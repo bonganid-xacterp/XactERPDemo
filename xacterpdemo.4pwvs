@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<WorkspaceViewState version="1.0">
+  <ExpandedNodes>
+    <Node path="xacterpdemo.4pw" type="pm/main-project"/>
+    <Node path="xacterpdemo.4pw/app" type="pm/group"/>
+    <Node path="xacterpdemo.4pw/app/_menus/top_menu" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/app/db" type="pm/group"/>
+    <Node path="xacterpdemo.4pw/app/db/db_maintainance" type="pm/application"/>
+  </ExpandedNodes>
+  <OpenDocuments>
+    <Document container="true" filePath="database/xactdemoappschema.4db" locator="" module="mod-db3"/>
+  </OpenDocuments>
+  <CurrentDocument filePath="database/xactdemoappschema.4db" module="mod-db3"/>
+</WorkspaceViewState>

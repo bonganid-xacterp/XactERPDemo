@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
+<File n="mainapp.4gl" s="2" ts="20250915161131928">
+<Fct c="1" el="11" l="1" n="main()" t="F" v="pub"/>
+</File>
+<File n="_menu/_top_menu.4gl" s="2" ts="20250915155823446">
+<Fct c="10" el="138" l="136" n="global_delete()" t="F" v="pub"/>
+<Fct c="10" el="134" l="132" n="global_next()" t="F" v="pub"/>
+<Fct c="10" el="130" l="128" n="global_prev()" t="F" v="pub"/>
+<Fct c="10" el="126" l="124" n="global_search()" t="F" v="pub"/>
+<Fct c="10" el="121" l="119" n="open_finance()" t="F" v="pub"/>
+<Fct c="10" el="117" l="115" n="open_purchases()" t="F" v="pub"/>
+<Fct c="10" el="113" l="111" n="open_sales()" t="F" v="pub"/>
+<Fct c="10" el="109" l="107" n="open_warehouse()" t="F" v="pub"/>
+<Fct c="10" el="105" l="103" n="open_stock()" t="F" v="pub"/>
+<Fct c="10" el="101" l="99" n="open_creditors()" t="F" v="pub"/>
+<Fct c="10" el="97" l="95" n="open_debtors()" t="F" v="pub"/>
+<Fct c="10" el="77" l="7" n="start_menu(p_userid INTEGER)" t="F" v="pub">
+<Call c="16" l="16" n="can" t="F"/>
+<Call c="22" l="17" n="open_debtors" t="F"/>
+<Call c="16" l="24" n="can" t="F"/>
+<Call c="22" l="25" n="open_creditors" t="F"/>
+<Call c="16" l="32" n="can" t="F"/>
+<Call c="22" l="33" n="open_stock" t="F"/>
+<Call c="16" l="40" n="can" t="F"/>
+<Call c="22" l="41" n="open_warehouse" t="F"/>
+<Call c="16" l="48" n="can" t="F"/>
+<Call c="46" l="48" n="can" t="F"/>
+<Call c="22" l="49" n="open_sales" t="F"/>
+<Call c="16" l="56" n="can" t="F"/>
+<Call c="46" l="56" n="can" t="F"/>
+<Call c="22" l="57" n="open_purchases" t="F"/>
+<Call c="16" l="64" n="can" t="F"/>
+<Call c="22" l="65" n="open_finance" t="F"/>
+</Fct>
+</File>
+</WorkspaceDatabase>
