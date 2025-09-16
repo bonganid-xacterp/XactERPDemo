@@ -1,0 +1,188 @@
+# XACT ERP DEMO - COMPLETE SYSTEM STRUCTURE
+# Generated from PostgreSQL Schema v1.1
+# Includes: System, Debtors, Creditors, Stock, Warehousing, Sales, Purchases, GL, Payments
+
+## DATABASE TABLES LIST:
+
+### SYSTEM MODULE (sy)
+sy00_user      - System Users
+sy01_sess      - User Sessions
+sy02_logs      - System Logs
+sy03_sett      - System Settings
+sy04_role      - User Roles
+sy05_perm      - Permissions
+sy06_role_perm - Role Permissions
+sy40_hist      - System History
+
+### DEBTORS LEDGER (dl)
+dl01_mast      - Debtors Master
+dl30_trans     - Debtors Transactions
+dl40_hist      - Debtors History
+
+### CREDITORS LEDGER (cl)
+cl01_mast      - Creditors Master
+cl30_trans     - Creditors Transactions
+cl40_hist      - Creditors History
+
+### STOCK LEDGER (st)
+st_cat         - Stock Categories
+st01_mast      - Stock Master
+st30_trans     - Stock Transactions
+st40_hist      - Stock History
+
+### WAREHOUSING (wh/wb)
+wh01_mast      - Warehouse Master
+wh_cat_perm    - Warehouse Category Permissions
+wh30_trans     - Warehouse Transactions
+wh40_hist      - Warehouse History
+wb01_mast      - Bin Master
+wb30_trans     - Bin Transactions
+wb40_hist      - Bin History
+
+### SALES LEDGER (sa)
+sa30_hdr       - Sales Invoice Header
+sa30_det       - Sales Invoice Details
+sa40_hist      - Sales Invoice History
+sa31_hdr       - Sales Order Header
+sa31_det       - Sales Order Details
+sa41_hist      - Sales Order History
+sa32_hdr       - Sales Delivery Header
+sa32_det       - Sales Delivery Details
+sa42_hist      - Sales Delivery History
+sa33_hdr       - Sales Return Header
+sa33_det       - Sales Return Details
+sa43_hist      - Sales Return History
+
+### PURCHASING LEDGER (pu)
+pu30_hdr       - Purchase Invoice Header
+pu30_det       - Purchase Invoice Details
+pu40_hist      - Purchase Invoice History
+pu31_hdr       - Purchase Order Header
+pu31_det       - Purchase Order Details
+pu41_hist      - Purchase Order History
+
+### GENERAL LEDGER (gl)
+gl01_acc       - GL Accounts
+gl30_journals  - GL Journals Header
+gl31_lines     - GL Journal Lines
+gl40_hist      - GL History
+
+### PAYMENTS (payt)
+payt30_hdr     - Payments Header
+payt40_hist    - Payments History
+
+## COMPLETE PROGRAM & FORM LIST:
+
+### SYSTEM MODULE (sy)
+sy101_user.4gl  - User Maintenance          | sy101_user.4fd  (frm_sy101_user)
+sy102_role.4gl  - Role Maintenance          | sy102_role.4fd  (frm_sy102_role)
+sy103_perm.4gl  - Permission Maintenance    | sy103_perm.4fd  (frm_sy103_perm)
+sy120_sett.4gl  - System Settings           | sy120_sett.4fd  (frm_sy120_sett)
+sy121_logs.4gl  - System Logs Viewer        | sy121_logs.4fd  (frm_sy121_logs)
+sy122_hist.4gl  - System History Viewer     | sy122_hist.4fd  (frm_sy122_hist)
+
+### DEBTORS LEDGER (dl)
+dl101_mast.4gl  - Debtors Master Maintenance | dl101_mast.4fd  (frm_dl101_mast)
+dl120_mast.4gl  - Debtors Enquiry           | dl120_mast.4fd  (frm_dl120_mast)
+dl121_tran.4gl  - Debtors Transactions Enq. | dl121_tran.4fd  (frm_dl121_tran)
+dl200_list.4gl  - Debtors Listing           | dl200_list.4fd  (frm_dl200_list)
+dl201_aging.4gl - Debtors Aging Report      | dl201_aging.4fd (frm_dl201_aging)
+dl220_state.4gl - Debtors Statement         | dl220_state.4fd (frm_dl220_state)
+
+### CREDITORS LEDGER (cl)
+cl101_mast.4gl  - Creditors Master Maintenance | cl101_mast.4fd  (frm_cl101_mast)
+cl120_mast.4gl  - Creditors Enquiry          | cl120_mast.4fd  (frm_cl120_mast)
+cl121_tran.4gl  - Creditors Transactions Enq.| cl121_tran.4fd  (frm_cl121_tran)
+cl200_list.4gl  - Creditors Listing          | cl200_list.4fd  (frm_cl200_list)
+cl201_aging.4gl - Creditors Aging Report     | cl201_aging.4fd (frm_cl201_aging)
+
+### STOCK LEDGER (st)
+st101_mast.4gl  - Stock Master Maintenance  | st101_mast.4fd  (frm_st101_mast)
+st102_cat.4gl   - Stock Category Maintenance| st102_cat.4fd   (frm_st102_cat)
+st120_mast.4gl  - Stock Master Enquiry      | st120_mast.4fd  (frm_st120_mast)
+st121_tran.4gl  - Stock Transactions Enquiry| st121_tran.4fd  (frm_st121_tran)
+st130_adj.4gl   - Stock Adjustment          | st130_adj.4fd   (frm_st130_adj)
+st200_list.4gl  - Stock Listing             | st200_list.4fd  (frm_st200_list)
+st201_move.4gl  - Stock Movement Report     | st201_move.4fd  (frm_st201_move)
+st220_card.4gl  - Stock Card                | st220_card.4fd  (frm_st220_card)
+
+### WAREHOUSING (wh/wb)
+wh101_mast.4gl  - Warehouse Maintenance     | wh101_mast.4fd  (frm_wh101_mast)
+wb101_mast.4gl  - Bin Maintenance           | wb101_mast.4fd  (frm_wb101_mast)
+wh120_stock.4gl - Warehouse Stock Enquiry   | wh120_stock.4fd (frm_wh120_stock)
+wb120_stock.4gl - Bin Stock Enquiry         | wb120_stock.4fd (frm_wb120_stock)
+wh130_trans.4gl - Warehouse Transfer        | wh130_trans.4fd (frm_wh130_trans)
+wh200_list.4gl  - Warehouse Listing         | wh200_list.4fd  (frm_wh200_list)
+wb200_list.4gl  - Bin Listing               | wb200_list.4fd  (frm_wb200_list)
+
+### SALES LEDGER (sa)
+sa130_inv.4gl   - Sales Invoice Entry       | sa130_inv.4fd   (frm_sa130_inv)
+sa131_ord.4gl   - Sales Order Entry         | sa131_ord.4fd   (frm_sa131_ord)
+sa132_del.4gl   - Sales Delivery Entry      | sa132_del.4fd   (frm_sa132_del)
+sa133_ret.4gl   - Sales Return Entry        | sa133_ret.4fd   (frm_sa133_ret)
+sa120_inv.4gl   - Sales Invoice Enquiry     | sa120_inv.4fd   (frm_sa120_inv)
+sa121_ord.4gl   - Sales Order Enquiry       | sa121_ord.4fd   (frm_sa121_ord)
+sa200_inv.4gl   - Sales Invoice Report      | sa200_inv.4fd   (frm_sa200_inv)
+sa201_ord.4gl   - Sales Order Report        | sa201_ord.4fd   (frm_sa201_ord)
+sa220_sales.4gl - Sales Analysis Report     | sa220_sales.4fd (frm_sa220_sales)
+
+### PURCHASING LEDGER (pu)
+pu130_inv.4gl   - Purchase Invoice Entry    | pu130_inv.4fd   (frm_pu130_inv)
+pu131_ord.4gl   - Purchase Order Entry      | pu131_ord.4fd   (frm_pu131_ord)
+pu120_inv.4gl   - Purchase Invoice Enquiry  | pu120_inv.4fd   (frm_pu120_inv)
+pu121_ord.4gl   - Purchase Order Enquiry    | pu121_ord.4fd   (frm_pu121_ord)
+pu200_inv.4gl   - Purchase Invoice Report   | pu200_inv.4fd   (frm_pu200_inv)
+pu201_ord.4gl   - Purchase Order Report     | pu201_ord.4fd   (frm_pu201_ord)
+pu220_purch.4gl - Purchase Analysis Report  | pu220_purch.4fd (frm_pu220_purch)
+
+### GENERAL LEDGER (gl)
+gl101_acc.4gl   - GL Accounts Maintenance   | gl101_acc.4fd   (frm_gl101_acc)
+gl130_jrn.4gl   - Journal Entry             | gl130_jrn.4fd   (frm_gl130_jrn)
+gl120_acc.4gl   - GL Account Enquiry        | gl120_acc.4fd   (frm_gl120_acc)
+gl121_jrn.4gl   - Journal Enquiry           | gl121_jrn.4fd   (frm_gl121_jrn)
+gl200_bal.4gl   - Trial Balance             | gl200_bal.4fd   (frm_gl200_bal)
+gl201_pl.4gl    - Profit & Loss             | gl201_pl.4fd    (frm_gl201_pl)
+gl202_bs.4gl    - Balance Sheet             | gl202_bs.4fd    (frm_gl202_bs)
+
+### PAYMENTS (payt)
+payt130_in.4gl  - Receipts Entry            | payt130_in.4fd  (frm_payt130_in)
+payt131_out.4gl - Payments Entry            | payt131_out.4fd (frm_payt131_out)
+payt200_cash.4gl- Cash Book Report          | payt200_cash.4fd (frm_payt200_cash)
+payt201_bank.4gl- Bank Reconciliation       | payt201_bank.4fd (frm_payt201_bank)
+
+### MAIN APPLICATION
+mainapp.4gl     - Main Application Menu     | mainapp.4fd     (frm_mainapp)
+login.4gl       - Login Screen              | login.4fd       (frm_login)
+
+## FILE STRUCTURE:
+XactERPDemo/
+├── src/
+│   ├── sy/     # System Module
+│   ├── dl/     # Debtors Ledger
+│   ├── cl/     # Creditors Ledger
+│   ├── st/     # Stock Ledger
+│   ├── wh/     # Warehousing
+│   ├── wb/     # Bins
+│   ├── sa/     # Sales Ledger
+│   ├── pu/     # Purchasing Ledger
+│   ├── gl/     # General Ledger
+│   ├── payt/   # Payments
+│   └── mainapp.4gl
+├── database/
+│   ├── xactdemoapp_db.sch
+│   └── xactdemoappschema.4db
+└── etc/
+    └── xactdemoapp.4rp
+
+## TOTAL PROGRAMS: 86
+## TOTAL FORMS: 86
+## TOTAL TABLES: 46
+
+# GENERO STUDIO CONFIGURATION:
+# - Application name: mainapp
+# - Database: PostgreSQL
+# - Each .4gl program has corresponding .4fd form
+# - Forms follow naming pattern: frm_<program_name>
+# - Module prefixes maintained throughout system
+
+# END OF FILE

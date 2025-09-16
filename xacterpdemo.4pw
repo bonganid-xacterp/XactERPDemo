@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Project defaultApplication="18736" gstVersion="3140a" version="3.3">
+<Project defaultApplication="221858380" gstVersion="3140a" version="3.3">
   <Settings>
     <DynamicProperties version="2">
       <DynamicProperty description="Accent color (Android 5.0 and later)" initialValue="#9575CD" isDefaultInherited="false" isHidden="false" label="Accent color" name="gma-accent-color" readOnly="false" type="COLOR"/>
@@ -64,27 +64,67 @@
   </Settings>
   <LanguageList version="1.0"/>
   <PlatformList version="1.0"/>
-  <Group id="75644415" label="app" language="Genero">
-    <Application binaryName="_main" dependencies="14000,1986" id="18736" label="_main">
-      <File filePath="mainapp.4gl"/>
-    </Application>
-    <Group id="65981975" label="_menus" language="Genero">
-      <Application binaryName="top_menu" id="68885454" label="top_menu">
-        <File filePath="_menu/_top_menu.4gl"/>
+  <Group id="147973800" label="erpdemoapp" language="Genero">
+    <Group id="13865401" label="configs"/>
+    <Library binaryName="db" id="31764552" label="db">
+      <File filePath="xactdemo.4db"/>
+      <File filePath="db/xactdemo_tables.4gl"/>
+    </Library>
+    <Library binaryName="libs" id="104908716" label="libs">
+      <File filePath="libs/globals.4gl"/>
+    </Library>
+    <Group id="174698916" label="logs"/>
+    <Group id="686352960" label="reports"/>
+    <Group id="39840687" label="src">
+      <Application binaryName="_main" id="221858380" label="_main">
+        <File filePath="src/f_login.4fd"/>
+        <File filePath="src/main.4gl"/>
       </Application>
-    </Group>
-    <Group id="21237744" label="auth" language="Genero"/>
-    <Group id="29314719" label="creditors" language="Genero">
-      <Application binaryName="creditors_maintanance" id="36122226" label="creditors_maintanance"/>
-    </Group>
-    <Group id="612364512" label="db" language="Genero">
-      <Application binaryName="db_maintainance" id="851317935" label="db_maintainance">
-        <File filePath="database/xactdemoappschema.4db"/>
+      <Application binaryName="cl01_mast" id="713572960" label="cl01_mast"/>
+      <Application binaryName="cl30_trans" id="42429894" label="cl30_trans"/>
+      <Application binaryName="cl40_hist" id="685366744" label="cl40_hist"/>
+      <Application binaryName="dl01_mast" id="150687270" label="dl01_mast"/>
+      <Application binaryName="dl30_trans" id="27202992" label="dl30_trans"/>
+      <Application binaryName="dl40_hist" id="102184641" label="dl40_hist"/>
+      <Application binaryName="gl01_acc" id="361542366" label="gl01_acc"/>
+      <Application binaryName="gl30_jnl" id="272073424" label="gl30_jnl"/>
+      <Application binaryName="gl31_det" id="107921619" label="gl31_det"/>
+      <Application binaryName="gl40_hist" id="106121004" label="gl40_hist"/>
+      <Application binaryName="pu30_det" id="127987816" label="pu30_det"/>
+      <Application binaryName="pu30_hdr" id="250990443" label="pu30_hdr"/>
+      <Application binaryName="pu31_det" id="395872064" label="pu31_det"/>
+      <Application binaryName="pu31_hdr" id="188103378" label="pu31_hdr"/>
+      <Application binaryName="pu40_hist" id="240492" label="pu40_hist"/>
+      <Application binaryName="pu41_hist" id="106938261" label="pu41_hist"/>
+      <Application binaryName="sa30_det" id="395029658" label="sa30_det"/>
+      <Application binaryName="sa30_hdr" id="381913194" label="sa30_hdr"/>
+      <Application binaryName="sa31_det" id="642896605" label="sa31_det"/>
+      <Application binaryName="sa31_hdr" id="22666828" label="sa31_hdr"/>
+      <Application binaryName="sa32_det" id="721020336" label="sa32_det"/>
+      <Application binaryName="sa32_hdr" id="42607919" label="sa32_hdr"/>
+      <Application binaryName="sa33_det" id="175969108" label="sa33_det"/>
+      <Application binaryName="sa33_hdr" id="155492575" label="sa33_hdr"/>
+      <Application binaryName="sa40_hist" id="536751900" label="sa40_hist"/>
+      <Application binaryName="sa41_hist" id="234260460" label="sa41_hist"/>
+      <Application binaryName="sa42_hist" id="135362304" label="sa42_hist"/>
+      <Application binaryName="sa43_hist" id="162250032" label="sa43_hist"/>
+      <Application binaryName="st01_mast" id="143387118" label="st01_mast"/>
+      <Application binaryName="st02_wh_cat" id="230840064" label="st02_wh_cat"/>
+      <Application binaryName="sy00_user" id="364603618" label="sy00_user">
+        <File filePath="src/auth/sy00_user.4fd"/>
+        <File filePath="src/sy00_user/sy00_user.4gl"/>
       </Application>
+      <Application binaryName="sy01_sess" id="356984264" label="sy01_sess"/>
+      <Application binaryName="sy02_logs" id="252410214" label="sy02_logs"/>
+      <Application binaryName="sy03_sett" id="364440770" label="sy03_sett"/>
+      <Application binaryName="sy04_role" id="425012860" label="sy04_role"/>
+      <Application binaryName="sy05_perm" id="36313706" label="sy05_perm"/>
+      <Application binaryName="sy06_role_perm" id="540543855" label="sy06_role_perm"/>
+      <Application binaryName="sy40_hist" id="422909272" label="sy40_hist"/>
+      <Application binaryName="wb01_mast" id="45028841" label="wb01_mast"/>
+      <Application binaryName="wh01_mast" id="425676175" label="wh01_mast"/>
+      <Application binaryName="wh30_trans" id="282693280" label="wh30_trans"/>
+      <Application binaryName="wh40_hist" id="330849568" label="wh40_hist"/>
     </Group>
-    <Group id="9194673" label="warehouse" language="Genero"/>
-    <Group id="133714245" label="stock" language="Genero"/>
-    <Group id="411390330" label="shared" language="Genero"/>
-    <Group id="61294014" label="debtors" language="Genero"/>
   </Group>
 </Project>
