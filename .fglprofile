@@ -1,0 +1,5 @@
+# Default DB Client
+dbi.database.provider = "dbmpostgres"
+
+# LOCAL connection (same machine)
+dbi.database.pg.local.source = "dbname=xactdemo host=localhost port=5432 user=postgres password=napoleon"

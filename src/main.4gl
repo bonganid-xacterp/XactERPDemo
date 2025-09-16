@@ -1,14 +1,13 @@
+
 MAIN
 
-
-  DEFER INTERRUPT
-  CONNECT TO "custdemo"
-  -- SET LOCK MODE TO WAIT   valid depending on database vendor  
-  CLOSE WINDOW SCREEN
-  OPEN WINDOW authf WITH FORM "f_login"
-
-  CLOSE WINDOW authf
+ CALL test() 
  
-  DISCONNECT CURRENT
 
 END MAIN  
+
+FUNCTION test()
+
+  DISPLAY   "New App"
+   
+END FUNCTION  -- select_name

@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="libs/globals.4gl" s="2" ts="20250916145647951"/>
-<File n="src/main.4gl" s="2" ts="20250916145647807">
-<Fct c="1" el="14" l="1" n="main()" t="F" v="pub"/>
+<File n="db/xactdemo_tables.4gl" s="2" ts="20250916145746601">
+<Fct c="10" el="799" l="791" n="db_add_indexes()" t="F" v="pub"/>
+<Fct c="10" el="788" l="733" n="db_drop_constraints()" t="F" v="pub"/>
+<Fct c="10" el="730" l="437" n="db_add_constraints()" t="F" v="pub"/>
+<Fct c="10" el="434" l="396" n="db_drop_tables()" t="F" v="pub"/>
+<Fct c="10" el="393" l="17" n="db_create_tables()" t="F" v="pub"/>
+<Fct c="1" el="14" l="6" n="main()" t="F" v="pub">
+<Call c="10" l="9" n="db_drop_constraints" t="F"/>
+<Call c="10" l="10" n="db_drop_tables" t="F"/>
+<Call c="10" l="11" n="db_create_tables" t="F"/>
+<Call c="10" l="12" n="db_add_indexes" t="F"/>
+<Call c="10" l="13" n="db_add_constraints" t="F"/>
+</Fct>
+</File>
+<File n="libs/globals.4gl" s="2" ts="20250916155410440">
+<Fct c="1" el="4" l="1" n="main()" t="F" v="pub"/>
+</File>
+<File n="src/main.4gl" s="2" ts="20250916162201366">
+<Fct c="10" el="13" l="9" n="test()" t="F" v="pub"/>
+<Fct c="1" el="7" l="2" n="main()" t="F" v="pub">
+<Call c="7" l="4" n="test" t="F"/>
+</Fct>
 </File>
 <File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250916145647885"/>
 </WorkspaceDatabase>

@@ -66,7 +66,7 @@
   <PlatformList version="1.0"/>
   <Group id="147973800" label="erpdemoapp" language="Genero">
     <Group id="13865401" label="configs"/>
-    <Library binaryName="db" id="31764552" label="db">
+    <Library binaryName="database" id="31764552" label="database">
       <File filePath="xactdemo.4db"/>
       <File filePath="db/xactdemo_tables.4gl"/>
     </Library>
@@ -75,9 +75,11 @@
     </Library>
     <Group id="174698916" label="logs"/>
     <Group id="686352960" label="reports"/>
+    <Library binaryName="resource_files" id="541201365" label="resource_files">
+      <File filePath=".fglprofile"/>
+    </Library>
     <Group id="39840687" label="src">
       <Application binaryName="_main" id="221858380" label="_main">
-        <File filePath="src/f_login.4fd"/>
         <File filePath="src/main.4gl"/>
       </Application>
       <Application binaryName="cl01_mast" id="713572960" label="cl01_mast"/>
@@ -111,7 +113,6 @@
       <Application binaryName="st01_mast" id="143387118" label="st01_mast"/>
       <Application binaryName="st02_wh_cat" id="230840064" label="st02_wh_cat"/>
       <Application binaryName="sy00_user" id="364603618" label="sy00_user">
-        <File filePath="src/auth/sy00_user.4fd"/>
         <File filePath="src/sy00_user/sy00_user.4gl"/>
       </Application>
       <Application binaryName="sy01_sess" id="356984264" label="sy01_sess"/>
@@ -120,6 +121,7 @@
       <Application binaryName="sy04_role" id="425012860" label="sy04_role"/>
       <Application binaryName="sy05_perm" id="36313706" label="sy05_perm"/>
       <Application binaryName="sy06_role_perm" id="540543855" label="sy06_role_perm"/>
+      <Application binaryName="sy100_login" id="570478975" label="sy100_login"/>
       <Application binaryName="sy40_hist" id="422909272" label="sy40_hist"/>
       <Application binaryName="wb01_mast" id="45028841" label="wb01_mast"/>
       <Application binaryName="wh01_mast" id="425676175" label="wh01_mast"/>
