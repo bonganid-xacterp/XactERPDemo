@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/main.4gl" s="0" ts="20250918151237457">
-<Fct c="10" el="226" l="202" n="open_main_container()" t="F" v="pub"/>
-<Fct c="10" el="199" l="196" n="check_password(p_pass STRING,db_pass STRING)" t="F" v="pub"/>
-<Fct c="10" el="194" l="144" n="validate_login(p_user STRING,p_pass STRING)" t="F" v="pub"/>
-<Fct c="10" el="141" l="123" n="initialize_login_display()" t="F" v="pub"/>
-<Fct c="10" el="120" l="92" n="setup_login_image()" t="F" v="pub"/>
-<Fct c="10" el="89" l="49" n="run_login()" t="F" v="pub">
+<File n="src/main.4gl" s="2" ts="20250918154023021">
+<Fct c="10" el="222" l="198" n="open_main_container()" t="F" v="pub"/>
+<Fct c="10" el="195" l="145" n="validate_login(p_user STRING,p_pass STRING)" t="F" v="pub"/>
+<Fct c="10" el="142" l="124" n="initialize_login_display()" t="F" v="pub"/>
+<Fct c="10" el="121" l="93" n="setup_login_image()" t="F" v="pub"/>
+<Fct c="10" el="90" l="49" n="run_login()" t="F" v="pub">
 <Call c="10" l="61" n="setup_login_image" t="F"/>
 <Call c="22" l="69" n="initialize_login_display" t="F"/>
 <Call c="26" l="72" n="validate_login" t="F"/>
-<Call c="14" l="87" n="open_main_container" t="F"/>
+<Call c="26" l="74" n="open_main_container" t="F"/>
+<Call c="14" l="88" n="open_main_container" t="F"/>
 </Fct>
 <Fct c="10" el="46" l="30" n="initialize_database()" t="F" v="pub"/>
 <Fct c="1" el="27" l="20" n="main()" t="F" v="pub">
-<Call c="10" l="24" n="initialize_database" t="F"/>
 <Call c="10" l="26" n="run_login" t="F"/>
 </Fct>
 </File>
@@ -54,13 +53,75 @@
 </File>
 <File n="libs/globals.4gl" s="2" ts="20250918143426950"/>
 <File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250918094631939"/>
-<File n="src/auth/sy02_logs.4gl" s="2" ts="20250918094631881">
-<Fct c="10" el="34" l="11" n="validate_user(p_user STRING,p_pass STRING)" t="F" v="pub">
-<Call c="18" l="25" n="log_action" t="F"/>
-<Call c="18" l="27" n="log_action" t="F"/>
-<Call c="14" l="30" n="log_action" t="F"/>
+<File n="src/auth/sy200_logs.4gl" s="2" ts="20250918152139630">
+<Fct c="10" el="478" l="475" n="enable_file_logging(enabled BOOLEAN)" t="F" v="pub">
+<Call c="10" l="477" n="log_info" t="F"/>
 </Fct>
-<Fct c="10" el="8" l="1" n="log_action(action STRING,user_name STRING,module STRING,status STRING)" t="F" v="pub"/>
-<Todo l="22" t="Replace with password hash compare&#13;"/>
+<Fct c="10" el="473" l="470" n="enable_database_logging(enabled BOOLEAN)" t="F" v="pub">
+<Call c="10" l="472" n="log_info" t="F"/>
+</Fct>
+<Fct c="10" el="468" l="464" n="set_log_file_path(file_path STRING)" t="F" v="pub">
+<Call c="10" l="466" n="create_log_directory" t="F"/>
+<Call c="10" l="467" n="log_info" t="F"/>
+</Fct>
+<Fct c="10" el="462" l="459" n="set_log_level(level SMALLINT)" t="F" v="pub">
+<Call c="10" l="461" n="log_info" t="F"/>
+</Fct>
+<Fct c="10" el="456" l="435" n="create_security_log_table()" t="F" v="pub"/>
+<Fct c="10" el="433" l="411" n="create_system_log_table()" t="F" v="pub"/>
+<Fct c="10" el="409" l="398" n="ensure_security_log_table()" t="F" v="pub">
+<Call c="14" l="407" n="create_security_log_table" t="F"/>
+</Fct>
+<Fct c="10" el="396" l="385" n="ensure_system_log_table()" t="F" v="pub">
+<Call c="14" l="394" n="create_system_log_table" t="F"/>
+</Fct>
+<Fct c="10" el="370" l="360" n="update_user_last_login(user_id INTEGER)" t="F" v="pub"/>
+<Fct c="10" el="358" l="333" n="get_client_info()" t="F" v="pub"/>
+<Fct c="10" el="331" l="312" n="parse_client_info(client_info STRING)" t="F" v="pub"/>
+<Fct c="10" el="227" l="206" n="create_log_directory()" t="F" v="pub"/>
+<Fct c="10" el="204" l="191" n="write_to_log_file(log_entry STRING)" t="F" v="pub"/>
+<Fct c="10" el="189" l="145" n="write_log_entry(level SMALLINT,log_type STRING,message STRING,user_id INTEGER,additional_data STRING)" t="F" v="pub">
+<Call c="14" l="179" n="write_to_log_file" t="F"/>
+<Call c="14" l="184" n="insert_system_log" t="F"/>
+</Fct>
+<Fct c="10" el="142" l="138" n="log_fatal(log_type STRING,message STRING,user_id INTEGER,additional_data STRING)" t="F" v="pub">
+<Call c="14" l="140" n="write_log_entry" t="F"/>
+</Fct>
+<Fct c="10" el="136" l="132" n="log_error(log_type STRING,message STRING,user_id INTEGER,additional_data STRING)" t="F" v="pub">
+<Call c="14" l="134" n="write_log_entry" t="F"/>
+</Fct>
+<Fct c="10" el="130" l="126" n="log_warn(log_type STRING,message STRING,user_id INTEGER,additional_data STRING)" t="F" v="pub">
+<Call c="14" l="128" n="write_log_entry" t="F"/>
+</Fct>
+<Fct c="10" el="124" l="120" n="log_info(log_type STRING,message STRING,user_id INTEGER,additional_data STRING)" t="F" v="pub">
+<Call c="14" l="122" n="write_log_entry" t="F"/>
+</Fct>
+<Fct c="10" el="118" l="114" n="log_debug(log_type STRING,message STRING,user_id INTEGER,additional_data STRING)" t="F" v="pub">
+<Call c="14" l="116" n="write_log_entry" t="F"/>
+</Fct>
+<Fct c="10" el="111" l="109" n="log_application_event(event_description STRING,user_id INTEGER,additional_data STRING)" t="F" v="pub">
+<Call c="10" l="110" n="log_info" t="F"/>
+</Fct>
+<Fct c="10" el="107" l="99" n="log_database_error(operation STRING,error_code INTEGER,error_message STRING,user_id INTEGER)" t="F" v="pub">
+<Call c="10" l="106" n="log_error" t="F"/>
+</Fct>
+<Fct c="10" el="97" l="85" n="log_security_event(event_type STRING,description STRING,user_id INTEGER,details STRING)" t="F" v="pub">
+<Call c="10" l="91" n="log_warn" t="F"/>
+<Call c="14" l="95" n="insert_security_log" t="F"/>
+</Fct>
+<Fct c="10" el="83" l="68" n="log_login_failure(username STRING,reason STRING,client_info STRING)" t="F" v="pub">
+<Call c="10" l="74" n="log_warn" t="F"/>
+<Call c="14" l="78" n="insert_login_log" t="F"/>
+<Call c="10" l="82" n="increment_failed_attempts" t="F"/>
+</Fct>
+<Fct c="10" el="66" l="51" n="log_login_success(user_id INTEGER,username STRING,client_info STRING)" t="F" v="pub">
+<Call c="10" l="57" n="log_info" t="F"/>
+<Call c="14" l="61" n="insert_login_log" t="F"/>
+<Call c="10" l="65" n="update_user_last_login" t="F"/>
+</Fct>
+<Fct c="10" el="48" l="35" n="logging_init()" t="F" v="pub">
+<Call c="10" l="44" n="create_log_directory" t="F"/>
+<Call c="10" l="47" n="log_info" t="F"/>
+</Fct>
 </File>
 </WorkspaceDatabase>

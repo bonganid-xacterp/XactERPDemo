@@ -78,7 +78,8 @@
       <Application binaryName="cl30_trans" id="42429894" label="cl30_trans"/>
       <Application binaryName="cl40_hist" id="685366744" label="cl40_hist"/>
       <Library binaryName="database" id="31764552" label="database">
-        <File filePath="xactdemo.4db"/>
+        <File filePath="db/xactdemo.4db"/>
+        <File filePath="db/xactdemo.sch"/>
         <File filePath="db/xactdemo_tables.4gl"/>
       </Library>
       <Application binaryName="dl01_mast" id="150687270" label="dl01_mast"/>
@@ -88,6 +89,7 @@
       <Application binaryName="gl30_jnl" id="272073424" label="gl30_jnl"/>
       <Application binaryName="gl31_det" id="107921619" label="gl31_det"/>
       <Application binaryName="gl40_hist" id="106121004" label="gl40_hist"/>
+      <Library binaryName="incl" id="56784492" label="incl"/>
       <Library binaryName="libs" id="104908716" label="libs">
         <File filePath="libs/globals.4gl"/>
       </Library>

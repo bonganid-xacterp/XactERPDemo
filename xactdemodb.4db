@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='windows-1252'?>
-<Schema id="{2edf89c4-07b4-4a45-9d6d-71936bf14207}" version="4.0">
-  <ExtractionSettings last="SQLite">
-    <ExtractionOptions casens="LowerCase" cvmeth="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ignerr="true" systab="false" type="SQLite"/>
-  </ExtractionSettings>
-</Schema>

@@ -1,5 +1,7 @@
 IMPORT ui
 
+SCHEMA "xactdemo"
+
 FUNCTION main_application_menu()
     MENU "Main Menu"
         BEFORE MENU
