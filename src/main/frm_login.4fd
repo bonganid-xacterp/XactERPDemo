@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactdemo" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{08d8ff61-d463-44d6-a08e-42218ca8dc4d}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy00_user" name="login_credentials" uid="{0ef31b82-b496-4e64-bfdb-c669009a9c8d}">
+    <RecordField colName="username" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy00_user.username" sqlTabName="sy00_user" uid="{94443672-cc25-4b76-a8d9-d96c96539d86}"/>
+    <RecordField colName="password" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy00_user.password" sqlTabName="sy00_user" uid="{701c031e-73cb-4c8c-b094-58641536329f}"/>
+  </Record>
+  <Form gridHeight="17" gridWidth="33" minHeight="20" minWidth="20" name="frm_login" text="XACT ERP Demo – Login">
+    <Grid gridHeight="15" gridWidth="31" name="login_grid" posX="1" posY="1">
+      <Group gridHeight="14" gridWidth="29" name="workarea" posX="1" posY="0" text="">
+        <Image autoScale="true" gridHeight="8" gridWidth="26" image="" name="img_logo" posX="1" posY="1">
+          <Initializer image="images/logo.png"/>
+        </Image>
+        <Label gridHeight="1" gridWidth="10" name="lbl_username" posX="1" posY="10" text="Username">
+          <Initializer text="dbschema:sy00_user.username/@label"/>
+        </Label>
+        <Edit colName="username" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sy00_user.username" posX="12" posY="10" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="f_username" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="10" name="lbl_password" posX="1" posY="12" text="Password">
+          <Initializer text="dbschema:sy00_user.password/@label"/>
+        </Label>
+        <Edit colName="password" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sy00_user.password" posX="12" posY="12" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="f_password" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+      </Group>
+    </Grid>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

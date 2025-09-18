@@ -1,68 +1,118 @@
 # ==============================================================
-# Program : sy100_main.4gl
-# Purpose : Minimal app container (no login yet)
-# Module  : System (sy)
-# Number  : 100 (Input Program per standard)
-# Version : v0.1 (Genero BDL 3.2.1)
+# Program   :   sy100_main.4gl
+# Purpose   :   App entry point with login + main container
+# Module    :   System (sy)
+# Number    :   100
+# Author    :   Bongani Dlamini
+# Version   :   Genero BDL 3.2.1
 # ==============================================================
 
-IMPORT os -- 3.2.1-safe; future file ops
+IMPORT os
 
 CONSTANT k_app_version = "XACT ERP Demo v0.1"
 
--- Modular variables (window + form handles)
 DEFINE g_win ui.Window
 DEFINE g_form ui.Form
+DEFINE f_username STRING
+DEFINE f_password STRING
 
 MAIN
-    DEFER INTERRUPT -- Defer Ctrl+C to safe points
-
-    CALL init_app() -- 1) Clear/init globals
-    CALL open_main_shell() -- 2) Open the main container window
-
-    CALL run_main_menu() -- 3) Basic menu loop (no business logic here)
-
-    CALL shutdown_app() -- 4) Tidy close
+    DEFER INTERRUPT
+    CALL run_login()
 END MAIN
 
-# ------------------ INITIALISATION (no business logic) --------
-FUNCTION init_app()
-    -- If we add globals later, we clear/init them here.
-END FUNCTION
+# ------------------ LOGIN FLOW -------------------
+FUNCTION run_login()
+    DEFINE ok SMALLINT
 
-# ------------------ BUILD/DISPLAY (UI only) -------------------
-FUNCTION open_main_shell()
-
-    -- Close the default SCREEN window first
     CLOSE WINDOW SCREEN
 
-    -- Open a window with a very small shell form (main_container.4fd)
-    OPEN WINDOW w_main WITH FORM "main_container" ATTRIBUTES(NORMAL);
+    -- Open login window
+    OPEN WINDOW w_login WITH FORM "frm_login"
+
     LET g_win = ui.Window.getCurrent()
     LET g_form = g_win.getForm()
+    CALL g_win.setText("XACT ERP Demo – Login")
 
-    -- Set a nice title bar
-    CALL g_win.setText("XACT ERP Demo – Dev - Bongani Dlamini")
+    -- Run login interaction
+    DIALOG
+        INPUT BY NAME f_username, f_password
+            ON ACTION login
+                LET ok = validate_login(f_username, f_password)
+                IF ok = 1 THEN
+                    MESSAGE "Successfully logged in"
+                    EXIT DIALOG
+                END IF
 
-    -- Show version in form label if present
-    IF g_form IS NOT NULL THEN
-        CALL g_form.setElementText("lbl_version", k_app_version)
+            ON ACTION cancel
+                EXIT PROGRAM
+        END INPUT
+    END DIALOG
+
+    CLOSE WINDOW w_login
+
+    IF ok = 1 THEN
+        CALL open_main_container()
     END IF
 END FUNCTION
 
-# ------------------ MAIN MENU (keep thin) ---------------------
-FUNCTION run_main_menu()
+# ------------------ VALIDATION -------------------
+FUNCTION validate_login(p_user STRING, p_pass STRING)
+    DEFINE db_pass STRING
+    DEFINE db_status SMALLINT
+    DEFINE input_hash STRING
+
+    -- Empty checks
+    IF p_user IS NULL OR p_user = "" THEN
+        ERROR "Username cannot be empty"
+        RETURN 0
+    END IF
+
+    IF p_pass IS NULL OR p_pass = "" THEN
+        ERROR "Password cannot be empty"
+        RETURN 0
+    END IF
+
+    -- Fetch encrypted password
+    SELECT password, status
+        INTO db_pass, db_status
+        FROM sy00_user
+        WHERE username = p_user AND deleted_at IS NULL AND status = 1
+
+    WHENEVER NOT FOUND CONTINUE
+
+    IF db_pass IS NULL THEN
+        ERROR "Invalid username or password"
+        RETURN 0
+    END IF
+
+    -- Hash entered password with bcrypt
+    #ET input_hash = check_password(p_pass, db_pass)
+
+    IF input_hash = db_pass THEN
+        RETURN 1
+    ELSE
+        ERROR "Invalid username or password"
+        RETURN 0
+    END IF
+END FUNCTION
+
+# ------------------ MAIN CONTAINER ----------------
+FUNCTION open_main_container()
+    CLOSE WINDOW SCREEN
+
+    OPEN WINDOW w_main WITH FORM "main_container"
+
+    LET g_win = ui.Window.getCurrent()
+    LET g_form = g_win.getForm()
+    CALL g_win.setText("XACT ERP Demo – Main Container")
+
     MENU "XACT ERP Demo"
         COMMAND "About"
             MESSAGE k_app_version
         COMMAND "Quit"
             EXIT MENU
     END MENU
-END FUNCTION
 
-# ------------------ SHUTDOWN / CLEAR --------------------------
-FUNCTION shutdown_app()
-    -- IMPORTANT: CLOSE WINDOW expects an identifier, not an expression.
-    -- That's why we close 'w_main' directly, not g_win.getIdentifier().
     CLOSE WINDOW w_main
 END FUNCTION
