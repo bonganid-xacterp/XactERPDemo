@@ -1,19 +1,37 @@
-# Default DB Client
-dbi.database.provider = "dbmdefault"
+# ==============================================================
+# FGLPROFILE Configuration for XACT ERP Demo
+# PostgreSQL Database Configuration
+# ==============================================================
 
-# LOCAL connection (same machine)
-dbi.database.pg.local.source = "xactdemo host=localhost port=5432 user=postgres password=napoleon"
+# Database Provider Configuration
+# Use dbmpsql for PostgreSQL (not dbmdefault)
+dbi.default.driver = "dbmpsql"
 
-# Window container settings for Genero 3.2.1
-fgl.win.container = 1
-gui.window.container = 1
-gui.window.parent = main
-fgl.window.parentName = w_main
+# PostgreSQL Connection String
+# Format: database+driver='PostgreSQL Unicode',host='host',port=port,user='user',password='password'
+dbi.default.source = "xactdemo+driver='PostgreSQL Unicode',host='localhost',port=5432,user='postgres',password='napoleon'"
 
-# Make main window act as parent
-gui.window.maximize = 1
-gui.window.style = normal
+# Alternative simpler format (if the above doesn't work)
+# dbi.default.source = "xactdemo@postgresql://postgres:napoleon@localhost:5432"
 
-# Child window settings  
-gui.window.child.container = 1
-gui.window.child.parent = main
+# Database debugging (optional - helps troubleshoot connection issues)
+# dbi.default.debug.level = 2
+# dbi.default.debug.file = "database_debug.log"
+
+# Connection pool settings (optional)
+dbi.default.pool.minSize = 1
+dbi.default.pool.maxSize = 10
+dbi.default.pool.timeout = 30
+
+# Other Genero settings
+fgl.profile.version = "3.20"
+
+# UI settings
+gui.uimode = "traditional"
+
+# Application settings
+application.name = "XACT ERP Demo"
+
+# Uncomment these lines for web deployment
+# gws.application.timeout = 3600
+# gws.session.timeout = 1800

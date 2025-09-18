@@ -1,5 +1,99 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Form name="main_container.tmp" build="3.20.14" sqlDbName="xactdemo" text="" windowStyle="" version="0.1" width="81" height="25">
+  <TopMenu name="top_menu">
+    <TopMenuGroup name="tm_file" text="File">
+      <LStr text="File"/>
+      <TopMenuSeparator name="topmenuseparator1"/>
+      <TopMenuCommand name="tm_sb_exit" image="quit" text="Quit">
+        <LStr text="Quit"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+    <TopMenuGroup name="tm_dl" text="Debtors">
+      <LStr text="Debtors"/>
+      <TopMenuCommand name="tm_sb_dl_add" text="Add Debtors">
+        <LStr text="Add Debtors"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_dl_list" text="List Debtors">
+        <LStr text="List Debtors"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+    <TopMenuGroup name="tm_cl" text="Creditors">
+      <LStr text="Creditors"/>
+      <TopMenuCommand name="tm_sm_cl_list" text="List Creditors">
+        <LStr text="List Creditors"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_cl_add" text="Add Creditor">
+        <LStr text="Add Creditor"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+    <TopMenuGroup name="tm_st" text="Stock">
+      <LStr text="Stock"/>
+      <TopMenuCommand name="tm_st_list" text="List Stock">
+        <LStr text="List Stock"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_st_add" text="Add Stock">
+        <LStr text="Add Stock"/>
+      </TopMenuCommand>
+      <TopMenuSeparator name="topmenuseparator2"/>
+      <TopMenuCommand name="tm_st_cat" text="List Categories">
+        <LStr text="List Categories"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_st_wh_list" text="List Warehouses">
+        <LStr text="List Warehouses"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+    <TopMenuGroup name="tm_gl" tag="" text="Finance">
+      <LStr text="Finance"/>
+      <TopMenuCommand name="tm_sm_gl" text="General Ledger">
+        <LStr text="General Ledger"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_gl_jnl" text="Journals">
+        <LStr text="Journals"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+    <TopMenuGroup name="tm_sa" text="Sales">
+      <LStr text="Sales"/>
+      <TopMenuCommand name="tm_sb_sa_qt" text="Quotations">
+        <LStr text="Quotations"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_sa_ord" text="Orders">
+        <LStr text="Orders"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_sa_inv" text="Invoices">
+        <LStr text="Invoices"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_sa_crn" text="Credit Notes">
+        <LStr text="Credit Notes"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+    <TopMenuGroup name="tm_pa" text="Purchases">
+      <LStr text="Purchases"/>
+      <TopMenuCommand name="tm_sb_pa_ord" text="Orders">
+        <LStr text="Orders"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_pa_inv" text="GRN">
+        <LStr text="GRN"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+    <TopMenuGroup name="tm_sys" text="System">
+      <LStr text="System"/>
+      <TopMenuCommand name="tm_sy_users" text="Users">
+        <LStr text="Users"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sys_sb_roles" text="User Roles">
+        <LStr text="User Roles"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_sys_perm" text="User Permissions">
+        <LStr text="User Permissions"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_sys_sett" text="Settings">
+        <LStr text="Settings"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="tm_sb_sys_logs" text="Logs">
+        <LStr text="Logs"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+  </TopMenu>
   <LStr text=""/>
   <Grid name="main_grid" width="81" height="25">
     <Label name="lbl_title" width="30" text="" fontPitch="variable" justify="center" posY="0" posX="1" gridWidth="30">

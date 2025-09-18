@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/main.4gl" s="2" ts="20250918113926524">
-<Fct c="10" el="105" l="101" n="shutdown_app()" t="F" v="pub"/>
-<Fct c="10" el="98" l="91" n="run_main_menu()" t="F" v="pub"/>
-<Fct c="10" el="88" l="74" n="open_main_container()" t="F" v="pub"/>
-<Fct c="10" el="70" l="65" n="validate_login(p_user STRING,p_pass STRING)" t="F" v="pub"/>
-<Fct c="10" el="62" l="26" n="run_login()" t="F" v="pub">
-<Call c="26" l="42" n="validate_login" t="F"/>
-<Call c="14" l="60" n="open_main_container" t="F"/>
+<File n="src/main.4gl" s="0" ts="20250918151237457">
+<Fct c="10" el="226" l="202" n="open_main_container()" t="F" v="pub"/>
+<Fct c="10" el="199" l="196" n="check_password(p_pass STRING,db_pass STRING)" t="F" v="pub"/>
+<Fct c="10" el="194" l="144" n="validate_login(p_user STRING,p_pass STRING)" t="F" v="pub"/>
+<Fct c="10" el="141" l="123" n="initialize_login_display()" t="F" v="pub"/>
+<Fct c="10" el="120" l="92" n="setup_login_image()" t="F" v="pub"/>
+<Fct c="10" el="89" l="49" n="run_login()" t="F" v="pub">
+<Call c="10" l="61" n="setup_login_image" t="F"/>
+<Call c="22" l="69" n="initialize_login_display" t="F"/>
+<Call c="26" l="72" n="validate_login" t="F"/>
+<Call c="14" l="87" n="open_main_container" t="F"/>
 </Fct>
-<Fct c="1" el="23" l="19" n="main()" t="F" v="pub">
-<Call c="10" l="21" n="run_login" t="F"/>
+<Fct c="10" el="46" l="30" n="initialize_database()" t="F" v="pub"/>
+<Fct c="1" el="27" l="20" n="main()" t="F" v="pub">
+<Call c="10" l="24" n="initialize_database" t="F"/>
+<Call c="10" l="26" n="run_login" t="F"/>
 </Fct>
 </File>
 <File n="src/main/main_container.4gl" s="2" ts="20250918094631997">
@@ -47,9 +52,7 @@
 <Call c="10" l="13" n="db_add_constraints" t="F"/>
 </Fct>
 </File>
-<File n="libs/globals.4gl" s="2" ts="20250918094632104">
-<Fct c="1" el="4" l="1" n="main()" t="F" v="pub"/>
-</File>
+<File n="libs/globals.4gl" s="2" ts="20250918143426950"/>
 <File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250918094631939"/>
 <File n="src/auth/sy02_logs.4gl" s="2" ts="20250918094631881">
 <Fct c="10" el="34" l="11" n="validate_user(p_user STRING,p_pass STRING)" t="F" v="pub">

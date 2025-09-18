@@ -72,7 +72,9 @@
         <File filePath="src/main/main_container.4fd"/>
         <File filePath="src/main/main_container.4gl"/>
       </Application>
-      <Application binaryName="cl01_mast" id="713572960" label="cl01_mast"/>
+      <Application binaryName="cl01_mast" id="713572960" label="cl01_mast">
+        <File filePath="src/dl100_mast/dl100_mast.4fd"/>
+      </Application>
       <Application binaryName="cl30_trans" id="42429894" label="cl30_trans"/>
       <Application binaryName="cl40_hist" id="685366744" label="cl40_hist"/>
       <Library binaryName="database" id="31764552" label="database">
@@ -86,9 +88,6 @@
       <Application binaryName="gl30_jnl" id="272073424" label="gl30_jnl"/>
       <Application binaryName="gl31_det" id="107921619" label="gl31_det"/>
       <Application binaryName="gl40_hist" id="106121004" label="gl40_hist"/>
-      <Library binaryName="images" id="137779200" label="images">
-        <File filePath="../../logo.png"/>
-      </Library>
       <Library binaryName="libs" id="104908716" label="libs">
         <File filePath="libs/globals.4gl"/>
       </Library>
@@ -98,8 +97,9 @@
       <Application binaryName="pu31_hdr" id="188103378" label="pu31_hdr"/>
       <Application binaryName="pu40_hist" id="240492" label="pu40_hist"/>
       <Application binaryName="pu41_hist" id="106938261" label="pu41_hist"/>
-      <Library binaryName="resource_files" id="541201365" label="resource_files">
+      <Library binaryName="resources" id="541201365" label="resources">
         <File filePath=".fglprofile"/>
+        <File filePath="../../logo.png"/>
       </Library>
       <Application binaryName="sa30_det" id="395029658" label="sa30_det"/>
       <Application binaryName="sa30_hdr" id="381913194" label="sa30_hdr"/>
@@ -120,14 +120,14 @@
         <File filePath="src/sy00_user/sy100_user_mast.4fd"/>
       </Application>
       <Application binaryName="sy01_sess" id="356984264" label="sy01_sess"/>
-      <Application binaryName="sy02_logs" id="252410214" label="sy02_logs">
-        <File filePath="src/auth/sy02_logs.4gl"/>
-      </Application>
       <Application binaryName="sy03_sett" id="364440770" label="sy03_sett"/>
       <Application binaryName="sy04_role" id="425012860" label="sy04_role"/>
       <Application binaryName="sy05_perm" id="36313706" label="sy05_perm"/>
       <Application binaryName="sy06_role_perm" id="540543855" label="sy06_role_perm"/>
       <Application binaryName="sy100_login" id="570478975" label="sy100_login"/>
+      <Application binaryName="sy200_logs" id="252410214" label="sy200_logs">
+        <File filePath="src/auth/sy200_logs.4gl"/>
+      </Application>
       <Application binaryName="sy40_hist" id="422909272" label="sy40_hist"/>
       <Application binaryName="wb01_mast" id="45028841" label="wb01_mast"/>
       <Application binaryName="wh01_mast" id="425676175" label="wh01_mast"/>

@@ -4,27 +4,27 @@
   <Grid name="login_grid" width="30" height="15">
     <Group name="workarea" text="" posY="0" posX="1" gridWidth="29" gridHeight="14">
       <LStr text=""/>
-      <Image name="img_logo" width="26" height="8" image="" autoScale="1" posY="1" posX="1" gridWidth="26" gridHeight="8"/>
+      <Image name="company_logo" width="27" height="8" posY="1" posX="1" gridWidth="27" gridHeight="8"/>
       <Label name="lbl_username" width="10" text="Username" posY="10" posX="1" gridWidth="10">
         <LStr text="Username"/>
       </Label>
-      <FormField name="sy00_user.username" colName="username" sqlType="VARCHAR(50)" required="1" notNull="1" fieldId="0" sqlTabName="sy00_user" tabIndex="1">
+      <FormField name="formonly.f_username" colName="f_username" sqlType="VARCHAR" fieldId="0" sqlTabName="formonly" tabIndex="1">
         <Edit width="15" scroll="1" posY="10" posX="12" gridWidth="15"/>
       </FormField>
       <Label name="lbl_password" width="10" text="Password" posY="12" posX="1" gridWidth="10">
         <LStr text="Password"/>
       </Label>
-      <FormField name="sy00_user.password" colName="password" sqlType="VARCHAR(255)" required="1" notNull="1" fieldId="1" sqlTabName="sy00_user" tabIndex="2">
+      <FormField name="formonly.f_password" colName="f_password" sqlType="VARCHAR" fieldId="1" sqlTabName="formonly" tabIndex="2">
         <Edit width="15" scroll="1" posY="12" posX="12" gridWidth="15"/>
       </FormField>
     </Group>
   </Grid>
-  <RecordView tabName="sy00_user">
-    <Link colName="username" fieldIdRef="0"/>
-    <Link colName="password" fieldIdRef="1"/>
+  <RecordView tabName="formonly">
+    <Link colName="f_username" fieldIdRef="0"/>
+    <Link colName="f_password" fieldIdRef="1"/>
   </RecordView>
   <RecordView tabName="login_credentials">
-    <Link colName="username" fieldIdRef="0"/>
-    <Link colName="password" fieldIdRef="1"/>
+    <Link colName="f_username" fieldIdRef="0"/>
+    <Link colName="f_password" fieldIdRef="1"/>
   </RecordView>
 </Form>

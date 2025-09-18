@@ -5,12 +5,14 @@
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/database" type="pm/library"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/dl30_trans" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/images" type="pm/library"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/libs" type="pm/library"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy200_logs" type="pm/application"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/sy40_hist" type="pm/application"/>
   </ExpandedNodes>
   <OpenDocuments>
-    <Document container="true" filePath="src/main.4gl" locator="42:54" module="mod-ce3">
+    <Document container="true" filePath="src/main.4gl" locator="44:12" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
     <Document container="true" filePath="src/main/main_container.4gl" locator="76:1" module="mod-ce3">
@@ -18,6 +20,14 @@
     </Document>
     <Document container="true" filePath="src/main/main_container.4fd" locator="" module="mod-fd"/>
     <Document container="true" filePath="src/main/frm_login.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="xactdemo.4db" locator="" module="mod-db3"/>
+    <Document container="true" filePath="src/dl100_mast/dl100_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="libs/globals.4gl" locator="6:1" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/auth/sy200_logs.4gl" locator="16:28" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
   </OpenDocuments>
-  <CurrentDocument filePath="src/main.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="src/auth/sy200_logs.4gl" module="mod-ce3"/>
 </WorkspaceViewState>
