@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.4js.com/2004/forms">
+<vbox>
+  <label text="XactERP Demo System"/>
+  <grid>
+    <label text="Username:"/>
+    <edit name="username" width="20"/>
+    <label text="Password:"/>
+    <textedit name="password" width="20" password="true"/>
+  </grid>
+  <hbox>
+    <button name="btn_login" text="Login"/>
+    <button name="btn_cancel" text="Cancel"/>
+  </hbox>
+  <label text="Demo: admin/admin123, user/user123"/>
+</vbox>
+</form>

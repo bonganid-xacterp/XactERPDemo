@@ -67,14 +67,9 @@
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
     <Group environment="filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile" id="39840687" label="src">
       <Application binaryName="_main" dependencies="31764552" id="221858380" label="_main">
-        <File filePath="src/main/dashboard.4gl"/>
         <File filePath="src/main.4gl"/>
+        <File filePath="src/main/main_container.4fd"/>
         <File filePath="src/main/main_container.4gl"/>
-        <File filePath="src/main/main_container.per"/>
-      </Application>
-      <Application binaryName="auth" id="415251176" label="auth">
-        <File filePath="src/auth/f_login.4gl"/>
-        <File filePath="src/auth/f_login.per"/>
       </Application>
       <Application binaryName="cl01_mast" id="713572960" label="cl01_mast"/>
       <Application binaryName="cl30_trans" id="42429894" label="cl30_trans"/>

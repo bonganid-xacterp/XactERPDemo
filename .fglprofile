@@ -4,6 +4,16 @@ dbi.database.provider = "dbmdefault"
 # LOCAL connection (same machine)
 dbi.database.pg.local.source = "xactdemo host=localhost port=5432 user=postgres password=napoleon"
 
-fgl.win.style = "naked"
-fgl.win.maximize = 1
-gui.rendering.mode = "normal"
+# Window container settings for Genero 3.2.1
+fgl.win.container = 1
+gui.window.container = 1
+gui.window.parent = main
+fgl.window.parentName = w_main
+
+# Make main window act as parent
+gui.window.maximize = 1
+gui.window.style = normal
+
+# Child window settings  
+gui.window.child.container = 1
+gui.window.child.parent = main

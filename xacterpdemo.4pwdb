@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/main.4gl" s="2" ts="20250917160016351">
-<Fct c="1" el="30" l="1" n="main()" t="F" v="pub">
-<Call c="12" l="8" n="login_screen" t="F"/>
-<Call c="10" l="23" n="launch_child_window" t="F"/>
-<Call c="10" l="26" n="main_application_menu" t="F"/>
-<Call c="10" l="28" n="shutdown_application" t="F"/>
+<File n="src/main.4gl" s="2" ts="20250918094931130">
+<Fct c="10" el="64" l="60" n="shutdown_app()" t="F" v="pub"/>
+<Fct c="10" el="57" l="50" n="run_main_menu()" t="F" v="pub"/>
+<Fct c="10" el="47" l="34" n="open_main_shell()" t="F" v="pub"/>
+<Fct c="10" el="31" l="29" n="init_app()" t="F" v="pub"/>
+<Fct c="1" el="26" l="17" n="main()" t="F" v="pub">
+<Call c="10" l="20" n="init_app" t="F"/>
+<Call c="10" l="21" n="open_main_shell" t="F"/>
+<Call c="10" l="23" n="run_main_menu" t="F"/>
+<Call c="10" l="25" n="shutdown_app" t="F"/>
 </Fct>
 </File>
-<File n="src/main/main_container.4gl" s="2" ts="20250917160016411">
-<Fct c="10" el="32" l="1" n="login_screen()" t="F" v="pub">
-<Call c="20" l="17" n="validate_user" t="F"/>
+<File n="src/main/main_container.4gl" s="2" ts="20250918094631997">
+<Fct c="10" el="85" l="82" n="shutdown_application()" t="F" v="pub">
+<Call c="10" l="83" n="update_status" t="F"/>
+</Fct>
+<Fct c="10" el="79" l="60" n="confirm_exit()" t="F" v="pub"/>
+<Fct c="10" el="57" l="40" n="update_status(p_msg STRING)" t="F" v="pub"/>
+<Fct c="10" el="37" l="31" n="launch_child_window(module_name STRING)" t="F" v="pub">
+<Call c="10" l="34" n="update_status" t="F"/>
+<Call c="10" l="36" n="update_status" t="F"/>
+</Fct>
+<Fct c="10" el="28" l="3" n="main_application_menu()" t="F" v="pub">
+<Call c="18" l="6" n="update_status" t="F"/>
+<Call c="18" l="9" n="launch_child_window" t="F"/>
+<Call c="18" l="12" n="launch_child_window" t="F"/>
+<Call c="18" l="15" n="launch_child_window" t="F"/>
+<Call c="18" l="18" n="launch_child_window" t="F"/>
+<Call c="18" l="21" n="launch_child_window" t="F"/>
+<Call c="16" l="24" n="confirm_exit" t="F"/>
 </Fct>
 </File>
-<File n="db/xactdemo_tables.4gl" s="2" ts="20250916145746601">
+<File n="db/xactdemo_tables.4gl" s="2" ts="20250918094632036">
 <Fct c="10" el="799" l="791" n="db_add_indexes()" t="F" v="pub"/>
 <Fct c="10" el="788" l="733" n="db_drop_constraints()" t="F" v="pub"/>
 <Fct c="10" el="730" l="437" n="db_add_constraints()" t="F" v="pub"/>
@@ -27,8 +46,17 @@
 <Call c="10" l="13" n="db_add_constraints" t="F"/>
 </Fct>
 </File>
-<File n="libs/globals.4gl" s="2" ts="20250916155410440">
+<File n="libs/globals.4gl" s="2" ts="20250918094632104">
 <Fct c="1" el="4" l="1" n="main()" t="F" v="pub"/>
 </File>
-<File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250916145647885"/>
+<File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250918094631939"/>
+<File n="src/auth/sy02_logs.4gl" s="2" ts="20250918094631881">
+<Fct c="10" el="34" l="11" n="validate_user(p_user STRING,p_pass STRING)" t="F" v="pub">
+<Call c="18" l="25" n="log_action" t="F"/>
+<Call c="18" l="27" n="log_action" t="F"/>
+<Call c="14" l="30" n="log_action" t="F"/>
+</Fct>
+<Fct c="10" el="8" l="1" n="log_action(action STRING,user_name STRING,module STRING,status STRING)" t="F" v="pub"/>
+<Todo l="22" t="Replace with password hash compare&#13;"/>
+</File>
 </WorkspaceDatabase>

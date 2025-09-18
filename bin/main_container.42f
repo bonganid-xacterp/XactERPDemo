@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="main_container.tmp" build="3.20.14" sqlDbName="xactdemo" text="" windowStyle="" version="0.1" width="81" height="25">
+  <LStr text=""/>
+  <Grid name="main_grid" width="81" height="25">
+    <Label name="lbl_title" width="30" text="" fontPitch="variable" justify="center" posY="0" posX="1" gridWidth="30">
+      <LStr text=""/>
+    </Label>
+    <Label name="lbl_version" width="20" text="" posY="0" posX="60" gridWidth="20">
+      <LStr text=""/>
+    </Label>
+    <Group name="grp_workarea" text="" posY="2" posX="1" gridWidth="79" gridHeight="21">
+      <LStr text=""/>
+    </Group>
+  </Grid>
+</Form>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.4js.com/2004/forms" text="XactERP Dashboard">
+<vbox>
+  <!-- Header Section -->
+  <hbox>
+    <label name="welcome_msg" text="Welcome to XactERP Demo System" style="font-weight:bold;font-size:14pt"/>
+    <spacer/>
+    <label name="current_date" text="Date: "/>
+    <label name="current_time" text="Time: "/>
+  </hbox>
+  
+  <spacer height="10"/>
+  
+  <!-- Dashboard Info Grid -->
+  <grid gridWidth="3" gridHeight="2">
+    <griditem gridWidth="1" gridHeight="1">
+      <vbox>
+        <label text="System Status" style="font-weight:bold"/>
+        <label text="Running" style="color:green"/>
+      </vbox>
+    </griditem>
+    <griditem gridWidth="1" gridHeight="1">
+      <vbox>
+        <label text="Active Users" style="font-weight:bold"/>
+        <label name="active_users" text="1"/>
+      </vbox>
+    </griditem>
+    <griditem gridWidth="1" gridHeight="1">
+      <vbox>
+        <label text="Database" style="font-weight:bold"/>
+        <label text="Connected" style="color:green"/>
+      </vbox>
+    </griditem>
+  </grid>
+  
+  <spacer height="20"/>
+  
+  <!-- Main Workspace Area -->
+  <hbox>
+    <label text="Application Workspace - Child windows will appear here" style="font-style:italic"/>
+  </hbox>
+  
+  <!-- Expandable workspace -->
+  <spacer/>
+  
+  <!-- Status Bar -->
+  <hbox>
+    <label name="status_bar" text="Ready" style="font-size:small"/>
+    <spacer/>
+    <label text="XactERP v1.0" style="font-size:small"/>
+  </hbox>
+  
+</vbox>
+</form>
