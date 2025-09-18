@@ -1,0 +1,26 @@
+LAYOUT
+    GRID
+    {
+       ===========================================
+              XactERP Demo System Main Window
+       ===========================================
+
+       [workspace                                               ]
+
+       ---------------------------------------------------------
+       Status: [status_bar                  ]
+    }
+    END
+END LAYOUT
+
+TABLES
+END
+
+ATTRIBUTES
+    TEXTEDIT workspace = formonly.workspace, WIDTH=80, HEIGHT=15;
+    LABEL status_bar   = formonly.status_bar, TEXT="Ready";
+END
+
+INSTRUCTIONS
+    SCREEN RECORD sr_main(formonly.*);
+END

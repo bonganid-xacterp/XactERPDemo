@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
+<File n="src/main.4gl" s="2" ts="20250917160016351">
+<Fct c="1" el="30" l="1" n="main()" t="F" v="pub">
+<Call c="12" l="8" n="login_screen" t="F"/>
+<Call c="10" l="23" n="launch_child_window" t="F"/>
+<Call c="10" l="26" n="main_application_menu" t="F"/>
+<Call c="10" l="28" n="shutdown_application" t="F"/>
+</Fct>
+</File>
+<File n="src/main/main_container.4gl" s="2" ts="20250917160016411">
+<Fct c="10" el="32" l="1" n="login_screen()" t="F" v="pub">
+<Call c="20" l="17" n="validate_user" t="F"/>
+</Fct>
+</File>
 <File n="db/xactdemo_tables.4gl" s="2" ts="20250916145746601">
 <Fct c="10" el="799" l="791" n="db_add_indexes()" t="F" v="pub"/>
 <Fct c="10" el="788" l="733" n="db_drop_constraints()" t="F" v="pub"/>
@@ -16,12 +29,6 @@
 </File>
 <File n="libs/globals.4gl" s="2" ts="20250916155410440">
 <Fct c="1" el="4" l="1" n="main()" t="F" v="pub"/>
-</File>
-<File n="src/main.4gl" s="2" ts="20250916162201366">
-<Fct c="10" el="13" l="9" n="test()" t="F" v="pub"/>
-<Fct c="1" el="7" l="2" n="main()" t="F" v="pub">
-<Call c="7" l="4" n="test" t="F"/>
-</Fct>
 </File>
 <File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250916145647885"/>
 </WorkspaceDatabase>

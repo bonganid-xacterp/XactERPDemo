@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.4js.com/2004/forms" text="XactERP Demo System">
+  <VBox>
+    <HBox>
+      <Spacer/>
+      <Label id="lbl_title" text="XactERP Demo System" style="bold"/>
+      <Spacer/>
+    </HBox>
+
+    <Spacer height="1"/>
+
+    <!-- Workspace area -->
+    <Grid columns="80" rows="20" id="workspace"/>
+
+    <Spacer height="1"/>
+    <Label id="status_bar" text="Ready" style="small"/>
+  </VBox>
+</form>
+
+

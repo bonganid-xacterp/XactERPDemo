@@ -64,27 +64,25 @@
   </Settings>
   <LanguageList version="1.0"/>
   <PlatformList version="1.0"/>
-  <Group id="147973800" label="erpdemoapp" language="Genero">
-    <Group id="13865401" label="configs"/>
-    <Library binaryName="database" id="31764552" label="database">
-      <File filePath="xactdemo.4db"/>
-      <File filePath="db/xactdemo_tables.4gl"/>
-    </Library>
-    <Library binaryName="libs" id="104908716" label="libs">
-      <File filePath="libs/globals.4gl"/>
-    </Library>
-    <Group id="174698916" label="logs"/>
-    <Group id="686352960" label="reports"/>
-    <Library binaryName="resource_files" id="541201365" label="resource_files">
-      <File filePath=".fglprofile"/>
-    </Library>
-    <Group id="39840687" label="src">
-      <Application binaryName="_main" id="221858380" label="_main">
+  <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
+    <Group environment="filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile" id="39840687" label="src">
+      <Application binaryName="_main" dependencies="31764552" id="221858380" label="_main">
+        <File filePath="src/main/dashboard.4gl"/>
         <File filePath="src/main.4gl"/>
+        <File filePath="src/main/main_container.4gl"/>
+        <File filePath="src/main/main_container.per"/>
+      </Application>
+      <Application binaryName="auth" id="415251176" label="auth">
+        <File filePath="src/auth/f_login.4gl"/>
+        <File filePath="src/auth/f_login.per"/>
       </Application>
       <Application binaryName="cl01_mast" id="713572960" label="cl01_mast"/>
       <Application binaryName="cl30_trans" id="42429894" label="cl30_trans"/>
       <Application binaryName="cl40_hist" id="685366744" label="cl40_hist"/>
+      <Library binaryName="database" id="31764552" label="database">
+        <File filePath="xactdemo.4db"/>
+        <File filePath="db/xactdemo_tables.4gl"/>
+      </Library>
       <Application binaryName="dl01_mast" id="150687270" label="dl01_mast"/>
       <Application binaryName="dl30_trans" id="27202992" label="dl30_trans"/>
       <Application binaryName="dl40_hist" id="102184641" label="dl40_hist"/>
@@ -92,12 +90,18 @@
       <Application binaryName="gl30_jnl" id="272073424" label="gl30_jnl"/>
       <Application binaryName="gl31_det" id="107921619" label="gl31_det"/>
       <Application binaryName="gl40_hist" id="106121004" label="gl40_hist"/>
+      <Library binaryName="libs" id="104908716" label="libs">
+        <File filePath="libs/globals.4gl"/>
+      </Library>
       <Application binaryName="pu30_det" id="127987816" label="pu30_det"/>
       <Application binaryName="pu30_hdr" id="250990443" label="pu30_hdr"/>
       <Application binaryName="pu31_det" id="395872064" label="pu31_det"/>
       <Application binaryName="pu31_hdr" id="188103378" label="pu31_hdr"/>
       <Application binaryName="pu40_hist" id="240492" label="pu40_hist"/>
       <Application binaryName="pu41_hist" id="106938261" label="pu41_hist"/>
+      <Library binaryName="resource_files" id="541201365" label="resource_files">
+        <File filePath=".fglprofile"/>
+      </Library>
       <Application binaryName="sa30_det" id="395029658" label="sa30_det"/>
       <Application binaryName="sa30_hdr" id="381913194" label="sa30_hdr"/>
       <Application binaryName="sa31_det" id="642896605" label="sa31_det"/>
@@ -114,9 +118,12 @@
       <Application binaryName="st02_wh_cat" id="230840064" label="st02_wh_cat"/>
       <Application binaryName="sy00_user" id="364603618" label="sy00_user">
         <File filePath="src/sy00_user/sy00_user.4gl"/>
+        <File filePath="src/sy00_user/sy100_user_mast.4fd"/>
       </Application>
       <Application binaryName="sy01_sess" id="356984264" label="sy01_sess"/>
-      <Application binaryName="sy02_logs" id="252410214" label="sy02_logs"/>
+      <Application binaryName="sy02_logs" id="252410214" label="sy02_logs">
+        <File filePath="src/auth/sy02_logs.4gl"/>
+      </Application>
       <Application binaryName="sy03_sett" id="364440770" label="sy03_sett"/>
       <Application binaryName="sy04_role" id="425012860" label="sy04_role"/>
       <Application binaryName="sy05_perm" id="36313706" label="sy05_perm"/>
