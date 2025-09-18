@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{08d8ff61-d463-44d6-a08e-42218ca8dc4d}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Form gridHeight="50" gridWidth="51" name="frm_login" text="Form">
+    <Group gridHeight="22" gridWidth="48" name="workarea" posX="2" posY="1" text=""/>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAg==]]>
+  </DiagramLayout>
+</ManagedForm>

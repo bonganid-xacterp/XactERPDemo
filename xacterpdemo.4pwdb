@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/main.4gl" s="2" ts="20250918094931130">
-<Fct c="10" el="64" l="60" n="shutdown_app()" t="F" v="pub"/>
-<Fct c="10" el="57" l="50" n="run_main_menu()" t="F" v="pub"/>
-<Fct c="10" el="47" l="34" n="open_main_shell()" t="F" v="pub"/>
+<File n="src/main.4gl" s="2" ts="20250918103034386">
+<Fct c="10" el="68" l="64" n="shutdown_app()" t="F" v="pub"/>
+<Fct c="10" el="61" l="54" n="run_main_menu()" t="F" v="pub"/>
+<Fct c="10" el="51" l="34" n="open_main_shell()" t="F" v="pub"/>
 <Fct c="10" el="31" l="29" n="init_app()" t="F" v="pub"/>
 <Fct c="1" el="26" l="17" n="main()" t="F" v="pub">
 <Call c="10" l="20" n="init_app" t="F"/>

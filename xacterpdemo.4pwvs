@@ -9,13 +9,14 @@
     <Node path="xacterpdemo.4pw/erpdemoapp/src/sy40_hist" type="pm/application"/>
   </ExpandedNodes>
   <OpenDocuments>
-    <Document container="true" filePath="src/main.4gl" locator="36:35:36:48" module="mod-ce3">
+    <Document container="true" filePath="src/main.4gl" locator="40:68" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
     <Document container="true" filePath="src/main/main_container.4gl" locator="76:1" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
     <Document container="true" filePath="src/main/main_container.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/main/login.4fd" locator="" module="mod-fd"/>
   </OpenDocuments>
-  <CurrentDocument filePath="src/main/main_container.4fd" module="mod-fd"/>
+  <CurrentDocument filePath="src/main/login.4fd" module="mod-fd"/>
 </WorkspaceViewState>
