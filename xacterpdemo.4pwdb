@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/main.4gl" s="2" ts="20250918154023021">
+<File n="src/main.4gl" s="2" ts="20250919080937762">
 <Fct c="10" el="222" l="198" n="open_main_container()" t="F" v="pub"/>
 <Fct c="10" el="195" l="145" n="validate_login(p_user STRING,p_pass STRING)" t="F" v="pub"/>
 <Fct c="10" el="142" l="124" n="initialize_login_display()" t="F" v="pub"/>
@@ -14,27 +14,28 @@
 </Fct>
 <Fct c="10" el="46" l="30" n="initialize_database()" t="F" v="pub"/>
 <Fct c="1" el="27" l="20" n="main()" t="F" v="pub">
+<Call c="10" l="24" n="initialize_database" t="F"/>
 <Call c="10" l="26" n="run_login" t="F"/>
 </Fct>
 </File>
-<File n="src/main/main_container.4gl" s="2" ts="20250918094631997">
-<Fct c="10" el="85" l="82" n="shutdown_application()" t="F" v="pub">
-<Call c="10" l="83" n="update_status" t="F"/>
+<File n="src/main/main_container.4gl" s="2" ts="20250919080132272">
+<Fct c="10" el="87" l="84" n="shutdown_application()" t="F" v="pub">
+<Call c="10" l="85" n="update_status" t="F"/>
 </Fct>
-<Fct c="10" el="79" l="60" n="confirm_exit()" t="F" v="pub"/>
-<Fct c="10" el="57" l="40" n="update_status(p_msg STRING)" t="F" v="pub"/>
-<Fct c="10" el="37" l="31" n="launch_child_window(module_name STRING)" t="F" v="pub">
-<Call c="10" l="34" n="update_status" t="F"/>
+<Fct c="10" el="81" l="62" n="confirm_exit()" t="F" v="pub"/>
+<Fct c="10" el="59" l="42" n="update_status(p_msg STRING)" t="F" v="pub"/>
+<Fct c="10" el="39" l="33" n="launch_child_window(module_name STRING)" t="F" v="pub">
 <Call c="10" l="36" n="update_status" t="F"/>
+<Call c="10" l="38" n="update_status" t="F"/>
 </Fct>
-<Fct c="10" el="28" l="3" n="main_application_menu()" t="F" v="pub">
-<Call c="18" l="6" n="update_status" t="F"/>
-<Call c="18" l="9" n="launch_child_window" t="F"/>
-<Call c="18" l="12" n="launch_child_window" t="F"/>
-<Call c="18" l="15" n="launch_child_window" t="F"/>
-<Call c="18" l="18" n="launch_child_window" t="F"/>
-<Call c="18" l="21" n="launch_child_window" t="F"/>
-<Call c="16" l="24" n="confirm_exit" t="F"/>
+<Fct c="10" el="30" l="5" n="main_application_menu()" t="F" v="pub">
+<Call c="18" l="8" n="update_status" t="F"/>
+<Call c="18" l="11" n="launch_child_window" t="F"/>
+<Call c="18" l="14" n="launch_child_window" t="F"/>
+<Call c="18" l="17" n="launch_child_window" t="F"/>
+<Call c="18" l="20" n="launch_child_window" t="F"/>
+<Call c="18" l="23" n="launch_child_window" t="F"/>
+<Call c="16" l="26" n="confirm_exit" t="F"/>
 </Fct>
 </File>
 <File n="db/xactdemo_tables.4gl" s="2" ts="20250918094632036">
@@ -51,6 +52,7 @@
 <Call c="10" l="13" n="db_add_constraints" t="F"/>
 </Fct>
 </File>
+<File n="src/incl/incl.4gl" s="2" ts="20250919080132790"/>
 <File n="libs/globals.4gl" s="2" ts="20250918143426950"/>
 <File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250918094631939"/>
 <File n="src/auth/sy200_logs.4gl" s="2" ts="20250918152139630">

@@ -89,8 +89,11 @@
       <Application binaryName="gl30_jnl" id="272073424" label="gl30_jnl"/>
       <Application binaryName="gl31_det" id="107921619" label="gl31_det"/>
       <Application binaryName="gl40_hist" id="106121004" label="gl40_hist"/>
-      <Library binaryName="incl" id="56784492" label="incl"/>
+      <Library binaryName="incl" id="56784492" label="incl">
+        <File filePath="src/incl/incl.4gl"/>
+      </Library>
       <Library binaryName="libs" id="104908716" label="libs">
+        <File filePath=".fglprofile"/>
         <File filePath="libs/globals.4gl"/>
       </Library>
       <Application binaryName="pu30_det" id="127987816" label="pu30_det"/>
@@ -100,7 +103,6 @@
       <Application binaryName="pu40_hist" id="240492" label="pu40_hist"/>
       <Application binaryName="pu41_hist" id="106938261" label="pu41_hist"/>
       <Library binaryName="resources" id="541201365" label="resources">
-        <File filePath=".fglprofile"/>
         <File filePath="../../logo.png"/>
       </Library>
       <Application binaryName="sa30_det" id="395029658" label="sa30_det"/>

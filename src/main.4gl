@@ -1,7 +1,7 @@
 # ==============================================================
 # Program   :   sy100_main.4gl
 # Purpose   :   App entry point with login + main container
-# Module    :   System (sy)
+# Module    :   Main
 # Number    :   100
 # Author    :   Bongani Dlamini
 # Version   :   Genero BDL 3.2.1
@@ -19,9 +19,9 @@ DEFINE f_password STRING
 
 MAIN
     DEFER INTERRUPT
-
+    CLOSE WINDOW SCREEN
     -- Initialize database connection
-    # CALL initialize_database()
+    #CALL initialize_database()
 
     CALL run_login()
 END MAIN
@@ -48,8 +48,6 @@ END FUNCTION
 # ------------------ LOGIN FLOW -------------------
 FUNCTION run_login()
     DEFINE ok SMALLINT
-
-    CLOSE WINDOW SCREEN
 
     -- Open login window
     OPEN WINDOW w_login WITH FORM "frm_login"
@@ -82,9 +80,10 @@ FUNCTION run_login()
         END INPUT
     END DIALOG
 
-    CLOSE WINDOW w_login
+   
 
     IF ok = 1 THEN
+        CLOSE WINDOW w_login
         CALL open_main_container()
     END IF
 END FUNCTION
@@ -110,13 +109,7 @@ FUNCTION setup_login_image()
 
     -- Set the image if found
     IF image_exists THEN
-        CALL g_form.setElementImage("company_logo", image_path)
-        DISPLAY "Company logo loaded from: ", image_path
-    ELSE
-        DISPLAY "Warning: Company logo not found. Checked paths:"
-        DISPLAY "  - resources/logo.png"
-        DISPLAY "  - src/resources/logo.png"
-        DISPLAY "  - resources/logo.png"
+        DISPLAY image_path
     END IF
 END FUNCTION
 

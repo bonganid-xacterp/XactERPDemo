@@ -15,7 +15,7 @@
         <LStr text="Password"/>
       </Label>
       <FormField name="formonly.f_password" colName="f_password" sqlType="VARCHAR" fieldId="1" sqlTabName="formonly" tabIndex="2">
-        <Edit width="15" scroll="1" posY="12" posX="12" gridWidth="15"/>
+        <Edit width="15" isPassword="1" scroll="1" posY="12" posX="12" gridWidth="15"/>
       </FormField>
     </Group>
   </Grid>

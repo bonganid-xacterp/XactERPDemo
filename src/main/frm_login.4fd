@@ -20,7 +20,7 @@
         <Label gridHeight="1" gridWidth="10" name="lbl_password" posX="1" posY="12" text="Password">
           <Initializer text="dbschema:sy00_user.password/@label"/>
         </Label>
-        <Edit case="none" colName="password" fieldId="4" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="1" name="f_password" posX="12" posY="12" scroll="true" sqlTabName="sy00_user" sqlType="VARCHAR" tabIndex="2" title="f_password" widget="Edit">
+        <Edit case="none" colName="password" fieldId="4" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" invisible="true" length="1" name="f_password" posX="12" posY="12" scroll="true" sqlTabName="sy00_user" sqlType="VARCHAR" tabIndex="2" title="f_password" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
       </Group>
