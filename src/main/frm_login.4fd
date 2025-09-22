@@ -7,26 +7,28 @@
     <RecordField colName="username" fieldIdRef="3" fieldType="NON_DATABASE" name="f_username" sqlTabName="sy00_user" uid="{94443672-cc25-4b76-a8d9-d96c96539d86}"/>
     <RecordField colName="password" fieldIdRef="4" fieldType="NON_DATABASE" name="f_password" sqlTabName="sy00_user" uid="{701c031e-73cb-4c8c-b094-58641536329f}"/>
   </Record>
-  <Form gridHeight="17" gridWidth="33" minHeight="20" minWidth="20" name="frm_login" text="XACT ERP Demo – Login">
-    <Grid gridHeight="15" gridWidth="31" name="login_grid" posX="1" posY="1">
-      <Group gridHeight="14" gridWidth="29" name="workarea" posX="1" posY="0" text="">
-        <Image gridHeight="8" gridWidth="27" name="company_logo" posX="1" posY="1"/>
-        <Label gridHeight="1" gridWidth="10" name="lbl_username" posX="1" posY="10" text="Username">
-          <Initializer text="dbschema:sy00_user.username/@label"/>
-        </Label>
-        <Edit colName="username" fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="1" name="f_username" posX="12" posY="10" scroll="true" sqlTabName="sy00_user" sqlType="VARCHAR" tabIndex="1" title="f_username" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="10" name="lbl_password" posX="1" posY="12" text="Password">
-          <Initializer text="dbschema:sy00_user.password/@label"/>
-        </Label>
-        <Edit case="none" colName="password" fieldId="4" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" invisible="true" length="1" name="f_password" posX="12" posY="12" scroll="true" sqlTabName="sy00_user" sqlType="VARCHAR" tabIndex="2" title="f_password" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-      </Group>
-    </Grid>
+  <Form gridHeight="17" gridWidth="35" minHeight="0" minWidth="0" name="frm_login" text="XACT ERP Demo – Login">
+    <HBox gridHeight="14" gridWidth="34" name="hbox1" posX="1" posY="1">
+      <Grid gridHeight="14" gridWidth="30" name="login_grid" posX="2" posY="0">
+        <Group gridHeight="14" gridWidth="29" name="workarea" posX="1" posY="0" text="">
+          <Image autoScale="true" gridHeight="8" gridWidth="27" image="resources/logo.png" name="company_logo" posX="1" posY="1" stretch="both"/>
+          <Label gridHeight="1" gridWidth="10" name="lbl_username" posX="1" posY="10" text="Username">
+            <Initializer text="dbschema:sy00_user.username/@label"/>
+          </Label>
+          <Edit colName="username" fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="1" name="f_username" posX="12" posY="10" scroll="true" sqlTabName="sy00_user" sqlType="VARCHAR" tabIndex="1" title="f_username" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="10" name="lbl_password" posX="1" posY="12" text="Password">
+            <Initializer text="dbschema:sy00_user.password/@label"/>
+          </Label>
+          <Edit case="none" colName="password" fieldId="4" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" invisible="true" length="1" name="f_password" posX="12" posY="12" scroll="true" sqlTabName="sy00_user" sqlType="VARCHAR" tabIndex="2" title="f_password" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+        </Group>
+      </Grid>
+    </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

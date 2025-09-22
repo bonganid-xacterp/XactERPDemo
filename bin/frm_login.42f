@@ -1,24 +1,26 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="frm_login.tmp" build="3.20.14" sqlDbName="xactdemo" minWidth="20" minHeight="20" text="XACT ERP Demo – Login" width="30" height="15">
+<Form name="frm_login.tmp" build="3.20.14" sqlDbName="xactdemo" minWidth="0" minHeight="0" text="XACT ERP Demo – Login" width="30" height="14">
   <LStr text="XACT ERP Demo – Login"/>
-  <Grid name="login_grid" width="30" height="15">
-    <Group name="workarea" text="" posY="0" posX="1" gridWidth="29" gridHeight="14">
-      <LStr text=""/>
-      <Image name="company_logo" width="27" height="8" posY="1" posX="1" gridWidth="27" gridHeight="8"/>
-      <Label name="lbl_username" width="10" text="Username" posY="10" posX="1" gridWidth="10">
-        <LStr text="Username"/>
-      </Label>
-      <FormField name="formonly.f_username" colName="f_username" sqlType="VARCHAR" fieldId="0" sqlTabName="formonly" tabIndex="1">
-        <Edit width="15" scroll="1" posY="10" posX="12" gridWidth="15"/>
-      </FormField>
-      <Label name="lbl_password" width="10" text="Password" posY="12" posX="1" gridWidth="10">
-        <LStr text="Password"/>
-      </Label>
-      <FormField name="formonly.f_password" colName="f_password" sqlType="VARCHAR" fieldId="1" sqlTabName="formonly" tabIndex="2">
-        <Edit width="15" isPassword="1" scroll="1" posY="12" posX="12" gridWidth="15"/>
-      </FormField>
-    </Group>
-  </Grid>
+  <HBox name="hbox1">
+    <Grid name="login_grid" width="30" height="14">
+      <Group name="workarea" text="" posY="0" posX="1" gridWidth="29" gridHeight="14">
+        <LStr text=""/>
+        <Image name="company_logo" width="27" height="8" image="/images/logo.png" autoScale="1" stretch="both" posY="1" posX="1" gridWidth="27" gridHeight="8"/>
+        <Label name="lbl_username" width="10" text="Username" posY="10" posX="1" gridWidth="10">
+          <LStr text="Username"/>
+        </Label>
+        <FormField name="formonly.f_username" colName="f_username" sqlType="VARCHAR" fieldId="0" sqlTabName="formonly" tabIndex="1">
+          <Edit width="15" scroll="1" posY="10" posX="12" gridWidth="15"/>
+        </FormField>
+        <Label name="lbl_password" width="10" text="Password" posY="12" posX="1" gridWidth="10">
+          <LStr text="Password"/>
+        </Label>
+        <FormField name="formonly.f_password" colName="f_password" sqlType="VARCHAR" fieldId="1" sqlTabName="formonly" tabIndex="2">
+          <Edit width="15" isPassword="1" scroll="1" posY="12" posX="12" gridWidth="15"/>
+        </FormField>
+      </Group>
+    </Grid>
+  </HBox>
   <RecordView tabName="formonly">
     <Link colName="f_username" fieldIdRef="0"/>
     <Link colName="f_password" fieldIdRef="1"/>

@@ -5,11 +5,11 @@
 
 # Database Provider Configuration
 # Use dbmpsql for PostgreSQL (not dbmdefault)
-dbi.default.driver = "dbmpsql"
+dbi.default.driver = "dbmpgs_9"
 
 # PostgreSQL Connection String
 # Format: database+driver='PostgreSQL Unicode',host='host',port=port,user='user',password='password'
-dbi.default.source = "xactdemo+driver='PostgreSQL Unicode',host='localhost',port=5432,user='postgres',password='napoleon'"
+dbi.default.source = "xactapp_db+driver='PostgreSQL Unicode',host='localhost',port=5432,user='postgres',password='napoleon'"
 
 # Alternative simpler format (if the above doesn't work)
 # dbi.default.source = "xactdemo@postgresql://postgres:napoleon@localhost:5432"

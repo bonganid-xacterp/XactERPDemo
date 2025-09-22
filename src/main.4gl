@@ -12,19 +12,33 @@ IMPORT ui
 IMPORT security -- For password hashing (if available)
 IMPORT util -- For crypto functions
 
+-- TODO: Need to move the code that can be global to libs
+# DB Connection
+# Persistant user state
+# Error handler
+# Loading State
+# Alert messages
+
 DEFINE g_win ui.Window
 DEFINE g_form ui.Form
 DEFINE f_username STRING
 DEFINE f_password STRING
+DEFINE g_env STRING 
 
 MAIN
     DEFER INTERRUPT
     CLOSE WINDOW SCREEN
     -- Initialize database connection
     #CALL initialize_database()
-
+    #CALL run_console_login()
     CALL run_login()
 END MAIN
+
+# ----------------- RUN CONSOLE LOGIN ----------------
+FUNCTION run_console_login()
+
+  
+END FUNCTION
 
 # ------------------ DATABASE INITIALIZATION -------------------
 FUNCTION initialize_database()
@@ -47,7 +61,7 @@ END FUNCTION
 
 # ------------------ LOGIN FLOW -------------------
 FUNCTION run_login()
-    DEFINE ok SMALLINT
+    DEFINE login_state SMALLINT
 
     -- Open login window
     OPEN WINDOW w_login WITH FORM "frm_login"
@@ -62,143 +76,60 @@ FUNCTION run_login()
     DIALOG
         INPUT BY NAME f_username, f_password
 
-            -- Initialize display when dialog starts
-            BEFORE INPUT
-                CALL initialize_login_display()
+            ON ACTION Login
+                LET login_state = validate_login(f_username, f_password)
 
-            ON ACTION login
-                LET ok = validate_login(f_username, f_password)
-                IF ok = 1 THEN
+                IF login_state = 1 THEN
+                    CLOSE WINDOW w_login
                     CALL open_main_container()
                     MESSAGE "Successfully logged in as: " || f_username
                     EXIT DIALOG
+                ELSE
+                    ERROR "Invalid username or password"
                 END IF
 
-            ON ACTION cancel
+            ON ACTION CANCEL
+                CLOSE WINDOW w_login
                 EXIT PROGRAM
-
         END INPUT
+        
     END DIALOG
 
-   
-
-    IF ok = 1 THEN
-        CLOSE WINDOW w_login
-        CALL open_main_container()
-    END IF
 END FUNCTION
 
-# ------------------ IMAGE SETUP -------------------
+# ------------------ COMPANY LOGO SETUP -------------------
 FUNCTION setup_login_image()
-    DEFINE image_path STRING
-    DEFINE image_exists SMALLINT
+    DEFINE company_logo STRING
 
     -- Try different possible image paths
-    LET image_path = "resources/logo.png"
-    LET image_exists = os.Path.exists(image_path)
+    LET company_logo = "resources/logo.png"
 
-    IF NOT image_exists THEN
-        LET image_path = "src/resources/logo.png"
-        LET image_exists = os.Path.exists(image_path)
-    END IF
-
-    IF NOT image_exists THEN
-        LET image_path = "resources/logo.png"
-        LET image_exists = os.Path.exists(image_path)
-    END IF
-
-    -- Set the image if found
-    IF image_exists THEN
-        DISPLAY image_path
-    END IF
+    -- Set the image
+    DISPLAY company_logo
 END FUNCTION
 
-# ------------------ LOGIN DISPLAY INIT -------------------
-FUNCTION initialize_login_display()
-    DEFINE logo_node om.DomNode
-
-    -- Get the image element from the form
-    LET logo_node = g_form.findNode("Image", "company_logo")
-
-    IF logo_node IS NOT NULL THEN
-        -- Set image display properties for better rendering
-        CALL logo_node.setAttribute("stretch", "both")
-        CALL logo_node.setAttribute("autoScale", "isotropic")
-
-        -- Optional: Set border style
-        CALL logo_node.setAttribute("style", "companyLogo")
-
-        DISPLAY "Logo display properties configured"
-    ELSE
-        DISPLAY "Warning: Logo image element 'company_logo' not found in form"
-    END IF
-END FUNCTION
-
-# ------------------ VALIDATION -------------------
-FUNCTION validate_login(p_user STRING, p_pass STRING)
-    DEFINE db_pass STRING
-    DEFINE db_status SMALLINT
-    DEFINE input_hash STRING
-
-    -- Empty checks
-    IF p_user IS NULL OR p_user = "" THEN
-        ERROR "Username cannot be empty"
-        RETURN 0
-    END IF
-
-    IF p_pass IS NULL OR p_pass = "" THEN
-        ERROR "Password cannot be empty"
-        RETURN 0
-    END IF
-
-    -- For development/testing - remove in production
-    IF p_user = "admin" AND p_pass = "admin" THEN
+# ------------------ AUTH VALIDATION -------------------
+FUNCTION validate_login(f_username STRING, f_password STRING)
+    -- Simple validation logic (replace with database check)
+    IF f_username = "admin" AND f_password = "1234" THEN
+        MESSAGE "Login successful!"
         RETURN 1
-    END IF
-
-    -- Database validation (uncomment when database is ready)
-
-    -- Fetch encrypted password
-    SELECT password, status
-        INTO db_pass, db_status
-        FROM sy00_user
-        WHERE username = p_user AND deleted_at IS NULL AND status = 1
-
-    WHENEVER NOT FOUND CONTINUE
-
-    IF db_pass IS NULL THEN
-        ERROR "Invalid username or password"
-        RETURN 0
-    END IF
-
-    -- Hash entered password with bcrypt
-    #LET input_hash = check_password(p_pass, db_pass)
-
-    IF input_hash = db_pass THEN
-        RETURN 1
+        -- Continue to main application
     ELSE
         ERROR "Invalid username or password"
         RETURN 0
+        -- Return to login form or exit
     END IF
-
-    -- Default response for development
-    ERROR "Invalid username or password"
-    RETURN 0
-
 END FUNCTION
-
 # ------------------ MAIN CONTAINER ----------------
 FUNCTION open_main_container()
-
-    #CLOSE WINDOW SCREEN
-
     -- Open main container window
     OPEN WINDOW w_main WITH FORM "main_container"
     LET g_win = ui.Window.getCurrent()
     LET g_form = g_win.getForm()
     CALL g_win.setText("XACT ERP Demo – Main Container")
 
-    MENU "XACT ERP Demo"
+    MENU
         COMMAND "About"
             MESSAGE "About the app"
             #CALL show_about_dialog()

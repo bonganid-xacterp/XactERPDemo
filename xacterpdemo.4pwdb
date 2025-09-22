@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/main.4gl" s="2" ts="20250919080937762">
-<Fct c="10" el="222" l="198" n="open_main_container()" t="F" v="pub"/>
-<Fct c="10" el="195" l="145" n="validate_login(p_user STRING,p_pass STRING)" t="F" v="pub"/>
-<Fct c="10" el="142" l="124" n="initialize_login_display()" t="F" v="pub"/>
-<Fct c="10" el="121" l="93" n="setup_login_image()" t="F" v="pub"/>
-<Fct c="10" el="90" l="49" n="run_login()" t="F" v="pub">
-<Call c="10" l="61" n="setup_login_image" t="F"/>
-<Call c="22" l="69" n="initialize_login_display" t="F"/>
-<Call c="26" l="72" n="validate_login" t="F"/>
-<Call c="26" l="74" n="open_main_container" t="F"/>
-<Call c="14" l="88" n="open_main_container" t="F"/>
+<File n="src/main.4gl" s="2" ts="20250922090228188">
+<Fct c="10" el="142" l="121" n="open_main_container()" t="F" v="pub"/>
+<Fct c="10" el="119" l="108" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub"/>
+<Fct c="10" el="105" l="97" n="setup_login_image()" t="F" v="pub"/>
+<Fct c="10" el="94" l="63" n="run_login()" t="F" v="pub">
+<Call c="10" l="73" n="setup_login_image" t="F"/>
+<Call c="35" l="80" n="validate_login" t="F"/>
+<Call c="26" l="83" n="open_main_container" t="F"/>
 </Fct>
-<Fct c="10" el="46" l="30" n="initialize_database()" t="F" v="pub"/>
-<Fct c="1" el="27" l="20" n="main()" t="F" v="pub">
-<Call c="10" l="24" n="initialize_database" t="F"/>
-<Call c="10" l="26" n="run_login" t="F"/>
+<Fct c="10" el="60" l="44" n="initialize_database()" t="F" v="pub"/>
+<Fct c="10" el="41" l="38" n="run_console_login()" t="F" v="pub"/>
+<Fct c="1" el="35" l="28" n="main()" t="F" v="pub">
+<Call c="10" l="34" n="run_login" t="F"/>
 </Fct>
+<Todo l="15" t="Need to move the code that can be global to libs&#13;"/>
 </File>
 <File n="src/main/main_container.4gl" s="2" ts="20250919080132272">
 <Fct c="10" el="87" l="84" n="shutdown_application()" t="F" v="pub">
