@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968"?>
+<TopMenu>
+  <TopMenuGroup text="Form">
+    <TopMenuCommand name="help" text="Help" image="quest"/>
+    <TopMenuCommand name="quit" text="Quit" acceleratorName="alt-F4"/>
+  </TopMenuGroup>
+  <TopMenuGroup text="Edit">
+    <TopMenuCommand name="accept" text="Validate" image="ok"/>
+    <TopMenuCommand name="cancel" text="Cancel" image="cancel"/>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="editcut" text="Cut"/>
+    <TopMenuCommand name="editcopy" text="Copy"/>
+    <TopMenuCommand name="editpaste" text="Paste"/>
+  </TopMenuGroup>
+  <TopMenuGroup text="Records">
+    <TopMenuCommand name="append" text="Add" />
+    <TopMenuCommand name="delete" text="Remove" />
+    <TopMenuCommand name="update" text="Modify" />
+    <TopMenuSeparator/>
+    <TopMenuCommand name="search" text="Query" image="find"/>
+  </TopMenuGroup>
+</TopMenu>

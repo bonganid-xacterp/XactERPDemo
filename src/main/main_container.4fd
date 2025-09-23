@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo" fileVersion="31400" gstVersion="3140a" name="frm_main_container" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
+<ManagedForm fileVersion="31400" gstVersion="3140a" name="frm_main_container" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
@@ -8,7 +8,7 @@
     <TopMenu name="top_menu">
       <TopMenuGroup name="tm_file" text="File">
         <TopMenuSeparator name="topmenuseparator1"/>
-        <TopMenuCommand image="quit" name="tm_sb_exit" text="Quit"/>
+        <TopMenuCommand acceleratorName="exit" image="quit" name="tm_sb_exit" text="Quit"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_dl" text="Debtors">
         <TopMenuCommand name="tm_sb_dl_add" text="Add Debtors"/>
@@ -30,7 +30,9 @@
         <TopMenuCommand name="tm_sb_gl_jnl" text="Journals"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_sa" text="Sales">
-        <TopMenuCommand name="tm_sb_sa_qt" text="Quotations"/>
+        <TopMenuGroup name="topmenugroup1" text="Quotations">
+          <TopMenuCommand name="tm_sb_sa_qt" text=""/>
+        </TopMenuGroup>
         <TopMenuCommand name="tm_sb_sa_ord" text="Orders"/>
         <TopMenuCommand name="tm_sb_sa_inv" text="Invoices"/>
         <TopMenuCommand name="tm_sb_sa_crn" text="Credit Notes"/>
@@ -45,6 +47,9 @@
         <TopMenuCommand name="tm_sb_sys_perm" text="User Permissions"/>
         <TopMenuCommand name="tm_sb_sys_sett" text="Settings"/>
         <TopMenuCommand name="tm_sb_sys_logs" text="Logs"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_app" text="Help">
+        <TopMenuCommand name="tm_sy_about" text="About"/>
       </TopMenuGroup>
     </TopMenu>
     <Grid gridHeight="25" gridWidth="80" name="main_grid" posX="0" posY="0">

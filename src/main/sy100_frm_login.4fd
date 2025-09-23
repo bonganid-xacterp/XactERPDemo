@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{08d8ff61-d463-44d6-a08e-42218ca8dc4d}">
+<ManagedForm fileVersion="31400" gstVersion="3140a" name="sy100_frm_login" uid="{08d8ff61-d463-44d6-a08e-42218ca8dc4d}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
@@ -15,13 +15,13 @@
           <Label gridHeight="1" gridWidth="10" name="lbl_username" posX="1" posY="10" text="Username">
             <Initializer text="dbschema:sy00_user.username/@label"/>
           </Label>
-          <Edit colName="username" fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="1" name="f_username" posX="12" posY="10" scroll="true" sqlTabName="sy00_user" sqlType="VARCHAR" tabIndex="1" title="f_username" widget="Edit">
+          <Edit fieldId="3" gridHeight="1" gridWidth="15" length="1" name="f_username" posX="12" posY="10" scroll="true" sqlType="VARCHAR" tabIndex="1" title="f_username" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="10" name="lbl_password" posX="1" posY="12" text="Password">
             <Initializer text="dbschema:sy00_user.password/@label"/>
           </Label>
-          <Edit case="none" colName="password" fieldId="4" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" invisible="true" length="1" name="f_password" posX="12" posY="12" scroll="true" sqlTabName="sy00_user" sqlType="VARCHAR" tabIndex="2" title="f_password" widget="Edit">
+          <Edit case="none" fieldId="4" gridHeight="1" gridWidth="15" invisible="true" length="1" name="f_password" posX="12" posY="12" scroll="true" sqlType="VARCHAR" tabIndex="2" title="f_password" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
         </Group>
@@ -29,6 +29,6 @@
     </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAABAAAAZAIAAAEAAABgAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

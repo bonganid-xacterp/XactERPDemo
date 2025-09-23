@@ -3,35 +3,22 @@
 # PostgreSQL Database Configuration
 # ==============================================================
 
-# Database Provider Configuration
-# Use dbmpsql for PostgreSQL (not dbmdefault)
-dbi.default.driver = "dbmpgs_9"
+# Database provider
+dbi.database.provider = "dbmpostgres"
 
-# PostgreSQL Connection String
-# Format: database+driver='PostgreSQL Unicode',host='host',port=port,user='user',password='password'
-dbi.default.source = "xactapp_db+driver='PostgreSQL Unicode',host='localhost',port=5432,user='postgres',password='napoleon'"
+# PostgreSQL Connection
+dbi.database.xactapp_db.source = "dbname=xactapp_db host=localhost port=5432 user=postgres password=napoleon"
 
-# Alternative simpler format (if the above doesn't work)
-# dbi.default.source = "xactdemo@postgresql://postgres:napoleon@localhost:5432"
-
-# Database debugging (optional - helps troubleshoot connection issues)
-# dbi.default.debug.level = 2
-# dbi.default.debug.file = "database_debug.log"
+# Debugging (optional)
+# dbi.debug.level = 2
+# dbi.debug.file = "database_debug.log"
 
 # Connection pool settings (optional)
-dbi.default.pool.minSize = 1
-dbi.default.pool.maxSize = 10
-dbi.default.pool.timeout = 30
+dbi.database.xactapp_db.pool.minSize = 1
+dbi.database.xactapp_db.pool.maxSize = 10
+dbi.database.xactapp_db.pool.timeout = 30
 
 # Other Genero settings
 fgl.profile.version = "3.20"
-
-# UI settings
 gui.uimode = "traditional"
-
-# Application settings
 application.name = "XACT ERP Demo"
-
-# Uncomment these lines for web deployment
-# gws.application.timeout = 3600
-# gws.session.timeout = 1800

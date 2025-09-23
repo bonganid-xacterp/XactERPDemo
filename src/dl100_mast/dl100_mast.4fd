@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0cca1519-2eb0-48f9-b95e-1b0f2b80b728}">
+<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0cca1519-2eb0-48f9-b95e-1b0f2b80b728}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="25" gridWidth="80" name="form_dl100_mast" text="Form">
-    <Grid gridHeight="22" gridWidth="79" name="dl_mast_grid" posX="0" posY="0"/>
+  <Record name="record1" uid="{1ef1a7f9-7b66-4c81-b86d-293044e0cf78}">
+    <RecordField fieldIdRef="1" name="dl01_f_acc_code" uid="{4f88b64b-92d0-4e4b-9a52-3d3e9bc3fcb6}"/>
+    <RecordField fieldIdRef="2" name="dl01_f_debt_name" uid="{f2a7539a-800f-46c1-8046-a8d00498ef56}"/>
+    <RecordField fieldIdRef="3" name="dl01_f_phone" uid="{7343eaba-7cb7-4bb1-ae0f-8103072091e7}"/>
+  </Record>
+  <Form gridHeight="28" gridWidth="83" name="form_dl100_mast" text="Form">
+    <HBox gridHeight="25" gridWidth="82" name="hbox1" posX="0" posY="0">
+      <Grid gridHeight="25" gridWidth="78" name="dl01_mast" posX="2" posY="0">
+        <Label color="green" gridHeight="1" gridWidth="76" justify="center" name="lbl_title" posX="1" posY="1" sizePolicy="fixed" text="DEBTOR MASTER"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_acc_code" posX="1" posY="2" text="Acc Code"/>
+        <Edit fieldId="1" gridHeight="1" gridWidth="10" name="dl01_f_acc_code" posX="12" posY="2" repeat="false" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_debt_name" posX="24" posY="2" text="Name"/>
+        <Edit fieldId="2" gridHeight="1" gridWidth="42" name="dl01_f_debt_name" posX="35" posY="2" repeat="false" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_phone" posX="1" posY="4" text="Phone"/>
+        <Edit fieldId="3" gridHeight="1" gridWidth="10" name="dl01_f_phone" posX="12" posY="4" repeat="false" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+    </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAg==]]>
+    <![CDATA[AAAAAgAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

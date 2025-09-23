@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="main_container.tmp" build="3.20.14" sqlDbName="xactdemo" text="" windowStyle="" version="0.1" width="81" height="25">
+<Form name="main_container.tmp" build="3.20.14" text="" windowStyle="" version="0.1" width="81" height="25">
   <TopMenu name="top_menu">
     <TopMenuGroup name="tm_file" text="File">
       <LStr text="File"/>
       <TopMenuSeparator name="topmenuseparator1"/>
-      <TopMenuCommand name="tm_sb_exit" image="quit" text="Quit">
+      <TopMenuCommand name="tm_sb_exit" image="quit" text="Quit" acceleratorName="exit">
         <LStr text="Quit"/>
       </TopMenuCommand>
     </TopMenuGroup>
@@ -53,9 +53,12 @@
     </TopMenuGroup>
     <TopMenuGroup name="tm_sa" text="Sales">
       <LStr text="Sales"/>
-      <TopMenuCommand name="tm_sb_sa_qt" text="Quotations">
+      <TopMenuGroup name="topmenugroup1" text="Quotations">
         <LStr text="Quotations"/>
-      </TopMenuCommand>
+        <TopMenuCommand name="tm_sb_sa_qt" text="">
+          <LStr text=""/>
+        </TopMenuCommand>
+      </TopMenuGroup>
       <TopMenuCommand name="tm_sb_sa_ord" text="Orders">
         <LStr text="Orders"/>
       </TopMenuCommand>
@@ -91,6 +94,12 @@
       </TopMenuCommand>
       <TopMenuCommand name="tm_sb_sys_logs" text="Logs">
         <LStr text="Logs"/>
+      </TopMenuCommand>
+    </TopMenuGroup>
+    <TopMenuGroup name="tm_app" text="Help">
+      <LStr text="Help"/>
+      <TopMenuCommand name="tm_sy_about" text="About">
+        <LStr text="About"/>
       </TopMenuCommand>
     </TopMenuGroup>
   </TopMenu>

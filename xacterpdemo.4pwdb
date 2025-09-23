@@ -1,59 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/main.4gl" s="2" ts="20250922090228188">
-<Fct c="10" el="142" l="121" n="open_main_container()" t="F" v="pub"/>
-<Fct c="10" el="119" l="108" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub"/>
-<Fct c="10" el="105" l="97" n="setup_login_image()" t="F" v="pub"/>
-<Fct c="10" el="94" l="63" n="run_login()" t="F" v="pub">
-<Call c="10" l="73" n="setup_login_image" t="F"/>
-<Call c="35" l="80" n="validate_login" t="F"/>
-<Call c="26" l="83" n="open_main_container" t="F"/>
+<File n="src/main_app.4gl" s="2" ts="20250923161859640">
+<Dep t="src/sy100_login.4gl"/>
+<Dep t="src/sy900_utils.4gl"/>
+<Fct c="10" el="137" l="132" n="cleanup_application()" t="F" v="pub"/>
+<Fct c="10" el="130" l="117" n="confirm_exit()" t="F" v="pub"/>
+<Fct c="10" el="115" l="113" n="set_page_title(title STRING)" t="F" v="pub"/>
+<Fct c="10" el="110" l="95" n="main_menu()" t="F" v="pub">
+<Call c="16" l="105" n="confirm_exit" t="F"/>
 </Fct>
-<Fct c="10" el="60" l="44" n="initialize_database()" t="F" v="pub"/>
-<Fct c="10" el="41" l="38" n="run_console_login()" t="F" v="pub"/>
-<Fct c="1" el="35" l="28" n="main()" t="F" v="pub">
-<Call c="10" l="34" n="run_login" t="F"/>
+<Fct c="10" el="92" l="72" n="open_main_container()" t="F" v="pub">
+<Call c="10" l="83" n="set_page_title" t="F"/>
+<Call c="10" l="86" n="main_menu" t="F"/>
 </Fct>
-<Todo l="15" t="Need to move the code that can be global to libs&#13;"/>
+<Fct c="10" el="69" l="58" n="run_login()" t="F" v="pub">
+<Call c="36" i="sy100_login" l="61" n="run_login" t="F"/>
+</Fct>
+<Fct c="10" el="55" l="46" n="initialize_application()" t="F" v="pub"/>
+<Fct c="1" el="43" l="25" n="main()" t="F" v="pub">
+<Call c="10" l="30" n="initialize_application" t="F"/>
+<Call c="8" l="33" n="run_login" t="F"/>
+<Call c="14" l="35" n="open_main_container" t="F"/>
+<Call c="10" l="42" n="cleanup_application" t="F"/>
+</Fct>
+<Todo l="16" t="Need to move the code that can be global to libs&#13;"/>
+<Todo l="98" t="Open dashboard&#13;"/>
 </File>
-<File n="src/main/main_container.4gl" s="2" ts="20250919080132272">
-<Fct c="10" el="87" l="84" n="shutdown_application()" t="F" v="pub">
-<Call c="10" l="85" n="update_status" t="F"/>
-</Fct>
-<Fct c="10" el="81" l="62" n="confirm_exit()" t="F" v="pub"/>
-<Fct c="10" el="59" l="42" n="update_status(p_msg STRING)" t="F" v="pub"/>
-<Fct c="10" el="39" l="33" n="launch_child_window(module_name STRING)" t="F" v="pub">
-<Call c="10" l="36" n="update_status" t="F"/>
-<Call c="10" l="38" n="update_status" t="F"/>
-</Fct>
-<Fct c="10" el="30" l="5" n="main_application_menu()" t="F" v="pub">
-<Call c="18" l="8" n="update_status" t="F"/>
+<File n="src/main/main_container.4gl" s="2" ts="20250923084923375">
+<Fct c="10" el="34" l="31" n="confirm_exit()" t="F" v="pub"/>
+<Fct c="10" el="29" l="27" n="launch_child_window(module_name STRING)" t="F" v="pub"/>
+<Fct c="10" el="24" l="1" n="main_application_menu()" t="F" v="pub">
+<Call c="18" l="5" n="launch_child_window" t="F"/>
+<Call c="18" l="8" n="launch_child_window" t="F"/>
 <Call c="18" l="11" n="launch_child_window" t="F"/>
 <Call c="18" l="14" n="launch_child_window" t="F"/>
 <Call c="18" l="17" n="launch_child_window" t="F"/>
-<Call c="18" l="20" n="launch_child_window" t="F"/>
-<Call c="18" l="23" n="launch_child_window" t="F"/>
-<Call c="16" l="26" n="confirm_exit" t="F"/>
+<Call c="16" l="20" n="confirm_exit" t="F"/>
 </Fct>
 </File>
-<File n="db/xactdemo_tables.4gl" s="2" ts="20250918094632036">
-<Fct c="10" el="799" l="791" n="db_add_indexes()" t="F" v="pub"/>
-<Fct c="10" el="788" l="733" n="db_drop_constraints()" t="F" v="pub"/>
-<Fct c="10" el="730" l="437" n="db_add_constraints()" t="F" v="pub"/>
-<Fct c="10" el="434" l="396" n="db_drop_tables()" t="F" v="pub"/>
-<Fct c="10" el="393" l="17" n="db_create_tables()" t="F" v="pub"/>
-<Fct c="1" el="14" l="6" n="main()" t="F" v="pub">
-<Call c="10" l="9" n="db_drop_constraints" t="F"/>
-<Call c="10" l="10" n="db_drop_tables" t="F"/>
-<Call c="10" l="11" n="db_create_tables" t="F"/>
-<Call c="10" l="12" n="db_add_indexes" t="F"/>
-<Call c="10" l="13" n="db_add_constraints" t="F"/>
+<File n="src/incl/incl.4gl" s="2" ts="20250923091147081"/>
+<File n="libs/globals.4gl" s="2" ts="20250923091147094"/>
+<File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250923091147177"/>
+<File n="src/sy100_login.4gl" s="2" ts="20250923161859685">
+<Dep t="src/sy900_utils.4gl"/>
+<Fct c="10" el="177" l="175" n="is_user_authenticated()" t="F" v="pub"/>
+<Fct c="10" el="173" l="169" n="clear_user_session()" t="F" v="pub"/>
+<Fct c="10" el="166" l="160" n="show_help_dialog()" t="F" v="pub">
+<Call c="10" i="sy900_utils" l="161" n="show_alert" t="F"/>
 </Fct>
+<Fct c="10" el="158" l="145" n="confirm_exit_login()" t="F" v="pub"/>
+<Fct c="10" el="143" l="141" n="get_user_role()" t="F" v="pub"/>
+<Fct c="10" el="139" l="137" n="get_current_user()" t="F" v="pub"/>
+<Fct c="10" el="134" l="84" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub">
+<Call c="14" i="sy900_utils" l="95" n="show_alert" t="F"/>
+<Call c="14" i="sy900_utils" l="100" n="show_alert" t="F"/>
+</Fct>
+<Fct c="10" el="81" l="18" n="run_login()" t="F" v="pub">
+<Call c="10" i="sy900_utils" l="31" n="set_page_title" t="F"/>
+<Call c="20" l="43" n="validate_login" t="F"/>
+<Call c="26" i="sy900_utils" l="45" n="show_alert" t="F"/>
+<Call c="30" i="sy900_utils" l="50" n="show_alert" t="F"/>
+<Call c="30" i="sy900_utils" l="54" n="show_alert" t="F"/>
+<Call c="20" l="61" n="confirm_exit_login" t="F"/>
+<Call c="22" l="67" n="show_help_dialog" t="F"/>
+<Call c="16" l="72" n="confirm_exit_login" t="F"/>
+</Fct>
+<Todo l="104" t="Replace with database lookup&#13;"/>
 </File>
-<File n="src/incl/incl.4gl" s="2" ts="20250919080132790"/>
-<File n="libs/globals.4gl" s="2" ts="20250918143426950"/>
-<File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250918094631939"/>
-<File n="src/auth/sy200_logs.4gl" s="2" ts="20250918152139630">
+<File n="src/auth/sy200_logs.4gl" s="2" ts="20250923091147158">
 <Fct c="10" el="478" l="475" n="enable_file_logging(enabled BOOLEAN)" t="F" v="pub">
 <Call c="10" l="477" n="log_info" t="F"/>
 </Fct>
@@ -123,5 +137,10 @@
 <Call c="10" l="44" n="create_log_directory" t="F"/>
 <Call c="10" l="47" n="log_info" t="F"/>
 </Fct>
+</File>
+<File n="src/sy900_utils.4gl" s="2" ts="20250923091147132">
+<Fct c="10" el="67" l="60" n="set_page_title(p_title STRING)" t="F" v="pub"/>
+<Fct c="10" el="56" l="33" n="show_alert(p_message STRING)" t="F" v="pub"/>
+<Fct c="10" el="29" l="13" n="initialize_database()" t="F" v="pub"/>
 </File>
 </WorkspaceDatabase>

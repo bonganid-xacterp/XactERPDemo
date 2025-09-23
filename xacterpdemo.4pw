@@ -66,9 +66,8 @@
   <PlatformList version="1.0"/>
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
     <Group environment="filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile" id="39840687" label="src">
-      <Application binaryName="_main" dependencies="31764552" id="221858380" label="_main">
-        <File filePath="src/main/frm_login.4fd"/>
-        <File filePath="src/main.4gl"/>
+      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365" id="221858380" label="_main">
+        <File filePath="src/main_app.4gl"/>
         <File filePath="src/main/main_container.4fd"/>
         <File filePath="src/main/main_container.4gl"/>
       </Application>
@@ -78,9 +77,7 @@
       <Application binaryName="cl30_trans" id="42429894" label="cl30_trans"/>
       <Application binaryName="cl40_hist" id="685366744" label="cl40_hist"/>
       <Library binaryName="database" id="31764552" label="database">
-        <File filePath="db/xactdemo.4db"/>
-        <File filePath="db/xactdemo.sch"/>
-        <File filePath="db/xactdemo_tables.4gl"/>
+        <File filePath="database/xactapp_db.4db"/>
       </Library>
       <Application binaryName="dl01_mast" id="150687270" label="dl01_mast"/>
       <Application binaryName="dl30_trans" id="27202992" label="dl30_trans"/>
@@ -91,6 +88,7 @@
       <Application binaryName="gl40_hist" id="106121004" label="gl40_hist"/>
       <Library binaryName="incl" id="56784492" label="incl">
         <File filePath="src/incl/incl.4gl"/>
+        <File filePath="src/top_menu.4tm"/>
       </Library>
       <Library binaryName="libs" id="104908716" label="libs">
         <File filePath=".fglprofile"/>
@@ -128,11 +126,19 @@
       <Application binaryName="sy04_role" id="425012860" label="sy04_role"/>
       <Application binaryName="sy05_perm" id="36313706" label="sy05_perm"/>
       <Application binaryName="sy06_role_perm" id="540543855" label="sy06_role_perm"/>
-      <Application binaryName="sy100_login" id="570478975" label="sy100_login"/>
+      <Application binaryName="sy100_login" dependencies="497700,56784492,104908716,541201365,31764552" id="570478975" label="sy100_login">
+        <File filePath="src/main/sy100_frm_login.4fd"/>
+        <File filePath="src/sy100_login.4gl"/>
+      </Application>
       <Application binaryName="sy200_logs" id="252410214" label="sy200_logs">
         <File filePath="src/auth/sy200_logs.4gl"/>
       </Application>
       <Application binaryName="sy40_hist" id="422909272" label="sy40_hist"/>
+      <Library binaryName="utils" id="497700" label="utils">
+        <File filePath="src/sy900_utils.4gl"/>
+        <File filePath="src/utils/sy910_db_utils.4gl"/>
+        <File filePath="src/utils/sy920_ui_utils.4gl"/>
+      </Library>
       <Application binaryName="wb01_mast" id="45028841" label="wb01_mast"/>
       <Application binaryName="wh01_mast" id="425676175" label="wh01_mast"/>
       <Application binaryName="wh30_trans" id="282693280" label="wh30_trans"/>
