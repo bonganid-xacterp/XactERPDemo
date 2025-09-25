@@ -12,8 +12,9 @@ IMPORT ui
 IMPORT security -- For password hashing (if available)
 IMPORT util -- For crypto functions
 IMPORT FGL sy100_login
-IMPORT FGL sy920_ui_utils
-IMPORT FGL main_shell
+IMPORT FGL sy920_ui_utils -- ui utils
+IMPORT FGL sy910_db_utils -- db utils
+IMPORT FGL main_shell -- application shell
 
 -- TODOS: Need to move the code that can be global to libs
 -- DB Connection
@@ -46,16 +47,10 @@ END MAIN
 
 # ------------------ INITIALIZATION -------------------
 FUNCTION initialize_application()
+    DEFINE db_result SMALLINT 
     -- Initialize database connection
-    -- CALL initialize_database()
-    
-    -- Set global application settings
-    LET g_user_authenticated = FALSE
+    LET db_result =  sy910_db_utils.initialize_database()
 
-    --IF g_user_authenticated THEN 
-    ---- Set application properties
-    --    CALL ui.Interface.setText("XactERP Demo System")
-    --END if
 END FUNCTION
 
 # ------------------ LOGIN FLOW -------------------

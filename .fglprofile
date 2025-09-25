@@ -4,7 +4,7 @@
 # ==============================================================
 
 # Database provider
-dbi.database.provider = "dbmpostgres"
+ dbi.database.provider = "dbmpgs_9"
 
 # PostgreSQL Connection
 dbi.database.xactapp_db.source = "dbname=xactapp_db host=localhost port=5432 user=postgres password=napoleon"
@@ -19,6 +19,6 @@ dbi.database.xactapp_db.pool.maxSize = 10
 dbi.database.xactapp_db.pool.timeout = 30
 
 # Other Genero settings
-fgl.profile.version = "3.20"
-gui.uimode = "traditional"
-application.name = "XACT ERP Demo"
+# fgl.profile.version = "3.20"
+# gui.uimode = "traditional"
+# application.name = "XACT ERP Demo"

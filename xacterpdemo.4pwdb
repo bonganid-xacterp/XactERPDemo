@@ -1,66 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/main_app.4gl" s="2" ts="20250925113603019">
+<File n="src/main_app.4gl" s="2" ts="20250925143858217">
 <Dep t="src/sy100_login.4gl"/>
 <Dep t="src/utils/sy920_ui_utils.4gl"/>
+<Dep t="src/utils/sy910_db_utils.4gl"/>
 <Dep t="src/main/main_shell.4gl"/>
-<Fct c="10" el="106" l="101" n="cleanup_application()" t="F" v="pub"/>
-<Fct c="10" el="98" l="76" n="open_main_container()" t="F" v="pub">
-<Call c="25" i="sy920_ui_utils" l="87" n="set_page_title" t="F"/>
-<Call c="20" i="main_shell" l="91" n="main_application_menu" t="F"/>
+<Fct c="10" el="101" l="96" n="cleanup_application()" t="F" v="pub"/>
+<Fct c="10" el="93" l="71" n="open_main_container()" t="F" v="pub">
+<Call c="25" i="sy920_ui_utils" l="82" n="set_page_title" t="F"/>
+<Call c="20" i="main_shell" l="86" n="main_application_menu" t="F"/>
 </Fct>
-<Fct c="10" el="73" l="62" n="run_login()" t="F" v="pub">
-<Call c="36" i="sy100_login" l="65" n="login_user" t="F"/>
+<Fct c="10" el="68" l="57" n="run_login()" t="F" v="pub">
+<Call c="36" i="sy100_login" l="60" n="login_user" t="F"/>
 </Fct>
-<Fct c="10" el="59" l="48" n="initialize_application()" t="F" v="pub"/>
-<Fct c="1" el="45" l="27" n="main()" t="F" v="pub">
-<Call c="10" l="32" n="initialize_application" t="F"/>
-<Call c="8" l="35" n="run_login" t="F"/>
-<Call c="14" l="37" n="open_main_container" t="F"/>
-<Call c="10" l="44" n="cleanup_application" t="F"/>
+<Fct c="10" el="54" l="49" n="initialize_application()" t="F" v="pub">
+<Call c="37" i="sy910_db_utils" l="52" n="initialize_database" t="F"/>
+</Fct>
+<Fct c="1" el="46" l="28" n="main()" t="F" v="pub">
+<Call c="10" l="33" n="initialize_application" t="F"/>
+<Call c="8" l="36" n="run_login" t="F"/>
+<Call c="14" l="38" n="open_main_container" t="F"/>
+<Call c="10" l="45" n="cleanup_application" t="F"/>
 </Fct>
 </File>
 <File n="src/main_app_menu.4gl" s="2" ts="20250925100714390">
 <Fct c="10" el="9" l="1" n="top_menu()" t="F" v="pub"/>
 </File>
-<File n="src/main/main_shell.4gl" s="2" ts="20250925102520920">
+<File n="src/main/main_shell.4gl" s="2" ts="20250925152440893">
 <Dep t="src/utils/sy920_ui_utils.4gl"/>
-<Fct c="10" el="28" l="25" n="confirm_exit()" t="F" v="pub"/>
-<Fct c="10" el="23" l="21" n="launch_child_window(module_name STRING)" t="F" v="pub"/>
-<Fct c="10" el="18" l="4" n="main_application_menu()" t="F" v="pub">
+<Fct c="10" el="29" l="26" n="confirm_exit()" t="F" v="pub"/>
+<Fct c="10" el="24" l="22" n="launch_child_window(module_name STRING)" t="F" v="pub"/>
+<Fct c="10" el="19" l="4" n="main_application_menu()" t="F" v="pub">
 <Call c="25" i="sy920_ui_utils" l="7" n="set_page_title" t="F"/>
-<Call c="16" l="14" n="confirm_exit" t="F"/>
 </Fct>
 </File>
-<File n="src/dl100_mast/dl100_mast.4gl" s="2" ts="20250925102537818">
+<File n="src/dl100_mast/cl100_mast.4gl" s="2" ts="20250925150732450">
 <Fct c="10" el="10" l="4" n="open_debtors()" t="F" v="pub"/>
 </File>
-<File n="src/incl/incl.4gl" s="2" ts="20250925094301705"/>
-<File n="libs/globals.4gl" s="2" ts="20250925094301850"/>
-<File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250925094301874"/>
-<File n="src/sy100_login.4gl" s="2" ts="20250925115158917">
-<Dep t="src/utils/sy920_ui_utils.4gl"/>
-<Fct c="10" el="195" l="193" n="is_user_authenticated()" t="F" v="pub"/>
-<Fct c="10" el="191" l="187" n="clear_user_session()" t="F" v="pub"/>
-<Fct c="10" el="184" l="178" n="show_help_dialog()" t="F" v="pub"/>
-<Fct c="10" el="176" l="163" n="confirm_exit_login()" t="F" v="pub"/>
-<Fct c="10" el="161" l="159" n="get_user_role()" t="F" v="pub"/>
-<Fct c="10" el="157" l="155" n="get_current_user()" t="F" v="pub"/>
-<Fct c="10" el="152" l="102" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub"/>
-<Fct c="10" el="97" l="77" n="try_login(f_username STRING,f_password STRING,max_attempts SMALLINT)" t="F" v="pub">
-<Call c="8" l="83" n="validate_login" t="F"/>
+<File n="database/xactapp_db_maint.4gl" s="2" ts="20250925150732312">
+<Fct c="10" el="799" l="791" n="db_add_indexes()" t="F" v="pub"/>
+<Fct c="10" el="788" l="733" n="db_drop_constraints()" t="F" v="pub"/>
+<Fct c="10" el="730" l="437" n="db_add_constraints()" t="F" v="pub"/>
+<Fct c="10" el="434" l="396" n="db_drop_tables()" t="F" v="pub"/>
+<Fct c="10" el="393" l="17" n="db_create_tables()" t="F" v="pub"/>
+<Fct c="1" el="14" l="6" n="main()" t="F" v="pub">
+<Call c="10" l="9" n="db_drop_constraints" t="F"/>
+<Call c="10" l="10" n="db_drop_tables" t="F"/>
+<Call c="10" l="11" n="db_create_tables" t="F"/>
+<Call c="10" l="12" n="db_add_indexes" t="F"/>
+<Call c="10" l="13" n="db_add_constraints" t="F"/>
 </Fct>
-<Fct c="10" el="73" l="18" n="login_user()" t="F" v="pub">
-<Call c="10" i="sy920_ui_utils" l="31" n="set_page_title" t="F"/>
-<Call c="36" l="41" n="try_login" t="F"/>
-<Call c="36" l="48" n="try_login" t="F"/>
-<Call c="20" l="54" n="confirm_exit_login" t="F"/>
-<Call c="26" l="60" n="show_help_dialog" t="F"/>
-<Call c="16" l="65" n="confirm_exit_login" t="F"/>
-</Fct>
-<Todo l="122" t="Replace with database lookup&#13;"/>
 </File>
-<File n="src/auth/sy200_logs.4gl" s="2" ts="20250925094301733">
+<File n="src/incl/incl.4gl" s="2" ts="20250925150732375"/>
+<File n="libs/globals.4gl" s="2" ts="20250925150732268"/>
+<File n="src/sy00_user/sy00_user.4gl" s="2" ts="20250925150732345"/>
+<File n="src/sy100_login.4gl" s="2" ts="20250925150732501">
+<Dep t="src/utils/sy920_ui_utils.4gl"/>
+<Fct c="10" el="202" l="200" n="is_user_authenticated()" t="F" v="pub"/>
+<Fct c="10" el="198" l="194" n="clear_user_session()" t="F" v="pub"/>
+<Fct c="10" el="191" l="185" n="show_help_dialog()" t="F" v="pub"/>
+<Fct c="10" el="183" l="168" n="confirm_exit_login()" t="F" v="pub"/>
+<Fct c="10" el="166" l="164" n="get_user_role()" t="F" v="pub"/>
+<Fct c="10" el="162" l="160" n="get_current_user()" t="F" v="pub"/>
+<Fct c="10" el="157" l="107" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub"/>
+<Fct c="10" el="104" l="79" n="try_login(f_username STRING,f_password STRING,max_attempts SMALLINT)" t="F" v="pub">
+<Call c="8" l="87" n="validate_login" t="F"/>
+</Fct>
+<Fct c="10" el="76" l="18" n="login_user()" t="F" v="pub">
+<Call c="25" i="sy920_ui_utils" l="32" n="set_page_title" t="F"/>
+<Call c="21" l="43" n="try_login" t="F"/>
+<Call c="21" l="51" n="try_login" t="F"/>
+<Call c="20" l="57" n="confirm_exit_login" t="F"/>
+<Call c="22" l="63" n="show_help_dialog" t="F"/>
+<Call c="16" l="68" n="confirm_exit_login" t="F"/>
+</Fct>
+</File>
+<File n="src/auth/sy200_logs.4gl" s="2" ts="20250925150732585">
 <Fct c="10" el="478" l="475" n="enable_file_logging(enabled BOOLEAN)" t="F" v="pub">
 <Call c="10" l="477" n="log_info" t="F"/>
 </Fct>
@@ -131,11 +146,11 @@
 <Call c="10" l="47" n="log_info" t="F"/>
 </Fct>
 </File>
-<File n="src/sy900_utils.4gl" s="2" ts="20250925094301755"/>
-<File n="src/utils/sy910_db_utils.4gl" s="2" ts="20250925094301925">
-<Fct c="10" el="17" l="3" n="initialize_database(p_dbname STRING)" t="F" v="pub"/>
+<File n="src/sy900_utils.4gl" s="2" ts="20250925150732613"/>
+<File n="src/utils/sy910_db_utils.4gl" s="2" ts="20250925150732404">
+<Fct c="10" el="30" l="11" n="initialize_database()" t="F" v="pub"/>
 </File>
-<File n="src/utils/sy920_ui_utils.4gl" s="2" ts="20250925094301802">
+<File n="src/utils/sy920_ui_utils.4gl" s="2" ts="20250925150732551">
 <Fct c="10" el="30" l="24" n="set_page_title(p_title STRING)" t="F" v="pub"/>
 <Fct c="10" el="20" l="3" n="show_alert(p_message STRING,p_title STRING)" t="F" v="pub"/>
 </File>

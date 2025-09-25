@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0cca1519-2eb0-48f9-b95e-1b0f2b80b728}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record name="record1" uid="{1ef1a7f9-7b66-4c81-b86d-293044e0cf78}">
+    <RecordField fieldIdRef="1" name="cl01_f_acc_code" uid="{4f88b64b-92d0-4e4b-9a52-3d3e9bc3fcb6}"/>
+    <RecordField fieldIdRef="2" length="1" name="cl01_f_supp_name" sqlType="CHAR" uid="{f2a7539a-800f-46c1-8046-a8d00498ef56}"/>
+    <RecordField fieldIdRef="3" name="cl01_f_phone" uid="{7343eaba-7cb7-4bb1-ae0f-8103072091e7}"/>
+    <RecordField fieldIdRef="4" name="cl01_f_email" uid="{52dcb39b-b464-42d6-9678-1cdf6a0bcedf}"/>
+    <RecordField defaultValue="active" fieldIdRef="5" name="cl01_f_status" uid="{25bf4494-aa05-40ac-8ac4-a1b69e551b46}"/>
+    <RecordField fieldIdRef="6" length="1" name="cl01_f_supp_add1" sqlType="CHAR" uid="{e7978f82-8230-4af1-907a-36c3cd1b5180}"/>
+    <RecordField fieldIdRef="7" length="1" name="dl01_f_supp_add2" sqlType="CHAR" uid="{60d72cc1-8c37-48b8-8af1-6d6933017e59}"/>
+    <RecordField fieldIdRef="8" length="1" name="dl01_f_supp_city" sqlType="CHAR" uid="{374c7eb2-15c5-4834-b089-8cc488a37365}"/>
+    <RecordField fieldIdRef="9" length="1" name="dl01_f_supp_zipcode" sqlType="CHAR" uid="{2ce0f208-5af4-48aa-a378-ce9c25fe9a82}"/>
+    <RecordField fieldIdRef="10" length="1" name="dl01_f_supp_bal" sqlType="CHAR" uid="{71432a79-22a5-4393-bc19-3cf3b31e1c37}"/>
+  </Record>
+  <Form gridHeight="28" gridWidth="82" name="form_dl100_mast" perFooterComment="" spacing="compact" text="Debtors">
+    <ToolBar name="toolbar1">
+      <ToolBarItem image="listadd" name="add" text="add"/>
+    </ToolBar>
+    <HBox gridHeight="9" gridWidth="82" name="hbox1" posX="0" posY="0">
+      <Grid gridHeight="9" gridWidth="78" name="cl01_mast" posX="2" posY="0">
+        <Label gridHeight="1" gridWidth="6" name="lbl_acc_code" posX="1" posY="1" text="Acc Code"/>
+        <Edit fieldId="1" gridHeight="1" gridWidth="12" name="cl01_f_acc_code" posX="8" posY="1" repeat="false" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_supp_name" posX="21" posY="1" text="Supplier Name"/>
+        <Edit fieldId="2" gridHeight="1" gridWidth="44" length="1" name="cl01_f_supp_name" posX="32" posY="1" repeat="false" sqlType="CHAR" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="6" name="lbl_phone" posX="1" posY="3" text="Phone"/>
+        <Edit fieldId="3" gridHeight="1" gridWidth="12" name="cl01_f_phone" posX="8" posY="3" repeat="false" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_email" posX="21" posY="3" text="Email"/>
+        <Edit fieldId="4" gridHeight="1" gridWidth="14" name="cl01_f_email" posX="32" posY="3" repeat="false" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_status" posX="48" posY="3" text="Status"/>
+        <ComboBox defaultValue="active" fieldId="5" gridHeight="1" gridWidth="17" items="" name="cl01_f_status" posX="59" posY="3" tabIndex="-1" title="buttonedit1" widget="ComboBox"/>
+        <Label gridHeight="1" gridWidth="6" name="lbl_supp_add1" posX="1" posY="5" text="Address 1"/>
+        <Edit fieldId="6" gridHeight="1" gridWidth="29" length="1" name="cl01_f_supp_add1" posX="8" posY="5" repeat="false" sqlType="CHAR" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="8" name="lbl_supp_add2" posX="38" posY="5" text="Address 2"/>
+        <Edit fieldId="7" gridHeight="1" gridWidth="28" length="1" name="dl01_f_supp_add2" posX="48" posY="5" repeat="false" sqlType="CHAR" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="6" name="lbl_supp_city" posX="1" posY="7" text="City"/>
+        <Edit fieldId="8" gridHeight="1" gridWidth="12" length="1" name="dl01_f_supp_city" posX="8" posY="7" repeat="false" sqlType="CHAR" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="6" name="lbl_supp_zipcode" posX="21" posY="7" text="ZipCode"/>
+        <Edit fieldId="9" gridHeight="1" gridWidth="9" length="1" name="dl01_f_supp_zipcode" posX="28" posY="7" repeat="false" sqlType="CHAR" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="8" name="lbl_supp_bal" posX="38" posY="7" text="Balance"/>
+        <Edit fieldId="10" gridHeight="1" gridWidth="9" length="1" name="dl01_f_supp_bal" posX="48" posY="7" repeat="false" sqlType="CHAR" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+    </HBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

@@ -1,17 +1,30 @@
-# Database Utilities
 
-FUNCTION initialize_database(p_dbname STRING)
+# ==============================================================
+# Program   :   sy900_db_utils.4gl
+# Purpose   :   database connection and init programs 
+# Module    :   DB Utils
+# Number    :   910
+# Author    :   Bongani Dlamini
+# Version   :   Genero BDL 3.2.1
+# ==============================================================
 
-    -- Set your database name/connection string
-    LET p_dbname = "xactapp_db"
-
+FUNCTION initialize_database() RETURNS SMALLINT
+    DEFINE db_status SMALLINT
     -- Connect to database
+    LET db_status = 0
+
     TRY
-        DATABASE p_dbname
-        DISPLAY "Connected to database: ", p_dbname
+        CONNECT TO "xactapp_db@localhost:5432+driver='dbmpgs_9'"
+            USER "postgres" USING "napoleon"
+        RETURN 1
+
+        DISPLAY "Connected to database: "
     CATCH
-        DISPLAY "Database connection failed: ", SQLCA.SQLCODE
-        DISPLAY "Error message: ", SQLCA.SQLERRM
+
+        ERROR   "Database connection failed: ", SQLCA.SQLCODE  ||
+                "Error message: ", SQLCA.SQLERRM
         EXIT PROGRAM
     END TRY
+    RETURN 0
+
 END FUNCTION

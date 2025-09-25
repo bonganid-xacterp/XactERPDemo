@@ -264,9 +264,9 @@ sy00_user^id^309^8^1^
 sy00_user^username^457^50^2^
 sy00_user^full_name^457^100^3^
 sy00_user^phone^201^20^4^
-sy00_user^email^201^100^5^
+sy00_user^email^457^100^5^
 sy00_user^password^457^255^6^
-sy00_user^status^1^2^7^
+sy00_user^status^257^2^7^
 sy00_user^role_id^52^8^8^
 sy00_user^created_at^10^4622^9^
 sy00_user^updated_at^10^4622^10^

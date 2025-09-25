@@ -5,16 +5,17 @@ FUNCTION main_application_menu()
 
     -- Set page title (top bar, if defined in form)
     CALL sy920_ui_utils.set_page_title("Dashboard")
-    
-    DISPLAY 'version 1.0'
-    
-    MENU "Main Menu"
 
-        COMMAND "exit" "Exit System"
-            IF confirm_exit() THEN
-                EXIT MENU
-            END IF
-    END MENU
+    
+    DISPLAY 'ver 1.0'
+--    
+--    MENU "Main Menu"
+--
+--        COMMAND "exit" "Exit System"
+--            IF confirm_exit() THEN
+--                EXIT MENU
+--            END IF
+--    END MENU
 END FUNCTION
 
 
