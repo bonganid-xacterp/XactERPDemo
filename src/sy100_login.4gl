@@ -25,9 +25,10 @@ FUNCTION login_user() RETURNS SMALLINT
     LET g_login_attempts = 0
     LET login_result = FALSE
 
-    OPEN WINDOW w_login WITH FORM "sy100_frm_login"
-    ATTRIBUTE(STYLE="dialog", TEXT="XactERP Login")
-
+    OPEN WINDOW w_login
+        WITH
+        FORM "sy100_frm_login"
+        ATTRIBUTE(STYLE = "dialog", TEXT = "XactERP Login")
 
     CALL sy920_ui_utils.set_page_title("Login")
 
@@ -41,15 +42,13 @@ FUNCTION login_user() RETURNS SMALLINT
                 -- Try to login after leaving password field
                 LET login_result =
                     try_login(f_username, f_password, max_attempts)
-                IF login_result = TRUE OR g_login_attempts >= max_attempts THEN
+                IF login_result = TRUE THEN
                     EXIT DIALOG
                 END IF
-
-            ON ACTION login
-                -- Try to login on button press
-                LET login_result =
-                    try_login(f_username, f_password, max_attempts)
-                IF login_result = TRUE OR g_login_attempts >= max_attempts THEN
+                -- If invalid, force user back into password field until correct
+                IF g_login_attempts < max_attempts THEN
+                    NEXT FIELD f_password
+                ELSE
                     EXIT DIALOG
                 END IF
 

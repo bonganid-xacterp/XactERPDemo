@@ -9,13 +9,13 @@ FUNCTION main_application_menu()
     
     DISPLAY 'ver 1.0'
 --    
---    MENU "Main Menu"
+    MENU "Main Menu"
 --
---        COMMAND "exit" "Exit System"
---            IF confirm_exit() THEN
---                EXIT MENU
---            END IF
---    END MENU
+        COMMAND "exit" "Exit System"
+            IF confirm_exit() THEN
+                EXIT MENU
+            END IF
+    END MENU
 END FUNCTION
 
 
