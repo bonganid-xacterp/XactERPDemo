@@ -8,7 +8,7 @@
     <RecordField fieldIdRef="2" name="dl01_f_debt_name" uid="{f2a7539a-800f-46c1-8046-a8d00498ef56}"/>
     <RecordField fieldIdRef="3" name="dl01_f_phone" uid="{7343eaba-7cb7-4bb1-ae0f-8103072091e7}"/>
   </Record>
-  <Form gridHeight="28" gridWidth="83" name="form_dl100_mast" text="Form">
+  <Form gridHeight="28" gridWidth="83" name="form_dl100_mast" perFooterComment="" text="Debtors">
     <HBox gridHeight="25" gridWidth="82" name="hbox1" posX="0" posY="0">
       <Grid gridHeight="25" gridWidth="78" name="dl01_mast" posX="2" posY="0">
         <Label color="green" gridHeight="1" gridWidth="76" justify="center" name="lbl_title" posX="1" posY="1" sizePolicy="fixed" text="DEBTOR MASTER"/>

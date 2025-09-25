@@ -12,8 +12,10 @@ IMPORT ui
 IMPORT security -- For password hashing (if available)
 IMPORT util -- For crypto functions
 IMPORT FGL sy100_login
-IMPORT FGL sy900_utils
--- TODO: Need to move the code that can be global to libs
+IMPORT FGL sy920_ui_utils
+IMPORT FGL main_shell
+
+-- TODOS: Need to move the code that can be global to libs
 -- DB Connection
 -- Persistent user state
 -- Error handler
@@ -49,16 +51,18 @@ FUNCTION initialize_application()
     
     -- Set global application settings
     LET g_user_authenticated = FALSE
-    
-    -- Set application properties
-    CALL ui.Interface.setText("XactERP Demo System")
+
+    --IF g_user_authenticated THEN 
+    ---- Set application properties
+    --    CALL ui.Interface.setText("XactERP Demo System")
+    --END if
 END FUNCTION
 
 # ------------------ LOGIN FLOW -------------------
 FUNCTION run_login()
     DEFINE login_result SMALLINT
     
-    LET login_result = sy100_login.run_login()
+    LET login_result = sy100_login.login_user()
     
     IF login_result THEN
         LET g_user_authenticated = TRUE
@@ -75,59 +79,24 @@ FUNCTION open_main_container()
     -- Save current interrupt flag state
     LET int_flag_saved = int_flag
     
-    -- Open main container window
-    OPEN WINDOW w_main WITH FORM "main_container"
-        ATTRIBUTE (STYLE="dialog", TEXT="XactERP Main System")
+    -- Open the main application container
+    OPEN WINDOW w_main WITH FORM "main_shell"
+        ATTRIBUTE (STYLE="main", TEXT="XactERP Main System")
     
-    -- Set page title
-    CALL set_page_title("Dashboard")
+    -- Set page title (top bar, if defined in form)
+    CALL sy920_ui_utils.set_page_title("Dashboard")
     
-    -- Main application loop
-    CALL main_menu()
     
+    -- Main loop: keep the container alive with a menu
+   CALL main_shell.main_application_menu()
+    
+    -- Close window when menu exits
     CLOSE WINDOW w_main
     
     -- Restore interrupt flag
     LET int_flag = int_flag_saved
 END FUNCTION
 
-# ------------------ MAIN MENU -------------------
-FUNCTION main_menu()
-    MENU "Main Menu"
-        COMMAND "Dashboard"
-            -- TODO: Open dashboard
-            MESSAGE "Dashboard selected"
-            
-        COMMAND "Exit"
-            EXIT MENU
-            
-        ON INTERRUPT
-            IF confirm_exit() THEN
-                EXIT MENU
-            END IF
-            
-    END MENU
-END FUNCTION
-
-# ------------------ UTILITY FUNCTIONS -------------------
-FUNCTION set_page_title(title STRING)
-    CALL ui.Interface.setText(title)
-END FUNCTION
-
-FUNCTION confirm_exit()
-    DEFINE result SMALLINT
-    
-    MENU "Confirm Exit" ATTRIBUTE(STYLE="dialog", COMMENT="Are you sure you want to exit?")
-        COMMAND "Yes"
-            LET result = TRUE
-            EXIT MENU
-        COMMAND "No"
-            LET result = FALSE
-            EXIT MENU
-    END MENU
-    
-    RETURN result
-END FUNCTION
 
 FUNCTION cleanup_application()
     -- Close database connections

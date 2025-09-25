@@ -68,11 +68,13 @@
     <Group environment="filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile" id="39840687" label="src">
       <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365" id="221858380" label="_main">
         <File filePath="src/main_app.4gl"/>
-        <File filePath="src/main/main_container.4fd"/>
-        <File filePath="src/main/main_container.4gl"/>
+        <File filePath="src/main_app_menu.4gl"/>
+        <File filePath="src/main/main_shell.4fd"/>
+        <File filePath="src/main/main_shell.4gl"/>
       </Application>
       <Application binaryName="cl01_mast" id="713572960" label="cl01_mast">
         <File filePath="src/dl100_mast/dl100_mast.4fd"/>
+        <File filePath="src/dl100_mast/dl100_mast.4gl"/>
       </Application>
       <Application binaryName="cl30_trans" id="42429894" label="cl30_trans"/>
       <Application binaryName="cl40_hist" id="685366744" label="cl40_hist"/>
@@ -134,7 +136,8 @@
         <File filePath="src/auth/sy200_logs.4gl"/>
       </Application>
       <Application binaryName="sy40_hist" id="422909272" label="sy40_hist"/>
-      <Library binaryName="utils" id="497700" label="utils">
+      <Library binaryName="sy900_utils" id="497700" label="sy900_utils">
+        <File filePath="src/utils/frm_sy900_alert.4fd"/>
         <File filePath="src/sy900_utils.4gl"/>
         <File filePath="src/utils/sy910_db_utils.4gl"/>
         <File filePath="src/utils/sy920_ui_utils.4gl"/>

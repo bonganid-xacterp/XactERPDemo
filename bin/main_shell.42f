@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="main_container.tmp" build="3.20.14" text="" windowStyle="" version="0.1" width="81" height="25">
+<Form name="main_shell.tmp" build="3.20.14" text="" windowStyle="" version="0.1" width="81" height="25">
   <TopMenu name="top_menu">
     <TopMenuGroup name="tm_file" text="File">
       <LStr text="File"/>

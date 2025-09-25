@@ -10,8 +10,8 @@ dbi.database.provider = "dbmpostgres"
 dbi.database.xactapp_db.source = "dbname=xactapp_db host=localhost port=5432 user=postgres password=napoleon"
 
 # Debugging (optional)
-# dbi.debug.level = 2
-# dbi.debug.file = "database_debug.log"
+ dbi.debug.level = 10
+ dbi.debug.file = "database_debug.log"
 
 # Connection pool settings (optional)
 dbi.database.xactapp_db.pool.minSize = 1

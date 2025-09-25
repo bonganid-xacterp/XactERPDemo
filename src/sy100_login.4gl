@@ -8,14 +8,14 @@
 # ==============================================================
 
 IMPORT ui
-IMPORT FGL sy900_utils
+IMPORT FGL sy920_ui_utils
 
 -- Global variables for user session
 DEFINE g_current_user STRING
 DEFINE g_user_role STRING
 DEFINE g_login_attempts SMALLINT
 
-FUNCTION run_login() RETURNS SMALLINT
+FUNCTION login_user() RETURNS SMALLINT
     DEFINE login_result SMALLINT
     DEFINE f_username STRING 
     DEFINE f_password STRING
@@ -28,57 +28,75 @@ FUNCTION run_login() RETURNS SMALLINT
     OPEN WINDOW w_login WITH FORM "sy100_frm_login"
         ATTRIBUTE (STYLE="dialog", TEXT="XactERP Login", NORMAL)
     
-    CALL set_page_title("Login")  -- global title
+    CALL set_page_title("Login")
     
     DIALOG
         INPUT BY NAME f_username, f_password
             BEFORE INPUT
-                -- Clear fields and set focus
                 CLEAR FORM
                 NEXT FIELD f_username
-                
-            ON ACTION login
-                LET g_login_attempts = g_login_attempts + 1
-                
-                IF validate_login(f_username, f_password) THEN
-                    LET g_current_user = f_username
-                    CALL show_alert("Welcome " || f_username || "!")
-                    LET login_result = TRUE
+
+            AFTER FIELD f_password
+                -- Try to login after leaving password field
+                LET login_result = try_login(f_username, f_password, max_attempts)
+                IF login_result = TRUE OR g_login_attempts >= max_attempts THEN
                     EXIT DIALOG
-                ELSE
-                    IF g_login_attempts >= max_attempts THEN
-                        CALL show_alert("Maximum login attempts exceeded. Exiting system.")
-                        LET login_result = FALSE
-                        EXIT DIALOG
-                    ELSE
-                        CALL show_alert("Invalid credentials. Attempt " || g_login_attempts || " of " || max_attempts)
-                        CLEAR FORM
-                        NEXT FIELD f_username
-                    END IF
                 END IF
-                
+
+            ON ACTION login
+                -- Try to login on button press
+                LET login_result = try_login(f_username, f_password, max_attempts)
+                IF login_result = TRUE OR g_login_attempts >= max_attempts THEN
+                    EXIT DIALOG
+                END IF
+
             ON ACTION cancel
                 IF confirm_exit_login() THEN
                     LET login_result = FALSE
                     EXIT DIALOG
                 END IF
-                
-            ON KEY (F1)
-                CALL show_help_dialog()
-                
+
+                ON ACTION credentials ATTRIBUTE (TEXT="Credentials")
+                    CALL show_help_dialog()
+
         END INPUT
-        
+
         ON ACTION close
             IF confirm_exit_login() THEN
                 LET login_result = FALSE
                 EXIT DIALOG
             END IF
-            
     END DIALOG
     
     CLOSE WINDOW w_login
     RETURN login_result
 END FUNCTION
+
+
+-- Centralized login validation logic
+FUNCTION try_login(f_username STRING, f_password STRING, max_attempts SMALLINT) RETURNS SMALLINT
+    DEFINE result SMALLINT
+    LET result = FALSE
+
+    LET g_login_attempts = g_login_attempts + 1
+
+    IF validate_login(f_username, f_password) THEN
+        LET g_current_user = f_username
+        MESSAGE "Welcome " || f_username || "!"
+        LET result = TRUE
+    ELSE
+        IF g_login_attempts >= max_attempts THEN
+            ERROR "Maximum login attempts exceeded. Exiting system."
+        ELSE
+            ERROR "Invalid credentials. Attempt " || g_login_attempts || " of " || max_attempts
+            CLEAR f_password
+        END IF
+    END IF
+
+    RETURN result
+END FUNCTION
+
+
 
 -- ------------------ AUTH VALIDATION -------------------
 FUNCTION validate_login(f_username STRING, f_password STRING) RETURNS SMALLINT
@@ -92,12 +110,12 @@ FUNCTION validate_login(f_username STRING, f_password STRING) RETURNS SMALLINT
     
     -- Check for empty fields
     IF f_username.getLength() = 0 THEN
-        CALL show_alert("Username is required")
+        ERROR "Username is required"
         RETURN FALSE
     END IF
     
     IF f_password.getLength() = 0 THEN
-        CALL show_alert("Password is required")
+        ERROR "Password is required"
         RETURN FALSE
     END IF
     
@@ -158,11 +176,11 @@ FUNCTION confirm_exit_login() RETURNS SMALLINT
 END FUNCTION
 
 FUNCTION show_help_dialog()
-    CALL show_alert("Login Help:\n\nDemo Credentials:\n" ||
+   ERROR "Login Help:\n\nDemo Credentials:\n" ||
                    "Username: admin, Password: 1234\n" ||
                    "Username: user, Password: user123\n" ||
                    "Username: demo, Password: demo\n\n" ||
-                   "Press F1 for help, ESC to cancel")
+                   "Press F1 for help, ESC to cancel"
 END FUNCTION
 
 -- ------------------ SESSION MANAGEMENT -------------------
