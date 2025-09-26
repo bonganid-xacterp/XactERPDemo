@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="sy100_user_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Form" width="82" height="20">
+  <LStr text="Form"/>
+  <HBox name="hbox1">
+    <Grid name="grid1" width="0" height="20"/>
+    <Grid name="xactapp_db1" width="82" height="20">
+      <Label name="lbl_sy00_user_user" width="8" text="Username" posY="1" posX="1" gridWidth="8">
+        <LStr text="Username"/>
+      </Label>
+      <FormField name="sy00_user.username" colName="username" sqlType="VARCHAR(50)" required="1" notNull="1" fieldId="0" sqlTabName="sy00_user" tabIndex="1">
+        <Edit width="30" scroll="1" posY="1" posX="10" gridWidth="30"/>
+      </FormField>
+      <Label name="lbl_sy00_user_name" width="9" text="Full Name" posY="1" posX="41" gridWidth="9">
+        <LStr text="Full Name"/>
+      </Label>
+      <FormField name="sy00_user.full_name" colName="full_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="sy00_user" tabIndex="2">
+        <Edit width="30" scroll="1" posY="1" posX="51" gridWidth="30"/>
+      </FormField>
+      <Label name="lbl_sy00_user_phone" width="8" text="Phone Number" posY="2" posX="1" gridWidth="8">
+        <LStr text="Phone Number"/>
+      </Label>
+      <FormField name="sy00_user.phone" colName="phone" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="sy00_user" tabIndex="3">
+        <Edit width="20" scroll="1" posY="2" posX="10" gridWidth="20"/>
+      </FormField>
+      <Label name="lbl_sy00_user_email" width="9" text="Email" posY="2" posX="41" gridWidth="9">
+        <LStr text="Email"/>
+      </Label>
+      <FormField name="sy00_user.email" colName="email" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="3" sqlTabName="sy00_user" tabIndex="4">
+        <Edit width="30" scroll="1" posY="2" posX="51" gridWidth="30"/>
+      </FormField>
+      <Label name="lbl_sy00_user_role_id" width="8" text="User Role " posY="3" posX="1" gridWidth="8">
+        <LStr text="User Role "/>
+      </Label>
+      <FormField name="formonly.lbl_sy00_user_role" colName="lbl_sy00_user_role" sqlType="BIGINT" fieldId="4" sqlTabName="formonly" notNull="1" required="1" tabIndex="5">
+        <ButtonEdit width="18" action="role_search" image="zoom" scroll="1" posY="3" posX="10" gridWidth="20"/>
+      </FormField>
+      <Label name="lbl_sy00_user_status" width="9" text="Status" posY="3" posX="41" gridWidth="9">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="sy00_user.status" colName="status" sqlType="SMALLINT" required="1" notNull="1" fieldId="5" sqlTabName="sy00_user" tabIndex="6">
+        <ComboBox width="18" scroll="1" posY="3" posX="51" gridWidth="20"/>
+      </FormField>
+      <Group name="grp_pwd" text="Change Password" posY="5" posX="1" gridWidth="39" gridHeight="5">
+        <LStr text="Change Password"/>
+        <Label name="sy00_user_password_label1" width="9" text="Current Password" comment="Leave Blank if there are no changes" posY="1" posX="1" gridWidth="9">
+          <LStr text="Current Password" comment="Leave Blank if there are no changes"/>
+        </Label>
+        <FormField name="sy00_user.password" colName="password" sqlType="VARCHAR(255)" required="1" notNull="1" fieldId="6" sqlTabName="sy00_user" tabIndex="7">
+          <Edit width="18" scroll="1" comment="Leave blank if not changing it" posY="1" posX="11" gridWidth="18">
+            <LStr comment="Leave blank if not changing it"/>
+          </Edit>
+        </FormField>
+        <Label name="sy00_user_password_label2" width="9" text="New Password" comment="Leave Blank if there are no changes" posY="2" posX="1" gridWidth="9">
+          <LStr text="New Password" comment="Leave Blank if there are no changes"/>
+        </Label>
+        <FormField name="formonly.new_password" colName="new_password" sqlType="VARCHAR" fieldId="7" sqlTabName="formonly" tabIndex="8">
+          <Edit width="18" scroll="1" comment="" posY="2" posX="11" gridWidth="18">
+            <LStr comment=""/>
+          </Edit>
+        </FormField>
+        <Label name="sy00_user_password_label3" width="9" text="Confirm Password" comment="Leave Blank if there are no changes" posY="3" posX="1" gridWidth="9">
+          <LStr text="Confirm Password" comment="Leave Blank if there are no changes"/>
+        </Label>
+        <FormField name="sy00_user2.password" colName="password" sqlType="VARCHAR(255)" required="1" notNull="1" fieldId="8" sqlTabName="sy00_user" tabIndex="9">
+          <Edit width="18" scroll="1" comment="Leave blank if not changing it" posY="3" posX="11" gridWidth="18">
+            <LStr comment="Leave blank if not changing it"/>
+          </Edit>
+        </FormField>
+      </Group>
+    </Grid>
+  </HBox>
+  <RecordView tabName="sy00_user2">
+    <Link colName="password" fieldIdRef="8"/>
+  </RecordView>
+  <RecordView tabName="sy00_user">
+    <Link colName="username" fieldIdRef="0"/>
+    <Link colName="full_name" fieldIdRef="1"/>
+    <Link colName="phone" fieldIdRef="2"/>
+    <Link colName="email" fieldIdRef="3"/>
+    <Link colName="status" fieldIdRef="5"/>
+    <Link colName="password" fieldIdRef="6"/>
+  </RecordView>
+  <RecordView tabName="formonly">
+    <Link colName="lbl_sy00_user_role" fieldIdRef="4"/>
+    <Link colName="new_password" fieldIdRef="7"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="username" fieldIdRef="0"/>
+    <Link colName="full_name" fieldIdRef="1"/>
+    <Link colName="phone" fieldIdRef="2"/>
+    <Link colName="email" fieldIdRef="3"/>
+    <Link colName="status" fieldIdRef="5"/>
+    <Link colName="lbl_sy00_user_role" fieldIdRef="4"/>
+    <Link colName="password" fieldIdRef="6"/>
+    <Link colName="new_password" fieldIdRef="7"/>
+    <Link colName="password" fieldIdRef="8"/>
+  </RecordView>
+</Form>

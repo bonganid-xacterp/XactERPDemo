@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{6aeaed05-05b4-417d-97f4-a2894eaa83df}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record name="record1" uid="{1a282dea-55ac-4dbe-8e9d-d65d40f9c211}"/>
+  <Record name="record2" uid="{7bdbae52-2bb5-480f-9f44-8fad9e7dce69}"/>
+  <Record masterTable="sy05_perm" name="record3" uid="{a3cff743-6929-4aaa-a405-700b5d8f63d9}"/>
+  <Record masterTable="sy04_role1" name="record4" uid="{bbe3e212-b90f-4b1c-a33f-913cffd98838}">
+    <RecordField colName="role_name" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy04_role.role_name" sqlTabName="sy04_role" uid="{1119f7ff-9fba-45c5-9536-8fe725b3d8ea}"/>
+    <RecordField colName="status" defaultValue="1" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy04_role.status" sqlTabName="sy04_role" uid="{f7301838-a3c9-4f80-8ed1-839f310f0fcc}"/>
+  </Record>
+  <Record masterTable="sy05_perm" name="record5" uid="{4ea2363b-3312-43d5-a078-72b4451b1f35}"/>
+  <Record name="record6" uid="{5cf7806e-4186-477d-992d-e17e8dbd88b5}"/>
+  <Form gridHeight="44" gridWidth="215" name="frm_role" text="Roles">
+    <HBox gridHeight="5" gridWidth="80" name="hbox1" posX="0" posY="0">
+      <Grid gridHeight="5" gridWidth="76" name="xactapp_db1" posX="2" posY="0">
+        <Label gridHeight="1" gridWidth="9" name="lbl_sy04_role_name" posX="1" posY="1" text="Role Name">
+          <Initializer text="dbschema:sy04_role.role_name/@label"/>
+        </Label>
+        <Edit colName="role_name" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy04_role.role_name" posX="11" posY="1" scroll="true" sqlTabName="sy04_role" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="lbl_sy04_role1_status" posX="42" posY="1" text="Status">
+          <Initializer text="dbschema:sy04_role.status/@label"/>
+        </Label>
+        <ComboBox colName="status" defaultValue="1" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" items="Inactive, Active" name="sy04_role.status" notNull="true" posX="49" posY="1" required="true" scroll="true" sqlTabName="sy04_role" tabIndex="-1" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          <Item lstrtext="false" name="0" text="Inactive"/>
+          <Item lstrtext="false" name="1" text="Active"/>
+        </ComboBox>
+      </Grid>
+    </HBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA0AGUAYQAyADMANgAzAGIALQAzADMAMQAyAC0ANAAzAGQANQAtAGEAMAA3ADgALQA3ADIAYgA0ADQANQAxAGIAMQBmADMANQB9QEAAAAQAAABAQAAABAAAAAAAAAAAAAAAAQAAAEwAewAxAGEAMgA4ADIAZABlAGEALQA1ADUAYQBjAC0ANABkAGIAZQAtADgAZQA5AGQALQBkADYANQBkADQAMABmADkAYwAyADEAMQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewBhADMAYwBmAGYANwA0ADMALQA2ADkAMgA5AC0ANABhAGEAYQAtAGEANAAwADUALQA3ADAAMABiADUAZAA4AGYANgAzAGQAOQB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewBiAGIAZQAzAGUAMgAxADIALQBiADkAMABmAC0ANABiADEAYwAtAGEAMwAzAGYALQA5ADEAMwBjAGYAZgBkADkAOAA4ADMAOAB9QDgAAAYAAABAOAAABgAAAAAAAAAAAAAAAQAAAEwAewA3AGIAZABiAGEAZQA1ADIALQAyAGIAYgA1AC0ANAA4ADAAZgAtADkAZgA0ADQALQA4AGYAYQBkADkAZQA3AGQAYwBlADYAOQB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewA1AGMAZgA3ADgAMAA2AGUALQA0ADEAOAA2AC0ANAA3ADcAZAAtADkAOQAyAGQALQBlADEANwBlADgAZABiAGQAOAA4AGIANQB9QEgAAAYAAABASAAABgAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

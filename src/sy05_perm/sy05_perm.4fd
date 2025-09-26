@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{3a5530f6-99b7-4d25-b3be-1c7bfade607d}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy05_perm" name="record1" uid="{68b9342c-9df6-428b-bcfb-761f0a7f1c00}">
+    <RecordField colName="perm_name" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy05_perm.perm_name" sqlTabName="sy05_perm" uid="{b9a55216-8bc9-4400-b192-88e131ec38d7}"/>
+    <RecordField colName="description" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy05_perm.description" sqlTabName="sy05_perm" uid="{9572e93a-b6a7-4247-ab14-8ab465ce8b4f}"/>
+    <RecordField colName="status" defaultValue="0" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy05_perm.status" sqlTabName="sy05_perm" uid="{eb691751-4a8b-400b-b994-7dd3b2cb28c0}"/>
+  </Record>
+  <Form gridHeight="25" gridWidth="92" name="form" text="Form">
+    <HBox gridHeight="4" gridWidth="91" name="hbox1" posX="1" posY="0">
+      <Grid gridHeight="4" gridWidth="87" name="perm_grid" posX="2" posY="0">
+        <Label gridHeight="1" gridWidth="9" name="lbl_sy05_perm_name" posX="1" posY="1" text="Name">
+          <Initializer text="dbschema:sy05_perm.perm_name/@label"/>
+        </Label>
+        <Edit colName="perm_name" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy05_perm.perm_name" posX="11" posY="1" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="lbl_sy05_perm_dscr" posX="42" posY="1" text="Description">
+          <Initializer text="dbschema:sy05_perm.description/@label"/>
+        </Label>
+        <Edit colName="description" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy05_perm.description" posX="54" posY="1" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="9" name="lbl_sy05_perm_status" posX="1" posY="2" text="Status">
+          <Initializer text="dbschema:sy05_perm.status/@label"/>
+        </Label>
+        <ComboBox autoNext="true" colName="status" defaultValue="0" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" items="Inactive, Active" name="sy05_perm.status" notNull="true" posX="11" posY="2" required="true" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          <Item lstrtext="false" name="0" text="Inactive"/>
+          <Item lstrtext="false" name="1" text="Active"/>
+        </ComboBox>
+      </Grid>
+    </HBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA2ADgAYgA5ADMANAAyAGMALQA5AGQAZgA2AC0ANAAyADgAYgAtAGIAYwBmAGIALQA3ADYAMQBmADAAYQA3AGYAMQBjADAAMAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

@@ -1,5 +1,6 @@
 
 IMPORT FGL sy920_ui_utils
+IMPORT FGL dl100_mast
 
 FUNCTION main_application_menu()
 
@@ -10,6 +11,7 @@ FUNCTION main_application_menu()
     DISPLAY 'ver 1.0'
 --    
     MENU "Main Menu"
+        ATTRIBUTES (STYLE="")
 --
         COMMAND "exit" "Exit System"
             IF confirm_exit() THEN
@@ -17,6 +19,11 @@ FUNCTION main_application_menu()
             END IF
     END MENU
 END FUNCTION
+
+-- open debtors menu
+FUNCTION add_debtors()
+    CALL dl100_mast.open_debtors()       
+END FUNCTION 
 
 
 FUNCTION launch_child_window(module_name STRING)

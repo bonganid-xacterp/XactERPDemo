@@ -22,6 +22,7 @@ IMPORT FGL main_shell -- application shell
 -- Error handler
 -- Loading State
 -- Alert messages
+-- Look at the after password effect, it triggers some errors
 
 DEFINE g_user_authenticated SMALLINT
 
@@ -79,7 +80,7 @@ FUNCTION open_main_container()
         ATTRIBUTE (STYLE="main", TEXT="XactERP Main System")
     
     -- Set page title (top bar, if defined in form)
-    CALL sy920_ui_utils.set_page_title("Dashboard")
+    CALL sy920_ui_utils.set_page_title("Dashboard" || sy100_login.get_current_user())
     
     
     -- Main loop: keep the container alive with a menu

@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="dl100_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" spacing="compact" text="Debtors" width="126" height="20">
+  <ToolBar name="toolbar1">
+    <ToolBarItem name="add" image="listadd" text="Add">
+      <LStr text="Add"/>
+    </ToolBarItem>
+    <ToolBarItem name="find" image="find"/>
+    <ToolBarItem name="previous" image="prev2"/>
+    <ToolBarItem name="next" image="next"/>
+    <ToolBarSeparator name="toolbarseparator1"/>
+    <ToolBarItem name="exit" image="exit2" text="Exit">
+      <LStr text="Exit"/>
+    </ToolBarItem>
+    <ToolBarSeparator name="toolbarseparator2"/>
+    <ToolBarItem name="delete" image="delete" text="Delete">
+      <LStr text="Delete"/>
+    </ToolBarItem>
+  </ToolBar>
+  <LStr text="Debtors"/>
+  <VBox name="vbox1">
+    <Grid name="dl01_mast" width="77" height="10">
+      <Label name="lbl_acc_code" width="6" text="Acc Code" posY="1" posX="1" gridWidth="6">
+        <LStr text="Acc Code"/>
+      </Label>
+      <FormField name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" tabIndex="1">
+        <Edit width="12" posY="1" posX="8" gridWidth="12"/>
+      </FormField>
+      <Label name="lbl_supp_name" width="10" text="Supplier Name" posY="1" posX="21" gridWidth="10">
+        <LStr text="Supplier Name"/>
+      </Label>
+      <FormField name="dl01_mast.cust_name" colName="cust_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="dl01_mast" tabIndex="2">
+        <Edit width="44" posY="1" posX="32" gridWidth="44"/>
+      </FormField>
+      <Label name="lbl_phone" width="6" text="Phone" posY="3" posX="1" gridWidth="6">
+        <LStr text="Phone"/>
+      </Label>
+      <FormField name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="dl01_mast" tabIndex="3">
+        <Edit width="12" posY="3" posX="8" gridWidth="12"/>
+      </FormField>
+      <Label name="lbl_email" width="10" text="Email" posY="3" posX="21" gridWidth="10">
+        <LStr text="Email"/>
+      </Label>
+      <FormField name="dl01_mast.email" colName="email" sqlType="VARCHAR(100)" fieldId="3" sqlTabName="dl01_mast" tabIndex="4">
+        <Edit width="14" posY="3" posX="32" gridWidth="14"/>
+      </FormField>
+      <Label name="lbl_status" width="10" text="Status" posY="3" posX="48" gridWidth="10">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="formonly.state" colName="state" sqlType="VARCHAR" fieldId="4" sqlTabName="formonly" defaultValue="active" tabIndex="5">
+        <ComboBox width="15" posY="3" posX="59" gridWidth="17"/>
+      </FormField>
+      <Label name="lbl_supp_add1" width="6" text="Address 1" posY="5" posX="1" gridWidth="6">
+        <LStr text="Address 1"/>
+      </Label>
+      <FormField name="dl01_mast.address1" colName="address1" sqlType="VARCHAR(100)" fieldId="5" sqlTabName="dl01_mast" tabIndex="6">
+        <Edit width="29" posY="5" posX="8" gridWidth="29"/>
+      </FormField>
+      <Label name="lbl_supp_add2" width="8" text="Address 2" posY="5" posX="38" gridWidth="8">
+        <LStr text="Address 2"/>
+      </Label>
+      <FormField name="dl01_mast.address2" colName="address2" sqlType="VARCHAR(100)" fieldId="6" sqlTabName="dl01_mast" tabIndex="7">
+        <Edit width="28" posY="5" posX="48" gridWidth="28"/>
+      </FormField>
+      <Label name="lbl_supp_city" width="6" text="City" posY="7" posX="1" gridWidth="6">
+        <LStr text="City"/>
+      </Label>
+      <FormField name="dl01_mast.address3" colName="address3" sqlType="VARCHAR(100)" fieldId="7" sqlTabName="dl01_mast" tabIndex="8">
+        <Edit width="12" posY="7" posX="8" gridWidth="12"/>
+      </FormField>
+      <Label name="lbl_supp_zipcode" width="6" text="ZipCode" posY="7" posX="21" gridWidth="6">
+        <LStr text="ZipCode"/>
+      </Label>
+      <FormField name="formonly.dl01_f_supp_zipcode" colName="dl01_f_supp_zipcode" sqlType="CHAR" fieldId="8" sqlTabName="formonly" tabIndex="9">
+        <Edit width="9" posY="7" posX="28" gridWidth="9"/>
+      </FormField>
+      <Label name="lbl_supp_bal" width="8" text="Balance" posY="7" posX="38" gridWidth="8">
+        <LStr text="Balance"/>
+      </Label>
+      <FormField name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="dl01_mast" tabIndex="10">
+        <Edit width="9" posY="7" posX="48" gridWidth="9"/>
+      </FormField>
+    </Grid>
+    <Folder name="docs">
+      <Page name="trans_group" text="Trans Documents">
+        <LStr text="Trans Documents"/>
+        <Grid name="trans_grid" width="126" height="10">
+          <Table pageSize="5" name="dl100_trans_tb" width="125" posY="0" posX="1" gridWidth="125" gridHeight="6" tabName="+tn_0">
+            <TableColumn name="dl30_trans.txn_date" colName="txn_date" sqlType="DATE" required="1" notNull="1" fieldId="10" sqlTabName="dl30_trans" text="Trans Date" tabIndex="11">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Trans Date"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="11" sqlTabName="dl30_trans" text="Doc No" tabIndex="12">
+              <Edit width="20" scroll="1"/>
+              <LStr text="Doc No"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="12" sqlTabName="dl30_trans" text="Trans Type" tabIndex="13">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Trans Type"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="13" sqlTabName="dl30_trans" text="Doc Type" tabIndex="14">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Doc Type"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.gross_val" colName="gross_val" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="14" sqlTabName="dl30_trans" text="Total Excl" tabIndex="15" numAlign="1">
+              <Edit width="14" scroll="1"/>
+              <LStr text="Total Excl"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.vat" colName="vat" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="15" sqlTabName="dl30_trans" text="VAT" tabIndex="16" numAlign="1">
+              <Edit width="14" scroll="1"/>
+              <LStr text="VAT"/>
+            </TableColumn>
+            <TableColumn name="formonly.edit1" colName="edit1" fieldId="16" sqlTabName="formonly" text="Total Incl" tabIndex="17">
+              <Edit width="8"/>
+              <LStr text="Total Incl"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="17" sqlTabName="dl30_trans" text="Notes" tabIndex="18">
+              <Edit width="30" scroll="1"/>
+              <LStr text="Notes"/>
+            </TableColumn>
+          </Table>
+        </Grid>
+      </Page>
+    </Folder>
+  </VBox>
+  <RecordView tabName="dl30_trans">
+    <Link colName="txn_date" fieldIdRef="10"/>
+    <Link colName="doc_no" fieldIdRef="11"/>
+    <Link colName="trans_type" fieldIdRef="12"/>
+    <Link colName="doc_type" fieldIdRef="13"/>
+    <Link colName="gross_val" fieldIdRef="14"/>
+    <Link colName="vat" fieldIdRef="15"/>
+    <Link colName="notes" fieldIdRef="17"/>
+  </RecordView>
+  <RecordView tabName="dl01_mast">
+    <Link colName="acc_code" fieldIdRef="0"/>
+    <Link colName="cust_name" fieldIdRef="1"/>
+    <Link colName="phone" fieldIdRef="2"/>
+    <Link colName="email" fieldIdRef="3"/>
+    <Link colName="address1" fieldIdRef="5"/>
+    <Link colName="address2" fieldIdRef="6"/>
+    <Link colName="address3" fieldIdRef="7"/>
+    <Link colName="balance" fieldIdRef="9"/>
+  </RecordView>
+  <RecordView tabName="formonly">
+    <Link colName="state" fieldIdRef="4"/>
+    <Link colName="dl01_f_supp_zipcode" fieldIdRef="8"/>
+    <Link colName="edit1" fieldIdRef="16"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="acc_code" fieldIdRef="0"/>
+    <Link colName="cust_name" fieldIdRef="1"/>
+    <Link colName="phone" fieldIdRef="2"/>
+    <Link colName="email" fieldIdRef="3"/>
+    <Link colName="state" fieldIdRef="4"/>
+    <Link colName="address1" fieldIdRef="5"/>
+    <Link colName="address2" fieldIdRef="6"/>
+    <Link colName="address3" fieldIdRef="7"/>
+    <Link colName="dl01_f_supp_zipcode" fieldIdRef="8"/>
+    <Link colName="balance" fieldIdRef="9"/>
+  </RecordView>
+  <RecordView tabName="record5">
+    <Link colName="txn_date" fieldIdRef="10"/>
+    <Link colName="trans_type" fieldIdRef="12"/>
+    <Link colName="doc_type" fieldIdRef="13"/>
+    <Link colName="doc_no" fieldIdRef="11"/>
+    <Link colName="gross_val" fieldIdRef="14"/>
+    <Link colName="vat" fieldIdRef="15"/>
+    <Link colName="edit1" fieldIdRef="16"/>
+    <Link colName="notes" fieldIdRef="17"/>
+  </RecordView>
+</Form>

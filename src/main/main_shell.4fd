@@ -12,19 +12,17 @@
         <TopMenuCommand acceleratorName="exit" image="quit" name="tm_sb_exit" text="Quit"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_dl" text="Debtors">
-        <TopMenuCommand name="tm_sb_dl_add" text="Add Debtors"/>
+        <TopMenuCommand name="tm_sb_dl_add" text="Debtors Enquiry"/>
         <TopMenuCommand name="tm_sb_dl_list" text="List Debtors"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_cl" text="Creditors">
-        <TopMenuCommand name="tm_sm_cl_list" text="List Creditors"/>
         <TopMenuCommand name="tm_sb_cl_add" text="Add Creditor"/>
+        <TopMenuCommand name="tm_sm_cl_list" text="List Creditors"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_st" text="Stock">
-        <TopMenuCommand name="tm_st_list" text="List Stock"/>
-        <TopMenuCommand name="tm_st_add" text="Add Stock"/>
-        <TopMenuSeparator name="topmenuseparator2"/>
-        <TopMenuCommand name="tm_st_cat" text="List Categories"/>
-        <TopMenuCommand name="tm_st_wh_list" text="List Warehouses"/>
+        <TopMenuCommand name="tm_st_list" text="Stock Maintanance"/>
+        <TopMenuCommand name="tm_st_cat" text="Stock Categories"/>
+        <TopMenuCommand name="tm_st_whs" text="Warehouses"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_gl" tag="" text="Finance">
         <TopMenuCommand name="tm_sm_gl" text="General Ledger"/>
@@ -52,14 +50,17 @@
       <TopMenuGroup name="tm_app" text="Help">
         <TopMenuCommand name="tm_sy_about" text="About"/>
       </TopMenuGroup>
+      <TopMenuGroup hidden="true" name="main" text="Main">
+        <TopMenuCommand hidden="true" name="container"/>
+      </TopMenuGroup>
     </TopMenu>
-    <Grid gridHeight="25" gridWidth="129" name="main_grid" posX="0" posY="0">
+    <Grid gridHeight="25" gridWidth="129" hidden="true" name="main_grid" posX="0" posY="0">
       <Label fontPitch="variable" gridHeight="1" gridWidth="30" justify="center" name="lbl_title" posX="1" posY="0" text=""/>
-      <Label gridHeight="1" gridWidth="20" name="lbl_version" posX="60" posY="0" text=""/>
-      <Group gridChildrenInParent="true" gridHeight="21" gridWidth="128" name="grp_workarea" posX="1" posY="1" text=""/>
+      <Label gridHeight="1" gridWidth="22" name="lbl_version" posX="60" posY="0" text=""/>
+      <Group gridChildrenInParent="true" gridHeight="21" gridWidth="128" hidden="true" name="grp_workarea" posX="1" posY="1" text=""/>
     </Grid>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzMzdgAADAFmZmY////j9QYk3S8an8AQAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>
