@@ -39,7 +39,7 @@
     <VBox gridHeight="20" gridWidth="128" name="vbox1" posX="0" posY="0">
       <Grid gridHeight="7" gridWidth="128" name="dl01_mast" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="6" name="lbl_dl_acc_code" posX="1" posY="1" text="Acc Code"/>
-        <Edit colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="dl01_mast.acc_code" posX="8" posY="1" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+        <ButtonEdit colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="dl01_mast.acc_code" posX="8" posY="1" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="ButtonEdit"/>
         <Label gridHeight="1" gridWidth="10" name="lbl_dl_name" posX="21" posY="1" text="Debtor Name"/>
         <Edit colName="cust_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="44" name="dl01_mast.cust_name" posX="32" posY="1" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
         <Label gridHeight="1" gridWidth="6" name="lbl_dl_phone" posX="1" posY="2" text="Phone"/>
@@ -92,6 +92,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM0nmZm/AKzMzTmZmcD9QYk3S8an8AQAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM0+TM0LAKzMzVTMzRD9QYk3S8an8AQAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQ==]]>
   </DiagramLayout>
 </ManagedForm>

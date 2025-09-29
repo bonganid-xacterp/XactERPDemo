@@ -15,9 +15,19 @@
     <RecordField colName="status" defaultValue="0" fieldIdRef="9" fieldType="TABLE_COLUMN" name="cl01_mast.status" sqlTabName="cl01_mast" uid="{69a55d0d-b53f-4971-8f8e-898a7c69b9d4}"/>
   </Record>
   <Record masterTable="cl30_trans" name="record4" uid="{f13c169d-fd2f-4ded-8db1-b84034c88337}"/>
+  <Record masterTable="dl30_trans" name="record5" uid="{ce90db7c-0f0f-45a3-ab5f-f40abbe491b1}">
+    <RecordField colName="date" fieldIdRef="10" fieldType="TABLE_COLUMN" name="dl30_trans.date" sqlTabName="dl30_trans" uid="{24ff53f7-1851-4db1-a1d3-7326429558b2}"/>
+    <RecordField colName="trans_type" fieldIdRef="12" fieldType="TABLE_COLUMN" name="dl30_trans.trans_type" sqlTabName="dl30_trans" uid="{63acad09-0d40-49e3-aaad-01aa27e55f38}"/>
+    <RecordField colName="doc_type" fieldIdRef="13" fieldType="TABLE_COLUMN" name="dl30_trans.doc_type" sqlTabName="dl30_trans" uid="{5313e6b2-0f5c-479f-80e2-4ee13b1a0f1c}"/>
+    <RecordField colName="doc_no" fieldIdRef="11" fieldType="TABLE_COLUMN" name="dl30_trans.doc_no" sqlTabName="dl30_trans" uid="{f2617e07-dcd2-4617-a1a9-06b394e904ed}"/>
+    <RecordField colName="gross_val" fieldIdRef="14" fieldType="TABLE_COLUMN" name="dl30_trans.gross_val" sqlTabName="dl30_trans" uid="{1e71a5b9-853d-46ea-81ab-9e97d8638197}"/>
+    <RecordField colName="vat" fieldIdRef="15" fieldType="TABLE_COLUMN" name="dl30_trans.vat" sqlTabName="dl30_trans" uid="{5d63805e-e62d-4c51-bdeb-3924e4116a57}"/>
+    <RecordField defaultValue="0.00" fieldIdRef="16" length="10" name="dl30_trans_tot_incl" uid="{70689f4c-1710-4d80-81b4-71510076d202}"/>
+    <RecordField colName="notes" fieldIdRef="17" fieldType="TABLE_COLUMN" name="dl30_trans.notes" sqlTabName="dl30_trans" uid="{7c6bd2d6-b541-4211-929b-df6249424883}"/>
+  </Record>
   <Form gridHeight="20" gridWidth="130" name="form_cl100_mast" perFooterComment="" spacing="compact" text="Creditors Master">
-    <HBox gridHeight="8" gridWidth="100" name="hbox1" posX="0" posY="0">
-      <Grid gridHeight="8" gridWidth="96" name="grid" posX="2" posY="0">
+    <VBox gridHeight="19" gridWidth="126" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="6" gridWidth="126" name="grid" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="8" name="lbl_cl01_mast_acc_code" posX="1" posY="1" text="Account Code">
           <Initializer text="dbschema:cl01_mast.acc_code/@label"/>
         </Label>
@@ -75,9 +85,39 @@
           <Item lstrtext="false" name="1" text="Active"/>
         </ComboBox>
       </Grid>
-    </HBox>
+      <Folder gridHeight="11" gridWidth="126" name="docs" posX="0" posY="7">
+        <Page name="trans_group" text="Documents">
+          <Grid gridHeight="10" gridWidth="126" name="trans_grid" posX="0" posY="0">
+            <Table gridHeight="9" gridWidth="125" name="dl30_trans_tb" posX="1" posY="0" totalRows="5">
+              <Edit colName="date" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.date" posX="0" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="doc_no" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="dl30_trans.doc_no" posX="10" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="trans_type" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.trans_type" posX="30" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Type" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="doc_type" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.doc_type" posX="40" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="gross_val" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="dl30_trans.gross_val" posX="50" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Total Excl" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="vat" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="dl30_trans.vat" posX="64" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="VAT" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit defaultValue="0.00" fieldId="16" gridHeight="1" gridWidth="8" length="10" name="dl30_trans_tot_incl" posX="78" posY="0" tabIndex="-1" title="Total Incl" widget="Edit"/>
+              <Edit colName="notes" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="dl30_trans.notes" posX="86" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Notes" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+            </Table>
+          </Grid>
+        </Page>
+      </Folder>
+    </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyAGUAOABmADYAYgA0ADcALQBjAGQANQA0AC0ANABkADAAYQAtADgAYwBlAGEALQA1AGIAYgBhADUAMgAwADgAOQA0AGYANwB9wGYzM0PZmZ7AIzMzQZmZnj9ok3S8an76AQAAAEwAewBmADEAMwBjADEANgA5AGQALQBmAGQAMgBmAC0ANABkAGUAZAAtADgAZABiADEALQBiADgANAAwADMANABjADgAOAAzADMANwB9wDgAABIAAAXAFmZmdzMzOD9wYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmADEAMwBjADEANgA5AGQALQBmAGQAMgBmAC0ANABkAGUAZAAtADgAZABiADEALQBiADgANAAwADMANABjADgAOAAzADMANwB9wDgAABgAAAnAFmZmfMzM1j9wYk3S8an8AQAAAEwAewBjAGUAOQAwAGQAYgA3AGMALQAwAGYAMABmAC0ANAA1AGEAMwAtAGEAYgA1AGYALQBmADQAMABhAGIAYgBlADQAOQAxAGIAMQB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewAyAGUAOABmADYAYgA0ADcALQBjAGQANQA0AC0ANABkADAAYQAtADgAYwBlAGEALQA1AGIAYgBhADUAMgAwADgAOQA0AGYANwB9wGYzM0lmZm/AIzMzRmZmbz9ok3S8an76AQ==]]>
   </DiagramLayout>
 </ManagedForm>
