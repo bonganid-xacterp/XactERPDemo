@@ -4,13 +4,13 @@
     <TopMenuGroup name="tm_file" text="File">
       <LStr text="File"/>
       <TopMenuSeparator name="topmenuseparator1"/>
-      <TopMenuCommand name="tm_sb_exit" image="quit" text="Quit" acceleratorName="exit">
+      <TopMenuCommand name="tm_sb_exit" image="quit" text="Quit" acceleratorName="quit">
         <LStr text="Quit"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_dl" text="Debtors">
       <LStr text="Debtors"/>
-      <TopMenuCommand name="tm_sb_dl_add" image="open2" text="Debtors Enquiry">
+      <TopMenuCommand name="tm_sb_dl_add" image="open2" text="Debtors Enquiry" acceleratorName="open">
         <LStr text="Debtors Enquiry"/>
       </TopMenuCommand>
       <TopMenuCommand name="tm_sb_dl_list" image="open2" text="List Debtors" acceleratorName="open">
@@ -19,88 +19,84 @@
     </TopMenuGroup>
     <TopMenuGroup name="tm_cl" text="Creditors">
       <LStr text="Creditors"/>
-      <TopMenuCommand name="tm_sb_cl_add" text="Add Creditor">
+      <TopMenuCommand name="tm_sb_cl_add" image="open2" text="Add Creditor">
         <LStr text="Add Creditor"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sm_cl_list" text="List Creditors">
+      <TopMenuCommand name="tm_sm_cl_list" image="open2" text="List Creditors">
         <LStr text="List Creditors"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_st" text="Stock">
       <LStr text="Stock"/>
-      <TopMenuCommand name="tm_st_list" text="Stock Maintanance">
+      <TopMenuCommand name="tm_st_list" image="open2" text="Stock Maintanance">
         <LStr text="Stock Maintanance"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_st_cat" text="Stock Categories">
+      <TopMenuCommand name="tm_st_cat" image="open2" text="Stock Categories">
         <LStr text="Stock Categories"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_st_whs" text="Warehouses">
+      <TopMenuCommand name="tm_st_whs" image="open2" text="Warehouses">
         <LStr text="Warehouses"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_gl" tag="" text="Finance">
       <LStr text="Finance"/>
-      <TopMenuCommand name="tm_sm_gl" text="General Ledger">
+      <TopMenuCommand name="tm_sm_gl" image="open2" text="General Ledger">
         <LStr text="General Ledger"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sb_gl_jnl" text="Journals">
+      <TopMenuCommand name="tm_sb_gl_jnl" image="open2" text="Journals">
         <LStr text="Journals"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_sa" text="Sales">
       <LStr text="Sales"/>
-      <TopMenuGroup name="topmenugroup1" text="Quotations">
+      <TopMenuGroup name="topmenugroup1" image="open2" text="Quotations">
         <LStr text="Quotations"/>
         <TopMenuCommand name="tm_sb_sa_qt" text="">
           <LStr text=""/>
         </TopMenuCommand>
       </TopMenuGroup>
-      <TopMenuCommand name="tm_sb_sa_ord" text="Orders">
+      <TopMenuCommand name="tm_sb_sa_ord" image="open2" text="Orders">
         <LStr text="Orders"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sb_sa_inv" text="Invoices">
+      <TopMenuCommand name="tm_sb_sa_inv" image="open2" text="Invoices">
         <LStr text="Invoices"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sb_sa_crn" text="Credit Notes">
+      <TopMenuCommand name="tm_sb_sa_crn" image="open2" text="Credit Notes">
         <LStr text="Credit Notes"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_pa" text="Purchases">
       <LStr text="Purchases"/>
-      <TopMenuCommand name="tm_sb_pa_ord" text="Orders">
+      <TopMenuCommand name="tm_sb_pa_ord" image="open2" text="Orders">
         <LStr text="Orders"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sb_pa_inv" text="GRN">
+      <TopMenuCommand name="tm_sb_pa_inv" image="open2" text="GRN">
         <LStr text="GRN"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_sys" text="System">
       <LStr text="System"/>
-      <TopMenuCommand name="tm_sy_users" text="Users">
+      <TopMenuCommand name="tm_sy_users" image="open2" text="Users">
         <LStr text="Users"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sys_sb_roles" text="User Roles">
+      <TopMenuCommand name="tm_sys_sb_roles" image="open2" text="User Roles">
         <LStr text="User Roles"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sb_sys_perm" text="User Permissions">
+      <TopMenuCommand name="tm_sb_sys_perm" image="open2" text="User Permissions">
         <LStr text="User Permissions"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sb_sys_sett" text="Settings">
+      <TopMenuCommand name="tm_sb_sys_sett" image="open2" text="Settings">
         <LStr text="Settings"/>
       </TopMenuCommand>
-      <TopMenuCommand name="tm_sb_sys_logs" text="Logs">
+      <TopMenuCommand name="tm_sb_sys_logs" image="open2" text="Logs">
         <LStr text="Logs"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_app" text="Help">
       <LStr text="Help"/>
-      <TopMenuCommand name="tm_sy_about" text="About">
+      <TopMenuCommand name="tm_sy_about" image="fa-info-circle" text="About">
         <LStr text="About"/>
       </TopMenuCommand>
-    </TopMenuGroup>
-    <TopMenuGroup name="main" text="Main" hidden="1">
-      <LStr text="Main"/>
-      <TopMenuCommand name="container" hidden="1"/>
     </TopMenuGroup>
   </TopMenu>
   <LStr text=""/>

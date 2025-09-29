@@ -48,12 +48,12 @@
 </Fct>
 </File>
 <File n="src/_main/main_menu.4gl" s="2" ts="20250929112640754"/>
-<File n="src/_main/main_shell.4gl" s="2" ts="20250929115804552">
+<File n="src/_main/main_shell.4gl" s="2" ts="20250929131643518">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Dep t="src/dl/dl100_mast.4gl"/>
 <Fct c="10" el="32" l="29" n="confirm_exit()" t="F" v="pub"/>
 <Fct c="10" el="27" l="25" n="launch_child_window(module_name STRING)" t="F" v="pub"/>
-<Fct c="10" el="23" l="21" n="add_debtors()" t="F" v="pub">
+<Fct c="10" el="23" l="21" n="debtors()" t="F" v="pub">
 <Call c="21" i="dl100_mast" l="22" n="open_debtors" t="F"/>
 </Fct>
 <Fct c="10" el="18" l="4" n="main_application_menu()" t="F" v="pub">
@@ -64,9 +64,10 @@
 <File n="src/cl/cl100_mast.4gl" s="2" ts="20250929112641643">
 <Fct c="10" el="8" l="4" n="open_debtors()" t="F" v="pub"/>
 </File>
-<File n="src/cl/cl30_trans.4gl" s="2" ts="20250929112641766">
+<File n="src/cl/cl30_trans.4gl" s="2" ts="20250929131233090">
+<Dep t="src/utils/utils_ui.4gl"/>
 <Fct c="10" el="15" l="3" n="show_cl_trans()" t="F" v="pub">
-<Call c="25" i="sy920_ui_utils" l="6" n="set_page_title" t="F"/>
+<Call c="19" i="utils_ui" l="6" n="set_page_title" t="F"/>
 </Fct>
 </File>
 <File n="database/xactapp_db_maint.4gl" s="2" ts="20250929112641799">
