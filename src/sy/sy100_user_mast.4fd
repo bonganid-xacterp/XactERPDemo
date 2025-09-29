@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{d49d6607-804d-46a9-bf92-66e4f0f07459}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy00_user" name="record1" uid="{cf4b484d-4845-40a3-b5ce-19c126f498e7}">
+    <RecordField colName="username" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy00_user.username" sqlTabName="sy00_user" uid="{cbafd763-7b2e-4a31-b99f-985b3706e435}"/>
+    <RecordField colName="full_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy00_user.full_name" sqlTabName="sy00_user" uid="{33bfb2f1-f0c8-4275-8222-0b661651abf1}"/>
+    <RecordField colName="phone" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy00_user.phone" sqlTabName="sy00_user" uid="{7f90d31c-bfa0-4bdb-99a0-37b10d2d9b21}"/>
+    <RecordField colName="email" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy00_user.email" sqlTabName="sy00_user" uid="{b06e105c-2826-473c-b2d5-e1d0a8692e55}"/>
+    <RecordField colName="status" defaultValue="1" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sy00_user.status" sqlTabName="sy00_user" uid="{22113aaa-6075-452d-afcb-54ccc8467aad}"/>
+    <RecordField colName="role_id" fieldIdRef="7" fieldType="NON_DATABASE" name="lbl_sy00_user_role" sqlTabName="sy00_user" uid="{a98fd463-f139-4bba-9a1c-26c26568225a}"/>
+  </Record>
+  <Form gridHeight="7" gridWidth="88" name="form" text="Form">
+    <HBox gridHeight="6" gridWidth="88" name="hbox1" posX="0" posY="0">
+      <Grid gridHeight="6" gridWidth="84" name="xactapp_db1" posX="2" posY="0">
+        <Label gridHeight="1" gridWidth="8" name="lbl_sy00_user_user" posX="1" posY="1" text="Username">
+          <Initializer text="dbschema:sy00_user.username/@label"/>
+        </Label>
+        <Edit colName="username" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy00_user.username" posX="10" posY="1" scroll="true" sqlTabName="sy00_user" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="9" name="lbl_sy00_user_name" posX="41" posY="1" text="Full Name">
+          <Initializer text="dbschema:sy00_user.full_name/@label"/>
+        </Label>
+        <Edit colName="full_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy00_user.full_name" posX="51" posY="1" scroll="true" sqlTabName="sy00_user" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="8" name="lbl_sy00_user_phone" posX="1" posY="2" text="Phone Number">
+          <Initializer text="dbschema:sy00_user.phone/@label"/>
+        </Label>
+        <Edit colName="phone" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy00_user.phone" posX="10" posY="2" scroll="true" sqlTabName="sy00_user" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="9" name="lbl_sy00_user_email" posX="41" posY="2" text="Email">
+          <Initializer text="dbschema:sy00_user.email/@label"/>
+        </Label>
+        <Edit colName="email" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy00_user.email" posX="51" posY="2" scroll="true" sqlTabName="sy00_user" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="8" name="lbl_sy00_user_role_id" posX="1" posY="3" text="User Role ">
+          <Initializer text="dbschema:sy00_user.role_id/@label"/>
+        </Label>
+        <ButtonEdit action="role_search" colName="role_id" fieldId="7" fieldType="NON_DATABASE" gridHeight="1" gridWidth="20" image="zoom" length="1" name="lbl_sy00_user_role" notNull="true" posX="10" posY="3" required="true" scroll="true" sqlTabName="sy00_user" sqlType="BIGINT" tabIndex="-1" widget="ButtonEdit">
+          <Initializer action="role_search" title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ButtonEdit>
+        <Label gridHeight="1" gridWidth="9" name="lbl_sy00_user_status" posX="41" posY="3" text="Status">
+          <Initializer text="dbschema:sy00_user.status/@label"/>
+        </Label>
+        <ComboBox colName="status" defaultValue="1" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="Active, Inactive" name="sy00_user.status" posX="51" posY="3" scroll="true" sqlTabName="sy00_user" tabIndex="-1" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          <Item lstrtext="false" name="1" text="Active"/>
+          <Item lstrtext="false" name="0" text="Inactive"/>
+        </ComboBox>
+        <Button gridHeight="1" gridWidth="10" name="button1" posX="51" posY="5" tabIndex="-1" text="Change Password"/>
+      </Grid>
+    </HBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewBjAGYANABiADQAOAA0AGQALQA0ADgANAA1AC0ANAAwAGEAMwAtAGIANQBjAGUALQAxADkAYwAxADIANgBmADQAOQA4AGUANwB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

@@ -4,20 +4,7 @@
     <Node path="xacterpdemo.4pw" type="pm/main-project"/>
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/dl30_trans" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/res" type="pm/library"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sa42_hist" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/st02_wh_cat" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy00_user" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy04_role" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy06_role_perm" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy100_login" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy40_hist" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy900_utils" type="pm/library"/>
   </ExpandedNodes>
-  <OpenDocuments>
-    <Document container="true" filePath="src/st02_wh_cat/st02_wh_cat.4fd" locator="" module="mod-fd"/>
-  </OpenDocuments>
-  <CurrentDocument filePath="src/st02_wh_cat/st02_wh_cat.4fd" module="mod-fd"/>
+  <OpenDocuments/>
+  <CurrentDocument filePath="" module="mod-wp"/>
 </WorkspaceViewState>

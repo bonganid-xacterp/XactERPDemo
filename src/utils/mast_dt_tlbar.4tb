@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968"?>
+<ToolBar>
+    <ToolBarItem image="new.png" name="new" text="New"/>
+    <ToolBarItem image="edit.png" name="edit" text="Edit"/>
+    <ToolBarItem image="delete.png" name="delete" text="Delete"/>
+    <ToolBarItem image="save.png" name="save" text="Save"/>
+    <ToolBarItem image="cancel.png" name="cancel" text="Cancel"/>
+    <ToolBarItem image="search.png" name="search" text="Search"/>
+    <ToolBarItem image="exit.png" name="exit" text="Exit"/>
+    <ToolBarSeparator/>
+    <ToolBarItem image="find" name="zoom" text="Search"/>
+    <ToolBarSeparator/>
+    <ToolBarItem image="quit" name="exit" text="Exit"/>
+</ToolBar>

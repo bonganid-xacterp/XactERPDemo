@@ -797,5 +797,3 @@ FUNCTION db_add_indexes()
     EXECUTE IMMEDIATE "CREATE INDEX st30_idx_stock_date ON st30_trans(stock_id, txn_date)"
 
 END FUNCTION
-
-

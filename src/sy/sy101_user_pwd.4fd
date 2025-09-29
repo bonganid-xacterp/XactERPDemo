@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{b659f69f-92f4-49c4-9d27-b0b0b47ad70c}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record name="record1" uid="{94a519e2-f2ad-496d-b03f-650322e9d5e1}">
+    <RecordField colName="password" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy00_user.password" sqlTabName="sy00_user" uid="{827b8b24-848d-4ef0-9b82-4cba4c59a9e6}"/>
+    <RecordField fieldIdRef="2" fieldType="NON_DATABASE" length="255" name="new_password" sqlType="VARCHAR" uid="{e1a11d57-7f37-4465-81b8-aed27e3ab977}"/>
+    <RecordField colName="password" fieldIdRef="3" fieldType="TABLE_ALIAS" name="sy00_user2.password" sqlTabName="sy00_user" table_alias_name="sy00_user2" uid="{e3d6f0df-d384-4822-91bb-81fd0fbdd820}"/>
+  </Record>
+  <Form gridHeight="11" gridWidth="51" name="form" text="Change Password">
+    <HBox gridHeight="10" gridWidth="50" name="hbox1" posX="0" posY="0">
+      <VBox gridHeight="10" gridWidth="46" name="vbox1" posX="2" posY="0">
+        <Grid gridHeight="8" gridWidth="46" name="grid1" posX="0" posY="1">
+          <Group gridHeight="7" gridWidth="38" name="grp_pwd" posX="1" posY="1" text="Change Password">
+            <Label comment="Leave Blank if there are no changes" gridHeight="1" gridWidth="9" name="sy00_user_password_label1" posX="1" posY="1" text="Current Password">
+              <Initializer text="dbschema:sy00_user.password/@label"/>
+            </Label>
+            <Edit colName="password" comment="Leave blank if not changing it" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="18" name="sy00_user.password" posX="11" posY="1" scroll="true" sqlTabName="sy00_user" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Label comment="Leave Blank if there are no changes" gridHeight="1" gridWidth="9" name="sy00_user_password_label2" posX="1" posY="2" text="New Password">
+              <Initializer text="dbschema:sy00_user.password/@label"/>
+            </Label>
+            <Edit comment="" fieldId="2" fieldType="NON_DATABASE" gridHeight="1" gridWidth="18" length="255" name="new_password" posX="11" posY="2" scroll="true" sqlType="VARCHAR" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Label comment="Leave Blank if there are no changes" gridHeight="1" gridWidth="9" name="sy00_user_password_label3" posX="1" posY="3" text="Confirm Password">
+              <Initializer text="dbschema:sy00_user.password/@label"/>
+            </Label>
+            <Edit colName="password" comment="Leave blank if not changing it" fieldId="3" fieldType="TABLE_ALIAS" gridHeight="1" gridWidth="18" name="sy00_user2.password" posX="11" posY="3" scroll="true" sqlTabName="sy00_user" tabIndex="-1" table_alias_name="sy00_user2" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Button gridHeight="1" gridWidth="10" name="btn_change_pwd" posX="7" posY="5" tabIndex="-1" text="Submit"/>
+            <Button gridHeight="1" gridWidth="10" name="btn_cancel" posX="19" posY="5" tabIndex="-1" text="Cancel"/>
+          </Group>
+        </Grid>
+      </VBox>
+    </HBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA5ADQAYQA1ADEAOQBlADIALQBmADIAYQBkAC0ANAA5ADYAZAAtAGIAMAAzAGYALQA2ADUAMAAzADIAMgBlADkAZAA1AGUAMQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

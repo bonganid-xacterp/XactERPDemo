@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{492e6d54-6cd0-49fb-bc78-7f0bd5d9ee91}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy04_role" name="record1" uid="{6e4f5feb-3a45-484c-9cf2-bd610525a81c}">
+    <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy04_role.id" sqlTabName="sy04_role" uid="{9324a1ce-8c2c-4bdf-bab6-a4fb13c65167}"/>
+    <RecordField colName="role_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy04_role.role_name" sqlTabName="sy04_role" uid="{0418c8bf-21b9-40cb-8d52-052cab228db1}"/>
+  </Record>
+  <Form gridHeight="9" gridWidth="55" name="frm_roles_lk" text="Roles Lookup">
+    <VBox gridHeight="8" gridWidth="54" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="6" gridWidth="54" name="grid1" posX="0" posY="1">
+        <Table gridHeight="6" gridWidth="53" name="xactapp_db1" posX="1" posY="0" totalRows="5">
+          <Edit colName="id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy04_role.id" posX="1" posY="0" scroll="true" sqlTabName="sy04_role" tabIndex="-1" title="#ID" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="role_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy04_role.role_name" posX="21" posY="0" scroll="true" sqlTabName="sy04_role" tabIndex="-1" title="Name" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+        </Table>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA2AGUANABmADUAZgBlAGIALQAzAGEANAA1AC0ANAA4ADQAYwAtADkAYwBmADIALQBiAGQANgAxADAANQAyADUAYQA4ADEAYwB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>
