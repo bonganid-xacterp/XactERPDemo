@@ -16,7 +16,7 @@
     <RecordField colName="balance" fieldIdRef="10" fieldType="TABLE_COLUMN" name="dl01_mast.balance" sqlTabName="dl01_mast" uid="{71432a79-22a5-4393-bc19-3cf3b31e1c37}"/>
   </Record>
   <Record masterTable="dl30_trans" name="record5" uid="{fd34e9c0-bf2a-46da-8ce2-5b17a0d7c9ec}">
-    <RecordField colName="txn_date" fieldIdRef="11" fieldType="TABLE_COLUMN" name="dl30_trans.txn_date" sqlTabName="dl30_trans" uid="{63593575-7d84-4c00-8b70-ad081dfa36d2}"/>
+    <RecordField colName="date" fieldIdRef="11" fieldType="TABLE_COLUMN" name="dl30_trans.date" sqlTabName="dl30_trans" uid="{63593575-7d84-4c00-8b70-ad081dfa36d2}"/>
     <RecordField colName="trans_type" fieldIdRef="12" fieldType="TABLE_COLUMN" name="dl30_trans.trans_type" sqlTabName="dl30_trans" uid="{1f50ec04-66be-42b1-a5b3-51f064d3b587}"/>
     <RecordField colName="doc_type" fieldIdRef="13" fieldType="TABLE_COLUMN" name="dl30_trans.doc_type" sqlTabName="dl30_trans" uid="{9ed89a99-449b-4546-bf40-8cdce3c7dfd3}"/>
     <RecordField colName="doc_no" fieldIdRef="14" fieldType="TABLE_COLUMN" name="dl30_trans.doc_no" sqlTabName="dl30_trans" uid="{985193a4-fa0f-42aa-9b50-abdfb2e2089d}"/>
@@ -63,7 +63,7 @@
         <Page name="trans_group" text="Documents">
           <Grid gridHeight="10" gridWidth="126" name="trans_grid" posX="0" posY="0">
             <Table gridHeight="9" gridWidth="125" name="dl30_trans_tb" posX="1" posY="0" totalRows="5">
-              <Edit colName="txn_date" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.txn_date" posX="0" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
+              <Edit colName="date" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.date" posX="0" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
               <Edit colName="doc_no" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="dl30_trans.doc_no" posX="10" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
@@ -92,6 +92,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM0Q5mZ7AKzMzR5mZnz9QYk3S8an8AQAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM0nmZm/AKzMzTmZmcD9QYk3S8an8AQAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQ==]]>
   </DiagramLayout>
 </ManagedForm>

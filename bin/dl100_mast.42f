@@ -85,7 +85,7 @@
         <LStr text="Documents"/>
         <Grid name="trans_grid" width="126" height="10">
           <Table pageSize="5" name="dl30_trans_tb" width="125" posY="0" posX="1" gridWidth="125" gridHeight="9" tabName="+tn_0">
-            <TableColumn name="dl30_trans.txn_date" colName="txn_date" sqlType="DATE" required="1" notNull="1" fieldId="10" sqlTabName="dl30_trans" text="Trans Date" tabIndex="11">
+            <TableColumn name="dl30_trans.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="10" sqlTabName="dl30_trans" text="Trans Date" tabIndex="11">
               <Edit width="10" scroll="1"/>
               <LStr text="Trans Date"/>
             </TableColumn>
@@ -123,7 +123,7 @@
     </Folder>
   </VBox>
   <RecordView tabName="dl30_trans">
-    <Link colName="txn_date" fieldIdRef="10"/>
+    <Link colName="date" fieldIdRef="10"/>
     <Link colName="doc_no" fieldIdRef="11"/>
     <Link colName="trans_type" fieldIdRef="12"/>
     <Link colName="doc_type" fieldIdRef="13"/>
@@ -159,7 +159,7 @@
     <Link colName="balance" fieldIdRef="9"/>
   </RecordView>
   <RecordView tabName="record5">
-    <Link colName="txn_date" fieldIdRef="10"/>
+    <Link colName="date" fieldIdRef="10"/>
     <Link colName="trans_type" fieldIdRef="12"/>
     <Link colName="doc_type" fieldIdRef="13"/>
     <Link colName="doc_no" fieldIdRef="11"/>

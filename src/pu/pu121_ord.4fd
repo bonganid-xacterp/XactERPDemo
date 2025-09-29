@@ -5,14 +5,15 @@
   </AGSettings>
   <Record masterTable="pu30_hdr" name="record1" uid="{fb70b872-169f-401b-9279-671fe3bc85b5}">
     <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="pu30_hdr.doc_no" sqlTabName="pu30_hdr" uid="{ec8ca13f-6214-4089-93c3-fac8dc6a983b}"/>
-    <RecordField colName="creditor_id" fieldIdRef="2" fieldType="TABLE_COLUMN" name="pu30_hdr.creditor_id" sqlTabName="pu30_hdr" uid="{66676733-674f-474c-914c-3b5174b0d43a}"/>
-    <RecordField colName="txn_date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="pu30_hdr.txn_date" sqlTabName="pu30_hdr" uid="{517d7bd0-7937-462a-b05a-c62baa2f6b90}"/>
+    <RecordField colName="acc_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="pu30_hdr.acc_code" sqlTabName="pu30_hdr" uid="{66676733-674f-474c-914c-3b5174b0d43a}"/>
+    <RecordField colName="date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="pu30_hdr.date" sqlTabName="pu30_hdr" uid="{517d7bd0-7937-462a-b05a-c62baa2f6b90}"/>
     <RecordField colName="total_value" fieldIdRef="4" fieldType="TABLE_COLUMN" name="pu30_hdr.total_value" sqlTabName="pu30_hdr" uid="{b362ec17-c297-4284-8d6b-79c5674ed4c4}"/>
     <RecordField colName="vat" fieldIdRef="5" fieldType="TABLE_COLUMN" name="pu30_hdr.vat" sqlTabName="pu30_hdr" uid="{533bc268-4d8f-4e0f-bada-8424b8c102b6}"/>
     <RecordField colName="status" fieldIdRef="6" fieldType="TABLE_COLUMN" name="pu30_hdr.status" sqlTabName="pu30_hdr" uid="{cb8d86e0-d12d-4ed4-9d03-c6e6a3d515f0}"/>
   </Record>
   <Record masterTable="pu30_det" name="record2" uid="{64de5626-18e6-4ea4-84c1-c9c8f1a04058}"/>
-  <Form gridHeight="25" gridWidth="163" name="form" text="Form">
+  <Record name="record3" uid="{daca7526-cfdd-4e89-ad25-f2b9200f056a}"/>
+  <Form gridHeight="25" gridWidth="81" name="form" text="Form">
     <HBox gridHeight="5" gridWidth="80" name="hbox1" posX="0" posY="0">
       <Grid gridHeight="5" gridWidth="76" name="xactapp_db1" posX="2" posY="0">
         <Label gridHeight="1" gridWidth="10" name="pu30_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
@@ -24,13 +25,13 @@
         <Label gridHeight="1" gridWidth="10" name="pu30_hdr_creditor_id_label1" posX="27" posY="1" text="Creditor">
           <Initializer text="dbschema:pu30_hdr.creditor_id/@label"/>
         </Label>
-        <ButtonEdit colName="creditor_id" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="pu30_hdr.creditor_id" posX="38" posY="1" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="Creditor" widget="ButtonEdit">
+        <ButtonEdit colName="acc_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="pu30_hdr.acc_code" posX="38" posY="1" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="Creditor" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ButtonEdit>
         <Label gridHeight="1" gridWidth="10" name="pu30_hdr_txn_date_label1" posX="1" posY="2" text="Trans Date">
           <Initializer text="dbschema:pu30_hdr.txn_date/@label"/>
         </Label>
-        <DateEdit colName="txn_date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_hdr.txn_date" posX="12" posY="2" sqlTabName="pu30_hdr" tabIndex="-1" title="Trans Date" widget="DateEdit">
+        <DateEdit colName="date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_hdr.date" posX="12" posY="2" sqlTabName="pu30_hdr" tabIndex="-1" title="Trans Date" widget="DateEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </DateEdit>
         <Label gridHeight="1" gridWidth="10" name="pu30_hdr_total_value_label1" posX="27" posY="2" text="Doc Total">
@@ -55,6 +56,6 @@
     </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmAGIANwAwAGIAOAA3ADIALQAxADYAOQBmAC0ANAAwADEAYgAtADkAMgA3ADkALQA2ADcAMQBmAGUAMwBiAGMAOAA1AGIANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA2ADQAZABlADUANgAyADYALQAxADgAZQA2AC0ANABlAGEANAAtADgANABjADEALQBjADkAYwA4AGYAMQBhADAANAAwADUAOAB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmAGIANwAwAGIAOAA3ADIALQAxADYAOQBmAC0ANAAwADEAYgAtADkAMgA3ADkALQA2ADcAMQBmAGUAMwBiAGMAOAA1AGIANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewBkAGEAYwBhADcANQAyADYALQBjAGYAZABkAC0ANABlADgAOQAtAGEAZAAyADUALQBmADIAYgA5ADIAMAAwAGYAMAA1ADYAYQB9QDAAAAwAAANAMAAADAAAAwAAAAAAAAAAAQAAAEwAewA2ADQAZABlADUANgAyADYALQAxADgAZQA2AC0ANABlAGEANAAtADgANABjADEALQBjADkAYwA4AGYAMQBhADAANAAwADUAOAB9QCAAABAAAAZAIAAAEAAABgAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

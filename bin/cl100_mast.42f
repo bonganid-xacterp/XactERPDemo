@@ -7,7 +7,7 @@
         <LStr text="Account Code"/>
       </Label>
       <FormField name="cl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="cl01_mast" tabIndex="1">
-        <Edit width="20" scroll="1" posY="1" posX="10" gridWidth="20"/>
+        <ButtonEdit width="18" action="zoom" autoNext="1" scroll="1" posY="1" posX="10" gridWidth="20"/>
       </FormField>
       <Label name="lbl_cl01_mast_supp_name" width="9" text="Supplier Name" posY="1" posX="41" gridWidth="9">
         <LStr text="Supplier Name"/>

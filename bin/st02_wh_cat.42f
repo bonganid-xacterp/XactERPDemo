@@ -6,25 +6,25 @@
       <Label name="st02_mast_cat_code_label1" width="11" text="Warehouse Category" posY="1" posX="1" gridWidth="11">
         <LStr text="Warehouse Category"/>
       </Label>
-      <FormField name="st02_mast.cat_code" colName="cat_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="st02_mast" tabIndex="1">
+      <FormField name="st_cat.cat_code" colName="cat_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="st_cat" tabIndex="1">
         <Edit width="20" scroll="1" posY="1" posX="13" gridWidth="20"/>
       </FormField>
       <Label name="st02_mast_cat_name_label1" width="8" text="Category Name" posY="1" posX="44" gridWidth="8">
         <LStr text="Category Name"/>
       </Label>
-      <FormField name="st02_mast.cat_name" colName="cat_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="st02_mast" tabIndex="2">
+      <FormField name="st_cat.cat_name" colName="cat_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="st_cat" tabIndex="2">
         <Edit width="30" scroll="1" posY="1" posX="53" gridWidth="30"/>
       </FormField>
       <Label name="st02_mast_description_label1" width="11" text="Description" posY="2" posX="1" gridWidth="11">
         <LStr text="Description"/>
       </Label>
-      <FormField name="st02_mast.description" colName="description" sqlType="TEXT" fieldId="2" sqlTabName="st02_mast" tabIndex="3">
+      <FormField name="st_cat.description" colName="description" sqlType="TEXT" fieldId="2" sqlTabName="st_cat" tabIndex="3">
         <Edit width="30" scroll="1" posY="2" posX="13" gridWidth="30"/>
       </FormField>
       <Label name="st02_mast_status_label1" width="8" text="Status" posY="2" posX="44" gridWidth="8">
         <LStr text="Status"/>
       </Label>
-      <FormField name="st02_mast.status" colName="status" sqlType="SMALLINT" fieldId="3" sqlTabName="st02_mast" notNull="1" required="1" tabIndex="4">
+      <FormField name="st_cat.status" colName="status" sqlType="SMALLINT" fieldId="3" sqlTabName="st_cat" notNull="1" required="1" tabIndex="4">
         <ComboBox width="8" scroll="1" posY="2" posX="53" gridWidth="10">
           <Item name="0" text="Active"/>
           <Item name="1" text="Inactive"/>
@@ -32,7 +32,7 @@
       </FormField>
     </Grid>
   </HBox>
-  <RecordView tabName="st02_mast">
+  <RecordView tabName="st_cat">
     <Link colName="cat_code" fieldIdRef="0"/>
     <Link colName="cat_name" fieldIdRef="1"/>
     <Link colName="description" fieldIdRef="2"/>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="main_shell.tmp" build="3.20.14" sqlDbName="xactapp_db" text="" style="" windowStyle="" version="0.1" width="129" height="25">
+<Form name="main_shell.tmp" build="3.20.14" sqlDbName="xactapp_db" text="" style="" windowStyle="" version="0.1" width="103" height="23">
   <TopMenu name="top_menu">
     <TopMenuGroup name="tm_file" text="File">
       <LStr text="File"/>
@@ -100,15 +100,13 @@
     </TopMenuGroup>
   </TopMenu>
   <LStr text=""/>
-  <Grid name="main_grid" width="129" height="25" hidden="1">
+  <Grid name="main_grid" width="103" height="23" hidden="1">
     <Label name="lbl_title" width="30" text="" fontPitch="variable" justify="center" posY="0" posX="1" gridWidth="30">
       <LStr text=""/>
     </Label>
-    <Label name="lbl_version" width="22" text="" posY="0" posX="60" gridWidth="22">
+    <Label name="lbl_version" width="22" text="" posY="0" posX="80" gridWidth="22">
       <LStr text=""/>
     </Label>
-    <Group name="grp_workarea" text="" hidden="1" gridChildrenInParent="1" posY="1" posX="1" gridWidth="128" gridHeight="21">
-      <LStr text=""/>
-    </Group>
+    <ScrollGrid wantFixedPageSize="1" name="grp_workarea" hidden="1" gridChildrenInParent="1" posY="1" posX="1" gridWidth="100" gridHeight="21"/>
   </Grid>
 </Form>

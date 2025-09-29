@@ -21,9 +21,9 @@
         <Label gridHeight="1" gridWidth="8" name="lbl_cl01_mast_acc_code" posX="1" posY="1" text="Account Code">
           <Initializer text="dbschema:cl01_mast.acc_code/@label"/>
         </Label>
-        <Edit colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="cl01_mast.acc_code" posX="10" posY="1" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" widget="Edit">
+        <ButtonEdit action="zoom" autoNext="true" colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="cl01_mast.acc_code" posX="10" posY="1" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
+        </ButtonEdit>
         <Label gridHeight="1" gridWidth="9" name="lbl_cl01_mast_supp_name" posX="41" posY="1" text="Supplier Name">
           <Initializer text="dbschema:cl01_mast.supp_name/@label"/>
         </Label>
@@ -78,6 +78,6 @@
     </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmADEAMwBjADEANgA5AGQALQBmAGQAMgBmAC0ANABkAGUAZAAtADgAZABiADEALQBiADgANAAwADMANABjADgAOAAzADMANwB9wDgAAAwAAALAFmZmcZmZmz9wYk3S8an8AQAAAEwAewAyAGUAOABmADYAYgA0ADcALQBjAGQANQA0AC0ANABkADAAYQAtADgAYwBlAGEALQA1AGIAYgBhADUAMgAwADgAOQA0AGYANwB9wGYzMz5MzM7AIzMzPMzMzj9ok3S8an76AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyAGUAOABmADYAYgA0ADcALQBjAGQANQA0AC0ANABkADAAYQAtADgAYwBlAGEALQA1AGIAYgBhADUAMgAwADgAOQA0AGYANwB9wGYzM0PZmZ7AIzMzQZmZnj9ok3S8an76AQAAAEwAewBmADEAMwBjADEANgA5AGQALQBmAGQAMgBmAC0ANABkAGUAZAAtADgAZABiADEALQBiADgANAAwADMANABjADgAOAAzADMANwB9wDgAABIAAAXAFmZmdzMzOD9wYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

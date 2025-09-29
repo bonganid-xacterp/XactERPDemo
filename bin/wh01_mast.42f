@@ -21,17 +21,11 @@
       <FormField name="wh01_mast.location" colName="location" sqlType="VARCHAR(100)" fieldId="2" sqlTabName="wh01_mast" tabIndex="3">
         <Edit width="30" scroll="1" posY="2" posX="10" gridWidth="30"/>
       </FormField>
-      <Label name="wh01_mast_safety_tag_label1" width="10" text="Safety Tag" posY="2" posX="41" gridWidth="10">
-        <LStr text="Safety Tag"/>
-      </Label>
-      <FormField name="wh01_mast.safety_tag" colName="safety_tag" sqlType="VARCHAR(50)" fieldId="3" sqlTabName="wh01_mast" tabIndex="4">
-        <Edit width="30" posY="2" posX="52" gridWidth="30"/>
-      </FormField>
-      <Label name="wh01_mast_status_label1" width="8" text="Status" posY="3" posX="1" gridWidth="8">
+      <Label name="wh01_mast_status_label1" width="10" text="Status" posY="2" posX="41" gridWidth="10">
         <LStr text="Status"/>
       </Label>
-      <FormField name="wh01_mast.status" colName="status" sqlType="SMALLINT" fieldId="4" sqlTabName="wh01_mast" tabIndex="5">
-        <ComboBox width="8" scroll="1" posY="3" posX="10" gridWidth="10"/>
+      <FormField name="wh01_mast.status" colName="status" sqlType="SMALLINT" fieldId="3" sqlTabName="wh01_mast" tabIndex="4">
+        <ComboBox width="8" scroll="1" posY="2" posX="52" gridWidth="10"/>
       </FormField>
     </Grid>
   </HBox>
@@ -39,14 +33,12 @@
     <Link colName="wh_code" fieldIdRef="0"/>
     <Link colName="wh_name" fieldIdRef="1"/>
     <Link colName="location" fieldIdRef="2"/>
-    <Link colName="safety_tag" fieldIdRef="3"/>
-    <Link colName="status" fieldIdRef="4"/>
+    <Link colName="status" fieldIdRef="3"/>
   </RecordView>
   <RecordView tabName="record1">
     <Link colName="wh_code" fieldIdRef="0"/>
     <Link colName="wh_name" fieldIdRef="1"/>
     <Link colName="location" fieldIdRef="2"/>
-    <Link colName="safety_tag" fieldIdRef="3"/>
-    <Link colName="status" fieldIdRef="4"/>
+    <Link colName="status" fieldIdRef="3"/>
   </RecordView>
 </Form>

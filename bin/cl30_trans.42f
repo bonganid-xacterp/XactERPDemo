@@ -62,7 +62,7 @@
       <Page name="trans_group" text="Documents">
         <LStr text="Documents"/>
         <Table pageSize="5" name="xactapp_db1" tabName="record3">
-          <TableColumn name="cl30_trans.txn_date" colName="txn_date" sqlType="DATE" required="1" notNull="1" fieldId="9" sqlTabName="cl30_trans" text="Trans Date" tabIndex="10">
+          <TableColumn name="cl30_trans.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="9" sqlTabName="cl30_trans" text="Trans Date" tabIndex="10">
             <Edit width="10" scroll="1"/>
             <LStr text="Trans Date"/>
           </TableColumn>
@@ -108,7 +108,7 @@
     <Link colName="address3" fieldIdRef="7"/>
   </RecordView>
   <RecordView tabName="cl30_trans">
-    <Link colName="txn_date" fieldIdRef="9"/>
+    <Link colName="date" fieldIdRef="9"/>
     <Link colName="trans_type" fieldIdRef="10"/>
     <Link colName="doc_type" fieldIdRef="11"/>
     <Link colName="doc_no" fieldIdRef="12"/>

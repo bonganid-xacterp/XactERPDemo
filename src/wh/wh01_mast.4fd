@@ -7,7 +7,6 @@
     <RecordField colName="wh_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wh01_mast.wh_code" sqlTabName="wh01_mast" uid="{c8f68739-95a6-4ec9-8a3c-48c96373b2bb}"/>
     <RecordField colName="wh_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wh01_mast.wh_name" sqlTabName="wh01_mast" uid="{1249028e-4755-4b28-8eb5-ad766000f3f2}"/>
     <RecordField colName="location" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wh01_mast.location" sqlTabName="wh01_mast" uid="{12e7da7c-1052-48d8-bb2a-de63f507621a}"/>
-    <RecordField colName="safety_tag" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wh01_mast.safety_tag" sqlTabName="wh01_mast" uid="{4c24a1cd-5e0f-4e38-bc86-e97563f8168b}"/>
     <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="wh01_mast.status" sqlTabName="wh01_mast" uid="{7a7a8838-656c-4378-a7a6-0c7fa3d440c9}"/>
   </Record>
   <Form gridHeight="25" gridWidth="86" name="frm_whs" text="Warehouse">
@@ -31,16 +30,10 @@
         <Edit colName="location" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="wh01_mast.location" posX="10" posY="2" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Location" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="10" name="wh01_mast_safety_tag_label1" posX="41" posY="2" text="Safety Tag">
-          <Initializer text="dbschema:wh01_mast.safety_tag/@label"/>
-        </Label>
-        <Edit colName="safety_tag" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="wh01_mast.safety_tag" posX="52" posY="2" sqlTabName="wh01_mast" tabIndex="-1" title="Safety Tag" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="8" name="wh01_mast_status_label1" posX="1" posY="3" text="Status">
+        <Label gridHeight="1" gridWidth="10" name="wh01_mast_status_label1" posX="41" posY="2" text="Status">
           <Initializer text="dbschema:wh01_mast.status/@label"/>
         </Label>
-        <ComboBox colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="" name="wh01_mast.status" posX="10" posY="3" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Status" widget="ComboBox">
+        <ComboBox colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="" name="wh01_mast.status" posX="52" posY="2" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Status" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ComboBox>
       </Grid>

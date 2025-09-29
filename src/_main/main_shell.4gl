@@ -8,8 +8,8 @@ FUNCTION main_application_menu()
 
     DISPLAY 'ver 1.0'
 --
-    MENU "Main Menu" ATTRIBUTES(STYLE = "")
---
+    MENU "" ATTRIBUTES(STYLE = "" )
+
         COMMAND "exit" "Exit System"
             IF confirm_exit() THEN
                 EXIT MENU

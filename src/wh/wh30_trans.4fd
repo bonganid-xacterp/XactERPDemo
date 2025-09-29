@@ -3,43 +3,51 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="wh30_trans" name="record1" uid="{f3ec3b12-98af-4b55-9379-c9b394dcd505}">
-    <RecordField colName="wh_id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wh30_trans.wh_id" sqlTabName="wh30_trans" uid="{1c4fe757-9f44-4b6d-b349-e53426168c32}"/>
-    <RecordField colName="stock_id" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wh30_trans.stock_id" sqlTabName="wh30_trans" uid="{7dfd1bfc-6782-4c9a-be5a-22e6dab69ac7}"/>
-    <RecordField colName="txn_date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wh30_trans.txn_date" sqlTabName="wh30_trans" uid="{df692f74-2265-4fd2-a0f6-4027bf1f3464}"/>
-    <RecordField colName="direction" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wh30_trans.direction" sqlTabName="wh30_trans" uid="{c83b05fe-eafe-4574-9b64-112757bcf0ef}"/>
-    <RecordField colName="qty" fieldIdRef="5" fieldType="TABLE_COLUMN" name="wh30_trans.qty" sqlTabName="wh30_trans" uid="{e6a2c743-3dc8-4cd5-974d-92650d8706f6}"/>
-    <RecordField colName="doc_type" fieldIdRef="6" fieldType="TABLE_COLUMN" name="wh30_trans.doc_type" sqlTabName="wh30_trans" uid="{3c70f00a-e203-4c94-891c-beef11c82304}"/>
-    <RecordField colName="doc_no" fieldIdRef="7" fieldType="TABLE_COLUMN" name="wh30_trans.doc_no" sqlTabName="wh30_trans" uid="{61406891-db99-4f3b-9eaa-936ac9ded5cf}"/>
+  <Record masterTable="wh30_trans" name="record1" uid="{f3ec3b12-98af-4b55-9379-c9b394dcd505}"/>
+  <Record masterTable="wh30_hdr" name="record2" uid="{e46bd3f2-9d13-42c3-a71b-d55383458afe}">
+    <RecordField colName="trans_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wh30_hdr.trans_no" sqlTabName="wh30_hdr" uid="{254983f4-f1ff-4cf7-82d8-193e451cbd22}"/>
+    <RecordField colName="from_wh" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wh30_hdr.from_wh" sqlTabName="wh30_hdr" uid="{ab94095e-ae1d-434f-b3fb-423c1854d91a}"/>
+    <RecordField colName="to_wh" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wh30_hdr.to_wh" sqlTabName="wh30_hdr" uid="{7b28e85c-aa9c-42e2-86f3-22f60a4af511}"/>
+    <RecordField colName="trans_date" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wh30_hdr.trans_date" sqlTabName="wh30_hdr" uid="{6022e456-db80-4c26-b0c3-0ead05f92507}"/>
+    <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="wh30_hdr.status" sqlTabName="wh30_hdr" uid="{58303ff4-73a0-4524-9526-8d6ed957fef8}"/>
   </Record>
   <Form gridHeight="25" gridWidth="105" name="form" text="Warehouse Transactions">
     <VBox gridHeight="20" gridWidth="105" name="vbox1" posX="0" posY="0">
-      <Table gridHeight="18" gridWidth="105" name="xactapp_db1" posX="0" posY="1" totalRows="5">
-        <Edit colName="wh_id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.wh_id" posX="1" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="WH Code" widget="Edit">
+      <Grid gridHeight="19" gridWidth="105" name="xactapp_db1" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="8" name="wh30_hdr_trans_no_label1" posX="1" posY="1" text="Trans No">
+          <Initializer text="dbschema:wh30_hdr.trans_no/@label"/>
+        </Label>
+        <Edit colName="trans_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="wh30_hdr.trans_no" posX="10" posY="1" scroll="true" sqlTabName="wh30_hdr" tabIndex="-1" title="Trans No" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="stock_id" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.stock_id" posX="21" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Stock #ID" widget="Edit">
+        <Label gridHeight="1" gridWidth="10" name="wh30_hdr_from_wh_label1" posX="31" posY="1" text="From WH">
+          <Initializer text="dbschema:wh30_hdr.from_wh/@label"/>
+        </Label>
+        <ButtonEdit colName="from_wh" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_hdr.from_wh" posX="42" posY="1" scroll="true" sqlTabName="wh30_hdr" tabIndex="-1" title="From WH" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Edit colName="txn_date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.txn_date" posX="41" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
+        </ButtonEdit>
+        <Label gridHeight="1" gridWidth="8" name="wh30_hdr_to_wh_label1" posX="1" posY="2" text="To WH">
+          <Initializer text="dbschema:wh30_hdr.to_wh/@label"/>
+        </Label>
+        <ButtonEdit colName="to_wh" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_hdr.to_wh" posX="10" posY="2" scroll="true" sqlTabName="wh30_hdr" tabIndex="-1" title="To WH" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Edit colName="direction" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="3" name="wh30_trans.direction" posX="51" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Direction" widget="Edit">
+        </ButtonEdit>
+        <Label gridHeight="1" gridWidth="10" name="wh30_hdr_trans_date_label1" posX="31" posY="2" text="Trans Date">
+          <Initializer text="dbschema:wh30_hdr.trans_date/@label"/>
+        </Label>
+        <DateEdit colName="trans_date" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_hdr.trans_date" posX="42" posY="2" sqlTabName="wh30_hdr" tabIndex="-1" title="Trans Date" widget="DateEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Edit colName="qty" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="wh30_trans.qty" posX="54" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Quantity" widget="Edit">
+        </DateEdit>
+        <Label gridHeight="1" gridWidth="8" name="wh30_hdr_status_label1" posX="1" posY="3" text="Status">
+          <Initializer text="dbschema:wh30_hdr.status/@label"/>
+        </Label>
+        <ComboBox colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" items="" name="wh30_hdr.status" posX="10" posY="3" scroll="true" sqlTabName="wh30_hdr" tabIndex="-1" title="Status" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Edit colName="doc_type" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.doc_type" posX="68" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Edit colName="doc_no" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.doc_no" posX="78" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Doc No" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-      </Table>
+        </ComboBox>
+      </Grid>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmADMAZQBjADMAYgAxADIALQA5ADgAYQBmAC0ANABiADUANQAtADkAMwA3ADkALQBjADkAYgAzADkANABkAGMAZAA1ADAANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmADMAZQBjADMAYgAxADIALQA5ADgAYQBmAC0ANABiADUANQAtADkAMwA3ADkALQBjADkAYgAzADkANABkAGMAZAA1ADAANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewBlADQANgBiAGQAMwBmADIALQA5AGQAMQAzAC0ANAAyAGMAMwAtAGEANwAxAGIALQBkADUANQAzADgAMwA0ADUAOABhAGYAZQB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

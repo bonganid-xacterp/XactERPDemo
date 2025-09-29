@@ -5,21 +5,6 @@
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/dl" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/pu" type="pm/application"/>
   </ExpandedNodes>
-  <OpenDocuments>
-    <Document container="true" filePath="src/_main/main_app.4gl" locator="89:33" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/_main/main_auth.4gl" locator="30:15" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/_main/main_shell.4gl" locator="9:22" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/_main/login.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/_main/main_loader.4fd" locator="" module="mod-fd"/>
-  </OpenDocuments>
-  <CurrentDocument filePath="src/_main/main_loader.4fd" module="mod-fd"/>
+  <OpenDocuments/>
 </WorkspaceViewState>
