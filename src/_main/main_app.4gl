@@ -11,9 +11,9 @@ IMPORT os
 IMPORT ui
 IMPORT security -- For password hashing (if available)
 IMPORT util -- For crypto functions
-IMPORT FGL sy100_login
-IMPORT FGL sy920_ui_utils -- ui utils
-IMPORT FGL sy910_db_utils -- db utils
+IMPORT FGL main_auth
+IMPORT FGL utils_ui -- ui utils
+IMPORT FGL utils_db -- db utils
 IMPORT FGL main_shell -- application shell
 
 -- TODOS: Need to move the code that can be global to libs
@@ -50,7 +50,7 @@ END MAIN
 FUNCTION initialize_application()
     DEFINE db_result SMALLINT
     -- Initialize database connection
-    LET db_result = sy910_db_utils.initialize_database()
+    LET db_result = utils_db.initialize_database()
 
 END FUNCTION
 
@@ -58,7 +58,7 @@ END FUNCTION
 FUNCTION run_login()
     DEFINE login_result SMALLINT
 
-    LET login_result = sy100_login.login_user()
+    LET login_result = main_auth.login_user()
 
     IF login_result THEN
         LET g_user_authenticated = TRUE
@@ -82,8 +82,8 @@ FUNCTION open_main_container()
         ATTRIBUTE(STYLE = "main", TEXT = "XactERP Main System")
 
     -- Set page title (top bar, if defined in form)
-    CALL sy920_ui_utils.set_page_title(
-        "Dashboard" || sy100_login.get_current_user())
+    CALL utils_ui.set_page_title(
+        "Dashboard" || main_auth.get_current_user())
 
     -- Main loop: keep the container alive with a menu
     CALL main_shell.main_application_menu()

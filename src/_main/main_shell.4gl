@@ -1,10 +1,10 @@
-IMPORT FGL sy920_ui_utils
+IMPORT FGL utils_ui
 IMPORT FGL dl100_mast
 
 FUNCTION main_application_menu()
 
     -- Set page title (top bar, if defined in form)
-    CALL sy920_ui_utils.set_page_title("Dashboard")
+    CALL utils_ui.set_page_title("Dashboard")
 
     DISPLAY 'ver 1.0'
 --

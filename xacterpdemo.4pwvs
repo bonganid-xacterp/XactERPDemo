@@ -4,6 +4,7 @@
     <Node path="xacterpdemo.4pw" type="pm/main-project"/>
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
   </ExpandedNodes>
   <OpenDocuments/>
   <CurrentDocument filePath="" module="mod-wp"/>

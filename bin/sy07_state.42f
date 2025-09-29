@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="sy07_state.tmp" build="3.20.14" sqlDbName="xactapp_db" text="State Master" width="23" height="20">
+  <LStr text="State Master"/>
+  <HBox name="hbox1">
+    <Grid name="state_grid" width="23" height="20">
+      <Label name="lbl_state" width="10" text="Name" posY="1" posX="1" gridWidth="10">
+        <LStr text="Name"/>
+      </Label>
+      <FormField name="cl01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="0" sqlTabName="cl01_mast" tabIndex="1">
+        <Edit width="10" posY="1" posX="12" gridWidth="10"/>
+      </FormField>
+    </Grid>
+  </HBox>
+  <RecordView tabName="cl01_mast">
+    <Link colName="id" fieldIdRef="0"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="id" fieldIdRef="0"/>
+  </RecordView>
+</Form>

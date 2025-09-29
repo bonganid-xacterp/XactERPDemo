@@ -66,18 +66,17 @@
   <PlatformList version="1.0"/>
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
     <Group environment="filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile" id="39840687" label="src">
-      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270" id="221858380" label="_main">
-        <File filePath="src/_main/dashboard.4fd"/>
-        <File filePath="src/_main/frm_sy100_main_login.4fd"/>
+      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,31393700" id="221858380" label="_main">
+        <File filePath="src/_main/frm_main_login.4fd"/>
         <File filePath="src/_main/main_app.4gl"/>
         <File filePath="src/_main/main_app_menu.4gl"/>
+        <File filePath="src/_main/main_auth.4gl"/>
         <File filePath="src/_main/main_menu.4gl"/>
         <File filePath="src/_main/main_shell.4fd"/>
         <File filePath="src/_main/main_shell.4gl"/>
-        <File filePath="src/_main/sy100_frm_login.4fd"/>
         <File filePath="src/_main/top_menu.4tm"/>
       </Application>
-      <Application binaryName="cl" id="396525034" label="cl">
+      <Application binaryName="cl" dependencies="497700,56784492,104908716,31764552" id="396525034" label="cl">
         <File filePath="src/cl/cl100_mast.4fd"/>
         <File filePath="src/cl/cl100_mast.4gl"/>
         <File filePath="src/cl/cl30_trans.4fd"/>
@@ -88,11 +87,11 @@
         <File filePath="database/xactapp_db_maint.4gl"/>
         <File filePath="database/xactapp_db_maintainance.4db"/>
       </Library>
-      <Application binaryName="dl" id="409572948" label="dl">
+      <Application binaryName="dl" dependencies="497700,56784492,104908716,31764552" id="409572948" label="dl">
         <File filePath="src/dl/dl100_mast.4fd"/>
         <File filePath="src/dl/dl100_mast.4gl"/>
       </Application>
-      <Application binaryName="gl" id="276307902" label="gl"/>
+      <Application binaryName="gl" dependencies="497700,56784492,104908716,31764552" id="276307902" label="gl"/>
       <Library binaryName="incl" id="56784492" label="incl">
         <File filePath="src/incl/incl.4gl"/>
         <File filePath="src/top_menu.4tm"/>
@@ -102,26 +101,28 @@
         <File filePath="libs/globals.4gl"/>
         <File filePath="src/utils/mast_dt_tlbar.4tb"/>
       </Library>
-      <Application binaryName="pu" id="39599040" label="pu"/>
+      <Application binaryName="pu" dependencies="497700,56784492,104908716,31764552" id="39599040" label="pu"/>
       <Library binaryName="res" id="541201365" label="res">
         <File filePath="src/res/logo.png"/>
       </Library>
-      <Application binaryName="sa" id="95666062" label="sa"/>
-      <Application binaryName="st" id="757682379" label="st">
+      <Application binaryName="sa" dependencies="497700,104908716,31764552" id="95666062" label="sa"/>
+      <Application binaryName="st" dependencies="497700,104908716,31764552" id="757682379" label="st">
         <File filePath="src/st01_mast/st01_mast.4fd"/>
         <File filePath="src/st02_wh_cat/st02_wh_cat.4fd"/>
       </Application>
-      <Application binaryName="sy" id="31393700" label="sy">
-        <File filePath="src/sy00_user/sy00_user.4gl"/>
-        <File filePath="src/sy04_role/sy04_role.4gl"/>
-        <File filePath="src/sy04_role/sy04_role_list.4fd"/>
-        <File filePath="src/sy04_role/sy04_role_mast.4fd"/>
-        <File filePath="src/sy05_perm/sy05_perm.4fd"/>
-        <File filePath="src/sy07_state/sy07_state.4fd"/>
-        <File filePath="src/sy07_state/sy07_state.4gl"/>
-        <File filePath="src/sy00_user/sy100_user_mast.4fd"/>
-        <File filePath="src/sy00_user/sy101_user_pwd.4fd"/>
-        <File filePath="src/auth/sy200_logs.4gl"/>
+      <Application binaryName="sy" dependencies="497700,104908716,31764552" id="31393700" label="sy">
+        <File filePath="src/sy/sy00_user.4fd"/>
+        <File filePath="src/sy/sy00_user.4gl"/>
+        <File filePath="src/sy/sy04_role.4gl"/>
+        <File filePath="src/sy/sy04_role_list.4fd"/>
+        <File filePath="src/sy/sy04_role_mast.4fd"/>
+        <File filePath="src/sy/sy05_perm.4fd"/>
+        <File filePath="src/sy/sy07_state.4fd"/>
+        <File filePath="src/sy/sy07_state.4gl"/>
+        <File filePath="src/sy/sy100_user_mast.4fd"/>
+        <File filePath="src/sy/sy101_user_pwd.4fd"/>
+        <File filePath="src/sy/sy200_logs.4gl"/>
+        <File filePath="src/sy/sy900_utils.4gl"/>
       </Application>
       <Library binaryName="utils" id="497700" label="utils">
         <File filePath="src/utils/utils_alertbox.4fd"/>
@@ -129,10 +130,10 @@
         <File filePath="src/utils/utils_mast_tlb.4tb"/>
         <File filePath="src/utils/utils_ui.4gl"/>
       </Library>
-      <Application binaryName="wb" id="206295008" label="wb">
+      <Application binaryName="wb" dependencies="31764552,497700,104908716" id="206295008" label="wb">
         <File filePath="src/wb/wb01_mast.4fd"/>
       </Application>
-      <Application binaryName="wh" id="45766396" label="wh">
+      <Application binaryName="wh" dependencies="31764552,497700,104908716" id="45766396" label="wh">
         <File filePath="src/wh/wh01_mast.4fd"/>
         <File filePath="src/wh/wh30_trans.4fd"/>
         <File filePath="src/wh/wh30_trans.4gl"/>

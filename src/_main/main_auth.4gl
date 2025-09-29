@@ -8,7 +8,7 @@
 # ==============================================================
 
 IMPORT ui
-IMPORT FGL sy920_ui_utils
+IMPORT FGL utils_ui
 
 -- Global variables for user session
 DEFINE g_current_user STRING
@@ -27,10 +27,10 @@ FUNCTION login_user() RETURNS SMALLINT
 
     OPEN WINDOW w_login
         WITH
-        FORM "sy100_frm_login"
+        FORM "frm_main_login"
         ATTRIBUTE(STYLE = "dialog", TEXT = "XactERP Login")
 
-    CALL sy920_ui_utils.set_page_title("Login")
+    CALL utils_ui.set_page_title("Login")
 
     DIALOG
         INPUT BY NAME f_username, f_password
