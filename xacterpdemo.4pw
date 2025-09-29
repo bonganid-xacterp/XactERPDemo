@@ -66,8 +66,8 @@
   <PlatformList version="1.0"/>
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
     <Group environment="filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile" id="39840687" label="src">
-      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,31393700" id="221858380" label="_main">
-        <File filePath="src/_main/frm_main_login.4fd"/>
+      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,31393700,409572948,45766396,95666062,276307902,206295008,757682379,39599040" id="221858380" label="_main">
+        <File filePath="src/_main/login.4fd"/>
         <File filePath="src/_main/main_app.4gl"/>
         <File filePath="src/_main/main_app_menu.4gl"/>
         <File filePath="src/_main/main_auth.4gl"/>

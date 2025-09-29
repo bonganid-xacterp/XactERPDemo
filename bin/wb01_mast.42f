@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="wb01_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Warehouse Bins" width="80" height="4">
+  <LStr text="Warehouse Bins"/>
+  <HBox name="hbox1">
+    <Grid name="xactapp_db1" width="80" height="4">
+      <Label name="wb01_mast_wb_code_label1" width="11" text="Bin Code" posY="1" posX="1" gridWidth="11">
+        <LStr text="Bin Code"/>
+      </Label>
+      <FormField name="wb01_mast.wb_code" colName="wb_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="wb01_mast" tabIndex="1">
+        <Edit width="20" scroll="1" posY="1" posX="13" gridWidth="20"/>
+      </FormField>
+      <Label name="wb01_mast_wh_id_label1" width="14" text="Warehouse Code" posY="1" posX="44" gridWidth="14">
+        <LStr text="Warehouse Code"/>
+      </Label>
+      <FormField name="wb01_mast.wh_id" colName="wh_id" sqlType="BIGINT" required="1" notNull="1" fieldId="1" sqlTabName="wb01_mast" tabIndex="2">
+        <ButtonEdit width="18" scroll="1" posY="1" posX="59" gridWidth="20"/>
+      </FormField>
+      <Label name="wb01_mast_description_label1" width="11" text="Description" posY="2" posX="1" gridWidth="11">
+        <LStr text="Description"/>
+      </Label>
+      <FormField name="wb01_mast.description" colName="description" sqlType="VARCHAR(100)" fieldId="2" sqlTabName="wb01_mast" tabIndex="3">
+        <Edit width="30" scroll="1" posY="2" posX="13" gridWidth="30"/>
+      </FormField>
+      <Label name="wb01_mast_status_label1" width="14" text="Status" posY="2" posX="44" gridWidth="14">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="wb01_mast.status" colName="status" sqlType="SMALLINT" fieldId="3" sqlTabName="wb01_mast" tabIndex="4">
+        <ComboBox width="4" scroll="1" posY="2" posX="59" gridWidth="6"/>
+      </FormField>
+    </Grid>
+  </HBox>
+  <RecordView tabName="wb01_mast">
+    <Link colName="wb_code" fieldIdRef="0"/>
+    <Link colName="wh_id" fieldIdRef="1"/>
+    <Link colName="description" fieldIdRef="2"/>
+    <Link colName="status" fieldIdRef="3"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="wb_code" fieldIdRef="0"/>
+    <Link colName="wh_id" fieldIdRef="1"/>
+    <Link colName="description" fieldIdRef="2"/>
+    <Link colName="status" fieldIdRef="3"/>
+  </RecordView>
+</Form>
