@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="st01_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Stock" width="91" height="8">
+  <LStr text="Stock"/>
+  <HBox name="hbox1">
+    <Grid name="xactapp_db1" width="91" height="8">
+      <Label name="st01_mast_stock_code_label1" width="13" text="Stock Code" posY="1" posX="1" gridWidth="13">
+        <LStr text="Stock Code"/>
+      </Label>
+      <FormField name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="st01_mast" tabIndex="1">
+        <Edit width="20" scroll="1" posY="1" posX="15" gridWidth="20"/>
+      </FormField>
+      <Label name="st01_mast_description_label1" width="13" text="Description" posY="1" posX="46" gridWidth="13">
+        <LStr text="Description"/>
+      </Label>
+      <FormField name="st01_mast.description" colName="description" sqlType="VARCHAR(150)" required="1" notNull="1" fieldId="1" sqlTabName="st01_mast" tabIndex="2">
+        <Edit width="30" scroll="1" posY="1" posX="60" gridWidth="30"/>
+      </FormField>
+      <Label name="st01_mast_barcode_label1" width="13" text="Barcode" posY="2" posX="1" gridWidth="13">
+        <LStr text="Barcode"/>
+      </Label>
+      <FormField name="st01_mast.barcode" colName="barcode" sqlType="VARCHAR(50)" fieldId="2" sqlTabName="st01_mast" tabIndex="3">
+        <Edit width="30" scroll="1" posY="2" posX="15" gridWidth="30"/>
+      </FormField>
+      <Label name="st01_mast_batch_control_label1" width="13" text="Batch Control" posY="2" posX="46" gridWidth="13">
+        <LStr text="Batch Control"/>
+      </Label>
+      <FormField name="st01_mast.batch_control" colName="batch_control" sqlType="BOOLEAN" fieldId="3" sqlTabName="st01_mast" tabIndex="4">
+        <Edit width="5" scroll="1" posY="2" posX="60" gridWidth="5"/>
+      </FormField>
+      <Label name="st01_mast_category_id_label1" width="13" text="Stock Category" posY="3" posX="1" gridWidth="13">
+        <LStr text="Stock Category"/>
+      </Label>
+      <FormField name="st01_mast.category_id" colName="category_id" sqlType="BIGINT" fieldId="4" sqlTabName="st01_mast" tabIndex="5">
+        <ButtonEdit width="18" autoNext="1" program="fetch_st_cat" scroll="1" picture="zoom" posY="3" posX="15" gridWidth="20"/>
+      </FormField>
+      <Label name="st01_mast_cost_label1" width="13" text="Item Cost Price" posY="3" posX="46" gridWidth="13">
+        <LStr text="Item Cost Price"/>
+      </Label>
+      <FormField name="st01_mast.cost" colName="cost" sqlType="DECIMAL(12,2)" fieldId="5" sqlTabName="st01_mast" tabIndex="6">
+        <Edit width="14" scroll="1" posY="3" posX="60" gridWidth="14"/>
+      </FormField>
+      <Label name="st01_mast_selling_price_label1" width="13" text="Selling Price" posY="4" posX="1" gridWidth="13">
+        <LStr text="Selling Price"/>
+      </Label>
+      <FormField name="st01_mast.selling_price" colName="selling_price" sqlType="DECIMAL(12,2)" fieldId="6" sqlTabName="st01_mast" tabIndex="7">
+        <Edit width="14" scroll="1" posY="4" posX="15" gridWidth="14"/>
+      </FormField>
+      <Label name="st01_mast_stock_on_hand_label1" width="13" text="Stock On Hand" posY="4" posX="46" gridWidth="13">
+        <LStr text="Stock On Hand"/>
+      </Label>
+      <FormField name="st01_mast.stock_on_hand" colName="stock_on_hand" sqlType="DECIMAL(12,2)" fieldId="7" sqlTabName="st01_mast" tabIndex="8">
+        <Edit width="14" scroll="1" posY="4" posX="60" gridWidth="14"/>
+      </FormField>
+      <Label name="st01_mast_total_purch_label1" width="13" text="Total Purchases" posY="5" posX="1" gridWidth="13">
+        <LStr text="Total Purchases"/>
+      </Label>
+      <FormField name="st01_mast.total_purch" colName="total_purch" sqlType="DECIMAL(12,2)" fieldId="8" sqlTabName="st01_mast" tabIndex="9">
+        <Edit width="14" scroll="1" posY="5" posX="15" gridWidth="14"/>
+      </FormField>
+      <Label name="st01_mast_total_sales_label1" width="13" text="Total Sales" posY="5" posX="46" gridWidth="13">
+        <LStr text="Total Sales"/>
+      </Label>
+      <FormField name="st01_mast.total_sales" colName="total_sales" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="st01_mast" tabIndex="10">
+        <Edit width="14" scroll="1" posY="5" posX="60" gridWidth="14"/>
+      </FormField>
+      <Label name="st01_mast_status_label1" width="13" text="Status" posY="6" posX="1" gridWidth="13">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="st01_mast.status" colName="status" sqlType="SMALLINT" fieldId="10" sqlTabName="st01_mast" defaultValue="0" notNull="1" required="1" tabIndex="11">
+        <ComboBox width="8" scroll="1" posY="6" posX="15" gridWidth="10">
+          <Item name="0" text="Inactive"/>
+          <Item name="1" text="Active"/>
+        </ComboBox>
+      </FormField>
+    </Grid>
+    <Grid name="grid1" width="0" height="8"/>
+  </HBox>
+  <RecordView tabName="st01_mast">
+    <Link colName="stock_code" fieldIdRef="0"/>
+    <Link colName="description" fieldIdRef="1"/>
+    <Link colName="barcode" fieldIdRef="2"/>
+    <Link colName="batch_control" fieldIdRef="3"/>
+    <Link colName="category_id" fieldIdRef="4"/>
+    <Link colName="cost" fieldIdRef="5"/>
+    <Link colName="selling_price" fieldIdRef="6"/>
+    <Link colName="stock_on_hand" fieldIdRef="7"/>
+    <Link colName="total_purch" fieldIdRef="8"/>
+    <Link colName="total_sales" fieldIdRef="9"/>
+    <Link colName="status" fieldIdRef="10"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="stock_code" fieldIdRef="0"/>
+    <Link colName="description" fieldIdRef="1"/>
+    <Link colName="barcode" fieldIdRef="2"/>
+    <Link colName="batch_control" fieldIdRef="3"/>
+    <Link colName="category_id" fieldIdRef="4"/>
+    <Link colName="cost" fieldIdRef="5"/>
+    <Link colName="selling_price" fieldIdRef="6"/>
+    <Link colName="stock_on_hand" fieldIdRef="7"/>
+    <Link colName="total_purch" fieldIdRef="8"/>
+    <Link colName="total_sales" fieldIdRef="9"/>
+    <Link colName="status" fieldIdRef="10"/>
+  </RecordView>
+</Form>

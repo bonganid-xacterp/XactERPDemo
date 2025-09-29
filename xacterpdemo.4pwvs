@@ -4,8 +4,8 @@
     <Node path="xacterpdemo.4pw" type="pm/main-project"/>
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/dl" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/res" type="pm/library"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/st" type="pm/application"/>
   </ExpandedNodes>
   <OpenDocuments>
     <Document container="true" filePath="src/_main/main_app.4gl" locator="89:33" module="mod-ce3">
@@ -18,6 +18,8 @@
     <Document container="true" filePath="src/_main/main_shell.4gl" locator="22:28" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
+    <Document container="true" filePath="src/st/st01_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/st/st02_wh_cat.4fd" locator="" module="mod-fd"/>
   </OpenDocuments>
-  <CurrentDocument filePath="src/_main/login.4fd" module="mod-fd"/>
+  <CurrentDocument filePath="src/st/st02_wh_cat.4fd" module="mod-fd"/>
 </WorkspaceViewState>

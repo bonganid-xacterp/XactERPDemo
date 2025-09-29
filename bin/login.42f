@@ -3,7 +3,7 @@
   <LStr text="Login"/>
   <VBox name="vbox1">
     <Grid name="login_grid" width="32" height="14">
-      <Image name="company_logo" width="30" height="8" image="res/logo.png" autoScale="1" stretch="both" sizePolicy="dynamic" posY="1" posX="1" gridWidth="30" gridHeight="8"/>
+      <Image name="company_logo" width="30" height="8" image="logo.png" autoScale="1" stretch="both" sizePolicy="dynamic" posY="1" posX="1" gridWidth="30" gridHeight="8"/>
       <Label name="lbl_username" width="10" text="Username" posY="10" posX="1" gridWidth="10">
         <LStr text="Username"/>
       </Label>

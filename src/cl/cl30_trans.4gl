@@ -1,9 +1,9 @@
-IMPORT FGL sy920_ui_utils
+IMPORT FGL utils_ui
 
 FUNCTION show_cl_trans()
 
     -- Set page title (top bar, if defined in form)
-    CALL sy920_ui_utils.set_page_title("Dashboard")
+    CALL utils_ui.set_page_title("Dashboard")
 
     DISPLAY 'Creditor Transactions'
 --

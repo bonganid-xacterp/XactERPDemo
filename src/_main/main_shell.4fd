@@ -9,49 +9,46 @@
     <TopMenu name="top_menu">
       <TopMenuGroup name="tm_file" text="File">
         <TopMenuSeparator name="topmenuseparator1"/>
-        <TopMenuCommand acceleratorName="exit" image="quit" name="tm_sb_exit" text="Quit"/>
+        <TopMenuCommand acceleratorName="quit" image="quit" name="tm_sb_exit" text="Quit"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_dl" text="Debtors">
-        <TopMenuCommand name="tm_sb_dl_add" text="Debtors Enquiry"/>
-        <TopMenuCommand name="tm_sb_dl_list" text="List Debtors"/>
+        <TopMenuCommand acceleratorName="open" image="open2" name="tm_sb_dl_add" text="Debtors Enquiry"/>
+        <TopMenuCommand acceleratorName="open" image="open2" name="tm_sb_dl_list" text="List Debtors"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_cl" text="Creditors">
-        <TopMenuCommand name="tm_sb_cl_add" text="Add Creditor"/>
-        <TopMenuCommand name="tm_sm_cl_list" text="List Creditors"/>
+        <TopMenuCommand image="open2" name="tm_sb_cl_add" text="Add Creditor"/>
+        <TopMenuCommand image="open2" name="tm_sm_cl_list" text="List Creditors"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_st" text="Stock">
-        <TopMenuCommand name="tm_st_list" text="Stock Maintanance"/>
-        <TopMenuCommand name="tm_st_cat" text="Stock Categories"/>
-        <TopMenuCommand name="tm_st_whs" text="Warehouses"/>
+        <TopMenuCommand image="open2" name="tm_st_list" text="Stock Maintanance"/>
+        <TopMenuCommand image="open2" name="tm_st_cat" text="Stock Categories"/>
+        <TopMenuCommand image="open2" name="tm_st_whs" text="Warehouses"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_gl" tag="" text="Finance">
-        <TopMenuCommand name="tm_sm_gl" text="General Ledger"/>
-        <TopMenuCommand name="tm_sb_gl_jnl" text="Journals"/>
+        <TopMenuCommand image="open2" name="tm_sm_gl" text="General Ledger"/>
+        <TopMenuCommand image="open2" name="tm_sb_gl_jnl" text="Journals"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_sa" text="Sales">
-        <TopMenuGroup name="topmenugroup1" text="Quotations">
+        <TopMenuGroup image="open2" name="topmenugroup1" text="Quotations">
           <TopMenuCommand name="tm_sb_sa_qt" text=""/>
         </TopMenuGroup>
-        <TopMenuCommand name="tm_sb_sa_ord" text="Orders"/>
-        <TopMenuCommand name="tm_sb_sa_inv" text="Invoices"/>
-        <TopMenuCommand name="tm_sb_sa_crn" text="Credit Notes"/>
+        <TopMenuCommand image="open2" name="tm_sb_sa_ord" text="Orders"/>
+        <TopMenuCommand image="open2" name="tm_sb_sa_inv" text="Invoices"/>
+        <TopMenuCommand image="open2" name="tm_sb_sa_crn" text="Credit Notes"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_pa" text="Purchases">
-        <TopMenuCommand name="tm_sb_pa_ord" text="Orders"/>
-        <TopMenuCommand name="tm_sb_pa_inv" text="GRN"/>
+        <TopMenuCommand image="open2" name="tm_sb_pa_ord" text="Orders"/>
+        <TopMenuCommand image="open2" name="tm_sb_pa_inv" text="GRN"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_sys" text="System">
-        <TopMenuCommand name="tm_sy_users" text="Users"/>
-        <TopMenuCommand name="tm_sys_sb_roles" text="User Roles"/>
-        <TopMenuCommand name="tm_sb_sys_perm" text="User Permissions"/>
-        <TopMenuCommand name="tm_sb_sys_sett" text="Settings"/>
-        <TopMenuCommand name="tm_sb_sys_logs" text="Logs"/>
+        <TopMenuCommand image="open2" name="tm_sy_users" text="Users"/>
+        <TopMenuCommand image="open2" name="tm_sys_sb_roles" text="User Roles"/>
+        <TopMenuCommand image="open2" name="tm_sb_sys_perm" text="User Permissions"/>
+        <TopMenuCommand image="open2" name="tm_sb_sys_sett" text="Settings"/>
+        <TopMenuCommand image="open2" name="tm_sb_sys_logs" text="Logs"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_app" text="Help">
-        <TopMenuCommand name="tm_sy_about" text="About"/>
-      </TopMenuGroup>
-      <TopMenuGroup hidden="true" name="main" text="Main">
-        <TopMenuCommand hidden="true" name="container"/>
+        <TopMenuCommand image="fa-info-circle" name="tm_sy_about" text="About"/>
       </TopMenuGroup>
     </TopMenu>
     <Grid gridHeight="25" gridWidth="129" hidden="true" name="main_grid" posX="0" posY="0">
@@ -61,6 +58,6 @@
     </Grid>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzMzdgAADAFmZmY////j9QYk3S8an8AQAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzMztszM7AFmZmaZmZlz9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

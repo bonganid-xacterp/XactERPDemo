@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="cl100_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" spacing="compact" text="Creditors Master" width="82" height="8">
+  <LStr text="Creditors Master"/>
+  <HBox name="hbox1">
+    <Grid name="grid" width="82" height="8">
+      <Label name="lbl_cl01_mast_acc_code" width="8" text="Account Code" posY="1" posX="1" gridWidth="8">
+        <LStr text="Account Code"/>
+      </Label>
+      <FormField name="cl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="cl01_mast" tabIndex="1">
+        <Edit width="20" scroll="1" posY="1" posX="10" gridWidth="20"/>
+      </FormField>
+      <Label name="lbl_cl01_mast_supp_name" width="9" text="Supplier Name" posY="1" posX="41" gridWidth="9">
+        <LStr text="Supplier Name"/>
+      </Label>
+      <FormField name="cl01_mast.supp_name" colName="supp_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="cl01_mast" tabIndex="2">
+        <Edit width="30" scroll="1" posY="1" posX="51" gridWidth="30"/>
+      </FormField>
+      <Label name="lbl_cl01_mast_address1" width="8" text="Address 1" posY="2" posX="1" gridWidth="8">
+        <LStr text="Address 1"/>
+      </Label>
+      <FormField name="cl01_mast.address1" colName="address1" sqlType="VARCHAR(100)" fieldId="2" sqlTabName="cl01_mast" tabIndex="3">
+        <Edit width="30" scroll="1" posY="2" posX="10" gridWidth="30"/>
+      </FormField>
+      <Label name="lbl_cl01_mast_address2" width="9" text="Address 2" posY="2" posX="41" gridWidth="9">
+        <LStr text="Address 2"/>
+      </Label>
+      <FormField name="cl01_mast.address2" colName="address2" sqlType="VARCHAR(100)" fieldId="3" sqlTabName="cl01_mast" tabIndex="4">
+        <Edit width="30" scroll="1" posY="2" posX="51" gridWidth="30"/>
+      </FormField>
+      <Label name="lbl_cl01_mast_address3" width="8" text="Address 3" posY="3" posX="1" gridWidth="8">
+        <LStr text="Address 3"/>
+      </Label>
+      <FormField name="cl01_mast.address3" colName="address3" sqlType="VARCHAR(100)" fieldId="4" sqlTabName="cl01_mast" tabIndex="5">
+        <Edit width="30" scroll="1" posY="3" posX="10" gridWidth="30"/>
+      </FormField>
+      <Label name="lbl_cl01_mast_phone" width="9" text="Phone Number" posY="3" posX="41" gridWidth="9">
+        <LStr text="Phone Number"/>
+      </Label>
+      <FormField name="cl01_mast.phone" colName="phone" sqlType="VARCHAR(20)" fieldId="5" sqlTabName="cl01_mast" notNull="1" required="1" tabIndex="6">
+        <Edit width="20" scroll="1" posY="3" posX="51" gridWidth="20"/>
+      </FormField>
+      <Label name="lbl_cl01_mast_email" width="8" text="Email" posY="4" posX="1" gridWidth="8">
+        <LStr text="Email"/>
+      </Label>
+      <FormField name="cl01_mast.email" colName="email" sqlType="VARCHAR(100)" fieldId="6" sqlTabName="cl01_mast" notNull="1" required="1" tabIndex="7">
+        <Edit width="30" scroll="1" posY="4" posX="10" gridWidth="30"/>
+      </FormField>
+      <Label name="lbl_cl01_mast_bal" width="9" text="Balance Owing" posY="4" posX="41" gridWidth="9">
+        <LStr text="Balance Owing"/>
+      </Label>
+      <FormField name="cl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="7" sqlTabName="cl01_mast" tabIndex="8">
+        <Edit width="14" scroll="1" posY="4" posX="51" gridWidth="14"/>
+      </FormField>
+      <Label name="cl01_mast_status_label1" width="8" text="Status" posY="5" posX="1" gridWidth="8">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="cl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="8" sqlTabName="cl01_mast" defaultValue="0" notNull="1" required="1" tabIndex="9">
+        <ComboBox width="8" autoNext="1" scroll="1" posY="5" posX="10" gridWidth="10">
+          <Item name="0" text="Inactive"/>
+          <Item name="1" text="Active"/>
+        </ComboBox>
+      </FormField>
+    </Grid>
+  </HBox>
+  <RecordView tabName="cl01_mast">
+    <Link colName="acc_code" fieldIdRef="0"/>
+    <Link colName="supp_name" fieldIdRef="1"/>
+    <Link colName="address1" fieldIdRef="2"/>
+    <Link colName="address2" fieldIdRef="3"/>
+    <Link colName="address3" fieldIdRef="4"/>
+    <Link colName="phone" fieldIdRef="5"/>
+    <Link colName="email" fieldIdRef="6"/>
+    <Link colName="balance" fieldIdRef="7"/>
+    <Link colName="status" fieldIdRef="8"/>
+  </RecordView>
+  <RecordView tabName="record2">
+    <Link colName="acc_code" fieldIdRef="0"/>
+    <Link colName="supp_name" fieldIdRef="1"/>
+    <Link colName="address1" fieldIdRef="2"/>
+    <Link colName="address2" fieldIdRef="3"/>
+    <Link colName="address3" fieldIdRef="4"/>
+    <Link colName="phone" fieldIdRef="5"/>
+    <Link colName="email" fieldIdRef="6"/>
+    <Link colName="balance" fieldIdRef="7"/>
+    <Link colName="status" fieldIdRef="8"/>
+  </RecordView>
+</Form>

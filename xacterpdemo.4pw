@@ -107,8 +107,8 @@
       </Library>
       <Application binaryName="sa" dependencies="497700,104908716,31764552" id="95666062" label="sa"/>
       <Application binaryName="st" dependencies="497700,104908716,31764552" id="757682379" label="st">
-        <File filePath="src/st01_mast/st01_mast.4fd"/>
-        <File filePath="src/st02_wh_cat/st02_wh_cat.4fd"/>
+        <File filePath="src/st/st01_mast.4fd"/>
+        <File filePath="src/st/st02_wh_cat.4fd"/>
       </Application>
       <Application binaryName="sy" dependencies="497700,104908716,31764552" id="31393700" label="sy">
         <File filePath="src/sy/sy00_user.4fd"/>

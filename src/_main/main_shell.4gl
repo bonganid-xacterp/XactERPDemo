@@ -18,7 +18,7 @@ FUNCTION main_application_menu()
 END FUNCTION
 
 -- open debtors menu
-FUNCTION add_debtors()
+FUNCTION debtors()
     CALL dl100_mast.open_debtors()
 END FUNCTION
 
