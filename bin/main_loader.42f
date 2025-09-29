@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="main_loader.tmp" build="3.20.14" text="Loading ...." width="36" height="16">
+  <LStr text="Loading ...."/>
+  <HBox name="hbox1">
+    <Grid name="grid1" width="36" height="16">
+      <Image name="image1" width="30" height="13" image="logo.png" posY="1" posX="5" gridWidth="30" gridHeight="13"/>
+      <Label name="lbl_loader" width="27" text="Loading ...." color="green" blink="1" justify="center" posY="14" posX="7" gridWidth="27">
+        <LStr text="Loading ...."/>
+      </Label>
+    </Grid>
+  </HBox>
+</Form>
