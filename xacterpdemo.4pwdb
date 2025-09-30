@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/_main/main_app.4gl" s="2" ts="20250929130520126">
+<File n="src/_main/main_app.4gl" s="2" ts="20250930105926805">
 <Dep t="src/_main/main_auth.4gl"/>
 <Dep t="src/utils/utils_ui.4gl"/>
 <Dep t="src/utils/utils_db.4gl"/>
 <Dep t="src/_main/main_shell.4gl"/>
-<Fct c="10" el="103" l="98" n="cleanup_application()" t="F" v="pub"/>
-<Fct c="10" el="96" l="72" n="open_main_container()" t="F" v="pub">
-<Call c="19" i="utils_ui" l="85" n="set_page_title" t="F"/>
-<Call c="34" i="main_auth" l="86" n="get_current_user" t="F"/>
-<Call c="21" i="main_shell" l="89" n="main_application_menu" t="F"/>
+<Fct c="10" el="105" l="100" n="cleanup_application()" t="F" v="pub"/>
+<Fct c="10" el="98" l="74" n="open_main_container()" t="F" v="pub">
+<Call c="19" i="utils_ui" l="87" n="set_page_title" t="F"/>
+<Call c="34" i="main_auth" l="88" n="get_current_user" t="F"/>
+<Call c="21" i="main_shell" l="91" n="main_application_menu" t="F"/>
 </Fct>
-<Fct c="10" el="69" l="58" n="run_login()" t="F" v="pub">
-<Call c="34" i="main_auth" l="61" n="login_user" t="F"/>
+<Fct c="10" el="71" l="60" n="run_login()" t="F" v="pub">
+<Call c="34" i="main_auth" l="63" n="login_user" t="F"/>
 </Fct>
-<Fct c="10" el="55" l="50" n="initialize_application()" t="F" v="pub">
-<Call c="30" i="utils_db" l="53" n="initialize_database" t="F"/>
+<Fct c="10" el="57" l="50" n="initialize_application()" t="F" v="pub">
+<Call c="30" i="utils_db" l="55" n="initialize_database" t="F"/>
 </Fct>
 <Fct c="1" el="47" l="29" n="main()" t="F" v="pub">
 <Call c="10" l="34" n="initialize_application" t="F"/>
@@ -24,27 +24,27 @@
 <Call c="10" l="46" n="cleanup_application" t="F"/>
 </Fct>
 </File>
-<File n="src/_main/main_auth.4gl" s="2" ts="20250929152027076">
+<File n="src/_main/main_auth.4gl" s="2" ts="20250930134928652">
 <Dep t="src/utils/utils_ui.4gl"/>
-<Fct c="10" el="201" l="199" n="is_user_authenticated()" t="F" v="pub"/>
-<Fct c="10" el="197" l="193" n="clear_user_session()" t="F" v="pub"/>
-<Fct c="10" el="190" l="184" n="show_help_dialog()" t="F" v="pub"/>
-<Fct c="10" el="182" l="167" n="confirm_exit_login()" t="F" v="pub"/>
-<Fct c="10" el="165" l="163" n="get_user_role()" t="F" v="pub"/>
-<Fct c="10" el="161" l="159" n="get_current_user()" t="F" v="pub"/>
-<Fct c="10" el="156" l="106" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub"/>
-<Fct c="10" el="103" l="78" n="try_login(f_username STRING,f_password STRING,max_attempts SMALLINT)" t="F" v="pub">
-<Call c="8" l="86" n="validate_login" t="F"/>
+<Fct c="10" el="208" l="206" n="is_user_authenticated()" t="F" v="pub"/>
+<Fct c="10" el="204" l="200" n="clear_user_session()" t="F" v="pub"/>
+<Fct c="10" el="197" l="191" n="show_help_dialog()" t="F" v="pub"/>
+<Fct c="10" el="189" l="174" n="confirm_exit_login()" t="F" v="pub"/>
+<Fct c="10" el="172" l="170" n="get_user_role()" t="F" v="pub"/>
+<Fct c="10" el="168" l="166" n="get_current_user()" t="F" v="pub"/>
+<Fct c="10" el="163" l="113" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub"/>
+<Fct c="10" el="110" l="85" n="try_login(f_username STRING,f_password STRING,max_attempts SMALLINT)" t="F" v="pub">
+<Call c="8" l="93" n="validate_login" t="F"/>
 </Fct>
-<Fct c="10" el="75" l="18" n="login_user()" t="F" v="pub">
-<Call c="19" i="utils_ui" l="33" n="set_page_title" t="F"/>
-<Call c="21" l="44" n="try_login" t="F"/>
-<Call c="20" l="56" n="confirm_exit_login" t="F"/>
-<Call c="22" l="62" n="show_help_dialog" t="F"/>
-<Call c="16" l="67" n="confirm_exit_login" t="F"/>
+<Fct c="10" el="82" l="20" n="login_user()" t="F" v="pub">
+<Call c="19" i="utils_ui" l="37" n="set_page_title" t="F"/>
+<Call c="21" l="51" n="try_login" t="F"/>
+<Call c="20" l="63" n="confirm_exit_login" t="F"/>
+<Call c="22" l="69" n="show_help_dialog" t="F"/>
+<Call c="16" l="74" n="confirm_exit_login" t="F"/>
 </Fct>
 </File>
-<File n="src/_main/main_shell.4gl" s="2" ts="20250930090101626">
+<File n="src/_main/main_shell.4gl" s="2" ts="20250930133243593">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Dep t="src/dl/dl100_mast.4gl"/>
 <Fct c="10" el="44" l="41" n="confirm_exit()" t="F" v="pub"/>
@@ -99,9 +99,11 @@
 <File n="src/utils/utils_db.4gl" s="2" ts="20250929162029644">
 <Fct c="10" el="30" l="10" n="initialize_database()" t="F" v="pub"/>
 </File>
-<File n="src/utils/utils_ui.4gl" s="2" ts="20250930094549007">
-<Fct c="10" el="36" l="30" n="set_page_title(p_title STRING)" t="F" v="pub"/>
+<File n="src/utils/utils_ui.4gl" s="2" ts="20250930120821507">
+<Fct c="10" el="48" l="40" n="set_form_lbl(lbl_name STRING,new_text STRING)" t="F" v="pub"/>
+<Fct c="10" el="37" l="31" n="set_page_title(p_title STRING)" t="F" v="pub"/>
 <Fct c="10" el="28" l="11" n="show_alert(p_message STRING,p_title STRING)" t="F" v="pub"/>
 </File>
+<File n="src/wb/wb01_mast.4gl" s="2" ts="20250930095104283"/>
 <File n="src/wh/wh30_trans.4gl" s="2" ts="20250930094549106"/>
 </WorkspaceDatabase>
