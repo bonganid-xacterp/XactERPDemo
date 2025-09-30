@@ -14,7 +14,6 @@
     <RecordField colName="balance" fieldIdRef="8" fieldType="TABLE_COLUMN" name="cl01_mast.balance" sqlTabName="cl01_mast" table_alias_name="cl01_mast1" uid="{2b2db222-2dc2-492e-9808-8dd955dba1ed}"/>
     <RecordField colName="status" defaultValue="0" fieldIdRef="9" fieldType="TABLE_COLUMN" name="cl01_mast.status" sqlTabName="cl01_mast" uid="{69a55d0d-b53f-4971-8f8e-898a7c69b9d4}"/>
   </Record>
-  <Record masterTable="cl30_trans" name="record4" uid="{f13c169d-fd2f-4ded-8db1-b84034c88337}"/>
   <Record masterTable="dl30_trans" name="record5" uid="{ce90db7c-0f0f-45a3-ab5f-f40abbe491b1}">
     <RecordField colName="date" fieldIdRef="10" fieldType="TABLE_COLUMN" name="dl30_trans.date" sqlTabName="dl30_trans" uid="{24ff53f7-1851-4db1-a1d3-7326429558b2}"/>
     <RecordField colName="trans_type" fieldIdRef="12" fieldType="TABLE_COLUMN" name="dl30_trans.trans_type" sqlTabName="dl30_trans" uid="{63acad09-0d40-49e3-aaad-01aa27e55f38}"/>
@@ -118,6 +117,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmADEAMwBjADEANgA5AGQALQBmAGQAMgBmAC0ANABkAGUAZAAtADgAZABiADEALQBiADgANAAwADMANABjADgAOAAzADMANwB9wDgAABgAAAnAFmZmfMzM1j9wYk3S8an8AQAAAEwAewBjAGUAOQAwAGQAYgA3AGMALQAwAGYAMABmAC0ANAA1AGEAMwAtAGEAYgA1AGYALQBmADQAMABhAGIAYgBlADQAOQAxAGIAMQB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewAyAGUAOABmADYAYgA0ADcALQBjAGQANQA0AC0ANABkADAAYQAtADgAYwBlAGEALQA1AGIAYgBhADUAMgAwADgAOQA0AGYANwB9wGYzM0lmZm/AIzMzRmZmbz9ok3S8an76AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyAGUAOABmADYAYgA0ADcALQBjAGQANQA0AC0ANABkADAAYQAtADgAYwBlAGEALQA1AGIAYgBhADUAMgAwADgAOQA0AGYANwB9wGYzM07zM0LAIzMzSzMzQT9ok3S8an76AQAAAEwAewBjAGUAOQAwAGQAYgA3AGMALQAwAGYAMABmAC0ANAA1AGEAMwAtAGEAYgA1AGYALQBmADQAMABhAGIAYgBlADQAOQAxAGIAMQB9wCZmZmP///7AJmZmY////j94k3S8an76AQ==]]>
   </DiagramLayout>
 </ManagedForm>

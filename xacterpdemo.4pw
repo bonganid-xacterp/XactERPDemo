@@ -92,7 +92,6 @@
       <Application binaryName="gl" dependencies="497700,56784492,104908716,31764552" id="276307902" label="gl"/>
       <Library binaryName="incl" id="56784492" label="incl">
         <File filePath="src/incl/incl.4gl"/>
-        <File filePath="src/top_menu.4tm"/>
       </Library>
       <Library binaryName="libs" id="104908716" label="libs">
         <File filePath=".fglprofile"/>
@@ -100,12 +99,15 @@
         <File filePath="src/utils/mast_dt_tlbar.4tb"/>
       </Library>
       <Application binaryName="pu" dependencies="497700,56784492,104908716,31764552" id="39599040" label="pu">
-        <File filePath="src/pu/pu121_ord.4fd"/>
+        <File filePath="src/pu/pu30_inv_hdr.4fd"/>
+        <File filePath="src/pu/pu31_ord_hdr.4fd"/>
       </Application>
       <Library binaryName="res" id="541201365" label="res">
         <File filePath="src/res/logo.png"/>
       </Library>
-      <Application binaryName="sa" dependencies="497700,104908716,31764552" id="95666062" label="sa"/>
+      <Application binaryName="sa" dependencies="497700,104908716,31764552" id="95666062" label="sa">
+        <File filePath="src/sa/sa31_ord_hdr.4fd"/>
+      </Application>
       <Application binaryName="st" dependencies="497700,104908716,31764552" id="757682379" label="st">
         <File filePath="src/st/st01_mast.4fd"/>
         <File filePath="src/st/st02_wh_cat.4fd"/>
@@ -113,12 +115,12 @@
       <Application binaryName="sy" dependencies="497700,104908716,31764552" id="31393700" label="sy">
         <File filePath="src/sy/sy00_user.4fd"/>
         <File filePath="src/sy/sy00_user.4gl"/>
+        <File filePath="src/sy/sy02_logs.4fd"/>
         <File filePath="src/sy/sy04_role.4gl"/>
         <File filePath="src/sy/sy04_role_list.4fd"/>
         <File filePath="src/sy/sy04_role_mast.4fd"/>
         <File filePath="src/sy/sy05_perm.4fd"/>
         <File filePath="src/sy/sy07_state.4fd"/>
-        <File filePath="src/sy/sy07_state.4gl"/>
         <File filePath="src/sy/sy100_user_mast.4fd"/>
         <File filePath="src/sy/sy101_user_pwd.4fd"/>
         <File filePath="src/sy/sy200_logs.4gl"/>
@@ -132,6 +134,7 @@
       </Library>
       <Application binaryName="wb" dependencies="31764552,497700,104908716" id="206295008" label="wb">
         <File filePath="src/wb/wb01_mast.4fd"/>
+        <File filePath="src/wb/wb01_mast.4gl"/>
       </Application>
       <Application binaryName="wh" dependencies="31764552,497700,104908716" id="45766396" label="wh">
         <File filePath="src/wh/wh01_mast.4fd"/>

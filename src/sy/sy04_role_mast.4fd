@@ -3,7 +3,9 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record name="record1" uid="{1a282dea-55ac-4dbe-8e9d-d65d40f9c211}"/>
+  <Record name="record1" uid="{1a282dea-55ac-4dbe-8e9d-d65d40f9c211}">
+    <RecordField colName="perm_name" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy05_perm.perm_name" sqlTabName="sy05_perm" uid="{ffb8e0cd-ce93-4e5b-842e-453822bb096c}"/>
+  </Record>
   <Record name="record2" uid="{7bdbae52-2bb5-480f-9f44-8fad9e7dce69}"/>
   <Record masterTable="sy05_perm" name="record3" uid="{a3cff743-6929-4aaa-a405-700b5d8f63d9}"/>
   <Record masterTable="sy04_role1" name="record4" uid="{bbe3e212-b90f-4b1c-a33f-913cffd98838}">
@@ -12,9 +14,11 @@
   </Record>
   <Record masterTable="sy05_perm" name="record5" uid="{4ea2363b-3312-43d5-a078-72b4451b1f35}"/>
   <Record name="record6" uid="{5cf7806e-4186-477d-992d-e17e8dbd88b5}"/>
-  <Form gridHeight="44" gridWidth="215" name="frm_role" text="Roles">
-    <HBox gridHeight="5" gridWidth="80" name="hbox1" posX="0" posY="0">
-      <Grid gridHeight="5" gridWidth="76" name="xactapp_db1" posX="2" posY="0">
+  <Record masterTable="sy05_perm" name="record7" uid="{2e956b12-5044-46a0-b55d-166a14bd0e63}"/>
+  <Record name="record8" uid="{79c50b3c-99d4-476d-931a-2a71ed7f1028}"/>
+  <Form gridHeight="44" gridWidth="267" name="frm_role" text="Roles">
+    <VBox gridHeight="20" gridWidth="267" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="18" gridWidth="267" name="xactapp_db1" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="9" name="lbl_sy04_role_name" posX="1" posY="1" text="Role Name">
           <Initializer text="dbschema:sy04_role.role_name/@label"/>
         </Label>
@@ -29,10 +33,13 @@
           <Item lstrtext="false" name="0" text="Inactive"/>
           <Item lstrtext="false" name="1" text="Active"/>
         </ComboBox>
+        <Group gridHeight="15" gridWidth="266" name="group1" posX="1" posY="3" text="Permissions">
+          <CheckBox colName="perm_name" columnCount="4" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="18" name="sy05_perm.perm_name" posX="2" posY="1" repeat="true" rowCount="6" sqlTabName="sy05_perm" stepX="10" stepY="1" tabIndex="-1" text="" title="checkbox1" widget="CheckBox"/>
+        </Group>
       </Grid>
-    </HBox>
+    </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA0AGUAYQAyADMANgAzAGIALQAzADMAMQAyAC0ANAAzAGQANQAtAGEAMAA3ADgALQA3ADIAYgA0ADQANQAxAGIAMQBmADMANQB9QEAAAAQAAABAQAAABAAAAAAAAAAAAAAAAQAAAEwAewAxAGEAMgA4ADIAZABlAGEALQA1ADUAYQBjAC0ANABkAGIAZQAtADgAZQA5AGQALQBkADYANQBkADQAMABmADkAYwAyADEAMQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewBhADMAYwBmAGYANwA0ADMALQA2ADkAMgA5AC0ANABhAGEAYQAtAGEANAAwADUALQA3ADAAMABiADUAZAA4AGYANgAzAGQAOQB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewBiAGIAZQAzAGUAMgAxADIALQBiADkAMABmAC0ANABiADEAYwAtAGEAMwAzAGYALQA5ADEAMwBjAGYAZgBkADkAOAA4ADMAOAB9QDgAAAYAAABAOAAABgAAAAAAAAAAAAAAAQAAAEwAewA3AGIAZABiAGEAZQA1ADIALQAyAGIAYgA1AC0ANAA4ADAAZgAtADkAZgA0ADQALQA4AGYAYQBkADkAZQA3AGQAYwBlADYAOQB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewA1AGMAZgA3ADgAMAA2AGUALQA0ADEAOAA2AC0ANAA3ADcAZAAtADkAOQAyAGQALQBlADEANwBlADgAZABiAGQAOAA4AGIANQB9QEgAAAYAAABASAAABgAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyAGUAOQA1ADYAYgAxADIALQA1ADAANAA0AC0ANAA2AGEAMAAtAGIANQA1AGQALQAxADYANgBhADEANABiAGQAMABlADYAMwB9QEgAAAYAAABASAAABgAAAAAAAAAAAAAAAQAAAEwAewBhADMAYwBmAGYANwA0ADMALQA2ADkAMgA5AC0ANABhAGEAYQAtAGEANAAwADUALQA3ADAAMABiADUAZAA4AGYANgAzAGQAOQB9QDAAAAgAAAFAMAAACAAAAQAAAAAAAAAAAQAAAEwAewBiAGIAZQAzAGUAMgAxADIALQBiADkAMABmAC0ANABiADEAYwAtAGEAMwAzAGYALQA5ADEAMwBjAGYAZgBkADkAOAA4ADMAOAB9QDgAAAwAAAJAOAAADAAAAgAAAAAAAAAAAQAAAEwAewAxAGEAMgA4ADIAZABlAGEALQA1ADUAYQBjAC0ANABkAGIAZQAtADgAZQA5AGQALQBkADYANQBkADQAMABmADkAYwAyADEAMQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA3AGIAZABiAGEAZQA1ADIALQAyAGIAYgA1AC0ANAA4ADAAZgAtADkAZgA0ADQALQA4AGYAYQBkADkAZQA3AGQAYwBlADYAOQB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQAAAEwAewA1AGMAZgA3ADgAMAA2AGUALQA0ADEAOAA2AC0ANAA3ADcAZAAtADkAOQAyAGQALQBlADEANwBlADgAZABiAGQAOAA4AGIANQB9QEgAAAwAAAJASAAADAAAAgAAAAAAAAAAAQAAAEwAewA3ADkAYwA1ADAAYgAzAGMALQA5ADkAZAA0AC0ANAA3ADYAZAAtADkAMwAxAGEALQAyAGEANwAxAGUAZAA3AGYAMQAwADIAOAB9QEwAAAcAAABATAAABwAAAAAAAAAAAAAAAQAAAEwAewA0AGUAYQAyADMANgAzAGIALQAzADMAMQAyAC0ANAAzAGQANQAtAGEAMAA3ADgALQA3ADIAYgA0ADQANQAxAGIAMQBmADMANQB9QEAAAAgAAAFAQAAACAAAAQAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

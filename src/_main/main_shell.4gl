@@ -1,3 +1,15 @@
+# ==============================================================
+# Program   :   main_shell.4gl
+# Purpose   :   Centralized container window module for loading
+#               other programs.
+# Module    :   main
+# Number    :   
+# Author    :   Bongani Dlamini
+# Version   :   Genero BDL 3.2.1
+# ==============================================================
+
+
+
 IMPORT FGL utils_ui
 IMPORT FGL dl100_mast
 

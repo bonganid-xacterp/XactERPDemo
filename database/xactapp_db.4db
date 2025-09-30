@@ -170,6 +170,17 @@
     <Index indexColumns="doc_no" indexConstraint="unique" name="pu30_hdr_doc_no_key" status="U" uuid="db/index20"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="pu30_hdr_pkey" status="U" uuid="db/index21"/>
   </Table>
+  <Table active="true" name="pu31_det" status="U" uuid="db/table48">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column310"/>
+    <Column fglLength="4" fglType="2" name="doc_no" notNull="true" order="2" status="U" uuid="db/column311"/>
+    <Column fglLength="4" fglType="2" name="item_no" notNull="true" order="3" status="U" uuid="db/column312"/>
+    <Column fglLength="20" fglType="201" name="stock_code" notNull="true" order="4" status="U" uuid="db/column313"/>
+    <Column fglLength="30" fglType="201" name="batch_id" notNull="false" order="5" status="U" uuid="db/column314"/>
+    <Column fglLength="4" fglType="7" name="expiry_date" notNull="false" order="6" status="U" uuid="db/column315"/>
+    <Column fglLength="3074" fglType="5" name="qty" notNull="true" order="7" status="U" uuid="db/column316"/>
+    <Column fglLength="3074" fglType="5" name="unit_cost" notNull="false" order="8" status="U" uuid="db/column317"/>
+    <Column fglLength="3074" fglType="5" name="total" notNull="false" order="9" status="U" uuid="db/column318"/>
+  </Table>
   <Table active="true" name="pu31_hdr" status="U" uuid="db/table12">
     <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column123"/>
     <Column fglLength="4" fglType="6" name="doc_no" notNull="true" order="2" status="U" uuid="db/column124"/>
@@ -211,6 +222,18 @@
     <Index indexColumns="doc_no" indexConstraint="unique" name="sa30_hdr_doc_no_key" status="U" uuid="db/index28"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="sa30_hdr_pkey" status="U" uuid="db/index29"/>
   </Table>
+  <Table active="true" name="sa31_det" status="U" uuid="db/table49">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column319"/>
+    <Column fglLength="4" fglType="2" name="doc_no" notNull="true" order="2" status="U" uuid="db/column320"/>
+    <Column fglLength="4" fglType="2" name="item_no" notNull="true" order="3" status="U" uuid="db/column325"/>
+    <Column fglLength="20" fglType="201" name="stock_code" notNull="true" order="4" status="U" uuid="db/column330"/>
+    <Column fglLength="30" fglType="201" name="batch_id" notNull="false" order="5" status="U" uuid="db/column331"/>
+    <Column fglLength="3074" fglType="5" name="qty" notNull="true" order="6" status="U" uuid="db/column332"/>
+    <Column fglLength="3074" fglType="5" name="unit_cost" notNull="false" order="7" status="U" uuid="db/column333"/>
+    <Column fglLength="3074" fglType="5" name="unit_sell" notNull="false" order="8" status="U" uuid="db/column334"/>
+    <Column fglLength="3074" fglType="5" name="disc" notNull="false" order="9" status="U" uuid="db/column335"/>
+    <Column fglLength="3074" fglType="5" name="total" notNull="false" order="10" status="U" uuid="db/column336"/>
+  </Table>
   <Table active="true" name="sa31_hdr" status="U" uuid="db/table16">
     <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column166"/>
     <Column fglLength="4" fglType="6" name="doc_no" notNull="true" order="2" status="U" uuid="db/column167"/>
@@ -224,6 +247,18 @@
     <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="10" status="U" uuid="db/column175"/>
     <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="11" status="U" uuid="db/column176"/>
   </Table>
+  <Table active="true" name="sa32_det" status="U" uuid="db/table50">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column337"/>
+    <Column fglLength="4" fglType="2" name="doc_no" notNull="true" order="2" status="U" uuid="db/column338"/>
+    <Column fglLength="4" fglType="2" name="item_no" notNull="true" order="3" status="U" uuid="db/column339"/>
+    <Column fglLength="20" fglType="201" name="stock_code" notNull="true" order="4" status="U" uuid="db/column340"/>
+    <Column fglLength="30" fglType="201" name="batch_id" notNull="false" order="5" status="U" uuid="db/column341"/>
+    <Column fglLength="3074" fglType="5" name="qty" notNull="true" order="6" status="U" uuid="db/column342"/>
+    <Column fglLength="3074" fglType="5" name="unit_cost" notNull="false" order="7" status="U" uuid="db/column446"/>
+    <Column fglLength="3074" fglType="5" name="unit_sell" notNull="false" order="8" status="U" uuid="db/column447"/>
+    <Column fglLength="3074" fglType="5" name="disc" notNull="false" order="9" status="U" uuid="db/column448"/>
+    <Column fglLength="3074" fglType="5" name="total" notNull="false" order="10" status="U" uuid="db/column449"/>
+  </Table>
   <Table active="true" name="sa32_hdr" status="U" uuid="db/table18">
     <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column188"/>
     <Column fglLength="4" fglType="6" name="doc_no" notNull="true" order="2" status="U" uuid="db/column189"/>
@@ -236,6 +271,18 @@
     <Column fglLength="4622" fglType="10" name="created_at" notNull="false" order="9" status="U" uuid="db/column196"/>
     <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="10" status="U" uuid="db/column197"/>
     <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="11" status="U" uuid="db/column198"/>
+  </Table>
+  <Table active="true" name="sa33_det" status="U" uuid="db/table51">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column450"/>
+    <Column fglLength="4" fglType="2" name="doc_no" notNull="true" order="2" status="U" uuid="db/column451"/>
+    <Column fglLength="4" fglType="2" name="item_no" notNull="true" order="3" status="U" uuid="db/column452"/>
+    <Column fglLength="20" fglType="201" name="stock_code" notNull="true" order="4" status="U" uuid="db/column453"/>
+    <Column fglLength="30" fglType="201" name="batch_id" notNull="false" order="5" status="U" uuid="db/column454"/>
+    <Column fglLength="3074" fglType="5" name="qty" notNull="true" order="6" status="U" uuid="db/column455"/>
+    <Column fglLength="3074" fglType="5" name="unit_cost" notNull="false" order="7" status="U" uuid="db/column456"/>
+    <Column fglLength="3074" fglType="5" name="unit_sell" notNull="false" order="8" status="U" uuid="db/column457"/>
+    <Column fglLength="3074" fglType="5" name="disc" notNull="false" order="9" status="U" uuid="db/column458"/>
+    <Column fglLength="3074" fglType="5" name="total" notNull="false" order="10" status="U" uuid="db/column459"/>
   </Table>
   <Table active="true" name="sa33_hdr" status="U" uuid="db/table20">
     <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column210"/>
@@ -502,7 +549,7 @@
   <Views ActiveView="View-1" showLabels="true">
     <View Name="View-1">
       <Layout>
-        <![CDATA[AAAAAgAAABQAZABiAC8AdABhAGIAbABlADQAMUCgYmZqfwAAQJq8zNN8AAAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAyADlApyTM0pYAAECigmZrBwAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMgAwQFUdA57g2oBAfs4UbhnrgAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADIAMUCQRuFQ3oUgQKCIzNDvAAAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAyADZAqMt3bJlEQECcIIigobvAAAAAAAAAAAABAAAAEgBkAGIALwB0AGEAYgBsAGUAM0B5h0DTLp0AQILo2msgnQAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAyADhAqMu70v+7wECgeVVQ6yIgAAAAAAAAAAABAAAAEgBkAGIALwB0AGEAYgBsAGUAMUCPncKhgQpAQK7KIjrlu8AAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAxADRAcjxfniixgECUaAAFGgAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUANAA2QIs78m01YwBAlSzM0hgAAAAAAAAAAAAAAQAAABIAZABiAC8AdABhAGIAbABlADlAj03d1KBEQECmBmZr6AAAP3R64UeuFHsBAAAAEgBkAGIALwB0AGEAYgBsAGUAMkCH33dsXkRAQK9d3dSkREAAAAAAAAAAAAEAAAASAGQAYgAvAHQAYQBiAGwAZQA0QGZNpzjGnQBAirIG03lOgAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADMAOECr6AAG+gAAQJJSnQSUp0AAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAxADNAgQu7t3YiIECdAIig2bvAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMQAwQI0KqqDcREBAql93bP5EQD9ok3S8an76AQAAABQAZABiAC8AdABhAGIAbABlADMAMECq+zM58gAAQKN5VVGrIiAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAzADNAmnREOdBEQECXLd3sMd3gAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUANAA3QJTV3eub3eBAlEMzOEQAAAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADEAMkCN4gbURU6AQLHWRFFCXeAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAyADdAp3+7uRMiIECp/iI5srvAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMwA3QJ4AAAeAAABApqbu7BAiIAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADEAOEAu2nTUg2oAQF0tOgdLToAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAzADFAoPSIhD0iIECWIzM4vAAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUANAA0QJoERDm0REBAodVVUUIiIAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADMAOUCTiAAE4gAAQJlgiJ/xu8AAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQA0ADNAn5szOxoAAECfHmZuLgAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUANAA1QJhKIjlFu8BAk9O7uCgiIAAAAAAAAAAAAQAAABIAZABiAC8AdABhAGIAbABlADhAqGlVUuciIECWDERST93gAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUANAAwQIqOZm0KAABAnDKqoKZEQAAAAAAAAAAAAQAAABIAZABiAC8AdABhAGIAbABlADVAnl7vB5e7wECkM3eFDN3gAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMgA0QIIKIh4cIiBAo12ZnnEAAAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADMANkCgwu7qlyIgQKa8RFJ73eAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAyADVApK1VUfgiIECc8Iig1bvAP1BiTdLxqfwBAAAAFABkAGIALwB0AGEAYgBsAGUANAAyQJoKqqAcREBAntiIoU+7wAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADEANkB2oljSdWMAQC9wozsPXAAAAAAAAAAAAAE=]]>
+        <![CDATA[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]]>
       </Layout>
     </View>
   </Views>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{cb1a44d2-089e-4685-9f09-93e10189ddc2}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="pu31_hdr" name="record1" uid="{c22bbe95-bf37-4fce-8621-020ad4289fab}">
+    <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="pu31_hdr.doc_no" sqlTabName="pu31_hdr" uid="{571651de-97ad-4104-9758-71d5b7a38c54}"/>
+    <RecordField colName="acc_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="pu31_hdr.acc_code" sqlTabName="pu31_hdr" uid="{800f2b46-fa61-43dd-9801-71c539ddc175}"/>
+    <RecordField colName="date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="pu31_hdr.date" sqlTabName="pu31_hdr" uid="{d27b8c1a-28e1-410b-8e5a-8edff7a53186}"/>
+    <RecordField colName="total_value" fieldIdRef="4" fieldType="TABLE_COLUMN" name="pu31_hdr.total_value" sqlTabName="pu31_hdr" uid="{ca4d3c7e-f081-439f-9419-2c0b804d1f1a}"/>
+    <RecordField colName="vat" fieldIdRef="5" fieldType="TABLE_COLUMN" name="pu31_hdr.vat" sqlTabName="pu31_hdr" uid="{731cd84c-4cc0-4fa6-b300-bcc1513e3c1a}"/>
+    <RecordField colName="status" fieldIdRef="6" fieldType="TABLE_COLUMN" name="pu31_hdr.status" sqlTabName="pu31_hdr" uid="{5f35d25c-45a4-49e8-8795-a72a4192d1fb}"/>
+  </Record>
+  <Record masterTable="pu31_det" name="record2" uid="{90ac65a3-9315-4ffe-978d-b09d2f184787}">
+    <RecordField colName="doc_no" fieldIdRef="7" fieldType="TABLE_COLUMN" name="pu31_det.doc_no" sqlTabName="pu31_det" uid="{cd90d28b-10a5-41ec-a5d9-7574595944b8}"/>
+    <RecordField colName="item_no" fieldIdRef="8" fieldType="TABLE_COLUMN" name="pu31_det.item_no" sqlTabName="pu31_det" uid="{f4456182-515c-4718-9392-28a9b1a4b94f}"/>
+    <RecordField colName="stock_code" fieldIdRef="9" fieldType="TABLE_COLUMN" name="pu31_det.stock_code" sqlTabName="pu31_det" uid="{2af98547-f810-4de3-bb6f-8b886de56dc6}"/>
+    <RecordField colName="batch_id" fieldIdRef="10" fieldType="TABLE_COLUMN" name="pu31_det.batch_id" sqlTabName="pu31_det" uid="{5947a0ea-36ec-4c12-93c2-b584cf19e1a9}"/>
+    <RecordField colName="expiry_date" fieldIdRef="11" fieldType="TABLE_COLUMN" name="pu31_det.expiry_date" sqlTabName="pu31_det" uid="{a045d69d-5a1c-4b76-8923-d33e8fa283fc}"/>
+    <RecordField colName="qty" fieldIdRef="12" fieldType="TABLE_COLUMN" name="pu31_det.qty" sqlTabName="pu31_det" uid="{5ee60df3-de13-49e5-85d7-e39b3deecd64}"/>
+    <RecordField colName="unit_cost" fieldIdRef="13" fieldType="TABLE_COLUMN" name="pu31_det.unit_cost" sqlTabName="pu31_det" uid="{cc03c98d-bbfb-48ae-a764-c209fa66b274}"/>
+    <RecordField colName="total" fieldIdRef="14" fieldType="TABLE_COLUMN" name="pu31_det.total" sqlTabName="pu31_det" uid="{4e40fda8-ac9f-4676-b4de-3f9fa54c4300}"/>
+  </Record>
+  <Form gridHeight="25" gridWidth="137" name="form" text="Form">
+    <VBox gridHeight="20" gridWidth="137" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="18" gridWidth="137" name="xactapp_db1" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="6" name="pu31_hdr_doc_no_label1" posX="1" posY="1">
+          <Initializer text="dbschema:pu31_hdr.doc_no/@label"/>
+        </Label>
+        <Edit colName="doc_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu31_hdr.doc_no" posX="8" posY="1" scroll="true" sqlTabName="pu31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="pu31_hdr_acc_code_label1" posX="23" posY="1">
+          <Initializer text="dbschema:pu31_hdr.acc_code/@label"/>
+        </Label>
+        <Edit colName="acc_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="pu31_hdr.acc_code" posX="35" posY="1" scroll="true" sqlTabName="pu31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="pu31_hdr_date_label1" posX="1" posY="2">
+          <Initializer text="dbschema:pu31_hdr.date/@label"/>
+        </Label>
+        <Edit colName="date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu31_hdr.date" posX="8" posY="2" scroll="true" sqlTabName="pu31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="pu31_hdr_total_value_label1" posX="23" posY="2">
+          <Initializer text="dbschema:pu31_hdr.total_value/@label"/>
+        </Label>
+        <Edit colName="total_value" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu31_hdr.total_value" posX="35" posY="2" scroll="true" sqlTabName="pu31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="pu31_hdr_vat_label1" posX="1" posY="3">
+          <Initializer text="dbschema:pu31_hdr.vat/@label"/>
+        </Label>
+        <Edit colName="vat" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu31_hdr.vat" posX="8" posY="3" scroll="true" sqlTabName="pu31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="pu31_hdr_status_label1" posX="23" posY="3">
+          <Initializer text="dbschema:pu31_hdr.status/@label"/>
+        </Label>
+        <Edit colName="status" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="pu31_hdr.status" posX="35" posY="3" scroll="true" sqlTabName="pu31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Group gridHeight="14" gridWidth="135" name="group1" posX="1" posY="4" text="">
+          <Table gridHeight="6" gridWidth="133" name="xactapp_db2" posX="1" posY="1" totalRows="5">
+            <Edit colName="doc_no" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu31_det.doc_no" posX="1" posY="0" scroll="true" sqlTabName="pu31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="item_no" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu31_det.item_no" posX="12" posY="0" scroll="true" sqlTabName="pu31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="stock_code" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="pu31_det.stock_code" posX="23" posY="0" scroll="true" sqlTabName="pu31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="batch_id" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="pu31_det.batch_id" posX="43" posY="0" scroll="true" sqlTabName="pu31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="expiry_date" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu31_det.expiry_date" posX="73" posY="0" scroll="true" sqlTabName="pu31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="qty" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu31_det.qty" posX="83" posY="0" scroll="true" sqlTabName="pu31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="unit_cost" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu31_det.unit_cost" posX="97" posY="0" scroll="true" sqlTabName="pu31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="total" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu31_det.total" posX="111" posY="0" scroll="true" sqlTabName="pu31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+          </Table>
+        </Group>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA5ADAAYQBjADYANQBhADMALQA5ADMAMQA1AC0ANABmAGYAZQAtADkANwA4AGQALQBiADAAOQBkADIAZgAxADgANAA3ADgANwB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewBjADIAMgBiAGIAZQA5ADUALQBiAGYAMwA3AC0ANABmAGMAZQAtADgANgAyADEALQAwADIAMABhAGQANAAyADgAOQBmAGEAYgB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

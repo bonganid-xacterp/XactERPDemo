@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="sy100_user_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Form" width="82" height="6">
+<Form name="sy100_user_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Form" width="82" height="8">
   <LStr text="Form"/>
   <HBox name="hbox1">
-    <Grid name="xactapp_db1" width="82" height="6">
+    <Grid name="xactapp_db1" width="82" height="8">
       <Label name="lbl_sy00_user_user" width="8" text="Username" posY="1" posX="1" gridWidth="8">
         <LStr text="Username"/>
       </Label>

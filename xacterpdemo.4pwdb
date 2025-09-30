@@ -44,27 +44,26 @@
 <Call c="16" l="67" n="confirm_exit_login" t="F"/>
 </Fct>
 </File>
-<File n="src/_main/main_shell.4gl" s="2" ts="20250929152026937">
+<File n="src/_main/main_shell.4gl" s="2" ts="20250930090101626">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Dep t="src/dl/dl100_mast.4gl"/>
-<Fct c="10" el="32" l="29" n="confirm_exit()" t="F" v="pub"/>
-<Fct c="10" el="27" l="25" n="launch_child_window(module_name STRING)" t="F" v="pub"/>
-<Fct c="10" el="23" l="21" n="debtors()" t="F" v="pub">
-<Call c="21" i="dl100_mast" l="22" n="open_debtors" t="F"/>
+<Fct c="10" el="44" l="41" n="confirm_exit()" t="F" v="pub"/>
+<Fct c="10" el="39" l="37" n="launch_child_window(module_name STRING)" t="F" v="pub"/>
+<Fct c="10" el="35" l="33" n="debtors()" t="F" v="pub">
+<Call c="21" i="dl100_mast" l="34" n="open_debtors" t="F"/>
 </Fct>
-<Fct c="10" el="18" l="4" n="main_application_menu()" t="F" v="pub">
-<Call c="19" i="utils_ui" l="7" n="set_page_title" t="F"/>
-<Call c="16" l="14" n="confirm_exit" t="F"/>
+<Fct c="10" el="30" l="16" n="main_application_menu()" t="F" v="pub">
+<Call c="19" i="utils_ui" l="19" n="set_page_title" t="F"/>
+<Call c="16" l="26" n="confirm_exit" t="F"/>
 </Fct>
 </File>
-<File n="src/cl/cl100_mast.4gl" s="2" ts="20250929152026863">
-<Fct c="10" el="8" l="4" n="open_debtors()" t="F" v="pub"/>
+<File n="src/cl/cl100_mast.4gl" s="2" ts="20250930094548973">
+<Fct c="10" el="27" l="20" n="search_creditors(p_term STRING)" t="F" v="pub"/>
+<Fct c="10" el="17" l="13" n="open_creditors()" t="F" v="pub"/>
 </File>
-<File n="src/cl/cl30_trans.4gl" s="2" ts="20250929152027046">
+<File n="src/cl/cl30_trans.4gl" s="2" ts="20250930094549139">
 <Dep t="src/utils/utils_ui.4gl"/>
-<Fct c="10" el="15" l="3" n="show_cl_trans()" t="F" v="pub">
-<Call c="19" i="utils_ui" l="6" n="set_page_title" t="F"/>
-</Fct>
+<Fct c="10" el="16" l="12" n="show_cl_trans()" t="F" v="pub"/>
 </File>
 <File n="database/xactapp_db_pgs_create_script.4gl" s="2" ts="20250929162029926">
 <Fct c="10" el="726" l="719" n="db_add_indexes()" t="F" v="pub"/>
@@ -83,19 +82,26 @@
 <File n="src/dl/dl100_mast.4gl" s="2" ts="20250929162029796">
 <Fct c="10" el="18" l="12" n="open_debtors()" t="F" v="pub"/>
 </File>
-<File n="src/incl/incl.4gl" s="2" ts="20250929162029736"/>
-<File n="libs/globals.4gl" s="2" ts="20250929162029609"/>
-<File n="src/sy/sy00_user.4gl" s="2" ts="20250929162029972"/>
-<File n="src/sy/sy04_role.4gl" s="2" ts="20250929162030066"/>
-<File n="src/sy/sy07_state.4gl" s="2" ts="20250929162029676"/>
-<File n="src/sy/sy200_logs.4gl" s="2" ts="20250929162029883"/>
-<File n="src/sy/sy900_utils.4gl" s="2" ts="20250929162029766"/>
+<File n="src/incl/incl.4gl" s="2" ts="20250930094548924"/>
+<File n="libs/globals.4gl" s="2" ts="20250930094549244"/>
+<File n="src/sy/sy00_user.4gl" s="2" ts="20250930094549209">
+<Fct c="10" el="27" l="23" n="add_user()" t="F" v="pub"/>
+<Fct c="10" el="20" l="17" n="search_user()" t="F" v="pub"/>
+<Fct c="10" el="14" l="12" n="list_users()" t="F" v="pub"/>
+</File>
+<File n="src/sy/sy04_role.4gl" s="2" ts="20250930094549181"/>
+<File n="src/sy/sy200_logs.4gl" s="2" ts="20250930094549039">
+<Fct c="10" el="31" l="27" n="log_details()" t="F" v="pub"/>
+<Fct c="10" el="23" l="20" n="load_logs()" t="F" v="pub"/>
+<Fct c="10" el="16" l="12" n="add_log()" t="F" v="pub"/>
+</File>
+<File n="src/sy/sy900_utils.4gl" s="2" ts="20250930094549079"/>
 <File n="src/utils/utils_db.4gl" s="2" ts="20250929162029644">
 <Fct c="10" el="30" l="10" n="initialize_database()" t="F" v="pub"/>
 </File>
-<File n="src/utils/utils_ui.4gl" s="2" ts="20250929162030017">
-<Fct c="10" el="28" l="22" n="set_page_title(p_title STRING)" t="F" v="pub"/>
-<Fct c="10" el="20" l="3" n="show_alert(p_message STRING,p_title STRING)" t="F" v="pub"/>
+<File n="src/utils/utils_ui.4gl" s="2" ts="20250930094549007">
+<Fct c="10" el="36" l="30" n="set_page_title(p_title STRING)" t="F" v="pub"/>
+<Fct c="10" el="28" l="11" n="show_alert(p_message STRING,p_title STRING)" t="F" v="pub"/>
 </File>
-<File n="src/wh/wh30_trans.4gl" s="2" ts="20250929162029706"/>
+<File n="src/wh/wh30_trans.4gl" s="2" ts="20250930094549106"/>
 </WorkspaceDatabase>

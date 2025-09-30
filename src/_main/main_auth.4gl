@@ -10,6 +10,8 @@
 IMPORT ui
 IMPORT FGL utils_ui
 
+
+
 -- Global variables for user session
 DEFINE g_current_user STRING
 DEFINE g_user_role STRING

@@ -1,4 +1,12 @@
-# UI Utilities
+# ==============================================================
+# Program   :   utils_ui.4gl
+# Purpose   :   Utilities for shared ui components
+# Module    :   Utilities
+# Number    :   
+# Author    :   Bongani Dlamini
+# Version   :   Genero BDL 3.2.1
+# ==============================================================
+
 
 FUNCTION show_alert(p_message STRING, p_title STRING)
     DEFINE l_title STRING

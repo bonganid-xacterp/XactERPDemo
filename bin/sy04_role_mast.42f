@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="sy04_role_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Roles" width="64" height="5">
+<Form name="sy04_role_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Roles" width="267" height="18">
   <LStr text="Roles"/>
-  <HBox name="hbox1">
-    <Grid name="xactapp_db1" width="64" height="5">
+  <VBox name="vbox1">
+    <Grid name="xactapp_db1" width="267" height="18">
       <Label name="lbl_sy04_role_name" width="9" text="Role Name" posY="1" posX="1" gridWidth="9">
         <LStr text="Role Name"/>
       </Label>
@@ -18,11 +18,25 @@
           <Item name="1" text="Active"/>
         </ComboBox>
       </FormField>
+      <Group name="group1" text="Permissions" posY="3" posX="1" gridWidth="266" gridHeight="15">
+        <LStr text="Permissions"/>
+        <Matrix pageSize="24" stepY="2" stepX="28" columnCount="4" name="sy05_perm.perm_name" colName="perm_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="2" sqlTabName="sy05_perm" tabIndex="3">
+          <CheckBox width="18" text="" posY="1" posX="2" gridWidth="18">
+            <LStr text=""/>
+          </CheckBox>
+        </Matrix>
+      </Group>
     </Grid>
-  </HBox>
+  </VBox>
   <RecordView tabName="sy04_role">
     <Link colName="role_name" fieldIdRef="0"/>
     <Link colName="status" fieldIdRef="1"/>
+  </RecordView>
+  <RecordView tabName="sy05_perm">
+    <Link colName="perm_name" fieldIdRef="2"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="perm_name" fieldIdRef="2"/>
   </RecordView>
   <RecordView tabName="record4">
     <Link colName="role_name" fieldIdRef="0"/>

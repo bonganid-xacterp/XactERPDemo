@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="cl100_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" spacing="compact" text="Creditors Master" width="82" height="8">
+<Form name="cl100_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" spacing="compact" text="Creditors Master" width="126" height="16">
   <LStr text="Creditors Master"/>
-  <HBox name="hbox1">
-    <Grid name="grid" width="82" height="8">
+  <VBox name="vbox1">
+    <Grid name="grid" width="82" height="6">
       <Label name="lbl_cl01_mast_acc_code" width="8" text="Account Code" posY="1" posX="1" gridWidth="8">
         <LStr text="Account Code"/>
       </Label>
@@ -61,7 +61,48 @@
         </ComboBox>
       </FormField>
     </Grid>
-  </HBox>
+    <Folder name="docs">
+      <Page name="trans_group" text="Documents">
+        <LStr text="Documents"/>
+        <Grid name="trans_grid" width="126" height="10">
+          <Table pageSize="5" name="dl30_trans_tb" width="125" posY="0" posX="1" gridWidth="125" gridHeight="9" tabName="+tn_0">
+            <TableColumn name="dl30_trans.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="9" sqlTabName="dl30_trans" text="Trans Date" tabIndex="10">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Trans Date"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="10" sqlTabName="dl30_trans" text="Doc No" tabIndex="11">
+              <Edit width="20" scroll="1"/>
+              <LStr text="Doc No"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="11" sqlTabName="dl30_trans" text="Trans Type" tabIndex="12">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Trans Type"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="12" sqlTabName="dl30_trans" text="Doc Type" tabIndex="13">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Doc Type"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.gross_val" colName="gross_val" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="13" sqlTabName="dl30_trans" text="Total Excl" tabIndex="14" numAlign="1">
+              <Edit width="14" scroll="1"/>
+              <LStr text="Total Excl"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.vat" colName="vat" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="14" sqlTabName="dl30_trans" text="VAT" tabIndex="15" numAlign="1">
+              <Edit width="14" scroll="1"/>
+              <LStr text="VAT"/>
+            </TableColumn>
+            <TableColumn name="formonly.dl30_trans_tot_incl" colName="dl30_trans_tot_incl" fieldId="15" sqlTabName="formonly" defaultValue="0.00" text="Total Incl" tabIndex="16">
+              <Edit width="8"/>
+              <LStr text="Total Incl"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="16" sqlTabName="dl30_trans" text="Notes" tabIndex="17">
+              <Edit width="30" scroll="1"/>
+              <LStr text="Notes"/>
+            </TableColumn>
+          </Table>
+        </Grid>
+      </Page>
+    </Folder>
+  </VBox>
   <RecordView tabName="cl01_mast">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="supp_name" fieldIdRef="1"/>
@@ -73,6 +114,18 @@
     <Link colName="balance" fieldIdRef="7"/>
     <Link colName="status" fieldIdRef="8"/>
   </RecordView>
+  <RecordView tabName="dl30_trans">
+    <Link colName="date" fieldIdRef="9"/>
+    <Link colName="doc_no" fieldIdRef="10"/>
+    <Link colName="trans_type" fieldIdRef="11"/>
+    <Link colName="doc_type" fieldIdRef="12"/>
+    <Link colName="gross_val" fieldIdRef="13"/>
+    <Link colName="vat" fieldIdRef="14"/>
+    <Link colName="notes" fieldIdRef="16"/>
+  </RecordView>
+  <RecordView tabName="formonly">
+    <Link colName="dl30_trans_tot_incl" fieldIdRef="15"/>
+  </RecordView>
   <RecordView tabName="record2">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="supp_name" fieldIdRef="1"/>
@@ -83,5 +136,15 @@
     <Link colName="email" fieldIdRef="6"/>
     <Link colName="balance" fieldIdRef="7"/>
     <Link colName="status" fieldIdRef="8"/>
+  </RecordView>
+  <RecordView tabName="record5">
+    <Link colName="date" fieldIdRef="9"/>
+    <Link colName="trans_type" fieldIdRef="11"/>
+    <Link colName="doc_type" fieldIdRef="12"/>
+    <Link colName="doc_no" fieldIdRef="10"/>
+    <Link colName="gross_val" fieldIdRef="13"/>
+    <Link colName="vat" fieldIdRef="14"/>
+    <Link colName="dl30_trans_tot_incl" fieldIdRef="15"/>
+    <Link colName="notes" fieldIdRef="16"/>
   </RecordView>
 </Form>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{31eaf1df-4427-4484-bf44-9f76a723d736}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sa31_hdr" name="record1" uid="{b57f35b6-9ea2-4901-9311-084c98f9c3ef}">
+    <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sa31_hdr.doc_no" sqlTabName="sa31_hdr" uid="{1522d9d4-b1b4-4356-b218-b68ccbacacc1}"/>
+    <RecordField colName="acc_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sa31_hdr.acc_code" sqlTabName="sa31_hdr" uid="{7446f086-4513-440d-8ba9-ed2c2c47bd82}"/>
+    <RecordField colName="date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sa31_hdr.date" sqlTabName="sa31_hdr" uid="{473a948b-1902-4e1d-92f2-4cb2cd0c5977}"/>
+    <RecordField colName="total_excl" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sa31_hdr.total_excl" sqlTabName="sa31_hdr" uid="{3015e86b-be22-4c84-816b-e918eaf0935f}"/>
+    <RecordField colName="vat" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sa31_hdr.vat" sqlTabName="sa31_hdr" uid="{3ea811bf-ecee-4532-b793-d3f0686b2b0e}"/>
+    <RecordField colName="total_cost" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sa31_hdr.total_cost" sqlTabName="sa31_hdr" uid="{3e07b758-8e70-4790-b13f-72eb582ab947}"/>
+    <RecordField colName="status" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sa31_hdr.status" sqlTabName="sa31_hdr" uid="{8b5eb25d-d640-4d97-8fa5-cf2ae9fe4116}"/>
+  </Record>
+  <Record masterTable="sa31_det" name="record2" uid="{eed7fe3c-8be1-45df-b1ab-7119691f0be2}"/>
+  <Record masterTable="sa31_det" name="record3" uid="{abaa00ba-f86e-4819-b4af-fef1b11fbb04}">
+    <RecordField colName="doc_no" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sa31_det.doc_no" sqlTabName="sa31_det" uid="{d87b580f-7349-467c-9307-092661cfc855}"/>
+    <RecordField colName="item_no" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sa31_det.item_no" sqlTabName="sa31_det" uid="{cf902eff-1f00-4e89-9939-096cf6da71cb}"/>
+    <RecordField colName="stock_code" fieldIdRef="10" fieldType="TABLE_COLUMN" name="sa31_det.stock_code" sqlTabName="sa31_det" uid="{e835d8db-9c7a-4664-a396-3eabedb8df86}"/>
+    <RecordField colName="batch_id" fieldIdRef="11" fieldType="TABLE_COLUMN" name="sa31_det.batch_id" sqlTabName="sa31_det" uid="{aaa8e68c-c09f-4357-bc9d-8dbfc823dd40}"/>
+    <RecordField colName="qty" fieldIdRef="12" fieldType="TABLE_COLUMN" name="sa31_det.qty" sqlTabName="sa31_det" uid="{8c9edbe2-976a-4a80-a3f5-6d3b319ca147}"/>
+    <RecordField colName="unit_cost" fieldIdRef="13" fieldType="TABLE_COLUMN" name="sa31_det.unit_cost" sqlTabName="sa31_det" uid="{a891375f-0087-4f6e-a75b-ba06afddb8b5}"/>
+    <RecordField colName="unit_sell" fieldIdRef="14" fieldType="TABLE_COLUMN" name="sa31_det.unit_sell" sqlTabName="sa31_det" uid="{141bbce8-6374-44d4-b913-c74738446be2}"/>
+    <RecordField colName="disc" fieldIdRef="15" fieldType="TABLE_COLUMN" name="sa31_det.disc" sqlTabName="sa31_det" uid="{cb59fee3-7a1a-4afb-b5bb-11981aa37f90}"/>
+    <RecordField colName="total" fieldIdRef="16" fieldType="TABLE_COLUMN" name="sa31_det.total" sqlTabName="sa31_det" uid="{8f5cad00-ecd7-46e1-b268-1083ce8847f3}"/>
+  </Record>
+  <Form gridHeight="27" gridWidth="155" name="form" text="Form">
+    <VBox gridHeight="27" gridWidth="155" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="25" gridWidth="155" name="xactapp_db1" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="6" name="sa31_hdr_doc_no_label1" posX="1" posY="1">
+          <Initializer text="dbschema:sa31_hdr.doc_no/@label"/>
+        </Label>
+        <Edit colName="doc_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa31_hdr.doc_no" posX="8" posY="1" scroll="true" sqlTabName="sa31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="10" name="sa31_hdr_acc_code_label1" posX="23" posY="1">
+          <Initializer text="dbschema:sa31_hdr.acc_code/@label"/>
+        </Label>
+        <Edit colName="acc_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sa31_hdr.acc_code" posX="34" posY="1" scroll="true" sqlTabName="sa31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="sa31_hdr_date_label1" posX="1" posY="2">
+          <Initializer text="dbschema:sa31_hdr.date/@label"/>
+        </Label>
+        <Edit colName="date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_hdr.date" posX="8" posY="2" scroll="true" sqlTabName="sa31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="10" name="sa31_hdr_total_excl_label1" posX="23" posY="2">
+          <Initializer text="dbschema:sa31_hdr.total_excl/@label"/>
+        </Label>
+        <Edit colName="total_excl" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_hdr.total_excl" posX="34" posY="2" scroll="true" sqlTabName="sa31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="sa31_hdr_vat_label1" posX="1" posY="3">
+          <Initializer text="dbschema:sa31_hdr.vat/@label"/>
+        </Label>
+        <Edit colName="vat" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_hdr.vat" posX="8" posY="3" scroll="true" sqlTabName="sa31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="10" name="sa31_hdr_total_cost_label1" posX="23" posY="3">
+          <Initializer text="dbschema:sa31_hdr.total_cost/@label"/>
+        </Label>
+        <Edit colName="total_cost" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_hdr.total_cost" posX="34" posY="3" scroll="true" sqlTabName="sa31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="sa31_hdr_status_label1" posX="1" posY="4">
+          <Initializer text="dbschema:sa31_hdr.status/@label"/>
+        </Label>
+        <Edit colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="sa31_hdr.status" posX="8" posY="4" scroll="true" sqlTabName="sa31_hdr" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Group gridHeight="20" gridWidth="154" name="group1" posX="1" posY="5" text="">
+          <Table gridHeight="6" gridWidth="152" name="xactapp_db2" posX="1" posY="1" totalRows="5">
+            <Edit colName="doc_no" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa31_det.doc_no" posX="1" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="item_no" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa31_det.item_no" posX="12" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="stock_code" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sa31_det.stock_code" posX="23" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="batch_id" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sa31_det.batch_id" posX="43" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="qty" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_det.qty" posX="73" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="unit_cost" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_det.unit_cost" posX="87" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="unit_sell" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_det.unit_sell" posX="101" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="disc" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_det.disc" posX="115" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="total" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_det.total" posX="129" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+          </Table>
+        </Group>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewBlAGUAZAA3AGYAZQAzAGMALQA4AGIAZQAxAC0ANAA1AGQAZgAtAGIAMQBhAGIALQA3ADEAMQA5ADYAOQAxAGYAMABiAGUAMgB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewBhAGIAYQBhADAAMABiAGEALQBmADgANgBlAC0ANAA4ADEAOQAtAGIANABhAGYALQBmAGUAZgAxAGIAMQAxAGYAYgBiADAANAB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewBiADUANwBmADMANQBiADYALQA5AGUAYQAyAC0ANAA5ADAAMQAtADkAMwAxADEALQAwADgANABjADkAOABmADkAYwAzAGUAZgB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>
