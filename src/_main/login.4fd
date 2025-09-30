@@ -10,7 +10,7 @@
   <Form gridHeight="18" gridWidth="34" minHeight="0" minWidth="0" name="frm_login" spacing="normal" text="Login" windowStyle="dialog4">
     <VBox gridHeight="16" gridWidth="32" name="vbox1" posX="1" posY="1">
       <Grid gridHeight="14" gridWidth="32" name="login_grid" posX="0" posY="1">
-        <Image autoScale="true" gridHeight="8" gridWidth="30" image="logo.png" name="company_logo" posX="1" posY="1" sizePolicy="dynamic" stretch="both"/>
+        <Image autoScale="true" gridHeight="8" gridWidth="30" name="company_logo" posX="1" posY="1" sizePolicy="dynamic" stretch="both"/>
         <Label gridHeight="1" gridWidth="10" name="lbl_username" posX="1" posY="10" text="Username">
           <Initializer text="dbschema:sy00_user.username/@label"/>
         </Label>
@@ -27,6 +27,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAACwAADdAIAAALAAANwAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAADAAAEJAIAAAMAAAQgAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

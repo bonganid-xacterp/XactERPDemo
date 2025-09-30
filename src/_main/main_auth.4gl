@@ -21,7 +21,9 @@ FUNCTION login_user() RETURNS SMALLINT
     DEFINE login_result SMALLINT
     DEFINE f_username STRING
     DEFINE f_password STRING
-    DEFINE max_attempts SMALLINT
+    DEFINE max_attempts SMALLINT    
+    DEFINE f ui.Form 
+
 
     LET max_attempts = 3
     LET g_login_attempts = 0
@@ -33,6 +35,9 @@ FUNCTION login_user() RETURNS SMALLINT
         ATTRIBUTE(STYLE = "dialog", TEXT = "XactERP Login")
 
     CALL utils_ui.set_page_title("Login")
+        
+    LET f = ui.Window.getCurrent().getForm()
+    CALL f.setElementImage("company_logo", "logo.png")
 
     DIALOG
         INPUT BY NAME f_username, f_password

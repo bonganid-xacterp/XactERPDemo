@@ -50,10 +50,6 @@ END MAIN
 FUNCTION initialize_application()
 
     DEFINE db_result SMALLINT
-    DEFINE f ui.Form 
-        
-    LET f = ui.Window.getCurrent().getForm()
-    CALL f.setElementImage("company_logo", "logo.png")
 
     -- Initialize database connection
     LET db_result = utils_db.initialize_database()

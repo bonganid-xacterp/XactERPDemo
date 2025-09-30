@@ -27,6 +27,7 @@ FUNCTION show_alert(p_message STRING, p_title STRING)
 
 END FUNCTION
 
+-- set the window page title
 FUNCTION set_page_title(p_title STRING)
     DEFINE g_win ui.Window
     LET g_win = ui.Window.getCurrent()
@@ -34,3 +35,14 @@ FUNCTION set_page_title(p_title STRING)
         CALL g_win.setText("XACT ERP Demo – " || p_title)
     END IF
 END FUNCTION
+
+-- set label value
+FUNCTION set_form_lbl(lbl_name STRING, new_text STRING )
+    DEFINE g_form ui.Form
+    LET g_form = ui.Window.getCurrent().getForm()
+    
+    # Set the text for the specified label element
+    # The element must exist in the form (.per file)
+    CALL g_form.setElementText(lbl_name, new_text)
+
+END FUNCTION    

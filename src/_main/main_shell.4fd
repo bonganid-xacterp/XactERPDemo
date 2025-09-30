@@ -7,57 +7,105 @@
   <Record masterTable="sy00_user" name="record2" uid="{80bd2ca8-1d37-47d7-8ac3-1fd3bd447949}"/>
   <Form gridHeight="24" gridWidth="103" name="frm_main_container" style="" text="" version="0.1" windowStyle="">
     <TopMenu name="top_menu">
-      <TopMenuGroup name="tm_file" text="File">
-        <TopMenuSeparator name="topmenuseparator1"/>
-        <TopMenuCommand acceleratorName="quit" image="quit" name="tm_sb_exit" text="Quit"/>
+      <TopMenuGroup name="tm_main" text="File">
+        <TopMenuSeparator name="sep_01"/>
+        <TopMenuCommand acceleratorName="quit" image="quit" name="main_exit" text="Quit"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_dl" text="Debtors">
-        <TopMenuCommand acceleratorName="open" image="open2" name="tm_sb_dl_add" text="Debtors Enquiry"/>
-        <TopMenuCommand acceleratorName="open" image="open2" name="tm_sb_dl_list" text="List Debtors"/>
+        <TopMenuGroup image="fa-database" name="dl_m_grp" text="Debtors Enquiry">
+          <TopMenuCommand image="open" name="dl_enq" text="Debtor Enquiry"/>
+          <TopMenuCommand image="pen" name="dl_maint" text="Debptr Maintanance"/>
+        </TopMenuGroup>
       </TopMenuGroup>
       <TopMenuGroup name="tm_cl" text="Creditors">
-        <TopMenuCommand image="open2" name="tm_sb_cl_add" text="Add Creditor"/>
-        <TopMenuCommand image="open2" name="tm_sm_cl_list" text="List Creditors"/>
+        <TopMenuGroup image="fa-database" name="cl_m_grp" text="Creditor">
+          <TopMenuCommand image="open" name="cl_enq" text="Creditors Enquiry"/>
+          <TopMenuCommand image="pen" name="cl_maint" text="Creditors Maintanance"/>
+        </TopMenuGroup>
+        <TopMenuSeparator name="topmenuseparator1"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_st" text="Stock">
-        <TopMenuCommand image="open2" name="tm_st_list" text="Stock Maintanance"/>
-        <TopMenuCommand image="open2" name="tm_st_cat" text="Stock Categories"/>
-        <TopMenuCommand image="open2" name="tm_st_whs" text="Warehouses"/>
+        <TopMenuGroup image="fa-database" name="st_m_grp" text="Stock">
+          <TopMenuCommand image="" name="st_enq" text="Stock Enquiry"/>
+          <TopMenuCommand image="pen" name="st_maint" text="Stock Maintainance"/>
+        </TopMenuGroup>
+        <TopMenuGroup image="fa-database" name="st_cat_grp" text="Stock Categories">
+          <TopMenuCommand image="open" name="st_cat_enq" text="S/Category Enquiry"/>
+          <TopMenuCommand image="pen" name="st_cat_maint" text="S/Category Maintanance"/>
+        </TopMenuGroup>
+        <TopMenuGroup image="fa-database" name="wh_m_grp" text="Warehouses">
+          <TopMenuCommand image="open" name="wh_enq" text="WH Enquiry"/>
+          <TopMenuCommand image="pen" name="wh_maint" text="WH Maintanance"/>
+        </TopMenuGroup>
+        <TopMenuGroup image="fa-database" name="wb_m_grp" text="Wh Bins">
+          <TopMenuCommand image="open" name="wb_enq" text="WH Bin Enquiry"/>
+          <TopMenuCommand image="pen" name="wb_maint" text="WH Bin Maintanance"/>
+        </TopMenuGroup>
       </TopMenuGroup>
       <TopMenuGroup name="tm_gl" tag="" text="Finance">
-        <TopMenuCommand image="open2" name="tm_sm_gl" text="General Ledger"/>
-        <TopMenuCommand image="open2" name="tm_sb_gl_jnl" text="Journals"/>
+        <TopMenuGroup image="fa-database" name="fn_m_grp" text="General Ledger">
+          <TopMenuCommand image="open" name="gl_enq" text="G/L Enquiry"/>
+          <TopMenuCommand image="pen" name="gl_maint" text="G/L Maintanance"/>
+        </TopMenuGroup>
+        <TopMenuGroup image="fa-database" name="jnl_m_grp" text="Journals">
+          <TopMenuCommand image="open" name="jnl_enq" text="JNL Enquiry"/>
+          <TopMenuCommand image="pen" name="jnl_maint" text="JNL Maintanance"/>
+        </TopMenuGroup>
       </TopMenuGroup>
       <TopMenuGroup name="tm_sa" text="Sales">
-        <TopMenuGroup image="open2" name="topmenugroup1" text="Quotations">
-          <TopMenuCommand name="tm_sb_sa_qt" text=""/>
+        <TopMenuGroup image="fa-database" name="sa_ord_m_grp" text="Orders">
+          <TopMenuCommand image="open" name="sa_ord_enq" text="Orders Enquiry"/>
+          <TopMenuCommand image="pen" name="sa_ord_maint" text="Orders Maintanance"/>
         </TopMenuGroup>
-        <TopMenuCommand image="open2" name="tm_sb_sa_ord" text="Orders"/>
-        <TopMenuCommand image="open2" name="tm_sb_sa_inv" text="Invoices"/>
-        <TopMenuCommand image="open2" name="tm_sb_sa_crn" text="Credit Notes"/>
+        <TopMenuGroup image="fa-database" name="sa_inv_m_grp" text="Invoices">
+          <TopMenuCommand image="open" name="sa_inv_enq" text="Invoices Enquiry"/>
+          <TopMenuCommand image="pen" name="sa_inv_maint" text="Invoices Maintanance"/>
+        </TopMenuGroup>
+        <TopMenuGroup image="fa-database" name="sa_crn_m_grp" text="Credit Notes">
+          <TopMenuCommand image="open" name="sa_crn_enq" text="C/N Enquiry"/>
+          <TopMenuCommand image="pen" name="sa_crn_maint" text="C/N Maintanance"/>
+        </TopMenuGroup>
+        <TopMenuGroup image="fa-database" name="sa_qt_m_grp" text="Quotes">
+          <TopMenuCommand image="open" name="sa_qt_enq" text="Quotes Enquiry"/>
+          <TopMenuCommand image="pen" name="sa_qt_maint" text="Quotes Maintanance"/>
+        </TopMenuGroup>
       </TopMenuGroup>
-      <TopMenuGroup name="tm_pa" text="Purchases">
-        <TopMenuCommand image="open2" name="tm_sb_pa_ord" text="Orders"/>
-        <TopMenuCommand image="open2" name="tm_sb_pa_inv" text="GRN"/>
+      <TopMenuGroup name="tm_pu" text="Purchases">
+        <TopMenuGroup image="fa-database" name="pu_ord_grp" text="Orders">
+          <TopMenuCommand image="open" name="pu_po_enq" text="Orders Enquiry"/>
+          <TopMenuCommand image="pen" name="pu_po_maint" text="Orders Maintanance"/>
+        </TopMenuGroup>
+        <TopMenuGroup image="fa-database" name="pu_grn_grp" text="GRN">
+          <TopMenuCommand image="open" name="pu_grn_enq" text="GRN Enquiry"/>
+          <TopMenuCommand image="pen" name="pu_grn_maint" text="GRN Maintainance"/>
+        </TopMenuGroup>
       </TopMenuGroup>
       <TopMenuGroup name="tm_sys" text="System">
-        <TopMenuCommand image="open2" name="tm_sy_users" text="Users"/>
-        <TopMenuCommand image="open2" name="tm_sys_sb_roles" text="User Roles"/>
-        <TopMenuCommand image="open2" name="tm_sb_sys_perm" text="User Permissions"/>
-        <TopMenuCommand image="open2" name="tm_sb_sys_sett" text="Settings"/>
-        <TopMenuCommand image="open2" name="tm_sb_sys_logs" text="Logs"/>
+        <TopMenuGroup image="fa-database" name="sy_usr_grp" text="Users">
+          <TopMenuCommand image="open2" name="sy_usr_enq" text="Users Enquiry"/>
+          <TopMenuCommand image="pen" name="sy_usr_maint" text="Users Maintainance"/>
+        </TopMenuGroup>
+        <TopMenuGroup image="fa-database" name="sy_roles_grp" text="Roles &amp; Permissions">
+          <TopMenuCommand image="open" name="sy_roles_enq" text="Roles Enquiry"/>
+          <TopMenuCommand image="pen" name="sy_roles_maint" text="Roles Maintainance"/>
+          <TopMenuCommand image="open" name="sys_perm_enq" text="Permissions Enquiry"/>
+          <TopMenuCommand image="pen" name="sy_perm_maint" text="Permissions Maintainance"/>
+        </TopMenuGroup>
+        <TopMenuSeparator name="topmenuseparator2"/>
+        <TopMenuCommand image="open2" name="sys_sett" text="Settings"/>
+        <TopMenuCommand image="open2" name="sys_logs" text="Logs"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_app" text="Help">
-        <TopMenuCommand image="fa-info-circle" name="tm_sy_about" text="About"/>
+        <TopMenuCommand image="fa-info-circle" name="sy_about" text="About"/>
       </TopMenuGroup>
     </TopMenu>
     <Grid gridHeight="23" gridWidth="102" hidden="true" name="main_grid" posX="0" posY="0">
-      <Label fontPitch="variable" gridHeight="1" gridWidth="30" justify="center" name="lbl_title" posX="1" posY="0" text=""/>
+      <Label fontPitch="variable" gridHeight="1" gridWidth="30" justify="center" name="lbl_username" posX="1" posY="0" text=""/>
       <Label gridHeight="1" gridWidth="22" name="lbl_version" posX="80" posY="0" text=""/>
       <ScrollGrid gridChildrenInParent="true" gridHeight="21" gridWidth="100" hidden="true" name="grp_workarea" posX="1" posY="1"/>
     </Grid>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzMz95mZ3AFmZmbzMzMj9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzM0OGZm3AFmZmdMzMzT9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>
