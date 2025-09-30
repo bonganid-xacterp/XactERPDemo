@@ -78,6 +78,14 @@
       </Group>
     </Grid>
   </VBox>
+  <RecordView tabName="pu30_hdr">
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="acc_code" fieldIdRef="1"/>
+    <Link colName="date" fieldIdRef="2"/>
+    <Link colName="total_value" fieldIdRef="3"/>
+    <Link colName="vat" fieldIdRef="4"/>
+    <Link colName="status" fieldIdRef="5"/>
+  </RecordView>
   <RecordView tabName="pu30_det">
     <Link colName="doc_no" fieldIdRef="6"/>
     <Link colName="item_no" fieldIdRef="7"/>
@@ -87,14 +95,6 @@
     <Link colName="qty" fieldIdRef="11"/>
     <Link colName="unit_cost" fieldIdRef="12"/>
     <Link colName="total" fieldIdRef="13"/>
-  </RecordView>
-  <RecordView tabName="pu30_hdr">
-    <Link colName="doc_no" fieldIdRef="0"/>
-    <Link colName="acc_code" fieldIdRef="1"/>
-    <Link colName="date" fieldIdRef="2"/>
-    <Link colName="total_value" fieldIdRef="3"/>
-    <Link colName="vat" fieldIdRef="4"/>
-    <Link colName="status" fieldIdRef="5"/>
   </RecordView>
   <RecordView tabName="record1">
     <Link colName="doc_no" fieldIdRef="0"/>

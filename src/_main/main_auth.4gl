@@ -156,6 +156,7 @@ FUNCTION validate_login(f_username STRING, f_password STRING) RETURNS SMALLINT
 
     IF NOT is_valid THEN
         -- Log failed attempt (TODO: implement logging)
+        
         DISPLAY "Failed login attempt for user: ", f_username
     END IF
 

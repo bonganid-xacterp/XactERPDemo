@@ -1,12 +1,12 @@
 -- sy900_utils.4gl
 -- Utility functions for global dialogs and UI helpers
 
-FUNCTION show_alert(p_message STRING)
+FUNCTION show_sys_alert(p_message STRING)
     DEFINE g_alert_win ui.Window
     DEFINE g_alert_form ui.Form
 
     -- Open a small modal window with your alert form
-    OPEN WINDOW w_alert WITH FORM "frm_sy900_alert"
+    OPEN WINDOW w_alert WITH FORM "utils_alertbox"
     LET g_alert_win = ui.Window.getCurrent()
     LET g_alert_form = g_alert_win.getForm()
     CALL g_alert_win.setText("System Alert")

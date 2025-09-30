@@ -70,10 +70,8 @@
         <File filePath="src/_main/login.4fd"/>
         <File filePath="src/_main/main_app.4gl"/>
         <File filePath="src/_main/main_auth.4gl"/>
-        <File filePath="src/_main/main_loader.4fd"/>
         <File filePath="src/_main/main_shell.4fd"/>
         <File filePath="src/_main/main_shell.4gl"/>
-        <File filePath="src/_main/top_menu.4tm"/>
       </Application>
       <Application binaryName="cl" dependencies="497700,56784492,104908716,31764552" id="396525034" label="cl">
         <File filePath="src/cl/cl100_mast.4fd"/>
@@ -89,7 +87,9 @@
         <File filePath="src/dl/dl100_mast.4fd"/>
         <File filePath="src/dl/dl100_mast.4gl"/>
       </Application>
-      <Application binaryName="gl" dependencies="497700,56784492,104908716,31764552" id="276307902" label="gl"/>
+      <Application binaryName="gl" dependencies="497700,56784492,104908716,31764552" id="276307902" label="gl">
+        <File filePath="src/gl/gl100_.4gl"/>
+      </Application>
       <Library binaryName="incl" id="56784492" label="incl">
         <File filePath="src/incl/incl.4gl"/>
       </Library>
@@ -127,8 +127,11 @@
         <File filePath="src/sy/sy900_utils.4gl"/>
       </Application>
       <Library binaryName="utils" id="497700" label="utils">
+        <File filePath="src/utils/sy900_utils.4gl"/>
         <File filePath="src/utils/utils_alertbox.4fd"/>
         <File filePath="src/utils/utils_db.4gl"/>
+        <File filePath="src/utils/utils_enq.4gl"/>
+        <File filePath="src/utils/utils_lookup.4gl"/>
         <File filePath="src/utils/utils_mast_tlb.4tb"/>
         <File filePath="src/utils/utils_ui.4gl"/>
       </Library>
