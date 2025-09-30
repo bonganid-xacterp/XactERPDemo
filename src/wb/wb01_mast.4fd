@@ -10,8 +10,8 @@
     <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wb01_mast.status" sqlTabName="wb01_mast" uid="{d4064126-d0f4-4c7d-8426-1f46c424eaea}"/>
   </Record>
   <Form gridHeight="25" gridWidth="86" name="frm_bins" text="Warehouse Bins">
-    <HBox gridHeight="4" gridWidth="86" name="hbox1" posX="0" posY="0">
-      <Grid gridHeight="4" gridWidth="82" name="xactapp_db1" posX="2" posY="0">
+    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="18" gridWidth="83" name="xactapp_db1" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="11" name="wb01_mast_wb_code_label1" posX="1" posY="1" text="Bin Code">
           <Initializer text="dbschema:wb01_mast.wb_code/@label"/>
         </Label>
@@ -37,7 +37,7 @@
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ComboBox>
       </Grid>
-    </HBox>
+    </VBox>
   </Form>
   <DiagramLayout>
     <![CDATA[AAAAAgAAAEwAewAxADQANwBhADAAOAA1ADIALQA2AGYANwBiAC0ANAA4AGEAYQAtAGEAMwA2AGIALQAzAGQAYwA5ADAANQA2ADAAZgAwAGEAZgB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
