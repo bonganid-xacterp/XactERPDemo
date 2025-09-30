@@ -18,7 +18,7 @@ FUNCTION main_application_menu()
     -- Set page title (top bar, if defined in form)
     CALL utils_ui.set_page_title("Dashboard")
 
-    DISPLAY 'ver 1.0'
+    MESSAGE 'ver 1.0'
 --
     MENU "" ATTRIBUTES(STYLE = "" )
 

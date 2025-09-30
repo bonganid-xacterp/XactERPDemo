@@ -36,7 +36,7 @@ FUNCTION login_user() RETURNS SMALLINT
 
     CALL utils_ui.set_page_title("Login")
         
-    LET f = ui.Window.getCurrent().getForm()
+    LET f = ui.Dialog.getCurrent().getForm()
     CALL f.setElementImage("company_logo", "logo.png")
 
     DIALOG

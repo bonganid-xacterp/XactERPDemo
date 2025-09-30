@@ -27,7 +27,7 @@
         <TopMenuCommand name="cl_enq" image="open" text="Creditors Enquiry">
           <LStr text="Creditors Enquiry"/>
         </TopMenuCommand>
-        <TopMenuCommand name="cl_maint" text="Creditors Maintanance">
+        <TopMenuCommand name="cl_maint" image="pen" text="Creditors Maintanance">
           <LStr text="Creditors Maintanance"/>
         </TopMenuCommand>
       </TopMenuGroup>
