@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{6c8a00cd-b960-4865-a2a7-0f10269f41ad}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Form gridHeight="25" gridWidth="80" name="form" text="Form"/>
+</ManagedForm>

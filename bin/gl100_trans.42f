@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="gl100_trans.tmp" build="3.20.14" sqlDbName="xactapp_db" text="GL Transactions" width="72" height="6">
+  <LStr text="GL Transactions"/>
+  <VBox name="vbox1">
+    <Folder name="pg_wrapepr">
+      <Page name="lbl_page_title" text="">
+        <LStr text=""/>
+        <Grid name="xactapp_db1" width="72" height="6">
+          <Label name="gl30_journals_jrn_no_label1" width="6" text="Jrn No" posY="1" posX="1" gridWidth="6">
+            <LStr text="Jrn No"/>
+          </Label>
+          <FormField name="gl30_journals.jrn_no" colName="jrn_no" noEntry="1" sqlType="INTEGER" required="1" notNull="1" fieldId="0" sqlTabName="gl30_journals" tabIndex="1">
+            <Edit width="11" scroll="1" posY="1" posX="8" gridWidth="11"/>
+          </FormField>
+          <Label name="gl30_journals_date_label1" width="11" text="Date" posY="1" posX="29" gridWidth="11">
+            <LStr text="Date"/>
+          </Label>
+          <FormField name="gl30_journals.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="1" sqlTabName="gl30_journals" tabIndex="2">
+            <Edit width="10" scroll="1" posY="1" posX="41" gridWidth="10"/>
+          </FormField>
+          <Label name="gl30_journals_source_module_label1" width="6" text="Source" posY="2" posX="1" gridWidth="6">
+            <LStr text="Source"/>
+          </Label>
+          <FormField name="gl30_journals.source_module" colName="source_module" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="2" sqlTabName="gl30_journals" tabIndex="3">
+            <Edit width="20" scroll="1" posY="2" posX="8" gridWidth="20"/>
+          </FormField>
+          <Label name="gl30_journals_doc_type_label1" width="11" text="Doc Type" posY="2" posX="29" gridWidth="11">
+            <LStr text="Doc Type"/>
+          </Label>
+          <FormField name="gl30_journals.doc_type" colName="doc_type" sqlType="VARCHAR(10)" fieldId="3" sqlTabName="gl30_journals" tabIndex="4">
+            <Edit width="10" scroll="1" posY="2" posX="41" gridWidth="10"/>
+          </FormField>
+          <Label name="gl30_journals_doc_no_label1" width="6" text="Doc No" posY="3" posX="1" gridWidth="6">
+            <LStr text="Doc No"/>
+          </Label>
+          <FormField name="gl30_journals.doc_no" colName="doc_no" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="gl30_journals" tabIndex="5">
+            <Edit width="20" scroll="1" posY="3" posX="8" gridWidth="20"/>
+          </FormField>
+          <Label name="gl30_journals_description_label1" width="11" text="Description" posY="3" posX="29" gridWidth="11">
+            <LStr text="Description"/>
+          </Label>
+          <FormField name="gl30_journals.description" colName="description" sqlType="TEXT" fieldId="5" sqlTabName="gl30_journals" tabIndex="6">
+            <Edit width="30" scroll="1" posY="3" posX="41" gridWidth="30"/>
+          </FormField>
+          <Label name="gl30_journals_status_label1" width="6" text="Status" posY="4" posX="1" gridWidth="6">
+            <LStr text="Status"/>
+          </Label>
+          <FormField name="gl30_journals.status" colName="status" sqlType="SMALLINT" fieldId="6" sqlTabName="gl30_journals" tabIndex="7">
+            <ComboBox width="7" scroll="1" posY="4" posX="8" gridWidth="9"/>
+          </FormField>
+        </Grid>
+      </Page>
+    </Folder>
+  </VBox>
+  <RecordView tabName="gl30_journals">
+    <Link colName="jrn_no" fieldIdRef="0"/>
+    <Link colName="date" fieldIdRef="1"/>
+    <Link colName="source_module" fieldIdRef="2"/>
+    <Link colName="doc_type" fieldIdRef="3"/>
+    <Link colName="doc_no" fieldIdRef="4"/>
+    <Link colName="description" fieldIdRef="5"/>
+    <Link colName="status" fieldIdRef="6"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="jrn_no" fieldIdRef="0"/>
+    <Link colName="date" fieldIdRef="1"/>
+    <Link colName="source_module" fieldIdRef="2"/>
+    <Link colName="doc_type" fieldIdRef="3"/>
+    <Link colName="doc_no" fieldIdRef="4"/>
+    <Link colName="description" fieldIdRef="5"/>
+    <Link colName="status" fieldIdRef="6"/>
+  </RecordView>
+</Form>

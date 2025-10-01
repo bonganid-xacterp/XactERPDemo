@@ -7,7 +7,7 @@
     <RecordField colName="username" fieldIdRef="3" fieldType="NON_DATABASE" name="f_username" sqlTabName="sy00_user" uid="{94443672-cc25-4b76-a8d9-d96c96539d86}"/>
     <RecordField colName="password" fieldIdRef="4" fieldType="NON_DATABASE" name="f_password" sqlTabName="sy00_user" uid="{701c031e-73cb-4c8c-b094-58641536329f}"/>
   </Record>
-  <Form gridHeight="18" gridWidth="34" minHeight="0" minWidth="0" name="frm_login" spacing="normal" text="Login" windowStyle="dialog4">
+  <Form gridHeight="18" gridWidth="34" image="logo.png" minHeight="0" minWidth="0" name="frm_login" spacing="normal" style="" text="Login" windowStyle="dialog4">
     <VBox gridHeight="16" gridWidth="32" name="vbox1" posX="1" posY="1">
       <Grid gridHeight="14" gridWidth="32" name="login_grid" posX="0" posY="1">
         <Image autoScale="true" gridHeight="8" gridWidth="30" image="logo.png" name="company_logo" posX="1" posY="1" sizePolicy="dynamic" stretch="both"/>
@@ -27,6 +27,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAACgAAC1AIAAAKAAALQAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAwAGUAZgAzADEAYgA4ADIALQBiADQAOQA2AC0ANABlADYANAAtAGIAZgBkAGIALQBjADYANgA5ADAAMAA5AGEAOQBjADgAZAB9QCAAADQAAE5AIAAANAAATgAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

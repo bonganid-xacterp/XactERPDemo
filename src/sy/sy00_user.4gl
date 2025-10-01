@@ -8,21 +8,18 @@
 # ==============================================================
 SCHEMA xactapp_db
 
--- List users 
+-- List users
 FUNCTION list_users()
-    
+
 END FUNCTION
 
 -- search user profile
 FUNCTION search_user()
 
-
 END FUNCTION
 
 -- function for adding
 FUNCTION add_user()
-    --DEFINE r_user 
+    --DEFINE r_user
 
-
-END FUNCTION 
-
+END FUNCTION

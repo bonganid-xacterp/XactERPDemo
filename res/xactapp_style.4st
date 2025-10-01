@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StyleList>
+
+  <!-- ===================================================
+       Parent container style (main MDI window)
+       =================================================== -->
+  <Style name="Window.xactapp">
+     <StyleAttribute name="windowType" value="normal"/>
+     <StyleAttribute name="tabbedContainer" value="yes"/>
+     <StyleAttribute name="startMenuPosition" value="menu"/>
+     <StyleAttribute name="windowState" value="normal"/>
+     <StyleAttribute name="toolBarPosition" value="top"/>
+     <StyleAttribute name="statusBarType" value="normal"/>
+  </Style>
+
+  <!-- ===================================================
+       Child style (will appear inside parent tabs)
+       =================================================== -->
+  <Style name="Window.child">
+     <StyleAttribute name="windowType" value="normal"/>
+     <StyleAttribute name="sizable" value="yes"/>
+     <StyleAttribute name="actionPanelPosition" value="none"/>
+     <StyleAttribute name="ringMenuPosition" value="none"/>
+     <StyleAttribute name="toolBarPosition" value="top"/>
+     <StyleAttribute name="statusBarType" value="none"/>
+  </Style>
+
+  <!-- ===================================================
+       Modal child style (child behaves like modal dialog,
+       but still hosted inside the tabbed container)
+       =================================================== -->
+  <Style name="Window.childModal">
+     <StyleAttribute name="windowType" value="modal"/>
+     <StyleAttribute name="sizable" value="no"/>
+     <StyleAttribute name="position" value="center"/>
+     <StyleAttribute name="tabbedContainer" value="yes"/>
+     <StyleAttribute name="actionPanelPosition" value="bottom"/>
+     <StyleAttribute name="toolBarPosition" value="none"/>
+     <StyleAttribute name="statusBarType" value="none"/>
+  </Style>
+
+  <!-- ===================================================
+       Standard modal dialogs (login, alerts, confirm boxes)
+       =================================================== -->
+  <Style name="Window.dialog">
+     <StyleAttribute name="windowType" value="modal"/>
+     <StyleAttribute name="sizable" value="no"/>
+     <StyleAttribute name="position" value="center"/>
+     <StyleAttribute name="actionPanelPosition" value="bottom"/>
+     <StyleAttribute name="ringMenuPosition" value="none"/>
+     <StyleAttribute name="toolBarPosition" value="none"/>
+     <StyleAttribute name="statusBarType" value="none"/>
+     <StyleAttribute name="errorMessagePosition" value="popup"/>
+  </Style>
+
+</StyleList>

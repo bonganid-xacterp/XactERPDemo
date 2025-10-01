@@ -1,8 +1,11 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="wh30_trans.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Warehouse Transactions" width="63" height="18">
+<Form name="wh30_trans.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Warehouse Transactions" width="82" height="18">
   <LStr text="Warehouse Transactions"/>
   <VBox name="vbox1">
-    <Grid name="xactapp_db1" width="63" height="18">
+    <Grid name="xactapp_db1" width="82" height="18">
+      <Label name="lbl_title" width="80" text="" color="blue" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="80">
+        <LStr text=""/>
+      </Label>
       <Label name="wh30_hdr_trans_no_label1" width="8" text="Trans No" posY="1" posX="1" gridWidth="8">
         <LStr text="Trans No"/>
       </Label>

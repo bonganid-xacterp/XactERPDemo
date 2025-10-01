@@ -2,8 +2,7 @@
 # Program   :   includes.4gl
 # Purpose   :   Centralized programs for shared functions
 # Module    :   Includes
-# Number    :   
+# Number    :
 # Author    :   Bongani Dlamini
 # Version   :   Genero BDL 3.2.1
 # ==============================================================
-

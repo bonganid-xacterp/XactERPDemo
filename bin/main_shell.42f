@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="main_shell.tmp" build="3.20.14" sqlDbName="xactapp_db" text="" style="" windowStyle="" version="0.1" width="103" height="26">
+<Form name="main_shell.tmp" build="3.20.14" sqlDbName="xactapp_db" text="" style="" windowStyle="xactapp" version="0.1" width="82" height="20">
   <TopMenu name="top_menu">
     <TopMenuGroup name="tm_main" text="File">
       <LStr text="File"/>
@@ -160,15 +160,12 @@
     </TopMenuGroup>
   </TopMenu>
   <LStr text=""/>
-  <Grid name="main_grid" width="103" height="26" hidden="1">
-    <Label name="lbl_username" width="30" text="" fontPitch="variable" justify="center" posY="0" posX="1" gridWidth="30">
-      <LStr text=""/>
-    </Label>
-    <Label name="lbl_version" width="22" text="" posY="0" posX="80" gridWidth="22">
-      <LStr text=""/>
-    </Label>
-    <Group name="mdi_area" text="" gridChildrenInParent="1" posY="1" posX="1" gridWidth="80" gridHeight="25">
-      <LStr text=""/>
-    </Group>
-  </Grid>
+  <Group name="main_wrapper" text="" hidden="1">
+    <LStr text=""/>
+    <Grid name="mdi_wrapper" width="82" height="20">
+      <Label name="lbl_dummy" width="80" text="" hidden="1" justify="center" posY="0" posX="1" gridWidth="80">
+        <LStr text=""/>
+      </Label>
+    </Grid>
+  </Group>
 </Form>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StyleList>
+
+  <!-- ===================================================
+       MAIN CONTAINER (Dashboard MDI wrapper)
+       =================================================== -->
+  <Style name="Window.main">
+     <StyleAttribute name="windowType" value="normal"/>
+     <StyleAttribute name="tabbedContainer" value="yes"/>
+     <StyleAttribute name="startMenuPosition" value="menu"/>
+     <StyleAttribute name="toolBarPosition" value="top"/>
+     <StyleAttribute name="statusBarType" value="normal"/>
+     <!-- SAP B1 style: neutral gray background -->
+     <StyleAttribute name="backgroundColor" value="#F2F2F2"/>
+     <StyleAttribute name="border" value="flat"/>
+  </Style>
+
+  <!-- ===================================================
+       NORMAL CHILD TAB (embedded form)
+       =================================================== -->
+  <Style name="Window.child">
+     <StyleAttribute name="windowType" value="normal"/>
+     <StyleAttribute name="sizable" value="yes"/>
+     <!-- White background, flat look -->
+     <StyleAttribute name="backgroundColor" value="#FFFFFF"/>
+     <StyleAttribute name="border" value="flat"/>
+     <StyleAttribute name="toolBarPosition" value="top"/>
+     <StyleAttribute name="statusBarType" value="none"/>
+  </Style>
+
+  <!-- ===================================================
+       MODAL CHILD (blocking tab)
+       =================================================== -->
+  <Style name="Window.childModal">
+     <StyleAttribute name="windowType" value="modal"/>
+     <StyleAttribute name="tabbedContainer" value="yes"/>
+     <StyleAttribute name="position" value="center"/>
+     <StyleAttribute name="sizable" value="no"/>
+     <!-- Light gray background -->
+     <StyleAttribute name="backgroundColor" value="#EAEAEA"/>
+     <StyleAttribute name="border" value="flat"/>
+  </Style>
+
+  <!-- ===================================================
+       ALERT (general notice)
+       SAP B1: light blue banner
+       =================================================== -->
+  <Style name="Window.alert">
+     <StyleAttribute name="windowType" value="modal"/>
+     <StyleAttribute name="position" value="center"/>
+     <StyleAttribute name="backgroundColor" value="#D0E6F8"/>
+     <StyleAttribute name="border" value="flat"/>
+  </Style>
+
+  <!-- ===================================================
+       INFO
+       SAP B1: softer blue, like message popups
+       =================================================== -->
+  <Style name="Window.info">
+     <StyleAttribute name="windowType" value="modal"/>
+     <StyleAttribute name="position" value="center"/>
+     <StyleAttribute name="backgroundColor" value="#E6F2FF"/>
+     <StyleAttribute name="border" value="flat"/>
+  </Style>
+
+  <!-- ===================================================
+       WARNING
+       SAP B1: amber / gold
+       =================================================== -->
+  <Style name="Window.warning">
+     <StyleAttribute name="windowType" value="modal"/>
+     <StyleAttribute name="position" value="center"/>
+     <StyleAttribute name="backgroundColor" value="#FFF4CC"/>
+     <StyleAttribute name="border" value="flat"/>
+  </Style>
+
+  <!-- ===================================================
+       ERROR
+       SAP B1: red highlight
+       =================================================== -->
+  <Style name="Window.error">
+     <StyleAttribute name="windowType" value="modal"/>
+     <StyleAttribute name="position" value="center"/>
+     <StyleAttribute name="backgroundColor" value="#F8D7DA"/>
+     <StyleAttribute name="border" value="flat"/>
+  </Style>
+
+  <!-- ===================================================
+       CONFIRM
+       SAP B1: green success tone
+       =================================================== -->
+  <Style name="Window.confirm">
+     <StyleAttribute name="windowType" value="modal"/>
+     <StyleAttribute name="position" value="center"/>
+     <StyleAttribute name="backgroundColor" value="#D4EDDA"/>
+     <StyleAttribute name="border" value="flat"/>
+  </Style>
+
+</StyleList>

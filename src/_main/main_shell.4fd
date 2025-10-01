@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="frm_main_shell" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="mdi_wrapper" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record name="record1" uid="{29209917-10e4-417a-add6-5a4e3f56e1e5}"/>
   <Record masterTable="sy00_user" name="record2" uid="{80bd2ca8-1d37-47d7-8ac3-1fd3bd447949}"/>
-  <Form gridHeight="26" gridWidth="103" name="frm_main_container" style="" text="" version="0.1" windowStyle="">
+  <Form fourSTFile="../../res/xactapp_style.4st" gridHeight="27" gridWidth="103" name="mdi_wrapper" style="" text="" version="0.1" windowStyle="xactapp">
     <TopMenu name="top_menu">
       <TopMenuGroup name="tm_main" text="File">
         <TopMenuSeparator name="sep_01"/>
@@ -80,13 +80,13 @@
         <TopMenuCommand image="fa-info-circle" name="sy_about" text="About"/>
       </TopMenuGroup>
     </TopMenu>
-    <Grid gridHeight="26" gridWidth="102" hidden="true" name="main_grid" posX="0" posY="0">
-      <Label fontPitch="variable" gridHeight="1" gridWidth="30" justify="center" name="lbl_username" posX="1" posY="0" text=""/>
-      <Label gridHeight="1" gridWidth="22" name="lbl_version" posX="80" posY="0" text=""/>
-      <Group gridChildrenInParent="true" gridHeight="25" gridWidth="80" name="mdi_area" posX="1" posY="1" text=""/>
-    </Grid>
+    <Group gridChildrenInParent="false" gridHeight="22" gridWidth="84" hidden="true" name="main_wrapper" posX="0" posY="0" text="">
+      <Grid gridHeight="20" gridWidth="81" name="mdi_wrapper" posX="1" posY="1">
+        <Label gridHeight="1" gridWidth="80" hidden="true" justify="center" name="lbl_dummy" posX="1" posY="0" text=""/>
+      </Grid>
+    </Group>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzM0+szOPAFmZmhZmZqD9QYk3S8an8AQAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzM1vTM2LAFmZmlmZmkD9QYk3S8an8AQAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

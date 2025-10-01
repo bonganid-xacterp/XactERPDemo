@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{8fc03a41-d6b2-4813-a38c-0c78675c63df}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy02_logs" name="record1" uid="{8d619dbe-47e2-406a-8614-5ea65bf64988}">
+    <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy02_logs.id" sqlTabName="sy02_logs" uid="{485eb1a4-1e19-4bb9-aada-b1bbb225f0e9}"/>
+    <RecordField colName="user_id" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy02_logs.user_id" sqlTabName="sy02_logs" uid="{2fdde4c8-124e-43e9-99cc-70364ac8546f}"/>
+    <RecordField colName="level" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy02_logs.level" sqlTabName="sy02_logs" uid="{50880ec6-ce82-40f7-8cf6-a6b3777bf588}"/>
+    <RecordField colName="action" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy02_logs.action" sqlTabName="sy02_logs" uid="{cf274ec1-4349-4167-8a91-61866a2b80a8}"/>
+    <RecordField colName="details" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sy02_logs.details" sqlTabName="sy02_logs" uid="{5c5b71c5-86cb-47f2-8c29-cc7ebfdf5794}"/>
+    <RecordField colName="created_at" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sy02_logs.created_at" sqlTabName="sy02_logs" uid="{d44c01a4-9e9b-48da-b091-5701d51eb713}"/>
+  </Record>
+  <Form gridHeight="25" gridWidth="142" name="form" text="Form">
+    <VBox gridHeight="8" gridWidth="142" name="vbox1" posX="0" posY="0">
+      <Table gridHeight="6" gridWidth="142" name="xactapp_db1" posX="0" posY="1" totalRows="5">
+        <Edit colName="id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy02_logs.id" posX="1" posY="0" scroll="true" sqlTabName="sy02_logs" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Edit colName="user_id" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy02_logs.user_id" posX="21" posY="0" scroll="true" sqlTabName="sy02_logs" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Edit colName="level" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sy02_logs.level" posX="41" posY="0" scroll="true" sqlTabName="sy02_logs" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Edit colName="action" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy02_logs.action" posX="51" posY="0" scroll="true" sqlTabName="sy02_logs" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Edit colName="details" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy02_logs.details" posX="81" posY="0" scroll="true" sqlTabName="sy02_logs" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Edit colName="created_at" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="25" name="sy02_logs.created_at" posX="111" posY="0" scroll="true" sqlTabName="sy02_logs" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+      </Table>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA4AGQANgAxADkAZABiAGUALQA0ADcAZQAyAC0ANAAwADYAYQAtADgANgAxADQALQA1AGUAYQA2ADUAYgBmADYANAA5ADgAOAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>
