@@ -1,21 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" spacing="compact" text="Debtors" windowStyle="viewer" width="126" height="17">
-  <ToolBar name="mast_tlbar" tag="master_toolbar">
-    <ToolBarItem name="add" image="listadd" text="Add">
-      <LStr text="Add"/>
-    </ToolBarItem>
-    <ToolBarItem name="find" image="find"/>
-    <ToolBarItem name="previous" image="prev2"/>
-    <ToolBarItem name="next" image="next"/>
-    <ToolBarSeparator name="toolbarseparator1"/>
-    <ToolBarItem name="exit" image="exit2" text="Exit">
-      <LStr text="Exit"/>
-    </ToolBarItem>
-    <ToolBarSeparator name="toolbarseparator2"/>
-    <ToolBarItem name="delete" image="delete" text="Delete">
-      <LStr text="Delete"/>
-    </ToolBarItem>
-  </ToolBar>
   <LStr text="Debtors"/>
   <VBox name="vbox1">
     <Grid name="dl01_mast" width="77" height="7">
@@ -23,7 +7,7 @@
         <LStr text="Acc Code"/>
       </Label>
       <FormField name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" tabIndex="1">
-        <ButtonEdit width="10" posY="1" posX="8" gridWidth="12"/>
+        <ButtonEdit width="10" program="dl_lookup" posY="1" posX="8" gridWidth="12"/>
       </FormField>
       <Label name="lbl_dl_name" width="10" text="Debtor Name" posY="1" posX="21" gridWidth="10">
         <LStr text="Debtor Name"/>
