@@ -1,46 +1,91 @@
 # ==============================================================
 # Program   :   utils_ui.4gl
-# Purpose   :   Utilities for shared ui components
+# Purpose   :   Utilities for shared UI components (dialogs, helpers)
 # Module    :   Utilities
 # Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.2.1
+# Version   :   Genero BDL 3.20
 # ==============================================================
 
 IMPORT ui
 
 -- =============================================================
--- Show a generic alert dialog
+-- Generic single-button popup
+-- style_name: "alert", "info", "warning", "error"
 -- =============================================================
-FUNCTION show_alert(p_message STRING, p_title STRING)
+FUNCTION show_message(p_message STRING, p_title STRING, style_name STRING) RETURNS SMALLINT
     DEFINE l_title STRING
     DEFINE result SMALLINT
 
-    -- Default title
     IF p_title IS NULL OR p_title = "" THEN
-        LET l_title = "System Alert"
+        LET l_title = "Message"
     ELSE
         LET l_title = p_title
     END IF
 
-    MENU l_title ATTRIBUTE(STYLE = "dialog")
+    OPEN WINDOW w_msg WITH FORM "alert_form"
+        ATTRIBUTES (STYLE=style_name, TEXT=l_title)
+
+    MENU l_title ATTRIBUTE(STYLE="dialog")
         COMMAND "OK"
             DISPLAY p_message
             LET result = TRUE
             EXIT MENU
     END MENU
 
+    CLOSE WINDOW w_msg
     RETURN result
 END FUNCTION
 
 -- =============================================================
--- Show an error alert (alias of show_alert but different naming)
+-- Specific wrappers for message types
 -- =============================================================
-FUNCTION show_error_alert(p_message STRING, p_title STRING)
-    RETURN show_alert(p_message, p_title)
+FUNCTION show_alert(p_message STRING, p_title STRING) RETURNS SMALLINT
+    RETURN show_message(p_message, p_title, "alert")
+END FUNCTION
+
+FUNCTION show_info(p_message STRING, p_title STRING) RETURNS SMALLINT
+    RETURN show_message(p_message, p_title, "info")
+END FUNCTION
+
+FUNCTION show_warning(p_message STRING, p_title STRING) RETURNS SMALLINT
+    RETURN show_message(p_message, p_title, "warning")
+END FUNCTION
+
+FUNCTION show_error(p_message STRING, p_title STRING) RETURNS SMALLINT
+    RETURN show_message(p_message, p_title, "error")
 END FUNCTION
 
 -- =============================================================
--- Set the current window page title
+-- Confirmation dialog (Yes/No)
+-- =============================================================
+FUNCTION show_confirm(p_message STRING, p_title STRING) RETURNS SMALLINT
+    DEFINE l_title STRING
+    DEFINE result SMALLINT
+
+    IF p_title IS NULL OR p_title = "" THEN
+        LET l_title = "Confirm"
+    ELSE
+        LET l_title = p_title
+    END IF
+
+    OPEN WINDOW w_confirm WITH FORM "alert_form"
+        ATTRIBUTES (STYLE="confirm", TEXT=l_title)
+
+    MENU l_title ATTRIBUTE(STYLE="dialog")
+        COMMAND "Yes"
+            LET result = TRUE
+            EXIT MENU
+        COMMAND "No"
+            LET result = FALSE
+            EXIT MENU
+    END MENU
+
+    CLOSE WINDOW w_confirm
+    RETURN result
+END FUNCTION
+
+-- =============================================================
+-- Other helpers (unchanged)
 -- =============================================================
 FUNCTION set_page_title(p_title STRING)
     DEFINE g_win ui.Window
@@ -50,21 +95,13 @@ FUNCTION set_page_title(p_title STRING)
     END IF
 END FUNCTION
 
--- =============================================================
--- Set the value of a label element in the current form
--- =============================================================
 FUNCTION set_form_lbl(lbl_name STRING, new_text STRING)
     DEFINE g_form ui.Form
     LET g_form = ui.Window.getCurrent().getForm()
-
     CALL g_form.setElementText(lbl_name, new_text)
 END FUNCTION
 
--- =============================================================
--- Mark this program as a child of the mdi_wrapper
--- =============================================================
 FUNCTION set_child_container()
     CALL ui.Interface.setContainer("mdi_wrapper")
-    CALL ui.Interface.setType("childModal")
-
+    CALL ui.Interface.setType("child")
 END FUNCTION

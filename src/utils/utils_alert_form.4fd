@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form name="alert_form">
+
+  <Layout>
+    <VBox name="main_box" expand="both" padding="10">
+
+      <!-- Title bar text comes from .4gl OPEN WINDOW attributes -->
+      <HBox name="alert_box" expand="both" spacing="8">
+
+        <!-- Icon placeholder -->
+        <StaticImage name="alert_icon" image="logo.png" 
+                     valign="center" expand="none"/>
+
+        <!-- Message area -->
+        <TextEdit name="alert_message" 
+                  valign="center" expand="both" 
+                  wrap="word" scroll="none" 
+                  text="Message text will appear here"/>
+      </HBox>
+
+    </VBox>
+  </Layout>
+
+  <Instructions>
+    <Style name="TextEdit" attribute="border" value="none"/>
+    <Style name="TextEdit" attribute="editable" value="no"/>
+  </Instructions>
+
+</Form>
