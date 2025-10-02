@@ -31,8 +31,6 @@ FUNCTION login_user() RETURNS SMALLINT
         FORM "sy100_login"
         ATTRIBUTE(STYLE = "dialog", TEXT = "XactERP Login")
 
-    CALL utils_ui.set_page_title("Login")
-
     LET f = ui.Window.getCurrent().getForm()
     CALL f.setElementImage("company_logo", "logo.png")
 

@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{f3e540bb-eff1-410b-b9e6-00cca32cac57}">
-  <AGSettings>
-    <DynamicProperties version="2"/>
-  </AGSettings>
-  <Form gridHeight="4" gridWidth="45" name="utils_alert_form" text="">
-    <Grid gridHeight="4" gridWidth="45" name="alert_wrapper" posX="0" posY="0">
-      <Label gridHeight="1" gridWidth="43" name="p_title" posX="2" posY="0" text=""/>
-      <Label gridHeight="3" gridWidth="43" name="alert_message" posX="2" posY="1" text=""/>
-    </Grid>
-  </Form>
-  <DiagramLayout>
-    <![CDATA[AAAAAg==]]>
-  </DiagramLayout>
-</ManagedForm>
+<?xml version="1.0" encoding="UTF-8" ?> <ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{f3e540bb-eff1-410b-b9e6-00cca32cac57}"> <AGSettings> <DynamicProperties version="2"/> </AGSettings> <Form gridHeight="4" gridWidth="45" name="utils_alert_form" text=""> <Grid gridHeight="4" gridWidth="45" name="alert_wrapper" posX="0" posY="0"> <Label gridHeight="1" gridWidth="43" name="p_title" posX="2" posY="0" text=""/> <Label gridHeight="3" gridWidth="43" name="alert_message" posX="2" posY="1" text=""/> </Grid> </Form> <DiagramLayout> <![CDATA[AAAAAg==]]> </DiagramLayout> </ManagedForm>

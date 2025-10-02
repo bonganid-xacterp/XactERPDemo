@@ -1,74 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/_main/main_app.4gl" s="2" ts="20251002151231390">
+<File n="src/_main/main_app.4gl" s="2" ts="20251002161024213">
 <Dep t="src/sy/sy100_login.4gl"/>
 <Dep t="src/utils/utils_ui.4gl"/>
 <Dep t="src/utils/utils_db.4gl"/>
 <Dep t="src/_main/main_shell.4gl"/>
 <Dep t="src/_main/main_menu.4gl"/>
-<Fct c="10" el="97" l="95" n="cleanup_application()" t="F" v="pub"/>
-<Fct c="10" el="92" l="65" n="open_main_container()" t="F" v="pub">
-<Call c="19" i="utils_ui" l="81" n="set_page_title" t="F"/>
-<Call c="39" i="sy100_login" l="82" n="get_current_user" t="F"/>
-<Call c="10" i="main_menu" l="85" n="main_application_menu" t="F"/>
+<Fct c="10" el="232" l="222" n="emergency_exit(exit_code SMALLINT)" t="F" v="pub">
+<Call c="10" l="227" n="cleanup_application" t="F"/>
 </Fct>
-<Fct c="10" el="62" l="52" n="run_login()" t="F" v="pub">
-<Call c="36" i="sy100_login" l="54" n="login_user" t="F"/>
+<Fct c="10" el="217" l="196" n="cleanup_application()" t="F" v="pub">
+<Call c="25" i="sy100_login" l="207" n="get_current_user" t="F"/>
 </Fct>
-<Fct c="10" el="49" l="46" n="initialize_application()" t="F" v="pub">
-<Call c="30" i="utils_db" l="48" n="initialize_database" t="F"/>
+<Fct c="10" el="191" l="143" n="open_main_container()" t="F" v="pub">
+<Call c="53" i="sy100_login" l="166" n="get_current_user" t="F"/>
+<Call c="23" i="utils_ui" l="169" n="set_page_title" t="F"/>
+<Call c="43" i="sy100_login" l="170" n="get_current_user" t="F"/>
+<Call c="24" i="main_menu" l="173" n="main_application_menu" t="F"/>
+<Call c="23" i="utils_ui" l="182" n="show_alert" t="F"/>
 </Fct>
-<Fct c="1" el="43" l="24" n="main()" t="F" v="pub">
-<Call c="10" l="31" n="initialize_application" t="F"/>
-<Call c="8" l="34" n="run_login" t="F"/>
-<Call c="14" l="36" n="open_main_container" t="F"/>
-<Call c="23" i="utils_ui" l="38" n="show_alert" t="F"/>
-<Call c="10" l="42" n="cleanup_application" t="F"/>
+<Fct c="10" el="138" l="136" n="run_login()" t="F" v="pub">
+<Call c="12" l="137" n="run_login_with_retry" t="F"/>
+</Fct>
+<Fct c="10" el="133" l="97" n="run_login_with_retry()" t="F" v="pub">
+<Call c="40" i="sy100_login" l="106" n="login_user" t="F"/>
+<Call c="29" i="sy100_login" l="111" n="get_current_user" t="F"/>
+<Call c="31" i="utils_ui" l="117" n="show_alert" t="F"/>
+<Call c="19" i="utils_ui" l="128" n="show_alert" t="F"/>
+</Fct>
+<Fct c="10" el="92" l="60" n="initialize_application()" t="F" v="pub">
+<Call c="34" i="utils_db" l="73" n="initialize_database" t="F"/>
+<Call c="27" i="utils_ui" l="76" n="show_alert" t="F"/>
+</Fct>
+<Fct c="1" el="55" l="30" n="main()" t="F" v="pub">
+<Call c="12" l="38" n="initialize_application" t="F"/>
+<Call c="23" i="utils_ui" l="39" n="show_alert" t="F"/>
+<Call c="8" l="45" n="run_login_with_retry" t="F"/>
+<Call c="14" l="47" n="open_main_container" t="F"/>
+<Call c="23" i="utils_ui" l="49" n="show_alert" t="F"/>
+<Call c="10" l="53" n="cleanup_application" t="F"/>
 </Fct>
 </File>
-<File n="src/_main/main_menu.4gl" s="2" ts="20251002151231662">
+<File n="src/_main/main_menu.4gl" s="2" ts="20251002155542364">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Dep t="src/_main/main_shell.4gl"/>
 <Fct c="10" el="85" l="82" n="confirm_exit()" t="F" v="pub">
 <Call c="21" i="utils_ui" l="83" n="show_confirm" t="F"/>
 </Fct>
 <Fct c="10" el="79" l="13" n="main_application_menu()" t="F" v="pub">
-<Call c="18" i="main_shell" l="19" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="21" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="27" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="29" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="35" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="37" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="43" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="45" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="51" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="53" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="59" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="61" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="67" n="launch_child_window" t="F"/>
-<Call c="18" i="main_shell" l="69" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="19" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="21" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="27" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="29" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="35" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="37" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="43" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="45" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="51" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="53" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="59" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="61" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="67" n="launch_child_window" t="F"/>
+<Call c="29" i="main_shell" l="69" n="launch_child_window" t="F"/>
 <Call c="16" l="75" n="confirm_exit" t="F"/>
 </Fct>
 </File>
-<File n="src/_main/main_shell.4gl" s="2" ts="20251002151557544">
+<File n="src/_main/main_shell.4gl" s="2" ts="20251002155542309">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Dep t="src/sy/sy100_login.4gl"/>
-<Fct c="10" el="63" l="55" n="unregister_program(formname STRING)" t="F" v="pub"/>
-<Fct c="10" el="52" l="21" n="launch_child_window(formname STRING,wintitle STRING)" t="F" v="pub">
+<Fct c="10" el="74" l="66" n="unregister_program(formname STRING)" t="F" v="pub"/>
+<Fct c="10" el="63" l="54" n="close_child_window(formname STRING)" t="F" v="pub"/>
+<Fct c="10" el="51" l="21" n="launch_child_window(formname STRING,wintitle STRING)" t="F" v="pub">
 <Call c="27" i="utils_ui" l="28" n="show_alert" t="F"/>
 </Fct>
 </File>
-<File n="src/cl/cl101_mast.4gl" s="2" ts="20251002151230931">
+<File n="src/cl/cl101_mast.4gl" s="2" ts="20251002155541542">
 <Fct c="10" el="23" l="19" n="search_creditors(p_term STRING)" t="F" v="pub"/>
 <Fct c="10" el="16" l="10" n="open_creditors()" t="F" v="pub"/>
 </File>
 <File n="src/cl/cl120_enq.4gl" s="2" ts="20251001163215681"/>
-<File n="src/cl/cl130_trans.4gl" s="2" ts="20251002151231516">
+<File n="src/cl/cl130_trans.4gl" s="2" ts="20251002155542223">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Fct c="10" el="16" l="12" n="show_cl_trans()" t="F" v="pub"/>
 </File>
 <File n="src/cl/cl140_hist.4gl" s="2" ts="20251001163213043"/>
-<File n="src/dl/dl101_mast.4gl" s="2" ts="20251002151231426">
+<File n="src/dl/dl101_mast.4gl" s="2" ts="20251002155542121">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Fct c="10" el="40" l="31" n="run_debtors_master()" t="F" v="pub"/>
 <Fct c="1" el="29" l="13" n="main()" t="F" v="pub">
@@ -76,19 +92,19 @@
 <Call c="10" l="24" n="run_debtors_master" t="F"/>
 </Fct>
 </File>
-<File n="src/dl/dl120_enq.4gl" s="2" ts="20251002151308485">
+<File n="src/dl/dl120_enq.4gl" s="2" ts="20251002155541754">
 <Fct c="10" el="13" l="11" n="saerch()" t="F" v="pub"/>
 </File>
 <File n="src/dl/dl130_trans.4gl" s="2" ts="20251001163213003"/>
 <File n="src/dl/dl140_hist.4gl" s="2" ts="20251001163214953"/>
-<File n="src/gl/gl100_trans.4gl" s="2" ts="20251002151231744"/>
+<File n="src/gl/gl100_trans.4gl" s="2" ts="20251002155542422"/>
 <File n="src/gl/gl101_acc.4gl" s="2" ts="20251001163213954"/>
 <File n="src/gl/gl130_journal.4gl" s="2" ts="20251001163213401"/>
 <File n="src/gl/gl140_hist.4gl" s="2" ts="20251001163216167"/>
 <File n="src/gl/gl220_trial_balance.4gl" s="2" ts="20251001163213840"/>
 <File n="src/gl/gl221_income_stmt.4gl" s="2" ts="20251001163214299"/>
-<File n="src/incl/incl.4gl" s="2" ts="20251002151230981"/>
-<File n="libs/globals.4gl" s="2" ts="20251002151231709"/>
+<File n="src/incl/incl.4gl" s="2" ts="20251002155541596"/>
+<File n="libs/globals.4gl" s="2" ts="20251002155542396"/>
 <File n="src/payt/payt130_doc.4gl" s="2" ts="20251001163214539"/>
 <File n="src/payt/payt140_hist.4gl" s="2" ts="20251001163213479"/>
 <File n="src/payt/payt220_cashbook.4gl" s="2" ts="20251001163215420"/>
@@ -105,37 +121,36 @@
 <File n="src/st/st120_enq.4gl" s="2" ts="20251001163214747"/>
 <File n="src/st/st130_trans.4gl" s="2" ts="20251001163213263"/>
 <File n="src/st/st140_hist.4gl" s="2" ts="20251001163214068"/>
-<File n="src/sy/sy100_login.4gl" s="2" ts="20251002151231302">
+<File n="src/sy/sy100_login.4gl" s="2" ts="20251002160301531">
 <Dep t="src/utils/utils_ui.4gl"/>
-<Fct c="10" el="142" l="131" n="confirm_exit_login()" t="F" v="pub"/>
-<Fct c="10" el="129" l="127" n="get_user_role()" t="F" v="pub"/>
-<Fct c="10" el="125" l="123" n="get_current_user()" t="F" v="pub"/>
-<Fct c="10" el="120" l="100" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub"/>
-<Fct c="10" el="97" l="72" n="try_login(f_username STRING,f_password STRING,max_attempts SMALLINT)" t="F" v="pub">
-<Call c="8" l="82" n="validate_login" t="F"/>
+<Fct c="10" el="140" l="129" n="confirm_exit_login()" t="F" v="pub"/>
+<Fct c="10" el="127" l="125" n="get_user_role()" t="F" v="pub"/>
+<Fct c="10" el="123" l="121" n="get_current_user()" t="F" v="pub"/>
+<Fct c="10" el="118" l="98" n="validate_login(f_username STRING,f_password STRING)" t="F" v="pub"/>
+<Fct c="10" el="95" l="70" n="try_login(f_username STRING,f_password STRING,max_attempts SMALLINT)" t="F" v="pub">
+<Call c="8" l="80" n="validate_login" t="F"/>
 </Fct>
-<Fct c="10" el="69" l="18" n="login_user()" t="F" v="pub">
-<Call c="19" i="utils_ui" l="34" n="set_page_title" t="F"/>
-<Call c="21" l="47" n="try_login" t="F"/>
-<Call c="20" l="59" n="confirm_exit_login" t="F"/>
+<Fct c="10" el="67" l="18" n="login_user()" t="F" v="pub">
+<Call c="21" l="45" n="try_login" t="F"/>
+<Call c="20" l="57" n="confirm_exit_login" t="F"/>
 </Fct>
 </File>
-<File n="src/sy/sy101_user.4gl" s="2" ts="20251002151231146">
+<File n="src/sy/sy101_user.4gl" s="2" ts="20251002155541787">
 <Fct c="10" el="25" l="22" n="add_user()" t="F" v="pub"/>
 <Fct c="10" el="19" l="17" n="search_user()" t="F" v="pub"/>
 <Fct c="10" el="14" l="12" n="list_users()" t="F" v="pub"/>
 </File>
-<File n="src/sy/sy102_role.4gl" s="2" ts="20251002151231334"/>
+<File n="src/sy/sy102_role.4gl" s="2" ts="20251002155541987"/>
 <File n="src/sy/sy103_perm.4gl" s="2" ts="20251002091549791"/>
 <File n="src/sy/sy104_user_pwd.4gl" s="2" ts="20251002091550454"/>
 <File n="src/sy/sy120_user_enq.4gl" s="2" ts="20251002091550036"/>
-<File n="src/sy/sy130_logs.4gl" s="2" ts="20251002151231221">
+<File n="src/sy/sy130_logs.4gl" s="2" ts="20251002155541842">
 <Fct c="10" el="24" l="22" n="log_details()" t="F" v="pub"/>
 <Fct c="10" el="19" l="17" n="load_logs()" t="F" v="pub"/>
 <Fct c="10" el="14" l="12" n="add_log()" t="F" v="pub"/>
 </File>
 <File n="src/sy/sy140_hist.4gl" s="2" ts="20251002091550102"/>
-<File n="src/utils/globals.4gl" s="2" ts="20251002151231022">
+<File n="src/utils/globals.4gl" s="2" ts="20251002155541640">
 <Fct c="10" el="221" l="206" n="is_valid_phone(p_phone STRING)" t="F" v="pub"/>
 <Fct c="10" el="203" l="192" n="is_valid_email(p_email STRING)" t="F" v="pub"/>
 <Fct c="10" el="185" l="177" n="is_empty(p_str STRING)" t="F" v="pub"/>
@@ -161,11 +176,25 @@
 </Fct>
 <Fct c="10" el="48" l="24" n="show_message(p_message STRING,p_title STRING,style_name STRING)" t="F" v="pub"/>
 </File>
-<File n="src/utils/utils_db.4gl" s="2" ts="20251002151231267">
-<Fct c="10" el="30" l="10" n="initialize_database()" t="F" v="pub"/>
+<File n="src/utils/utils_db.4gl" s="2" ts="20251002161449121">
+<Fct c="10" el="236" l="224" n="rollback_transaction()" t="F" v="pub"/>
+<Fct c="10" el="217" l="205" n="commit_transaction()" t="F" v="pub"/>
+<Fct c="10" el="198" l="186" n="begin_transaction()" t="F" v="pub"/>
+<Fct c="10" el="179" l="141" n="test_database_connection()" t="F" v="pub">
+<Call c="8" l="150" n="check_database_connection" t="F"/>
+</Fct>
+<Fct c="10" el="134" l="117" n="get_database_info()" t="F" v="pub">
+<Call c="8" l="126" n="check_database_connection" t="F"/>
+</Fct>
+<Fct c="10" el="110" l="99" n="reconnect_database()" t="F" v="pub">
+<Call c="12" l="108" n="initialize_database" t="F"/>
+</Fct>
+<Fct c="18" el="92" l="72" n="check_database_connection()" t="F" v="prv"/>
+<Fct c="10" el="65" l="48" n="close_database()" t="F" v="pub"/>
+<Fct c="10" el="41" l="15" n="initialize_database()" t="F" v="pub"/>
 </File>
 <File n="src/utils/utils_enq.4gl" s="2" ts="20251002091550070"/>
-<File n="src/utils/utils_lookup.4gl" s="2" ts="20251002151231050">
+<File n="src/utils/utils_lookup.4gl" s="2" ts="20251002155541684">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Fct c="10" el="271" l="234" n="display_lookup_dialog(result_array DYNAMIC ARRAY OF RECORD,row_count INTEGER,dialog_title STRING)" t="F" v="pub"/>
 <Fct c="10" el="229" l="191" n="execute_lookup_query(sql_query STRING,module_title STRING)" t="F" v="pub">
@@ -206,7 +235,7 @@
 <Call c="12" l="30" n="do_lookup" t="F"/>
 </Fct>
 </File>
-<File n="src/utils/utils_ui.4gl" s="2" ts="20251002151231082">
+<File n="src/utils/utils_ui.4gl" s="2" ts="20251002163859906">
 <Fct c="10" el="124" l="121" n="set_child_container()" t="F" v="pub"/>
 <Fct c="10" el="116" l="112" n="set_form_lbl(lbl_name STRING,new_text STRING)" t="F" v="pub"/>
 <Fct c="10" el="110" l="104" n="set_page_title(p_title STRING)" t="F" v="pub"/>
@@ -225,7 +254,7 @@
 </Fct>
 <Fct c="10" el="40" l="15" n="show_message(p_message STRING,p_title STRING,style_name STRING)" t="F" v="pub"/>
 </File>
-<File n="src/wh/wb101_mast.4gl" s="2" ts="20251002151231462">
+<File n="src/wh/wb101_mast.4gl" s="2" ts="20251002155542168">
 <Dep t="src/utils/utils_ui.4gl"/>
 <Fct c="10" el="34" l="12" n="open_wbbin_form()" t="F" v="pub">
 <Call c="19" i="utils_ui" l="25" n="set_page_title" t="F"/>
@@ -240,6 +269,6 @@
 <File n="src/wh/wh130_trans.4gl" s="2" ts="20251002091549742"/>
 <File n="src/wh/wh140_hist.4gl" s="2" ts="20251002091550532"/>
 <File n="src/wh/wh30_hdr.4gl" s="2" ts="20251002091550633"/>
-<File n="src/wh/wh30_trans.4gl" s="2" ts="20251002151231560"/>
+<File n="src/wh/wh30_trans.4gl" s="2" ts="20251002155542273"/>
 <File n="src/wh/wh31_det.4gl" s="2" ts="20251002091549904"/>
 </WorkspaceDatabase>

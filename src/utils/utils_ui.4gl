@@ -74,15 +74,15 @@ FUNCTION show_confirm(p_message STRING, p_title STRING) RETURNS SMALLINT
     END IF
 
     -- Open the confirmation dialog window
-    OPEN WINDOW w_confirm
-        WITH
-        FORM "utils_alert_form"
-        ATTRIBUTES(STYLE = "dialog", TEXT = l_title)
-
-    -- Get current form handle
+--    OPEN WINDOW w_confirm
+--        WITH
+--        FORM "utils_alert_form"
+--        ATTRIBUTES(STYLE = "dialog", TEXT = l_title)
+--
+--    -- Get current form handle
     LET f = ui.Window.getCurrent().getForm()
-
-    -- Set the message text in the form label/textedit
+--
+--    -- Set the message text in the form label/textedit
     CALL f.setElementText("alert_message", p_message)
 
     MENU l_title ATTRIBUTE(STYLE = "dialog")
@@ -94,7 +94,7 @@ FUNCTION show_confirm(p_message STRING, p_title STRING) RETURNS SMALLINT
             EXIT MENU
     END MENU
 
-    CLOSE WINDOW w_confirm
+    -- CLOSE WINDOW w_confirm
     RETURN result
 END FUNCTION
 
