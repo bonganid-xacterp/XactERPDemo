@@ -1,12 +1,11 @@
 # ==============================================================
 # Program   :   main_menu.4gl
-# Purpose   :   Loads App menu 
+# Purpose   :   Loads App menu
 # Module    :   Main
-# Number    :   
+# Number    :
 # Author    :   Bongani Dlamini
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
-
 
 IMPORT FGL utils_ui
 IMPORT FGL main_shell
@@ -17,7 +16,7 @@ FUNCTION main_application_menu()
         -- Debtors
         -- ====================
         ON ACTION dl_enq
-            CALL launch_child_window("dl101_mast", "Debtors Enquiry")
+            CALL launch_child_window("dl120_enq", "Debtors Enquiry")
         ON ACTION dl_maint
             CALL launch_child_window("dl101_mast", "Debtors Maintenance")
 
@@ -81,5 +80,6 @@ END FUNCTION
 
 -- Confirm application exit
 FUNCTION confirm_exit()
-    RETURN utils_ui.show_alert("Are you sure you want to exit?", "Confirm Exit")
+    RETURN utils_ui.show_confirm(
+        "Are you sure you want to exit?", "Confirm Exit")
 END FUNCTION

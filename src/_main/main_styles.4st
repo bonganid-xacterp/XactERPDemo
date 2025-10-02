@@ -1,99 +1,452 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ==============================================================
+  File      :   xact_erp_sap.4st
+  Purpose   :   SAP Business One inspired presentation styles
+  Module    :   Configuration
+  Author    :   Bongani Dlamini
+  Version   :   Genero BDL 3.20.10
+  
+  NOTE: Only using VALID Genero 3.20.10 style attributes
+  
+  SAP B1 Color Palette:
+  - Primary Blue: #0070C0
+  - Dark Blue: #003366
+  - Light Blue: #E8F4F8
+  - Gold/Yellow: #F0AB00
+  - Header Gray: #F5F5F5
+  ==============================================================
+-->
 <StyleList>
 
-  <!-- ===================================================
-       MAIN CONTAINER (Dashboard MDI wrapper)
-       =================================================== -->
+  <!-- ========================================================== -->
+  <!-- WINDOW STYLES -->
+  <!-- ========================================================== -->
+  
   <Style name="Window.main">
-     <StyleAttribute name="windowType" value="normal"/>
-     <StyleAttribute name="tabbedContainer" value="yes"/>
-     <StyleAttribute name="startMenuPosition" value="menu"/>
-     <StyleAttribute name="toolBarPosition" value="top"/>
-     <StyleAttribute name="statusBarType" value="normal"/>
-     <!-- style: neutral gray background -->
-     <StyleAttribute name="backgroundColor" value="#F2F2F2"/>
-     <StyleAttribute name="border" value="flat"/>
+    <StyleAttribute name="windowType" value="container"/>
+    <StyleAttribute name="position" value="center"/>
+    <StyleAttribute name="border" value="title"/>
+    <StyleAttribute name="sizable" value="yes"/>
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
   </Style>
 
-  <!-- ===================================================
-       NORMAL CHILD TAB (embedded form)
-       =================================================== -->
+  <Style name="Window.dialog">
+    <StyleAttribute name="windowType" value="normal"/>
+    <StyleAttribute name="border" value="dialog"/>
+    <StyleAttribute name="sizable" value="yes"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <Style name="Window.modal">
+    <StyleAttribute name="windowType" value="modal"/>
+    <StyleAttribute name="position" value="center"/>
+    <StyleAttribute name="border" value="dialog"/>
+    <StyleAttribute name="sizable" value="no"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <!-- MDI Child Window Style -->
   <Style name="Window.child">
-     <StyleAttribute name="windowType" value="normal"/>
-     <StyleAttribute name="sizable" value="yes"/>
-     <!-- White background, flat look -->
-     <StyleAttribute name="backgroundColor" value="#FFFFFF"/>
-     <StyleAttribute name="border" value="flat"/>
-     <StyleAttribute name="toolBarPosition" value="top"/>
-     <StyleAttribute name="statusBarType" value="none"/>
+    <StyleAttribute name="windowType" value="normal"/>
+    <StyleAttribute name="border" value="dialog"/>
+    <StyleAttribute name="sizable" value="yes"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
   </Style>
 
-  <!-- ===================================================
-       MODAL CHILD (blocking tab)
-       =================================================== -->
-  <Style name="Window.childModal">
-     <StyleAttribute name="windowType" value="modal"/>
-     <StyleAttribute name="tabbedContainer" value="yes"/>
-     <StyleAttribute name="position" value="center"/>
-     <StyleAttribute name="sizable" value="no"/>
-     <!-- Light gray background -->
-     <StyleAttribute name="backgroundColor" value="#EAEAEA"/>
-     <StyleAttribute name="border" value="flat"/>
+  <!-- ========================================================== -->
+  <!-- FORM STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="Form">
+    <StyleAttribute name="backgroundColor" value="white"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+    <StyleAttribute name="textColor" value="#333333"/>
   </Style>
 
-  <!-- ===================================================
-       ALERT (general notice)
-        light blue banner
-       =================================================== -->
+  <!-- ========================================================== -->
+  <!-- LABEL STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="Label">
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontWeight" value="normal"/>
+  </Style>
+
+  <Style name="Label.bold">
+    <StyleAttribute name="fontWeight" value="bold"/>
+    <StyleAttribute name="textColor" value="#003366"/>
+  </Style>
+
+  <Style name="Label.header">
+    <StyleAttribute name="fontWeight" value="bold"/>
+    <StyleAttribute name="fontSize" value="11pt"/>
+    <StyleAttribute name="textColor" value="#0070C0"/>
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+  </Style>
+
+  <Style name="Label.title">
+    <StyleAttribute name="fontWeight" value="bold"/>
+    <StyleAttribute name="fontSize" value="14pt"/>
+    <StyleAttribute name="textColor" value="#003366"/>
+  </Style>
+
+  <Style name="Label.required">
+    <StyleAttribute name="fontWeight" value="bold"/>
+    <StyleAttribute name="textColor" value="#CC0000"/>
+  </Style>
+
+  <Style name=".status_bar">
+    <StyleAttribute name="backgroundColor" value="#0070C0"/>
+    <StyleAttribute name="textColor" value="white"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- INPUT FIELD STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="Edit">
+    <StyleAttribute name="backgroundColor" value="white"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <Style name="Edit.required">
+    <StyleAttribute name="backgroundColor" value="#FFFACD"/>
+  </Style>
+
+  <Style name="Edit.readonly">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+    <StyleAttribute name="textColor" value="#666666"/>
+  </Style>
+
+  <Style name="Edit.disabled">
+    <StyleAttribute name="backgroundColor" value="#F0F0F0"/>
+    <StyleAttribute name="textColor" value="#999999"/>
+  </Style>
+
+  <Style name="Edit.error">
+    <StyleAttribute name="backgroundColor" value="#FFE0E0"/>
+  </Style>
+
+  <Style name="Edit:focus">
+    <StyleAttribute name="backgroundColor" value="#E8F4F8"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- TABLE STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="Table">
+    <StyleAttribute name="backgroundColor" value="white"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+    <StyleAttribute name="highlightCurrentRow" value="yes"/>
+    <StyleAttribute name="highlightCurrentCell" value="yes"/>
+    <StyleAttribute name="showGrid" value="yes"/>
+  </Style>
+
+  <Style name="TableColumn">
+    <StyleAttribute name="backgroundColor" value="#0070C0"/>
+    <StyleAttribute name="textColor" value="white"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- BUTTON STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="Button">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+    <StyleAttribute name="fontWeight" value="normal"/>
+  </Style>
+
+  <Style name="Button.primary">
+    <StyleAttribute name="backgroundColor" value="#0070C0"/>
+    <StyleAttribute name="textColor" value="white"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <Style name="Button.add">
+    <StyleAttribute name="backgroundColor" value="#F0AB00"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <Style name="Button.success">
+    <StyleAttribute name="backgroundColor" value="#008A00"/>
+    <StyleAttribute name="textColor" value="white"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <Style name="Button.danger">
+    <StyleAttribute name="backgroundColor" value="#CC0000"/>
+    <StyleAttribute name="textColor" value="white"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <Style name="Button.cancel">
+    <StyleAttribute name="backgroundColor" value="#999999"/>
+    <StyleAttribute name="textColor" value="white"/>
+    <StyleAttribute name="fontWeight" value="normal"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- MESSAGE DIALOG STYLES -->
+  <!-- ========================================================== -->
+  
   <Style name="Window.alert">
-     <StyleAttribute name="windowType" value="modal"/>
-     <StyleAttribute name="position" value="center"/>
-     <StyleAttribute name="backgroundColor" value="#D0E6F8"/>
-     <StyleAttribute name="border" value="flat"/>
+    <StyleAttribute name="windowType" value="modal"/>
+    <StyleAttribute name="position" value="center"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
   </Style>
 
-  <!-- ===================================================
-       INFO
-       softer blue, like message popups
-       =================================================== -->
   <Style name="Window.info">
-     <StyleAttribute name="windowType" value="modal"/>
-     <StyleAttribute name="position" value="center"/>
-     <StyleAttribute name="backgroundColor" value="#E6F2FF"/>
-     <StyleAttribute name="border" value="flat"/>
+    <StyleAttribute name="windowType" value="modal"/>
+    <StyleAttribute name="position" value="center"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
   </Style>
 
-  <!-- ===================================================
-       WARNING
-       amber / gold
-       =================================================== -->
   <Style name="Window.warning">
-     <StyleAttribute name="windowType" value="modal"/>
-     <StyleAttribute name="position" value="center"/>
-     <StyleAttribute name="backgroundColor" value="#FFF4CC"/>
-     <StyleAttribute name="border" value="flat"/>
+    <StyleAttribute name="windowType" value="modal"/>
+    <StyleAttribute name="position" value="center"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
   </Style>
 
-  <!-- ===================================================
-       ERROR
-       red highlight
-       =================================================== -->
   <Style name="Window.error">
-     <StyleAttribute name="windowType" value="modal"/>
-     <StyleAttribute name="position" value="center"/>
-     <StyleAttribute name="backgroundColor" value="#F8D7DA"/>
-     <StyleAttribute name="border" value="flat"/>
+    <StyleAttribute name="windowType" value="modal"/>
+    <StyleAttribute name="position" value="center"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
   </Style>
 
-  <!-- ===================================================
-       CONFIRM
-        green success tone
-       =================================================== -->
   <Style name="Window.confirm">
-     <StyleAttribute name="windowType" value="modal"/>
-     <StyleAttribute name="position" value="center"/>
-     <StyleAttribute name="backgroundColor" value="#D4EDDA"/>
-     <StyleAttribute name="border" value="flat"/>
+    <StyleAttribute name="windowType" value="modal"/>
+    <StyleAttribute name="position" value="center"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- MENU STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="Menu">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <Style name="Menu.dialog">
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <Style name="MenuItem">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- TOOLBAR STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="ToolBar">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+  </Style>
+
+  <Style name="ToolBarItem">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- GROUP BOX STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="GroupBox">
+    <StyleAttribute name="border" value="solid"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <Style name="GroupBox.important">
+    <StyleAttribute name="backgroundColor" value="#E8F4F8"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- TAB FOLDER STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="TabFolder">
+    <StyleAttribute name="backgroundColor" value="white"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- COMBO BOX STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="ComboBox">
+    <StyleAttribute name="backgroundColor" value="white"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <Style name="ComboBox.required">
+    <StyleAttribute name="backgroundColor" value="#FFFACD"/>
+  </Style>
+
+  <Style name="ComboBox:focus">
+    <StyleAttribute name="backgroundColor" value="#E8F4F8"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- CHECKBOX AND RADIO BUTTON STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="CheckBox">
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <Style name="RadioButton">
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- SCROLLBAR STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="ScrollBar">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- SPECIAL SAP B1 FIELD STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name="Edit.document_number">
+    <StyleAttribute name="fontWeight" value="bold"/>
+    <StyleAttribute name="fontSize" value="10pt"/>
+    <StyleAttribute name="textColor" value="#0070C0"/>
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+  </Style>
+
+  <Style name="Edit.currency">
+    <StyleAttribute name="fontWeight" value="bold"/>
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <Style name="Edit.total">
+    <StyleAttribute name="backgroundColor" value="#E8F4F8"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+    <StyleAttribute name="fontSize" value="10pt"/>
+    <StyleAttribute name="textColor" value="#003366"/>
+  </Style>
+
+  <Style name="Edit.date">
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- STATUS INDICATORS -->
+  <!-- ========================================================== -->
+  
+  <Style name="Label.status_open">
+    <StyleAttribute name="backgroundColor" value="#E8F4F8"/>
+    <StyleAttribute name="textColor" value="#0070C0"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <Style name="Label.status_closed">
+    <StyleAttribute name="backgroundColor" value="#F0F0F0"/>
+    <StyleAttribute name="textColor" value="#666666"/>
+  </Style>
+
+  <Style name="Label.status_active">
+    <StyleAttribute name="backgroundColor" value="#E8F8E8"/>
+    <StyleAttribute name="textColor" value="#008A00"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <Style name="Label.status_cancelled">
+    <StyleAttribute name="backgroundColor" value="#FFE0E0"/>
+    <StyleAttribute name="textColor" value="#CC0000"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <Style name="Label.status_pending">
+    <StyleAttribute name="backgroundColor" value="#FFF4E0"/>
+    <StyleAttribute name="textColor" value="#F0AB00"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <Style name="Label.status_approved">
+    <StyleAttribute name="backgroundColor" value="#E8F8E8"/>
+    <StyleAttribute name="textColor" value="#008A00"/>
+    <StyleAttribute name="fontWeight" value="bold"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- MDI CONTAINER STYLES -->
+  <!-- ========================================================== -->
+  
+  <Style name=".mdi_wrapper">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+  </Style>
+
+  <Style name=".mdi_container">
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <!-- ========================================================== -->
+  <!-- ADDITIONAL UI ELEMENTS -->
+  <!-- ========================================================== -->
+  
+  <Style name="Image">
+    <StyleAttribute name="backgroundColor" value="white"/>
+  </Style>
+
+  <Style name="ProgressBar">
+    <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+    <StyleAttribute name="textColor" value="#0070C0"/>
+  </Style>
+
+  <Style name="SpinEdit">
+    <StyleAttribute name="backgroundColor" value="white"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <Style name="SpinEdit.required">
+    <StyleAttribute name="backgroundColor" value="#FFFACD"/>
+  </Style>
+
+  <Style name="DateEdit">
+    <StyleAttribute name="backgroundColor" value="white"/>
+    <StyleAttribute name="textColor" value="#333333"/>
+    <StyleAttribute name="fontFamily" value="Segoe UI"/>
+    <StyleAttribute name="fontSize" value="9pt"/>
+  </Style>
+
+  <Style name="DateEdit.required">
+    <StyleAttribute name="backgroundColor" value="#FFFACD"/>
   </Style>
 
 </StyleList>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" spacing="compact" text="Debtors" windowStyle="viewer" width="126" height="17">
+<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" spacing="compact" text="Debtors" windowStyle="modal" width="126" height="17">
   <LStr text="Debtors"/>
   <VBox name="vbox1">
     <Grid name="dl01_mast" width="77" height="7">
@@ -65,7 +65,7 @@
       </FormField>
     </Grid>
     <Folder name="docs">
-      <Page name="trans_group" text="Documents">
+      <Page name="trans_group" text="Documents" image="fa-file-text-o">
         <LStr text="Documents"/>
         <Grid name="trans_grid" width="126" height="10">
           <Table pageSize="5" name="dl30_trans_tb" width="125" posY="0" posX="1" gridWidth="125" gridHeight="9" tabName="+tn_0">
@@ -104,21 +104,12 @@
           </Table>
         </Grid>
       </Page>
-      <Page name="pg_logs" text="Logs">
+      <Page name="pg_logs" text="Logs" image="fa-align-left">
         <LStr text="Logs"/>
         <Grid name="grid1" width="0" height="5"/>
       </Page>
     </Folder>
   </VBox>
-  <RecordView tabName="dl30_trans">
-    <Link colName="date" fieldIdRef="10"/>
-    <Link colName="doc_no" fieldIdRef="11"/>
-    <Link colName="trans_type" fieldIdRef="12"/>
-    <Link colName="doc_type" fieldIdRef="13"/>
-    <Link colName="gross_val" fieldIdRef="14"/>
-    <Link colName="vat" fieldIdRef="15"/>
-    <Link colName="notes" fieldIdRef="17"/>
-  </RecordView>
   <RecordView tabName="dl01_mast">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="cust_name" fieldIdRef="1"/>
@@ -130,6 +121,15 @@
     <Link colName="address3" fieldIdRef="7"/>
     <Link colName="cr_limit" fieldIdRef="8"/>
     <Link colName="balance" fieldIdRef="9"/>
+  </RecordView>
+  <RecordView tabName="dl30_trans">
+    <Link colName="date" fieldIdRef="10"/>
+    <Link colName="doc_no" fieldIdRef="11"/>
+    <Link colName="trans_type" fieldIdRef="12"/>
+    <Link colName="doc_type" fieldIdRef="13"/>
+    <Link colName="gross_val" fieldIdRef="14"/>
+    <Link colName="vat" fieldIdRef="15"/>
+    <Link colName="notes" fieldIdRef="17"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="dl30_trans_tot_incl" fieldIdRef="16"/>

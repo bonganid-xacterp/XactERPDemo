@@ -1,30 +1,30 @@
 # ==============================================================
 # Program   :   dl100_mast.4gl
-# Purpose   :   Debtors Master maintenance program
-# Module    :   Debtors
-# Number    :   100
+# Purpose   :   Debtors Master program
+# Module    :   Debtors (dl)
+# Number    :   101
 # Author    :   Bongani Dlamini
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
 
-IMPORT FGL utils_ui
+IMPORT FGL utils_ui -- utils for global / sharable utilities
 IMPORT ui
 
 MAIN
-    -- Step 1: set myself as child of mdi_wrapper
+    -- set as child of mdi_wrapper
     CALL utils_ui.set_child_container()
 
-    -- Step 2: open my window + form inside container
-    OPEN WINDOW w_dl100
+    --open my window + form inside container
+    OPEN WINDOW w_dl101
         WITH
-        FORM "dl100_mast"
+        FORM "dl101_mast"
         ATTRIBUTES(STYLE = "child", TEXT = "Debtors Master")
 
-    -- Step 3: run my menu / input loop
+    -- run my menu / input loop
     CALL run_debtors_master()
 
-    -- Step 4: close window when done
-    CLOSE WINDOW w_dl100
+    -- close window when done
+    CLOSE WINDOW w_dl101
 
 END MAIN
 

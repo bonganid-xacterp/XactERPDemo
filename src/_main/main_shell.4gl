@@ -2,15 +2,14 @@
 # Program   :   main_shell.4gl
 # Purpose   :   Centralized container window with menu + child mgmt
 # Module    :   Main
-# Number    :   
+# Number    :
 # Author    :   Bongani Dlamini
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
 
-
 IMPORT ui
 IMPORT FGL utils_ui
-IMPORT FGL main_auth
+IMPORT FGL sy100_login
 
 -- Track open modules
 DEFINE g_open_modules DYNAMIC ARRAY OF RECORD
@@ -22,33 +21,54 @@ END RECORD
 FUNCTION launch_child_window(formname STRING, wintitle STRING)
     DEFINE i INTEGER
     DEFINE winname STRING
-
+    
     -- Check if already open
     FOR i = 1 TO g_open_modules.getLength()
         IF g_open_modules[i].prog = formname THEN
-            ERROR utils_ui.show_alert(
+            CALL utils_ui.show_alert(
                 wintitle || " is already open!", "System Alert")
+            -- Optionally bring existing window to front
+            -- CALL ui.Window.findWindow(g_open_modules[i].winname).setFocus()
             RETURN
         END IF
     END FOR
-
+    
     -- Assign unique window name
     LET winname = "w_" || formname
+    
+    TRY
+        -- Configure container and type for this window
+        CALL ui.Interface.setContainer("mdi_wrapper")
+        CALL ui.Interface.setType("child")
+        
+        -- Open child window (remove "modal" style)
+        OPEN WINDOW winname
+            WITH FORM formname
+            ATTRIBUTES(TEXT = wintitle)
+        
+        -- Add to registry only after successful open
+        LET i = g_open_modules.getLength() + 1
+        LET g_open_modules[i].prog = formname
+        LET g_open_modules[i].winname = winname
+        
+    CATCH
+        CALL utils_ui.show_alert(
+            "Failed to open " || wintitle, "System Error")
+        -- Reset container settings if needed
+    END TRY
+    
+END FUNCTION
 
-    -- Attach child to mdi_wrapper container
-    CALL ui.Interface.setContainer("mdi_wrapper")
-    CALL ui.Interface.setType("Window.childModal")
-
-    -- Open child window
-    OPEN WINDOW winname
-        WITH
-        FORM formname
-        ATTRIBUTES(STYLE = "child", TEXT = wintitle)
-
-    -- Add to registry
-    LET i = g_open_modules.getLength() + 1
-    LET g_open_modules[i].prog = formname
-    LET g_open_modules[i].winname = winname
+-- Add companion cleanup function
+FUNCTION close_child_window(formname STRING)
+    DEFINE i INTEGER
+    
+    FOR i = 1 TO g_open_modules.getLength()
+        IF g_open_modules[i].prog = formname THEN
+            CALL g_open_modules.deleteElement(i)
+            EXIT FOR
+        END IF
+    END FOR
 END FUNCTION
 
 -- Remove from registry when closed

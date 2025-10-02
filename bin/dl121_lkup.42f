@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Form" width="112" height="22">
+  <LStr text="Form"/>
+  <VBox name="vbox1">
+    <Grid name="grid1" width="112" height="22">
+      <Label name="p_title" width="80" text="" sizePolicy="dynamic" posY="0" posX="1" gridWidth="80">
+        <LStr text=""/>
+      </Label>
+      <Table pageSize="5" name="xactapp_db1" width="111" posY="1" posX="1" gridWidth="111" gridHeight="6" tabName="record3">
+        <TableColumn name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" text="Code" tabIndex="1">
+          <Edit width="20" scroll="1"/>
+          <LStr text="Code"/>
+        </TableColumn>
+        <TableColumn name="dl01_mast.cust_name" colName="cust_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="dl01_mast" text="Customer Name" tabIndex="2">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Customer Name"/>
+        </TableColumn>
+        <TableColumn name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="dl01_mast" text="Phone" tabIndex="3">
+          <Edit width="20" scroll="1"/>
+          <LStr text="Phone"/>
+        </TableColumn>
+        <TableColumn name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="3" sqlTabName="dl01_mast" text="Balance" tabIndex="4" numAlign="1">
+          <Edit width="14" scroll="1"/>
+          <LStr text="Balance"/>
+        </TableColumn>
+        <TableColumn name="dl01_mast.cr_limit" colName="cr_limit" sqlType="DECIMAL(12,2)" fieldId="4" sqlTabName="dl01_mast" text="Credit Limit" tabIndex="5" numAlign="1">
+          <Edit width="14" scroll="1"/>
+          <LStr text="Credit Limit"/>
+        </TableColumn>
+        <TableColumn name="dl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="5" sqlTabName="dl01_mast" text="Status" tabIndex="6" numAlign="1">
+          <Edit width="6" scroll="1"/>
+          <LStr text="Status"/>
+        </TableColumn>
+      </Table>
+      <Label name="lbl_filter" width="9" text="Filter" posY="7" posX="1" gridWidth="9">
+        <LStr text="Filter"/>
+      </Label>
+      <FormField name="formonly.f_search" colName="f_search" fieldId="6" sqlTabName="formonly" tabIndex="7">
+        <Edit width="29" posY="7" posX="11" gridWidth="29"/>
+      </FormField>
+    </Grid>
+  </VBox>
+  <RecordView tabName="dl01_mast">
+    <Link colName="acc_code" fieldIdRef="0"/>
+    <Link colName="cust_name" fieldIdRef="1"/>
+    <Link colName="phone" fieldIdRef="2"/>
+    <Link colName="balance" fieldIdRef="3"/>
+    <Link colName="cr_limit" fieldIdRef="4"/>
+    <Link colName="status" fieldIdRef="5"/>
+  </RecordView>
+  <RecordView tabName="formonly">
+    <Link colName="f_search" fieldIdRef="6"/>
+  </RecordView>
+  <RecordView tabName="record2">
+    <Link colName="f_search" fieldIdRef="6"/>
+  </RecordView>
+</Form>

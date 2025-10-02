@@ -28,7 +28,7 @@ FUNCTION login_user() RETURNS SMALLINT
 
     OPEN WINDOW w_login
         WITH
-        FORM "login"
+        FORM "sy100_login"
         ATTRIBUTE(STYLE = "dialog", TEXT = "XactERP Login")
 
     CALL utils_ui.set_page_title("Login")

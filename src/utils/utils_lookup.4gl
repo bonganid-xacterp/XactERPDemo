@@ -3,6 +3,7 @@
 # Split lookups by group: Masters, Stock, Documents
 # ============================================================================
 IMPORT ui
+IMPORT FGL utils_ui
 
 # Shared result type
 TYPE t_lookup_result RECORD
@@ -34,9 +35,9 @@ FUNCTION lookup_creditor(search_val STRING, field_name STRING) RETURNS STRING
 
     DEFINE sql_query STRING
     LET sql_query =
-        "SELECT acc_code, supplier_name, address1, phone, payment_terms "
+        "SELECT acc_code, supp_name, address1, phone "
             || "FROM cl01_mast "
-            || build_where(search_val, "acc_code", "supplier_name")
+            || build_where(search_val, "acc_code", "supp_name")
             || " ORDER BY acc_code"
 
     RETURN do_lookup(sql_query, "Creditor", field_name)
@@ -47,7 +48,7 @@ FUNCTION lookup_warehouse(search_val STRING, field_name STRING) RETURNS STRING
 
     DEFINE sql_query STRING
     LET sql_query =
-        "SELECT wh_code, wh_name, location, manager, capacity "
+        "SELECT wh_code, wh_name, location,  capacity "
             || "FROM wh01_mast "
             || build_where(search_val, "wh_code", "wh_name")
             || " ORDER BY wh_code"
@@ -96,7 +97,7 @@ FUNCTION lookup_sales_order(search_val STRING, field_name STRING) RETURNS STRING
 
     DEFINE sql_query STRING
     LET sql_query =
-        "SELECT doc_no, acc_code, order_date, total_amount, status "
+        "SELECT doc_no, acc_code, date, status "
             || "FROM sa30_hdr "
             || build_where(search_val, "doc_no", "acc_code")
             || " ORDER BY doc_no DESC"
@@ -111,7 +112,7 @@ FUNCTION lookup_purchase_order(
 
     DEFINE sql_query STRING
     LET sql_query =
-        "SELECT doc_no, acc_code, po_date, total_amount, status "
+        "SELECT doc_no, acc_code, date, status "
             || "FROM pu30_hdr "
             || build_where(search_val, "doc_no", "acc_code")
             || " ORDER BY doc_no DESC"
@@ -209,12 +210,13 @@ FUNCTION execute_lookup_query(
         FREE c1
 
     CATCH
-        CALL show_error("Database error: " || SQLCA.SQLERRM)
+        CALL utils_ui.show_error(
+            "Database error: " || SQLCA.SQLERRM, "System Error")
         RETURN result_array, 0
     END TRY
 
     IF row_count = 0 THEN
-        CALL show_message("No records found")
+        CALL utils_ui.show_message("No records found", "System Info", "info")
         RETURN result_array, 0
     END IF
 
@@ -266,24 +268,4 @@ FUNCTION display_lookup_dialog(
 
     RETURN selected_idx
 
-END FUNCTION
-
-# ----------------------------------------------------------------------------
-# Simple error popup
-# ----------------------------------------------------------------------------
-FUNCTION show_error(msg STRING)
-    MENU "Error" ATTRIBUTES(STYLE = "dialog", COMMENT = msg)
-        ON ACTION accept
-            EXIT MENU
-    END MENU
-END FUNCTION
-
-# ----------------------------------------------------------------------------
-# Simple info popup
-# ----------------------------------------------------------------------------
-FUNCTION show_message(msg STRING)
-    MENU "Info" ATTRIBUTES(STYLE = "dialog", COMMENT = msg)
-        ON ACTION accept
-            EXIT MENU
-    END MENU
 END FUNCTION
