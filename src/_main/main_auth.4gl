@@ -8,7 +8,7 @@
 # ==============================================================
 
 IMPORT ui
-IMPORT FGL utils_ui
+# IMPORT FGL utils_ui
 
 -- Global variables for user session
 DEFINE g_current_user STRING
@@ -31,7 +31,7 @@ FUNCTION login_user() RETURNS SMALLINT
         FORM "login"
         ATTRIBUTE(STYLE = "dialog", TEXT = "XactERP Login")
 
-    CALL utils_ui.set_page_title("Login")
+    #CALL ui.Interface.set_page_title("Login")
 
     LET f = ui.Window.getCurrent().getForm()
     CALL f.setElementImage("company_logo", "logo.png")

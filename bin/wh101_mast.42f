@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="wh101_mast.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Warehouse" width="83" height="5">
+  <LStr text="Warehouse"/>
+  <HBox name="hbox1">
+    <Grid name="xactapp_db1" width="83" height="5">
+      <Label name="lbl_title" width="80" text="" color="blue" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="80">
+        <LStr text=""/>
+      </Label>
+      <Label name="wh01_mast_wh_code_label1" width="8" text="WH Code" posY="1" posX="1" gridWidth="8">
+        <LStr text="WH Code"/>
+      </Label>
+      <FormField name="wh01_mast.wh_code" colName="wh_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="wh01_mast" tabIndex="1">
+        <Edit width="20" scroll="1" posY="1" posX="10" gridWidth="20"/>
+      </FormField>
+      <Label name="wh01_mast_wh_name_label1" width="10" text="Name" posY="1" posX="41" gridWidth="10">
+        <LStr text="Name"/>
+      </Label>
+      <FormField name="wh01_mast.wh_name" colName="wh_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="wh01_mast" tabIndex="2">
+        <Edit width="30" scroll="1" posY="1" posX="52" gridWidth="30"/>
+      </FormField>
+      <Label name="wh01_mast_location_label1" width="8" text="Location" posY="2" posX="1" gridWidth="8">
+        <LStr text="Location"/>
+      </Label>
+      <FormField name="wh01_mast.location" colName="location" sqlType="VARCHAR(100)" fieldId="2" sqlTabName="wh01_mast" tabIndex="3">
+        <Edit width="30" scroll="1" posY="2" posX="10" gridWidth="30"/>
+      </FormField>
+      <Label name="wh01_mast_status_label1" width="10" text="Status" posY="2" posX="41" gridWidth="10">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="wh01_mast.status" colName="status" sqlType="SMALLINT" fieldId="3" sqlTabName="wh01_mast" tabIndex="4">
+        <ComboBox width="8" scroll="1" posY="2" posX="52" gridWidth="10"/>
+      </FormField>
+    </Grid>
+  </HBox>
+  <RecordView tabName="wh01_mast">
+    <Link colName="wh_code" fieldIdRef="0"/>
+    <Link colName="wh_name" fieldIdRef="1"/>
+    <Link colName="location" fieldIdRef="2"/>
+    <Link colName="status" fieldIdRef="3"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="wh_code" fieldIdRef="0"/>
+    <Link colName="wh_name" fieldIdRef="1"/>
+    <Link colName="location" fieldIdRef="2"/>
+    <Link colName="status" fieldIdRef="3"/>
+  </RecordView>
+</Form>

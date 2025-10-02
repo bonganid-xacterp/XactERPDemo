@@ -181,14 +181,24 @@
 <Call c="12" l="29" n="do_lookup" t="F"/>
 </Fct>
 </File>
-<File n="src/utils/utils_ui.4gl" s="2" ts="20251001163213909">
-<Fct c="10" el="70" l="66" n="set_child_container()" t="F" v="pub"/>
-<Fct c="10" el="61" l="56" n="set_form_lbl(lbl_name STRING,new_text STRING)" t="F" v="pub"/>
-<Fct c="10" el="51" l="45" n="set_page_title(p_title STRING)" t="F" v="pub"/>
-<Fct c="10" el="40" l="38" n="show_error_alert(p_message STRING,p_title STRING)" t="F" v="pub">
-<Call c="12" l="39" n="show_alert" t="F"/>
+<File n="src/utils/utils_ui.4gl" s="2" ts="20251002080658321">
+<Fct c="10" el="107" l="104" n="set_child_container()" t="F" v="pub"/>
+<Fct c="10" el="102" l="98" n="set_form_lbl(lbl_name STRING,new_text STRING)" t="F" v="pub"/>
+<Fct c="10" el="96" l="90" n="set_page_title(p_title STRING)" t="F" v="pub"/>
+<Fct c="10" el="85" l="61" n="show_confirm(p_message STRING,p_title STRING)" t="F" v="pub"/>
+<Fct c="10" el="56" l="54" n="show_error(p_message STRING,p_title STRING)" t="F" v="pub">
+<Call c="12" l="55" n="show_message" t="F"/>
 </Fct>
-<Fct c="10" el="33" l="14" n="show_alert(p_message STRING,p_title STRING)" t="F" v="pub"/>
+<Fct c="10" el="52" l="50" n="show_warning(p_message STRING,p_title STRING)" t="F" v="pub">
+<Call c="12" l="51" n="show_message" t="F"/>
+</Fct>
+<Fct c="10" el="48" l="46" n="show_info(p_message STRING,p_title STRING)" t="F" v="pub">
+<Call c="12" l="47" n="show_message" t="F"/>
+</Fct>
+<Fct c="10" el="44" l="42" n="show_alert(p_message STRING,p_title STRING)" t="F" v="pub">
+<Call c="12" l="43" n="show_message" t="F"/>
+</Fct>
+<Fct c="10" el="37" l="15" n="show_message(p_message STRING,p_title STRING,style_name STRING)" t="F" v="pub"/>
 </File>
 <File n="src/wh/wb101_mast.4gl" s="2" ts="20251001163215018">
 <Dep t="src/utils/utils_ui.4gl"/>

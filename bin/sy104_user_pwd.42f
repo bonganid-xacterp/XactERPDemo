@@ -40,11 +40,11 @@
       </Grid>
     </VBox>
   </HBox>
-  <RecordView tabName="sy00_user2">
-    <Link colName="password" fieldIdRef="2"/>
-  </RecordView>
   <RecordView tabName="sy00_user">
     <Link colName="password" fieldIdRef="0"/>
+  </RecordView>
+  <RecordView tabName="sy00_user2">
+    <Link colName="password" fieldIdRef="2"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="new_password" fieldIdRef="1"/>

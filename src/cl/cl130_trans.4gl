@@ -4,7 +4,7 @@
 # Module    :   Creditors Transactions (cl)
 # Number    :   30
 # Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.2.1
+# Version   :   Genero BDL 3.20.10
 # ==============================================================
 
 IMPORT FGL utils_ui

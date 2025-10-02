@@ -10,7 +10,7 @@
      <StyleAttribute name="startMenuPosition" value="menu"/>
      <StyleAttribute name="toolBarPosition" value="top"/>
      <StyleAttribute name="statusBarType" value="normal"/>
-     <!-- SAP B1 style: neutral gray background -->
+     <!-- style: neutral gray background -->
      <StyleAttribute name="backgroundColor" value="#F2F2F2"/>
      <StyleAttribute name="border" value="flat"/>
   </Style>
@@ -43,7 +43,7 @@
 
   <!-- ===================================================
        ALERT (general notice)
-       SAP B1: light blue banner
+        light blue banner
        =================================================== -->
   <Style name="Window.alert">
      <StyleAttribute name="windowType" value="modal"/>
@@ -54,7 +54,7 @@
 
   <!-- ===================================================
        INFO
-       SAP B1: softer blue, like message popups
+       softer blue, like message popups
        =================================================== -->
   <Style name="Window.info">
      <StyleAttribute name="windowType" value="modal"/>
@@ -65,7 +65,7 @@
 
   <!-- ===================================================
        WARNING
-       SAP B1: amber / gold
+       amber / gold
        =================================================== -->
   <Style name="Window.warning">
      <StyleAttribute name="windowType" value="modal"/>
@@ -76,7 +76,7 @@
 
   <!-- ===================================================
        ERROR
-       SAP B1: red highlight
+       red highlight
        =================================================== -->
   <Style name="Window.error">
      <StyleAttribute name="windowType" value="modal"/>
@@ -87,7 +87,7 @@
 
   <!-- ===================================================
        CONFIRM
-       SAP B1: green success tone
+        green success tone
        =================================================== -->
   <Style name="Window.confirm">
      <StyleAttribute name="windowType" value="modal"/>

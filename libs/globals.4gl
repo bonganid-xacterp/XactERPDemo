@@ -4,7 +4,7 @@
 # Module    :   Globals
 # Number    :
 # Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.2.1
+# Version   :   Genero BDL 3.20.10
 # ==============================================================
 
 CONSTANT g_app_version = "v0.1"

@@ -4,7 +4,7 @@
 # Module    :   DB Utils
 # Number    :   910
 # Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.2.1
+# Version   :   Genero BDL 3.20.10
 # ==============================================================
 
 FUNCTION initialize_database() RETURNS SMALLINT

@@ -2,9 +2,9 @@
 # Program   :   main_app.4gl
 # Purpose   :   App entry point with login + main container
 # Module    :   Main
-# Number    :   100
+# Number    :
 # Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.2.1
+# Version   :   Genero BDL 3.20.10
 # ==============================================================
 
 IMPORT os
@@ -15,6 +15,7 @@ IMPORT FGL main_auth -- login handling
 IMPORT FGL utils_ui -- ui utils
 IMPORT FGL utils_db -- db utils
 IMPORT FGL main_shell -- application shell
+IMPORT FGL main_menu -- application menu
 
 DEFINE g_user_authenticated SMALLINT
 
@@ -69,16 +70,13 @@ FUNCTION open_main_container()
     CALL ui.Interface.loadStyles("xactapp_style")
 
     -- Open the main shell form as MDI
-    OPEN WINDOW w_main
-        WITH
-        FORM "main_shell"
-        ATTRIBUTES(STYLE = "main", TEXT = "XactERP Demo System")
+    OPEN WINDOW w_main WITH FORM "main_shell"
 
     -- Set dashboard title with logged-in user
     CALL utils_ui.set_page_title("Dashboard - " || main_auth.get_current_user())
 
     -- Run top menu
-    CALL main_shell.main_application_menu()
+    CALL main_application_menu()
 
     -- Close after menu exit
     CLOSE WINDOW w_main

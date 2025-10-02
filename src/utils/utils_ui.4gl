@@ -101,6 +101,9 @@ FUNCTION set_form_lbl(lbl_name STRING, new_text STRING)
     CALL g_form.setElementText(lbl_name, new_text)
 END FUNCTION
 
+-- =============================================================
+-- Load child form to the parent wrapper
+-- =============================================================
 FUNCTION set_child_container()
     CALL ui.Interface.setContainer("mdi_wrapper")
     CALL ui.Interface.setType("child")
