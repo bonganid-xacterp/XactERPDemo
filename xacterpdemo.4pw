@@ -118,6 +118,13 @@
         <File filePath="src/incl/incl.4gl"/>
       </Library>
       <Library binaryName="libs" id="104908716" label="libs">
+        <VirtualFolder label="images">
+          <File filePath="src/res/company_logo.png"/>
+          <File filePath="src/res/logo.png"/>
+        </VirtualFolder>
+        <VirtualFolder label="styles">
+          <File filePath="src/res/main_styles.4st"/>
+        </VirtualFolder>
         <File filePath=".fglprofile"/>
         <File filePath="libs/globals.4gl"/>
         <File filePath="src/utils/mast_dt_tlbar.4tb"/>
@@ -140,11 +147,6 @@
         <File filePath="src/pu/pu30_inv_hdr.4fd"/>
         <File filePath="src/pu/pu31_ord_hdr.4fd"/>
       </Application>
-      <Library binaryName="res" id="960354642" label="res">
-        <File filePath="src/res/company_logo.png"/>
-        <File filePath="src/res/logo.png"/>
-        <File filePath="src/res/main_styles.4st"/>
-      </Library>
       <Application binaryName="sa" dependencies="497700,104908716,31764552,782461791" id="95666062" label="sa">
         <File filePath="src/sa/sa130_order.4fd"/>
         <File filePath="src/sa/sa130_order.4gl"/>

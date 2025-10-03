@@ -20,7 +20,7 @@ IMPORT FGL main_menu -- Application menu
 CONSTANT MAX_LOGIN_ATTEMPTS = 3
 CONSTANT APP_NAME = "XACT ERP System"
 CONSTANT APP_VERSION = "1.0.0"
-CONSTANT STYLE_FILE = "main_styles"
+CONSTANT STYLE_FILE = "$FGLDIR/lib/styles/main_styles.4st"
 CONSTANT MAIN_FORM = "main_shell"
 CONSTANT MAIN_WINDOW = "w_main"
 CONSTANT MDI_CONTAINER = "mdi_wrapper"
@@ -38,7 +38,8 @@ MAIN
     CLOSE WINDOW SCREEN
     
     -- Enable debug mode (set to FALSE in production)
-    LET g_debug_mode = TRUE
+    CALL main_menu.set_debug_mode(TRUE)
+
     
     -- Initialize application
     IF NOT initialize_application() THEN
