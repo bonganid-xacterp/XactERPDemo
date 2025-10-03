@@ -34,12 +34,11 @@ MAIN
     -- Prevent CTRL+C interrupt crash
     DEFER INTERRUPT
     
-    -- Close default SCREEN window
-    CLOSE WINDOW SCREEN
+    -- DON'T close SCREEN yet - we need it for error messages
+    -- CLOSE WINDOW SCREEN  -- ? Comment this out
     
     -- Enable debug mode (set to FALSE in production)
-    CALL main_menu.set_debug_mode(TRUE)
-
+    LET g_debug_mode = TRUE
     
     -- Initialize application
     IF NOT initialize_application() THEN
@@ -48,6 +47,9 @@ MAIN
         -- TODO: Log critical initialization failure
         EXIT PROGRAM 1
     END IF
+    
+    -- Close SCREEN after successful initialization
+    CLOSE WINDOW SCREEN
     
     -- Run login process (with retry logic)
     IF run_login_with_retry() THEN

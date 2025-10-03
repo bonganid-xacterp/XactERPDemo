@@ -405,7 +405,7 @@ END FUNCTION
 -- Purpose:  Enable/disable debug output
 -- Parameters: p_enabled - TRUE to enable, FALSE to disable
 -- ==============================================================
-PUBLIC FUNCTION set_debug_mode(p_enabled SMALLINT)
+PUBLIC FUNCTION menu_set_debug_mode(p_enabled SMALLINT)
     LET g_debug_mode = p_enabled
     IF g_debug_mode THEN
         DISPLAY "Debug mode enabled for main_menu"
