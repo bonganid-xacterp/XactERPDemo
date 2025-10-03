@@ -6,7 +6,6 @@
 -- Author    :   Bongani Dlamini
 -- Version   :   Genero BDL 3.20.10
 
-
 IMPORT os
 IMPORT ui
 IMPORT security -- For password hashing (if available)
@@ -17,16 +16,12 @@ IMPORT FGL utils_db -- Database utilities
 IMPORT FGL main_shell -- Application shell
 IMPORT FGL main_menu -- Application menu
 
-SCHEMA xactapp_db
-
-
 -- GLOBAL VARIABLES
 
 DEFINE g_user_authenticated SMALLINT
 
 
 -- MAIN ENTRY POINT
-
 MAIN
     -- Prevent CTRL+C interrupt crash
     DEFER INTERRUPT
@@ -56,7 +51,6 @@ END MAIN
 
 
 -- INITIALIZATION
-
 FUNCTION initialize_application()
     DEFINE db_result SMALLINT
     DEFINE style_loaded SMALLINT
@@ -93,7 +87,6 @@ END FUNCTION
 
 
 -- LOGIN FLOW WITH RETRY
-
 FUNCTION run_login_with_retry()
     DEFINE login_result SMALLINT
     DEFINE retry_count SMALLINT
@@ -139,7 +132,6 @@ END FUNCTION
 
 
 -- MAIN MDI CONTAINER
-
 FUNCTION open_main_container()
     DEFINE int_flag_saved SMALLINT
     DEFINE w ui.Window
@@ -190,7 +182,6 @@ END FUNCTION
 
 
 -- CLEANUP AND EXIT
-
 FUNCTION cleanup_application()
 
     TRY
@@ -216,7 +207,6 @@ END FUNCTION
 
 
 -- UTILITY: Emergency Exit Handler (Optional)
-
 FUNCTION emergency_exit(exit_code SMALLINT)
 
     DISPLAY "EMERGENCY EXIT TRIGGERED - Code: ", exit_code
