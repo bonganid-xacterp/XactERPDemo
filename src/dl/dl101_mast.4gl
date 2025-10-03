@@ -7,15 +7,21 @@
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
 
-IMPORT FGL utils_globals -- utils for global / sharable utilities
-IMPORT ui
-IMPORT FGL utils_lookup
+IMPORT ui -- Genero UI functions
+IMPORT FGL utils_globals -- UI common utilities
+IMPORT FGL utils_lookup -- global lookup by program utilities
+IMPORT FGL utils_db -- Database connection helpers
 IMPORT FGL utils_status_const
 
 SCHEMA xactapp_db
 
+TYPE t_status_item RECORD
+    code SMALLINT,
+    label STRING
+END RECORD
+
 -- record fields
-DEFINE rec RECORD
+DEFINE rec_mast RECORD
     acc_code LIKE dl01_mast.acc_code,
     cust_name LIKE dl01_mast.cust_name,
     address1 LIKE dl01_mast.address1,
@@ -26,13 +32,21 @@ DEFINE rec RECORD
     status LIKE dl01_mast.status
 END RECORD
 
+-- Local status array for combobox
+
+#DEFINE g_status_values DYNAMIC ARRAY OF t_status_item
+
 MAIN
+
+    DEFINE db_status INT
     -- set as child of mdi_wrapper
-    CALL utils_globals.set_child_container()
+    # CALL utils_globals.set_child_container()
 
     -- temp code to be removed later
     -- TODOS: This will be reomoved once the meina menu is working
     CALL utils_globals.hide_screen()
+    -- check db connection
+    LET db_status = utils_db.initialize_database()
 
     --open my window + form inside container
 
@@ -55,7 +69,7 @@ FUNCTION run_debtors_master()
     DEFINE search STRING
 
     -- Load status options into combobox
-    CALL populate_status_combobox()
+    CALL utils_status_const.populate_status_combobox()
 
     MENU "Debtors Master"
         COMMAND "Find"
@@ -65,12 +79,12 @@ FUNCTION run_debtors_master()
             IF code IS NOT NULL THEN
                 CALL load_debtor(code)
             ELSE
-                ERROR 'No records found.', 'System Info', 'info'
+                CALL utils_globals.show_alert('No records found.', 'System Info')
             END IF
         COMMAND "Create"
             CALL add_debtor()
         COMMAND "Edit"
-            MESSAGE "Edit existing debtor (TODO)"
+           CALL edit_debtor()
         COMMAND "Next"
             DISPLAY "Next Record"
         COMMAND "Previous"
@@ -90,24 +104,40 @@ FUNCTION load_debtor(p_code STRING)
         balance,
         cr_limit,
         status
-        INTO rec.*
+        INTO rec_mast.*
         FROM dl01_mast
         WHERE acc_code = p_code
 
     -- show record on form
-    DISPLAY BY NAME rec.*
+    DISPLAY BY NAME rec_mast.*
 END FUNCTION
 
 -- add new debtor
 FUNCTION add_debtor()
-    INITIALIZE rec.* TO NULL
-    LET rec.status = 1 -- default Active
 
-    INPUT BY NAME rec.* ATTRIBUTE(UNBUFFERED, ACCEPT = "ALL")
+    CLEAR FORM
 
-        ON ACTION ACCEPT
+    INPUT BY NAME rec_mast.* ATTRIBUTE(UNBUFFERED)
+
+        ON ACTION ACCEPT ATTRIBUTE(TEXT='Add Debtor')
             -- Save to database
-            INSERT INTO dl01_mast VALUES(rec.*)
+            INSERT INTO dl01_mast(
+                acc_code,
+                cust_name,
+                address1,
+                phone,
+                email,
+                balance,
+                cr_limit,
+                status)
+                VALUES(rec_mast.acc_code,
+                    rec_mast.cust_name,
+                    rec_mast.address1,
+                    rec_mast.phone,
+                    rec_mast.email,
+                    rec_mast.balance,
+                    rec_mast.cr_limit,
+                    rec_mast.status);
 
             -- Confirmation popup
             CALL show_message("Debtor added successfully.", "Success", "info")
@@ -120,18 +150,7 @@ FUNCTION add_debtor()
     END INPUT
 END FUNCTION
 
--- load status combos
-FUNCTION populate_status_combobox()
-    DEFINE f ui.Form
-    DEFINE i INTEGER
-
-    -- initialize statuses
-    CALL utils_status_const.init_status_constants()
-
-    LET f = ui.Window.getCurrent().getForm()
-
-    -- clear old values first
-
-    -- loop through global array and add items
-
-END FUNCTION
+-- Edit / Update debtor
+FUNCTION edit_debtor()
+    
+END FUNCTION 

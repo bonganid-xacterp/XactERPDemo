@@ -7,9 +7,6 @@
 # Version   : Genero BDL 3.20.10
 # ==============================================================
 
-CONSTANT STATUS_ACTIVE = 1
-CONSTANT STATUS_INACTIVE = 0
-
 # Array for combobox options
 DEFINE g_status_values DYNAMIC ARRAY OF RECORD
     code SMALLINT,
@@ -17,13 +14,34 @@ DEFINE g_status_values DYNAMIC ARRAY OF RECORD
 END RECORD
 
 -- Get active and inactive statuses
-FUNCTION init_status_constants()
-    -- Initialize status values (only once)
-    IF g_status_values.getLength() = 0 THEN
-        LET g_status_values[1].code = STATUS_ACTIVE
-        LET g_status_values[1].label = "Active"
 
-        LET g_status_values[2].code = STATUS_INACTIVE
-        LET g_status_values[2].label = "Inactive"
+-- load status combos
+FUNCTION populate_status_combobox()
+    DEFINE cb ui.ComboBox
+    DEFINE i INTEGER
+    
+    -- Populate array
+    LET g_status_values[1].code  = 1
+    LET g_status_values[1].label = "Active"
+    LET g_status_values[2].code  = 0
+    LET g_status_values[2].label = "Inactive"
+    LET g_status_values[3].code  = -1
+    LET g_status_values[3].label = "Archived"
+    
+    -- Get combobox directly by field name
+    LET cb = ui.ComboBox.forName("status")
+    
+    IF cb IS NOT NULL THEN
+        -- Clear old values
+        CALL cb.clear()
+        
+        -- Add new options
+        FOR i = 1 TO g_status_values.getLength()
+            CALL cb.addItem(g_status_values[i].code,
+                            g_status_values[i].label)
+        END FOR
+    ELSE
+        DISPLAY "Warning: ComboBox 'status' not found"
     END IF
+    
 END FUNCTION

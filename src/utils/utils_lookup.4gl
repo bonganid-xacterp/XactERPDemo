@@ -207,13 +207,12 @@ FUNCTION execute_lookup_query(
 
     CATCH
         CALL utils_globals.show_error(
-            "Database error: " || SQLCA.SQLERRM, "System Error")
+            "Database error: " || SQLCA.SQLERRM)
         RETURN result_array, 0
     END TRY
 
     IF row_count = 0 THEN
-        CALL utils_globals.show_message(
-            "No records found", "System Info", "info")
+        CALL utils_globals.show_info("No records found")
         RETURN result_array, 0
     END IF
 

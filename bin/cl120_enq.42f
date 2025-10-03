@@ -103,6 +103,15 @@
       </Page>
     </Folder>
   </VBox>
+  <RecordView tabName="dl30_trans">
+    <Link colName="date" fieldIdRef="9"/>
+    <Link colName="doc_no" fieldIdRef="10"/>
+    <Link colName="trans_type" fieldIdRef="11"/>
+    <Link colName="doc_type" fieldIdRef="12"/>
+    <Link colName="gross_val" fieldIdRef="13"/>
+    <Link colName="vat" fieldIdRef="14"/>
+    <Link colName="notes" fieldIdRef="16"/>
+  </RecordView>
   <RecordView tabName="cl01_mast">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="supp_name" fieldIdRef="1"/>
@@ -113,15 +122,6 @@
     <Link colName="email" fieldIdRef="6"/>
     <Link colName="balance" fieldIdRef="7"/>
     <Link colName="status" fieldIdRef="8"/>
-  </RecordView>
-  <RecordView tabName="dl30_trans">
-    <Link colName="date" fieldIdRef="9"/>
-    <Link colName="doc_no" fieldIdRef="10"/>
-    <Link colName="trans_type" fieldIdRef="11"/>
-    <Link colName="doc_type" fieldIdRef="12"/>
-    <Link colName="gross_val" fieldIdRef="13"/>
-    <Link colName="vat" fieldIdRef="14"/>
-    <Link colName="notes" fieldIdRef="16"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="dl30_trans_tot_incl" fieldIdRef="15"/>

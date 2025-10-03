@@ -7,6 +7,7 @@
 # ==============================================================
 
 IMPORT ui
+IMPORT FGL fgldialog
 
 -- Global application variables
 DEFINE g_user_id INTEGER
@@ -39,81 +40,81 @@ END FUNCTION
 -- Show message with OK button
 FUNCTION show_message(p_message STRING, p_title STRING, style_name STRING)
     DEFINE l_title STRING
-    DEFINE f ui.Form
-
-    IF p_title IS NULL OR p_title = "" THEN
-        LET l_title = "Message"
-    ELSE
-        LET l_title = p_title
-    END IF
-
-    OPEN WINDOW w_msg
-        WITH
-        FORM "utils_alert_form"
-        ATTRIBUTES(STYLE = style_name, TEXT = l_title)
-
-    LET f = ui.Window.getCurrent().getForm()
-    CALL f.setElementText("alert_message", p_message)
-
-    MENU l_title ATTRIBUTE(STYLE = "dialog")
-        COMMAND "OK"
-            EXIT MENU
-    END MENU
-
-    CLOSE WINDOW w_msg
+    DEFINE l_icon STRING
+    
+    LET l_title = IIF(p_title IS NULL OR p_title = "", "Message", p_title)
+    
+    CASE style_name
+        WHEN "info"     LET l_icon = "information"
+        WHEN "warning"  LET l_icon = "exclamation"
+        WHEN "error"    LET l_icon = "stop"
+        WHEN "question" LET l_icon = "question"
+        OTHERWISE       LET l_icon = "information"
+    END CASE
+    
+    CALL fgldialog.fgl_winmessage(l_title, p_message, l_icon)
 END FUNCTION
 
--- Alert message
-FUNCTION show_alert(p_message STRING, p_title STRING)
-    CALL show_message(p_message, p_title, "alert")
-END FUNCTION
-
--- Info message
-FUNCTION show_info(p_message STRING, p_title STRING)
-    CALL show_message(p_message, p_title, "info")
-END FUNCTION
-
--- Warning message
-FUNCTION show_warning(p_message STRING, p_title STRING)
+-- ==============================================================
+-- Function: show_alert
+-- Purpose:  Quick alert message (convenience wrapper)
+-- ==============================================================
+PUBLIC FUNCTION show_alert(p_message STRING, p_title STRING)
     CALL show_message(p_message, p_title, "warning")
 END FUNCTION
 
--- Error message
-FUNCTION show_error(p_message STRING, p_title STRING)
-    CALL show_message(p_message, p_title, "error")
+-- ==============================================================
+-- Function: show_info
+-- Purpose:  Information message
+-- ==============================================================
+PUBLIC FUNCTION show_info(p_message STRING)
+    CALL show_message(p_message, "Information", "info")
 END FUNCTION
 
--- Confirmation dialog
-FUNCTION show_confirm(p_message STRING, p_title STRING) RETURNS SMALLINT
-    DEFINE l_title STRING
-    DEFINE result SMALLINT
-    DEFINE f ui.Form
+-- ==============================================================
+-- Function: show_warning
+-- Purpose:  Warning message
+-- ==============================================================
+PUBLIC FUNCTION show_warning(p_message STRING)
+    CALL show_message(p_message, "Warning", "warning")
+END FUNCTION
 
+-- ==============================================================
+-- Function: show_error
+-- Purpose:  Error message
+-- ==============================================================
+PUBLIC FUNCTION show_error(p_message STRING)
+    CALL show_message(p_message, "Error", "error")
+END FUNCTION
+
+-- ==============================================================
+-- Function: show_success
+-- Purpose:  Success message
+-- ==============================================================
+PUBLIC FUNCTION show_success(p_message STRING)
+    CALL show_message(p_message, "Success", "info")
+END FUNCTION
+
+-- ==============================================================
+-- Function: Confirmation dialog 
+-- Purpose:  Ask user for confirmation (Yes/No)
+-- Returns:  TRUE if user clicked Yes, FALSE otherwise
+-- ==============================================================
+FUNCTION show_confirm(p_message STRING, p_title STRING)
+    DEFINE l_title STRING
+    DEFINE answer STRING
+    
     IF p_title IS NULL OR p_title = "" THEN
         LET l_title = "Confirm"
     ELSE
         LET l_title = p_title
     END IF
-
-    OPEN WINDOW w_confirm
-        WITH
-        FORM "utils_alert_form"
-        ATTRIBUTES(STYLE = "dialog", TEXT = l_title)
-
-    LET f = ui.Window.getCurrent().getForm()
-    CALL f.setElementText("alert_message", p_message)
-
-    MENU l_title ATTRIBUTE(STYLE = "dialog")
-        COMMAND "Yes"
-            LET result = TRUE
-            EXIT MENU
-        COMMAND "No"
-            LET result = FALSE
-            EXIT MENU
-    END MENU
-
-    CLOSE WINDOW w_confirm
-    RETURN result
+    
+    LET answer = fgl_winquestion(l_title, p_message, 
+                                  "no", "yes|no", "question", 0)
+    
+    RETURN (answer = "yes")
+    
 END FUNCTION
 
 -- Set window title

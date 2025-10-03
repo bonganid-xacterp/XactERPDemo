@@ -8,9 +8,19 @@
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
 
--- Log an activity
-FUNCTION add_log()
+DEFINE log_rec RECORD
+    user_id INT,
+    level STRING,
+    user_action STRING,
+    details STRING
+    END RECORD 
+    
+    
 
+-- Log an activity
+-- TODOS: add the logic for logging activity
+FUNCTION add_log()
+    # LET log_rec.user_id = log_data.
 END FUNCTION
 
 -- Loads system logs

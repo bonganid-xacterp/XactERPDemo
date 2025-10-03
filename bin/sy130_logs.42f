@@ -3,29 +3,29 @@
   <LStr text="Form"/>
   <VBox name="vbox1">
     <Table pageSize="5" name="xactapp_db1" tabName="record1">
-      <TableColumn name="sy02_logs.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="0" sqlTabName="sy02_logs" text="id" tabIndex="1" numAlign="1">
+      <TableColumn name="sy02_logs.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="0" sqlTabName="sy02_logs" text="ID#" tabIndex="1" numAlign="1">
         <Edit width="20" scroll="1"/>
-        <LStr text="id"/>
+        <LStr text="ID#"/>
       </TableColumn>
-      <TableColumn name="sy02_logs.user_id" colName="user_id" sqlType="BIGINT" fieldId="1" sqlTabName="sy02_logs" text="user_id" tabIndex="2" numAlign="1">
+      <TableColumn name="sy02_logs.user_id" colName="user_id" sqlType="BIGINT" fieldId="1" sqlTabName="sy02_logs" text="Username" tabIndex="2" numAlign="1">
         <Edit width="20" scroll="1"/>
-        <LStr text="user_id"/>
+        <LStr text="Username"/>
       </TableColumn>
-      <TableColumn name="sy02_logs.level" colName="level" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="2" sqlTabName="sy02_logs" text="level" tabIndex="3">
+      <TableColumn name="sy02_logs.level" colName="level" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="2" sqlTabName="sy02_logs" text="Level" tabIndex="3">
         <Edit width="10" scroll="1"/>
-        <LStr text="level"/>
+        <LStr text="Level"/>
       </TableColumn>
-      <TableColumn name="sy02_logs.action" colName="action" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="3" sqlTabName="sy02_logs" text="action" tabIndex="4">
+      <TableColumn name="sy02_logs.action" colName="action" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="3" sqlTabName="sy02_logs" text="User Action" tabIndex="4">
         <Edit width="30" scroll="1"/>
-        <LStr text="action"/>
+        <LStr text="User Action"/>
       </TableColumn>
-      <TableColumn name="sy02_logs.details" colName="details" sqlType="TEXT" fieldId="4" sqlTabName="sy02_logs" text="details" tabIndex="5">
+      <TableColumn name="sy02_logs.details" colName="details" sqlType="TEXT" fieldId="4" sqlTabName="sy02_logs" text="Log Details" tabIndex="5">
         <Edit width="30" scroll="1"/>
-        <LStr text="details"/>
+        <LStr text="Log Details"/>
       </TableColumn>
-      <TableColumn name="sy02_logs.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="5" sqlTabName="sy02_logs" text="created_at" tabIndex="6">
+      <TableColumn name="sy02_logs.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="5" sqlTabName="sy02_logs" text="Date" tabIndex="6">
         <Edit width="25" scroll="1"/>
-        <LStr text="created_at"/>
+        <LStr text="Date"/>
       </TableColumn>
     </Table>
   </VBox>

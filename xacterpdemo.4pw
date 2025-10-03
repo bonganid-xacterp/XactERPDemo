@@ -189,10 +189,6 @@
         <File filePath="src/sy/sy140_hist.4fd"/>
         <File filePath="src/sy/sy140_hist.4gl"/>
       </Application>
-      <Application binaryName="test" dependencies="960354642,497700,104908716,31764552,56784492" id="24928576" label="test">
-        <File filePath="src/test/app.4fd"/>
-        <File filePath="src/test/test_styles.4st"/>
-      </Application>
       <Library binaryName="utils" dependencies="782461791,31764552" id="497700" label="utils">
         <File filePath="src/utils/utils_alert_form.4fd"/>
         <File filePath="src/utils/utils_db.4gl"/>

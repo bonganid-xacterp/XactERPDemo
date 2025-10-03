@@ -4,10 +4,10 @@
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record masterTable="st02_mast" name="record1" uid="{e234db07-48d5-4e34-b189-75426457f82d}">
-    <RecordField colName="cat_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="st_cat.cat_code" sqlTabName="st_cat" uid="{ccc018de-ad1a-4b9a-8d4f-182553f4d3e2}"/>
-    <RecordField colName="cat_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="st_cat.cat_name" sqlTabName="st_cat" uid="{039776e1-b2ed-424a-93c3-b5bdcac13d09}"/>
-    <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st_cat.description" sqlTabName="st_cat" uid="{10eb3dab-ed6e-4f3b-ac9c-f158cec8952f}"/>
-    <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="st_cat.status" sqlTabName="st_cat" uid="{7aa89946-c88e-4ae9-983f-c2ba419eb5ae}"/>
+    <RecordField colName="cat_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="st02_cat.cat_code" sqlTabName="st02_cat" uid="{ccc018de-ad1a-4b9a-8d4f-182553f4d3e2}"/>
+    <RecordField colName="cat_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="st02_cat.cat_name" sqlTabName="st02_cat" uid="{039776e1-b2ed-424a-93c3-b5bdcac13d09}"/>
+    <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st02_cat.description" sqlTabName="st02_cat" uid="{10eb3dab-ed6e-4f3b-ac9c-f158cec8952f}"/>
+    <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="st02_cat.status" sqlTabName="st02_cat" uid="{7aa89946-c88e-4ae9-983f-c2ba419eb5ae}"/>
   </Record>
   <Form gridHeight="5" gridWidth="90" name="form" text="Warehouse Category">
     <HBox gridHeight="4" gridWidth="90" name="hbox1" posX="0" posY="0">
@@ -15,25 +15,25 @@
         <Label gridHeight="1" gridWidth="11" name="st02_mast_cat_code_label1" posX="1" posY="1" text="Warehouse Category">
           <Initializer text="dbschema:st02_mast.cat_code/@label"/>
         </Label>
-        <Edit colName="cat_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st_cat.cat_code" posX="13" posY="1" scroll="true" sqlTabName="st_cat" tabIndex="-1" widget="Edit">
+        <Edit colName="cat_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st02_cat.cat_code" posX="13" posY="1" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
         <Label gridHeight="1" gridWidth="8" name="st02_mast_cat_name_label1" posX="44" posY="1" text="Category Name">
           <Initializer text="dbschema:st02_mast.cat_name/@label"/>
         </Label>
-        <Edit colName="cat_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st_cat.cat_name" posX="53" posY="1" scroll="true" sqlTabName="st_cat" tabIndex="-1" widget="Edit">
+        <Edit colName="cat_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.cat_name" posX="53" posY="1" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
         <Label gridHeight="1" gridWidth="11" name="st02_mast_description_label1" posX="1" posY="2" text="Description">
           <Initializer text="dbschema:st02_mast.description/@label"/>
         </Label>
-        <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st_cat.description" posX="13" posY="2" scroll="true" sqlTabName="st_cat" tabIndex="-1" widget="Edit">
+        <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.description" posX="13" posY="2" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
         <Label gridHeight="1" gridWidth="8" name="st02_mast_status_label1" posX="44" posY="2" text="Status">
           <Initializer text="dbschema:st02_mast.status/@label"/>
         </Label>
-        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="Active, Inactive" name="st_cat.status" notNull="true" posX="53" posY="2" required="true" scroll="true" sqlTabName="st_cat" tabIndex="-1" widget="ComboBox">
+        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="Active, Inactive" name="st02_cat.status" notNull="true" posX="53" posY="2" required="true" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           <Item lstrtext="false" name="0" text="Active"/>
           <Item lstrtext="false" name="1" text="Inactive"/>

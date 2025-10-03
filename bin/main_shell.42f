@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="main_shell.tmp" build="3.20.14" sqlDbName="xactapp_db" text="" style="main_styles.4st" windowStyle="mdi" version="0.1" width="91" height="20">
+<Form name="main_shell.tmp" build="3.20.14" sqlDbName="xactapp_db" text="" version="0.1" width="91" height="20">
   <TopMenu name="top_menu">
     <TopMenuGroup name="tm_main" text="File">
       <LStr text="File"/>
@@ -160,7 +160,7 @@
     </TopMenuGroup>
   </TopMenu>
   <LStr text=""/>
-  <Group name="mdi_wrapper" text="" hidden="1">
+  <Group name="mdi_group" text="" hidden="1">
     <LStr text=""/>
     <Grid name="main_grid" width="91" height="20">
       <Label name="lbl_top_title" width="89" text="" hidden="1" justify="center" posY="0" posX="1" gridWidth="89">
