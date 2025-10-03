@@ -3,7 +3,8 @@
 # Split lookups by group: Masters, Stock, Documents
 # ============================================================================
 IMPORT ui
-IMPORT FGL utils_ui
+IMPORT FGL utils_globals
+SCHEMA xactapp_db
 
 # Shared result type
 TYPE t_lookup_result RECORD
@@ -18,16 +19,11 @@ END RECORD
 # MASTER LOOKUPS
 # ============================================================================
 
-FUNCTION lookup_debtor(search_val STRING, field_name STRING) RETURNS STRING
+FUNCTION run_lookup(p_mode STRING, p_search STRING) RETURNS STRING
 
     DEFINE sql_query STRING
-    LET sql_query =
-        "SELECT acc_code, cust_name, address1, phone, cr_limit "
-            || "FROM dl01_mast "
-            || build_where(search_val, "acc_code", "cust_name")
-            || " ORDER BY acc_code"
 
-    RETURN do_lookup(sql_query, "Debtor", field_name)
+    RETURN ""
 
 END FUNCTION
 
@@ -210,13 +206,14 @@ FUNCTION execute_lookup_query(
         FREE c1
 
     CATCH
-        CALL utils_ui.show_error(
+        CALL utils_globals.show_error(
             "Database error: " || SQLCA.SQLERRM, "System Error")
         RETURN result_array, 0
     END TRY
 
     IF row_count = 0 THEN
-        CALL utils_ui.show_message("No records found", "System Info", "info")
+        CALL utils_globals.show_message(
+            "No records found", "System Info", "info")
         RETURN result_array, 0
     END IF
 
@@ -267,5 +264,13 @@ FUNCTION display_lookup_dialog(
     CLOSE WINDOW w_lookup
 
     RETURN selected_idx
+
+END FUNCTION
+
+# ----------------------------------------------------------------------------
+# Display lookup form
+# ----------------------------------------------------------------------------
+
+FUNCTION show_lookupf_form()
 
 END FUNCTION

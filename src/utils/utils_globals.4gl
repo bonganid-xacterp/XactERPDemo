@@ -20,6 +20,22 @@ DEFINE g_fiscal_period INTEGER
 -- UI Utility Functions
 -- =============================================================
 
+-- Load child form to the parent wrapper
+FUNCTION set_child_container()
+    CALL ui.Interface.setContainer("mdi_wrapper")
+    CALL ui.Interface.setType("child")
+END FUNCTION
+
+-- Global hide screen code
+
+FUNCTION hide_screen()
+    -- Prevent CTRL+C interrupt crash
+    DEFER INTERRUPT
+
+    -- Close default SCREEN window
+    CLOSE WINDOW SCREEN
+END FUNCTION
+
 -- Show message with OK button
 FUNCTION show_message(p_message STRING, p_title STRING, style_name STRING)
     DEFINE l_title STRING
@@ -146,12 +162,12 @@ END FUNCTION
 -- =============================================================
 
 -- Format currency
---FUNCTION format_currency(p_amount DECIMAL) RETURNS STRING
---    IF p_amount IS NULL THEN
---        LET p_amount = 0
---    END IF
---    -- RETURN "R ", p_amount USING "---,---,--&.&&"
---END FUNCTION
+FUNCTION format_currency(p_amount DECIMAL) RETURNS STRING
+    IF p_amount IS NULL THEN
+        LET p_amount = 0
+    END IF
+    RETURN p_amount USING "---,---,--&.&&"
+END FUNCTION
 
 -- Format quantity
 FUNCTION format_quantity(p_qty DECIMAL) RETURNS STRING

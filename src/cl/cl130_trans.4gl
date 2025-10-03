@@ -7,7 +7,7 @@
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
 
-IMPORT FGL utils_ui
+IMPORT FGL utils_globals
 
 FUNCTION show_cl_trans()
 

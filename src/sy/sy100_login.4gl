@@ -8,7 +8,7 @@
 # ==============================================================
 
 IMPORT ui
-IMPORT FGL utils_ui
+IMPORT FGL utils_globals
 
 -- Global variables for user session
 DEFINE g_current_user STRING

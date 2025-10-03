@@ -8,8 +8,7 @@
 # ==============================================================
 
 IMPORT ui
-IMPORT FGL utils_ui
-IMPORT FGL sy100_login
+IMPORT FGL utils_globals
 
 -- Track open modules
 DEFINE g_open_modules DYNAMIC ARRAY OF RECORD
@@ -25,7 +24,7 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING)
     -- Check if already open
     FOR i = 1 TO g_open_modules.getLength()
         IF g_open_modules[i].prog = formname THEN
-            CALL utils_ui.show_alert(
+            CALL utils_globals.show_alert(
                 wintitle || " is already open!", "System Alert")
             RETURN
         END IF

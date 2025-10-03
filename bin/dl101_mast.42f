@@ -7,7 +7,7 @@
         <LStr text="Acc Code"/>
       </Label>
       <FormField name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" tabIndex="1">
-        <ButtonEdit width="10" program="dl_lookup" posY="1" posX="8" gridWidth="12"/>
+        <ButtonEdit width="10" action="find" program="dl_lookup" posY="1" posX="8" gridWidth="12"/>
       </FormField>
       <Label name="lbl_dl_name" width="10" text="Debtor Name" posY="1" posX="21" gridWidth="10">
         <LStr text="Debtor Name"/>
@@ -25,13 +25,13 @@
         <LStr text="Email"/>
       </Label>
       <FormField name="dl01_mast.email" colName="email" sqlType="VARCHAR(100)" fieldId="3" sqlTabName="dl01_mast" tabIndex="4">
-        <Edit width="14" posY="2" posX="32" gridWidth="14"/>
+        <Edit width="28" posY="2" posX="32" gridWidth="28"/>
       </FormField>
-      <Label name="lbl_dl_status" width="10" text="Status" posY="2" posX="48" gridWidth="10">
+      <Label name="lbl_dl_status" width="5" text="Status" posY="2" posX="61" gridWidth="5">
         <LStr text="Status"/>
       </Label>
-      <FormField name="dl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="4" sqlTabName="dl01_mast" defaultValue="0" tabIndex="5">
-        <ComboBox width="15" posY="2" posX="59" gridWidth="17"/>
+      <FormField name="dl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="4" sqlTabName="dl01_mast" tabIndex="5" defaultValue="0">
+        <ComboBox width="7" posY="2" posX="67" gridWidth="9"/>
       </FormField>
       <Label name="lbl_dl_add1" width="6" text="Address 1" posY="4" posX="1" gridWidth="6">
         <LStr text="Address 1"/>

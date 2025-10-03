@@ -86,6 +86,7 @@
       <Library binaryName="database" id="31764552" label="database">
         <File filePath="database/xactapp_db.4db"/>
         <File filePath="database/xactapp_db.sch"/>
+        <File filePath="database/xactapp_db_pgs_creation.4gl"/>
         <File filePath="database/xactapp_db_schema.4db"/>
       </Library>
       <Application binaryName="dl" dependencies="497700,56784492,104908716,31764552,782461791" id="409572948" label="dl">
@@ -142,6 +143,7 @@
       <Library binaryName="res" id="960354642" label="res">
         <File filePath="src/res/company_logo.png"/>
         <File filePath="src/res/logo.png"/>
+        <File filePath="src/res/main_styles.4st"/>
       </Library>
       <Application binaryName="sa" dependencies="497700,104908716,31764552,782461791" id="95666062" label="sa">
         <File filePath="src/sa/sa130_order.4fd"/>
@@ -187,14 +189,19 @@
         <File filePath="src/sy/sy140_hist.4fd"/>
         <File filePath="src/sy/sy140_hist.4gl"/>
       </Application>
+      <Application binaryName="test" dependencies="960354642,497700,104908716,31764552,56784492" id="24928576" label="test">
+        <File filePath="src/test/app.4fd"/>
+        <File filePath="src/test/test_styles.4st"/>
+      </Application>
       <Library binaryName="utils" dependencies="782461791,31764552" id="497700" label="utils">
-        <File filePath="src/utils/globals.4gl"/>
         <File filePath="src/utils/utils_alert_form.4fd"/>
         <File filePath="src/utils/utils_db.4gl"/>
         <File filePath="src/utils/utils_enq.4gl"/>
+        <File filePath="src/utils/utils_globals.4gl"/>
         <File filePath="src/utils/utils_lookup.4gl"/>
         <File filePath="src/utils/utils_lookup_form.4fd"/>
         <File filePath="src/utils/utils_mast_tlb.4tb"/>
+        <File filePath="src/utils/utils_status_const.4gl"/>
         <File filePath="src/utils/utils_ui.4gl"/>
       </Library>
       <Application binaryName="wb" dependencies="31764552,497700,104908716" id="206295008" label="wb">

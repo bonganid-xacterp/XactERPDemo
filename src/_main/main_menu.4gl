@@ -7,7 +7,7 @@
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
 
-IMPORT FGL utils_ui
+IMPORT FGL utils_globals
 IMPORT FGL main_shell
 
 FUNCTION main_application_menu()
@@ -18,15 +18,18 @@ FUNCTION main_application_menu()
         ON ACTION dl_enq
             CALL main_shell.launch_child_window("dl120_enq", "Debtors Enquiry")
         ON ACTION dl_maint
-            CALL main_shell.launch_child_window("dl101_mast", "Debtors Maintenance")
+            CALL main_shell.launch_child_window(
+                "dl101_mast", "Debtors Maintenance")
 
             -- ====================
             -- Creditors
             -- ====================
         ON ACTION cl_enq
-            CALL main_shell.launch_child_window("cl120_enq", "Creditors Enquiry")
+            CALL main_shell.launch_child_window(
+                "cl120_enq", "Creditors Enquiry")
         ON ACTION cl_maint
-            CALL main_shell.launch_child_window("cl101_mast", "Creditors Maintenance")
+            CALL main_shell.launch_child_window(
+                "cl101_mast", "Creditors Maintenance")
 
             -- ====================
             -- Stock
@@ -34,7 +37,8 @@ FUNCTION main_application_menu()
         ON ACTION st_enq
             CALL main_shell.launch_child_window("st120_enq", "Stock Enquiry")
         ON ACTION st_maint
-            CALL main_shell.launch_child_window("st101_mast", "Stock Maintenance")
+            CALL main_shell.launch_child_window(
+                "st101_mast", "Stock Maintenance")
 
             -- ====================
             -- Finance
@@ -48,17 +52,21 @@ FUNCTION main_application_menu()
             -- Sales
             -- ====================
         ON ACTION sa_ord_enq
-            CALL main_shell.launch_child_window("sa120_enq", "Sales Orders Enquiry")
+            CALL main_shell.launch_child_window(
+                "sa120_enq", "Sales Orders Enquiry")
         ON ACTION sa_ord_maint
-            CALL main_shell.launch_child_window("sa130_hdr", "Sales Orders Maintenance")
+            CALL main_shell.launch_child_window(
+                "sa130_hdr", "Sales Orders Maintenance")
 
             -- ====================
             -- Purchases
             -- ====================
         ON ACTION pu_po_enq
-            CALL main_shell.launch_child_window("pu120_enq", "Purchase Orders Enquiry")
+            CALL main_shell.launch_child_window(
+                "pu120_enq", "Purchase Orders Enquiry")
         ON ACTION pu_po_maint
-            CALL main_shell.launch_child_window("pu130_hdr", "Purchase Orders Maintenance")
+            CALL main_shell.launch_child_window(
+                "pu130_hdr", "Purchase Orders Maintenance")
 
             -- ====================
             -- System
@@ -66,7 +74,8 @@ FUNCTION main_application_menu()
         ON ACTION sy_usr_enq
             CALL main_shell.launch_child_window("sy120_enq", "Users Enquiry")
         ON ACTION sy_usr_maint
-            CALL main_shell.launch_child_window("sy100_user", "Users Maintenance")
+            CALL main_shell.launch_child_window(
+                "sy100_user", "Users Maintenance")
 
             -- ====================
             -- Exit
@@ -80,6 +89,6 @@ END FUNCTION
 
 -- Confirm application exit
 FUNCTION confirm_exit()
-    RETURN utils_ui.show_confirm(
+    RETURN utils_globals.show_confirm(
         "Are you sure you want to exit?", "Confirm Exit")
 END FUNCTION

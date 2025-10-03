@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="utils_alert_form.tmp" build="3.20.14" text="" width="46" height="4">
-  <LStr text=""/>
-  <Grid name="alert_wrapper" width="46" height="4">
-    <Label name="p_title" width="43" text="" posY="0" posX="2" gridWidth="43">
+<Form name="utils_alert_form.tmp" build="3.20.14" text="Message" width="40" height="5">
+  <LStr text="Message"/>
+  <Grid name="alert_wrapper" width="40" height="5">
+    <Label name="alert_message" width="38" height="3" text="" posY="1" posX="1" gridWidth="38" gridHeight="3">
       <LStr text=""/>
     </Label>
-    <Label name="alert_message" width="43" height="3" text="" posY="1" posX="2" gridWidth="43" gridHeight="3">
-      <LStr text=""/>
-    </Label>
+    <Button name="ok" width="8" text="OK" posY="4" posX="16" gridWidth="8" tabIndex="1">
+      <LStr text="OK"/>
+    </Button>
   </Grid>
 </Form>

@@ -7,7 +7,7 @@
 # Author    :   Bongani Dlamini
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
-IMPORT FGL utils_ui
+IMPORT FGL utils_globals
 
 FUNCTION open_wbbin_form()
     DEFINE int_flag_saved SMALLINT
@@ -22,7 +22,7 @@ FUNCTION open_wbbin_form()
         ATTRIBUTE(STYLE = "child", TEXT = "Warehouse Bin")
 
     -- Set page title (top bar, if defined in form)
-    CALL utils_ui.set_page_title("Dashboard")
+    CALL utils_globals.set_page_title("Dashboard")
 
     -- Main loop: keep the container alive with a menu
 

@@ -361,27 +361,6 @@
     <Index indexColumns="stock_code, date" indexConstraint="index" name="st30_idx_code_date" status="U" uuid="db/index34"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="st30_trans_pkey" status="U" uuid="db/index35"/>
   </Table>
-  <Table active="true" name="st_cat" status="U" uuid="db/table27">
-    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column262"/>
-    <Column fglLength="20" fglType="201" name="cat_code" notNull="true" order="2" status="U" uuid="db/column263"/>
-    <Column fglLength="100" fglType="201" name="cat_name" notNull="true" order="3" status="U" uuid="db/column264"/>
-    <Column fglLength="56" fglType="12" name="description" notNull="false" order="4" status="U" uuid="db/column265"/>
-    <Column fglLength="2" fglType="1" name="status" notNull="false" order="5" status="U" uuid="db/column266"/>
-    <Column fglLength="4622" fglType="10" name="created_at" notNull="false" order="6" status="U" uuid="db/column267"/>
-    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="7" status="U" uuid="db/column268"/>
-    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="8" status="U" uuid="db/column269"/>
-    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="9" status="U" uuid="db/column270"/>
-    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="10" status="U" uuid="db/column271"/>
-    <Index indexColumns="cat_code" indexConstraint="unique" name="st_cat_cat_code_key1" status="U" uuid="db/index36"/>
-    <Index indexColumns="id" indexConstraint="primaryKey" name="st_cat_pkey1" status="U" uuid="db/index37"/>
-  </Table>
-  <Table active="true" name="st_tag_link" status="U" uuid="db/table28">
-    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column272"/>
-    <Column fglLength="8" fglType="52" name="stock_id" notNull="true" order="2" status="U" uuid="db/column273"/>
-    <Column fglLength="8" fglType="52" name="tag_id" notNull="true" order="3" status="U" uuid="db/column274"/>
-    <Index indexColumns="id" indexConstraint="primaryKey" name="st_tag_link_pkey" status="U" uuid="db/index38"/>
-    <Index indexColumns="stock_id, tag_id" indexConstraint="unique" name="st_tag_link_stock_id_tag_id_key" status="U" uuid="db/index39"/>
-  </Table>
   <Table active="true" name="sy00_user" status="U" uuid="db/table29">
     <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column275"/>
     <Column fglLength="50" fglType="201" name="username" notNull="true" order="2" status="U" uuid="db/column276"/>
@@ -558,10 +537,6 @@
   <ForeignKey cascadeDelete="true" fkColumns="stock_id" fkRefColumns="id" name="st30_tag_link_stock_id_fkey" refTable="st01_mast" status="U" table="st30_tag_link" uuid="db/foreignkey20"/>
   <ForeignKey cascadeDelete="true" fkColumns="tag_id" fkRefColumns="id" name="st30_tag_link_tag_id_fkey" refTable="wh30_tag" status="U" table="st30_tag_link" uuid="db/foreignkey21"/>
   <ForeignKey cascadeDelete="false" fkColumns="stock_code" fkRefColumns="stock_code" name="st30_trans_stock_code_fkey" refTable="st01_mast" status="U" table="st30_trans" uuid="db/foreignkey22"/>
-  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="st_cat_created_by_fkey" refTable="sy00_user" status="U" table="st_cat" uuid="db/foreignkey23"/>
-  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="st_cat_updated_by_fkey" refTable="sy00_user" status="U" table="st_cat" uuid="db/foreignkey24"/>
-  <ForeignKey cascadeDelete="true" fkColumns="stock_id" fkRefColumns="id" name="st_tag_link_stock_id_fkey" refTable="st01_mast" status="U" table="st_tag_link" uuid="db/foreignkey25"/>
-  <ForeignKey cascadeDelete="true" fkColumns="tag_id" fkRefColumns="id" name="st_tag_link_tag_id_fkey" refTable="wh30_tag" status="U" table="st_tag_link" uuid="db/foreignkey26"/>
   <ForeignKey cascadeDelete="false" fkColumns="role_id" fkRefColumns="id" name="sy00_user_role_id_fkey" refTable="sy04_role" status="U" table="sy00_user" uuid="db/foreignkey27"/>
   <ForeignKey cascadeDelete="false" fkColumns="user_id" fkRefColumns="id" name="sy02_logs_user_id_fkey" refTable="sy00_user" status="U" table="sy02_logs" uuid="db/foreignkey28"/>
   <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sy05_perm_created_by_fkey" refTable="sy00_user" status="U" table="sy05_perm" uuid="db/foreignkey29"/>
@@ -583,4 +558,11 @@
   <ForeignKey cascadeDelete="true" fkColumns="wh_id" fkRefColumns="id" name="wh_cat_perm_wh_id_fkey" refTable="wh01_mast" status="U" table="wh30_cat_perm" uuid="db/foreignkey45"/>
   <ForeignKey cascadeDelete="true" fkColumns="tag_id" fkRefColumns="id" name="wh_tag_link_tag_id_fkey" refTable="wh30_tag" status="U" table="wh30_tag_link" uuid="db/foreignkey46"/>
   <ForeignKey cascadeDelete="true" fkColumns="wh_id" fkRefColumns="id" name="wh_tag_link_wh_id_fkey" refTable="wh01_mast" status="U" table="wh30_tag_link" uuid="db/foreignkey47"/>
+  <Views ActiveView="View-1" showLabels="true">
+    <View Name="View-1">
+      <Layout>
+        <![CDATA[AAAAAgAAABQAZABiAC8AdABhAGIAbABlADMANUCixu7rGCIgQKQYAAUGAAAAAAAAAAAAAAEAAAASAGQAYgAvAHQAYQBiAGwAZQA1QKs2qqBnREBAmBREOThEQAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADIAMECpoAAGaAAAQIbYiJ9Pu8AAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAyADVAq6IiOhu7wECsgZmgugAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMgA5QJRYiIUWIiBAprpmbBUAAAAAAAAAAAAAAQAAABIAZABiAC8AdABhAGIAbABlADdArWIiOou7wECTo7u4HCIgAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMgA2QKcTu7j4IiBArOxEOm5EQAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADEANUCm9IiFvSIgQJbZER9P3eAAAAAAAAAAAAEAAAASAGQAYgAvAHQAYQBiAGwAZQA5QDBtOmqBtQBAo/t3hP7d4AAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADEAOUCoTqq5Rt3gQFGi/GrPJYAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAxADdAo0d3hNHd4EAvCjzUj1wAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMgA4QKkmqp/jREBArSt3bbFEQAAAAAAAAAAAAQAAABIAZABiAC8AdABhAGIAbABlADNApYDM0i0AAECCo2nRdadAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMQAyQKTYRFIC3eBAnuxEOu5EQAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADMAMECRZgbRJk6AQKLZ3esc3eAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAxADZArNAABzQAAECg3iId0SIgAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMwAyQJHZ+TepsYBAq42ZoH0AAAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADIAN0CEtp0FLadAQKd4zNKrAAAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAzADFAoz+7uAMiIECW3ERSg93gAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMQA4QKAQAAQEAABAnoxEOtZEQAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADMANkCeJVVt77vAQKXhER8R3eAAAAAAAAAAAAEAAAASAGQAYgAvAHQAYQBiAGwAZQAyQLdGRFKeXeBAqp1VbQ27wAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADMANECRxPXRPgpAQKowRDm/REAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAyADJArJKqoL5EQECpIMzTFQAAAAAAAAAAAAABAAAAEgBkAGIALwB0AGEAYgBsAGUAOECCnF+eQLGAQKRuIh61IiAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAxADBArxlVbiy7wECoy7vS/7vAAAAAAAAAAAABAAAAEgBkAGIALwB0AGEAYgBsAGUAMUC0y1VR/6IgQKquIjneu8AAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAxADRAqFe7uUkiIEChdmZqxAAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMwA5QKpt3dNoREBApfIiHxYiIAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADQAMECgJERQ1d3gQKgFVVLOIiAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQA0ADFAqu+704i7wECuBZmhGwAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMQAxQLH6AAR+gABAqbFVbNK7wAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADIAMUCgsZmdxgAAQHWBR57564AAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAzADhApaO7uJwiIECnfZmfeQAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMwA3QKPNmZ6NAABApvYiH1ciIAAAAAAAAAAAAQAAABIAZABiAC8AdABhAGIAbABlADZArtMzOugAAECXzEQ5JkRAAAAAAAAAAAABAAAAEgBkAGIALwB0AGEAYgBsAGUANECmDiIfHSIgQEa2nTjg2oAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQA0ADJAqKTM0vYAAECrSIiga7vAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUAMQAzQLbk7uwfoiBArZ2ZoQEAAAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADIAM0CoeIift7vAQKeRER993eAAAAAAAAAAAAEAAAAUAGQAYgAvAHQAYQBiAGwAZQAyADRAjU35OoaxgECkyAAFMgAAAAAAAAAAAAABAAAAFABkAGIALwB0AGEAYgBsAGUANAAzQKQzd4UM3eBAqdMzOagAAAAAAAAAAAAAAQAAABQAZABiAC8AdABhAGIAbABlADMAM0CJUKPTIPXAQKo0zNNaAAAAAAAAAAAAAAE=]]>
+      </Layout>
+    </View>
+  </Views>
 </Schema>
