@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="st02_wh_cat.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Warehouse Category" width="84" height="4">
+<Form name="st02_wh_cat.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Warehouse Category" width="84" height="4">
   <LStr text="Warehouse Category"/>
   <HBox name="hbox1">
     <Grid name="frm_wh_cat" width="84" height="4">

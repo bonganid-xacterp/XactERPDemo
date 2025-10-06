@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="gl100_trans.tmp" build="3.20.14" sqlDbName="xactapp_db" text="GL Transactions" width="72" height="6">
+<Form name="gl100_trans.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="GL Transactions" width="72" height="6">
   <LStr text="GL Transactions"/>
   <VBox name="vbox1">
     <Folder name="pg_wrapepr">

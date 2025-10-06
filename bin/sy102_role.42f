@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="sy102_role.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Form" windowStyle="main" width="267" height="18">
+<Form name="sy102_role.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Form" windowStyle="main" width="267" height="18">
   <LStr text="Form"/>
   <VBox name="vbox1">
     <Grid name="xactapp_db1" width="267" height="18">
@@ -28,12 +28,12 @@
       </Group>
     </Grid>
   </VBox>
+  <RecordView tabName="sy05_perm">
+    <Link colName="perm_name" fieldIdRef="2"/>
+  </RecordView>
   <RecordView tabName="sy04_role">
     <Link colName="role_name" fieldIdRef="0"/>
     <Link colName="status" fieldIdRef="1"/>
-  </RecordView>
-  <RecordView tabName="sy05_perm">
-    <Link colName="perm_name" fieldIdRef="2"/>
   </RecordView>
   <RecordView tabName="record4">
     <Link colName="role_name" fieldIdRef="0"/>

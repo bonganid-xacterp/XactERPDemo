@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Form" width="112" height="22">
-  <LStr text="Form"/>
+<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Debtors Lookup" windowStyle="dialog4" width="112" height="22">
+  <LStr text="Debtors Lookup"/>
   <VBox name="vbox1">
     <Grid name="grid1" width="112" height="22">
       <Label name="p_title" width="80" text="" sizePolicy="dynamic" posY="0" posX="1" gridWidth="80">

@@ -7,7 +7,7 @@
  dbi.database.provider = "dbmpgs"
 
 # PostgreSQL Connection
-dbi.database.xactapp_db.source = "dbname=xactapp_db host=localhost port=5432 user=postgres password=napoleon"
+dbi.database.xactdemo_db.source = "dbname=xactdemo_db host=localhost port=5432 user=postgres password=napoleon"
 
 # Style configuration
 fglrun.universalClientStyleSheet = "$FGLDIR/_main/main_styles.4st"

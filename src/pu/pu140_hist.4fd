@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{8a8dbdaa-9de7-409a-b577-45c756da0c2c}">
+<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{8a8dbdaa-9de7-409a-b577-45c756da0c2c}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>

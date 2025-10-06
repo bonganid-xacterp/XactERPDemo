@@ -11,7 +11,7 @@ IMPORT ui
 IMPORT FGL fgldialog
 IMPORT FGL utils_globals
 
-SCHEMA xactapp_db
+SCHEMA xactdemo_db
 
 -- ==============================================================
 -- CONFIGURATION CONSTANTS

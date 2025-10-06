@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="sy104_user_pwd.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Change Password" width="39" height="8">
+<Form name="sy104_user_pwd.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Change Password" width="39" height="8">
   <LStr text="Change Password"/>
   <HBox name="hbox1">
     <VBox name="vbox1">

@@ -1,0 +1,8 @@
+-- ==============================================================
+-- Program   :   utils_types.4gl
+-- Purpose   :   Application shared types 
+-- Module    :   Utils
+-- Number    :
+-- Author    :   Bongani Dlamini
+-- Version   :   Genero BDL 3.20.10
+-- ==============================================================

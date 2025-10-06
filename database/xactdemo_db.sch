@@ -11,6 +11,7 @@ cl01_mast^status^1^2^10^
 cl01_mast^created_at^10^4622^11^
 cl01_mast^updated_at^10^4622^12^
 cl01_mast^deleted_at^10^4622^13^
+cl01_mast^created_by^52^8^14^
 cl30_trans^id^309^8^1^
 cl30_trans^acc_code^457^20^2^
 cl30_trans^date^263^4^3^
@@ -36,6 +37,7 @@ dl01_mast^status^1^2^13^
 dl01_mast^created_at^10^4622^14^
 dl01_mast^updated_at^10^4622^15^
 dl01_mast^deleted_at^10^4622^16^
+dl01_mast^created_by^52^8^17^
 dl30_trans^id^309^8^1^
 dl30_trans^acc_code^457^20^2^
 dl30_trans^date^263^4^3^
@@ -54,6 +56,7 @@ gl01_acc^status^1^2^6^
 gl01_acc^created_at^10^4622^7^
 gl01_acc^updated_at^10^4622^8^
 gl01_acc^deleted_at^10^4622^9^
+gl01_acc^created_by^52^8^10^
 gl30_journals^id^309^8^1^
 gl30_journals^jrn_no^262^4^2^
 gl30_journals^date^263^4^3^
@@ -65,6 +68,7 @@ gl30_journals^status^1^2^8^
 gl30_journals^created_at^10^4622^9^
 gl30_journals^updated_at^10^4622^10^
 gl30_journals^deleted_at^10^4622^11^
+gl30_journals^created_by^52^8^12^
 gl31_lines^id^309^8^1^
 gl31_lines^jrn_no^258^4^2^
 gl31_lines^line_no^258^4^3^
@@ -84,6 +88,8 @@ payt30_hdr^notes^12^56^9^
 payt30_hdr^status^1^2^10^
 payt30_hdr^created_at^10^4622^11^
 payt30_hdr^created_by^52^8^12^
+payt30_hdr^updated_at^10^4622^13^
+payt30_hdr^deleted_at^10^4622^14^
 payt31_det^id^309^8^1^
 payt31_det^hdr_id^308^8^2^
 payt31_det^invoice_no^457^20^3^
@@ -108,6 +114,7 @@ pu30_hdr^status^1^2^7^
 pu30_hdr^created_at^10^4622^8^
 pu30_hdr^updated_at^10^4622^9^
 pu30_hdr^deleted_at^10^4622^10^
+pu30_hdr^created_by^52^8^11^
 pu31_det^id^309^8^1^
 pu31_det^doc_no^258^4^2^
 pu31_det^item_no^258^4^3^
@@ -127,6 +134,7 @@ pu31_hdr^status^1^2^7^
 pu31_hdr^created_at^10^4622^8^
 pu31_hdr^updated_at^10^4622^9^
 pu31_hdr^deleted_at^10^4622^10^
+pu31_hdr^created_by^52^8^11^
 sa30_det^id^309^8^1^
 sa30_det^doc_no^258^4^2^
 sa30_det^item_no^258^4^3^
@@ -148,6 +156,7 @@ sa30_hdr^status^1^2^8^
 sa30_hdr^created_at^10^4622^9^
 sa30_hdr^updated_at^10^4622^10^
 sa30_hdr^deleted_at^10^4622^11^
+sa30_hdr^created_by^52^8^12^
 sa31_det^id^309^8^1^
 sa31_det^doc_no^258^4^2^
 sa31_det^item_no^258^4^3^
@@ -169,6 +178,7 @@ sa31_hdr^status^1^2^8^
 sa31_hdr^created_at^10^4622^9^
 sa31_hdr^updated_at^10^4622^10^
 sa31_hdr^deleted_at^10^4622^11^
+sa31_hdr^created_by^52^8^12^
 sa32_det^id^309^8^1^
 sa32_det^doc_no^258^4^2^
 sa32_det^item_no^258^4^3^
@@ -190,6 +200,7 @@ sa32_hdr^status^1^2^8^
 sa32_hdr^created_at^10^4622^9^
 sa32_hdr^updated_at^10^4622^10^
 sa32_hdr^deleted_at^10^4622^11^
+sa32_hdr^created_by^52^8^12^
 sa33_det^id^309^8^1^
 sa33_det^doc_no^258^4^2^
 sa33_det^item_no^258^4^3^
@@ -211,14 +222,7 @@ sa33_hdr^status^1^2^8^
 sa33_hdr^created_at^10^4622^9^
 sa33_hdr^updated_at^10^4622^10^
 sa33_hdr^deleted_at^10^4622^11^
-st01_cat^id^309^8^1^
-st01_cat^cat_code^457^20^2^
-st01_cat^cat_name^457^100^3^
-st01_cat^description^12^56^4^
-st01_cat^status^1^2^5^
-st01_cat^created_at^10^4622^6^
-st01_cat^updated_at^10^4622^7^
-st01_cat^deleted_at^10^4622^8^
+sa33_hdr^created_by^52^8^12^
 st01_mast^id^309^8^1^
 st01_mast^stock_code^457^20^2^
 st01_mast^description^457^150^3^
@@ -234,6 +238,7 @@ st01_mast^status^1^2^12^
 st01_mast^created_at^10^4622^13^
 st01_mast^updated_at^10^4622^14^
 st01_mast^deleted_at^10^4622^15^
+st01_mast^created_by^52^8^16^
 st02_cat^id^309^8^1^
 st02_cat^cat_code^457^20^2^
 st02_cat^cat_name^457^100^3^
@@ -243,7 +248,6 @@ st02_cat^created_at^10^4622^6^
 st02_cat^updated_at^10^4622^7^
 st02_cat^deleted_at^10^4622^8^
 st02_cat^created_by^52^8^9^
-st02_cat^updated_by^52^8^10^
 st30_tag_link^id^309^8^1^
 st30_tag_link^stock_id^308^8^2^
 st30_tag_link^tag_id^308^8^3^
@@ -259,6 +263,7 @@ st30_trans^batch_id^201^30^9^
 st30_trans^expiry_date^7^4^10^
 st30_trans^doc_type^457^10^11^
 st30_trans^doc_no^457^20^12^
+st30_trans^notes^12^56^13^
 st_cat^id^309^8^1^
 st_cat^cat_code^457^20^2^
 st_cat^cat_name^457^100^3^
@@ -268,10 +273,6 @@ st_cat^created_at^10^4622^6^
 st_cat^updated_at^10^4622^7^
 st_cat^deleted_at^10^4622^8^
 st_cat^created_by^52^8^9^
-st_cat^updated_by^52^8^10^
-st_tag_link^id^309^8^1^
-st_tag_link^stock_id^308^8^2^
-st_tag_link^tag_id^308^8^3^
 sy00_user^id^309^8^1^
 sy00_user^username^457^50^2^
 sy00_user^full_name^457^100^3^
@@ -283,6 +284,7 @@ sy00_user^role_id^52^8^8^
 sy00_user^created_at^10^4622^9^
 sy00_user^updated_at^10^4622^10^
 sy00_user^deleted_at^10^4622^11^
+sy00_user^created_by^52^8^12^
 sy02_logs^id^309^8^1^
 sy02_logs^user_id^52^8^2^
 sy02_logs^level^457^10^3^
@@ -294,6 +296,7 @@ sy03_sett^sett_key^457^50^2^
 sy03_sett^sett_value^268^56^3^
 sy03_sett^description^12^56^4^
 sy03_sett^updated_at^10^4622^5^
+sy03_sett^created_by^52^8^6^
 sy04_role^id^309^8^1^
 sy04_role^role_name^457^50^2^
 sy04_role^status^1^2^3^
@@ -308,7 +311,6 @@ sy05_perm^created_at^10^4622^5^
 sy05_perm^updated_at^10^4622^6^
 sy05_perm^deleted_at^10^4622^7^
 sy05_perm^created_by^52^8^8^
-sy05_perm^updated_by^52^8^9^
 sy06_role_perm^id^309^8^1^
 sy06_role_perm^role_id^308^8^2^
 sy06_role_perm^perm_id^308^8^3^
@@ -320,6 +322,7 @@ wb01_mast^status^1^2^5^
 wb01_mast^created_at^10^4622^6^
 wb01_mast^updated_at^10^4622^7^
 wb01_mast^deleted_at^10^4622^8^
+wb01_mast^created_by^52^8^9^
 wb30_hdr^id^309^8^1^
 wb30_hdr^trans_no^262^4^2^
 wb30_hdr^wb_from^308^8^3^
@@ -327,6 +330,8 @@ wb30_hdr^wb_to^308^8^4^
 wb30_hdr^trans_date^263^4^5^
 wb30_hdr^created_by^52^8^6^
 wb30_hdr^created_at^10^4622^7^
+wb30_hdr^updated_at^10^4622^8^
+wb30_hdr^deleted_at^10^4622^9^
 wb31_det^id^309^8^1^
 wb31_det^hdr_id^308^8^2^
 wb31_det^stock_code^457^20^3^
@@ -341,10 +346,12 @@ wh01_mast^status^1^2^5^
 wh01_mast^created_at^10^4622^6^
 wh01_mast^updated_at^10^4622^7^
 wh01_mast^deleted_at^10^4622^8^
+wh01_mast^created_by^52^8^9^
 wh30_cat_perm^id^309^8^1^
 wh30_cat_perm^wh_id^308^8^2^
 wh30_cat_perm^cat_id^308^8^3^
 wh30_cat_perm^created_at^10^4622^4^
+wh30_cat_perm^created_by^52^8^5^
 wh30_hdr^id^309^8^1^
 wh30_hdr^trans_no^262^4^2^
 wh30_hdr^from_wh^308^8^3^
@@ -353,12 +360,17 @@ wh30_hdr^trans_date^263^4^5^
 wh30_hdr^status^1^2^6^
 wh30_hdr^created_by^52^8^7^
 wh30_hdr^created_at^10^4622^8^
+wh30_hdr^updated_at^10^4622^9^
+wh30_hdr^deleted_at^10^4622^10^
 wh30_tag^id^309^8^1^
 wh30_tag^tag_code^457^20^2^
 wh30_tag^tag_name^457^100^3^
 wh30_tag^description^12^56^4^
 wh30_tag^status^1^2^5^
 wh30_tag^created_at^10^4622^6^
+wh30_tag^updated_at^10^4622^7^
+wh30_tag^deleted_at^10^4622^8^
+wh30_tag^created_by^52^8^9^
 wh30_tag_link^id^309^8^1^
 wh30_tag_link^wh_id^308^8^2^
 wh30_tag_link^tag_id^308^8^3^

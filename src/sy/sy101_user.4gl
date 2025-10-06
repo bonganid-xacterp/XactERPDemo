@@ -6,7 +6,7 @@
 # Author    :   Bongani Dlamini
 # Version   :   Genero BDL 3.20.10
 # ==============================================================
-SCHEMA xactapp_db
+SCHEMA xactdemo_db
 
 -- List users
 FUNCTION list_users()

@@ -4,7 +4,7 @@
 #+       Adapt it to fit your needs
 
 MAIN
-    DATABASE xactapp_db
+    DATABASE xactdemo_db
 
     CALL db_drop_constraints()
     CALL db_drop_tables()
@@ -30,7 +30,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE cl30_trans (
         id BIGSERIAL NOT NULL,
         acc_code VARCHAR(20) NOT NULL,
@@ -57,7 +58,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE dl30_trans (
         id BIGSERIAL NOT NULL,
         acc_code VARCHAR(20) NOT NULL,
@@ -77,7 +79,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE gl30_journals (
         id BIGSERIAL NOT NULL,
         jrn_no SERIAL NOT NULL,
@@ -89,7 +92,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE gl31_lines (
         id BIGSERIAL NOT NULL,
         jrn_no INTEGER NOT NULL,
@@ -110,7 +114,9 @@ FUNCTION db_create_tables()
         notes TEXT,
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
-        created_by BIGINT)"
+        created_by BIGINT,
+        updated_at DATETIME YEAR TO FRACTION(4),
+        deleted_at DATETIME YEAR TO FRACTION(4))"
     EXECUTE IMMEDIATE "CREATE TABLE payt31_det (
         id BIGSERIAL NOT NULL,
         hdr_id BIGINT NOT NULL,
@@ -137,7 +143,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE pu31_det (
         id BIGSERIAL NOT NULL,
         doc_no INTEGER NOT NULL,
@@ -158,7 +165,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE sa30_det (
         id BIGSERIAL NOT NULL,
         doc_no INTEGER NOT NULL,
@@ -181,7 +189,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE sa31_det (
         id BIGSERIAL NOT NULL,
         doc_no INTEGER NOT NULL,
@@ -204,7 +213,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE sa32_det (
         id BIGSERIAL NOT NULL,
         doc_no INTEGER NOT NULL,
@@ -227,7 +237,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE sa33_det (
         id BIGSERIAL NOT NULL,
         doc_no INTEGER NOT NULL,
@@ -250,16 +261,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
-    EXECUTE IMMEDIATE "CREATE TABLE st01_cat (
-        id BIGSERIAL NOT NULL,
-        cat_code VARCHAR(20) NOT NULL,
-        cat_name VARCHAR(100) NOT NULL,
-        description TEXT,
-        status SMALLINT,
-        created_at DATETIME YEAR TO FRACTION(4),
-        updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE st01_mast (
         id BIGSERIAL NOT NULL,
         stock_code VARCHAR(20) NOT NULL,
@@ -275,7 +278,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE st02_cat (
         id BIGSERIAL NOT NULL,
         cat_code VARCHAR(20) NOT NULL,
@@ -285,8 +289,7 @@ FUNCTION db_create_tables()
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
         deleted_at DATETIME YEAR TO FRACTION(4),
-        created_by BIGINT,
-        updated_by BIGINT)"
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE st30_tag_link (
         id BIGSERIAL NOT NULL,
         stock_id BIGINT NOT NULL,
@@ -303,7 +306,8 @@ FUNCTION db_create_tables()
         batch_id VARCHAR(30),
         expiry_date DATE,
         doc_type VARCHAR(10) NOT NULL,
-        doc_no VARCHAR(20) NOT NULL)"
+        doc_no VARCHAR(20) NOT NULL,
+        notes TEXT)"
     EXECUTE IMMEDIATE "CREATE TABLE st_cat (
         id BIGSERIAL NOT NULL,
         cat_code VARCHAR(20) NOT NULL,
@@ -313,12 +317,7 @@ FUNCTION db_create_tables()
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
         deleted_at DATETIME YEAR TO FRACTION(4),
-        created_by BIGINT,
-        updated_by BIGINT)"
-    EXECUTE IMMEDIATE "CREATE TABLE st_tag_link (
-        id BIGSERIAL NOT NULL,
-        stock_id BIGINT NOT NULL,
-        tag_id BIGINT NOT NULL)"
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE sy00_user (
         id BIGSERIAL NOT NULL,
         username VARCHAR(50) NOT NULL,
@@ -330,7 +329,8 @@ FUNCTION db_create_tables()
         role_id BIGINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE sy02_logs (
         id BIGSERIAL NOT NULL,
         user_id BIGINT,
@@ -343,7 +343,8 @@ FUNCTION db_create_tables()
         sett_key VARCHAR(50) NOT NULL,
         sett_value TEXT NOT NULL,
         description TEXT,
-        updated_at DATETIME YEAR TO FRACTION(4))"
+        updated_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE sy04_role (
         id BIGSERIAL NOT NULL,
         role_name VARCHAR(50) NOT NULL,
@@ -359,8 +360,7 @@ FUNCTION db_create_tables()
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
         deleted_at DATETIME YEAR TO FRACTION(4),
-        created_by BIGINT,
-        updated_by BIGINT)"
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE sy06_role_perm (
         id BIGSERIAL NOT NULL,
         role_id BIGINT NOT NULL,
@@ -373,7 +373,8 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE wb30_hdr (
         id BIGSERIAL NOT NULL,
         trans_no SERIAL NOT NULL,
@@ -381,7 +382,9 @@ FUNCTION db_create_tables()
         wb_to BIGINT NOT NULL,
         trans_date DATE NOT NULL,
         created_by BIGINT,
-        created_at DATETIME YEAR TO FRACTION(4))"
+        created_at DATETIME YEAR TO FRACTION(4),
+        updated_at DATETIME YEAR TO FRACTION(4),
+        deleted_at DATETIME YEAR TO FRACTION(4))"
     EXECUTE IMMEDIATE "CREATE TABLE wb31_det (
         id BIGSERIAL NOT NULL,
         hdr_id BIGINT NOT NULL,
@@ -397,12 +400,14 @@ FUNCTION db_create_tables()
         status SMALLINT,
         created_at DATETIME YEAR TO FRACTION(4),
         updated_at DATETIME YEAR TO FRACTION(4),
-        deleted_at DATETIME YEAR TO FRACTION(4))"
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE wh30_cat_perm (
         id BIGSERIAL NOT NULL,
         wh_id BIGINT NOT NULL,
         cat_id BIGINT NOT NULL,
-        created_at DATETIME YEAR TO FRACTION(4))"
+        created_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE wh30_hdr (
         id BIGSERIAL NOT NULL,
         trans_no SERIAL NOT NULL,
@@ -411,14 +416,19 @@ FUNCTION db_create_tables()
         trans_date DATE NOT NULL,
         status SMALLINT,
         created_by BIGINT,
-        created_at DATETIME YEAR TO FRACTION(4))"
+        created_at DATETIME YEAR TO FRACTION(4),
+        updated_at DATETIME YEAR TO FRACTION(4),
+        deleted_at DATETIME YEAR TO FRACTION(4))"
     EXECUTE IMMEDIATE "CREATE TABLE wh30_tag (
         id BIGSERIAL NOT NULL,
         tag_code VARCHAR(20) NOT NULL,
         tag_name VARCHAR(100) NOT NULL,
         description TEXT,
         status SMALLINT,
-        created_at DATETIME YEAR TO FRACTION(4))"
+        created_at DATETIME YEAR TO FRACTION(4),
+        updated_at DATETIME YEAR TO FRACTION(4),
+        deleted_at DATETIME YEAR TO FRACTION(4),
+        created_by BIGINT)"
     EXECUTE IMMEDIATE "CREATE TABLE wh30_tag_link (
         id BIGSERIAL NOT NULL,
         wh_id BIGINT NOT NULL,
@@ -459,13 +469,11 @@ FUNCTION db_drop_tables()
     EXECUTE IMMEDIATE "DROP TABLE sa32_hdr"
     EXECUTE IMMEDIATE "DROP TABLE sa33_det"
     EXECUTE IMMEDIATE "DROP TABLE sa33_hdr"
-    EXECUTE IMMEDIATE "DROP TABLE st01_cat"
     EXECUTE IMMEDIATE "DROP TABLE st01_mast"
     EXECUTE IMMEDIATE "DROP TABLE st02_cat"
     EXECUTE IMMEDIATE "DROP TABLE st30_tag_link"
     EXECUTE IMMEDIATE "DROP TABLE st30_trans"
     EXECUTE IMMEDIATE "DROP TABLE st_cat"
-    EXECUTE IMMEDIATE "DROP TABLE st_tag_link"
     EXECUTE IMMEDIATE "DROP TABLE sy00_user"
     EXECUTE IMMEDIATE "DROP TABLE sy02_logs"
     EXECUTE IMMEDIATE "DROP TABLE sy03_sett"
@@ -526,6 +534,14 @@ FUNCTION db_add_constraints()
         PRIMARY KEY (id)"
     EXECUTE IMMEDIATE "ALTER TABLE pu30_hdr ADD CONSTRAINT pu30_hdr_doc_no_key
         UNIQUE (doc_no)"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_det ADD CONSTRAINT pu31_det_pkey
+        PRIMARY KEY (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_det ADD CONSTRAINT pu31_det_doc_no_item_no_key
+        UNIQUE (doc_no, item_no)"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_hdr ADD CONSTRAINT pu31_hdr_pkey
+        PRIMARY KEY (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_hdr ADD CONSTRAINT pu31_hdr_doc_no_key
+        UNIQUE (doc_no)"
     EXECUTE IMMEDIATE "ALTER TABLE sa30_det ADD CONSTRAINT sa30_det_pkey
         PRIMARY KEY (id)"
     EXECUTE IMMEDIATE "ALTER TABLE sa30_det ADD CONSTRAINT sa30_det_doc_no_item_no_key
@@ -534,10 +550,30 @@ FUNCTION db_add_constraints()
         PRIMARY KEY (id)"
     EXECUTE IMMEDIATE "ALTER TABLE sa30_hdr ADD CONSTRAINT sa30_hdr_doc_no_key
         UNIQUE (doc_no)"
-    EXECUTE IMMEDIATE "ALTER TABLE st01_cat ADD CONSTRAINT st_cat_pkey
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_det ADD CONSTRAINT sa31_det_pkey
         PRIMARY KEY (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE st01_cat ADD CONSTRAINT st_cat_cat_code_key
-        UNIQUE (cat_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_det ADD CONSTRAINT sa31_det_doc_no_item_no_key
+        UNIQUE (doc_no, item_no)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_hdr ADD CONSTRAINT sa31_hdr_pkey
+        PRIMARY KEY (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_hdr ADD CONSTRAINT sa31_hdr_doc_no_key
+        UNIQUE (doc_no)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_det ADD CONSTRAINT sa32_det_pkey
+        PRIMARY KEY (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_det ADD CONSTRAINT sa32_det_doc_no_item_no_key
+        UNIQUE (doc_no, item_no)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_hdr ADD CONSTRAINT sa32_hdr_pkey
+        PRIMARY KEY (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_hdr ADD CONSTRAINT sa32_hdr_doc_no_key
+        UNIQUE (doc_no)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_det ADD CONSTRAINT sa33_det_pkey
+        PRIMARY KEY (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_det ADD CONSTRAINT sa33_det_doc_no_item_no_key
+        UNIQUE (doc_no, item_no)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_hdr ADD CONSTRAINT sa33_hdr_pkey
+        PRIMARY KEY (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_hdr ADD CONSTRAINT sa33_hdr_doc_no_key
+        UNIQUE (doc_no)"
     EXECUTE IMMEDIATE "ALTER TABLE st01_mast ADD CONSTRAINT st01_mast_pkey
         PRIMARY KEY (id)"
     EXECUTE IMMEDIATE "ALTER TABLE st01_mast ADD CONSTRAINT st01_mast_stock_code_key
@@ -552,16 +588,10 @@ FUNCTION db_add_constraints()
         UNIQUE (stock_id, tag_id)"
     EXECUTE IMMEDIATE "ALTER TABLE st30_trans ADD CONSTRAINT st30_trans_pkey
         PRIMARY KEY (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE st_cat ADD CONSTRAINT st_cat_pkey1
+    EXECUTE IMMEDIATE "ALTER TABLE st_cat ADD CONSTRAINT st_cat_pkey
         PRIMARY KEY (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE st_cat ADD CONSTRAINT st_cat_cat_code_key1
+    EXECUTE IMMEDIATE "ALTER TABLE st_cat ADD CONSTRAINT st_cat_cat_code_key
         UNIQUE (cat_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE st_tag_link ADD CONSTRAINT st_tag_link_pkey
-        PRIMARY KEY (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE st_tag_link ADD CONSTRAINT st_tag_link_stock_id_tag_id_key
-        UNIQUE (stock_id, tag_id)"
-    EXECUTE IMMEDIATE "ALTER TABLE sy00_user ADD CONSTRAINT sy00_user_pkey
-        PRIMARY KEY (id)"
     EXECUTE IMMEDIATE "ALTER TABLE sy00_user ADD CONSTRAINT sy00_user_username_key
         UNIQUE (username)"
     EXECUTE IMMEDIATE "ALTER TABLE sy02_logs ADD CONSTRAINT sy02_logs_pkey
@@ -596,30 +626,42 @@ FUNCTION db_add_constraints()
         PRIMARY KEY (id)"
     EXECUTE IMMEDIATE "ALTER TABLE wh01_mast ADD CONSTRAINT wh01_mast_wh_code_key
         UNIQUE (wh_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh_cat_perm_pkey
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh30_cat_perm_pkey
         PRIMARY KEY (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh_cat_perm_wh_id_cat_id_key
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh30_cat_perm_wh_id_cat_id_key
         UNIQUE (wh_id, cat_id)"
     EXECUTE IMMEDIATE "ALTER TABLE wh30_hdr ADD CONSTRAINT wh30_hdr_pkey
         PRIMARY KEY (id)"
     EXECUTE IMMEDIATE "ALTER TABLE wh30_hdr ADD CONSTRAINT wh30_hdr_trans_no_key
         UNIQUE (trans_no)"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag ADD CONSTRAINT wh_tag_pkey
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag ADD CONSTRAINT wh30_tag_pkey
         PRIMARY KEY (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag ADD CONSTRAINT wh_tag_tag_code_key
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag ADD CONSTRAINT wh30_tag_tag_code_key
         UNIQUE (tag_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link ADD CONSTRAINT wh_tag_link_pkey
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link ADD CONSTRAINT wh30_tag_link_pkey
         PRIMARY KEY (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link ADD CONSTRAINT wh_tag_link_wh_id_tag_id_key
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link ADD CONSTRAINT wh30_tag_link_wh_id_tag_id_key
         UNIQUE (wh_id, tag_id)"
     EXECUTE IMMEDIATE "ALTER TABLE wh31_det ADD CONSTRAINT wh31_det_pkey
         PRIMARY KEY (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE cl01_mast ADD CONSTRAINT cl01_mast_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
     EXECUTE IMMEDIATE "ALTER TABLE cl30_trans ADD CONSTRAINT cl30_trans_acc_code_fkey
         FOREIGN KEY (acc_code)
         REFERENCES cl01_mast (acc_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE dl01_mast ADD CONSTRAINT dl01_mast_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
     EXECUTE IMMEDIATE "ALTER TABLE dl30_trans ADD CONSTRAINT dl30_trans_acc_code_fkey
         FOREIGN KEY (acc_code)
         REFERENCES dl01_mast (acc_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE gl01_acc ADD CONSTRAINT gl01_acc_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE gl30_journals ADD CONSTRAINT gl30_journals_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
     EXECUTE IMMEDIATE "ALTER TABLE gl31_lines ADD CONSTRAINT gl31_lines_acc_code_fkey
         FOREIGN KEY (acc_code)
         REFERENCES gl01_acc (acc_code)"
@@ -644,9 +686,22 @@ FUNCTION db_add_constraints()
     EXECUTE IMMEDIATE "ALTER TABLE pu30_hdr ADD CONSTRAINT pu30_hdr_acc_code_fkey
         FOREIGN KEY (acc_code)
         REFERENCES cl01_mast (acc_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE pu31_hdr ADD CONSTRAINT pu31_hdr_acc_fk
+    EXECUTE IMMEDIATE "ALTER TABLE pu30_hdr ADD CONSTRAINT pu30_hdr_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_det ADD CONSTRAINT pu31_det_doc_no_fkey
+        FOREIGN KEY (doc_no)
+        REFERENCES pu31_hdr (doc_no)
+        ON DELETE CASCADE"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_det ADD CONSTRAINT pu31_det_stock_code_fkey
+        FOREIGN KEY (stock_code)
+        REFERENCES st01_mast (stock_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_hdr ADD CONSTRAINT pu31_hdr_acc_code_fkey
         FOREIGN KEY (acc_code)
         REFERENCES cl01_mast (acc_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_hdr ADD CONSTRAINT pu31_hdr_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
     EXECUTE IMMEDIATE "ALTER TABLE sa30_det ADD CONSTRAINT sa30_det_doc_no_fkey
         FOREIGN KEY (doc_no)
         REFERENCES sa30_hdr (doc_no)
@@ -657,23 +712,56 @@ FUNCTION db_add_constraints()
     EXECUTE IMMEDIATE "ALTER TABLE sa30_hdr ADD CONSTRAINT sa30_hdr_acc_code_fkey
         FOREIGN KEY (acc_code)
         REFERENCES dl01_mast (acc_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE sa31_hdr ADD CONSTRAINT sa31_hdr_acc_fk
-        FOREIGN KEY (acc_code)
-        REFERENCES dl01_mast (acc_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE sa32_hdr ADD CONSTRAINT sa32_hdr_acc_fk
-        FOREIGN KEY (acc_code)
-        REFERENCES dl01_mast (acc_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE sa33_hdr ADD CONSTRAINT sa33_hdr_acc_fk
-        FOREIGN KEY (acc_code)
-        REFERENCES dl01_mast (acc_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE st01_mast ADD CONSTRAINT st01_mast_category_id_fkey
-        FOREIGN KEY (category_id)
-        REFERENCES st01_cat (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE st02_cat ADD CONSTRAINT st02_cat_created_by_fkey
+    EXECUTE IMMEDIATE "ALTER TABLE sa30_hdr ADD CONSTRAINT sa30_hdr_created_by_fkey
         FOREIGN KEY (created_by)
         REFERENCES sy00_user (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE st02_cat ADD CONSTRAINT st02_cat_updated_by_fkey
-        FOREIGN KEY (updated_by)
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_det ADD CONSTRAINT sa31_det_doc_no_fkey
+        FOREIGN KEY (doc_no)
+        REFERENCES sa31_hdr (doc_no)
+        ON DELETE CASCADE"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_det ADD CONSTRAINT sa31_det_stock_code_fkey
+        FOREIGN KEY (stock_code)
+        REFERENCES st01_mast (stock_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_hdr ADD CONSTRAINT sa31_hdr_acc_code_fkey
+        FOREIGN KEY (acc_code)
+        REFERENCES dl01_mast (acc_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_hdr ADD CONSTRAINT sa31_hdr_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_det ADD CONSTRAINT sa32_det_doc_no_fkey
+        FOREIGN KEY (doc_no)
+        REFERENCES sa32_hdr (doc_no)
+        ON DELETE CASCADE"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_det ADD CONSTRAINT sa32_det_stock_code_fkey
+        FOREIGN KEY (stock_code)
+        REFERENCES st01_mast (stock_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_hdr ADD CONSTRAINT sa32_hdr_acc_code_fkey
+        FOREIGN KEY (acc_code)
+        REFERENCES dl01_mast (acc_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_hdr ADD CONSTRAINT sa32_hdr_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_det ADD CONSTRAINT sa33_det_doc_no_fkey
+        FOREIGN KEY (doc_no)
+        REFERENCES sa33_hdr (doc_no)
+        ON DELETE CASCADE"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_det ADD CONSTRAINT sa33_det_stock_code_fkey
+        FOREIGN KEY (stock_code)
+        REFERENCES st01_mast (stock_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_hdr ADD CONSTRAINT sa33_hdr_acc_code_fkey
+        FOREIGN KEY (acc_code)
+        REFERENCES dl01_mast (acc_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_hdr ADD CONSTRAINT sa33_hdr_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE st01_mast ADD CONSTRAINT st01_mast_category_id_fkey
+        FOREIGN KEY (category_id)
+        REFERENCES st_cat (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE st01_mast ADD CONSTRAINT st01_mast_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE st02_cat ADD CONSTRAINT st02_cat_created_by_fkey
+        FOREIGN KEY (created_by)
         REFERENCES sy00_user (id)"
     EXECUTE IMMEDIATE "ALTER TABLE st30_tag_link ADD CONSTRAINT st30_tag_link_stock_id_fkey
         FOREIGN KEY (stock_id)
@@ -689,28 +777,20 @@ FUNCTION db_add_constraints()
     EXECUTE IMMEDIATE "ALTER TABLE st_cat ADD CONSTRAINT st_cat_created_by_fkey
         FOREIGN KEY (created_by)
         REFERENCES sy00_user (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE st_cat ADD CONSTRAINT st_cat_updated_by_fkey
-        FOREIGN KEY (updated_by)
+    EXECUTE IMMEDIATE "ALTER TABLE sy00_user ADD CONSTRAINT sy00_user_created_by_fkey
+        FOREIGN KEY (created_by)
         REFERENCES sy00_user (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE st_tag_link ADD CONSTRAINT st_tag_link_stock_id_fkey
-        FOREIGN KEY (stock_id)
-        REFERENCES st01_mast (id)
-        ON DELETE CASCADE"
-    EXECUTE IMMEDIATE "ALTER TABLE st_tag_link ADD CONSTRAINT st_tag_link_tag_id_fkey
-        FOREIGN KEY (tag_id)
-        REFERENCES wh30_tag (id)
-        ON DELETE CASCADE"
     EXECUTE IMMEDIATE "ALTER TABLE sy00_user ADD CONSTRAINT sy00_user_role_id_fkey
         FOREIGN KEY (role_id)
         REFERENCES sy04_role (id)"
     EXECUTE IMMEDIATE "ALTER TABLE sy02_logs ADD CONSTRAINT sy02_logs_user_id_fkey
         FOREIGN KEY (user_id)
         REFERENCES sy00_user (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE sy05_perm ADD CONSTRAINT sy05_perm_created_by_fkey
+    EXECUTE IMMEDIATE "ALTER TABLE sy03_sett ADD CONSTRAINT sy03_sett_created_by_fkey
         FOREIGN KEY (created_by)
         REFERENCES sy00_user (id)"
-    EXECUTE IMMEDIATE "ALTER TABLE sy05_perm ADD CONSTRAINT sy05_perm_updated_by_fkey
-        FOREIGN KEY (updated_by)
+    EXECUTE IMMEDIATE "ALTER TABLE sy05_perm ADD CONSTRAINT sy05_perm_created_by_fkey
+        FOREIGN KEY (created_by)
         REFERENCES sy00_user (id)"
     EXECUTE IMMEDIATE "ALTER TABLE sy06_role_perm ADD CONSTRAINT sy06_role_perm_perm_id_fkey
         FOREIGN KEY (perm_id)
@@ -720,6 +800,9 @@ FUNCTION db_add_constraints()
         FOREIGN KEY (role_id)
         REFERENCES sy04_role (id)
         ON DELETE CASCADE"
+    EXECUTE IMMEDIATE "ALTER TABLE wb01_mast ADD CONSTRAINT wb01_mast_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
     EXECUTE IMMEDIATE "ALTER TABLE wb01_mast ADD CONSTRAINT wb01_mast_wh_id_fkey
         FOREIGN KEY (wh_id)
         REFERENCES wh01_mast (id)
@@ -740,6 +823,20 @@ FUNCTION db_add_constraints()
     EXECUTE IMMEDIATE "ALTER TABLE wb31_det ADD CONSTRAINT wb31_det_stock_code_fkey
         FOREIGN KEY (stock_code)
         REFERENCES st01_mast (stock_code)"
+    EXECUTE IMMEDIATE "ALTER TABLE wh01_mast ADD CONSTRAINT wh01_mast_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh30_cat_perm_cat_id_fkey
+        FOREIGN KEY (cat_id)
+        REFERENCES st_cat (id)
+        ON DELETE CASCADE"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh30_cat_perm_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh30_cat_perm_wh_id_fkey
+        FOREIGN KEY (wh_id)
+        REFERENCES wh01_mast (id)
+        ON DELETE CASCADE"
     EXECUTE IMMEDIATE "ALTER TABLE wh30_hdr ADD CONSTRAINT wh30_hdr_created_by_fkey
         FOREIGN KEY (created_by)
         REFERENCES sy00_user (id)"
@@ -749,6 +846,17 @@ FUNCTION db_add_constraints()
     EXECUTE IMMEDIATE "ALTER TABLE wh30_hdr ADD CONSTRAINT wh30_hdr_to_wh_fkey
         FOREIGN KEY (to_wh)
         REFERENCES wh01_mast (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag ADD CONSTRAINT wh30_tag_created_by_fkey
+        FOREIGN KEY (created_by)
+        REFERENCES sy00_user (id)"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link ADD CONSTRAINT wh30_tag_link_tag_id_fkey
+        FOREIGN KEY (tag_id)
+        REFERENCES wh30_tag (id)
+        ON DELETE CASCADE"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link ADD CONSTRAINT wh30_tag_link_wh_id_fkey
+        FOREIGN KEY (wh_id)
+        REFERENCES wh01_mast (id)
+        ON DELETE CASCADE"
     EXECUTE IMMEDIATE "ALTER TABLE wh31_det ADD CONSTRAINT wh31_det_hdr_id_fkey
         FOREIGN KEY (hdr_id)
         REFERENCES wh30_hdr (id)
@@ -756,22 +864,6 @@ FUNCTION db_add_constraints()
     EXECUTE IMMEDIATE "ALTER TABLE wh31_det ADD CONSTRAINT wh31_det_stock_code_fkey
         FOREIGN KEY (stock_code)
         REFERENCES st01_mast (stock_code)"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh_cat_perm_cat_id_fkey
-        FOREIGN KEY (cat_id)
-        REFERENCES st01_cat (id)
-        ON DELETE CASCADE"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm ADD CONSTRAINT wh_cat_perm_wh_id_fkey
-        FOREIGN KEY (wh_id)
-        REFERENCES wh01_mast (id)
-        ON DELETE CASCADE"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link ADD CONSTRAINT wh_tag_link_tag_id_fkey
-        FOREIGN KEY (tag_id)
-        REFERENCES wh30_tag (id)
-        ON DELETE CASCADE"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link ADD CONSTRAINT wh_tag_link_wh_id_fkey
-        FOREIGN KEY (wh_id)
-        REFERENCES wh01_mast (id)
-        ON DELETE CASCADE"
 
 END FUNCTION
 
@@ -779,8 +871,12 @@ END FUNCTION
 FUNCTION db_drop_constraints()
     WHENEVER ERROR CONTINUE
 
+    EXECUTE IMMEDIATE "ALTER TABLE cl01_mast DROP CONSTRAINT cl01_mast_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE cl30_trans DROP CONSTRAINT cl30_trans_acc_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE dl01_mast DROP CONSTRAINT dl01_mast_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE dl30_trans DROP CONSTRAINT dl30_trans_acc_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE gl01_acc DROP CONSTRAINT gl01_acc_created_by_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE gl30_journals DROP CONSTRAINT gl30_journals_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE gl31_lines DROP CONSTRAINT gl31_lines_acc_code_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE gl31_lines DROP CONSTRAINT gl31_lines_jrn_no_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE payt30_hdr DROP CONSTRAINT payt30_hdr_created_by_fkey"
@@ -788,44 +884,60 @@ FUNCTION db_drop_constraints()
     EXECUTE IMMEDIATE "ALTER TABLE pu30_det DROP CONSTRAINT pu30_det_doc_no_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE pu30_det DROP CONSTRAINT pu30_det_stock_code_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE pu30_hdr DROP CONSTRAINT pu30_hdr_acc_code_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE pu31_hdr DROP CONSTRAINT pu31_hdr_acc_fk"
+    EXECUTE IMMEDIATE "ALTER TABLE pu30_hdr DROP CONSTRAINT pu30_hdr_created_by_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_det DROP CONSTRAINT pu31_det_doc_no_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_det DROP CONSTRAINT pu31_det_stock_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_hdr DROP CONSTRAINT pu31_hdr_acc_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE pu31_hdr DROP CONSTRAINT pu31_hdr_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE sa30_det DROP CONSTRAINT sa30_det_doc_no_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE sa30_det DROP CONSTRAINT sa30_det_stock_code_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE sa30_hdr DROP CONSTRAINT sa30_hdr_acc_code_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE sa31_hdr DROP CONSTRAINT sa31_hdr_acc_fk"
-    EXECUTE IMMEDIATE "ALTER TABLE sa32_hdr DROP CONSTRAINT sa32_hdr_acc_fk"
-    EXECUTE IMMEDIATE "ALTER TABLE sa33_hdr DROP CONSTRAINT sa33_hdr_acc_fk"
+    EXECUTE IMMEDIATE "ALTER TABLE sa30_hdr DROP CONSTRAINT sa30_hdr_created_by_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_det DROP CONSTRAINT sa31_det_doc_no_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_det DROP CONSTRAINT sa31_det_stock_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_hdr DROP CONSTRAINT sa31_hdr_acc_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa31_hdr DROP CONSTRAINT sa31_hdr_created_by_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_det DROP CONSTRAINT sa32_det_doc_no_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_det DROP CONSTRAINT sa32_det_stock_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_hdr DROP CONSTRAINT sa32_hdr_acc_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa32_hdr DROP CONSTRAINT sa32_hdr_created_by_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_det DROP CONSTRAINT sa33_det_doc_no_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_det DROP CONSTRAINT sa33_det_stock_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_hdr DROP CONSTRAINT sa33_hdr_acc_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sa33_hdr DROP CONSTRAINT sa33_hdr_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE st01_mast DROP CONSTRAINT st01_mast_category_id_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE st01_mast DROP CONSTRAINT st01_mast_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE st02_cat DROP CONSTRAINT st02_cat_created_by_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE st02_cat DROP CONSTRAINT st02_cat_updated_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE st30_tag_link DROP CONSTRAINT st30_tag_link_stock_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE st30_tag_link DROP CONSTRAINT st30_tag_link_tag_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE st30_trans DROP CONSTRAINT st30_trans_stock_code_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE st_cat DROP CONSTRAINT st_cat_created_by_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE st_cat DROP CONSTRAINT st_cat_updated_by_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE st_tag_link DROP CONSTRAINT st_tag_link_stock_id_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE st_tag_link DROP CONSTRAINT st_tag_link_tag_id_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sy00_user DROP CONSTRAINT sy00_user_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE sy00_user DROP CONSTRAINT sy00_user_role_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE sy02_logs DROP CONSTRAINT sy02_logs_user_id_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE sy03_sett DROP CONSTRAINT sy03_sett_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE sy05_perm DROP CONSTRAINT sy05_perm_created_by_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE sy05_perm DROP CONSTRAINT sy05_perm_updated_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE sy06_role_perm DROP CONSTRAINT sy06_role_perm_perm_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE sy06_role_perm DROP CONSTRAINT sy06_role_perm_role_id_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE wb01_mast DROP CONSTRAINT wb01_mast_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wb01_mast DROP CONSTRAINT wb01_mast_wh_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wb30_hdr DROP CONSTRAINT wb30_hdr_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wb30_hdr DROP CONSTRAINT wb30_hdr_wb_from_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wb30_hdr DROP CONSTRAINT wb30_hdr_wb_to_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wb31_det DROP CONSTRAINT wb31_det_hdr_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wb31_det DROP CONSTRAINT wb31_det_stock_code_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE wh01_mast DROP CONSTRAINT wh01_mast_created_by_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm DROP CONSTRAINT wh30_cat_perm_cat_id_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm DROP CONSTRAINT wh30_cat_perm_created_by_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm DROP CONSTRAINT wh30_cat_perm_wh_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wh30_hdr DROP CONSTRAINT wh30_hdr_created_by_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wh30_hdr DROP CONSTRAINT wh30_hdr_from_wh_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wh30_hdr DROP CONSTRAINT wh30_hdr_to_wh_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag DROP CONSTRAINT wh30_tag_created_by_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link DROP CONSTRAINT wh30_tag_link_tag_id_fkey"
+    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link DROP CONSTRAINT wh30_tag_link_wh_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wh31_det DROP CONSTRAINT wh31_det_hdr_id_fkey"
     EXECUTE IMMEDIATE "ALTER TABLE wh31_det DROP CONSTRAINT wh31_det_stock_code_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm DROP CONSTRAINT wh_cat_perm_cat_id_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_cat_perm DROP CONSTRAINT wh_cat_perm_wh_id_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link DROP CONSTRAINT wh_tag_link_tag_id_fkey"
-    EXECUTE IMMEDIATE "ALTER TABLE wh30_tag_link DROP CONSTRAINT wh_tag_link_wh_id_fkey"
 
 END FUNCTION
 
@@ -836,5 +948,8 @@ FUNCTION db_add_indexes()
     EXECUTE IMMEDIATE "CREATE INDEX cl30_idx_acc_date ON cl30_trans(acc_code, date)"
     EXECUTE IMMEDIATE "CREATE INDEX dl30_idx_acc_date ON dl30_trans(acc_code, date)"
     EXECUTE IMMEDIATE "CREATE INDEX st30_idx_code_date ON st30_trans(stock_code, date)"
+    EXECUTE IMMEDIATE "CREATE UNIQUE INDEX sy00_user_pkey ON sy00_user(id, id)"
 
 END FUNCTION
+
+

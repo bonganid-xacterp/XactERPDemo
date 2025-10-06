@@ -16,10 +16,10 @@ FUNCTION initialize_database() RETURNS SMALLINT
 
     TRY
         -- Connect to PostgreSQL database
-        CONNECT TO "xactapp_db@localhost:5432+driver='dbmpgs_9'"
+        CONNECT TO "xactdemo_db@localhost:5432+driver='dbmpgs_9'"
             USER "postgres" USING "napoleon"
 
-        DISPLAY "Connected to database: xactapp_db"
+        DISPLAY "Connected to database: xactdemo_db"
 
         -- Verify connection
         --IF check_database_connection() THEN
@@ -117,7 +117,7 @@ END FUNCTION
 FUNCTION get_database_info() RETURNS STRING
     DEFINE info STRING
 
-    LET info = "Database: xactapp_db\n"
+    LET info = "Database: xactdemo_db\n"
     LET info = info || "Server: localhost:5432\n"
     LET info = info || "Driver: dbmpgs_9 (PostgreSQL)\n"
     LET info = info || "User: postgres\n"

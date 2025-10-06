@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{772a245c-c471-4fbe-af77-3557e53ef499}">
+<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{772a245c-c471-4fbe-af77-3557e53ef499}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record name="record1" uid="{3b3380a7-9af1-45fe-a9b0-b5d9bc584a51}"/>
-  <Record name="record2" uid="{165dcbee-6d27-470b-9030-ab59ed6d8112}"/>
-  <Record masterTable="dl01_mast" name="record3" uid="{e4bc1a65-1299-49a0-9d20-f76b2dedb332}"/>
-  <Record masterTable="dl01_mast" name="record4" uid="{c2661f7f-7a3e-4340-81c4-b4a8cc9c5b74}"/>
-  <Record name="record5" uid="{3e1323b1-1264-45dc-a0fd-fd603b489b5b}"/>
   <Record name="record6" uid="{c5f0cb75-48b3-49b5-882b-03dc7d422537}">
     <RecordField colName="acc_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="dl01_mast.acc_code" sqlTabName="dl01_mast" uid="{3e0ad5ff-3d0f-4bdb-bce5-a7db63c14d6c}"/>
     <RecordField colName="cust_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="dl01_mast.cust_name" sqlTabName="dl01_mast" uid="{6297a19e-f852-4d4d-b2cb-8d992e2063f1}"/>
@@ -30,7 +25,7 @@
     <RecordField defaultValue="0.00" fieldIdRef="17" length="10" name="dl30_trans_tot_incl" uid="{f1ba82eb-3f1d-4843-be47-69a867d9a88c}"/>
     <RecordField colName="notes" fieldIdRef="18" fieldType="TABLE_COLUMN" name="dl30_trans.notes" sqlTabName="dl30_trans" uid="{0252cd26-65cb-4fbf-9236-9ede1c93f766}"/>
   </Record>
-  <Form fourSTFile="../_main/main_styles.4st" gridHeight="25" gridWidth="126" name="frm_dl101_enq" text="Debtor Enquiry" windowStyle="childDialog">
+  <Form fourSTFile="../_main/main_styles.4st" gridHeight="25" gridWidth="126" name="dl120_enq" text="Debtor Enquiry" windowStyle="childDialog">
     <VBox gridHeight="20" gridWidth="126" name="vbox1" posX="0" posY="0">
       <Grid gridHeight="7" gridWidth="126" name="dl01_mast" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="6" name="lbl_dl_acc_code" posX="1" posY="1" text="Acc Code"/>
@@ -90,6 +85,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAzAGUAMQAzADIAMwBiADEALQAxADIANgA0AC0ANAA1AGQAYwAtAGEAMABmAGQALQBmAGQANgAwADMAYgA0ADgAOQBiADUAYgB9QFAAAAQAAABAUAAABAAAAAAAAAAAAAAAAQAAAEwAewBjADIANgA2ADEAZgA3AGYALQA3AGEAMwBlAC0ANAAzADQAMAAtADgAMQBjADQALQBiADQAYQA4AGMAYwA5AGMANQBiADcANAB9QEwAAAcAAABATAAABwAAAAAAAAAAAAAAAQAAAEwAewBjADUAZgAwAGMAYgA3ADUALQA0ADgAYgAzAC0ANAA5AGIANQAtADgAOAAyAGIALQAwADMAZABjADcAZAA0ADIAMgA1ADMANwB9QFIAAASAAABAUgAABIAAAAAAAAAAAAAAAQAAAEwAewA0ADcAMwA0AGYANgA1ADAALQAzADAANAAwAC0ANAA4ADUAMwAtADgAOABmADkALQA2ADQAZgA0ADgAMwAzAGUAOAA4ADAAOAB9QFQAAAUAAABAVAAABQAAAAAAAAAAAAAAAQAAAEwAewBlADQAYgBjADEAYQA2ADUALQAxADIAOQA5AC0ANAA5AGEAMAAtADkAZAAyADAALQBmADcANgBiADIAZABlAGQAYgAzADMAMgB9QEQAAAUAAABARAAABQAAAAAAAAAAAAAAAQAAAEwAewAxADYANQBkAGMAYgBlAGUALQA2AGQAMgA3AC0ANAA3ADAAYgAtADkAMAAzADAALQBhAGIANQA5AGUAZAA2AGQAOAAxADEAMgB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewAzAGIAMwAzADgAMABhADcALQA5AGEAZgAxAC0ANAA1AGYAZQAtAGEAOQBiADAALQBiADUAZAA5AGIAYwA1ADgANABhADUAMQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBjADUAZgAwAGMAYgA3ADUALQA0ADgAYgAzAC0ANAA5AGIANQAtADgAOAAyAGIALQAwADMAZABjADcAZAA0ADIAMgA1ADMANwB9QFIAAA2AAANAUgAADYAAAwAAAAAAAAAAAQAAAEwAewA0ADcAMwA0AGYANgA1ADAALQAzADAANAAwAC0ANAA4ADUAMwAtADgAOABmADkALQA2ADQAZgA0ADgAMwAzAGUAOAA4ADAAOAB9QFQAAA8AAANAVAAADwAAAwAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

@@ -4,7 +4,7 @@
 # ============================================================================
 IMPORT ui
 IMPORT FGL utils_globals
-SCHEMA xactapp_db
+SCHEMA xactdemo_db
 
 # Shared result type
 TYPE t_lookup_result RECORD

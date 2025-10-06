@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{5468a855-04b2-49c6-a366-bd67ff6239fc}">
+<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{5468a855-04b2-49c6-a366-bd67ff6239fc}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
@@ -11,7 +11,7 @@
     <RecordField colName="status" defaultValue="1" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sy00_user.status" sqlTabName="sy00_user" uid="{ea5531e1-618a-4c99-b6c7-6975df489bfb}"/>
     <RecordField colName="role_id" fieldIdRef="5" fieldType="NON_DATABASE" length="1" name="lbl_sy00_user_role" sqlTabName="sy00_user" sqlType="BIGINT" uid="{ca61054a-19b7-42de-a2ff-0aa9735a5626}"/>
   </Record>
-  <Form gridHeight="8" gridWidth="88" name="form" text="Form">
+  <Form gridHeight="8" gridWidth="88" name="frm_sy101_user" text="Form">
     <HBox gridHeight="8" gridWidth="88" name="hbox1" posX="0" posY="0">
       <Grid gridHeight="8" gridWidth="84" name="xactapp_db1" posX="2" posY="0">
         <Label gridHeight="1" gridWidth="8" name="lbl_sy00_user_user" posX="1" posY="1" text="Username">

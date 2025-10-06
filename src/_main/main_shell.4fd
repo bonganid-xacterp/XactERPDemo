@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactapp_db" fileVersion="31400" gstVersion="3140a" name="ManagedForm" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
+<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="ManagedForm" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record name="record1" uid="{29209917-10e4-417a-add6-5a4e3f56e1e5}"/>
   <Record masterTable="sy00_user" name="record2" uid="{80bd2ca8-1d37-47d7-8ac3-1fd3bd447949}"/>
-  <Form gridHeight="27" gridWidth="103" name="mdi_wrapper" text="" version="0.1">
+  <Form fourSTFile="main_styles.4st" gridHeight="27" gridWidth="103" name="mdi_wrapper" text="" version="0.1" windowStyle="mdi">
     <TopMenu name="top_menu">
       <TopMenuGroup name="tm_main" text="File">
         <TopMenuSeparator name="sep_01"/>
@@ -87,6 +87,6 @@
     </Group>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzM3QgAHvAFmZmuAAAhj9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzM4RTM/XAFmZmzmZnRj9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

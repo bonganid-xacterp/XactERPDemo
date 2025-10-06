@@ -110,7 +110,7 @@ FUNCTION show_confirm(p_message STRING, p_title STRING)
         LET l_title = p_title
     END IF
     
-    LET answer = fgl_winquestion(l_title, p_message, 
+    LET answer = fgldialog.fgl_winQuestion(l_title, p_message, 
                                   "no", "yes|no", "question", 0)
     
     RETURN (answer = "yes")
@@ -230,9 +230,28 @@ FUNCTION is_valid_phone(p_phone STRING) RETURNS SMALLINT
     -- Remove spaces and dashes
     LET clean_phone = p_phone.trim()
 
-    IF LENGTH(clean_phone) < 10 THEN
+    IF LENGTH(clean_phone) < 10 OR LENGTH(clean_phone) >10 THEN
         RETURN FALSE
     END IF
 
     RETURN TRUE
 END FUNCTION
+
+-- handle sql errors
+FUNCTION handle_sql_error()
+    DEFINE errnum INTEGER
+    DEFINE errmsg STRING
+
+    LET errnum = SQLCA.SQLCODE
+    LET errmsg = SQLCA.SQLERRM
+
+    CASE errnum
+        WHEN 0
+            RETURN
+        WHEN NOTFOUND
+            CALL show_info("No more records to fetch.")
+        OTHERWISE
+            CALL show_error("SQL Error (" || errnum || "): " || errmsg)
+    END CASE
+END FUNCTION
+

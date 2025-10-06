@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="main_shell.tmp" build="3.20.14" sqlDbName="xactapp_db" text="" version="0.1" width="91" height="20">
+<Form name="main_shell.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="" windowStyle="mdi" version="0.1" width="91" height="20">
   <TopMenu name="top_menu">
     <TopMenuGroup name="tm_main" text="File">
       <LStr text="File"/>

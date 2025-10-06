@@ -13,7 +13,7 @@ IMPORT FGL utils_globals
 IMPORT FGL main_shell
 IMPORT FGL sy100_login
 
-SCHEMA xactapp_db
+SCHEMA xactdemo_db
 
 -- ==============================================================
 -- CONFIGURATION CONSTANTS
@@ -185,14 +185,14 @@ PRIVATE FUNCTION launch_module(formname STRING, title STRING,
     LET current_user = sy100_login.get_current_user()
     
     -- TODO: Check user permissions
-    -- CALL check_user_permission(current_user, permission)
-    --     RETURNING has_permission
+    CALL check_user_permission(current_user, permission)
+        RETURNING has_permission
     -- 
-    -- IF NOT has_permission THEN
-    --     CALL utils_globals.show_warning(
-    --         "You do not have permission to access:\n" || title)
-    --     RETURN
-    -- END IF
+    IF NOT has_permission THEN
+         CALL utils_globals.show_warning(
+             "You do not have permission to access:\n" || title)
+         RETURN
+     END IF
     
     -- Launch the module
     IF main_shell.launch_child_window(formname, title) THEN
@@ -276,7 +276,7 @@ PRIVATE FUNCTION show_about_dialog()
     LET about_text = APP_NAME || "\n" ||
                      "Version 1.0.0\n\n" ||
                      "Logged in as: " || current_user || "\n" ||
-                     "Database: xactapp_db\n\n" ||
+                     "Database: xactdemo_db\n\n" ||
                      "Copyright © 2025\n" ||
                      "All rights reserved."
     

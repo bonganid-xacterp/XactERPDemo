@@ -21,9 +21,7 @@ CREATE TABLE IF NOT EXISTS sy04_role (
   status SMALLINT DEFAULT 1,
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
-  deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  deleted_at TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS sy00_user (
@@ -38,8 +36,7 @@ CREATE TABLE IF NOT EXISTS sy00_user (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS sy01_sess (
@@ -65,8 +62,7 @@ CREATE TABLE IF NOT EXISTS sy03_sett (
   sett_value TEXT NOT NULL,
   description TEXT,
   updated_at TIMESTAMP DEFAULT now(),
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS sy05_perm (
@@ -77,8 +73,7 @@ CREATE TABLE IF NOT EXISTS sy05_perm (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS sy06_role_perm (
@@ -114,8 +109,7 @@ CREATE TABLE IF NOT EXISTS dl01_mast (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS dl30_trans (
@@ -153,8 +147,7 @@ CREATE TABLE IF NOT EXISTS cl01_mast (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS cl30_trans (
@@ -180,27 +173,13 @@ CREATE TABLE IF NOT EXISTS cl40_hist (
   changed_at TIMESTAMP DEFAULT now()
 );
 
--- ===== STOCK (st) =====
-CREATE TABLE IF NOT EXISTS st_cat (
-  id BIGSERIAL PRIMARY KEY,
-  cat_code VARCHAR(20) UNIQUE NOT NULL,
-  cat_name VARCHAR(100) NOT NULL,
-  description TEXT,
-  status SMALLINT DEFAULT 1,
-  created_at TIMESTAMP DEFAULT now(),
-  updated_at TIMESTAMP,
-  deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
-);
-
 CREATE TABLE IF NOT EXISTS st01_mast (
   id BIGSERIAL PRIMARY KEY,
   stock_code VARCHAR(20) UNIQUE NOT NULL,
   description VARCHAR(150) NOT NULL,
   barcode VARCHAR(50),
   batch_control BOOLEAN DEFAULT FALSE,
-  category_id BIGINT REFERENCES st_cat(id) ON DELETE SET NULL,
+  category_id BIGINT REFERENCES st02_cat(id) ON DELETE SET NULL,
   cost NUMERIC(12,2) DEFAULT 0,
   selling_price NUMERIC(12,2) DEFAULT 0,
   stock_on_hand NUMERIC(12,2) DEFAULT 0,
@@ -210,8 +189,7 @@ CREATE TABLE IF NOT EXISTS st01_mast (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS st30_trans (
@@ -251,8 +229,7 @@ CREATE TABLE IF NOT EXISTS wh01_mast (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 -- Tags that can be applied to warehouses and stock (safety/compliance)
@@ -265,8 +242,7 @@ CREATE TABLE IF NOT EXISTS wh30_tag (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 -- Link tags to warehouses
@@ -289,7 +265,7 @@ CREATE TABLE IF NOT EXISTS st30_tag_link (
 CREATE TABLE IF NOT EXISTS wh30_cat_perm (
   id BIGSERIAL PRIMARY KEY,
   wh_id BIGINT NOT NULL REFERENCES wh01_mast(id) ON DELETE CASCADE,
-  cat_id BIGINT NOT NULL REFERENCES st_cat(id) ON DELETE CASCADE,
+  cat_id BIGINT NOT NULL REFERENCES st02_cat(id) ON DELETE CASCADE,
   created_at TIMESTAMP DEFAULT now(),
   created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
   UNIQUE(wh_id, cat_id)
@@ -340,7 +316,6 @@ CREATE TABLE IF NOT EXISTS wb01_mast (
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
   created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
   UNIQUE(wh_id, wb_code)
 );
 
@@ -389,8 +364,7 @@ CREATE TABLE IF NOT EXISTS sa30_hdr (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS sa30_det (
@@ -430,8 +404,7 @@ CREATE TABLE IF NOT EXISTS sa31_hdr (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS sa31_det (
@@ -471,8 +444,7 @@ CREATE TABLE IF NOT EXISTS sa32_hdr (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS sa32_det (
@@ -512,8 +484,7 @@ CREATE TABLE IF NOT EXISTS sa33_hdr (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS sa33_det (
@@ -552,8 +523,7 @@ CREATE TABLE IF NOT EXISTS pu30_hdr (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS pu30_det (
@@ -591,8 +561,7 @@ CREATE TABLE IF NOT EXISTS pu31_hdr (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS pu31_det (
@@ -629,8 +598,7 @@ CREATE TABLE IF NOT EXISTS gl01_acc (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 -- ===== GL JOURNAL HEADERS =====
@@ -646,8 +614,7 @@ CREATE TABLE IF NOT EXISTS gl30_journals (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 -- ===== GL JOURNAL LINES =====
@@ -688,7 +655,6 @@ CREATE TABLE IF NOT EXISTS payt30_hdr (
   created_at TIMESTAMP DEFAULT now(),
   created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
   updated_at TIMESTAMP,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
   deleted_at TIMESTAMP
 );
 
@@ -721,8 +687,7 @@ CREATE TABLE IF NOT EXISTS st02_cat (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 -- ===== STOCK MASTER (st01_mast) =====
@@ -742,8 +707,7 @@ CREATE TABLE IF NOT EXISTS st01_mast (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 -- ===== STOCK TRANSACTIONS (st30_trans) =====
@@ -787,8 +751,7 @@ CREATE TABLE IF NOT EXISTS wh01_mast (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 -- ===== WAREHOUSE TAGS (wh30_tag) =====
@@ -801,8 +764,7 @@ CREATE TABLE IF NOT EXISTS wh30_tag (
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
-  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
+  created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL
 );
 
 -- Link tags to warehouses
@@ -876,7 +838,6 @@ CREATE TABLE IF NOT EXISTS wb01_mast (
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP,
   created_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
-  updated_by BIGINT REFERENCES sy00_user(id) ON DELETE SET NULL,
   UNIQUE(wh_id, wb_code)
 );
 

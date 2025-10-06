@@ -1,7 +1,101 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="payt130_doc.tmp" build="3.20.14" text="Form" width="0" height="18">
+<Form name="payt130_doc.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Form" width="77" height="18">
   <LStr text="Form"/>
   <VBox name="vbox1">
-    <Grid name="grid1" width="0" height="18"/>
+    <Grid name="xactdemo_db_schema1" width="77" height="12">
+      <Label name="payt30_hdr_doc_no_label1" width="10" text="doc_no" posY="1" posX="1" gridWidth="10">
+        <LStr text="doc_no"/>
+      </Label>
+      <FormField name="payt30_hdr.doc_no" colName="doc_no" noEntry="1" sqlType="INTEGER" required="1" notNull="1" fieldId="0" sqlTabName="payt30_hdr" tabIndex="1">
+        <Edit width="11" scroll="1" posY="1" posX="21" gridWidth="11"/>
+      </FormField>
+      <Label name="payt30_hdr_pay_type_label1" width="12" text="pay_type" posY="1" posX="33" gridWidth="12">
+        <LStr text="pay_type"/>
+      </Label>
+      <FormField name="payt30_hdr.pay_type" colName="pay_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="1" sqlTabName="payt30_hdr" tabIndex="2">
+        <Edit width="10" scroll="1" posY="1" posX="66" gridWidth="10"/>
+      </FormField>
+      <Label name="payt30_hdr_acc_code_label1" width="10" text="acc_code" posY="2" posX="1" gridWidth="10">
+        <LStr text="acc_code"/>
+      </Label>
+      <FormField name="payt30_hdr.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="2" sqlTabName="payt30_hdr" tabIndex="3">
+        <Edit width="20" scroll="1" posY="2" posX="12" gridWidth="20"/>
+      </FormField>
+      <Label name="payt30_hdr_date_label1" width="12" text="date" posY="2" posX="33" gridWidth="12">
+        <LStr text="date"/>
+      </Label>
+      <FormField name="payt30_hdr.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="3" sqlTabName="payt30_hdr" tabIndex="4">
+        <Edit width="10" scroll="1" posY="2" posX="66" gridWidth="10"/>
+      </FormField>
+      <Label name="payt30_hdr_method_label1" width="10" text="method" posY="3" posX="1" gridWidth="10">
+        <LStr text="method"/>
+      </Label>
+      <FormField name="payt30_hdr.method" colName="method" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="payt30_hdr" tabIndex="5">
+        <Edit width="20" scroll="1" posY="3" posX="12" gridWidth="20"/>
+      </FormField>
+      <Label name="payt30_hdr_bank_account_label1" width="12" text="bank_account" posY="3" posX="33" gridWidth="12">
+        <LStr text="bank_account"/>
+      </Label>
+      <FormField name="payt30_hdr.bank_account" colName="bank_account" sqlType="VARCHAR(50)" fieldId="5" sqlTabName="payt30_hdr" tabIndex="6">
+        <Edit width="30" scroll="1" posY="3" posX="46" gridWidth="30"/>
+      </FormField>
+      <Label name="payt30_hdr_amount_label1" width="10" text="amount" posY="4" posX="1" gridWidth="10">
+        <LStr text="amount"/>
+      </Label>
+      <FormField name="payt30_hdr.amount" colName="amount" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="6" sqlTabName="payt30_hdr" tabIndex="7">
+        <Edit width="14" scroll="1" posY="4" posX="18" gridWidth="14"/>
+      </FormField>
+      <Label name="payt30_hdr_notes_label1" width="12" text="notes" posY="4" posX="33" gridWidth="12">
+        <LStr text="notes"/>
+      </Label>
+      <FormField name="payt30_hdr.notes" colName="notes" sqlType="TEXT" fieldId="7" sqlTabName="payt30_hdr" tabIndex="8">
+        <Edit width="30" scroll="1" posY="4" posX="46" gridWidth="30"/>
+      </FormField>
+      <Label name="payt30_hdr_status_label1" width="10" text="status" posY="5" posX="1" gridWidth="10">
+        <LStr text="status"/>
+      </Label>
+      <FormField name="payt30_hdr.status" colName="status" sqlType="SMALLINT" fieldId="8" sqlTabName="payt30_hdr" tabIndex="9">
+        <Edit width="6" scroll="1" posY="5" posX="26" gridWidth="6"/>
+      </FormField>
+      <Label name="payt30_hdr_created_at_label1" width="12" text="created_at" posY="5" posX="33" gridWidth="12">
+        <LStr text="created_at"/>
+      </Label>
+      <FormField name="payt30_hdr.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="9" sqlTabName="payt30_hdr" tabIndex="10">
+        <Edit width="25" scroll="1" posY="5" posX="51" gridWidth="25"/>
+      </FormField>
+      <Label name="payt30_hdr_created_by_label1" width="10" text="created_by" posY="6" posX="1" gridWidth="10">
+        <LStr text="created_by"/>
+      </Label>
+      <FormField name="payt30_hdr.created_by" colName="created_by" sqlType="BIGINT" fieldId="10" sqlTabName="payt30_hdr" tabIndex="11">
+        <Edit width="20" scroll="1" posY="6" posX="12" gridWidth="20"/>
+      </FormField>
+    </Grid>
+    <Grid name="grid1" width="0" height="6"/>
   </VBox>
+  <RecordView tabName="payt30_hdr">
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="pay_type" fieldIdRef="1"/>
+    <Link colName="acc_code" fieldIdRef="2"/>
+    <Link colName="date" fieldIdRef="3"/>
+    <Link colName="method" fieldIdRef="4"/>
+    <Link colName="bank_account" fieldIdRef="5"/>
+    <Link colName="amount" fieldIdRef="6"/>
+    <Link colName="notes" fieldIdRef="7"/>
+    <Link colName="status" fieldIdRef="8"/>
+    <Link colName="created_at" fieldIdRef="9"/>
+    <Link colName="created_by" fieldIdRef="10"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="pay_type" fieldIdRef="1"/>
+    <Link colName="acc_code" fieldIdRef="2"/>
+    <Link colName="date" fieldIdRef="3"/>
+    <Link colName="method" fieldIdRef="4"/>
+    <Link colName="bank_account" fieldIdRef="5"/>
+    <Link colName="amount" fieldIdRef="6"/>
+    <Link colName="notes" fieldIdRef="7"/>
+    <Link colName="status" fieldIdRef="8"/>
+    <Link colName="created_at" fieldIdRef="9"/>
+    <Link colName="created_by" fieldIdRef="10"/>
+  </RecordView>
 </Form>

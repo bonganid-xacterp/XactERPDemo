@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="cl120_enq.tmp" build="3.20.14" sqlDbName="xactapp_db" text="Form" windowStyle="child" width="126" height="16">
+<Form name="cl120_enq.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Form" windowStyle="child" width="126" height="16">
   <LStr text="Form"/>
   <VBox name="vbox1">
     <Grid name="grid" width="82" height="6">
@@ -103,15 +103,6 @@
       </Page>
     </Folder>
   </VBox>
-  <RecordView tabName="dl30_trans">
-    <Link colName="date" fieldIdRef="9"/>
-    <Link colName="doc_no" fieldIdRef="10"/>
-    <Link colName="trans_type" fieldIdRef="11"/>
-    <Link colName="doc_type" fieldIdRef="12"/>
-    <Link colName="gross_val" fieldIdRef="13"/>
-    <Link colName="vat" fieldIdRef="14"/>
-    <Link colName="notes" fieldIdRef="16"/>
-  </RecordView>
   <RecordView tabName="cl01_mast">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="supp_name" fieldIdRef="1"/>
@@ -122,6 +113,15 @@
     <Link colName="email" fieldIdRef="6"/>
     <Link colName="balance" fieldIdRef="7"/>
     <Link colName="status" fieldIdRef="8"/>
+  </RecordView>
+  <RecordView tabName="dl30_trans">
+    <Link colName="date" fieldIdRef="9"/>
+    <Link colName="doc_no" fieldIdRef="10"/>
+    <Link colName="trans_type" fieldIdRef="11"/>
+    <Link colName="doc_type" fieldIdRef="12"/>
+    <Link colName="gross_val" fieldIdRef="13"/>
+    <Link colName="vat" fieldIdRef="14"/>
+    <Link colName="notes" fieldIdRef="16"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="dl30_trans_tot_incl" fieldIdRef="15"/>
