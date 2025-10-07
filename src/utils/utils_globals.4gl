@@ -10,13 +10,6 @@ IMPORT ui
 IMPORT os
 IMPORT FGL fgldialog
 
--- Global application variables
-DEFINE g_user_id INTEGER
-DEFINE g_user_name VARCHAR(50)
-DEFINE g_company_id INTEGER
-DEFINE g_company_name VARCHAR(100)
-DEFINE g_fiscal_year INTEGER
-DEFINE g_fiscal_period INTEGER
 
 -- =============================================================
 -- UI Utility Functions
@@ -41,7 +34,6 @@ END FUNCTION
 -- load system default styles
 FUNCTION load_ui_styles(p_stylefile STRING) RETURNS SMALLINT
     DEFINE exists SMALLINT
-    DEFINE cmd STRING
 
     TRY
         -- -----------------------------------------
