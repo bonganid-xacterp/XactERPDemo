@@ -1,149 +1,124 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <WorkspaceDatabase fileContentsEncoding="CP1252" version="3.0">
-<File n="src/_main/main_app.4gl" s="2" ts="20251006154210551">
+<File n="src/_main/main_app.4gl" s="2" ts="20251007093248112">
 <Dep t="src/sy/sy100_login.4gl"/>
 <Dep t="src/utils/utils_globals.4gl"/>
 <Dep t="src/utils/utils_db.4gl"/>
 <Dep t="src/_main/main_shell.4gl"/>
 <Dep t="src/_main/main_menu.4gl"/>
-<Fct c="10" el="249" l="245" n="emergency_exit(exit_code SMALLINT)" t="F" v="pub">
-<Call c="10" l="247" n="cleanup_application" t="F"/>
+<Fct c="10" el="220" l="209" n="cleanup_application()" t="F" v="pub">
+<Call c="25" i="sy100_login" l="215" n="get_current_user" t="F"/>
 </Fct>
-<Fct c="10" el="238" l="224" n="cleanup_application()" t="F" v="pub">
-<Call c="25" i="sy100_login" l="233" n="get_current_user" t="F"/>
+<Fct c="10" el="201" l="171" n="open_main_container()" t="F" v="pub">
+<Call c="36" i="sy100_login" l="175" n="get_current_user" t="F"/>
+<Call c="28" i="utils_globals" l="182" n="set_page_title" t="F"/>
+<Call c="24" i="main_menu" l="186" n="main_application_menu" t="F"/>
+<Call c="28" i="utils_globals" l="196" n="show_error" t="F"/>
 </Fct>
-<Fct c="10" el="217" l="172" n="open_main_container()" t="F" v="pub">
-<Call c="36" i="sy100_login" l="177" n="get_current_user" t="F"/>
-<Call c="32" i="utils_globals" l="191" n="show_error" t="F"/>
-<Call c="28" i="utils_globals" l="196" n="set_page_title" t="F"/>
-<Call c="24" i="main_menu" l="199" n="main_application_menu" t="F"/>
-<Call c="28" i="utils_globals" l="210" n="show_error" t="F"/>
+<Fct c="10" el="163" l="128" n="run_login_with_retry()" t="F" v="pub">
+<Call c="40" i="sy100_login" l="137" n="login_user" t="F"/>
+<Call c="40" i="sy100_login" l="141" n="get_current_user" t="F"/>
+<Call c="36" i="utils_globals" l="152" n="show_alert" t="F"/>
+<Call c="24" i="utils_globals" l="159" n="show_error" t="F"/>
 </Fct>
-<Fct c="10" el="165" l="163" n="run_login()" t="F" v="pub">
-<Call c="12" l="164" n="run_login_with_retry" t="F"/>
+<Fct c="10" el="120" l="89" n="initialize_application()" t="F" v="pub">
+<Call c="34" i="utils_db" l="100" n="initialize_database" t="F"/>
+<Call c="32" i="utils_globals" l="102" n="show_error" t="F"/>
 </Fct>
-<Fct c="10" el="159" l="119" n="run_login_with_retry()" t="F" v="pub">
-<Call c="40" i="sy100_login" l="127" n="login_user" t="F"/>
-<Call c="40" i="sy100_login" l="131" n="get_current_user" t="F"/>
-<Call c="40" i="utils_globals" l="143" n="show_warning" t="F"/>
-<Call c="40" i="utils_globals" l="147" n="show_alert" t="F"/>
-<Call c="24" i="utils_globals" l="155" n="show_error" t="F"/>
-</Fct>
-<Fct c="10" el="112" l="78" n="initialize_application()" t="F" v="pub">
-<Call c="34" i="utils_db" l="90" n="initialize_database" t="F"/>
-<Call c="32" i="utils_globals" l="93" n="show_error" t="F"/>
-</Fct>
-<Fct c="1" el="71" l="45" n="main()" t="F" v="pub">
-<Call c="24" i="utils_globals" l="47" n="hide_screen" t="F"/>
-<Call c="12" l="53" n="initialize_application" t="F"/>
-<Call c="28" i="utils_globals" l="54" n="show_error" t="F"/>
-<Call c="8" l="61" n="run_login_with_retry" t="F"/>
-<Call c="14" l="63" n="open_main_container" t="F"/>
-<Call c="28" i="utils_globals" l="65" n="show_alert" t="F"/>
-<Call c="10" l="69" n="cleanup_application" t="F"/>
+<Fct c="1" el="81" l="54" n="main()" t="F" v="pub">
+<Call c="24" i="utils_globals" l="59" n="hide_screen" t="F"/>
+<Call c="12" l="65" n="initialize_application" t="F"/>
+<Call c="28" i="utils_globals" l="66" n="show_error" t="F"/>
+<Call c="8" l="72" n="run_login_with_retry" t="F"/>
+<Call c="14" l="73" n="open_main_container" t="F"/>
+<Call c="28" i="utils_globals" l="75" n="show_alert" t="F"/>
+<Call c="10" l="79" n="cleanup_application" t="F"/>
 </Fct>
 </File>
-<File n="src/_main/main_menu.4gl" s="2" ts="20251006152211163">
+<File n="src/_main/main_menu.4gl" s="2" ts="20251007084212196">
 <Dep t="src/utils/utils_globals.4gl"/>
 <Dep t="src/_main/main_shell.4gl"/>
 <Dep t="src/sy/sy100_login.4gl"/>
-<Fct c="18" el="438" l="423" n="check_user_permission(p_username STRING,p_permission STRING)" t="F" v="prv"/>
-<Fct c="17" el="413" l="408" n="menu_set_debug_mode(p_enabled SMALLINT)" t="F" v="pub"/>
-<Fct c="18" el="401" l="384" n="check_session_timeout()" t="F" v="prv"/>
-<Fct c="18" el="377" l="357" n="cleanup_before_exit()" t="F" v="prv">
-<Call c="36" i="sy100_login" l="360" n="get_current_user" t="F"/>
-<Call c="21" i="main_shell" l="367" n="close_all_child_windows" t="F"/>
+<Fct c="18" el="420" l="412" n="check_user_permission(p_username STRING,p_permission STRING)" t="F" v="prv"/>
+<Fct c="17" el="403" l="398" n="menu_set_debug_mode(p_enabled SMALLINT)" t="F" v="pub"/>
+<Fct c="18" el="389" l="377" n="check_session_timeout()" t="F" v="prv"/>
+<Fct c="18" el="368" l="355" n="cleanup_before_exit()" t="F" v="prv">
+<Call c="36" i="sy100_login" l="357" n="get_current_user" t="F"/>
+<Call c="21" i="main_shell" l="363" n="close_all_child_windows" t="F"/>
 </Fct>
-<Fct c="18" el="351" l="320" n="confirm_exit()" t="F" v="prv">
-<Call c="33" i="main_shell" l="326" n="get_open_window_count" t="F"/>
-<Call c="28" i="fgldialog" l="336" n="fgl_winQuestion" t="F"/>
+<Fct c="18" el="346" l="323" n="confirm_exit()" t="F" v="prv">
+<Call c="28" i="main_shell" l="328" n="get_open_window_count" t="F"/>
+<Call c="28" i="fgldialog" l="337" n="fgl_winQuestion" t="F"/>
 </Fct>
-<Fct c="18" el="313" l="294" n="show_help()" t="F" v="prv">
-<Call c="20" i="fgldialog" l="308" n="fgl_winMessage" t="F"/>
+<Fct c="18" el="314" l="300" n="show_help()" t="F" v="prv">
+<Call c="20" i="fgldialog" l="313" n="fgl_winMessage" t="F"/>
 </Fct>
-<Fct c="18" el="288" l="270" n="show_about_dialog()" t="F" v="prv">
-<Call c="36" i="sy100_login" l="274" n="get_current_user" t="F"/>
-<Call c="20" i="fgldialog" l="283" n="fgl_winMessage" t="F"/>
+<Fct c="18" el="291" l="279" n="show_about_dialog()" t="F" v="prv">
+<Call c="36" i="sy100_login" l="283" n="get_current_user" t="F"/>
+<Call c="20" i="fgldialog" l="290" n="fgl_winMessage" t="F"/>
 </Fct>
-<Fct c="18" el="264" l="244" n="show_window_manager()" t="F" v="prv">
-<Call c="33" i="main_shell" l="248" n="get_open_window_count" t="F"/>
-<Call c="28" i="utils_globals" l="251" n="show_info" t="F"/>
-<Call c="34" i="main_shell" l="255" n="get_open_window_list" t="F"/>
-<Call c="20" i="fgldialog" l="257" n="fgl_winMessage" t="F"/>
+<Fct c="18" el="270" l="253" n="show_window_manager()" t="F" v="prv">
+<Call c="28" i="main_shell" l="257" n="get_open_window_count" t="F"/>
+<Call c="28" i="utils_globals" l="260" n="show_info" t="F"/>
+<Call c="34" i="main_shell" l="264" n="get_open_window_list" t="F"/>
+<Call c="20" i="fgldialog" l="266" n="fgl_winMessage" t="F"/>
 </Fct>
-<Fct c="18" el="238" l="216" n="setup_menu_display(p_username STRING)" t="F" v="prv"/>
-<Fct c="18" el="209" l="176" n="launch_module(formname STRING,title STRING,permission STRING)" t="F" v="prv">
-<Call c="36" i="sy100_login" l="185" n="get_current_user" t="F"/>
-<Call c="10" l="188" n="check_user_permission" t="F"/>
-<Call c="29" i="utils_globals" l="192" n="show_warning" t="F"/>
-<Call c="19" i="main_shell" l="198" n="launch_child_window" t="F"/>
+<Fct c="18" el="244" l="228" n="setup_menu_display(p_username STRING)" t="F" v="prv"/>
+<Fct c="18" el="219" l="193" n="launch_module(formname STRING,title STRING,permission STRING)" t="F" v="prv">
+<Call c="36" i="sy100_login" l="198" n="get_current_user" t="F"/>
+<Call c="10" l="201" n="check_user_permission" t="F"/>
+<Call c="28" i="utils_globals" l="205" n="show_warning" t="F"/>
+<Call c="19" i="main_shell" l="211" n="launch_child_window" t="F"/>
+<Call c="28" i="utils_globals" l="216" n="show_info" t="F"/>
 </Fct>
-<Fct c="17" el="166" l="34" n="main_application_menu()" t="F" v="pub">
-<Call c="36" i="sy100_login" l="38" n="get_current_user" t="F"/>
-<Call c="18" l="56" n="setup_menu_display" t="F"/>
-<Call c="18" l="60" n="launch_module" t="F"/>
-<Call c="18" l="63" n="launch_module" t="F"/>
-<Call c="18" l="69" n="launch_module" t="F"/>
-<Call c="18" l="72" n="launch_module" t="F"/>
-<Call c="18" l="78" n="launch_module" t="F"/>
-<Call c="18" l="81" n="launch_module" t="F"/>
-<Call c="18" l="87" n="launch_module" t="F"/>
-<Call c="18" l="90" n="launch_module" t="F"/>
+<Fct c="17" el="184" l="47" n="main_application_menu()" t="F" v="pub">
+<Call c="36" i="sy100_login" l="51" n="get_current_user" t="F"/>
+<Call c="18" l="67" n="setup_menu_display" t="F"/>
+<Call c="18" l="73" n="launch_module" t="F"/>
+<Call c="18" l="76" n="launch_module" t="F"/>
+<Call c="18" l="83" n="launch_module" t="F"/>
+<Call c="18" l="86" n="launch_module" t="F"/>
+<Call c="18" l="93" n="launch_module" t="F"/>
 <Call c="18" l="96" n="launch_module" t="F"/>
-<Call c="18" l="99" n="launch_module" t="F"/>
-<Call c="18" l="105" n="launch_module" t="F"/>
-<Call c="18" l="108" n="launch_module" t="F"/>
-<Call c="18" l="114" n="launch_module" t="F"/>
-<Call c="18" l="117" n="launch_module" t="F"/>
-<Call c="18" l="123" n="show_window_manager" t="F"/>
-<Call c="18" l="126" n="show_about_dialog" t="F"/>
-<Call c="18" l="129" n="show_help" t="F"/>
-<Call c="16" l="135" n="confirm_exit" t="F"/>
-<Call c="22" l="136" n="cleanup_before_exit" t="F"/>
-<Call c="16" l="141" n="confirm_exit" t="F"/>
-<Call c="22" l="142" n="cleanup_before_exit" t="F"/>
+<Call c="18" l="103" n="launch_module" t="F"/>
+<Call c="18" l="106" n="launch_module" t="F"/>
+<Call c="18" l="113" n="launch_module" t="F"/>
+<Call c="18" l="116" n="launch_module" t="F"/>
+<Call c="18" l="123" n="launch_module" t="F"/>
+<Call c="18" l="126" n="launch_module" t="F"/>
+<Call c="18" l="133" n="launch_module" t="F"/>
+<Call c="18" l="136" n="launch_module" t="F"/>
+<Call c="18" l="143" n="show_window_manager" t="F"/>
+<Call c="18" l="146" n="show_about_dialog" t="F"/>
+<Call c="18" l="149" n="show_help" t="F"/>
+<Call c="16" l="156" n="confirm_exit" t="F"/>
+<Call c="22" l="157" n="cleanup_before_exit" t="F"/>
+<Call c="16" l="162" n="confirm_exit" t="F"/>
+<Call c="22" l="163" n="cleanup_before_exit" t="F"/>
 </Fct>
-<Todo l="47" t="Log menu opened&#13;"/>
-<Todo l="57" t="Check and apply user permissions&#13;"/>
-<Todo l="164" t="Log menu closed&#13;"/>
-<Todo l="187" t="Check user permissions&#13;"/>
-<Todo l="202" t="Log module access (user, module, timestamp)&#13;"/>
-<Todo l="227" t="Hide menu items based on permissions&#13;"/>
-<Todo l="262" t="Log window manager accessed&#13;"/>
-<Todo l="345" t="Log user exit confirmation&#13;"/>
-<Todo l="374" t="Log application exit&#13;"/>
-<Todo l="375" t="Update user session end time&#13;"/>
-<Todo l="427" t="Implement actual permission checking&#13;"/>
+<Todo l="237" t="hide or disable certain menu items based on permissions&#13;"/>
 </File>
-<File n="src/_main/main_shell.4gl" s="2" ts="20251006143347859">
+<File n="src/_main/main_shell.4gl" s="2" ts="20251007084619142">
 <Dep t="src/utils/utils_globals.4gl"/>
-<Fct c="17" el="370" l="359" n="show_window_manager()" t="F" v="pub">
-<Call c="23" l="363" n="get_open_window_list" t="F"/>
-<Call c="20" i="fgldialog" l="365" n="fgl_winMessage" t="F"/>
+<Fct c="17" el="353" l="344" n="show_window_manager()" t="F" v="pub">
+<Call c="23" l="347" n="get_open_window_list" t="F"/>
+<Call c="20" i="fgldialog" l="349" n="fgl_winMessage" t="F"/>
 </Fct>
-<Fct c="17" el="353" l="348" n="shell_set_debug_mode(p_enabled SMALLINT)" t="F" v="pub"/>
-<Fct c="17" el="341" l="310" n="cleanup_stale_windows()" t="F" v="pub"/>
-<Fct c="17" el="304" l="287" n="get_open_window_list()" t="F" v="pub"/>
-<Fct c="17" el="280" l="278" n="get_open_window_count()" t="F" v="pub"/>
-<Fct c="17" el="271" l="260" n="is_window_open(formname STRING)" t="F" v="pub"/>
-<Fct c="18" el="252" l="231" n="bring_window_to_front(winname STRING)" t="F" v="prv"/>
-<Fct c="17" el="224" l="183" n="close_all_child_windows()" t="F" v="pub"/>
-<Fct c="17" el="177" l="134" n="close_child_window(formname STRING)" t="F" v="pub"/>
-<Fct c="17" el="126" l="44" n="launch_child_window(formname STRING,wintitle STRING)" t="F" v="pub">
-<Call c="28" i="utils_globals" l="52" n="show_error" t="F"/>
-<Call c="32" i="utils_globals" l="64" n="show_info" t="F"/>
-<Call c="18" l="68" n="bring_window_to_front" t="F"/>
-<Call c="32" i="utils_globals" l="98" n="show_error" t="F"/>
-<Call c="28" i="utils_globals" l="120" n="show_error" t="F"/>
+<Fct c="17" el="336" l="331" n="shell_set_debug_mode(p_enabled SMALLINT)" t="F" v="pub"/>
+<Fct c="17" el="323" l="297" n="cleanup_stale_windows()" t="F" v="pub"/>
+<Fct c="17" el="289" l="273" n="get_open_window_list()" t="F" v="pub"/>
+<Fct c="17" el="265" l="263" n="get_open_window_count()" t="F" v="pub"/>
+<Fct c="17" el="255" l="245" n="is_window_open(formname STRING)" t="F" v="pub"/>
+<Fct c="18" el="237" l="222" n="bring_window_to_front(winname STRING)" t="F" v="prv"/>
+<Fct c="17" el="214" l="179" n="close_all_child_windows()" t="F" v="pub"/>
+<Fct c="17" el="171" l="135" n="close_child_window(formname STRING)" t="F" v="pub"/>
+<Fct c="17" el="127" l="56" n="launch_child_window(formname STRING,wintitle STRING)" t="F" v="pub">
+<Call c="28" i="utils_globals" l="64" n="show_error" t="F"/>
+<Call c="32" i="utils_globals" l="75" n="show_info" t="F"/>
+<Call c="18" l="76" n="bring_window_to_front" t="F"/>
+<Call c="32" i="utils_globals" l="104" n="show_error" t="F"/>
+<Call c="28" i="utils_globals" l="123" n="show_error" t="F"/>
 </Fct>
-<Todo l="53" t="Log invalid form name&#13;"/>
-<Todo l="70" t="Log duplicate window attempt&#13;"/>
-<Todo l="100" t="Log window open failure&#13;"/>
-<Todo l="116" t="Log window opened&#13;"/>
-<Todo l="122" t="Log window open exception&#13;"/>
-<Todo l="165" t="Log window closed&#13;"/>
-<Todo l="222" t="Log all windows closed&#13;"/>
-<Todo l="339" t="Log stale window cleanup&#13;"/>
 </File>
 <File n="src/cl/cl101_mast.4gl" s="2" ts="20251003112623658">
 <Fct c="10" el="23" l="19" n="search_creditors(p_term STRING)" t="F" v="pub"/>
@@ -304,21 +279,22 @@
 <Fct c="10" el="41" l="15" n="initialize_database()" t="F" v="pub"/>
 </File>
 <File n="src/utils/utils_enq.4gl" s="2" ts="20251006141337669"/>
-<File n="src/utils/utils_globals.4gl" s="2" ts="20251006143347928">
-<Fct c="10" el="256" l="241" n="handle_sql_error()" t="F" v="pub">
-<Call c="18" l="252" n="show_info" t="F"/>
-<Call c="18" l="254" n="show_error" t="F"/>
+<File n="src/utils/utils_globals.4gl" s="2" ts="20251007092756756">
+<Fct c="10" el="271" l="256" n="handle_sql_error()" t="F" v="pub">
+<Call c="18" l="267" n="show_info" t="F"/>
+<Call c="18" l="269" n="show_error" t="F"/>
 </Fct>
-<Fct c="10" el="238" l="223" n="is_valid_phone(p_phone STRING)" t="F" v="pub"/>
-<Fct c="10" el="220" l="209" n="is_valid_email(p_email STRING)" t="F" v="pub"/>
-<Fct c="10" el="202" l="194" n="is_empty(p_str STRING)" t="F" v="pub"/>
-<Fct c="10" el="191" l="186" n="trim_str(p_str STRING)" t="F" v="pub"/>
-<Fct c="10" el="179" l="174" n="format_quantity(p_qty DECIMAL)" t="F" v="pub"/>
-<Fct c="10" el="171" l="166" n="format_currency(p_amount DECIMAL)" t="F" v="pub"/>
-<Fct c="10" el="159" l="157" n="get_timestamp()" t="F" v="pub"/>
-<Fct c="10" el="154" l="149" n="format_datetime(p_datetime DATETIME YEAR TO SECOND)" t="F" v="pub"/>
-<Fct c="10" el="146" l="141" n="format_date(p_date DATE)" t="F" v="pub"/>
-<Fct c="10" el="134" l="130" n="set_form_lbl(lbl_name STRING,new_text STRING)" t="F" v="pub"/>
+<Fct c="10" el="253" l="238" n="is_valid_phone(p_phone STRING)" t="F" v="pub"/>
+<Fct c="10" el="235" l="224" n="is_valid_email(p_email STRING)" t="F" v="pub"/>
+<Fct c="10" el="217" l="209" n="is_empty(p_str STRING)" t="F" v="pub"/>
+<Fct c="10" el="206" l="201" n="trim_str(p_str STRING)" t="F" v="pub"/>
+<Fct c="10" el="194" l="189" n="format_quantity(p_qty DECIMAL)" t="F" v="pub"/>
+<Fct c="10" el="186" l="181" n="format_currency(p_amount DECIMAL)" t="F" v="pub"/>
+<Fct c="10" el="174" l="172" n="get_timestamp()" t="F" v="pub"/>
+<Fct c="10" el="169" l="164" n="format_datetime(p_datetime DATETIME YEAR TO SECOND)" t="F" v="pub"/>
+<Fct c="10" el="161" l="156" n="format_date(p_date DATE)" t="F" v="pub"/>
+<Fct c="10" el="149" l="145" n="set_form_lbl(lbl_name STRING,new_text STRING)" t="F" v="pub"/>
+<Fct c="10" el="142" l="130" n="set_form_title(p_title STRING,p_username STRING)" t="F" v="pub"/>
 <Fct c="10" el="127" l="121" n="set_page_title(p_title STRING)" t="F" v="pub"/>
 <Fct c="10" el="118" l="103" n="show_confirm(p_message STRING,p_title STRING)" t="F" v="pub">
 <Call c="28" i="fgldialog" l="113" n="fgl_winQuestion" t="F"/>

@@ -60,7 +60,7 @@
   <!-- MDI Child Window Style -->
   <Style name="Window.child">
     <StyleAttribute name="windowType" value="normal"/>
-    <StyleAttribute name="border" value="dialog"/>
+    <StyleAttribute name="border" value="title"/>
     <StyleAttribute name="sizable" value="yes"/>
     <StyleAttribute name="backgroundColor" value="white"/>
   </Style>
@@ -419,6 +419,7 @@
   
   <Style name=".mdi_wrapper">
     <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
+    <StyleAttribute name="border" value="none"/>
   </Style>
 
   <Style name=".mdi_container">

@@ -25,7 +25,7 @@
     <RecordField defaultValue="0.00" fieldIdRef="18" length="10" name="dl30_trans_tot_incl" uid="{77ffe570-99e8-4245-b777-bc6c4b94cc27}"/>
     <RecordField colName="notes" fieldIdRef="17" fieldType="TABLE_COLUMN" name="dl30_trans.notes" sqlTabName="dl30_trans" uid="{e0325fb9-e91b-4e65-ab77-61de2bae78e7}"/>
   </Record>
-  <Form gridHeight="20" gridWidth="200" name="form_dl100_mast" perFooterComment="" spacing="compact" text="Debtors" windowStyle="">
+  <Form fourSTFile="../_main/main_styles.4st" gridHeight="20" gridWidth="200" name="form_dl100_mast" perFooterComment="" spacing="compact" style="child" text="Debtors" windowStyle="child">
     <HBox gridHeight="19" gridWidth="130" name="hbox1" posX="0" posY="0">
       <VBox gridHeight="19" gridWidth="126" name="vbox1" posX="2" posY="0">
         <Grid gridHeight="6" gridWidth="126" name="dl01_mast" posX="0" posY="1">
@@ -87,6 +87,6 @@
     </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM4hTM8fAKzMzmTMz5j9QYk3S8an8AQAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM44AAKnAKzMzoAAAzT9QYk3S8an8AQAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQ==]]>
   </DiagramLayout>
 </ManagedForm>

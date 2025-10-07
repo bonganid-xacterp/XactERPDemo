@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" spacing="compact" text="Debtors" windowStyle="" width="126" height="16">
+<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" spacing="compact" text="Debtors" style="child" windowStyle="child" width="126" height="16">
   <LStr text="Debtors"/>
   <HBox name="hbox1">
     <VBox name="vbox1">

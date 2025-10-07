@@ -3,8 +3,6 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record name="record1" uid="{29209917-10e4-417a-add6-5a4e3f56e1e5}"/>
-  <Record masterTable="sy00_user" name="record2" uid="{80bd2ca8-1d37-47d7-8ac3-1fd3bd447949}"/>
   <Form fourSTFile="main_styles.4st" gridHeight="27" gridWidth="103" name="mdi_wrapper" text="" version="0.1" windowStyle="mdi">
     <TopMenu name="top_menu">
       <TopMenuGroup name="tm_main" text="File">
@@ -13,7 +11,7 @@
       </TopMenuGroup>
       <TopMenuGroup name="tm_dl" text="Debtors">
         <TopMenuCommand image="open" name="dl_enq" text="Debtor Enquiry"/>
-        <TopMenuCommand image="pen" name="dl_maint" text="Debptr Maintanance"/>
+        <TopMenuCommand image="pen" name="dl_maint" text="Debtor Maintanance"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_cl" text="Creditors">
         <TopMenuCommand image="open" name="cl_enq" text="Creditors Enquiry"/>
@@ -80,13 +78,13 @@
         <TopMenuCommand image="fa-info-circle" name="sy_about" text="About"/>
       </TopMenuGroup>
     </TopMenu>
-    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" hidden="true" name="mdi_group" posX="0" posY="0" text="">
-      <Grid gridHeight="20" gridWidth="91" name="main_grid" posX="1" posY="1">
+    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" hidden="true" name="mdi_group" posX="0" posY="0" style="mdi_container" text="">
+      <Grid gridHeight="20" gridWidth="91" name="main_grid" posX="1" posY="1" style="mdi_wrapper">
         <Label gridHeight="1" gridWidth="89" hidden="true" justify="center" name="lbl_top_title" posX="1" posY="0" text=""/>
       </Grid>
     </Group>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyADkAMgAwADkAOQAxADcALQAxADAAZQA0AC0ANAAxADcAYQAtAGEAZABkADYALQA1AGEANABlADMAZgA1ADYAZQAxAGUANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA4ADAAYgBkADIAYwBhADgALQAxAGQAMwA3AC0ANAA3AGQANwAtADgAYQBjADMALQAxAGYAZAAzAGIAZAA0ADQANwA5ADQAOQB9QHAzM4RTM/XAFmZmzmZnRj9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAg==]]>
   </DiagramLayout>
 </ManagedForm>

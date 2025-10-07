@@ -7,6 +7,7 @@
 # ==============================================================
 
 IMPORT ui
+IMPORT os
 IMPORT FGL fgldialog
 
 -- Global application variables
@@ -36,6 +37,38 @@ FUNCTION hide_screen()
     -- Close default SCREEN window
     CLOSE WINDOW SCREEN
 END FUNCTION
+
+-- load system default styles
+FUNCTION load_ui_styles(p_stylefile STRING) RETURNS SMALLINT
+    DEFINE exists SMALLINT
+    DEFINE cmd STRING
+
+    TRY
+        -- -----------------------------------------
+        -- Check if the style file exists
+        -- -----------------------------------------
+        LET exists = os.Path.exists(p_stylefile)
+
+        IF NOT exists THEN
+            DISPLAY "?  Style file not found: ", p_stylefile
+            RETURN FALSE
+        END IF
+
+        -- -----------------------------------------
+        -- Attempt to load the styles
+        -- -----------------------------------------
+        CALL ui.Interface.loadStyles(p_stylefile)
+
+        DISPLAY "? Loaded UI style file: ", p_stylefile
+        RETURN TRUE
+
+    CATCH
+        DISPLAY "? Failed to load style file: ", p_stylefile
+        DISPLAY "   Error STATUS: ", STATUS
+        RETURN FALSE
+    END TRY
+END FUNCTION
+
 
 -- Show message with OK button
 FUNCTION show_message(p_message STRING, p_title STRING, style_name STRING)
@@ -124,6 +157,21 @@ FUNCTION set_page_title(p_title STRING)
     IF g_win IS NOT NULL THEN
         CALL g_win.setText("XACT ERP – " || p_title)
     END IF
+END FUNCTION
+
+-- Set form title
+FUNCTION set_form_title(p_title STRING, p_username STRING)
+    DEFINE f ui.Form
+
+    -- Get the currently active form object
+    LET f = ui.Window.getCurrent().getForm()
+
+    IF f IS NULL THEN
+        RETURN
+    END IF
+
+    -- Update the label element text
+    CALL f.setElementText("lbl_top_title", "XACT ERP – " || p_title || " | " || p_username)
 END FUNCTION
 
 -- Set form label text

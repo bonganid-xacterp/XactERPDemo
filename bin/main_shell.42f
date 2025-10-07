@@ -13,8 +13,8 @@
       <TopMenuCommand name="dl_enq" image="open" text="Debtor Enquiry">
         <LStr text="Debtor Enquiry"/>
       </TopMenuCommand>
-      <TopMenuCommand name="dl_maint" image="pen" text="Debptr Maintanance">
-        <LStr text="Debptr Maintanance"/>
+      <TopMenuCommand name="dl_maint" image="pen" text="Debtor Maintanance">
+        <LStr text="Debtor Maintanance"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_cl" text="Creditors">
@@ -160,9 +160,9 @@
     </TopMenuGroup>
   </TopMenu>
   <LStr text=""/>
-  <Group name="mdi_group" text="" hidden="1">
+  <Group name="mdi_group" text="" hidden="1" style="mdi_container">
     <LStr text=""/>
-    <Grid name="main_grid" width="91" height="20">
+    <Grid name="main_grid" width="91" height="20" style="mdi_wrapper">
       <Label name="lbl_top_title" width="89" text="" hidden="1" justify="center" posY="0" posX="1" gridWidth="89">
         <LStr text=""/>
       </Label>
