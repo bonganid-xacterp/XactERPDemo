@@ -1,122 +1,111 @@
 -- ==============================================================
--- Program   : main_app.4gl
--- Purpose   : Starting point of the XACT ERP System
---              - Initializes environment and database
---              - Handles user login (with retry)
---              - Opens the main application window (MDI)
--- Module    : Main
--- Author    : Bongani Dlamini
--- Version   : Genero BDL 3.20.10
--- ==============================================================
-
-
--- ==============================================================
--- IMPORTS
--- These bring in other modules and utilities
+-- Program   :   main_app.4gl
+-- Purpose   :   Application entry point with login and main MDI container
+-- Module    :   Main
+-- Number    :
+-- Author    :   Bongani Dlamini
+-- Version   :   Genero BDL 3.20.10
 -- ==============================================================
 
 IMPORT os
 IMPORT ui
-IMPORT security          -- Optional: password encryption support
-IMPORT util              -- General utilities (date, crypto, etc.)
+IMPORT security        -- For password hashing (if available)
+IMPORT util            -- For crypto functions
 
-IMPORT FGL sy100_login   -- Handles user login logic
-IMPORT FGL utils_globals -- Common UI helper functions
-IMPORT FGL utils_db      -- Database connection helpers
-IMPORT FGL main_shell    -- The main application form
-IMPORT FGL main_menu     -- The application’s menu system
+IMPORT FGL sy100_login     -- Login handling
+IMPORT FGL utils_globals   -- UI utilities
+IMPORT FGL utils_db        -- Database utilities
+IMPORT FGL main_shell      -- Application shell form
+IMPORT FGL main_menu       -- Application menu logic
 
 
 -- ==============================================================
 -- CONFIGURATION CONSTANTS
 -- ==============================================================
 
-CONSTANT APP_NAME        = "XACT ERP System"
-CONSTANT APP_VERSION     = "1.0.0"
-CONSTANT STYLE_FILE      = "main_styles.4st"         -- Style sheet file
-CONSTANT MAIN_FORM       = "main_shell"              -- Main form name
-CONSTANT MAIN_WINDOW     = "w_main"                  -- Window name
-CONSTANT MAX_LOGIN_ATTEMPTS = 3                      -- Allowed retries
+CONSTANT MAX_LOGIN_ATTEMPTS = 3
+CONSTANT APP_NAME     = "XACT ERP System"
+CONSTANT APP_VERSION  = "1.0.0"
+CONSTANT STYLE_FILE   = "_main/main_styles.4st"  -- Style file (keep in project folder)
+CONSTANT MAIN_FORM    = "main_shell"              -- Form file (main_shell.4fd)
+CONSTANT MAIN_WINDOW  = "w_main"                  -- Window name
 
 
 -- ==============================================================
 -- GLOBAL VARIABLES
 -- ==============================================================
 
-DEFINE g_user_authenticated SMALLINT   -- Tracks if the user is logged in
-DEFINE g_debug_mode SMALLINT           -- Enables debug messages
-
+DEFINE g_user_authenticated SMALLINT
+DEFINE g_debug_mode SMALLINT
 
 -- ==============================================================
 -- MAIN ENTRY POINT
 -- ==============================================================
 
 MAIN
-    -- Disable Ctrl+C to prevent crashing
-    DEFER INTERRUPT
-
-    -- Optional: Hide the default screen window
+    -- Prevent program crash when user presses CTRL+C
     CALL utils_globals.hide_screen()
 
-    -- Enable debug mode (set to FALSE in production)
+    -- Enable debug messages (set to FALSE in production)
     LET g_debug_mode = TRUE
 
-    -- Step 1: Initialize the application (styles, database, etc.)
+    -- Initialize the application environment
     IF NOT initialize_application() THEN
         CALL utils_globals.show_error(
-            "Initialization failed! Please contact your system administrator.")
+            "Application initialization failed!" ||
+            "\n\nPlease contact your system administrator.")
         EXIT PROGRAM 1
     END IF
 
-    -- Step 2: Run login process (allows up to 3 attempts)
+    -- Run login screen with retry logic
     IF run_login_with_retry() THEN
+        -- If login successful, open main MDI container
         CALL open_main_container()
     ELSE
         CALL utils_globals.show_alert("Login failed or cancelled.", "System")
     END IF
 
-    -- Step 3: Perform cleanup on exit
+    -- Cleanup before exit
     CALL cleanup_application()
 
 END MAIN
 
 
 -- ==============================================================
--- FUNCTION: initialize_application
--- Purpose : Load styles, connect to database, set flags
+-- INITIALIZATION SECTION
 -- ==============================================================
 
 FUNCTION initialize_application() RETURNS SMALLINT
     DEFINE db_result SMALLINT
 
     TRY
-        -- Load application stylesheet
-        IF NOT utils_globals.load_ui_styles("main_styles.4st") THEN
-            DISPLAY "?  UI Style file not loaded — using default theme."
-        END IF
-    
+        -- Load the visual style for the application
+        -- CALL ui.Interface.loadStyles(STYLE_FILE)
+
         IF g_debug_mode THEN
-            DISPLAY "Loaded style file: ", STYLE_FILE
+            DISPLAY "Stylesheet loaded from: ", STYLE_FILE
         END IF
 
         -- Initialize database connection
         LET db_result = utils_db.initialize_database()
+
         IF NOT db_result THEN
-            CALL utils_globals.show_error("Database initialization failed.")
+            CALL utils_globals.show_error("Database initialization failed!")
             RETURN FALSE
         END IF
 
-        -- Initialize global variables
+        -- Initialize global flags
         LET g_user_authenticated = FALSE
 
         IF g_debug_mode THEN
-            DISPLAY "Application initialized successfully (v", APP_VERSION, ")"
+            DISPLAY "Application initialized successfully"
+            DISPLAY "Version: ", APP_VERSION
         END IF
 
         RETURN TRUE
 
     CATCH
-        DISPLAY "Error during initialization: ", STATUS
+        DISPLAY "ERROR during initialization: ", STATUS
         RETURN FALSE
     END TRY
 
@@ -124,8 +113,7 @@ END FUNCTION
 
 
 -- ==============================================================
--- FUNCTION: run_login_with_retry
--- Purpose : Allow up to 3 login attempts before exit
+-- LOGIN FLOW (with retry attempts)
 -- ==============================================================
 
 FUNCTION run_login_with_retry() RETURNS SMALLINT
@@ -136,7 +124,6 @@ FUNCTION run_login_with_retry() RETURNS SMALLINT
     LET retry_count = 0
 
     WHILE retry_count < MAX_LOGIN_ATTEMPTS
-        -- Show login screen
         LET login_result = sy100_login.login_user()
 
         IF login_result THEN
@@ -144,7 +131,7 @@ FUNCTION run_login_with_retry() RETURNS SMALLINT
             LET username = sy100_login.get_current_user()
 
             IF g_debug_mode THEN
-                DISPLAY "User logged in: ", username
+                DISPLAY "Login successful for user: ", username
             END IF
 
             RETURN TRUE
@@ -152,72 +139,111 @@ FUNCTION run_login_with_retry() RETURNS SMALLINT
             LET retry_count = retry_count + 1
 
             IF retry_count < MAX_LOGIN_ATTEMPTS THEN
-                CALL utils_globals.show_alert(
-                    "Login failed. Attempt " || retry_count || 
-                    " of " || MAX_LOGIN_ATTEMPTS, "Login Error")
+                IF retry_count = MAX_LOGIN_ATTEMPTS - 1 THEN
+                    CALL utils_globals.show_warning(
+                        "WARNING: This is your final login attempt!" ||
+                        "\n\nAccount will be locked after one more failed attempt.")
+                ELSE
+                    CALL utils_globals.show_alert(
+                        "Login failed. Attempt " || retry_count || " of " || MAX_LOGIN_ATTEMPTS,
+                        "Login Error")
+                END IF
             END IF
         END IF
     END WHILE
 
     CALL utils_globals.show_error(
-        "Too many failed login attempts. The system will now exit.")
+        "Maximum login attempts exceeded.\n\nApplication will close for security reasons.")
     RETURN FALSE
 
 END FUNCTION
 
 
+-- Simple wrapper to allow backward compatibility
+FUNCTION run_login() RETURNS SMALLINT
+    RETURN run_login_with_retry()
+END FUNCTION
+
+
 -- ==============================================================
--- FUNCTION: open_main_container
--- Purpose : Opens main MDI window and menu after login
+-- MAIN MDI CONTAINER
 -- ==============================================================
 
 FUNCTION open_main_container()
+    DEFINE w ui.Window
     DEFINE username STRING
 
     TRY
         LET username = sy100_login.get_current_user()
 
-        -- Open main MDI window
+        IF g_debug_mode THEN
+            DISPLAY "Opening main container for user: ", username
+        END IF
+
+        -- Open the main MDI window with its form
+        -- STYLE="mdi" enables multiple document interface mode
         OPEN WINDOW w_main WITH FORM "main_shell"
             ATTRIBUTES(STYLE="mdi", TEXT=APP_NAME || " - " || username)
 
-        -- Update dashboard title (if your form supports it)
-        CALL utils_globals.set_page_title("Welcome, " || username)
+        LET w = ui.Window.getCurrent()
 
+        IF w IS NULL THEN
+            CALL utils_globals.show_error("Failed to get current window reference.")
+            RETURN
+        END IF
 
-        -- Load main application menu
+        -- Set the page title on the dashboard (top area)
+        CALL utils_globals.set_page_title("Dashboard - " || username)
+
+        -- Launch the main menu after login
         CALL main_menu.main_application_menu()
 
-        -- Close main window after exiting menu
-        CLOSE WINDOW w_main
-
-        IF g_debug_mode THEN
-            DISPLAY "Main window closed."
+        -- After user exits menu, close main window
+        IF ui.Window.getCurrent() IS NOT NULL THEN
+            CLOSE WINDOW w_main
+            IF g_debug_mode THEN
+                DISPLAY "Main window closed successfully."
+            END IF
         END IF
 
     CATCH
-        CALL utils_globals.show_error("Error opening main container: " || STATUS)
+        CALL utils_globals.show_error("Error opening main container. STATUS: " || STATUS)
+
         IF ui.Window.getCurrent() IS NOT NULL THEN
             CLOSE WINDOW w_main
         END IF
+    END TRY
+
+END FUNCTION
+
+
+-- ==============================================================
+-- CLEANUP AND EXIT
+-- ==============================================================
+
+FUNCTION cleanup_application()
+    TRY
+        -- Close database connections if open
+        -- CALL utils_db.close_database()
+
+        -- Clear user session variables
+        LET g_user_authenticated = FALSE
+
+        DISPLAY "Application shutdown complete for user: ",
+            sy100_login.get_current_user()
+
+    CATCH
+        DISPLAY "Warning: Cleanup encountered errors - ", STATUS
     END TRY
 END FUNCTION
 
 
 -- ==============================================================
--- FUNCTION: cleanup_application
--- Purpose : Close DB and clear session on exit
+-- EMERGENCY EXIT HANDLER (Optional utility)
 -- ==============================================================
 
-FUNCTION cleanup_application()
-    TRY
-        -- CALL utils_db.close_database()  -- Uncomment if needed
-        LET g_user_authenticated = FALSE
-
-        DISPLAY "Application closed for user: ",
-            sy100_login.get_current_user()
-
-    CATCH
-        DISPLAY "Warning: Cleanup error: ", STATUS
-    END TRY
+FUNCTION emergency_exit(exit_code SMALLINT)
+    DISPLAY "EMERGENCY EXIT TRIGGERED - Code: ", exit_code
+    CALL cleanup_application()
+    EXIT PROGRAM exit_code
 END FUNCTION

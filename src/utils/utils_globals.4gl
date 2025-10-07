@@ -7,9 +7,59 @@
 # ==============================================================
 
 IMPORT ui
-IMPORT os
 IMPORT FGL fgldialog
+IMPORT FGL utils_db
 
+-- Global application variables
+DEFINE g_debug_mode SMALLINT
+DEFINE g_user_authenticated SMALLINT
+
+CONSTANT APP_NAME = "XACT DEMO System"
+CONSTANT APP_VERSION = "1.0.0"
+CONSTANT STYLE_FILE = "main_styles.4st" -- Style file (keep in project folder)
+
+-- ==============================================================
+-- INITIALIZATION SECTION
+-- ==============================================================
+
+FUNCTION initialize_application() RETURNS SMALLINT
+    DEFINE db_result SMALLINT
+
+    -- hide screen and disable ctrl+c
+    CALL hide_screen()
+
+    TRY
+        -- Load the visual style for the application
+        CALL ui.Interface.loadStyles(STYLE_FILE)
+
+        IF g_debug_mode THEN
+            DISPLAY "Stylesheet loaded from: ", STYLE_FILE
+        END IF
+
+        -- Initialize database connection
+        LET db_result = utils_db.initialize_database()
+
+        IF NOT db_result THEN
+            CALL show_error("Database initialization failed!")
+            RETURN FALSE
+        END IF
+
+        -- Initialize global flags
+        LET g_user_authenticated = FALSE
+
+        IF g_debug_mode THEN
+            DISPLAY "Application initialized successfully"
+            DISPLAY "Version: ", APP_VERSION
+        END IF
+
+        RETURN TRUE
+
+    CATCH
+        DISPLAY "ERROR during initialization: ", STATUS
+        RETURN FALSE
+    END TRY
+
+END FUNCTION
 
 -- =============================================================
 -- UI Utility Functions
@@ -22,7 +72,6 @@ FUNCTION set_child_container()
 END FUNCTION
 
 -- Global hide screen code
-
 FUNCTION hide_screen()
     -- Prevent CTRL+C interrupt crash
     DEFER INTERRUPT
@@ -31,52 +80,26 @@ FUNCTION hide_screen()
     CLOSE WINDOW SCREEN
 END FUNCTION
 
--- load system default styles
-FUNCTION load_ui_styles(p_stylefile STRING) RETURNS SMALLINT
-    DEFINE exists SMALLINT
-
-    TRY
-        -- -----------------------------------------
-        -- Check if the style file exists
-        -- -----------------------------------------
-        LET exists = os.Path.exists(p_stylefile)
-
-        IF NOT exists THEN
-            DISPLAY "?  Style file not found: ", p_stylefile
-            RETURN FALSE
-        END IF
-
-        -- -----------------------------------------
-        -- Attempt to load the styles
-        -- -----------------------------------------
-        CALL ui.Interface.loadStyles(p_stylefile)
-
-        DISPLAY "? Loaded UI style file: ", p_stylefile
-        RETURN TRUE
-
-    CATCH
-        DISPLAY "? Failed to load style file: ", p_stylefile
-        DISPLAY "   Error STATUS: ", STATUS
-        RETURN FALSE
-    END TRY
-END FUNCTION
-
-
 -- Show message with OK button
 FUNCTION show_message(p_message STRING, p_title STRING, style_name STRING)
     DEFINE l_title STRING
     DEFINE l_icon STRING
-    
+
     LET l_title = IIF(p_title IS NULL OR p_title = "", "Message", p_title)
-    
+
     CASE style_name
-        WHEN "info"     LET l_icon = "information"
-        WHEN "warning"  LET l_icon = "exclamation"
-        WHEN "error"    LET l_icon = "stop"
-        WHEN "question" LET l_icon = "question"
-        OTHERWISE       LET l_icon = "information"
+        WHEN "info"
+            LET l_icon = "information"
+        WHEN "warning"
+            LET l_icon = "exclamation"
+        WHEN "error"
+            LET l_icon = "stop"
+        WHEN "question"
+            LET l_icon = "question"
+        OTHERWISE
+            LET l_icon = "information"
     END CASE
-    
+
     CALL fgldialog.fgl_winmessage(l_title, p_message, l_icon)
 END FUNCTION
 
@@ -121,25 +144,26 @@ PUBLIC FUNCTION show_success(p_message STRING)
 END FUNCTION
 
 -- ==============================================================
--- Function: Confirmation dialog 
+-- Function: Confirmation dialog
 -- Purpose:  Ask user for confirmation (Yes/No)
 -- Returns:  TRUE if user clicked Yes, FALSE otherwise
 -- ==============================================================
 FUNCTION show_confirm(p_message STRING, p_title STRING)
     DEFINE l_title STRING
     DEFINE answer STRING
-    
+
     IF p_title IS NULL OR p_title = "" THEN
         LET l_title = "Confirm"
     ELSE
         LET l_title = p_title
     END IF
-    
-    LET answer = fgldialog.fgl_winQuestion(l_title, p_message, 
-                                  "no", "yes|no", "question", 0)
-    
+
+    LET answer =
+        fgldialog.fgl_winQuestion(
+            l_title, p_message, "no", "yes|no", "question", 0)
+
     RETURN (answer = "yes")
-    
+
 END FUNCTION
 
 -- Set window title
@@ -147,23 +171,8 @@ FUNCTION set_page_title(p_title STRING)
     DEFINE g_win ui.Window
     LET g_win = ui.Window.getCurrent()
     IF g_win IS NOT NULL THEN
-        CALL g_win.setText("XACT ERP – " || p_title)
+        CALL g_win.setText(APP_NAME || p_title)
     END IF
-END FUNCTION
-
--- Set form title
-FUNCTION set_form_title(p_title STRING, p_username STRING)
-    DEFINE f ui.Form
-
-    -- Get the currently active form object
-    LET f = ui.Window.getCurrent().getForm()
-
-    IF f IS NULL THEN
-        RETURN
-    END IF
-
-    -- Update the label element text
-    CALL f.setElementText("lbl_top_title", "XACT ERP – " || p_title || " | " || p_username)
 END FUNCTION
 
 -- Set form label text
@@ -171,6 +180,22 @@ FUNCTION set_form_lbl(lbl_name STRING, new_text STRING)
     DEFINE g_form ui.Form
     LET g_form = ui.Window.getCurrent().getForm()
     CALL g_form.setElementText(lbl_name, new_text)
+END FUNCTION
+
+
+# --------------------------------------------------------------
+# Generic UI field visibility and activation control
+# --------------------------------------------------------------
+
+# Hide or show a list of fields on the current form
+PUBLIC FUNCTION set_field_status(field_list DYNAMIC ARRAY OF STRING, p_hidden SMALLINT)
+    DEFINE f ui.Form
+    DEFINE i INTEGER
+
+    LET f = ui.Window.getCurrent().getForm()
+    FOR i = 1 TO field_list.getLength()
+        CALL f.setFieldHidden(field_list[i], p_hidden)
+    END FOR
 END FUNCTION
 
 -- =============================================================
@@ -270,7 +295,7 @@ FUNCTION is_valid_phone(p_phone STRING) RETURNS SMALLINT
     -- Remove spaces and dashes
     LET clean_phone = p_phone.trim()
 
-    IF LENGTH(clean_phone) < 10 OR LENGTH(clean_phone) >10 THEN
+    IF LENGTH(clean_phone) < 10 OR LENGTH(clean_phone) > 10 THEN
         RETURN FALSE
     END IF
 
@@ -294,4 +319,3 @@ FUNCTION handle_sql_error()
             CALL show_error("SQL Error (" || errnum || "): " || errmsg)
     END CASE
 END FUNCTION
-

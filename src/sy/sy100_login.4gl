@@ -1,140 +1,124 @@
 # ==============================================================
-# Program   :   sy100_login.4gl
-# Purpose   :   App entry point for authentication
-# Module    :   System (sy)
-# Number    :   100
-# Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.20.10
+# Program   : sy100_login.4gl
+# Purpose   : Handles user login and authentication
+# Module    : System (sy)
+# Author    : Bongani Dlamini
+# Version   : Genero BDL 3.20.10
 # ==============================================================
 
 IMPORT ui
 IMPORT FGL utils_globals
 
--- Global variables for user session
+-- --------------------------------------------------------------
+-- GLOBAL VARIABLES
+-- --------------------------------------------------------------
 DEFINE g_current_user STRING
-DEFINE g_user_role STRING
-DEFINE g_login_attempts SMALLINT
+DEFINE g_user_role    STRING
+DEFINE g_login_tries  SMALLINT
 
-FUNCTION login_user() RETURNS SMALLINT
-    DEFINE login_result SMALLINT
-    DEFINE f_username STRING
-    DEFINE f_password STRING
-    DEFINE max_attempts SMALLINT
-    DEFINE f_logo ui.Form
+CONSTANT MAX_LOGIN_ATTEMPTS = 3
 
-    LET max_attempts = 3
-    LET g_login_attempts = 0
-    LET login_result = FALSE
+-- --------------------------------------------------------------
+-- MAIN LOGIN FUNCTION
+-- --------------------------------------------------------------
+PUBLIC FUNCTION login_user() RETURNS SMALLINT
+    DEFINE f_username, f_password STRING
+    DEFINE f ui.Form
+    DEFINE ok SMALLINT
 
-    OPEN WINDOW w_login
-        WITH
-        FORM "sy100_login"
-        ATTRIBUTE(STYLE = "dialog", TEXT = "XactERP Login")
+    LET g_login_tries = 0
+    LET ok = FALSE
 
-    LET f_logo = ui.Window.getCurrent().getForm()
-    CALL f_logo.setElementImage("company_logo", "logo.png")
+    -- Open login window
+    OPEN WINDOW w_login WITH FORM "sy100_login"
+        ATTRIBUTES(STYLE="dialog", TEXT="XACT ERP Login")
+
+    -- Show company logo if available
+    LET f = ui.Window.getCurrent().getForm()
+    CALL f.setElementImage("company_logo", "logo.png")
 
     DIALOG
         INPUT BY NAME f_username, f_password
+
             BEFORE INPUT
                 CLEAR FORM
                 NEXT FIELD f_username
 
             AFTER FIELD f_password
-                LET login_result =
-                    try_login(f_username, f_password, max_attempts)
-                IF login_result = TRUE THEN
+                IF try_login(f_username, f_password) THEN
+                    LET ok = TRUE
                     EXIT DIALOG
-                END IF
-
-                IF g_login_attempts < max_attempts THEN
-                    NEXT FIELD f_password
                 ELSE
-                    EXIT DIALOG
+                    IF g_login_tries < MAX_LOGIN_ATTEMPTS THEN
+                        NEXT FIELD f_password
+                    ELSE
+                        EXIT DIALOG
+                    END IF
                 END IF
 
             ON ACTION cancel
                 IF confirm_exit_login() THEN
-                    LET login_result = FALSE
                     EXIT DIALOG
                 END IF
-
         END INPUT
     END DIALOG
 
     CLOSE WINDOW w_login
-    RETURN login_result
+    RETURN ok
 END FUNCTION
 
--- LOGIN CHECK
-FUNCTION try_login(
-    f_username STRING, f_password STRING, max_attempts SMALLINT)
-    RETURNS SMALLINT
-    DEFINE result SMALLINT
-    LET result = FALSE
+-- --------------------------------------------------------------
+-- TRY LOGIN (handles retry and validation)
+-- --------------------------------------------------------------
+FUNCTION try_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
+    DEFINE valid SMALLINT
+    LET g_login_tries = g_login_tries + 1
+    LET valid = FALSE
 
-    LET g_login_attempts = g_login_attempts + 1
-    LET f_username = f_username.trim()
-    LET f_password = f_password.trim()
-
-    IF validate_login(f_username, f_password) THEN
-        LET g_current_user = f_username
-        MESSAGE "Welcome " || f_username || "!"
-        LET result = TRUE
+    IF validate_login(p_user.trim(), p_pass.trim()) THEN
+        LET g_current_user = p_user
+        MESSAGE "Welcome " || p_user || "!"
+        LET valid = TRUE
     ELSE
-        IF g_login_attempts >= max_attempts THEN
+        IF g_login_tries >= MAX_LOGIN_ATTEMPTS THEN
             ERROR "Maximum login attempts exceeded."
         ELSE
-            ERROR "Invalid credentials. Attempt "
-                || g_login_attempts
-                || " of "
-                || max_attempts
+            ERROR "Invalid credentials (" || g_login_tries || "/" ||
+                   MAX_LOGIN_ATTEMPTS || ")"
         END IF
     END IF
-    RETURN result
+
+    RETURN valid
 END FUNCTION
 
--- HARDCODED DEMO VALIDATION (replace with DB later)
-FUNCTION validate_login(f_username STRING, f_password STRING) RETURNS SMALLINT
-    CASE f_username.toLowerCase()
-        WHEN "admin"
-            IF f_password = "1234" THEN
-                LET g_user_role = "Administrator"
-                RETURN TRUE
-            END IF
-        WHEN "user"
-            IF f_password = "user123" THEN
-                LET g_user_role = "User"
-                RETURN TRUE
-            END IF
-        WHEN "demo"
-            IF f_password = "demo" THEN
-                LET g_user_role = "Demo User"
-                RETURN TRUE
-            END IF
+-- --------------------------------------------------------------
+-- SIMPLE DEMO VALIDATION (to replace with DB query later)
+-- --------------------------------------------------------------
+FUNCTION validate_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
+    CASE p_user.toLowerCase()
+        WHEN "admin" IF p_pass = "1234" THEN LET g_user_role = "Administrator"; RETURN TRUE END IF
+        WHEN "user"  IF p_pass = "user123" THEN LET g_user_role = "User"; RETURN TRUE END IF
+        WHEN "demo"  IF p_pass = "demo" THEN LET g_user_role = "Demo User"; RETURN TRUE END IF
     END CASE
-
     RETURN FALSE
 END FUNCTION
 
--- SESSION HELPERS
-FUNCTION get_current_user() RETURNS STRING
+-- --------------------------------------------------------------
+-- SESSION GETTERS
+-- --------------------------------------------------------------
+PUBLIC FUNCTION get_current_user() RETURNS STRING
     RETURN g_current_user
 END FUNCTION
 
-FUNCTION get_user_role() RETURNS STRING
+PUBLIC FUNCTION get_user_role() RETURNS STRING
     RETURN g_user_role
 END FUNCTION
 
+-- --------------------------------------------------------------
+-- CONFIRM EXIT PROMPT
+-- --------------------------------------------------------------
 FUNCTION confirm_exit_login() RETURNS SMALLINT
-    DEFINE result SMALLINT
-    MENU "Confirm Exit" ATTRIBUTE(STYLE = "dialog")
-        COMMAND "Yes"
-            LET result = TRUE
-            EXIT MENU
-        COMMAND "No"
-            LET result = FALSE
-            EXIT MENU
-    END MENU
-    RETURN result
+    DEFINE ans STRING
+    LET ans = utils_globals.show_confirm("Exit Login", "Do you want to cancel login?")
+    RETURN ans = "yes"
 END FUNCTION

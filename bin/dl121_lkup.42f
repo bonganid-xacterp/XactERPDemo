@@ -3,10 +3,10 @@
   <LStr text="Debtors Lookup"/>
   <VBox name="vbox1">
     <Grid name="grid1" width="112" height="22">
-      <Label name="p_title" width="80" text="" sizePolicy="dynamic" posY="0" posX="1" gridWidth="80">
-        <LStr text=""/>
+      <Label name="lbl_title" width="80" text="DEBTORS LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="80">
+        <LStr text="DEBTORS LOOKUP"/>
       </Label>
-      <Table pageSize="5" name="xactapp_db1" width="111" posY="1" posX="1" gridWidth="111" gridHeight="6" tabName="record3">
+      <Table pageSize="5" name="f_debtors_list" width="111" posY="1" posX="1" gridWidth="111" gridHeight="6" tabName="r_debtors_list">
         <TableColumn name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" text="Code" tabIndex="1">
           <Edit width="20" scroll="1"/>
           <LStr text="Code"/>
@@ -51,7 +51,7 @@
   <RecordView tabName="formonly">
     <Link colName="f_search" fieldIdRef="6"/>
   </RecordView>
-  <RecordView tabName="record2">
+  <RecordView tabName="f_debtors_search">
     <Link colName="f_search" fieldIdRef="6"/>
   </RecordView>
 </Form>

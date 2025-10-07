@@ -30,7 +30,7 @@
       <VBox gridHeight="19" gridWidth="126" name="vbox1" posX="2" posY="0">
         <Grid gridHeight="6" gridWidth="126" name="dl01_mast" posX="0" posY="1">
           <Label gridHeight="1" gridWidth="6" name="lbl_dl_acc_code" posX="1" posY="1" text="Acc Code"/>
-          <ButtonEdit action="find" colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="dl01_mast.acc_code" posX="8" posY="1" program="dl_lookup" repeat="false" sqlTabName="dl01_mast" tabIndex="1" title="edit1" widget="ButtonEdit"/>
+          <ButtonEdit action="lookup_acc_code" colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" image="fa-binoculars" justify="left" name="dl01_mast.acc_code" posX="8" posY="1" program="" repeat="false" sqlTabName="dl01_mast" tabIndex="1" title="edit1" widget="ButtonEdit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_dl_name" posX="21" posY="1" text="Debtor Name"/>
           <Edit colName="cust_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="44" name="dl01_mast.cust_name" posX="32" posY="1" repeat="false" sqlTabName="dl01_mast" tabIndex="2" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="6" name="lbl_dl_phone" posX="1" posY="2" text="Phone"/>
@@ -87,6 +87,6 @@
     </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM44AAKnAKzMzoAAAzT9QYk3S8an8AQAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM5OszYzAKzMzpszNtT9QYk3S8an8AQAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQ==]]>
   </DiagramLayout>
 </ManagedForm>

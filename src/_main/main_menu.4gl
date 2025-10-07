@@ -47,10 +47,10 @@ DEFINE g_last_activity DATETIME YEAR TO SECOND
 PUBLIC FUNCTION main_application_menu()
     DEFINE current_user STRING
 
-    -- 1. Get logged-in username
+    -- Get logged-in username
     LET current_user = sy100_login.get_current_user()
 
-    -- 2. Track session start time
+    -- Track session start time
     LET g_last_activity = CURRENT
 
     IF g_debug_mode THEN
