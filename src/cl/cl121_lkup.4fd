@@ -27,7 +27,7 @@
           </Edit>
         </Table>
         <Label gridHeight="1" gridWidth="9" name="lbl_filter" posX="1" posY="14" text="Filter"/>
-        <Edit fieldId="4" gridHeight="1" gridWidth="29" length="100" name="f_search" posX="11" posY="14" program="filter_records" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Edit fieldId="4" gridHeight="1" gridWidth="29" length="100" name="f_search" posX="11" posY="14" program="record_search" tabIndex="-1" title="edit1" widget="Edit"/>
       </Grid>
     </VBox>
   </Form>

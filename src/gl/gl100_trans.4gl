@@ -5,5 +5,5 @@
 # Module    :   Debtors
 # Number    :   100
 # Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.20.10
+# Version   :   Genero ver 3.20.10
 # ==============================================================

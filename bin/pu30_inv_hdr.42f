@@ -87,16 +87,6 @@
       </Table>
     </Grid>
   </VBox>
-  <RecordView tabName="pu30_det">
-    <Link colName="doc_no" fieldIdRef="8"/>
-    <Link colName="item_no" fieldIdRef="9"/>
-    <Link colName="stock_code" fieldIdRef="10"/>
-    <Link colName="batch_id" fieldIdRef="11"/>
-    <Link colName="expiry_date" fieldIdRef="12"/>
-    <Link colName="qty" fieldIdRef="13"/>
-    <Link colName="unit_cost" fieldIdRef="14"/>
-    <Link colName="total" fieldIdRef="15"/>
-  </RecordView>
   <RecordView tabName="pu30_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>
     <Link colName="acc_code" fieldIdRef="1"/>
@@ -106,6 +96,16 @@
     <Link colName="status" fieldIdRef="5"/>
     <Link colName="created_at" fieldIdRef="6"/>
     <Link colName="created_by" fieldIdRef="7"/>
+  </RecordView>
+  <RecordView tabName="pu30_det">
+    <Link colName="doc_no" fieldIdRef="8"/>
+    <Link colName="item_no" fieldIdRef="9"/>
+    <Link colName="stock_code" fieldIdRef="10"/>
+    <Link colName="batch_id" fieldIdRef="11"/>
+    <Link colName="expiry_date" fieldIdRef="12"/>
+    <Link colName="qty" fieldIdRef="13"/>
+    <Link colName="unit_cost" fieldIdRef="14"/>
+    <Link colName="total" fieldIdRef="15"/>
   </RecordView>
   <RecordView tabName="record3">
     <Link colName="doc_no" fieldIdRef="0"/>

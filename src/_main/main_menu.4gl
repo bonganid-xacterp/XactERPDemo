@@ -4,7 +4,7 @@
 --              Supports Parent/Child window management (MDI style).
 -- Module    : Main
 -- Author    : Bongani Dlamini
--- Version   : Genero BDL 3.20.10
+-- Version   : Genero ver 3.20.10
 -- ==============================================================
 
 
@@ -83,57 +83,57 @@ PUBLIC FUNCTION main_application_menu()
             CALL launch_module("cl120_enq", "Creditors Enquiry", "CL_VIEW")
 
         ON ACTION cl_maint
-            CALL launch_module("cl101_mast", "Creditors Maintenance", "CL_EDIT")
+            -- CALL launch_module("cl101_mast", "Creditors Maintenance", "CL_EDIT")
 
 
         -- ------------------------------------------------------
         -- STOCK MODULE
         -- ------------------------------------------------------
         ON ACTION st_enq
-            CALL launch_module("st120_enq", "Stock Enquiry", "ST_VIEW")
+            -- CALL launch_module("st120_enq", "Stock Enquiry", "ST_VIEW")
 
         ON ACTION st_maint
-            CALL launch_module("st101_mast", "Stock Maintenance", "ST_EDIT")
+            -- CALL launch_module("st101_mast", "Stock Maintenance", "ST_EDIT")
 
 
         -- ------------------------------------------------------
         -- GENERAL LEDGER MODULE
         -- ------------------------------------------------------
         ON ACTION gl_enq
-            CALL launch_module("gl120_enq", "GL Enquiry", "GL_VIEW")
+            -- CALL launch_module("gl120_enq", "GL Enquiry", "GL_VIEW")
 
         ON ACTION gl_maint
-            CALL launch_module("gl101_acc", "GL Maintenance", "GL_EDIT")
+            -- CALL launch_module("gl101_acc", "GL Maintenance", "GL_EDIT")
 
 
         -- ------------------------------------------------------
         -- SALES MODULE
         -- ------------------------------------------------------
         ON ACTION sa_ord_enq
-            CALL launch_module("sa120_enq", "Sales Orders Enquiry", "SA_VIEW")
+            -- CALL launch_module("sa120_enq", "Sales Orders Enquiry", "SA_VIEW")
 
         ON ACTION sa_ord_maint
-            CALL launch_module("sa130_hdr", "Sales Orders Maintenance", "SA_EDIT")
+            -- CALL launch_module("sa130_hdr", "Sales Orders Maintenance", "SA_EDIT")
 
 
         -- ------------------------------------------------------
         -- PURCHASES MODULE
         -- ------------------------------------------------------
         ON ACTION pu_po_enq
-            CALL launch_module("pu120_enq", "Purchase Orders Enquiry", "PU_VIEW")
+            -- CALL launch_module("pu120_enq", "Purchase Orders Enquiry", "PU_VIEW")
 
         ON ACTION pu_po_maint
-            CALL launch_module("pu130_hdr", "Purchase Orders Maintenance", "PU_EDIT")
+            -- CALL launch_module("pu130_hdr", "Purchase Orders Maintenance", "PU_EDIT")
 
 
         -- ------------------------------------------------------
         -- SYSTEM ADMINISTRATION
         -- ------------------------------------------------------
         ON ACTION sy_usr_enq
-            CALL launch_module("sy120_enq", "Users Enquiry", "SY_VIEW")
+            -- CALL launch_module("sy120_enq", "Users Enquiry", "SY_VIEW")
 
         ON ACTION sy_usr_maint
-            CALL launch_module("sy100_user", "Users Maintenance", "SY_ADMIN")
+            -- CALL launch_module("sy100_user", "Users Maintenance", "SY_ADMIN")
 
 
         -- ------------------------------------------------------

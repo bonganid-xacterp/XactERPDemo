@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0ea3406e-18c8-4527-a827-c6b038300d76}">
+<ManagedForm databaseName="xactdemo_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0ea3406e-18c8-4527-a827-c6b038300d76}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
-    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="80" name="grid1" posX="0" posY="1"/>
-    </VBox>
+  <Record masterTable="st02_cat" name="rec_st_cat" uid="{ec6fb53d-5529-4512-aafc-e90e27b120b2}">
+    <RecordField colName="cat_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="st02_cat.cat_code" sqlTabName="st02_cat" uid="{d964732b-d9d6-4cae-b9c9-544b4cc23d52}"/>
+    <RecordField colName="cat_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="st02_cat.cat_name" sqlTabName="st02_cat" uid="{b58f2874-2330-4990-8c73-f92861bcf14e}"/>
+    <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st02_cat.description" sqlTabName="st02_cat" uid="{bbced228-51a1-4e00-8591-03ca75b03341}"/>
+    <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="st02_cat.status" sqlTabName="st02_cat" uid="{b3c65faa-c287-4ea3-92a8-54fb859cc8c6}"/>
+  </Record>
+  <Form fourSTFile="../_main/main_styles.4st" gridHeight="4" gridWidth="90" name="frm_st_cat" text="Form" windowStyle="child">
+    <HBox gridHeight="4" gridWidth="90" name="hbox1" posX="0" posY="0">
+      <Grid gridHeight="4" gridWidth="86" name="st02_cat_grd" posX="2" posY="0">
+        <Label gridHeight="1" gridWidth="11" name="st02_mast_cat_code" posX="1" posY="1" text="Category Code">
+          <Initializer text="dbschema:st02_mast.cat_code/@label"/>
+        </Label>
+        <ButtonEdit colName="cat_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st02_cat.cat_code" posX="13" posY="1" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="ButtonEdit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ButtonEdit>
+        <Label gridHeight="1" gridWidth="8" name="st02_mast_cat_name" posX="44" posY="1" text="Category Name">
+          <Initializer text="dbschema:st02_mast.cat_name/@label"/>
+        </Label>
+        <Edit colName="cat_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.cat_name" posX="53" posY="1" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="st02_mast_description" posX="1" posY="2" text="Description">
+          <Initializer text="dbschema:st02_mast.description/@label"/>
+        </Label>
+        <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.description" posX="13" posY="2" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="8" name="st02_mast_status" posX="44" posY="2" text="Status">
+          <Initializer text="dbschema:st02_mast.status/@label"/>
+        </Label>
+        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="Active, Inactive" name="st02_cat.status" notNull="true" posX="53" posY="2" required="true" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          <Item lstrtext="false" name="0" text="Active"/>
+          <Item lstrtext="false" name="1" text="Inactive"/>
+        </ComboBox>
+      </Grid>
+    </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAg==]]>
+    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

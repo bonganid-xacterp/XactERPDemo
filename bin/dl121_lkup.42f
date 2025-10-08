@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Debtors Lookup" windowStyle="dialog4" width="112" height="22">
+<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Debtors Lookup" windowStyle="dialog4" width="70" height="15">
   <LStr text="Debtors Lookup"/>
   <VBox name="vbox1">
-    <Grid name="grid1" width="112" height="22">
-      <Label name="lbl_title" width="80" text="DEBTORS LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="80">
+    <Grid name="grid1" width="70" height="15">
+      <Label name="lbl_title" width="60" text="DEBTORS LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="60">
         <LStr text="DEBTORS LOOKUP"/>
       </Label>
-      <Table pageSize="5" name="f_debtors_list" width="111" posY="1" posX="1" gridWidth="111" gridHeight="6" tabName="r_debtors_list">
+      <Table pageSize="5" name="f_debtors_list" width="69" posY="1" posX="1" gridWidth="69" gridHeight="12" tabName="r_debtors_list">
         <TableColumn name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" text="Code" tabIndex="1">
           <Edit width="20" scroll="1"/>
           <LStr text="Code"/>
@@ -15,16 +15,20 @@
           <Edit width="30" scroll="1"/>
           <LStr text="Customer Name"/>
         </TableColumn>
-        <TableColumn name="dl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="2" sqlTabName="dl01_mast" text="Status" tabIndex="3" numAlign="1">
+        <TableColumn name="dl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="2" sqlTabName="dl01_mast" text="Status" hidden="1" tabIndex="3" numAlign="1">
           <Edit width="6" scroll="1"/>
           <LStr text="Status"/>
         </TableColumn>
+        <TableColumn name="formonly.status_lbl" colName="status_lbl" fieldId="3" sqlTabName="formonly" text="Status" tabIndex="4">
+          <Edit width="8"/>
+          <LStr text="Status"/>
+        </TableColumn>
       </Table>
-      <Label name="lbl_filter" width="9" text="Filter" posY="7" posX="1" gridWidth="9">
+      <Label name="lbl_filter" width="9" text="Filter" posY="13" posX="1" gridWidth="9">
         <LStr text="Filter"/>
       </Label>
-      <FormField name="formonly.f_search" colName="f_search" fieldId="3" sqlTabName="formonly" tabIndex="4">
-        <Edit width="29" posY="7" posX="11" gridWidth="29"/>
+      <FormField name="formonly.f_search" colName="f_search" fieldId="4" sqlTabName="formonly" tabIndex="5">
+        <Edit width="29" posY="13" posX="11" gridWidth="29"/>
       </FormField>
     </Grid>
   </VBox>
@@ -34,9 +38,10 @@
     <Link colName="status" fieldIdRef="2"/>
   </RecordView>
   <RecordView tabName="formonly">
-    <Link colName="f_search" fieldIdRef="3"/>
+    <Link colName="status_lbl" fieldIdRef="3"/>
+    <Link colName="f_search" fieldIdRef="4"/>
   </RecordView>
-  <RecordView tabName="f_debtors_search">
-    <Link colName="f_search" fieldIdRef="3"/>
+  <RecordView tabName="f_search">
+    <Link colName="f_search" fieldIdRef="4"/>
   </RecordView>
 </Form>

@@ -2,7 +2,7 @@
 -- Program   : utils_db.4gl
 -- Purpose   : Database connection and initialization utilities
 -- Author    : Bongani Dlamini
--- Version   : Genero BDL 3.20.10
+-- Version   : Genero ver 3.20.10
 -- ==============================================================
 
 -- Establish connection to PostgreSQL database

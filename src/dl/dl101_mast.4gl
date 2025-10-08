@@ -4,7 +4,7 @@
 -- Module    : Debtors (dl)
 -- Number    : 101
 -- Author    : Bongani Dlamini
--- Version   : Genero BDL 3.20.10
+-- Version   : Genero ver 3.20.10
 -- ==============================================================
 
 IMPORT ui
@@ -20,7 +20,6 @@ SCHEMA xactdemo_db
 -- Record definition
 -- ==============================================================
 DEFINE rec_mast RECORD
-
     acc_code LIKE dl01_mast.acc_code,
     cust_name LIKE dl01_mast.cust_name,
     phone LIKE dl01_mast.phone,
@@ -32,6 +31,8 @@ DEFINE rec_mast RECORD
     cr_limit LIKE dl01_mast.cr_limit,
     balance LIKE dl01_mast.balance
 END RECORD
+
+DEFINE c_rec_num STRING 
 
 -- ==============================================================
 -- MAIN
@@ -59,17 +60,19 @@ FUNCTION run_debtors_master()
 
         COMMAND "Find"
             LET code = query_debtor()
-            IF code IS NOT NULL AND code <> "" THEN
+            IF code IS NOT NULL THEN
                 CALL load_debtor_by_code(code)
             ELSE
                 CALL utils_globals.show_info("No record selected.")
             END IF
 
-        COMMAND "Create"
+        COMMAND "New"
             CALL add_debtor()
 
         COMMAND "Edit"
             CALL edit_debtor()
+
+        COMMAND "Update"
 
         COMMAND "Next"
             CALL next_debtor()
@@ -91,164 +94,13 @@ FUNCTION query_debtor() RETURNS STRING
     DEFINE selected_code STRING
 
     -- Call the popup dialog from the lookup module
-    LET selected_code = dl121_lkup.display_debt_list()
+    LET selected_code = dl121_lkup.fetch_debt_list()
 
     IF selected_code IS NULL OR selected_code = "" THEN
         CALL utils_globals.show_info("No record selected.")
-    ELSE
-        CALL utils_globals.show_success("Selected: " || selected_code)
     END IF
 
     RETURN selected_code
-END FUNCTION
-
--- ==============================================================
--- Alternative version with search capability using f_search field
--- ==============================================================
-FUNCTION load_lookup_form_with_search() RETURNS STRING
-    DEFINE selected_code STRING
-    DEFINE debt_arr DYNAMIC ARRAY OF RECORD
-        acc_code LIKE dl01_mast.acc_code,
-        cust_name LIKE dl01_mast.cust_name,
-        phone LIKE dl01_mast.phone,
-        balance LIKE dl01_mast.balance
-    END RECORD
-    DEFINE search_text STRING
-    DEFINE sel SMALLINT
-    DEFINE row_count INTEGER
-
-    LET selected_code = NULL
-    LET search_text = ""
-
-    -- Load all records initially
-    CALL load_debtors_for_lookup(search_text) RETURNING debt_arr, row_count
-
-    IF row_count = 0 THEN
-        CALL utils_globals.show_info("No debtor records found.")
-        RETURN NULL
-    END IF
-
-    OPEN WINDOW w_lkup WITH FORM "dl121_lkup" ATTRIBUTES(STYLE = "dialog")
-
-    DIALOG ATTRIBUTES(UNBUFFERED)
-
-        INPUT search_text FROM f_search
-            ON CHANGE search_text
-                -- Reload data based on search
-                CALL load_debtors_for_lookup(
-                    search_text)
-                    RETURNING debt_arr, row_count
-                CALL DIALOG.setCurrentRow("tbl_dl01", 1)
-        END INPUT
-
-        DISPLAY ARRAY debt_arr TO tbl_dl01.*
-
-            BEFORE DISPLAY
-                CALL DIALOG.setCurrentRow("tbl_dl01", 1)
-
-            ON ACTION accept
-                LET sel = DIALOG.getCurrentRow("tbl_dl01")
-                IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                    LET selected_code = debt_arr[sel].acc_code
-                    EXIT DIALOG
-                END IF
-
-            ON ACTION cancel
-                LET selected_code = NULL
-                EXIT DIALOG
-
-            ON ACTION doubleclick
-                LET sel = DIALOG.getCurrentRow("tbl_dl01")
-                IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                    LET selected_code = debt_arr[sel].acc_code
-                    EXIT DIALOG
-                END IF
-
-            ON KEY(RETURN)
-                LET sel = DIALOG.getCurrentRow("tbl_dl01")
-                IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                    LET selected_code = debt_arr[sel].acc_code
-                    EXIT DIALOG
-                END IF
-
-        END DISPLAY
-
-    END DIALOG
-
-    CLOSE WINDOW w_lkup
-
-    RETURN selected_code
-
-END FUNCTION
-
--- Helper function to load debtors with optional search filter
-FUNCTION load_debtors_for_lookup(search_filter STRING)
-    RETURNS(
-        DYNAMIC ARRAY OF RECORD
-            acc_code LIKE dl01_mast.acc_code,
-            cust_name LIKE dl01_mast.cust_name,
-            phone LIKE dl01_mast.phone,
-            balance LIKE dl01_mast.balance
-        END RECORD,
-        INTEGER)
-
-    DEFINE rec RECORD
-        acc_code LIKE dl01_mast.acc_code,
-        cust_name LIKE dl01_mast.cust_name,
-        phone LIKE dl01_mast.phone,
-        balance LIKE dl01_mast.balance
-    END RECORD
-    DEFINE debt_arr DYNAMIC ARRAY OF RECORD
-        acc_code LIKE dl01_mast.acc_code,
-        cust_name LIKE dl01_mast.cust_name,
-        phone LIKE dl01_mast.phone,
-        balance LIKE dl01_mast.balance
-    END RECORD
-    DEFINE sql_stmt STRING
-    DEFINE row_count INTEGER
-
-    CALL debt_arr.clear()
-    LET row_count = 0
-
-    -- Build SQL with search filter
-    LET sql_stmt = "SELECT acc_code, cust_name, phone, balance FROM dl01_mast"
-
-    IF search_filter IS NOT NULL AND search_filter.getLength() > 0 THEN
-        LET sql_stmt =
-            sql_stmt
-                || " WHERE acc_code LIKE '%"
-                || search_filter
-                || "%'"
-                || " OR cust_name LIKE '%"
-                || search_filter
-                || "%'"
-                || " OR phone LIKE '%"
-                || search_filter
-                || "%'"
-    END IF
-
-    LET sql_stmt = sql_stmt || " ORDER BY acc_code"
-
-    WHENEVER ERROR CONTINUE
-    PREPARE debt_prep FROM sql_stmt
-    DECLARE debt_csr2 CURSOR FOR debt_prep
-    OPEN debt_csr2
-
-    IF SQLCA.SQLCODE = 0 THEN
-        FETCH debt_csr2 INTO rec.*
-        WHILE SQLCA.SQLCODE = 0
-            LET row_count = row_count + 1
-            LET debt_arr[row_count].* = rec.*
-            FETCH debt_csr2 INTO rec.*
-        END WHILE
-    END IF
-
-    CLOSE debt_csr2
-    FREE debt_prep
-    WHENEVER ERROR STOP
-
-    RETURN debt_arr, row_count
-
 END FUNCTION
 
 -- ==============================================================
@@ -274,8 +126,14 @@ END FUNCTION
 -- ==============================================================
 FUNCTION add_debtor()
     DEFINE dup_found SMALLINT
-    LET rec_mast.status = 1
+
+    
     CLEAR FORM
+    -- set defaults for the form
+    LET rec_mast.status = 1
+    LET rec_mast.balance = 0.00
+    LET rec_mast.cr_limit = 0.00
+    
     DIALOG
         INPUT BY NAME rec_mast.*
 -- validattion

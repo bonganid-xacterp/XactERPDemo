@@ -102,17 +102,6 @@
       </Group>
     </Grid>
   </VBox>
-  <RecordView tabName="sa31_det">
-    <Link colName="doc_no" fieldIdRef="9"/>
-    <Link colName="item_no" fieldIdRef="10"/>
-    <Link colName="stock_code" fieldIdRef="11"/>
-    <Link colName="batch_id" fieldIdRef="12"/>
-    <Link colName="qty" fieldIdRef="13"/>
-    <Link colName="unit_cost" fieldIdRef="14"/>
-    <Link colName="unit_sell" fieldIdRef="15"/>
-    <Link colName="disc" fieldIdRef="16"/>
-    <Link colName="total" fieldIdRef="17"/>
-  </RecordView>
   <RecordView tabName="sa31_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>
     <Link colName="acc_code" fieldIdRef="1"/>
@@ -123,6 +112,17 @@
     <Link colName="status" fieldIdRef="6"/>
     <Link colName="created_at" fieldIdRef="7"/>
     <Link colName="created_by" fieldIdRef="8"/>
+  </RecordView>
+  <RecordView tabName="sa31_det">
+    <Link colName="doc_no" fieldIdRef="9"/>
+    <Link colName="item_no" fieldIdRef="10"/>
+    <Link colName="stock_code" fieldIdRef="11"/>
+    <Link colName="batch_id" fieldIdRef="12"/>
+    <Link colName="qty" fieldIdRef="13"/>
+    <Link colName="unit_cost" fieldIdRef="14"/>
+    <Link colName="unit_sell" fieldIdRef="15"/>
+    <Link colName="disc" fieldIdRef="16"/>
+    <Link colName="total" fieldIdRef="17"/>
   </RecordView>
   <RecordView tabName="record4">
     <Link colName="doc_no" fieldIdRef="0"/>

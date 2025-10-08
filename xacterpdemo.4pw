@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Project defaultApplication="396525034" gstVersion="3140a" version="3.3">
+<Project defaultApplication="409572948" gstVersion="3140a" version="3.3">
   <Settings>
     <DynamicProperties version="2">
       <DynamicProperty description="Accent color (Android 5.0 and later)" initialValue="#9575CD" isDefaultInherited="false" isHidden="false" label="Accent color" name="gma-accent-color" readOnly="false" type="COLOR"/>
@@ -65,7 +65,7 @@
   <LanguageList version="1.0"/>
   <PlatformList version="1.0"/>
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile,dir:res=$(ProjectDir)/src/res" id="147973800" label="erpdemoapp" language="Genero">
-    <Group environment="dir:FGLRESOURCEPATH=$(ProjectDir)/src/res,filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile,dir:FGLDATABASE=$(ProjectDir)/database,file:Logo=$(ProjectDir)/src/res/logo.png,file:FGLSTYLES=$(ProjectDir)/src/res/main_styles.4st" id="39840687" label="src">
+    <Group environment="dir:FGLRESOURCEPATH=$(ProjectDir)/src/res,filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile,dir:FGLDATABASE=$(ProjectDir)/database,file:Logo=$(ProjectDir)/src/res/logo.png,file:FGLSTYLES=$(ProjectDir)/src/_main/main_styles.4st" id="39840687" label="src">
       <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,31393700,409572948,45766396,95666062,276307902,206295008,757682379,39599040,396525034,782461791,33552074,960354642" id="221858380" label="_main">
         <File filePath="src/_main/main_app.4gl"/>
         <File filePath="src/_main/main_menu.4gl"/>
@@ -74,6 +74,9 @@
         <File filePath="src/_main/main_styles.4st"/>
       </Application>
       <Application binaryName="cl" dependencies="497700,56784492,104908716,31764552,782461791" id="396525034" label="cl">
+        <VirtualFolder label="models">
+          <File filePath="src/cl/cl101_mast_model.4gl"/>
+        </VirtualFolder>
         <File filePath="src/cl/cl101_mast.4fd"/>
         <File filePath="src/cl/cl101_mast.4gl"/>
         <File filePath="src/cl/cl120_enq.4fd"/>
@@ -101,6 +104,7 @@
         <File filePath="src/dl/dl130_trans.4gl"/>
         <File filePath="src/dl/dl140_hist.4fd"/>
         <File filePath="src/dl/dl140_hist.4gl"/>
+        <File filePath="src/dl/dl_model.4gl"/>
       </Application>
       <Application binaryName="gl" dependencies="497700,56784492,104908716,31764552,782461791" id="276307902" label="gl">
         <File filePath="src/gl/gl100_trans.4fd"/>
@@ -159,16 +163,26 @@
         <File filePath="src/sa/sa31_ord_hdr.4fd"/>
       </Application>
       <Application binaryName="st" dependencies="497700,104908716,31764552,782461791" id="757682379" label="st">
-        <File filePath="src/st/st02_wh_cat.4fd"/>
-        <File filePath="src/st/st101_mast.4fd"/>
-        <File filePath="src/st/st101_mast.4gl"/>
-        <File filePath="src/st/st102_cat.4fd"/>
-        <File filePath="src/st/st102_cat.4gl"/>
+        <VirtualFolder label="Stock">
+          <File filePath="src/st/st101_mast.4fd"/>
+          <File filePath="src/st/st101_mast.4gl"/>
+        </VirtualFolder>
+        <VirtualFolder label="Stock_Category">
+          <File filePath="src/st/st102_cat.4fd"/>
+          <File filePath="src/st/st102_cat.4gl"/>
+        </VirtualFolder>
+        <VirtualFolder label="StockTransfer">
+          <File filePath="src/st/st130_trans.4fd"/>
+          <File filePath="src/st/st130_trans.4gl"/>
+        </VirtualFolder>
+        <VirtualFolder label="Warehouse">
+          <File filePath="src/st/st02_wh_lkup.4fd"/>
+          <File filePath="src/st/st02_wh_lkup.4gl"/>
+        </VirtualFolder>
         <File filePath="src/st/st120_enq.4fd"/>
         <File filePath="src/st/st120_enq.4gl"/>
-        <File filePath="src/st/st121_lkup.4gl"/>
-        <File filePath="src/st/st130_trans.4fd"/>
-        <File filePath="src/st/st130_trans.4gl"/>
+        <File filePath="src/st/st121_st_lkup.4fd"/>
+        <File filePath="src/st/st121_st_lkup.4gl"/>
         <File filePath="src/st/st140_hist.4fd"/>
         <File filePath="src/st/st140_hist.4gl"/>
       </Application>

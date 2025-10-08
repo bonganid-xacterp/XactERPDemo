@@ -24,7 +24,7 @@
         <LStr text="Filter"/>
       </Label>
       <FormField name="formonly.f_search" colName="f_search" fieldId="3" sqlTabName="formonly" tabIndex="4">
-        <Edit width="29" program="filter_records" posY="14" posX="11" gridWidth="29"/>
+        <Edit width="29" program="record_search" posY="14" posX="11" gridWidth="29"/>
       </FormField>
     </Grid>
   </VBox>

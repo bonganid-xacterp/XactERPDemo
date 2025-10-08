@@ -38,7 +38,7 @@
     <Link colName="description" fieldIdRef="2"/>
     <Link colName="status" fieldIdRef="3"/>
   </RecordView>
-  <RecordView tabName="record1">
+  <RecordView tabName="rec_wh_cat">
     <Link colName="cat_code" fieldIdRef="0"/>
     <Link colName="cat_name" fieldIdRef="1"/>
     <Link colName="description" fieldIdRef="2"/>
