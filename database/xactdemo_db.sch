@@ -4,7 +4,7 @@ cl01_mast^supp_name^457^100^3^
 cl01_mast^address1^201^100^4^
 cl01_mast^address2^201^100^5^
 cl01_mast^address3^201^100^6^
-cl01_mast^phone^201^20^7^
+cl01_mast^phone^201^10^7^
 cl01_mast^email^201^100^8^
 cl01_mast^balance^5^3074^9^
 cl01_mast^status^1^2^10^
@@ -27,7 +27,7 @@ dl01_mast^cust_name^457^100^3^
 dl01_mast^address1^201^100^4^
 dl01_mast^address2^201^100^5^
 dl01_mast^address3^201^100^6^
-dl01_mast^phone^201^20^7^
+dl01_mast^phone^201^10^7^
 dl01_mast^email^201^100^8^
 dl01_mast^balance^5^3074^9^
 dl01_mast^cr_limit^5^3074^10^
@@ -284,7 +284,6 @@ sy00_user^role_id^52^8^8^
 sy00_user^created_at^10^4622^9^
 sy00_user^updated_at^10^4622^10^
 sy00_user^deleted_at^10^4622^11^
-sy00_user^created_by^52^8^12^
 sy02_logs^id^309^8^1^
 sy02_logs^user_id^52^8^2^
 sy02_logs^level^457^10^3^

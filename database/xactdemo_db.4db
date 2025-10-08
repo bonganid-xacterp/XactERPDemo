@@ -23,7 +23,7 @@
     <Column fglLength="100" fglType="201" name="address1" notNull="false" order="4" status="U" uuid="db/column4"/>
     <Column fglLength="100" fglType="201" name="address2" notNull="false" order="5" status="U" uuid="db/column5"/>
     <Column fglLength="100" fglType="201" name="address3" notNull="false" order="6" status="U" uuid="db/column6"/>
-    <Column fglLength="20" fglType="201" name="phone" notNull="false" order="7" status="U" uuid="db/column7"/>
+    <Column fglLength="10" fglType="201" name="phone" notNull="false" order="7" status="U" uuid="db/column7"/>
     <Column fglLength="100" fglType="201" name="email" notNull="false" order="8" status="U" uuid="db/column8"/>
     <Column fglLength="3074" fglType="5" name="balance" notNull="false" order="9" status="U" uuid="db/column9"/>
     <Column fglLength="2" fglType="1" name="status" notNull="false" order="10" status="U" uuid="db/column10"/>
@@ -54,7 +54,7 @@
     <Column fglLength="100" fglType="201" name="address1" notNull="false" order="4" status="U" uuid="db/column27"/>
     <Column fglLength="100" fglType="201" name="address2" notNull="false" order="5" status="U" uuid="db/column28"/>
     <Column fglLength="100" fglType="201" name="address3" notNull="false" order="6" status="U" uuid="db/column29"/>
-    <Column fglLength="20" fglType="201" name="phone" notNull="false" order="7" status="U" uuid="db/column30"/>
+    <Column fglLength="10" fglType="201" name="phone" notNull="false" order="7" status="U" uuid="db/column30"/>
     <Column fglLength="100" fglType="201" name="email" notNull="false" order="8" status="U" uuid="db/column31"/>
     <Column fglLength="3074" fglType="5" name="balance" notNull="false" order="9" status="U" uuid="db/column32"/>
     <Column fglLength="3074" fglType="5" name="cr_limit" notNull="false" order="10" status="U" uuid="db/column33"/>
@@ -406,8 +406,7 @@
     <Column fglLength="4622" fglType="10" name="created_at" notNull="false" order="9" status="U" uuid="db/column284"/>
     <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="10" status="U" uuid="db/column285"/>
     <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="11" status="U" uuid="db/column286"/>
-    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="12" status="U" uuid="db/column287"/>
-    <Index indexColumns="id, id" indexConstraint="uniqueIndex" name="sy00_user_pkey" status="U" uuid="db/index52"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy00_user_pkey" status="U" uuid="db/index52"/>
     <Index indexColumns="username" indexConstraint="unique" name="sy00_user_username_key" status="U" uuid="db/index53"/>
   </Table>
   <Table active="true" name="sy02_logs" status="U" uuid="db/table28">
@@ -600,7 +599,6 @@
   <ForeignKey cascadeDelete="true" fkColumns="tag_id" fkRefColumns="id" name="st30_tag_link_tag_id_fkey" refTable="wh30_tag" status="U" table="st30_tag_link" uuid="db/foreignkey39"/>
   <ForeignKey cascadeDelete="false" fkColumns="stock_code" fkRefColumns="stock_code" name="st30_trans_stock_code_fkey" refTable="st01_mast" status="U" table="st30_trans" uuid="db/foreignkey40"/>
   <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="st_cat_created_by_fkey" refTable="sy00_user" status="U" table="st_cat" uuid="db/foreignkey41"/>
-  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sy00_user_created_by_fkey" refTable="sy00_user" status="U" table="sy00_user" uuid="db/foreignkey42"/>
   <ForeignKey cascadeDelete="false" fkColumns="role_id" fkRefColumns="id" name="sy00_user_role_id_fkey" refTable="sy04_role" status="U" table="sy00_user" uuid="db/foreignkey43"/>
   <ForeignKey cascadeDelete="false" fkColumns="user_id" fkRefColumns="id" name="sy02_logs_user_id_fkey" refTable="sy00_user" status="U" table="sy02_logs" uuid="db/foreignkey44"/>
   <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sy03_sett_created_by_fkey" refTable="sy00_user" status="U" table="sy03_sett" uuid="db/foreignkey45"/>

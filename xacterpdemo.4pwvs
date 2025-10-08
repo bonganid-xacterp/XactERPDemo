@@ -5,15 +5,36 @@
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/database" type="pm/library"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/cl" type="pm/application"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/dl" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/utils" type="pm/library"/>
   </ExpandedNodes>
   <OpenDocuments>
-    <Document container="true" filePath="src/dl/dl101_mast.4gl" locator="394:21" module="mod-ce3">
+    <Document container="true" filePath="src/dl/dl101_mast.4gl" locator="253:1:271:0" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/dl/dl121_lkup.4fd" locator="" module="mod-fd"/>
     <Document container="true" filePath="src/dl/dl101_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/utils/utils_globals.4gl" locator="55:1" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/utils/utils_db.4gl" locator="15:1" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/dl/dl121_lkup.4gl" locator="41:38" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/cl/cl101_mast.4gl" locator="58:15" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/cl/cl121_lkup.4gl" locator="42:1" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/cl/cl101_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="database/xactdemo_db.4db" locator="" module="mod-db3"/>
+    <Document container="true" filePath="src/cl/cl121_lkup.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/utils/utils_status_const.4gl" locator="47:1" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
   </OpenDocuments>
-  <CurrentDocument filePath="src/dl/dl101_mast.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="src/cl/cl121_lkup.4gl" module="mod-ce3"/>
 </WorkspaceViewState>

@@ -22,29 +22,23 @@ FUNCTION display_debt_list() RETURNS STRING
     DEFINE debt_arr DYNAMIC ARRAY OF RECORD
         acc_code LIKE dl01_mast.acc_code,
         cust_name LIKE dl01_mast.cust_name,
-        phone LIKE dl01_mast.phone,
-        balance LIKE dl01_mast.balance,
-         credit LIKE dl01_mast.cr_limit,
          status LIKE dl01_mast.status
     END RECORD,
 
     debt_rec RECORD
         acc_code LIKE dl01_mast.acc_code,
         cust_name LIKE dl01_mast.cust_name,
-        phone LIKE dl01_mast.phone,
-        balance LIKE dl01_mast.balance,
-        credit LIKE dl01_mast.cr_limit,
         status LIKE dl01_mast.status
     END RECORD
 
     LET idx = 0
     LET selected_code = NULL
 
-    OPEN WINDOW wdebtr WITH FORM "dl121_lkup" ATTRIBUTES(STYLE="dialog")
+    OPEN WINDOW w_debt WITH FORM "dl121_lkup" ATTRIBUTES(STYLE="dialog")
 
-    -- Load data from the correct table
+    -- Load data of all active debtors
     DECLARE debtors_curs CURSOR FOR
-        SELECT acc_code, cust_name, phone, balance, cr_limit,status
+        SELECT acc_code, cust_name, status
         FROM dl01_mast
         ORDER BY acc_code
 
@@ -74,12 +68,6 @@ FUNCTION display_debt_list() RETURNS STRING
                 ON ACTION cancel
                     LET selected_code = NULL
 
-                ON ACTION doubleclick
-                   
-                    LET sel = dlg.getCurrentRow("r_debtors_list")
-                    IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                        LET selected_code = debt_arr[sel].acc_code
-                    END IF
 
                 ON KEY (RETURN)
                     LET sel = dlg.getCurrentRow("r_debtors_list")
@@ -96,6 +84,6 @@ FUNCTION display_debt_list() RETURNS STRING
         CALL utils_globals.show_info("No debtor records found.")
     END IF
 
-    CLOSE WINDOW wdebtr
+    CLOSE WINDOW w_debt
     RETURN selected_code
 END FUNCTION

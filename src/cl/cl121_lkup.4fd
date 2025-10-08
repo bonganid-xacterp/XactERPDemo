@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{f44acbaa-e8e5-47da-8dca-4e6e586321a7}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record active="false" masterTable="" name="r_creditors_list" uid="{c756d257-8134-4d36-b0a8-25f7d325d335}">
+    <RecordField colName="acc_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="cl01_mast.acc_code" sqlTabName="cl01_mast" uid="{eb0b945b-fd7f-45cd-a195-667420135fc5}"/>
+    <RecordField colName="supp_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="cl01_mast.supp_name" sqlTabName="cl01_mast" uid="{e9ea3f0d-b0ef-4413-b7ef-17d921e8f4c1}"/>
+    <RecordField colName="status" fieldIdRef="3" fieldType="TABLE_COLUMN" name="cl01_mast.status" sqlTabName="cl01_mast" uid="{dd2a178d-68b4-4025-9da5-6b9fd7d880b0}"/>
+  </Record>
+  <Record active="false" masterTable="" name="f_creditor_search" uid="{c84bbaaf-b0a0-45d2-975d-bbd97053a0da}">
+    <RecordField fieldIdRef="4" length="100" name="f_search" uid="{3d0adfb2-6e9d-4ecd-b5f9-edfa0b472cb0}"/>
+  </Record>
+  <Form gridHeight="25" gridWidth="63" name="frm_crd_lkup" text="Form">
+    <VBox gridHeight="24" gridWidth="62" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="22" gridWidth="113" name="grid1" posX="0" posY="1">
+        <Label color="green" gridHeight="1" gridWidth="60" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text="CREDITORS LOOKUP"/>
+        <Table gridHeight="12" gridWidth="60" name="f_crd_list" posX="1" posY="1" totalRows="10">
+          <Edit colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="cl01_mast.acc_code" posX="0" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Code" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="supp_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="cl01_mast.supp_name" posX="20" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Supplier Name" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="status" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="cl01_mast.status" posX="50" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Status" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+        </Table>
+        <Label gridHeight="1" gridWidth="9" name="lbl_filter" posX="1" posY="14" text="Filter"/>
+        <Edit fieldId="4" gridHeight="1" gridWidth="29" length="100" name="f_search" posX="11" posY="14" program="filter_records" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewBjADgANABiAGIAYQBhAGYALQBiADAAYQAwAC0ANAA1AGQAMgAtADkANwA1AGQALQBiAGIAZAA5ADcAMAA1ADMAYQAwAGQAYQB9QGeZmatMzNFAIZmZpszM0T9QYk3S8an8AQAAAEwAewBjADcANQA2AGQAMgA1ADcALQA4ADEAMwA0AC0ANABkADMANgAtAGIAMABhADgALQAyADUAZgA3AGQAMwAyADUAZAAzADMANQB9AAAAAAAAAAAAAAAAAAAAAD9gYk3S8an8AQ==]]>
+  </DiagramLayout>
+</ManagedForm>

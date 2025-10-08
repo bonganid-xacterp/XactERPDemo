@@ -15,19 +15,7 @@
           <Edit width="30" scroll="1"/>
           <LStr text="Customer Name"/>
         </TableColumn>
-        <TableColumn name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="dl01_mast" text="Phone" tabIndex="3">
-          <Edit width="20" scroll="1"/>
-          <LStr text="Phone"/>
-        </TableColumn>
-        <TableColumn name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="3" sqlTabName="dl01_mast" text="Balance" tabIndex="4" numAlign="1">
-          <Edit width="14" scroll="1"/>
-          <LStr text="Balance"/>
-        </TableColumn>
-        <TableColumn name="dl01_mast.cr_limit" colName="cr_limit" sqlType="DECIMAL(12,2)" fieldId="4" sqlTabName="dl01_mast" text="Credit Limit" tabIndex="5" numAlign="1">
-          <Edit width="14" scroll="1"/>
-          <LStr text="Credit Limit"/>
-        </TableColumn>
-        <TableColumn name="dl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="5" sqlTabName="dl01_mast" text="Status" tabIndex="6" numAlign="1">
+        <TableColumn name="dl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="2" sqlTabName="dl01_mast" text="Status" tabIndex="3" numAlign="1">
           <Edit width="6" scroll="1"/>
           <LStr text="Status"/>
         </TableColumn>
@@ -35,7 +23,7 @@
       <Label name="lbl_filter" width="9" text="Filter" posY="7" posX="1" gridWidth="9">
         <LStr text="Filter"/>
       </Label>
-      <FormField name="formonly.f_search" colName="f_search" fieldId="6" sqlTabName="formonly" tabIndex="7">
+      <FormField name="formonly.f_search" colName="f_search" fieldId="3" sqlTabName="formonly" tabIndex="4">
         <Edit width="29" posY="7" posX="11" gridWidth="29"/>
       </FormField>
     </Grid>
@@ -43,15 +31,12 @@
   <RecordView tabName="dl01_mast">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="cust_name" fieldIdRef="1"/>
-    <Link colName="phone" fieldIdRef="2"/>
-    <Link colName="balance" fieldIdRef="3"/>
-    <Link colName="cr_limit" fieldIdRef="4"/>
-    <Link colName="status" fieldIdRef="5"/>
+    <Link colName="status" fieldIdRef="2"/>
   </RecordView>
   <RecordView tabName="formonly">
-    <Link colName="f_search" fieldIdRef="6"/>
+    <Link colName="f_search" fieldIdRef="3"/>
   </RecordView>
   <RecordView tabName="f_debtors_search">
-    <Link colName="f_search" fieldIdRef="6"/>
+    <Link colName="f_search" fieldIdRef="3"/>
   </RecordView>
 </Form>
