@@ -54,7 +54,7 @@ MAIN
     END IF
 
     OPEN WINDOW w_dl101 WITH FORM "dl101_mast" ATTRIBUTES(STYLE = "main")
-    CALL run_debtors_dialog()
+    CALL init_module()
     CLOSE WINDOW w_dl101
 END MAIN
 
@@ -73,7 +73,7 @@ END FUNCTION
 -- ==============================================================
 FUNCTION set_fields_editable(editable SMALLINT)
     DEFINE f ui.Form
-    DEFINE fields STRING
+    --DEFINE fields STRING
     DEFINE i INTEGER
     DEFINE field_list DYNAMIC ARRAY OF STRING
     
@@ -106,10 +106,10 @@ END FUNCTION
 -- ==============================================================
 -- DIALOG Controller
 -- ==============================================================
-FUNCTION run_debtors_dialog()
+FUNCTION init_module()
 
     DEFINE ok SMALLINT 
-    DEFINE d ui.Dialog
+    --DEFINE dlg ui.Dialog
 
     CALL utils_status_const.populate_status_combobox()
     

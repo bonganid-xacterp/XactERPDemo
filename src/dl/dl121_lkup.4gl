@@ -24,14 +24,14 @@ FUNCTION fetch_debt_list() RETURNS STRING
             acc_code LIKE dl01_mast.acc_code,
             cust_name LIKE dl01_mast.cust_name,
             status LIKE dl01_mast.status,
-            status_lbl STRING
+            lbl_status STRING
         END RECORD,
 
         debt_rec RECORD
             acc_code LIKE dl01_mast.acc_code,
             cust_name LIKE dl01_mast.cust_name,
             status LIKE dl01_mast.status,
-            status_lbl STRING
+            lbl_status STRING
         END RECORD
 
     LET idx = 0
@@ -47,10 +47,10 @@ FUNCTION fetch_debt_list() RETURNS STRING
             CASE status
                 WHEN 1 THEN 'Active'
                 WHEN 0 THEN 'Inactive'
-                WHEN - 1 THEN 'Archived'
+                WHEN -1 THEN 'Archived'
                 ELSE 'Unknown' 
             END
-                AS status_lbl
+                AS lbl_status
             FROM dl01_mast
             ORDER BY acc_code
 
@@ -130,7 +130,7 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
         acc_code LIKE dl01_mast.acc_code,
         cust_name LIKE dl01_mast.cust_name,
         status LIKE dl01_mast.status,
-        status_lbl STRING
+        lbl_status STRING
     END RECORD
     DEFINE f_search STRING
     DEFINE sel SMALLINT
@@ -209,7 +209,7 @@ FUNCTION load_debtors_for_lookup(search_filter STRING)
             acc_code LIKE dl01_mast.acc_code,
             cust_name LIKE dl01_mast.cust_name,
             status LIKE dl01_mast.status,
-            status_lbl STRING
+            lbl_status STRING
         END RECORD,
         INTEGER)
 
@@ -217,14 +217,14 @@ FUNCTION load_debtors_for_lookup(search_filter STRING)
         acc_code LIKE dl01_mast.acc_code,
         cust_name LIKE dl01_mast.cust_name,
         status LIKE dl01_mast.status,
-        status_lbl STRING
+        lbl_status STRING
     END RECORD
 
     DEFINE debt_arr DYNAMIC ARRAY OF RECORD
         acc_code LIKE dl01_mast.acc_code,
         cust_name LIKE dl01_mast.cust_name,
         status LIKE dl01_mast.status,
-        status_lbl STRING
+        lbl_status STRING
     END RECORD
     DEFINE sql_stmt STRING
     DEFINE row_count INTEGER
@@ -259,7 +259,7 @@ FUNCTION load_debtors_for_lookup(search_filter STRING)
       "  WHEN 1 THEN 'Active' "   ||
       "  WHEN 0 THEN 'Inactive' " ||
       "  WHEN -1 THEN 'Archived' "||
-      "  ELSE 'Unknown' END AS status_lbl " ||
+      "  ELSE 'Unknown' END AS lbl_status " ||
       "FROM dl01_mast " ||
       "WHERE acc_code ILIKE ? OR cust_name ILIKE ? " ||
       "ORDER BY acc_code";

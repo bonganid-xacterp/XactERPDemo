@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Debtors Lookup" windowStyle="dialog4" width="70" height="15">
+<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="xactdemo_db" text="Debtors Lookup" windowStyle="dialog4" width="70" height="15">
   <LStr text="Debtors Lookup"/>
   <VBox name="vbox1">
     <Grid name="grid1" width="70" height="15">
@@ -19,7 +19,7 @@
           <Edit width="6" scroll="1"/>
           <LStr text="Status"/>
         </TableColumn>
-        <TableColumn name="formonly.status_lbl" colName="status_lbl" fieldId="3" sqlTabName="formonly" text="Status" tabIndex="4">
+        <TableColumn name="formonly.lbl_status" colName="lbl_status" fieldId="3" sqlTabName="formonly" text="Status" tabIndex="4">
           <Edit width="8"/>
           <LStr text="Status"/>
         </TableColumn>
@@ -38,7 +38,7 @@
     <Link colName="status" fieldIdRef="2"/>
   </RecordView>
   <RecordView tabName="formonly">
-    <Link colName="status_lbl" fieldIdRef="3"/>
+    <Link colName="lbl_status" fieldIdRef="3"/>
     <Link colName="f_search" fieldIdRef="4"/>
   </RecordView>
   <RecordView tabName="f_search">
