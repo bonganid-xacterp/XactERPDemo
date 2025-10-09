@@ -11,7 +11,7 @@
           <LStr text="Acc Code"/>
         </Label>
         <FormField name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" tabIndex="1">
-          <ButtonEdit width="10" action="lookup_acc_code" image="fa-binoculars" justify="left" program="query_debtor" posY="1" posX="8" gridWidth="12"/>
+          <ButtonEdit width="10" action="find" image="zoom" justify="left" program="" posY="1" posX="8" gridWidth="12"/>
         </FormField>
         <Label name="lbl_dl_name" width="10" text="Debtor Name" posY="1" posX="21" gridWidth="10">
           <LStr text="Debtor Name"/>
@@ -119,16 +119,6 @@
       </Folder>
     </VBox>
   </HBox>
-  <RecordView tabName="dl30_trans">
-    <Link colName="id" fieldIdRef="10"/>
-    <Link colName="date" fieldIdRef="11"/>
-    <Link colName="doc_no" fieldIdRef="12"/>
-    <Link colName="trans_type" fieldIdRef="13"/>
-    <Link colName="doc_type" fieldIdRef="14"/>
-    <Link colName="gross_val" fieldIdRef="15"/>
-    <Link colName="vat" fieldIdRef="16"/>
-    <Link colName="notes" fieldIdRef="18"/>
-  </RecordView>
   <RecordView tabName="dl01_mast">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="cust_name" fieldIdRef="1"/>
@@ -140,6 +130,16 @@
     <Link colName="address3" fieldIdRef="7"/>
     <Link colName="cr_limit" fieldIdRef="8"/>
     <Link colName="balance" fieldIdRef="9"/>
+  </RecordView>
+  <RecordView tabName="dl30_trans">
+    <Link colName="id" fieldIdRef="10"/>
+    <Link colName="date" fieldIdRef="11"/>
+    <Link colName="doc_no" fieldIdRef="12"/>
+    <Link colName="trans_type" fieldIdRef="13"/>
+    <Link colName="doc_type" fieldIdRef="14"/>
+    <Link colName="gross_val" fieldIdRef="15"/>
+    <Link colName="vat" fieldIdRef="16"/>
+    <Link colName="notes" fieldIdRef="18"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="dl30_trans_tot_incl" fieldIdRef="17"/>
