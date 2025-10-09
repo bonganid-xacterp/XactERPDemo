@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Project defaultApplication="221858380" gstVersion="3140a" version="3.3">
+<Project defaultApplication="409572948" gstVersion="3140a" version="3.3">
   <Settings>
     <DynamicProperties version="2">
       <DynamicProperty description="Accent color (Android 5.0 and later)" initialValue="#9575CD" isDefaultInherited="false" isHidden="false" label="Accent color" name="gma-accent-color" readOnly="false" type="COLOR"/>
@@ -93,7 +93,7 @@
         <File filePath="database/xactdemo_db_pgs_creation.4gl"/>
         <File filePath="database/xactdemo_db_schema.sch"/>
       </Library>
-      <Application binaryName="dl" dependencies="497700,56784492,104908716,31764552,782461791" id="409572948" label="dl">
+      <Application binaryName="dl" dependencies="497700,56784492,104908716,31764552,782461791,221924664" id="409572948" label="dl">
         <File filePath="src/dl/dl101_mast.4fd"/>
         <File filePath="src/dl/dl101_mast.4gl"/>
         <File filePath="src/dl/dl120_enq.4fd"/>
@@ -125,10 +125,7 @@
       </Library>
       <Library binaryName="libs" id="104908716" label="libs">
         <File filePath=".fglprofile"/>
-        <File filePath="src/res/company_logo.png"/>
         <File filePath="libs/globals.4gl"/>
-        <File filePath="src/res/logo.png"/>
-        <File filePath="src/res/main_styles.4st"/>
         <File filePath="src/utils/mast_dt_tlbar.4tb"/>
       </Library>
       <Application binaryName="payt" dependencies="31764552" id="33552074" label="payt">
@@ -149,6 +146,11 @@
         <File filePath="src/pu/pu30_inv_hdr.4fd"/>
         <File filePath="src/pu/pu31_ord_hdr.4fd"/>
       </Application>
+      <Library binaryName="res" id="221924664" label="res">
+        <File filePath="src/res/company_logo.png"/>
+        <File filePath="src/res/logo.png"/>
+        <File filePath="src/res/main_styles.4st"/>
+      </Library>
       <Application binaryName="sa" dependencies="497700,104908716,31764552,782461791" id="95666062" label="sa">
         <File filePath="src/sa/sa130_order.4fd"/>
         <File filePath="src/sa/sa130_order.4gl"/>
@@ -207,6 +209,7 @@
         <File filePath="src/utils/utils_status_const.4gl"/>
         <File filePath="src/utils/utils_types.4gl"/>
         <File filePath="src/utils/utils_ui.4gl"/>
+        <File filePath="src/utils/utils_windows.4gl"/>
       </Library>
       <Application binaryName="wb" dependencies="31764552,497700,104908716" id="206295008" label="wb">
         <File filePath="src/wh/wb101_mast.4fd"/>

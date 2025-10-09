@@ -60,12 +60,12 @@ PUBLIC FUNCTION launch_child_window(formname STRING, wintitle STRING)
     DEFINE existing_win ui.Window
 
     -- Validate parameters
-    IF formname IS NULL OR formname = "" THEN
+    IF formname IS NULL THEN
         CALL utils_globals.show_error("Invalid form name provided.")
         RETURN FALSE
     END IF
 
-    IF wintitle IS NULL OR wintitle = "" THEN
+    IF wintitle IS NULL THEN
         LET wintitle = formname
     END IF
 
@@ -86,6 +86,7 @@ PUBLIC FUNCTION launch_child_window(formname STRING, wintitle STRING)
         -- Tell Genero this is an MDI child
         CALL ui.Interface.setContainer(MDI_CONTAINER)
         CALL ui.Interface.setType("child")
+        CALL ui.Interface.loadStyles("main_styles.4st")
 
         IF g_debug_mode THEN
             DISPLAY "Opening child window..."

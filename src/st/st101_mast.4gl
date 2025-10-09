@@ -14,23 +14,3 @@ IMPORT FGL utils_lookup
 IMPORT FGL utils_status_const
 
 SCHEMA xactdemo_db
-
--- ==============================================================
--- MAIN
--- ==============================================================
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        DISPLAY "Initialization failed."
---        EXIT PROGRAM 1
---    END IF
---
---    OPEN WINDOW w WITH FORM "st101_mast" ATTRIBUTES(STYLE = "modal")
---    CALL run_stock_master()
---    CLOSE WINDOW w
---END MAIN
-
--- run stock in the system
-FUNCTION run_stock_master()
-    DISPLAY "display here"
-
-END FUNCTION

@@ -36,7 +36,6 @@ DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx  INTEGER
 DEFINE is_edit_mode SMALLINT
 
-
 CONSTANT msg01 = "No records found."
 CONSTANT msg02 = "Record saved successfully."
 CONSTANT msg03 = "Record updated successfully."
@@ -48,134 +47,16 @@ CONSTANT msg07 = "Enter account code or name to search."
 -- ==============================================================
 -- MAIN
 -- ==============================================================
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        DISPLAY "Initialization failed."
---        EXIT PROGRAM 1
---    END IF
---
---    OPEN WINDOW w_dl101 WITH FORM "dl101_mast" ATTRIBUTES(STYLE = "main")
---    CALL init_mod()
---    CLOSE WINDOW w_dl101
---END MAIN
-
-
--- ==============================================================
--- Module Init Controller
--- ==============================================================
-FUNCTION init_mod()
-
-    DEFINE ok SMALLINT 
-
-    CALL utils_status_const.populate_status_combobox()
-
-    -- Start in read-only mode
-    LET is_edit_mode = FALSE
-
-    DIALOG ATTRIBUTES(UNBUFFERED)
-
-        -- -------------------------
-        -- Header section
-        -- -------------------------
-        INPUT BY NAME rec_debt.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME="debtors")
-
-            BEFORE INPUT 
-                --- make fields read only
-                CALL DIALOG.setActionActive("save", FALSE )
-                CALL DIALOG.setActionActive("edit", TRUE)
-
-            ON ACTION find  ATTRIBUTES(TEXT="Search", IMAGE="zoom")
-                CALL query_debtors_lookup()
-                LET is_edit_mode = FALSE
-                CALL DIALOG.setActionActive("save", FALSE)
-                CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION new  ATTRIBUTES(TEXT="Create", IMAGE="new")
-                CALL new_debtor()
-                
-            ON ACTION edit  ATTRIBUTES(TEXT="Edit", IMAGE="edit")
-                IF rec_debt.acc_code IS NULL OR rec_debt.acc_code = "" THEN
-                    CALL utils_globals.show_info("No record selected to edit.")
-                ELSE
-                    LET is_edit_mode = TRUE
-                    CALL DIALOG.setActionActive("save", TRUE)
-                    CALL DIALOG.setActionActive("edit", FALSE)
-                    MESSAGE "Edit mode enabled. Make changes and click Update to save."
-                END IF
-                
-           ON ACTION save  ATTRIBUTES(TEXT="Update", IMAGE="filesave")
-                IF is_edit_mode THEN
-                    CALL save_debtor()
-                    LET is_edit_mode = FALSE
-                    CALL DIALOG.setActionActive("save", FALSE)
-                    CALL DIALOG.setActionActive("edit", TRUE)
-                END IF
-
-                
-            ON ACTION DELETE  ATTRIBUTES(TEXT="Delete", IMAGE="delete")
-                CALL delete_debtor()
-
-            ON ACTION FIRST  ATTRIBUTES(TEXT="First Record", IMAGE="first")
-                CALL move_record(-2)
-                LET is_edit_mode = FALSE
-                CALL DIALOG.setActionActive("save", FALSE)
-                CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION PREVIOUS  ATTRIBUTES(TEXT="Previous", IMAGE="prev")
-                CALL move_record(-1)
-                LET is_edit_mode = FALSE
-                CALL DIALOG.setActionActive("save", FALSE)
-                CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION NEXT  ATTRIBUTES(TEXT="Next", IMAGE="next")
-                CALL move_record(1)
-                LET is_edit_mode = FALSE
-                CALL DIALOG.setActionActive("save", FALSE)
-                CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION LAST  ATTRIBUTES(TEXT="Last Record", IMAGE="last")
-                CALL move_record(2)
-                LET is_edit_mode = FALSE
-                CALL DIALOG.setActionActive("save", FALSE)
-                CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION QUIT ATTRIBUTES(TEXT="Quit", IMAGE="quit")
-                EXIT DIALOG
-
-            BEFORE FIELD cust_name, phone, email, address1, address2, address3, status, cr_limit, balance
-                IF NOT is_edit_mode THEN
-                    CALL utils_globals.show_info("Click Edit button to modify this record.")
-                    NEXT FIELD acc_code
-                END IF
-
-        END INPUT
-
-        BEFORE DIALOG
-            -- Initial load
-            LET ok =  select_debtors("1=1")
-
-    END DIALOG
-END FUNCTION
-
--- ==============================================================
--- Query using Lookup Window
--- ==============================================================
-FUNCTION query_debtors_lookup()
-    DEFINE selected_code STRING
-    
-    LET selected_code = query_debtor()
-    
-    IF selected_code IS NOT NULL THEN
-        CALL load_debtor(selected_code)
-        -- Update the array to contain just this record for navigation
-        CALL arr_codes.clear()
-        LET arr_codes[1] = selected_code
-        LET curr_idx = 1
-    ELSE
-        CALL utils_globals.show_info("No debtor selected.")
+MAIN
+    IF NOT utils_globals.initialize_application() THEN
+        DISPLAY "Initialization failed."
+        EXIT PROGRAM 1
     END IF
-END FUNCTION
+
+    OPEN WINDOW w_dl101 WITH FORM "dl101_mast" ATTRIBUTES(STYLE = "main")
+    CALL run_debtors_dialog()
+    CLOSE WINDOW w_dl101
+END MAIN
 
 
 -- ==============================================================
@@ -192,7 +73,7 @@ END FUNCTION
 -- ==============================================================
 FUNCTION set_fields_editable(editable SMALLINT)
     DEFINE f ui.Form
-    -- DEFINE fields STRING
+    DEFINE fields STRING
     DEFINE i INTEGER
     DEFINE field_list DYNAMIC ARRAY OF STRING
     
@@ -222,6 +103,127 @@ FUNCTION set_fields_editable(editable SMALLINT)
     LET is_edit_mode = editable
 END FUNCTION
 
+-- ==============================================================
+-- DIALOG Controller
+-- ==============================================================
+FUNCTION run_debtors_dialog()
+
+    DEFINE ok SMALLINT 
+    DEFINE d ui.Dialog
+
+    CALL utils_status_const.populate_status_combobox()
+    
+    -- Start in read-only mode
+    LET is_edit_mode = FALSE
+
+    DIALOG ATTRIBUTES(UNBUFFERED)
+
+        -- -------------------------
+        -- Header section
+        -- -------------------------
+        INPUT BY NAME rec_debt.*
+            ATTRIBUTES(WITHOUT DEFAULTS, NAME="debtors")
+
+            BEFORE INPUT
+                -- Make fields readonly initially
+                CALL DIALOG.setActionActive("save", FALSE)
+                CALL DIALOG.setActionActive("edit", TRUE)
+                
+            ON ACTION find  ATTRIBUTES(TEXT="Search", IMAGE="zoom")
+                CALL query_debtors_lookup()
+                LET is_edit_mode = FALSE
+                CALL DIALOG.setActionActive("save", FALSE)
+                CALL DIALOG.setActionActive("edit", TRUE)
+                
+            ON ACTION new  ATTRIBUTES(TEXT="Create", IMAGE="new")
+                CALL new_debtor()
+                -- After successful add, load in readonly mode
+                LET is_edit_mode = FALSE
+                CALL DIALOG.setActionActive("save", FALSE)
+                CALL DIALOG.setActionActive("edit", TRUE)
+                
+            ON ACTION edit  ATTRIBUTES(TEXT="Edit", IMAGE="edit")
+                IF rec_debt.acc_code IS NULL OR rec_debt.acc_code = "" THEN
+                    CALL utils_globals.show_info("No record selected to edit.")
+                ELSE
+                    LET is_edit_mode = TRUE
+                    CALL DIALOG.setActionActive("save", TRUE)
+                    CALL DIALOG.setActionActive("edit", FALSE)
+                    MESSAGE "Edit mode enabled. Make changes and click Update to save."
+                END IF
+                
+            ON ACTION save  ATTRIBUTES(TEXT="Update", IMAGE="filesave")
+                IF is_edit_mode THEN
+                    CALL save_debtor()
+                    LET is_edit_mode = FALSE
+                    CALL DIALOG.setActionActive("save", FALSE)
+                    CALL DIALOG.setActionActive("edit", TRUE)
+                END IF
+                
+            ON ACTION DELETE  ATTRIBUTES(TEXT="Delete", IMAGE="delete")
+                CALL delete_debtor()
+
+            ON ACTION FIRST  ATTRIBUTES(TEXT="First Record", IMAGE="first")
+                CALL move_record(-2)
+                LET is_edit_mode = FALSE
+                CALL DIALOG.setActionActive("save", FALSE)
+                CALL DIALOG.setActionActive("edit", TRUE)
+                
+            ON ACTION PREVIOUS  ATTRIBUTES(TEXT="Previous", IMAGE="prev")
+                CALL move_record(-1)
+                LET is_edit_mode = FALSE
+                CALL DIALOG.setActionActive("save", FALSE)
+                CALL DIALOG.setActionActive("edit", TRUE)
+                
+            ON ACTION NEXT  ATTRIBUTES(TEXT="Next", IMAGE="next")
+                CALL move_record(1)
+                LET is_edit_mode = FALSE
+                CALL DIALOG.setActionActive("save", FALSE)
+                CALL DIALOG.setActionActive("edit", TRUE)
+                
+            ON ACTION LAST  ATTRIBUTES(TEXT="Last Record", IMAGE="last")
+                CALL move_record(2)
+                LET is_edit_mode = FALSE
+                CALL DIALOG.setActionActive("save", FALSE)
+                CALL DIALOG.setActionActive("edit", TRUE)
+
+            ON ACTION QUIT ATTRIBUTES(TEXT="Quit", IMAGE="quit")
+                EXIT DIALOG
+                
+            BEFORE FIELD cust_name, phone, email, address1, address2, address3, status, cr_limit, balance
+                IF NOT is_edit_mode THEN
+                    CALL utils_globals.show_info("Click Edit button to modify this record.")
+                    NEXT FIELD acc_code
+                END IF
+
+        END INPUT
+
+        BEFORE DIALOG
+            -- Initial load in read-only mode
+            LET ok = select_debtors("1=1")
+            LET is_edit_mode = FALSE
+
+    END DIALOG
+END FUNCTION
+
+-- ==============================================================
+-- Query using Lookup Window
+-- ==============================================================
+FUNCTION query_debtors_lookup()
+    DEFINE selected_code STRING
+    
+    LET selected_code = query_debtor()
+    
+    IF selected_code IS NOT NULL AND selected_code != "" THEN
+        CALL load_debtor(selected_code)
+        -- Update the array to contain just this record for navigation
+        CALL arr_codes.clear()
+        LET arr_codes[1] = selected_code
+        LET curr_idx = 1
+    ELSE
+        MESSAGE "No debtor selected."
+    END IF
+END FUNCTION
 
 -- ==============================================================
 -- Query  (CONSTRUCT)
@@ -230,7 +232,7 @@ FUNCTION query_debtors()
     DEFINE where_clause STRING
     DEFINE ok SMALLINT
 
-    CALL utils_globals.show_info(msg07)
+    MESSAGE msg07
     CLEAR FORM
 
     CONSTRUCT BY NAME where_clause ON
@@ -240,8 +242,7 @@ FUNCTION query_debtors()
 
         IF int_flag THEN
         -- user pressed ESC or Cancel
-        CALL utils_globals.show_info('Search Cancelled')
-        
+        MESSAGE "Search cancelled."
         RETURN
     END IF
 
@@ -309,14 +310,14 @@ FUNCTION move_record(dir SMALLINT)
             IF curr_idx > 1 THEN
                 LET curr_idx = curr_idx - 1
             ELSE
-                CALL utils_globals.show_info(msg06)
+                MESSAGE msg06
                 RETURN
             END IF
         WHEN 1
             IF curr_idx < arr_codes.getLength() THEN
                 LET curr_idx = curr_idx + 1
             ELSE
-                CALL utils_globals.show_info(msg05)
+                MESSAGE msg05
                 RETURN
             END IF
         WHEN 2
@@ -332,28 +333,24 @@ END FUNCTION
 FUNCTION new_debtor()
    DEFINE dup_found SMALLINT
    DEFINE ok SMALLINT 
+   DEFINE new_acc_code STRING
 
     -- open a modal popup window just for the new debtor
     OPEN WINDOW w_new WITH FORM "dl101_mast" ATTRIBUTES(STYLE="main")
 
-    CALL utils_status_const.populate_status_combobox()
-
-
     -- Clear all fields and set defaults
     INITIALIZE rec_debt.* TO NULL
-    LET rec_debt.status = 1
     LET rec_debt.balance = 0.00
     LET rec_debt.cr_limit = 0.00
     
     DISPLAY BY NAME rec_debt.*
 
-   MESSAGE "Enter new debtor details, then click Save or Cancel."
+    MESSAGE "Enter new debtor details, then click Save or Cancel."
 
     DIALOG ATTRIBUTES(UNBUFFERED)
         INPUT BY NAME rec_debt.*
-        
             ATTRIBUTES(WITHOUT DEFAULTS, NAME="new_debtor")
-          
+
             -- validations
             AFTER FIELD acc_code
                 IF rec_debt.acc_code IS NULL OR rec_debt.acc_code = "" THEN
@@ -372,11 +369,6 @@ FUNCTION new_debtor()
                     CALL utils_globals.show_error("Invalid email format.")
                     NEXT FIELD email
                 END IF
-
-              -- Prevent auto-exit when tabbing out of last field
-            AFTER INPUT
-                -- Do nothing, let user explicitly click Save or Cancel
-                CONTINUE INPUT
 
             -- main actions
             ON ACTION save ATTRIBUTES (TEXT="Save")
@@ -397,17 +389,29 @@ FUNCTION new_debtor()
                         rec_debt.cr_limit, rec_debt.balance)
 
                     CALL utils_globals.show_success("Debtor saved successfully.")
+                    LET new_acc_code = rec_debt.acc_code
                     EXIT DIALOG
                 END IF
 
             ON ACTION cancel
                 CALL utils_globals.show_info("New debtor cancelled.")
+                LET new_acc_code = NULL
                 EXIT DIALOG
         END INPUT
     END DIALOG
 
     CLOSE WINDOW w_new
-    LET ok =  select_debtors("1=1")
+    
+    -- Load the newly added record in readonly mode
+    IF new_acc_code IS NOT NULL THEN
+        CALL load_debtor(new_acc_code)
+        CALL arr_codes.clear()
+        LET arr_codes[1] = new_acc_code
+        LET curr_idx = 1
+    ELSE
+        -- Cancelled, reload the list
+        LET ok = select_debtors("1=1")
+    END IF
 END FUNCTION
 
 -- ==============================================================
@@ -421,6 +425,7 @@ FUNCTION save_debtor()
      WHERE acc_code = rec_debt.acc_code
 
     IF exists = 0 THEN
+    -- save data into the db
         INSERT INTO dl01_mast
             (acc_code, cust_name, phone, email,
              address1, address2, address3, status,
@@ -431,8 +436,9 @@ FUNCTION save_debtor()
              rec_debt.address1, rec_debt.address2,
              rec_debt.address3, rec_debt.status,
              rec_debt.cr_limit, rec_debt.balance)
-                CALL utils_globals.show_success(msg02)
+        CALL utils_globals.show_success(msg02)
     ELSE
+    -- update record
         UPDATE dl01_mast SET
             cust_name = rec_debt.cust_name,
             phone     = rec_debt.phone,

@@ -7,7 +7,6 @@
 -- Version   : Genero ver 3.20.10
 -- ==============================================================
 
-
 -- ==============================================================
 -- IMPORTS
 -- ==============================================================
@@ -18,20 +17,17 @@ IMPORT FGL utils_globals
 IMPORT FGL main_shell
 IMPORT FGL sy100_login
 
-
 -- ==============================================================
 -- DATABASE CONTEXT
 -- ==============================================================
 SCHEMA xactdemo_db
 
-
 -- ==============================================================
 -- CONFIGURATION CONSTANTS
 -- ==============================================================
 
-CONSTANT APP_NAME             = "XACT ERP System"
-CONSTANT MENU_TIMEOUT_MINUTES = 30     -- Inactivity timeout
-
+CONSTANT APP_NAME = "XACT ERP System"
+CONSTANT MENU_TIMEOUT_MINUTES = 30 -- Inactivity timeout
 
 -- ==============================================================
 -- MODULE VARIABLES
@@ -39,7 +35,6 @@ CONSTANT MENU_TIMEOUT_MINUTES = 30     -- Inactivity timeout
 
 DEFINE g_debug_mode SMALLINT
 DEFINE g_last_activity DATETIME YEAR TO SECOND
-
 
 -- ==============================================================
 -- MAIN ENTRY: Application Menu
@@ -66,79 +61,72 @@ PUBLIC FUNCTION main_application_menu()
             -- Set menu title and permissions
             CALL setup_menu_display(current_user)
 
-        -- ------------------------------------------------------
-        -- DEBTORS MODULE
-        -- ------------------------------------------------------
+            -- ------------------------------------------------------
+            -- DEBTORS MODULE
+            -- ------------------------------------------------------
         ON ACTION dl_enq
             CALL launch_module("dl120_enq", "Debtors Enquiry", "DL_VIEW")
 
         ON ACTION dl_maint
             CALL launch_module("dl101_mast", "Debtors Maintenance", "DL_EDIT")
 
+            -- ------------------------------------------------------
+            -- CREDITORS MODULE
+            -- ------------------------------------------------------
+--        ON ACTION cl_enq
+--            CALL launch_module("cl120_enq", "Creditors Enquiry", "CL_VIEW")
+--
+--        ON ACTION cl_maint
+--            -- CALL launch_module("cl101_mast", "Creditors Maintenance", "CL_EDIT")
+--
+--            -- ------------------------------------------------------
+--            -- STOCK MODULE
+--            -- ------------------------------------------------------
+--        ON ACTION st_enq
+--            -- CALL launch_module("st120_enq", "Stock Enquiry", "ST_VIEW")
+--
+--        ON ACTION st_maint
+--            -- CALL launch_module("st101_mast", "Stock Maintenance", "ST_EDIT")
+--
+--            -- ------------------------------------------------------
+--            -- GENERAL LEDGER MODULE
+--            -- ------------------------------------------------------
+--        ON ACTION gl_enq
+--            -- CALL launch_module("gl120_enq", "GL Enquiry", "GL_VIEW")
+--
+--        ON ACTION gl_maint
+--            -- CALL launch_module("gl101_acc", "GL Maintenance", "GL_EDIT")
+--
+--            -- ------------------------------------------------------
+--            -- SALES MODULE
+--            -- ------------------------------------------------------
+--        ON ACTION sa_ord_enq
+--            -- CALL launch_module("sa120_enq", "Sales Orders Enquiry", "SA_VIEW")
+--
+--        ON ACTION sa_ord_maint
+--            -- CALL launch_module("sa130_hdr", "Sales Orders Maintenance", "SA_EDIT")
+--
+--            -- ------------------------------------------------------
+--            -- PURCHASES MODULE
+--            -- ------------------------------------------------------
+--        ON ACTION pu_po_enq
+--            -- CALL launch_module("pu120_enq", "Purchase Orders Enquiry", "PU_VIEW")
+--
+--        ON ACTION pu_po_maint
+--            -- CALL launch_module("pu130_hdr", "Purchase Orders Maintenance", "PU_EDIT")
+--
+--            -- ------------------------------------------------------
+--            -- SYSTEM ADMINISTRATION
+--            -- ------------------------------------------------------
+--        ON ACTION sy_usr_enq
+--            -- CALL launch_module("sy120_enq", "Users Enquiry", "SY_VIEW")
+--
+--        ON ACTION sy_usr_maint
+--            -- CALL launch_module("sy100_user", "Users Maintenance", "SY_ADMIN")
 
-        -- ------------------------------------------------------
-        -- CREDITORS MODULE
-        -- ------------------------------------------------------
-        ON ACTION cl_enq
-            CALL launch_module("cl120_enq", "Creditors Enquiry", "CL_VIEW")
-
-        ON ACTION cl_maint
-            -- CALL launch_module("cl101_mast", "Creditors Maintenance", "CL_EDIT")
-
-
-        -- ------------------------------------------------------
-        -- STOCK MODULE
-        -- ------------------------------------------------------
-        ON ACTION st_enq
-            -- CALL launch_module("st120_enq", "Stock Enquiry", "ST_VIEW")
-
-        ON ACTION st_maint
-            -- CALL launch_module("st101_mast", "Stock Maintenance", "ST_EDIT")
-
-
-        -- ------------------------------------------------------
-        -- GENERAL LEDGER MODULE
-        -- ------------------------------------------------------
-        ON ACTION gl_enq
-            -- CALL launch_module("gl120_enq", "GL Enquiry", "GL_VIEW")
-
-        ON ACTION gl_maint
-            -- CALL launch_module("gl101_acc", "GL Maintenance", "GL_EDIT")
-
-
-        -- ------------------------------------------------------
-        -- SALES MODULE
-        -- ------------------------------------------------------
-        ON ACTION sa_ord_enq
-            -- CALL launch_module("sa120_enq", "Sales Orders Enquiry", "SA_VIEW")
-
-        ON ACTION sa_ord_maint
-            -- CALL launch_module("sa130_hdr", "Sales Orders Maintenance", "SA_EDIT")
-
-
-        -- ------------------------------------------------------
-        -- PURCHASES MODULE
-        -- ------------------------------------------------------
-        ON ACTION pu_po_enq
-            -- CALL launch_module("pu120_enq", "Purchase Orders Enquiry", "PU_VIEW")
-
-        ON ACTION pu_po_maint
-            -- CALL launch_module("pu130_hdr", "Purchase Orders Maintenance", "PU_EDIT")
-
-
-        -- ------------------------------------------------------
-        -- SYSTEM ADMINISTRATION
-        -- ------------------------------------------------------
-        ON ACTION sy_usr_enq
-            -- CALL launch_module("sy120_enq", "Users Enquiry", "SY_VIEW")
-
-        ON ACTION sy_usr_maint
-            -- CALL launch_module("sy100_user", "Users Maintenance", "SY_ADMIN")
-
-
-        -- ------------------------------------------------------
-        -- UTILITIES / INFO
-        -- ------------------------------------------------------
+            -- ------------------------------------------------------
+            -- UTILITIES / INFO
+            -- ------------------------------------------------------
         ON ACTION window_manager
             CALL show_window_manager()
 
@@ -148,10 +136,9 @@ PUBLIC FUNCTION main_application_menu()
         ON ACTION help
             CALL show_help()
 
-
-                -- ------------------------------------------------------
-        -- EXIT APPLICATION
-        -- ------------------------------------------------------
+            -- ------------------------------------------------------
+            -- EXIT APPLICATION
+            -- ------------------------------------------------------
         ON ACTION main_exit
             IF confirm_exit() THEN
                 CALL cleanup_before_exit()
@@ -164,16 +151,15 @@ PUBLIC FUNCTION main_application_menu()
                 EXIT MENU
             END IF
 
-
-        -- ------------------------------------------------------
-        -- (Optional) AUTO LOGOUT ON INACTIVITY
-        -- ------------------------------------------------------
-        -- ON IDLE MENU_TIMEOUT_MINUTES * 60
-        --     IF check_session_timeout() THEN
-        --         CALL utils_globals.show_warning(
-        --             "Session timed out. Please log in again.")
-        --         EXIT MENU
-        --     END IF
+            -- ------------------------------------------------------
+            -- (Optional) AUTO LOGOUT ON INACTIVITY
+            -- ------------------------------------------------------
+            -- ON IDLE MENU_TIMEOUT_MINUTES * 60
+            --     IF check_session_timeout() THEN
+            --         CALL utils_globals.show_warning(
+            --             "Session timed out. Please log in again.")
+            --         EXIT MENU
+            --     END IF
 
     END MENU
 
@@ -182,8 +168,6 @@ PUBLIC FUNCTION main_application_menu()
     END IF
 
 END FUNCTION
-
-
 
 -- ==============================================================
 -- FUNCTION: launch_module
@@ -198,7 +182,8 @@ PRIVATE FUNCTION launch_module(formname STRING, title STRING, permission STRING)
     LET current_user = sy100_login.get_current_user()
 
     -- (Stub) Check user permission
-    CALL check_user_permission(current_user, permission)
+    CALL check_user_permission(
+        current_user, permission)
         RETURNING has_permission
 
     IF NOT has_permission THEN
@@ -217,8 +202,6 @@ PRIVATE FUNCTION launch_module(formname STRING, title STRING, permission STRING)
     END IF
 
 END FUNCTION
-
-
 
 -- ==============================================================
 -- FUNCTION: setup_menu_display
@@ -243,8 +226,6 @@ PRIVATE FUNCTION setup_menu_display(p_username STRING)
     END IF
 END FUNCTION
 
-
-
 -- ==============================================================
 -- FUNCTION: show_window_manager
 -- Purpose : Show list of all open child windows
@@ -256,7 +237,7 @@ PRIVATE FUNCTION show_window_manager()
 
     LET count = main_shell.get_open_window_count()
 
-    IF count = 0 THEN
+    IF COUNT = 0 THEN
         CALL utils_globals.show_info("No windows are currently open.")
         RETURN
     END IF
@@ -264,12 +245,8 @@ PRIVATE FUNCTION show_window_manager()
     LET window_list = main_shell.get_open_window_list()
 
     CALL fgldialog.fgl_winmessage(
-        "Window Manager",
-        "Open windows:\n\n" || window_list,
-        "information")
+        "Window Manager", "Open windows:\n\n" || window_list, "information")
 END FUNCTION
-
-
 
 -- ==============================================================
 -- FUNCTION: show_about_dialog
@@ -282,15 +259,17 @@ PRIVATE FUNCTION show_about_dialog()
 
     LET current_user = sy100_login.get_current_user()
 
-    LET text = APP_NAME || "\nVersion 1.0.0\n\n" ||
-                "Logged in as: " || current_user || "\n" ||
-                "Database: xactdemo_db\n\n" ||
-                "© 2025 XACT ERP Demo"
+    LET text =
+        APP_NAME
+            || "\nVersion 1.0.0\n\n"
+            || "Logged in as: "
+            || current_user
+            || "\n"
+            || "Database: xactdemo_db\n\n"
+            || "© 2025 XACT ERP Demo"
 
     CALL fgldialog.fgl_winmessage("About", text, "information")
 END FUNCTION
-
-
 
 -- ==============================================================
 -- FUNCTION: show_help
@@ -300,20 +279,19 @@ END FUNCTION
 PRIVATE FUNCTION show_help()
     DEFINE help_text STRING
 
-    LET help_text = "XACT ERP System Help\n\n" ||
-                    "Navigation:\n" ||
-                    "• Use the menu to access modules\n" ||
-                    "• Each module opens in its own child window\n" ||
-                    "• Switch windows via tabs or the Window Manager\n\n" ||
-                    "Shortcuts:\n" ||
-                    "• ESC - Cancel current action\n" ||
-                    "• ENTER - Confirm or next field\n" ||
-                    "• F1 - Context Help"
+    LET help_text =
+        "XACT ERP System Help\n\n"
+            || "Navigation:\n"
+            || "• Use the menu to access modules\n"
+            || "• Each module opens in its own child window\n"
+            || "• Switch windows via tabs or the Window Manager\n\n"
+            || "Shortcuts:\n"
+            || "• ESC - Cancel current action\n"
+            || "• ENTER - Confirm or next field\n"
+            || "• F1 - Context Help"
 
     CALL fgldialog.fgl_winmessage("Help", help_text, "information")
 END FUNCTION
-
-
 
 -- ==============================================================
 -- FUNCTION: confirm_exit
@@ -327,25 +305,19 @@ PRIVATE FUNCTION confirm_exit() RETURNS SMALLINT
 
     LET count = main_shell.get_open_window_count()
 
-    IF count > 0 THEN
-        LET msg = "You still have " || count || 
-                  " open window(s).\n\nExit anyway?"
+    IF COUNT > 0 THEN
+        LET msg =
+            "You still have " || COUNT || " open window(s).\n\nExit anyway?"
     ELSE
         LET msg = "Are you sure you want to exit?"
     END IF
 
-    LET answer = fgldialog.fgl_winquestion(
-        "Confirm Exit",
-        msg,
-        "no",
-        "yes|no",
-        "question",
-        0)
+    LET answer =
+        fgldialog.fgl_winquestion(
+            "Confirm Exit", msg, "no", "yes|no", "question", 0)
 
     RETURN (answer = "yes")
 END FUNCTION
-
-
 
 -- ==============================================================
 -- FUNCTION: cleanup_before_exit
@@ -367,8 +339,6 @@ PRIVATE FUNCTION cleanup_before_exit()
     END IF
 END FUNCTION
 
-
-
 -- ==============================================================
 -- FUNCTION: check_session_timeout
 -- Purpose : Detect user inactivity
@@ -388,8 +358,6 @@ PRIVATE FUNCTION check_session_timeout() RETURNS SMALLINT
     RETURN FALSE
 END FUNCTION
 
-
-
 -- ==============================================================
 -- FUNCTION: menu_set_debug_mode
 -- Purpose : Enable/disable debug display
@@ -402,19 +370,18 @@ PUBLIC FUNCTION menu_set_debug_mode(p_enabled SMALLINT)
     END IF
 END FUNCTION
 
-
-
 -- ==============================================================
 -- FUNCTION: check_user_permission
 -- Purpose : (Stub) Always returns TRUE until real security is added
 -- ==============================================================
 
-PRIVATE FUNCTION check_user_permission(p_username STRING, p_permission STRING)
+PRIVATE FUNCTION check_user_permission(
+    p_username STRING, p_permission STRING)
     RETURNS SMALLINT
 
     IF g_debug_mode THEN
         DISPLAY "Checking permission: ", p_permission, " for user: ", p_username
     END IF
 
-    RETURN TRUE  -- Allow all for now
+    RETURN TRUE -- Allow all for now
 END FUNCTION

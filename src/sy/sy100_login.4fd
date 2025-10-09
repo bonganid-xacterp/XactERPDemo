@@ -3,14 +3,14 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="sy00_user" name="frm_login" uid="{b2f8ff33-ca1a-479b-9ead-679806005f71}">
+  <Record masterTable="sy00_user" name="rec_login" uid="{b2f8ff33-ca1a-479b-9ead-679806005f71}">
     <RecordField fieldIdRef="1" length="1" name="f_username" sqlType="VARCHAR" uid="{90f1e3c1-6149-4168-bca1-aa4b88672d2b}"/>
     <RecordField fieldIdRef="2" length="1" name="f_password" sqlType="VARCHAR" uid="{31431303-7fed-4d00-bc45-13edc4387ce8}"/>
   </Record>
-  <Form fourSTFile="../_main/main_styles.4st" gridHeight="18" gridWidth="34" name="form" style="" text="" windowStyle="dialog">
+<Form fourSTFile="" gridHeight="18" gridWidth="34" name="frm_login" style="" text="" windowStyle="">
     <VBox gridHeight="16" gridWidth="32" name="vbox1" posX="0" posY="0">
       <Grid gridHeight="14" gridWidth="32" name="login_grid" posX="0" posY="1">
-        <Image autoScale="true" gridHeight="8" gridWidth="30" image="" name="company_logo" posX="1" posY="1" sizePolicy="dynamic" stretch="both"/>
+        <Image autoScale="true" gridHeight="8" gridWidth="30" name="company_logo" posX="1" posY="1" sizePolicy="dynamic" stretch="both"/>
         <Label gridHeight="1" gridWidth="10" name="lbl_username" posX="1" posY="10" text="Username">
           <Initializer text="dbschema:sy00_user.username/@label"/>
         </Label>

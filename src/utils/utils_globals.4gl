@@ -24,6 +24,7 @@ CONSTANT STYLE_FILE = "main_styles.4st" -- Style file (keep in project folder)
 
 FUNCTION initialize_application() RETURNS SMALLINT
     DEFINE db_result SMALLINT
+    LET g_debug_mode = TRUE 
 
     -- hide screen and disable ctrl+c
     CALL hide_screen()
