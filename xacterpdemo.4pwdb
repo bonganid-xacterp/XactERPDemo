@@ -356,49 +356,79 @@
 <Dep t="src/utils/utils_lookup.4gl"/>
 <Dep t="src/utils/utils_status_const.4gl"/>
 </File>
-<File n="src/st/st102_cat.4gl" s="2" ts="20251010130931644">
+<File n="src/st/st102_cat.4gl" s="2" ts="20251010162505656">
 <Dep t="src/utils/utils_globals.4gl"/>
 <Dep t="src/utils/utils_db.4gl"/>
 <Dep t="src/utils/utils_lookup.4gl"/>
 <Dep t="src/utils/utils_status_const.4gl"/>
-<Fct c="10" el="181" l="179" n="move_record(p_value SMALLINT)" t="F" v="pub"/>
-<Fct c="10" el="176" l="174" n="delete_category()" t="F" v="pub"/>
-<Fct c="10" el="171" l="169" n="save_category()" t="F" v="pub"/>
-<Fct c="10" el="165" l="163" n="new_cat()" t="F" v="pub"/>
-<Fct c="10" el="160" l="151" n="cat_lookup()" t="F" v="pub"/>
-<Fct c="10" el="148" l="140" n="select_stock_cat(where_clause STRING)" t="F" v="pub"/>
-<Fct c="10" el="137" l="53" n="init_module()" t="F" v="pub">
-<Call c="22" l="69" n="cat_lookup" t="F"/>
-<Call c="22" l="75" n="new_cat" t="F"/>
-<Call c="40" i="utils_globals" l="83" n="show_info" t="F"/>
-<Call c="26" l="93" n="save_category" t="F"/>
-<Call c="22" l="100" n="delete_category" t="F"/>
-<Call c="22" l="103" n="move_record" t="F"/>
-<Call c="22" l="109" n="move_record" t="F"/>
-<Call c="22" l="115" n="move_record" t="F"/>
-<Call c="22" l="121" n="move_record" t="F"/>
-<Call c="22" l="133" n="select_stock_cat" t="F"/>
+<Dep t="src/st/st122_cat_lkup.4gl"/>
+<Fct c="10" el="340" l="317" n="validate_input(p_cat_code STRING,p_cat_name STRING)" t="F" v="pub">
+<Call c="28" i="utils_globals" l="325" n="show_error" t="F"/>
+<Call c="28" i="utils_globals" l="333" n="show_error" t="F"/>
 </Fct>
-<Fct c="1" el="47" l="38" n="main()" t="F" v="pub">
-<Call c="26" i="utils_globals" l="39" n="initialize_application" t="F"/>
-<Call c="10" l="45" n="init_module" t="F"/>
+<Fct c="10" el="314" l="278" n="move_record(p_value SMALLINT)" t="F" v="pub">
+<Call c="20" l="312" n="load_category_by_code" t="F"/>
+</Fct>
+<Fct c="10" el="274" l="258" n="delete_category()" t="F" v="pub">
+<Call c="28" i="utils_globals" l="262" n="show_info" t="F"/>
+<Call c="29" i="utils_globals" l="266" n="show_confirm" t="F"/>
+<Call c="28" i="utils_globals" l="270" n="get_msg_deleted" t="F"/>
+<Call c="14" l="272" n="move_record" t="F"/>
+</Fct>
+<Fct c="10" el="255" l="220" n="save_category()" t="F" v="pub">
+<Call c="28" i="utils_globals" l="225" n="show_error" t="F"/>
+<Call c="28" i="utils_globals" l="243" n="get_msg_saved" t="F"/>
+<Call c="28" i="utils_globals" l="250" n="get_msg_updated" t="F"/>
+<Call c="21" l="254" n="load_category_by_code" t="F"/>
+</Fct>
+<Fct c="10" el="217" l="177" n="new_cat()" t="F" v="pub">
+<Call c="40" i="utils_globals" l="191" n="show_error" t="F"/>
+<Call c="40" i="utils_globals" l="197" n="show_error" t="F"/>
+<Call c="33" l="202" n="validate_input" t="F"/>
+<Call c="26" l="207" n="save_category" t="F"/>
+</Fct>
+<Fct c="10" el="174" l="160" n="load_category_by_code(p_code STRING)" t="F" v="pub">
+<Call c="28" i="utils_globals" l="168" n="show_info" t="F"/>
+</Fct>
+<Fct c="10" el="156" l="151" n="cat_lookup()" t="F" v="pub">
+<Call c="33" i="st122_cat_lkup" l="154" n="load_lookup" t="F"/>
+</Fct>
+<Fct c="10" el="147" l="137" n="select_stock_cat(p_where STRING)" t="F" v="pub">
+<Call c="16" l="145" n="load_category_by_code" t="F"/>
+</Fct>
+<Fct c="10" el="130" l="52" n="init_module()" t="F" v="pub">
+<Call c="32" l="66" n="cat_lookup" t="F"/>
+<Call c="22" l="69" n="new_cat" t="F"/>
+<Call c="40" i="utils_globals" l="76" n="show_info" t="F"/>
+<Call c="26" l="86" n="save_category" t="F"/>
+<Call c="22" l="93" n="delete_category" t="F"/>
+<Call c="22" l="96" n="move_record" t="F"/>
+<Call c="22" l="102" n="move_record" t="F"/>
+<Call c="22" l="108" n="move_record" t="F"/>
+<Call c="22" l="114" n="move_record" t="F"/>
+<Call c="22" l="126" n="select_stock_cat" t="F"/>
+</Fct>
+<Fct c="1" el="46" l="37" n="main()" t="F" v="pub">
+<Call c="26" i="utils_globals" l="38" n="initialize_application" t="F"/>
+<Call c="10" l="44" n="init_module" t="F"/>
 </Fct>
 </File>
 <File n="src/st/st120_enq.4gl" s="2" ts="20251006141338191"/>
 <File n="src/st/st121_st_lkup.4gl" s="2" ts="20251008142701018">
 <Fct c="10" el="48" l="12" n="display_stocklist()" t="F" v="pub"/>
 </File>
-<File n="src/st/st122_st_lkup.4gl" s="2" ts="20251010124211639">
-<Fct c="10" el="48" l="12" n="display_stocklist()" t="F" v="pub"/>
+<File n="src/st/st122_cat_lkup.4gl" s="2" ts="20251010141400955">
+<Dep t="src/utils/utils_globals.4gl"/>
+<Fct c="10" el="51" l="13" n="load_lookup()" t="F" v="pub"/>
 </File>
-<File n="src/st/st130_trans.4gl" s="2" ts="20251009130641472">
+<File n="src/st/st130_trans.4gl" s="2" ts="20251010135844839">
 <Dep t="src/utils/utils_globals.4gl"/>
 <Dep t="src/utils/utils_db.4gl"/>
 <Dep t="src/utils/utils_lookup.4gl"/>
 <Dep t="src/utils/utils_status_const.4gl"/>
 </File>
-<File n="src/st/st140_hist.4gl" s="2" ts="20251008142701730"/>
-<File n="src/sy/sy100_login.4gl" s="2" ts="20251009154332586">
+<File n="src/st/st140_hist.4gl" s="2" ts="20251010135845156"/>
+<File n="src/sy/sy100_login.4gl" s="2" ts="20251010135843964">
 <Dep t="src/utils/utils_globals.4gl"/>
 <Fct c="10" el="124" l="120" n="confirm_exit_login()" t="F" v="pub">
 <Call c="29" i="utils_globals" l="122" n="show_confirm" t="F"/>
@@ -414,22 +444,22 @@
 <Call c="20" l="60" n="confirm_exit_login" t="F"/>
 </Fct>
 </File>
-<File n="src/sy/sy101_user.4gl" s="2" ts="20251008142701313">
+<File n="src/sy/sy101_user.4gl" s="2" ts="20251010135845107">
 <Fct c="10" el="25" l="22" n="add_user()" t="F" v="pub"/>
 <Fct c="10" el="19" l="17" n="search_user()" t="F" v="pub"/>
 <Fct c="10" el="14" l="12" n="list_users()" t="F" v="pub"/>
 </File>
-<File n="src/sy/sy102_role.4gl" s="2" ts="20251008142700524"/>
-<File n="src/sy/sy103_perm.4gl" s="2" ts="20251008142701230"/>
-<File n="src/sy/sy104_user_pwd.4gl" s="2" ts="20251008142700661"/>
-<File n="src/sy/sy120_user_enq.4gl" s="2" ts="20251008142700413"/>
-<File n="src/sy/sy130_logs.4gl" s="2" ts="20251008142701397">
+<File n="src/sy/sy102_role.4gl" s="2" ts="20251010135844000"/>
+<File n="src/sy/sy103_perm.4gl" s="2" ts="20251010135844417"/>
+<File n="src/sy/sy104_user_pwd.4gl" s="2" ts="20251010135843831"/>
+<File n="src/sy/sy120_user_enq.4gl" s="2" ts="20251010135844940"/>
+<File n="src/sy/sy130_logs.4gl" s="2" ts="20251010135843933">
 <Fct c="10" el="34" l="32" n="log_details()" t="F" v="pub"/>
 <Fct c="10" el="29" l="27" n="load_logs()" t="F" v="pub"/>
 <Fct c="10" el="24" l="22" n="add_log()" t="F" v="pub"/>
 </File>
-<File n="src/sy/sy140_hist.4gl" s="2" ts="20251008142700489"/>
-<File n="src/utils/utils_db.4gl" s="2" ts="20251010090510056">
+<File n="src/sy/sy140_hist.4gl" s="2" ts="20251010135844590"/>
+<File n="src/utils/utils_db.4gl" s="2" ts="20251010135843771">
 <Fct c="10" el="151" l="142" n="rollback_transaction()" t="F" v="pub"/>
 <Fct c="10" el="138" l="129" n="commit_transaction()" t="F" v="pub"/>
 <Fct c="10" el="125" l="116" n="begin_transaction()" t="F" v="pub"/>
@@ -447,75 +477,78 @@
 <Fct c="10" el="37" l="27" n="close_database()" t="F" v="pub"/>
 <Fct c="10" el="24" l="12" n="initialize_database()" t="F" v="pub"/>
 </File>
-<File n="src/utils/utils_enq.4gl" s="2" ts="20251008142700911"/>
-<File n="src/utils/utils_globals.4gl" s="2" ts="20251010090510097">
+<File n="src/utils/utils_enq.4gl" s="2" ts="20251010135844986"/>
+<File n="src/utils/utils_globals.4gl" s="2" ts="20251010160401165">
 <Dep t="src/utils/utils_db.4gl"/>
-<Fct c="10" el="272" l="257" n="handle_sql_error()" t="F" v="pub">
-<Call c="18" l="268" n="show_info" t="F"/>
-<Call c="18" l="270" n="show_error" t="F"/>
+<Fct c="10" el="276" l="261" n="handle_sql_error()" t="F" v="pub">
+<Call c="18" l="272" n="show_info" t="F"/>
+<Call c="18" l="274" n="show_error" t="F"/>
 </Fct>
-<Fct c="10" el="251" l="247" n="is_valid_phone(p_phone STRING)" t="F" v="pub"/>
-<Fct c="10" el="245" l="243" n="is_valid_email(p_email STRING)" t="F" v="pub"/>
-<Fct c="10" el="237" l="235" n="is_empty(p_str STRING)" t="F" v="pub"/>
-<Fct c="10" el="233" l="231" n="trim_str(p_str STRING)" t="F" v="pub"/>
-<Fct c="10" el="225" l="223" n="format_quantity(p_qty DECIMAL)" t="F" v="pub"/>
-<Fct c="10" el="221" l="219" n="format_currency(p_amount DECIMAL)" t="F" v="pub"/>
-<Fct c="10" el="213" l="211" n="get_timestamp()" t="F" v="pub"/>
-<Fct c="10" el="209" l="207" n="format_datetime(p_datetime DATETIME YEAR TO SECOND)" t="F" v="pub"/>
-<Fct c="10" el="205" l="203" n="format_date(p_date DATE)" t="F" v="pub"/>
-<Fct c="17" el="196" l="194" n="get_msg_no_search()" t="F" v="pub">
-<Call c="10" l="195" n="show_info" t="F"/>
+<Fct c="10" el="255" l="251" n="is_valid_phone(p_phone STRING)" t="F" v="pub"/>
+<Fct c="10" el="249" l="247" n="is_valid_email(p_email STRING)" t="F" v="pub"/>
+<Fct c="10" el="241" l="239" n="is_empty(p_str STRING)" t="F" v="pub"/>
+<Fct c="10" el="237" l="235" n="trim_str(p_str STRING)" t="F" v="pub"/>
+<Fct c="10" el="229" l="227" n="format_quantity(p_qty DECIMAL)" t="F" v="pub"/>
+<Fct c="10" el="225" l="223" n="format_currency(p_amount DECIMAL)" t="F" v="pub"/>
+<Fct c="10" el="217" l="215" n="get_timestamp()" t="F" v="pub"/>
+<Fct c="10" el="213" l="211" n="format_datetime(p_datetime DATETIME YEAR TO SECOND)" t="F" v="pub"/>
+<Fct c="10" el="209" l="207" n="format_date(p_date DATE)" t="F" v="pub"/>
+<Fct c="17" el="202" l="199" n="get_msg_confirm_delete()" t="F" v="pub">
+<Call c="18" l="201" n="show_confirm" t="F"/>
 </Fct>
-<Fct c="17" el="192" l="190" n="get_msg_sol()" t="F" v="pub">
-<Call c="10" l="191" n="show_info" t="F"/>
+<Fct c="17" el="197" l="195" n="get_msg_no_search()" t="F" v="pub">
+<Call c="10" l="196" n="show_info" t="F"/>
 </Fct>
-<Fct c="17" el="188" l="186" n="get_msg_eol()" t="F" v="pub">
-<Call c="10" l="187" n="show_info" t="F"/>
+<Fct c="17" el="193" l="191" n="get_msg_sol()" t="F" v="pub">
+<Call c="10" l="192" n="show_info" t="F"/>
 </Fct>
-<Fct c="17" el="184" l="182" n="get_msg_deleted()" t="F" v="pub">
-<Call c="10" l="183" n="show_info" t="F"/>
+<Fct c="17" el="189" l="187" n="get_msg_eol()" t="F" v="pub">
+<Call c="10" l="188" n="show_info" t="F"/>
 </Fct>
-<Fct c="17" el="180" l="178" n="get_msg_updated()" t="F" v="pub">
-<Call c="10" l="179" n="show_info" t="F"/>
+<Fct c="17" el="185" l="183" n="get_msg_deleted()" t="F" v="pub">
+<Call c="10" l="184" n="show_info" t="F"/>
 </Fct>
-<Fct c="17" el="177" l="175" n="get_msg_saved()" t="F" v="pub">
-<Call c="10" l="176" n="show_info" t="F"/>
+<Fct c="17" el="181" l="179" n="get_msg_updated()" t="F" v="pub">
+<Call c="10" l="180" n="show_info" t="F"/>
 </Fct>
-<Fct c="17" el="173" l="171" n="get_msg_no_record()" t="F" v="pub">
-<Call c="10" l="172" n="show_info" t="F"/>
+<Fct c="17" el="178" l="176" n="get_msg_saved()" t="F" v="pub">
+<Call c="10" l="177" n="show_info" t="F"/>
 </Fct>
-<Fct c="17" el="165" l="156" n="set_field_status(field_list DYNAMIC ARRAY OF STRING,p_hidden SMALLINT)" t="F" v="pub"/>
-<Fct c="10" el="154" l="150" n="set_form_lbl(lbl_name STRING,new_text STRING)" t="F" v="pub"/>
-<Fct c="10" el="148" l="142" n="set_page_title(p_title STRING)" t="F" v="pub"/>
-<Fct c="17" el="140" l="129" n="show_confirm(p_message STRING,p_title STRING)" t="F" v="pub">
-<Call c="19" i="fgldialog" l="136" n="fgl_winQuestion" t="F"/>
+<Fct c="17" el="174" l="172" n="get_msg_no_record()" t="F" v="pub">
+<Call c="10" l="173" n="show_info" t="F"/>
 </Fct>
-<Fct c="17" el="127" l="125" n="show_success(p_message STRING)" t="F" v="pub">
-<Call c="10" l="126" n="show_message" t="F"/>
+<Fct c="17" el="166" l="157" n="set_field_status(field_list DYNAMIC ARRAY OF STRING,p_hidden SMALLINT)" t="F" v="pub"/>
+<Fct c="10" el="155" l="151" n="set_form_lbl(lbl_name STRING,new_text STRING)" t="F" v="pub"/>
+<Fct c="10" el="149" l="143" n="set_page_title(p_title STRING)" t="F" v="pub"/>
+<Fct c="17" el="141" l="130" n="show_confirm(p_message STRING,p_title STRING)" t="F" v="pub">
+<Call c="19" i="fgldialog" l="137" n="fgl_winQuestion" t="F"/>
 </Fct>
-<Fct c="17" el="123" l="121" n="show_error(p_message STRING)" t="F" v="pub">
-<Call c="10" l="122" n="show_message" t="F"/>
+<Fct c="17" el="128" l="126" n="show_success(p_message STRING)" t="F" v="pub">
+<Call c="10" l="127" n="show_message" t="F"/>
 </Fct>
-<Fct c="17" el="119" l="117" n="show_warning(p_message STRING)" t="F" v="pub">
-<Call c="10" l="118" n="show_message" t="F"/>
+<Fct c="17" el="124" l="122" n="show_error(p_message STRING)" t="F" v="pub">
+<Call c="10" l="123" n="show_message" t="F"/>
 </Fct>
-<Fct c="17" el="115" l="113" n="show_info(p_message STRING)" t="F" v="pub">
-<Call c="10" l="114" n="show_message" t="F"/>
+<Fct c="17" el="120" l="118" n="show_warning(p_message STRING)" t="F" v="pub">
+<Call c="10" l="119" n="show_message" t="F"/>
 </Fct>
-<Fct c="17" el="111" l="109" n="show_alert(p_message STRING,p_title STRING)" t="F" v="pub">
-<Call c="10" l="110" n="show_message" t="F"/>
+<Fct c="17" el="116" l="114" n="show_info(p_message STRING)" t="F" v="pub">
+<Call c="10" l="115" n="show_message" t="F"/>
 </Fct>
-<Fct c="17" el="107" l="86" n="show_message(p_message STRING,p_title STRING,style_name STRING)" t="F" v="pub">
-<Call c="20" i="fgldialog" l="106" n="fgl_winMessage" t="F"/>
+<Fct c="17" el="112" l="110" n="show_alert(p_message STRING,p_title STRING)" t="F" v="pub">
+<Call c="10" l="111" n="show_message" t="F"/>
 </Fct>
-<Fct c="10" el="84" l="81" n="hide_screen()" t="F" v="pub"/>
-<Fct c="17" el="75" l="39" n="initialize_application()" t="F" v="pub">
-<Call c="10" l="44" n="hide_screen" t="F"/>
-<Call c="34" i="utils_db" l="55" n="initialize_database" t="F"/>
-<Call c="18" l="58" n="show_error" t="F"/>
+<Fct c="17" el="108" l="87" n="show_message(p_message STRING,p_title STRING,style_name STRING)" t="F" v="pub">
+<Call c="20" i="fgldialog" l="107" n="fgl_winMessage" t="F"/>
+</Fct>
+<Fct c="10" el="85" l="82" n="hide_screen()" t="F" v="pub"/>
+<Fct c="17" el="76" l="40" n="initialize_application()" t="F" v="pub">
+<Call c="10" l="45" n="hide_screen" t="F"/>
+<Call c="34" i="utils_db" l="56" n="initialize_database" t="F"/>
+<Call c="18" l="59" n="show_error" t="F"/>
 </Fct>
 </File>
-<File n="src/utils/utils_lookup.4gl" s="2" ts="20251010101551892">
+<File n="src/utils/utils_lookup.4gl" s="2" ts="20251010135844092">
 <Dep t="src/utils/utils_globals.4gl"/>
 <Fct c="10" el="275" l="273" n="show_lookupf_form()" t="F" v="pub"/>
 <Fct c="10" el="267" l="230" n="display_lookup_dialog(result_array DYNAMIC ARRAY OF RECORD,row_count INTEGER,dialog_title STRING)" t="F" v="pub"/>
@@ -554,15 +587,15 @@
 </Fct>
 <Fct c="10" el="28" l="22" n="run_lookup(p_mode STRING,p_search STRING)" t="F" v="pub"/>
 </File>
-<File n="src/utils/utils_notify.4gl" s="2" ts="20251010081325222"/>
-<File n="src/utils/utils_status_const.4gl" s="2" ts="20251008142701441">
+<File n="src/utils/utils_notify.4gl" s="2" ts="20251010135844324"/>
+<File n="src/utils/utils_status_const.4gl" s="2" ts="20251010135844133">
 <Fct c="10" el="47" l="19" n="populate_status_combobox()" t="F" v="pub"/>
 </File>
-<File n="src/utils/utils_types.4gl" s="2" ts="20251008142700745"/>
-<File n="src/utils/utils_ui.4gl" s="2" ts="20251009114604901">
+<File n="src/utils/utils_types.4gl" s="2" ts="20251010135844236"/>
+<File n="src/utils/utils_ui.4gl" s="2" ts="20251010135844471">
 <Fct c="10" el="14" l="12" n="load_default_menus()" t="F" v="pub"/>
 </File>
-<File n="src/utils/utils_windows.4gl" s="2" ts="20251009155105398">
+<File n="src/utils/utils_windows.4gl" s="2" ts="20251010135845251">
 <Fct c="17" el="131" l="123" n="standard_close_handler(p_has_changes SMALLINT)" t="F" v="pub">
 <Call c="16" l="126" n="confirm_unsaved_changes" t="F"/>
 <Call c="16" l="128" n="handle_window_close" t="F"/>
@@ -579,21 +612,21 @@
 <Call c="28" i="fgldialog" l="24" n="fgl_winQuestion" t="F"/>
 </Fct>
 </File>
-<File n="src/wh/wb101_mast.4gl" s="2" ts="20251008142701110">
+<File n="src/wh/wb101_mast.4gl" s="2" ts="20251010135844653">
 <Dep t="src/utils/utils_globals.4gl"/>
 <Fct c="10" el="34" l="12" n="open_wbbin_form()" t="F" v="pub">
 <Call c="24" i="utils_globals" l="25" n="set_page_title" t="F"/>
 </Fct>
 </File>
-<File n="src/wh/wb130_trans.4gl" s="2" ts="20251008142701677"/>
-<File n="src/wh/wb140_hist.4gl" s="2" ts="20251008142700871"/>
-<File n="src/wh/wb30_hdr.4gl" s="2" ts="20251008142700619"/>
-<File n="src/wh/wb31_det.4gl" s="2" ts="20251008142701498"/>
-<File n="src/wh/wh101_mast.4gl" s="2" ts="20251008142700777"/>
-<File n="src/wh/wh102_tag.4gl" s="2" ts="20251008142701633"/>
-<File n="src/wh/wh130_trans.4gl" s="2" ts="20251008142701269"/>
-<File n="src/wh/wh140_hist.4gl" s="2" ts="20251008142700956"/>
-<File n="src/wh/wh30_hdr.4gl" s="2" ts="20251008142700453"/>
-<File n="src/wh/wh30_trans.4gl" s="2" ts="20251008142701189"/>
-<File n="src/wh/wh31_det.4gl" s="2" ts="20251008142701066"/>
+<File n="src/wh/wb130_trans.4gl" s="2" ts="20251010135843690"/>
+<File n="src/wh/wb140_hist.4gl" s="2" ts="20251010135845301"/>
+<File n="src/wh/wb30_hdr.4gl" s="2" ts="20251010135844040"/>
+<File n="src/wh/wb31_det.4gl" s="2" ts="20251010135844713"/>
+<File n="src/wh/wh101_mast.4gl" s="2" ts="20251010135845040"/>
+<File n="src/wh/wh102_tag.4gl" s="2" ts="20251010135844545"/>
+<File n="src/wh/wh130_trans.4gl" s="2" ts="20251010135843891"/>
+<File n="src/wh/wh140_hist.4gl" s="2" ts="20251010135844370"/>
+<File n="src/wh/wh30_hdr.4gl" s="2" ts="20251010135844180"/>
+<File n="src/wh/wh30_trans.4gl" s="2" ts="20251010135844881"/>
+<File n="src/wh/wh31_det.4gl" s="2" ts="20251010135845202"/>
 </WorkspaceDatabase>

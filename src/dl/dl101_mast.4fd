@@ -40,7 +40,11 @@
           <Label gridHeight="1" gridWidth="10" name="lbl_dl_email" posX="21" posY="2" text="Email"/>
           <Edit colName="email" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="28" name="dl01_mast.email" posX="32" posY="2" repeat="false" sqlTabName="dl01_mast" tabIndex="4" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="5" name="lbl_dl_status" posX="61" posY="2" text="Status"/>
-          <ComboBox colName="status" defaultValue="0" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" items="" name="dl01_mast.status" posX="67" posY="2" sqlTabName="dl01_mast" tabIndex="5" title="buttonedit1" widget="ComboBox"/>
+          <ComboBox colName="status" defaultValue="0" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" items="Active, Inactive, Archived" name="dl01_mast.status" posX="67" posY="2" sqlTabName="dl01_mast" tabIndex="5" title="buttonedit1" widget="ComboBox">
+            <Item lstrtext="true" name="0" text="Active"/>
+            <Item lstrtext="true" name="1" text="Inactive"/>
+            <Item lstrtext="true" name="-1" text="Archived"/>
+          </ComboBox>
           <Label gridHeight="1" gridWidth="6" name="lbl_dl_add1" posX="1" posY="4" text="Address 1"/>
           <Edit colName="address1" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="29" name="dl01_mast.address1" posX="8" posY="4" repeat="false" sqlTabName="dl01_mast" tabIndex="6" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="8" name="lbl_dl_add2" posX="38" posY="4" text="Address 2"/>
@@ -90,6 +94,6 @@
     </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM7AMzhPAKzMzyMzOVT9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM7W5mv/AKzMzz5mbRz9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>
