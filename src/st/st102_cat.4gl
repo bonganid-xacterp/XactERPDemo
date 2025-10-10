@@ -198,17 +198,10 @@ FUNCTION new_cat()
                     NEXT FIELD cat_name
                 END IF
 
-            AFTER FIELD description
-                IF rec_st_cat.description IS NULL OR rec_st_cat.description = "" THEN
-                    CALL utils_globals.show_error("Description is required.")
-                    NEXT FIELD description
-                END IF
-
             ON ACTION save ATTRIBUTES(TEXT = "Save")
                 LET dup_found = validate_input(
                     rec_st_cat.cat_code,
-                    rec_st_cat.cat_name,
-                    rec_st_cat.description)
+                    rec_st_cat.cat_name)
 
                 IF dup_found = 0 THEN
                     CALL save_category()
@@ -245,7 +238,8 @@ FUNCTION save_category()
         rec_st_cat.cat_code, 
         rec_st_cat.cat_name, 
         rec_st_cat.description, 
-         rec_st_cat.status)
+        rec_st_cat.status
+         )
         CALL utils_globals.get_msg_saved()
     ELSE
         UPDATE st02_cat
@@ -320,12 +314,12 @@ FUNCTION move_record(p_value SMALLINT)
 END FUNCTION
 
 -- Duplicate checks
-FUNCTION validate_input(p_cat_code STRING, p_cat_name STRING, p_description STRING) RETURNS SMALLINT
+FUNCTION validate_input(p_cat_code STRING, p_cat_name STRING) RETURNS SMALLINT
     DEFINE dup_count INTEGER
     DEFINE exists SMALLINT
 
     LET exists = 0
-
+    -- check if cat_code exists
     SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE cat_code = p_cat_code
     IF dup_count > 0 THEN
         CALL utils_globals.show_error("Duplicate category code already exists.")
@@ -333,6 +327,7 @@ FUNCTION validate_input(p_cat_code STRING, p_cat_name STRING, p_description STRI
         RETURN exists
     END IF
 
+    -- check if cat_name exists
     SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE cat_name = p_cat_name
     IF dup_count > 0 THEN
         CALL utils_globals.show_error("Duplicate category name already exists.")
@@ -340,12 +335,6 @@ FUNCTION validate_input(p_cat_code STRING, p_cat_name STRING, p_description STRI
         RETURN exists
     END IF
 
-    SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE description = p_description
-    IF dup_count > 0 THEN
-        CALL utils_globals.show_error("Duplicate description already exists.")
-        LET exists = 1
-        RETURN exists
-    END IF
 
     RETURN exists
 END FUNCTION

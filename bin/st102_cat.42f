@@ -27,10 +27,17 @@
       <Label name="st02_mast_status" width="8" text="Status" posY="2" posX="44" gridWidth="8">
         <LStr text="Status"/>
       </Label>
-      <FormField name="st02_cat.status" colName="status" sqlType="SMALLINT" fieldId="3" sqlTabName="st02_cat" tabIndex="4" notNull="1" required="1">
+      <FormField name="st02_cat.status" colName="status" sqlType="SMALLINT" fieldId="3" sqlTabName="st02_cat" tabIndex="4" defaultValue="1" notNull="1" required="1">
         <ComboBox width="8" scroll="1" posY="2" posX="53" gridWidth="10">
-          <Item name="0" text="Active"/>
-          <Item name="1" text="Inactive"/>
+          <Item name="1" text="Inactive">
+            <LStr text="Inactive"/>
+          </Item>
+          <Item name="0" text="Active">
+            <LStr text="Active"/>
+          </Item>
+          <Item name="-1" text="Archived">
+            <LStr text="Archived"/>
+          </Item>
         </ComboBox>
       </FormField>
     </Grid>
