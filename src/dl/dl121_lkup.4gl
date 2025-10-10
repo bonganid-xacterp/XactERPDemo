@@ -19,8 +19,7 @@ FUNCTION fetch_debt_list() RETURNS STRING
     DEFINE r INTEGER
 
 
-    DEFINE
-        debt_arr DYNAMIC ARRAY OF RECORD
+    DEFINE  debt_arr DYNAMIC ARRAY OF RECORD
             acc_code LIKE dl01_mast.acc_code,
             cust_name LIKE dl01_mast.cust_name,
             status LIKE dl01_mast.status,

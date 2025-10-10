@@ -31,7 +31,7 @@ FUNCTION lookup_creditor(search_val STRING, field_name STRING) RETURNS STRING
 
     DEFINE sql_query STRING
     LET sql_query =
-        "SELECT acc_code, supp_name, address1, phone "
+        "SELECT acc_code, supp_name, phone "
             || "FROM cl01_mast "
             || build_where(search_val, "acc_code", "supp_name")
             || " ORDER BY acc_code"

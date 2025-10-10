@@ -5,8 +5,10 @@
 -- Version   : Genero ver 3.20.10
 -- ==============================================================
 
--- Establish connection to PostgreSQL database
 
+
+
+-- Establish connection to PostgreSQL database
 FUNCTION initialize_database() RETURNS SMALLINT
     TRY
         CONNECT TO "xactdemo_db@localhost:5432+driver='dbmpgs_9'"
@@ -35,7 +37,6 @@ FUNCTION close_database() RETURNS SMALLINT
 END FUNCTION
 
 -- Verify database connection is active
-
 FUNCTION check_database_connection() RETURNS SMALLINT
     DEFINE test_count INTEGER
     TRY
@@ -57,7 +58,6 @@ FUNCTION check_database_connection() RETURNS SMALLINT
 END FUNCTION
 
 -- Attempt to reconnect to database
-
 FUNCTION reconnect_database() RETURNS SMALLINT
 DEFINE db_result SMALLINT 
 LET db_result = close_database()
@@ -66,7 +66,6 @@ LET db_result = close_database()
 END FUNCTION
 
 -- Return current database connection information
-
 FUNCTION get_database_info() RETURNS STRING
     DEFINE info STRING
     LET info = "Database: xactdemo_db\n"
