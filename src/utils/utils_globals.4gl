@@ -22,6 +22,17 @@ CONSTANT APP_VERSION = "1.0.0"
 CONSTANT STYLE_FILE = "main_styles.4st" -- Style file (keep in project folder)
 
 -- ==============================================================
+-- STANDARD NOTIFICATION CONSTANTS
+-- ==============================================================
+CONSTANT MSG_NO_RECORD     = "No records found."
+CONSTANT MSG_SAVED         = "Record saved successfully."
+CONSTANT MSG_UPDATED       = "Record updated successfully."
+CONSTANT MSG_DELETED       = "Record deleted successfully."
+CONSTANT MSG_EOL           = "End of list."
+CONSTANT MSG_SOL           = "Start of list."
+CONSTANT MSG_NO_SEARCH     = "Enter account code or name to search."
+
+-- ==============================================================
 -- INITIALIZATION SECTION
 -- ==============================================================
 
@@ -157,32 +168,31 @@ END FUNCTION
 -- STANDARD NOTIFICATION MESSAGE FUNCTIONS
 -- ==============================================================
 
-PUBLIC FUNCTION get_msg_no_record() RETURNS STRING
-    RETURN "No records found."
+PUBLIC FUNCTION get_msg_no_record()
+    CALL show_info(MSG_NO_RECORD)
 END FUNCTION
 
-PUBLIC FUNCTION get_msg_saved() RETURNS STRING
-    RETURN "Record saved successfully."
+PUBLIC FUNCTION get_msg_saved()
+    CALL show_info(MSG_SAVED)
+END FUNCTION
+PUBLIC FUNCTION get_msg_updated()
+    CALL show_info(MSG_UPDATED)
 END FUNCTION
 
-PUBLIC FUNCTION get_msg_updated() RETURNS STRING
-    RETURN "Record updated successfully."
+PUBLIC FUNCTION get_msg_deleted()
+    CALL show_info(MSG_DELETED)
 END FUNCTION
 
-PUBLIC FUNCTION get_msg_deleted() RETURNS STRING
-    RETURN "Record deleted successfully."
+PUBLIC FUNCTION get_msg_eol()
+    CALL show_info(MSG_EOL)
 END FUNCTION
 
-PUBLIC FUNCTION get_msg_eol() RETURNS STRING
-    RETURN "End of list."
+PUBLIC FUNCTION get_msg_sol()
+    CALL show_info(MSG_SOL)
 END FUNCTION
 
-PUBLIC FUNCTION get_msg_sol() RETURNS STRING
-    RETURN "Start of list."
-END FUNCTION
-
-PUBLIC FUNCTION get_msg_no_search() RETURNS STRING
-    RETURN "Enter account code or name to search."
+PUBLIC FUNCTION get_msg_no_search()
+    CALL show_info(MSG_NO_SEARCH)
 END FUNCTION
 
 
