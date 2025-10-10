@@ -1,16 +1,19 @@
-# ==============================================================
-# Program   :   globals.4gl
-# Purpose   :   Global variables and utility functions
-# Module    :   Global
-# Author    :   Bongani Dlamini
-# Version   :   Genero ver 3.20.10
-# ==============================================================
+-- ==============================================================
+-- Program   : utils_globals.4gl
+-- Purpose   : Global variables, constants, and utility functions
+-- Module    : Utilities (Global)
+-- Author    : Bongani Dlamini
+-- Version   : Genero BDL 3.20.10
+-- ==============================================================
 
 IMPORT ui
 IMPORT FGL fgldialog
 IMPORT FGL utils_db
 
--- Global application variables
+-- ==============================================================
+-- GLOBAL VARIABLES
+-- ==============================================================
+
 DEFINE g_debug_mode SMALLINT
 DEFINE g_user_authenticated SMALLINT
 
@@ -19,14 +22,25 @@ CONSTANT APP_VERSION = "1.0.0"
 CONSTANT STYLE_FILE = "main_styles.4st" -- Style file (keep in project folder)
 
 -- ==============================================================
+-- STANDARD NOTIFICATION CONSTANTS
+-- ==============================================================
+CONSTANT MSG_NO_RECORD = "No records found."
+CONSTANT MSG_SAVED = "Record saved successfully."
+CONSTANT MSG_UPDATED = "Record updated successfully."
+CONSTANT MSG_DELETED = "Record deleted successfully."
+CONSTANT MSG_EOL = "End of list."
+CONSTANT MSG_SOL = "Start of list."
+CONSTANT MSG_NO_SEARCH = "Enter account code or name to search."
+
+-- ==============================================================
 -- INITIALIZATION SECTION
 -- ==============================================================
 
-FUNCTION initialize_application() RETURNS SMALLINT
+PUBLIC FUNCTION initialize_application() RETURNS SMALLINT
     DEFINE db_result SMALLINT
-    LET g_debug_mode = TRUE 
+    LET g_debug_mode = TRUE
 
-    -- hide screen and disable ctrl+c
+    -- Hide default screen and disable Ctrl+C
     CALL hide_screen()
 
     TRY
@@ -45,7 +59,6 @@ FUNCTION initialize_application() RETURNS SMALLINT
             RETURN FALSE
         END IF
 
-        -- Initialize global flags
         LET g_user_authenticated = FALSE
 
         IF g_debug_mode THEN
@@ -59,30 +72,19 @@ FUNCTION initialize_application() RETURNS SMALLINT
         DISPLAY "ERROR during initialization: ", STATUS
         RETURN FALSE
     END TRY
-
 END FUNCTION
 
--- =============================================================
--- UI Utility Functions
--- =============================================================
+-- ==============================================================
+-- UI UTILITY FUNCTIONS
+-- ==============================================================
 
--- Load child form to the parent wrapper
-FUNCTION set_child_container()
-    CALL ui.Interface.setContainer("mdi_wrapper")
-    CALL ui.Interface.setType("child")
-END FUNCTION
-
--- Global hide screen code
 FUNCTION hide_screen()
-    -- Prevent CTRL+C interrupt crash
     DEFER INTERRUPT
-
-    -- Close default SCREEN window
     CLOSE WINDOW SCREEN
 END FUNCTION
 
--- Show message with OK button
-FUNCTION show_message(p_message STRING, p_title STRING, style_name STRING)
+PUBLIC FUNCTION show_message(
+    p_message STRING, p_title STRING, style_name STRING)
     DEFINE l_title STRING
     DEFINE l_icon STRING
 
@@ -104,92 +106,55 @@ FUNCTION show_message(p_message STRING, p_title STRING, style_name STRING)
     CALL fgldialog.fgl_winmessage(l_title, p_message, l_icon)
 END FUNCTION
 
--- ==============================================================
--- Function: show_alert
--- Purpose:  Quick alert message (convenience wrapper)
--- ==============================================================
 PUBLIC FUNCTION show_alert(p_message STRING, p_title STRING)
     CALL show_message(p_message, p_title, "warning")
 END FUNCTION
 
--- ==============================================================
--- Function: show_info
--- Purpose:  Information message
--- ==============================================================
 PUBLIC FUNCTION show_info(p_message STRING)
     CALL show_message(p_message, "Information", "info")
 END FUNCTION
 
--- ==============================================================
--- Function: show_warning
--- Purpose:  Warning message
--- ==============================================================
 PUBLIC FUNCTION show_warning(p_message STRING)
     CALL show_message(p_message, "Warning", "warning")
 END FUNCTION
 
--- ==============================================================
--- Function: show_error
--- Purpose:  Error message
--- ==============================================================
 PUBLIC FUNCTION show_error(p_message STRING)
     CALL show_message(p_message, "Error", "error")
 END FUNCTION
 
--- ==============================================================
--- Function: show_success
--- Purpose:  Success message
--- ==============================================================
 PUBLIC FUNCTION show_success(p_message STRING)
     CALL show_message(p_message, "Success", "info")
 END FUNCTION
 
--- ==============================================================
--- Function: Confirmation dialog
--- Purpose:  Ask user for confirmation (Yes/No)
--- Returns:  TRUE if user clicked Yes, FALSE otherwise
--- ==============================================================
-FUNCTION show_confirm(p_message STRING, p_title STRING)
-    DEFINE l_title STRING
+PUBLIC FUNCTION show_confirm(p_message STRING, p_title STRING) RETURNS SMALLINT
     DEFINE answer STRING
+    DEFINE l_title STRING
 
-    IF p_title IS NULL OR p_title = "" THEN
-        LET l_title = "Confirm"
-    ELSE
-        LET l_title = p_title
-    END IF
+    LET l_title = IIF(p_title IS NULL OR p_title = "", "Confirm", p_title)
 
     LET answer =
         fgldialog.fgl_winQuestion(
             l_title, p_message, "no", "yes|no", "question", 0)
 
     RETURN (answer = "yes")
-
 END FUNCTION
 
--- Set window title
 FUNCTION set_page_title(p_title STRING)
-    DEFINE g_win ui.Window
-    LET g_win = ui.Window.getCurrent()
-    IF g_win IS NOT NULL THEN
-        CALL g_win.setText(APP_NAME || p_title)
+    DEFINE w ui.Window
+    LET w = ui.Window.getCurrent()
+    IF w IS NOT NULL THEN
+        CALL w.setText(APP_NAME || " - " || p_title)
     END IF
 END FUNCTION
 
--- Set form label text
 FUNCTION set_form_lbl(lbl_name STRING, new_text STRING)
-    DEFINE g_form ui.Form
-    LET g_form = ui.Window.getCurrent().getForm()
-    CALL g_form.setElementText(lbl_name, new_text)
+    DEFINE f ui.Form
+    LET f = ui.Window.getCurrent().getForm()
+    CALL f.setElementText(lbl_name, new_text)
 END FUNCTION
 
-
-# --------------------------------------------------------------
-# Generic UI field visibility and activation control
-# --------------------------------------------------------------
-
-# Hide or show a list of fields on the current form
-PUBLIC FUNCTION set_field_status(field_list DYNAMIC ARRAY OF STRING, p_hidden SMALLINT)
+PUBLIC FUNCTION set_field_status(
+    field_list DYNAMIC ARRAY OF STRING, p_hidden SMALLINT)
     DEFINE f ui.Form
     DEFINE i INTEGER
 
@@ -199,111 +164,64 @@ PUBLIC FUNCTION set_field_status(field_list DYNAMIC ARRAY OF STRING, p_hidden SM
     END FOR
 END FUNCTION
 
--- =============================================================
--- Date/Time Functions
--- =============================================================
+-- ==============================================================
+-- DATE/TIME UTILITIES
+-- ==============================================================
 
--- Format date as DD/MM/YYYY
 FUNCTION format_date(p_date DATE) RETURNS STRING
-    IF p_date IS NULL THEN
-        RETURN ""
-    END IF
-    RETURN p_date USING "dd/mm/yyyy"
+    RETURN IIF(p_date IS NULL, "", p_date USING "dd/mm/yyyy")
 END FUNCTION
 
--- Format datetime
 FUNCTION format_datetime(p_datetime DATETIME YEAR TO SECOND) RETURNS STRING
-    IF p_datetime IS NULL THEN
-        RETURN ""
-    END IF
-    RETURN p_datetime USING "dd/mm/yyyy hh:mm:ss"
+    RETURN IIF(p_datetime IS NULL, "", p_datetime USING "dd/mm/yyyy hh:mm:ss")
 END FUNCTION
 
--- Get current timestamp
 FUNCTION get_timestamp() RETURNS DATETIME YEAR TO SECOND
     RETURN CURRENT YEAR TO SECOND
 END FUNCTION
 
--- =============================================================
--- Number Formatting
--- =============================================================
+-- ==============================================================
+-- NUMBER FORMAT UTILITIES
+-- ==============================================================
 
--- Format currency
 FUNCTION format_currency(p_amount DECIMAL) RETURNS STRING
-    IF p_amount IS NULL THEN
-        LET p_amount = 0
-    END IF
-    RETURN p_amount USING "---,---,--&.&&"
+    RETURN (NVL(p_amount, 0) USING "---,---,--&.&&")
 END FUNCTION
 
--- Format quantity
 FUNCTION format_quantity(p_qty DECIMAL) RETURNS STRING
-    IF p_qty IS NULL THEN
-        LET p_qty = 0
-    END IF
-    RETURN p_qty USING "---,---,--&.&&"
+    RETURN (NVL(p_qty, 0) USING "---,---,--&.&&")
 END FUNCTION
 
--- =============================================================
--- String Functions
--- =============================================================
+-- ==============================================================
+-- STRING UTILITIES
+-- ==============================================================
 
--- Trim string
 FUNCTION trim_str(p_str STRING) RETURNS STRING
-    IF p_str IS NULL THEN
-        RETURN ""
-    END IF
-    RETURN p_str.trim()
+    RETURN IIF(p_str IS NULL, "", p_str.trim())
 END FUNCTION
 
--- Check if string is empty
 FUNCTION is_empty(p_str STRING) RETURNS SMALLINT
-    IF p_str IS NULL THEN
-        RETURN TRUE
-    END IF
-    IF LENGTH(p_str.trim()) = 0 THEN
-        RETURN TRUE
-    END IF
-    RETURN FALSE
+    RETURN (p_str IS NULL OR LENGTH(p_str.trim()) = 0)
 END FUNCTION
 
--- =============================================================
--- Validation Functions
--- =============================================================
+-- ==============================================================
+-- VALIDATION FUNCTIONS
+-- ==============================================================
 
--- Validate email
 FUNCTION is_valid_email(p_email STRING) RETURNS SMALLINT
-    IF p_email IS NULL THEN
-        RETURN FALSE
-    END IF
-
-    -- Basic validation
-    IF p_email NOT MATCHES "*@*.*" THEN
-        RETURN FALSE
-    END IF
-
-    RETURN TRUE
+    RETURN (p_email IS NOT NULL AND p_email MATCHES "*@*.*")
 END FUNCTION
 
--- Validate phone number
 FUNCTION is_valid_phone(p_phone STRING) RETURNS SMALLINT
-    DEFINE clean_phone STRING
-
-    IF p_phone IS NULL THEN
-        RETURN FALSE
-    END IF
-
-    -- Remove spaces and dashes
-    LET clean_phone = p_phone.trim()
-
-    IF LENGTH(clean_phone) < 10 OR LENGTH(clean_phone) > 10 THEN
-        RETURN FALSE
-    END IF
-
-    RETURN TRUE
+    DEFINE clean STRING
+    LET clean = p_phone.trim()
+    RETURN (LENGTH(clean) = 10)
 END FUNCTION
 
--- handle sql errors
+-- ==============================================================
+-- SQL ERROR HANDLER
+-- ==============================================================
+
 FUNCTION handle_sql_error()
     DEFINE errnum INTEGER
     DEFINE errmsg STRING
