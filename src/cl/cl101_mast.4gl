@@ -132,7 +132,7 @@ FUNCTION init_module()
                 CALL DIALOG.setActionActive("edit", TRUE)
                 
             ON ACTION find  ATTRIBUTES(TEXT="Search", IMAGE="zoom")
-                CALL query_creditors_lookup()
+                CALL load_lookup_form_with_search()
                 LET is_edit_mode = FALSE
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
@@ -211,7 +211,7 @@ END FUNCTION
 -- ==============================================================
 -- Query using Lookup Window
 -- ==============================================================
-FUNCTION query_creditors_lookup()
+FUNCTION load_lookup_form_with_search()
     DEFINE selected_code STRING
     
     LET selected_code = query_creditor()

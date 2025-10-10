@@ -9,39 +9,82 @@
     <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st02_cat.description" sqlTabName="st02_cat" uid="{bbced228-51a1-4e00-8591-03ca75b03341}"/>
     <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="st02_cat.status" sqlTabName="st02_cat" uid="{b3c65faa-c287-4ea3-92a8-54fb859cc8c6}"/>
   </Record>
-  <Form fourSTFile="../_main/main_styles.4st" gridHeight="4" gridWidth="90" name="frm_st_cat" text="Form" windowStyle="child">
-    <HBox gridHeight="4" gridWidth="90" name="hbox1" posX="0" posY="0">
-      <Grid gridHeight="4" gridWidth="86" name="st02_cat_grd" posX="2" posY="0">
+  <Record masterTable="st01_mast" name="record1" uid="{854f6255-98b3-4839-8c80-2081b7d38501}">
+    <RecordField colName="stock_code" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st01_mast.stock_code" sqlTabName="st01_mast" uid="{b81395c6-8beb-4037-b0db-95031fd4bada}"/>
+    <RecordField colName="description" fieldIdRef="6" fieldType="TABLE_COLUMN" name="st01_mast.description" sqlTabName="st01_mast" uid="{993351f3-085f-4796-9d2d-dc728dedf49c}"/>
+    <RecordField colName="cost" fieldIdRef="7" fieldType="TABLE_COLUMN" name="st01_mast.cost" sqlTabName="st01_mast" uid="{04e48624-2947-434b-9733-548c1f605a5f}"/>
+    <RecordField colName="selling_price" fieldIdRef="8" fieldType="TABLE_COLUMN" name="st01_mast.selling_price" sqlTabName="st01_mast" uid="{d41ca8cf-2c8e-400f-9efb-dfd713262e21}"/>
+    <RecordField colName="stock_on_hand" fieldIdRef="9" fieldType="TABLE_COLUMN" name="st01_mast.stock_on_hand" sqlTabName="st01_mast" uid="{752a0410-aa6d-454f-9851-916421fc463f}"/>
+    <RecordField colName="status" fieldIdRef="10" fieldType="TABLE_COLUMN" name="st01_mast.status" sqlTabName="st01_mast" uid="{e6c53b0c-23b5-40dd-87e6-55cb3ef641ec}"/>
+  </Record>
+  <Record name="record2" uid="{ed559683-5cc0-4b59-a8f2-ce2fadf68c87}">
+    <RecordField fieldIdRef="11" name="edit1" uid="{4f4f3118-1b46-4fdb-aad4-0924f924befa}"/>
+    <RecordField fieldIdRef="12" name="edit2" uid="{57989aa0-383b-449c-9fb5-635e0198f115}"/>
+  </Record>
+  <Form fourSTFile="../_main/main_styles.4st" gridHeight="108" gridWidth="106" name="frm_st_cat" text="Stock Category" windowStyle="child">
+    <VBox gridHeight="18" gridWidth="106" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="6" gridWidth="106" name="st02_cat_grd" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="80" justify="center" name="lbl_form_title" posX="1" posY="0" style="title" text="Stock Category"/>
         <Label gridHeight="1" gridWidth="11" name="st02_mast_cat_code" posX="1" posY="1" text="Category Code">
           <Initializer text="dbschema:st02_mast.cat_code/@label"/>
         </Label>
-        <ButtonEdit colName="cat_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st02_cat.cat_code" posX="13" posY="1" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="ButtonEdit">
+        <ButtonEdit action="find" colName="cat_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="zoom" name="st02_cat.cat_code" posX="13" posY="1" scroll="true" sqlTabName="st02_cat" tabIndex="1" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ButtonEdit>
         <Label gridHeight="1" gridWidth="8" name="st02_mast_cat_name" posX="44" posY="1" text="Category Name">
           <Initializer text="dbschema:st02_mast.cat_name/@label"/>
         </Label>
-        <Edit colName="cat_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.cat_name" posX="53" posY="1" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="Edit">
+        <Edit colName="cat_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.cat_name" posX="53" posY="1" scroll="true" sqlTabName="st02_cat" tabIndex="2" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
         <Label gridHeight="1" gridWidth="11" name="st02_mast_description" posX="1" posY="2" text="Description">
           <Initializer text="dbschema:st02_mast.description/@label"/>
         </Label>
-        <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.description" posX="13" posY="2" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="Edit">
+        <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.description" posX="13" posY="2" scroll="true" sqlTabName="st02_cat" tabIndex="3" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
         <Label gridHeight="1" gridWidth="8" name="st02_mast_status" posX="44" posY="2" text="Status">
           <Initializer text="dbschema:st02_mast.status/@label"/>
         </Label>
-        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="Active, Inactive" name="st02_cat.status" notNull="true" posX="53" posY="2" required="true" scroll="true" sqlTabName="st02_cat" tabIndex="-1" widget="ComboBox">
+        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="Active, Inactive" name="st02_cat.status" notNull="true" posX="53" posY="2" required="true" scroll="true" sqlTabName="st02_cat" tabIndex="4" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           <Item lstrtext="false" name="0" text="Active"/>
           <Item lstrtext="false" name="1" text="Inactive"/>
         </ComboBox>
       </Grid>
-    </HBox>
+      <Folder gridHeight="10" gridWidth="106" name="fld_st_cat_grp" posX="0" posY="7">
+        <Page image="fa-sitemap" name="st_cat_trans" text="Stock">
+          <Table gridHeight="6" gridWidth="105" name="xactdemo_db1" posX="1" posY="0" totalRows="5">
+            <ButtonEdit colName="stock_code" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st01_mast.stock_code" posX="1" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Stock Code" widget="ButtonEdit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </ButtonEdit>
+            <Edit colName="description" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st01_mast.description" posX="21" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Ddescription" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="cost" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="st01_mast.cost" posX="51" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Product Cost" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="selling_price" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="st01_mast.selling_price" posX="65" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Selling Price" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="stock_on_hand" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="st01_mast.stock_on_hand" posX="79" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Stock On Hand" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+            <Edit colName="status" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="st01_mast.status" posX="93" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Status" widget="Edit">
+              <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            </Edit>
+          </Table>
+        </Page>
+        <Page image="fa-area-chart" name="st_cat_hist" text="Logs">
+          <Table gridHeight="6" gridWidth="19" name="table1" posX="1" posY="0" totalRows="5">
+            <Edit fieldId="11" gridHeight="1" gridWidth="8" name="edit1" posX="0" posY="0" tabIndex="-1" title="edit1" widget="Edit"/>
+            <Edit fieldId="12" gridHeight="1" gridWidth="8" name="edit2" posX="8" posY="0" tabIndex="-1" title="edit2" widget="Edit"/>
+          </Table>
+        </Page>
+      </Folder>
+    </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9QCAAAAwAAANAIAAADAAAAwAAAAAAAAAAAQAAAEwAewA4ADUANABmADYAMgA1ADUALQA5ADgAYgAzAC0ANAA4ADMAOQAtADgAYwA4ADAALQAyADAAOAAxAGIANwBkADMAOAA1ADAAMQB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewBlAGQANQA1ADkANgA4ADMALQA1AGMAYwAwAC0ANABiADUAOQAtAGEAOABmADIALQBjAGUAMgBmAGEAZABmADYAOABjADgANwB9QDgAAAYAAABAOAAABgAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

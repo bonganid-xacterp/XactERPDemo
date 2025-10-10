@@ -245,7 +245,7 @@ FUNCTION save_category()
         rec_st_cat.cat_code, 
         rec_st_cat.cat_name, 
         rec_st_cat.description, 
-         rec_st_cat.status)
+        rec_st_cat.status)
         CALL utils_globals.get_msg_saved()
     ELSE
         UPDATE st02_cat

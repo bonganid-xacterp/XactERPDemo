@@ -31,6 +31,7 @@ CONSTANT MSG_DELETED       = "Record deleted successfully."
 CONSTANT MSG_EOL           = "End of list."
 CONSTANT MSG_SOL           = "Start of list."
 CONSTANT MSG_NO_SEARCH     = "Enter account code or name to search."
+CONSTANT MSG_CONFRIM_DELETE = "Do you want to delete this record ?"
 
 -- ==============================================================
 -- INITIALIZATION SECTION
@@ -195,7 +196,10 @@ PUBLIC FUNCTION get_msg_no_search()
     CALL show_info(MSG_NO_SEARCH)
 END FUNCTION
 
-
+PUBLIC FUNCTION get_msg_confirm_delete()
+    DEFINE status STRING 
+    LET status = show_confirm(MSG_CONFRIM_DELETE, "Delete Record")
+END FUNCTION
 -- ==============================================================
 -- DATE/TIME UTILITIES
 -- ==============================================================

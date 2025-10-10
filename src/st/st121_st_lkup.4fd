@@ -12,11 +12,11 @@
   <Record active="false" masterTable="" name="f_wh_search" uid="{72ede0cf-75f3-4ce4-a17b-5840723e100f}">
     <RecordField fieldIdRef="4" length="100" name="f_search" uid="{2832b36c-9af7-48f4-a981-4117e95cb987}"/>
   </Record>
-  <Form gridHeight="19" gridWidth="81" name="frm_wh_lkup" text="Stock Lookup ">
+  <Form gridHeight="19" gridWidth="72" name="frm_wh_lkup" text="Stock Lookup ">
     <VBox gridHeight="18" gridWidth="72" name="vbox1" posX="0" posY="0">
       <Grid gridHeight="16" gridWidth="72" name="grd_wh" posX="0" posY="1">
-        <Label color="green" gridHeight="1" gridWidth="70" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text="STOCK LOOKUP"/>
-        <Table gridHeight="12" gridWidth="70" name="f_st_list" posX="1" posY="1" totalRows="10">
+        <Label color="green" gridHeight="1" gridWidth="69" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text="STOCK LOOKUP"/>
+        <Table gridHeight="12" gridWidth="69" name="f_st_list" posX="1" posY="1" totalRows="10">
           <Edit colName="stock_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st01_mast.stock_code" posX="0" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Stock Code" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
@@ -34,6 +34,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA2ADIAMgA5AGQAYQBmADgALQA4AGEAYwBiAC0ANAAzAGMAYQAtAGIAMABkADMALQBlADgANQA5ADYANQAwADQANQAyAGMAZgB9QEAAAAQAAABAQAAABAAAAAAAAAAAAAAAAQAAAEwAewA3ADIAZQBkAGUAMABjAGYALQA3ADUAZgAzAC0ANABjAGUANAAtAGEAMQA3AGIALQA1ADgANAAwADcAMgAzAGUAMQAwADAAZgB9QGfmZmxgAABAQMzM0QAAAD9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA3ADIAZQBkAGUAMABjAGYALQA3ADUAZgAzAC0ANABjAGUANAAtAGEAMQA3AGIALQA1ADgANAAwADcAMgAzAGUAMQAwADAAZgB9QGfmZnJZmZtAQMzM1TMzND9QYk3S8an8AQAAAEwAewA2ADIAMgA5AGQAYQBmADgALQA4AGEAYwBiAC0ANAAzAGMAYQAtAGIAMABkADMALQBlADgANQA5ADYANQAwADQANQAyAGMAZgB9QEAAAAgAAAFAQAAACAAAAQAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

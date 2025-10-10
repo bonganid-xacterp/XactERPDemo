@@ -64,7 +64,7 @@
         <Label name="lbl_dl_bal" width="8" text="Balance" posY="5" posX="58" gridWidth="8">
           <LStr text="Balance"/>
         </Label>
-        <FormField name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="dl01_mast" tabIndex="0">
+        <FormField name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="dl01_mast" tabIndex="0" noEntry="1">
           <Edit width="9" posY="5" posX="67" gridWidth="9"/>
         </FormField>
       </Grid>

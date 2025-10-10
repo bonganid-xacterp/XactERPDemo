@@ -405,7 +405,6 @@ FUNCTION new_debtor()
                 END IF
 
             ON ACTION cancel
-                CALL utils_globals.show_info("New debtor cancelled.")
                 LET new_acc_code = NULL
                 EXIT DIALOG
         END INPUT

@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="st121_st_lkup.tmp" build="3.20.14" sqlDbName="xactdemo_db" text="Stock Lookup " width="72" height="16">
+<Form name="st121_st_lkup.tmp" build="3.20.14" sqlDbName="xactdemo_db" text="Stock Lookup " width="71" height="16">
   <LStr text="Stock Lookup "/>
   <VBox name="vbox1">
-    <Grid name="grd_wh" width="72" height="16">
-      <Label name="lbl_title" width="70" text="STOCK LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="70">
+    <Grid name="grd_wh" width="71" height="16">
+      <Label name="lbl_title" width="69" text="STOCK LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="69">
         <LStr text="STOCK LOOKUP"/>
       </Label>
-      <Table pageSize="10" name="f_st_list" width="70" posY="1" posX="1" gridWidth="70" gridHeight="12" tabName="r_wh_list">
+      <Table pageSize="10" name="f_st_list" width="69" posY="1" posX="1" gridWidth="69" gridHeight="12" tabName="r_wh_list">
         <TableColumn name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="st01_mast" text="Stock Code" tabIndex="1">
           <Edit width="20" scroll="1"/>
           <LStr text="Stock Code"/>

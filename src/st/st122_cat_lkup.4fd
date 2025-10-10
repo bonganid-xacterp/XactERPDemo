@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="xactdemo_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{ddb70f6d-4b2e-45f0-b237-a57f840b26ab}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record active="false" masterTable="st01_mast" name="r_st_cat_list" uid="{6229daf8-8acb-43ca-b0d3-e859650452cf}">
+    <RecordField colName="cat_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="st02_cat.cat_code" sqlTabName="st02_cat" uid="{4db96a48-716c-419c-9c16-f1732a4e6cc2}"/>
+    <RecordField colName="cat_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="st02_cat.cat_name" sqlTabName="st02_cat" uid="{65beebe2-ece0-4fa9-b098-1c56212a039c}"/>
+    <RecordField fieldIdRef="5" length="10" name="lbl_status" uid="{b90d6bdf-3545-47aa-a3ed-7c9ba44cf94c}"/>
+  </Record>
+  <Record active="false" masterTable="" name="f_wh_search" uid="{72ede0cf-75f3-4ce4-a17b-5840723e100f}">
+    <RecordField fieldIdRef="4" length="100" name="f_search" uid="{2832b36c-9af7-48f4-a981-4117e95cb987}"/>
+  </Record>
+  <Form gridHeight="19" gridWidth="64" name="frm_st_cat_lkup" text="Stock Category Lookup ">
+    <VBox gridHeight="18" gridWidth="63" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="16" gridWidth="72" name="grd_wh" posX="0" posY="1">
+        <Label color="green" gridHeight="1" gridWidth="62" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text="STOCK CATEGORY LOOKUP"/>
+        <Table gridHeight="12" gridWidth="62" name="f_st_list" posX="1" posY="1" totalRows="11">
+          <Edit colName="cat_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st02_cat.cat_code" posX="0" posY="0" scroll="true" sqlTabName="st02_cat" tabIndex="-1" title="Stock Code" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="cat_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st02_cat.cat_name" posX="20" posY="0" scroll="true" sqlTabName="st02_cat" tabIndex="-1" title="Description" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit fieldId="5" gridHeight="1" gridWidth="8" length="10" name="lbl_status" posX="50" posY="0" tabIndex="-1" title="Status" widget="Edit"/>
+        </Table>
+        <Label gridHeight="1" gridWidth="9" name="lbl_filter" posX="1" posY="14" text="Filter"/>
+        <Edit fieldId="4" gridHeight="1" gridWidth="29" length="100" name="f_search" placeholder="Search category" posX="11" posY="14" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA3ADIAZQBkAGUAMABjAGYALQA3ADUAZgAzAC0ANABjAGUANAAtAGEAMQA3AGIALQA1ADgANAAwADcAMgAzAGUAMQAwADAAZgB9QGfmZnhTMzhAQMzM2WZmaT9QYk3S8an8AQAAAEwAewA2ADIAMgA5AGQAYQBmADgALQA4AGEAYwBiAC0ANAAzAGMAYQAtAGIAMABkADMALQBlADgANQA5ADYANQAwADQANQAyAGMAZgB9QEAAAAwAAANAQAAADAAAAwAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

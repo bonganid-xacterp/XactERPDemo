@@ -10,7 +10,7 @@ IMPORT ui
 
 SCHEMA xactdemo_db
 
--- display debtor form
+-- display creditor form
 FUNCTION fetch_cred_list() RETURNS STRING
     DEFINE selected_code STRING
     DEFINE idx INTEGER
@@ -36,10 +36,10 @@ FUNCTION fetch_cred_list() RETURNS STRING
     LET idx = 0
     LET selected_code = NULL
 
-    OPEN WINDOW w_debt WITH FORM "dl121_lkup" ATTRIBUTES(STYLE = "dialog")
+    OPEN WINDOW w_debt WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
-    -- Load data of all active debtors
-    DECLARE debtors_curs CURSOR FOR
+    -- Load data of all active creditors
+    DECLARE creditors_curs CURSOR FOR
         SELECT acc_code,
             supp_name,
             status,
@@ -55,7 +55,7 @@ FUNCTION fetch_cred_list() RETURNS STRING
 
     CALL cred_arr.clear()
 
-    FOREACH debtors_curs INTO cred_rec.*
+    FOREACH creditors_curs INTO cred_rec.*
         LET idx = idx + 1
         LET cred_arr[idx].* = cred_rec.*
     END FOREACH
@@ -63,16 +63,16 @@ FUNCTION fetch_cred_list() RETURNS STRING
     -- Show array only if records exist
     IF idx > 0 THEN
         DIALOG ATTRIBUTES(UNBUFFERED)
-            DISPLAY ARRAY cred_arr TO r_debtors_list.* ATTRIBUTES(COUNT = idx)
+            DISPLAY ARRAY cred_arr TO r_creditors_list.* ATTRIBUTES(COUNT = idx)
 
                 BEFORE DISPLAY
                     LET dlg = ui.Dialog.getCurrent()
                     IF cred_arr.getLength() > 0 THEN
-                        CALL dlg.setCurrentRow("r_debtors_list", 1)
+                        CALL dlg.setCurrentRow("r_creditors_list", 1)
                     END IF
 
                 ON ACTION accept
-                    LET sel = dlg.getCurrentRow("r_debtors_list")
+                    LET sel = dlg.getCurrentRow("r_creditors_list")
                     IF sel > 0 AND sel <= cred_arr.getLength() THEN
                         LET selected_code = cred_arr[sel].acc_code
                     END IF
@@ -84,25 +84,25 @@ FUNCTION fetch_cred_list() RETURNS STRING
                     EXIT DIALOG
 
                 ON ACTION next
-                    LET r = DIALOG.getCurrentRow("r_debtors_list")
+                    LET r = DIALOG.getCurrentRow("r_creditors_list")
                     IF r < cred_arr.getLength() THEN
-                        CALL DIALOG.setCurrentRow("r_debtors_list", r + 1)
+                        CALL DIALOG.setCurrentRow("r_creditors_list", r + 1)
                     ELSE
                         -- wrap to first (optional)
-                        CALL DIALOG.setCurrentRow("r_debtors_list", 1)
+                        CALL DIALOG.setCurrentRow("r_creditors_list", 1)
                     END IF
 
                 ON ACTION previous
-                    LET r = DIALOG.getCurrentRow("r_debtors_list")
+                    LET r = DIALOG.getCurrentRow("r_creditors_list")
                     IF r < cred_arr.getLength() THEN
-                        CALL DIALOG.setCurrentRow("r_debtors_list", r + 1)
+                        CALL DIALOG.setCurrentRow("r_creditors_list", r + 1)
                     ELSE
                         -- wrap to first (optional)
-                        CALL DIALOG.setCurrentRow("r_debtors_list", 1)
+                        CALL DIALOG.setCurrentRow("r_creditors_list", 1)
                     END IF
 
                 ON KEY(RETURN)
-                    LET sel = dlg.getCurrentRow("r_debtors_list")
+                    LET sel = dlg.getCurrentRow("r_creditors_list")
                     IF sel > 0 AND sel <= cred_arr.getLength() THEN
                         LET selected_code = cred_arr[sel].acc_code
                     END IF
@@ -113,7 +113,7 @@ FUNCTION fetch_cred_list() RETURNS STRING
             END DISPLAY
         END DIALOG
     ELSE
-        CALL utils_globals.show_info("No debtor records found.")
+        CALL utils_globals.show_info("No creditor records found.")
     END IF
 
     CLOSE WINDOW w_debt
@@ -124,6 +124,7 @@ END FUNCTION
 -- Alternative version with search capability using f_search field
 -- ==============================================================
 FUNCTION load_lookup_form_with_search() RETURNS STRING
+
     DEFINE selected_code STRING
     DEFINE cred_arr DYNAMIC ARRAY OF RECORD
         acc_code LIKE cl01_mast.acc_code,
@@ -131,6 +132,7 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
         status LIKE cl01_mast.status,
         lbl_status STRING
     END RECORD
+    
     DEFINE f_search STRING
     DEFINE sel SMALLINT
     DEFINE row_count INTEGER
@@ -140,34 +142,34 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
     LET f_search = ""
 
     -- Load all records initially
-    CALL load_debtors_for_lookup(f_search) RETURNING cred_arr, row_count
+    CALL load_creditors_for_lookup(f_search) RETURNING cred_arr, row_count
 
     IF row_count = 0 THEN
-        CALL utils_globals.show_info("No debtor records found.")
+        CALL utils_globals.show_info("No creditor records found.")
         RETURN NULL
     END IF
 
-    OPEN WINDOW w_lkup WITH FORM "dl121_lkup" ATTRIBUTES(STYLE = "dialog")
+    OPEN WINDOW w_lkup WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
 
         INPUT BY NAME f_search
             AFTER FIELD f_search
-                CALL load_debtors_for_lookup(f_search)
+                CALL load_creditors_for_lookup(f_search)
                     RETURNING cred_arr, row_count
-                CALL DIALOG.setArrayLength("r_debtors_list", cred_arr.getLength())
+                CALL DIALOG.setArrayLength("r_creditors_list", cred_arr.getLength())
                 -- keep table on row 1 but return focus to filter
-                CALL DIALOG.setCurrentRow("r_debtors_list", IIF(row_count>0,1,0))
+                CALL DIALOG.setCurrentRow("r_creditors_list", IIF(row_count>0,1,0))
                 NEXT FIELD f_search
         END INPUT
 
-        DISPLAY ARRAY cred_arr TO r_debtors_list.*
+        DISPLAY ARRAY cred_arr TO r_creditors_list.*
 
             BEFORE DISPLAY
-                CALL DIALOG.setCurrentRow("r_debtors_list", 1)
+                CALL DIALOG.setCurrentRow("r_creditors_list", 1)
 
             ON ACTION accept
-                LET sel = DIALOG.getCurrentRow("r_debtors_list")
+                LET sel = DIALOG.getCurrentRow("r_creditors_list")
                 IF sel > 0 AND sel <= cred_arr.getLength() THEN
                     LET selected_code = cred_arr[sel].acc_code
                     EXIT DIALOG
@@ -178,14 +180,14 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
                 EXIT DIALOG
 
             ON ACTION doubleclick
-                LET sel = DIALOG.getCurrentRow("r_debtors_list")
+                LET sel = DIALOG.getCurrentRow("r_creditors_list")
                 IF sel > 0 AND sel <= cred_arr.getLength() THEN
                     LET selected_code = cred_arr[sel].acc_code
                     EXIT DIALOG
                 END IF
 
             ON KEY(RETURN)
-                LET sel = DIALOG.getCurrentRow("r_debtors_list")
+                LET sel = DIALOG.getCurrentRow("r_creditors_list")
                 IF sel > 0 AND sel <= cred_arr.getLength() THEN
                     LET selected_code = cred_arr[sel].acc_code
                     EXIT DIALOG
@@ -201,8 +203,8 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
 
 END FUNCTION
 
--- Helper function to load debtors with optional search filter
-FUNCTION load_debtors_for_lookup(search_filter STRING)
+-- Helper function to load creditors with optional search filter
+FUNCTION load_creditors_for_lookup(search_filter STRING)
     RETURNS(
         DYNAMIC ARRAY OF RECORD
             acc_code LIKE cl01_mast.acc_code,

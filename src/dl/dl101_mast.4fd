@@ -48,9 +48,9 @@
           <Label gridHeight="1" gridWidth="6" name="lbl_dl_add3" posX="1" posY="5" text="Address 3"/>
           <Edit colName="address3" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="29" name="dl01_mast.address3" posX="8" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="8" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="8" name="lbl_dl_cr_lmt" posX="38" posY="5" text="Credit Limit"/>
-          <Edit colName="cr_limit" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="dl01_mast.cr_limit" posX="48" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="9" title="edit1" widget="Edit"/>
+          <Edit colName="cr_limit" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="dl01_mast.cr_limit" noEntry="false" posX="48" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="9" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="8" name="lbl_dl_bal" posX="58" posY="5" text="Balance"/>
-          <Edit colName="balance" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="dl01_mast.balance" posX="67" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="0" title="edit1" widget="Edit"/>
+          <Edit colName="balance" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="dl01_mast.balance" noEntry="true" posX="67" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="0" title="edit1" widget="Edit"/>
         </Grid>
         <Folder gridHeight="11" gridWidth="136" name="docs" posX="0" posY="7">
           <Page image="fa-file-text-o" name="trans_group" text="Documents">
@@ -90,6 +90,6 @@
     </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM6pgASjAKzMzwgABZT9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM7AMzhPAKzMzyMzOVT9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

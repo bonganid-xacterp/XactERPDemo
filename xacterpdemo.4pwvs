@@ -4,20 +4,27 @@
     <Node path="xacterpdemo.4pw" type="pm/main-project"/>
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/cl" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/dl" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/st" type="pm/application"/>
   </ExpandedNodes>
   <OpenDocuments>
-    <Document container="true" filePath="src/cl/cl101_mast.4gl" locator="70:36:70:50" module="mod-ce3">
+    <Document container="true" filePath="src/cl/cl121_lkup.4gl" locator="234:26" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/cl/cl121_lkup.4gl" locator="268:1" module="mod-ce3">
+    <Document container="true" filePath="src/cl/cl101_mast.4gl" locator="118:1:127:58" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/dl/dl121_lkup.4gl" locator="8:1:284:12" module="mod-ce3">
+    <Document container="true" filePath="src/cl/cl101_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/dl/dl101_mast.4gl" locator="425:13" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/cl/cl121_lkup.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/dl/dl101_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/st/st102_cat.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/st/st102_cat.4gl" locator="170:5:170:11" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/st/st122_cat_lkup.4gl" locator="26:45:26:58" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
   </OpenDocuments>
-  <CurrentDocument filePath="src/cl/cl121_lkup.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="src/st/st122_cat_lkup.4gl" module="mod-ce3"/>
 </WorkspaceViewState>
