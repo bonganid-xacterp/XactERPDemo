@@ -23,10 +23,10 @@ TYPE debtor_t RECORD
     cust_name  LIKE dl01_mast.cust_name,
     phone      LIKE dl01_mast.phone,
     email      LIKE dl01_mast.email,
+    status     LIKE dl01_mast.status,
     address1   LIKE dl01_mast.address1,
     address2   LIKE dl01_mast.address2,
     address3   LIKE dl01_mast.address3,
-    status     LIKE dl01_mast.status,
     cr_limit   LIKE dl01_mast.cr_limit,
     balance    LIKE dl01_mast.balance
 END RECORD
@@ -35,14 +35,6 @@ DEFINE rec_debt  debtor_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx  INTEGER
 DEFINE is_edit_mode SMALLINT
-
-CONSTANT msg01 = "No records found."
-CONSTANT msg02 = "Record saved successfully."
-CONSTANT msg03 = "Record updated successfully."
-CONSTANT msg04 = "Record deleted successfully."
-CONSTANT msg05 = "End of list."
-CONSTANT msg06 = "Start of list."
-CONSTANT msg07 = "Enter account code or name to search."
 
 -- ==============================================================
 -- MAIN
@@ -57,6 +49,18 @@ MAIN
     CALL init_module()
     CLOSE WINDOW w_dl101
 END MAIN
+
+-- ==============================================================
+-- Statuses popup
+-- ==============================================================
+PUBLIC FUNCTION get_status_desc(p_code SMALLINT) RETURNS STRING
+    CASE p_code
+        WHEN 1 RETURN "Active"
+        WHEN 0 RETURN "Inactive"
+        WHEN -1 RETURN "Archived"
+        OTHERWISE RETURN "Unknown"
+    END CASE
+END FUNCTION
 
 
 -- ==============================================================
@@ -111,7 +115,7 @@ FUNCTION init_module()
     DEFINE ok SMALLINT 
     --DEFINE dlg ui.Dialog
 
-    CALL utils_status_const.populate_status_combobox()
+   CALL utils_status_const.populate_status_combobox()
     
     -- Start in read-only mode
     LET is_edit_mode = FALSE
@@ -214,14 +218,14 @@ FUNCTION query_debtors_lookup()
     
     LET selected_code = query_debtor()
     
-    IF selected_code IS NOT NULL AND selected_code != "" THEN
+    IF selected_code IS NOT NULL THEN
         CALL load_debtor(selected_code)
         -- Update the array to contain just this record for navigation
         CALL arr_codes.clear()
         LET arr_codes[1] = selected_code
         LET curr_idx = 1
     ELSE
-        MESSAGE "No debtor selected."
+        CALL utils_globals.show_error("No records found")
     END IF
 END FUNCTION
 
@@ -232,7 +236,6 @@ FUNCTION query_debtors()
     DEFINE where_clause STRING
     DEFINE ok SMALLINT
 
-    MESSAGE msg07
     CLEAR FORM
 
     CONSTRUCT BY NAME where_clause ON
@@ -274,7 +277,7 @@ FUNCTION select_debtors(where_clause) RETURNS SMALLINT
     FREE c_curs
 
     IF arr_codes.getLength() == 0 THEN
-        ERROR msg01
+        CALL utils_globals.get_msg_no_record()
         RETURN FALSE
     END IF
 
@@ -287,12 +290,17 @@ END FUNCTION
 -- Load Single Debtor
 -- ==============================================================
 FUNCTION load_debtor(p_code STRING)
+    DEFINE p_status SMALLINT
 
     SELECT acc_code, cust_name, phone, email, address1, address2,
            address3, status, cr_limit, balance
       INTO rec_debt.*
       FROM dl01_mast
      WHERE acc_code = p_code
+
+     LET p_status = rec_debt.status
+     -- Show only saved value for view mode
+    -- CALL utils_status_const.populate_status_single(p_status)
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_debt.*
@@ -310,14 +318,16 @@ FUNCTION move_record(dir SMALLINT)
             IF curr_idx > 1 THEN
                 LET curr_idx = curr_idx - 1
             ELSE
-                MESSAGE msg06
+                --MESSAGE msg06
+                CALL utils_globals.get_msg_sol()
                 RETURN
             END IF
         WHEN 1
             IF curr_idx < arr_codes.getLength() THEN
                 LET curr_idx = curr_idx + 1
             ELSE
-                MESSAGE msg05
+                --MESSAGE msg05
+                CALL utils_globals.get_msg_eol()
                 RETURN
             END IF
         WHEN 2
@@ -334,12 +344,13 @@ FUNCTION new_debtor()
    DEFINE dup_found SMALLINT
    DEFINE ok SMALLINT 
    DEFINE new_acc_code STRING
-
+   
     -- open a modal popup window just for the new debtor
     OPEN WINDOW w_new WITH FORM "dl101_mast" ATTRIBUTES(STYLE="main")
 
     -- Clear all fields and set defaults
     INITIALIZE rec_debt.* TO NULL
+    LET rec_debt.status = 1
     LET rec_debt.balance = 0.00
     LET rec_debt.cr_limit = 0.00
     
@@ -419,7 +430,6 @@ END FUNCTION
 -- ==============================================================
 FUNCTION save_debtor()
     DEFINE exists INTEGER
-    DEFINE ok SMALLINT 
 
     SELECT COUNT(*) INTO exists FROM dl01_mast
      WHERE acc_code = rec_debt.acc_code
@@ -436,7 +446,7 @@ FUNCTION save_debtor()
              rec_debt.address1, rec_debt.address2,
              rec_debt.address3, rec_debt.status,
              rec_debt.cr_limit, rec_debt.balance)
-        CALL utils_globals.show_success(msg02)
+        CALL utils_globals.get_msg_saved()
     ELSE
     -- update record
         UPDATE dl01_mast SET
@@ -450,10 +460,10 @@ FUNCTION save_debtor()
             cr_limit  = rec_debt.cr_limit,
             balance   = rec_debt.balance
         WHERE acc_code = rec_debt.acc_code
-        CALL utils_globals.show_success(msg03)
+        CALL utils_globals.get_msg_updated()
     END IF
 
-   LET ok =  select_debtors("1=1")
+   CALL load_debtor(rec_debt.acc_code)
 END FUNCTION
 
 -- ==============================================================
@@ -472,17 +482,17 @@ FUNCTION delete_debtor()
 
     IF NOT ok THEN
         MESSAGE "Delete cancelled."
+        CALL utils_globals.show_info("Delete cancelled.")
         RETURN
     END IF
 
     DELETE FROM dl01_mast WHERE acc_code = rec_debt.acc_code
-    CALL utils_globals.show_success(msg04)
+    CALL utils_globals.get_msg_deleted()
     LET ok  = select_debtors("1=1")
 END FUNCTION
 
-
 -- ==============================================================
--- Check debtor uniqueness (simplified)
+-- Check debtor uniqueness
 -- ==============================================================
 FUNCTION check_debtor_unique(
     p_acc_code STRING, p_cust_name STRING, p_phone STRING, p_email STRING)

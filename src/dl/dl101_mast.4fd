@@ -30,7 +30,7 @@
     <HBox gridHeight="19" gridWidth="140" name="hbox1" posX="0" posY="0">
       <VBox gridHeight="19" gridWidth="136" name="vbox1" posX="2" posY="0">
         <Grid gridHeight="6" gridWidth="136" name="dl01_mast" posX="0" posY="1">
-          <Label gridHeight="1" gridWidth="135" justify="center" name="lbl_form_title" posX="1" posY="0" style="title" text="DEBTORS MASTER"/>
+          <Label gridHeight="1" gridWidth="135" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="DEBTORS MASTER"/>
           <Label gridHeight="1" gridWidth="6" name="lbl_dl_acc_code" posX="1" posY="1" text="Acc Code"/>
           <ButtonEdit action="find" colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" image="zoom" justify="left" name="dl01_mast.acc_code" posX="8" posY="1" program="" repeat="false" sqlTabName="dl01_mast" tabIndex="1" title="edit1" widget="ButtonEdit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_dl_name" posX="21" posY="1" text="Debtor Name"/>
@@ -90,6 +90,6 @@
     </HBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM6SzND/AKzMzuzM0dz9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAxAGUAZgAxAGEANwBmADkALQA3AGIANgA2AC0ANABjADgAMQAtAGIAOAA2AGQALQAyADkAMwAwADQANABlADAAYwBmADcAOAB9AAAAAAAAAAAAAAAAAAAAAD90euFHrhR7AQAAAEwAewBmAGQAMwA0AGUAOQBjADAALQBiAGYAMgBhAC0ANAA2AGQAYQAtADgAYwBlADIALQA1AGIAMQA3AGEAMABkADcAYwA5AGUAYwB9QHazM6pgASjAKzMzwgABZT9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

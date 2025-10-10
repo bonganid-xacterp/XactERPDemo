@@ -4,7 +4,7 @@
   <HBox name="hbox1">
     <VBox name="vbox1">
       <Grid name="dl01_mast" width="137" height="6">
-        <Label name="lbl_form_title" width="135" text="DEBTORS MASTER" justify="center" style="title" posY="0" posX="1" gridWidth="135">
+        <Label name="lbl_form_title" width="135" text="DEBTORS MASTER" justify="center" style="header" posY="0" posX="1" gridWidth="135">
           <LStr text="DEBTORS MASTER"/>
         </Label>
         <Label name="lbl_dl_acc_code" width="6" text="Acc Code" posY="1" posX="1" gridWidth="6">

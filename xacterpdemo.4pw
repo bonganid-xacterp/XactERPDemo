@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Project defaultApplication="409572948" gstVersion="3140a" version="3.3">
+<Project defaultApplication="396525034" gstVersion="3140a" version="3.3">
   <Settings>
     <DynamicProperties version="2">
       <DynamicProperty description="Accent color (Android 5.0 and later)" initialValue="#9575CD" isDefaultInherited="false" isHidden="false" label="Accent color" name="gma-accent-color" readOnly="false" type="COLOR"/>
@@ -191,6 +191,7 @@
         <File filePath="src/sy/sy103_perm.4gl"/>
         <File filePath="src/sy/sy104_user_pwd.4fd"/>
         <File filePath="src/sy/sy104_user_pwd.4gl"/>
+        <File filePath="src/sy/sy105_doc_num.4fd"/>
         <File filePath="src/sy/sy120_user_enq.4fd"/>
         <File filePath="src/sy/sy120_user_enq.4gl"/>
         <File filePath="src/sy/sy130_logs.4fd"/>
@@ -206,6 +207,7 @@
         <File filePath="src/utils/utils_lookup.4gl"/>
         <File filePath="src/utils/utils_lookup_form.4fd"/>
         <File filePath="src/utils/utils_mast_tlb.4tb"/>
+        <File filePath="src/utils/utils_notify.4gl"/>
         <File filePath="src/utils/utils_status_const.4gl"/>
         <File filePath="src/utils/utils_types.4gl"/>
         <File filePath="src/utils/utils_ui.4gl"/>
