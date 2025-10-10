@@ -22,17 +22,6 @@ CONSTANT APP_VERSION = "1.0.0"
 CONSTANT STYLE_FILE = "main_styles.4st" -- Style file (keep in project folder)
 
 -- ==============================================================
--- STANDARD NOTIFICATION CONSTANTS
--- ==============================================================
-CONSTANT MSG_NO_RECORD = "No records found."
-CONSTANT MSG_SAVED = "Record saved successfully."
-CONSTANT MSG_UPDATED = "Record updated successfully."
-CONSTANT MSG_DELETED = "Record deleted successfully."
-CONSTANT MSG_EOL = "End of list."
-CONSTANT MSG_SOL = "Start of list."
-CONSTANT MSG_NO_SEARCH = "Enter account code or name to search."
-
--- ==============================================================
 -- INITIALIZATION SECTION
 -- ==============================================================
 
@@ -163,6 +152,39 @@ PUBLIC FUNCTION set_field_status(
         CALL f.setFieldHidden(field_list[i], p_hidden)
     END FOR
 END FUNCTION
+
+-- ==============================================================
+-- STANDARD NOTIFICATION MESSAGE FUNCTIONS
+-- ==============================================================
+
+PUBLIC FUNCTION get_msg_no_record() RETURNS STRING
+    RETURN "No records found."
+END FUNCTION
+
+PUBLIC FUNCTION get_msg_saved() RETURNS STRING
+    RETURN "Record saved successfully."
+END FUNCTION
+
+PUBLIC FUNCTION get_msg_updated() RETURNS STRING
+    RETURN "Record updated successfully."
+END FUNCTION
+
+PUBLIC FUNCTION get_msg_deleted() RETURNS STRING
+    RETURN "Record deleted successfully."
+END FUNCTION
+
+PUBLIC FUNCTION get_msg_eol() RETURNS STRING
+    RETURN "End of list."
+END FUNCTION
+
+PUBLIC FUNCTION get_msg_sol() RETURNS STRING
+    RETURN "Start of list."
+END FUNCTION
+
+PUBLIC FUNCTION get_msg_no_search() RETURNS STRING
+    RETURN "Enter account code or name to search."
+END FUNCTION
+
 
 -- ==============================================================
 -- DATE/TIME UTILITIES
