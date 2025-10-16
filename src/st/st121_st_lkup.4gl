@@ -7,27 +7,31 @@
 -- Version : Genero ver 3.20.10
 -- ==========================================
 
-SCHEMA xactdemo_db
+SCHEMA demoapp_db
 
 FUNCTION display_stocklist() RETURNS STRING
-    DEFINE stock_arr DYNAMIC ARRAY OF RECORD
-               stock_code     LIKE st01_mast.stock_code,
-               description    LIKE st01_mast.description
-           END RECORD,
-           stock_rec RECORD
-               stock_code     LIKE st01_mast.stock_code,
-               description    LIKE st01_mast.description
-           END RECORD,
-           ret_code STRING,
-           curr_pa, idx SMALLINT
+    DEFINE
+        stock_arr DYNAMIC ARRAY OF RECORD
+            stock_code LIKE st01_mast.stock_code,
+            description LIKE st01_mast.description
+        END RECORD,
+        stock_rec RECORD
+            stock_code LIKE st01_mast.stock_code,
+            description LIKE st01_mast.description
+        END RECORD,
+        ret_code STRING,
+        curr_pa, idx SMALLINT
 
-    OPEN WINDOW w_st121_lkup WITH FORM "st121_lkup" ATTRIBUTES(TYPE = POPUP, STYLE = "lookup")
+    OPEN WINDOW w_st121_lkup
+        WITH
+        FORM "st121_lkup"
+        ATTRIBUTES(TYPE = POPUP, STYLE = "lookup")
 
     DECLARE stock_curs CURSOR FOR
         SELECT stock_code, description
-          FROM st01_mast
-         WHERE status = 1
-         ORDER BY stock_code
+            FROM st01_mast
+            WHERE status = 1
+            ORDER BY stock_code
 
     LET idx = 0
     CALL stock_arr.clear()

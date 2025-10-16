@@ -8,29 +8,33 @@
 -- ==========================================
 IMPORT FGL utils_globals
 
-SCHEMA xactdemo_db
+SCHEMA demoapp_db
 
 FUNCTION load_lookup() RETURNS STRING
-    DEFINE arr_st_cat DYNAMIC ARRAY OF RECORD
-               cat_code     LIKE st02_cat.cat_code,
-               description    LIKE st02_cat.description,
-               status LIKE st02_cat.status
-           END RECORD,
-           rec_st_cat RECORD
-               cat_code     LIKE st02_cat.cat_code,
-               description    LIKE st02_cat.description,
-               status LIKE st02_cat.status
-           END RECORD,
-           ret_code STRING,
-           curr_pa, idx SMALLINT
+    DEFINE
+        arr_st_cat DYNAMIC ARRAY OF RECORD
+            cat_code LIKE st02_cat.cat_code,
+            description LIKE st02_cat.description,
+            status LIKE st02_cat.status
+        END RECORD,
+        rec_st_cat RECORD
+            cat_code LIKE st02_cat.cat_code,
+            description LIKE st02_cat.description,
+            status LIKE st02_cat.status
+        END RECORD,
+        ret_code STRING,
+        curr_pa, idx SMALLINT
 
-    OPEN WINDOW w_st122_cat_lkup WITH FORM "st122_cat_lkup" ATTRIBUTES(TYPE = POPUP, STYLE = "lookup")
+    OPEN WINDOW w_st122_cat_lkup
+        WITH
+        FORM "st122_cat_lkup"
+        ATTRIBUTES(TYPE = POPUP, STYLE = "lookup")
 
     DECLARE st_cat_curs CURSOR FOR
         SELECT cat_code, description
-          FROM st02_cat
-         WHERE status = 1
-         ORDER BY cat_code
+            FROM st02_cat
+            WHERE status = 1
+            ORDER BY cat_code
 
     LET idx = 0
     CALL arr_st_cat.clear()

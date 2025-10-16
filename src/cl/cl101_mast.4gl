@@ -1,9 +1,9 @@
 -- ==============================================================
--- Program   : cl100_mast.4gl
--- Purpose   : Creditors Master maintenance
--- Module    : Creditors (cl)
+-- Program   : cl101_mast.4gl
+-- Purpose   :creditors Master maintenance
+-- Module    :creditors (cl)
 -- Number    : 101
--- Author    : Bongani Dlamini
+-- Author    : Bongani clamini
 -- Version   : Genero ver 3.20.10
 -- ==============================================================
 
@@ -13,26 +13,26 @@ IMPORT FGL utils_globals
 IMPORT FGL cl121_lkup
 IMPORT FGL utils_status_const
 
-SCHEMA xactdemo_db
+SCHEMA demoapp_db
 
 -- ==============================================================
 -- Record definitions
 -- ==============================================================
 TYPE creditor_t RECORD
-    acc_code   LIKE cl01_mast.acc_code,
-    supp_name  LIKE cl01_mast.supp_name,
-    phone      LIKE cl01_mast.phone,
-    email      LIKE cl01_mast.email,
-    status     LIKE cl01_mast.status,
-    address1   LIKE cl01_mast.address1,
-    address2   LIKE cl01_mast.address2,
-    address3   LIKE cl01_mast.address3,
-    balance    LIKE cl01_mast.balance
+    acc_code LIKE cl01_mast.acc_code,
+    supp_name LIKE cl01_mast.supp_name,
+    phone LIKE cl01_mast.phone,
+    email LIKE cl01_mast.email,
+    status LIKE cl01_mast.status,
+    address1 LIKE cl01_mast.address1,
+    address2 LIKE cl01_mast.address2,
+    address3 LIKE cl01_mast.address3,
+    balance LIKE cl01_mast.balance
 END RECORD
 
-DEFINE rec_cred  creditor_t
+DEFINE rec_cred creditor_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
-DEFINE curr_idx  INTEGER
+DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
 
 -- ==============================================================
@@ -50,24 +50,11 @@ MAIN
 END MAIN
 
 -- ==============================================================
--- Statuses popup
--- ==============================================================
-PUBLIC FUNCTION get_status_desc(p_code SMALLINT) RETURNS STRING
-    CASE p_code
-        WHEN 1 RETURN "Active"
-        WHEN 0 RETURN "Inactive"
-        WHEN -1 RETURN "Archived"
-        OTHERWISE RETURN "Unknown"
-    END CASE
-END FUNCTION
-
-
--- ==============================================================
 -- Lookup popup
 -- ==============================================================
 FUNCTION query_creditor() RETURNS STRING
     DEFINE selected_code STRING
-    LET selected_code = cl121_lkup.fetch_cred_list()
+    LET selected_code = cl121_lkup.load_lookup_form_with_search()
     RETURN selected_code
 END FUNCTION
 
@@ -79,19 +66,19 @@ FUNCTION set_fields_editable(editable SMALLINT)
     --DEFINE fields STRING
     DEFINE i INTEGER
     DEFINE field_list DYNAMIC ARRAY OF STRING
-    
+
     LET f = ui.Window.getCurrent().getForm()
-    
+
     -- Define all fields that should be editable/readonly
     LET field_list[1] = "supp_name"
     LET field_list[2] = "phone"
     LET field_list[3] = "email"
-    LET field_list[4] = "address1"
-    LET field_list[5] = "address2"
-    LET field_list[6] = "address3"
-    LET field_list[7] = "status"
-    LET field_list[9] = "balance"
-    
+    LET field_list[4] = "status"
+    LET field_list[5] = "address1"
+    LET field_list[6] = "address2"
+    LET field_list[7] = "address3"
+    LET field_list[8] = "balance"
+
     FOR i = 1 TO field_list.getLength()
         IF editable THEN
             CALL f.setFieldHidden(field_list[i], FALSE)
@@ -100,7 +87,7 @@ FUNCTION set_fields_editable(editable SMALLINT)
             CALL f.setFieldHidden(field_list[i], FALSE)
         END IF
     END FOR
-    
+
     -- acc_code is always readonly after initial entry
     LET is_edit_mode = editable
 END FUNCTION
@@ -110,11 +97,8 @@ END FUNCTION
 -- ==============================================================
 FUNCTION init_module()
 
-    DEFINE ok SMALLINT 
-    --DEFINE dlg ui.Dialog
+    DEFINE ok SMALLINT
 
-   CALL utils_status_const.populate_status_combobox()
-    
     -- Start in read-only mode
     LET is_edit_mode = FALSE
 
@@ -124,27 +108,27 @@ FUNCTION init_module()
         -- Header section
         -- -------------------------
         INPUT BY NAME rec_cred.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME="creditors")
+            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "creditors")
 
             BEFORE INPUT
                 -- Make fields readonly initially
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION find  ATTRIBUTES(TEXT="Search", IMAGE="zoom")
-                CALL load_lookup_form_with_search()
+
+            ON ACTION find ATTRIBUTES(TEXT = "Search", IMAGE = "zoom")
+                CALL query_creditors_lookup()
                 LET is_edit_mode = FALSE
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION new  ATTRIBUTES(TEXT="Create", IMAGE="new")
+
+            ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
                 CALL new_creditor()
                 -- After successful add, load in readonly mode
                 LET is_edit_mode = FALSE
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION edit  ATTRIBUTES(TEXT="Edit", IMAGE="edit")
+
+            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
                 IF rec_cred.acc_code IS NULL OR rec_cred.acc_code = "" THEN
                     CALL utils_globals.show_info("No record selected to edit.")
                 ELSE
@@ -153,49 +137,58 @@ FUNCTION init_module()
                     CALL DIALOG.setActionActive("edit", FALSE)
                     MESSAGE "Edit mode enabled. Make changes and click Update to save."
                 END IF
-                
-            ON ACTION save  ATTRIBUTES(TEXT="Update", IMAGE="filesave")
+
+            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
                 IF is_edit_mode THEN
                     CALL save_creditor()
                     LET is_edit_mode = FALSE
                     CALL DIALOG.setActionActive("save", FALSE)
                     CALL DIALOG.setActionActive("edit", TRUE)
                 END IF
-                
-            ON ACTION DELETE  ATTRIBUTES(TEXT="Delete", IMAGE="delete")
+
+            ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
                 CALL delete_creditor()
 
-            ON ACTION FIRST  ATTRIBUTES(TEXT="First Record", IMAGE="first")
+            ON ACTION FIRST ATTRIBUTES(TEXT = "First Record", IMAGE = "first")
                 CALL move_record(-2)
                 LET is_edit_mode = FALSE
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION PREVIOUS  ATTRIBUTES(TEXT="Previous", IMAGE="prev")
+
+            ON ACTION PREVIOUS ATTRIBUTES(TEXT = "Previous", IMAGE = "prev")
                 CALL move_record(-1)
                 LET is_edit_mode = FALSE
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION NEXT  ATTRIBUTES(TEXT="Next", IMAGE="next")
+
+            ON ACTION NEXT ATTRIBUTES(TEXT = "Next", IMAGE = "next")
                 CALL move_record(1)
                 LET is_edit_mode = FALSE
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
-                
-            ON ACTION LAST  ATTRIBUTES(TEXT="Last Record", IMAGE="last")
+
+            ON ACTION LAST ATTRIBUTES(TEXT = "Last Record", IMAGE = "last")
                 CALL move_record(2)
                 LET is_edit_mode = FALSE
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
 
-            ON ACTION QUIT ATTRIBUTES(TEXT="Quit", IMAGE="quit")
+            ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
                 EXIT DIALOG
-                
-            BEFORE FIELD supp_name, phone, email, address1, address2, address3, status, balance
+
+            BEFORE FIELD acc_code,
+                supp_name,
+                phone,
+                email,
+                status,
+                address1,
+                address2,
+                address3,
+                balance
                 IF NOT is_edit_mode THEN
-                    CALL utils_globals.show_info("Click Edit button to modify this record.")
-                    NEXT FIELD acc_code
+                    CALL utils_globals.show_info(
+                        "Click Edit button to modify this record.")
+                    NEXT FIELD supp_name
                 END IF
 
         END INPUT
@@ -211,13 +204,13 @@ END FUNCTION
 -- ==============================================================
 -- Query using Lookup Window
 -- ==============================================================
-FUNCTION load_lookup_form_with_search()
+FUNCTION query_creditors_lookup()
     DEFINE selected_code STRING
-    
+
     LET selected_code = query_creditor()
-    
+
     IF selected_code IS NOT NULL THEN
-        CALL load_creditor(selected_code)
+        CALL load_creditor_enq(selected_code)
         -- Update the array to contain just this record for navigation
         CALL arr_codes.clear()
         LET arr_codes[1] = selected_code
@@ -236,28 +229,26 @@ FUNCTION query_creditors()
 
     CLEAR FORM
 
-    CONSTRUCT BY NAME where_clause ON
-        cl01_mast.acc_code,
-        cl01_mast.supp_name,
-        cl01_mast.phone
+    CONSTRUCT BY NAME where_clause
+        ON cl01_mast.acc_code, cl01_mast.supp_name, cl01_mast.phone
 
-        IF int_flag THEN
+    IF int_flag THEN
         -- user pressed ESC or Cancel
         MESSAGE "Search cancelled."
         RETURN
     END IF
 
     IF where_clause IS NULL OR where_clause = "" THEN
-        LET where_clause = "1=1"  -- default (show all)
+        LET where_clause = "1=1" -- default (show all)
     END IF
 
     LET ok = select_creditors(where_clause)
 END FUNCTION
 
 -- ==============================================================
--- SELECT creditors into Array
+-- SELECTcreditors into Array
 -- ==============================================================
-FUNCTION select_creditors(where_clause) RETURNS SMALLINT 
+FUNCTION select_creditors(where_clause) RETURNS SMALLINT
     DEFINE where_clause STRING
     DEFINE code STRING
     DEFINE idx INTEGER
@@ -265,8 +256,9 @@ FUNCTION select_creditors(where_clause) RETURNS SMALLINT
     CALL arr_codes.clear()
     LET idx = 0
 
-    DECLARE c_curs CURSOR FROM
-        "SELECT acc_code FROM cl01_mast WHERE " || where_clause || " ORDER BY acc_code"
+    DECLARE c_curs CURSOR FROM "SELECT acc_code FROM cl01_mast WHERE "
+        || where_clause
+        || " ORDER BY acc_code"
 
     FOREACH c_curs INTO code
         LET idx = idx + 1
@@ -275,30 +267,32 @@ FUNCTION select_creditors(where_clause) RETURNS SMALLINT
     FREE c_curs
 
     IF arr_codes.getLength() == 0 THEN
-        CALL utils_globals.get_msg_no_record()
+        CALL utils_globals.msg_no_record()
         RETURN FALSE
     END IF
 
     LET curr_idx = 1
-    CALL load_creditor(arr_codes[curr_idx])
+    CALL load_creditor_enq(arr_codes[curr_idx])
     RETURN TRUE
 END FUNCTION
 
 -- ==============================================================
--- Load Single creditor
+-- Load Singlecreditor
 -- ==============================================================
-FUNCTION load_creditor(p_code STRING)
-    DEFINE p_status SMALLINT
+FUNCTION load_creditor_enq(p_code STRING)
 
-    SELECT acc_code, supp_name, phone, email, address1, address2,
-           address3, status, balance
-      INTO rec_cred.*
-      FROM cl01_mast
-     WHERE acc_code = p_code
-
-     LET p_status = rec_cred.status
-     -- Show only saved value for view mode
-    -- CALL utils_status_const.populate_status_single(p_status)
+    SELECT acc_code,
+        supp_name,
+        phone,
+        email,
+        address1,
+        address2,
+        address3,
+        status,
+        balance
+        INTO rec_cred.*
+        FROM cl01_mast
+        WHERE acc_code = p_code
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_cred.*
@@ -317,7 +311,7 @@ FUNCTION move_record(dir SMALLINT)
                 LET curr_idx = curr_idx - 1
             ELSE
                 --MESSAGE msg06
-                CALL utils_globals.get_msg_sol()
+                CALL utils_globals.msg_start_of_list()
                 RETURN
             END IF
         WHEN 1
@@ -325,39 +319,38 @@ FUNCTION move_record(dir SMALLINT)
                 LET curr_idx = curr_idx + 1
             ELSE
                 --MESSAGE msg05
-                CALL utils_globals.get_msg_eol()
+                CALL utils_globals.msg_end_of_list()
                 RETURN
             END IF
         WHEN 2
             LET curr_idx = arr_codes.getLength()
     END CASE
 
-    CALL load_creditor(arr_codes[curr_idx])
+    CALL load_creditor_enq(arr_codes[curr_idx])
 END FUNCTION
 
 -- ==============================================================
--- New creditor
+-- Newcreditor
 -- ==============================================================
 FUNCTION new_creditor()
-   DEFINE dup_found SMALLINT
-   DEFINE ok SMALLINT 
-   DEFINE new_acc_code STRING
-   
-    -- open a modal popup window just for the new creditor
-    OPEN WINDOW w_new WITH FORM "cl101_mast" ATTRIBUTES(STYLE="main")
+    DEFINE dup_found SMALLINT
+    DEFINE ok SMALLINT
+    DEFINE new_acc_code STRING
+
+    -- open a modal popup window just for the newcreditor
+    OPEN WINDOW w_new WITH FORM "cl101_mast" ATTRIBUTES(STYLE = "main")
 
     -- Clear all fields and set defaults
     INITIALIZE rec_cred.* TO NULL
     LET rec_cred.status = 1
-    LET rec_cred.balance = 0.00
-    
+
     DISPLAY BY NAME rec_cred.*
 
-    MESSAGE "Enter new creditor details, then click Save or Cancel."
+    MESSAGE "Enter newcreditor details, then click Save or Cancel."
 
     DIALOG ATTRIBUTES(UNBUFFERED)
         INPUT BY NAME rec_cred.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME="new_creditor")
+            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "new_creditor")
 
             -- validations
             AFTER FIELD acc_code
@@ -368,7 +361,7 @@ FUNCTION new_creditor()
 
             AFTER FIELD supp_name
                 IF rec_cred.supp_name IS NULL OR rec_cred.supp_name = "" THEN
-                    CALL utils_globals.show_error("Supplier Name is required.")
+                    CALL utils_globals.show_error("Customer Name is required.")
                     NEXT FIELD supp_name
                 END IF
 
@@ -378,41 +371,53 @@ FUNCTION new_creditor()
                     NEXT FIELD email
                 END IF
 
-            -- main actions
-            ON ACTION save ATTRIBUTES (TEXT="Save")
-                LET dup_found = check_creditor_unique(
-                    rec_cred.acc_code,
-                    rec_cred.supp_name,
-                    rec_cred.phone,
-                    rec_cred.email)
+                -- main actions
+            ON ACTION save ATTRIBUTES(TEXT = "Save")
+                LET dup_found =
+                    check_creditor_unique(
+                        rec_cred.acc_code,
+                        rec_cred.supp_name,
+                        rec_cred.phone,
+                        rec_cred.email)
 
                 IF dup_found = 0 THEN
-                    INSERT INTO cl01_mast (
-                        acc_code, supp_name, phone, email,
-                        status, address1, address2, address3,
-                       balance)
-                    VALUES (
-                        rec_cred.acc_code, rec_cred.supp_name, rec_cred.phone, rec_cred.email,
-                        rec_cred.status, rec_cred.address1, rec_cred.address2, rec_cred.address3,
-                        rec_cred.balance)
+                    INSERT INTO cl01_mast(
+                        acc_code,
+                        supp_name,
+                        phone,
+                        email,
+                        status,
+                        address1,
+                        address2,
+                        address3,
+                        balance)
+                        VALUES(rec_cred.acc_code,
+                            rec_cred.supp_name,
+                            rec_cred.phone,
+                            rec_cred.email,
+                            rec_cred.status,
+                            rec_cred.address1,
+                            rec_cred.address2,
+                            rec_cred.address3,
+                            rec_cred.balance)
 
-                    CALL utils_globals.show_success("Creditor saved successfully.")
+                    CALL utils_globals.show_success(
+                        "Creditor saved successfully.")
                     LET new_acc_code = rec_cred.acc_code
                     EXIT DIALOG
                 END IF
 
             ON ACTION cancel
-                CALL utils_globals.show_info("New creditor cancelled.")
                 LET new_acc_code = NULL
                 EXIT DIALOG
         END INPUT
     END DIALOG
 
     CLOSE WINDOW w_new
-    
+
     -- Load the newly added record in readonly mode
     IF new_acc_code IS NOT NULL THEN
-        CALL load_creditor(new_acc_code)
+        CALL load_creditor_enq(new_acc_code)
         CALL arr_codes.clear()
         LET arr_codes[1] = new_acc_code
         LET curr_idx = 1
@@ -428,52 +433,67 @@ END FUNCTION
 FUNCTION save_creditor()
     DEFINE exists INTEGER
 
-    SELECT COUNT(*) INTO exists FROM cl01_mast
-     WHERE acc_code = rec_cred.acc_code
+    SELECT COUNT(*)
+        INTO exists
+        FROM cl01_mast
+        WHERE acc_code = rec_cred.acc_code
 
     IF exists = 0 THEN
-    -- save data into the db
-        INSERT INTO cl01_mast
-            (acc_code, supp_name, phone, email,
-             address1, address2, address3, status,
+        -- save data into the db
+        INSERT INTO cl01_mast(
+            acc_code,
+            supp_name,
+            phone,
+            email,
+            address1,
+            address2,
+            address3,
+            status,
             balance)
-        VALUES
-            (rec_cred.acc_code, rec_cred.supp_name,
-             rec_cred.phone, rec_cred.email,
-             rec_cred.address1, rec_cred.address2,
-             rec_cred.address3, rec_cred.status)
-        CALL utils_globals.get_msg_saved()
+            VALUES(rec_cred.acc_code,
+                rec_cred.supp_name,
+                rec_cred.phone,
+                rec_cred.email,
+                rec_cred.address1,
+                rec_cred.address2,
+                rec_cred.address3,
+                rec_cred.status,
+                rec_cred.balance)
+        CALL utils_globals.msg_saved()
     ELSE
-    -- update record
-        UPDATE cl01_mast SET
-            supp_name = rec_cred.supp_name,
-            phone     = rec_cred.phone,
-            email     = rec_cred.email,
-            address1  = rec_cred.address1,
-            address2  = rec_cred.address2,
-            address3  = rec_cred.address3,
-            status    = rec_cred.status,
-            balance   = rec_cred.balance
-        WHERE acc_code = rec_cred.acc_code
-        CALL utils_globals.get_msg_updated()
+        -- update record
+        UPDATE cl01_mast
+            SET supp_name = rec_cred.supp_name,
+                phone = rec_cred.phone,
+                email = rec_cred.email,
+                address1 = rec_cred.address1,
+                address2 = rec_cred.address2,
+                address3 = rec_cred.address3,
+                status = rec_cred.status,
+                balance = rec_cred.balance
+            WHERE acc_code = rec_cred.acc_code
+        CALL utils_globals.msg_updated()
     END IF
 
-   CALL load_creditor(rec_cred.acc_code)
+    CALL load_creditor_enq(rec_cred.acc_code)
 END FUNCTION
 
 -- ==============================================================
--- Delete creditor
+-- Deletecreditor
 -- ==============================================================
 FUNCTION delete_creditor()
     DEFINE ok SMALLINT
-   -- If no record is loaded, skip
+    -- If no record is loaded, skip
     IF rec_cred.acc_code IS NULL OR rec_cred.acc_code = "" THEN
         CALL utils_globals.show_info('No creditor selected for deletion.')
         RETURN
     END IF
 
     -- Confirm delete
-    LET ok = utils_globals.show_confirm("Delete this creditor: " || rec_cred.supp_name || "?", "Confirm Delete")
+    LET ok =
+        utils_globals.show_confirm(
+            "Delete this creditor: " || rec_cred.supp_name || "?",
+            "Confirm Delete")
 
     IF NOT ok THEN
         MESSAGE "Delete cancelled."
@@ -482,12 +502,12 @@ FUNCTION delete_creditor()
     END IF
 
     DELETE FROM cl01_mast WHERE acc_code = rec_cred.acc_code
-    CALL utils_globals.get_msg_deleted()
-    LET ok  = select_creditors("1=1")
+    CALL utils_globals.msg_deleted()
+    LET ok = select_creditors("1=1")
 END FUNCTION
 
 -- ==============================================================
--- Check creditor uniqueness
+-- Checkcreditor uniqueness
 -- ==============================================================
 FUNCTION check_creditor_unique(
     p_acc_code STRING, p_supp_name STRING, p_phone STRING, p_email STRING)
@@ -505,7 +525,7 @@ FUNCTION check_creditor_unique(
 -- check for duplicate name
     SELECT COUNT(*) INTO dup_count FROM cl01_mast WHERE supp_name = p_supp_name
     IF dup_count > 0 THEN
-        CALL utils_globals.show_error("Customer name already exists.")
+        CALL utils_globals.show_error("Supplier name already exists.")
         LET exists = 1
         RETURN exists
     END IF

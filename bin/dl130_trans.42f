@@ -1,7 +1,55 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl130_trans.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" text="Form" width="0" height="18">
-  <LStr text="Form"/>
+<Form name="dl130_trans.tmp" build="3.20.14" sqlDbName="demoapp_db" text="DEBTORS TRANSACTIONS" width="138" height="8">
+  <LStr text="DEBTORS TRANSACTIONS"/>
   <VBox name="vbox1">
-    <Grid name="grid1" width="0" height="18"/>
+    <Grid name="grd_dl130_trans" width="138" height="8">
+      <Label name="lbl_form_title" width="128" text="DEBTOR TRANSACTIONS" justify="center" style="header" posY="0" posX="1" gridWidth="128">
+        <LStr text="DEBTOR TRANSACTIONS"/>
+      </Label>
+      <Table pageSize="5" name="dl130_trans" width="137" posY="1" posX="1" gridWidth="137" gridHeight="6" tabName="rec_dl130_trans">
+        <TableColumn name="dl30_trans.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl30_trans" text="Account Code" tabIndex="1">
+          <Edit width="20" scroll="1"/>
+          <LStr text="Account Code"/>
+        </TableColumn>
+        <TableColumn name="dl30_trans.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="1" sqlTabName="dl30_trans" text="Date" tabIndex="2">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Date"/>
+        </TableColumn>
+        <TableColumn name="dl30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="2" sqlTabName="dl30_trans" text="Trans Type" tabIndex="3">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Trans Type"/>
+        </TableColumn>
+        <TableColumn name="dl30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="3" sqlTabName="dl30_trans" text="Doc Type" tabIndex="4">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Doc Type"/>
+        </TableColumn>
+        <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="4" sqlTabName="dl30_trans" text="Doc No" tabIndex="5">
+          <Edit width="20" scroll="1"/>
+          <LStr text="Doc No"/>
+        </TableColumn>
+        <TableColumn name="dl30_trans.gross_val" colName="gross_val" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="5" sqlTabName="dl30_trans" text="Gross Val" tabIndex="6" numAlign="1">
+          <Edit width="14" scroll="1"/>
+          <LStr text="Gross Val"/>
+        </TableColumn>
+        <TableColumn name="dl30_trans.vat" colName="vat" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="6" sqlTabName="dl30_trans" text="VAT" tabIndex="7" numAlign="1">
+          <Edit width="14" scroll="1"/>
+          <LStr text="VAT"/>
+        </TableColumn>
+        <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="7" sqlTabName="dl30_trans" text="Notes" tabIndex="8">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Notes"/>
+        </TableColumn>
+      </Table>
+    </Grid>
   </VBox>
+  <RecordView tabName="dl30_trans">
+    <Link colName="acc_code" fieldIdRef="0"/>
+    <Link colName="date" fieldIdRef="1"/>
+    <Link colName="trans_type" fieldIdRef="2"/>
+    <Link colName="doc_type" fieldIdRef="3"/>
+    <Link colName="doc_no" fieldIdRef="4"/>
+    <Link colName="gross_val" fieldIdRef="5"/>
+    <Link colName="vat" fieldIdRef="6"/>
+    <Link colName="notes" fieldIdRef="7"/>
+  </RecordView>
 </Form>

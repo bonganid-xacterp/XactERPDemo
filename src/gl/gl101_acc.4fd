@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{a4362c92-ea20-46fa-be29-4755b9e864c2}">
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{a4362c92-ea20-46fa-be29-4755b9e864c2}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
-    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="80" name="grid1" posX="0" posY="1"/>
+  <Record masterTable="gl01_acc" name="rec_gl_accounts" uid="{a094dc80-e8a6-4294-a30f-f68b0d689eb3}">
+    <RecordField colName="acc_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="gl01_acc.acc_code" sqlTabName="gl01_acc" uid="{06403ab7-4f58-481a-98d7-e7f11883025b}"/>
+    <RecordField colName="acc_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="gl01_acc.acc_name" sqlTabName="gl01_acc" uid="{fb031943-22f4-4123-9687-c828545dae64}"/>
+    <RecordField colName="acc_type" fieldIdRef="3" fieldType="TABLE_COLUMN" name="gl01_acc.acc_type" sqlTabName="gl01_acc" uid="{68df44f2-a606-45c5-a224-fd9706001c91}"/>
+    <RecordField colName="parent_acc" fieldIdRef="4" fieldType="TABLE_COLUMN" name="gl01_acc.parent_acc" sqlTabName="gl01_acc" uid="{075bd193-85ff-4f07-abe4-433e122a52e6}"/>
+    <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="gl01_acc.status" sqlTabName="gl01_acc" uid="{991c3d3b-7057-46bf-9ec9-93f7e26bce9e}"/>
+  </Record>
+  <Form gridHeight="8" gridWidth="90" name="frm_gl_acc" text="GL Accounts">
+    <VBox gridHeight="7" gridWidth="89" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="5" gridWidth="136" name="grd_gl_acc" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="88" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="GL ACCOUNTS"/>
+        <Label gridHeight="1" gridWidth="13" name="gl01_acc_acc_code_label1" posX="1" posY="1" text="Aaccount Code">
+          <Initializer text="dbschema:gl01_acc.acc_code/@label"/>
+        </Label>
+        <Edit colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl01_acc.acc_code" posX="15" posY="1" scroll="true" sqlTabName="gl01_acc" tabIndex="-1" title="Aaccount Code" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="14" name="gl01_acc_acc_name_label1" posX="36" posY="1" text="Account Name">
+          <Initializer text="dbschema:gl01_acc.acc_name/@label"/>
+        </Label>
+        <Edit colName="acc_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="gl01_acc.acc_name" posX="51" posY="1" scroll="true" sqlTabName="gl01_acc" tabIndex="-1" title="Account Name" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="13" name="gl01_acc_acc_type_label1" posX="1" posY="2" text="Account Type">
+          <Initializer text="dbschema:gl01_acc.acc_type/@label"/>
+        </Label>
+        <ComboBox colName="acc_type" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" items="" name="gl01_acc.acc_type" posX="15" posY="2" scroll="true" sqlTabName="gl01_acc" tabIndex="-1" title="Account Type" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ComboBox>
+        <Label gridHeight="1" gridWidth="14" name="gl01_acc_parent_acc_label1" posX="36" posY="2" text="Parent Account">
+          <Initializer text="dbschema:gl01_acc.parent_acc/@label"/>
+        </Label>
+        <Edit colName="parent_acc" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl01_acc.parent_acc" posX="51" posY="2" scroll="true" sqlTabName="gl01_acc" tabIndex="-1" title="Parent Account" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="13" name="gl01_acc_status_label1" posX="1" posY="3" text="Status">
+          <Initializer text="dbschema:gl01_acc.status/@label"/>
+        </Label>
+        <ComboBox colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" items="" name="gl01_acc.status" posX="15" posY="3" scroll="true" sqlTabName="gl01_acc" tabIndex="-1" title="Status" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ComboBox>
+      </Grid>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAg==]]>
+    <![CDATA[AAAAAgAAAEwAewBhADAAOQA0AGQAYwA4ADAALQBlADgAYQA2AC0ANAAyADkANAAtAGEAMwAwAGYALQBmADYAOABiADAAZAA2ADgAOQBlAGIAMwB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

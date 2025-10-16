@@ -13,15 +13,15 @@ IMPORT FGL utils_globals
 -- GLOBAL VARIABLES
 -- --------------------------------------------------------------
 DEFINE g_current_user STRING
-DEFINE g_user_role    STRING
-DEFINE g_login_tries  SMALLINT
+DEFINE g_user_role STRING
+DEFINE g_login_tries SMALLINT
 
 CONSTANT MAX_LOGIN_ATTEMPTS = 3
 
 -- --------------------------------------------------------------
 -- MAIN LOGIN FUNCTION
 -- --------------------------------------------------------------
-PUBLIC FUNCTION login_user() RETURNS SMALLINT
+FUNCTION login_user() RETURNS SMALLINT
     DEFINE f_username, f_password STRING
     DEFINE f ui.Form
     DEFINE ok SMALLINT
@@ -30,8 +30,10 @@ PUBLIC FUNCTION login_user() RETURNS SMALLINT
     LET ok = FALSE
 
     -- Open login window
-    OPEN WINDOW w_login WITH FORM "sy100_login"
-        ATTRIBUTES(STYLE="dialog", TEXT="XACT ERP Login")
+    OPEN WINDOW w_login
+        WITH
+        FORM "sy100_login"
+        ATTRIBUTES(STYLE = "dialog", TEXT = "XACT ERP Login")
 
     -- Show company logo if available
     LET f = ui.Window.getCurrent().getForm()
@@ -83,8 +85,11 @@ FUNCTION try_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
         IF g_login_tries >= MAX_LOGIN_ATTEMPTS THEN
             ERROR "Maximum login attempts exceeded."
         ELSE
-            ERROR "Invalid credentials (" || g_login_tries || "/" ||
-                   MAX_LOGIN_ATTEMPTS || ")"
+            ERROR "Invalid credentials ("
+                || g_login_tries
+                || "/"
+                || MAX_LOGIN_ATTEMPTS
+                || ")"
         END IF
     END IF
 
@@ -96,9 +101,21 @@ END FUNCTION
 -- --------------------------------------------------------------
 FUNCTION validate_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
     CASE p_user.toLowerCase()
-        WHEN "admin" IF p_pass = "1234" THEN LET g_user_role = "Administrator"; RETURN TRUE END IF
-        WHEN "user"  IF p_pass = "user123" THEN LET g_user_role = "User"; RETURN TRUE END IF
-        WHEN "demo"  IF p_pass = "demo" THEN LET g_user_role = "Demo User"; RETURN TRUE END IF
+        WHEN "admin"
+            IF p_pass = "1234" THEN
+                LET g_user_role = "Administrator";
+                RETURN TRUE
+            END IF
+        WHEN "user"
+            IF p_pass = "user123" THEN
+                LET g_user_role = "User";
+                RETURN TRUE
+            END IF
+        WHEN "demo"
+            IF p_pass = "demo" THEN
+                LET g_user_role = "Demo User";
+                RETURN TRUE
+            END IF
     END CASE
     RETURN FALSE
 END FUNCTION
@@ -106,11 +123,11 @@ END FUNCTION
 -- --------------------------------------------------------------
 -- SESSION GETTERS
 -- --------------------------------------------------------------
-PUBLIC FUNCTION get_current_user() RETURNS STRING
+FUNCTION get_current_user() RETURNS STRING
     RETURN g_current_user
 END FUNCTION
 
-PUBLIC FUNCTION get_user_role() RETURNS STRING
+FUNCTION get_user_role() RETURNS STRING
     RETURN g_user_role
 END FUNCTION
 
@@ -119,6 +136,7 @@ END FUNCTION
 -- --------------------------------------------------------------
 FUNCTION confirm_exit_login() RETURNS SMALLINT
     DEFINE ans STRING
-    LET ans = utils_globals.show_confirm("Exit Login", "Do you want to cancel login?")
+    LET ans =
+        utils_globals.show_confirm("Exit Login", "Do you want to cancel login?")
     RETURN ans = "yes"
 END FUNCTION

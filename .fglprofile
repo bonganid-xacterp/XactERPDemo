@@ -4,25 +4,26 @@
 # ==============================================================
 
 # Database provider
- dbi.database.provider = "dbmpgs"
+dbi.database.provider = "dbmpgs"
+dbi.database.demoapp_db.source = "dbname=demoapp_db host=localhost port=5432 user=postgres password=napoleon"
 
-# PostgreSQL Connection
-dbi.database.xactdemo_db.source = "dbname=xactdemo_db host=localhost port=5432 user=postgres password=napoleon"
+# ============================================================
+# Style Configuration
+# ============================================================
+ui.style = "${ProjectDir}/src/_main/main_styles.4st"
 
-# Style configuration
-fglrun.universalClientStyleSheet = "$FGLDIR/_main/main_styles.4st"
+# Optional: load multiple style files (base + overrides)
+# ui.style = "${ProjectDir}/src/_main/main_styles.4st; ${ProjectDir}/src/resources/xact_erp_sap.4st"
 
+# ============================================================
+# Debugging
+# ============================================================
+dbi.debug.level = 10
+dbi.debug.file  = "database_debug.log"
 
-# Debugging (optional)
- dbi.debug.level = 10
- dbi.debug.file = "database_debug.log"
-
-# Connection pool settings (optional)
-dbi.database.xactapp_db.pool.minSize = 1
-dbi.database.xactapp_db.pool.maxSize = 10
-dbi.database.xactapp_db.pool.timeout = 30
-
+# ============================================================
 # Other Genero settings
-# fgl.profile.version = "3.20"
+# ============================================================
+fgl.profile.version = "3.20"
 # gui.uimode = "traditional"
 # application.name = "XACT ERP Demo"

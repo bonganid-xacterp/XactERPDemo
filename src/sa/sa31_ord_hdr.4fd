@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{31eaf1df-4427-4484-bf44-9f76a723d736}">
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{31eaf1df-4427-4484-bf44-9f76a723d736}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
@@ -28,7 +28,7 @@
   </Record>
   <Form gridHeight="33" gridWidth="155" name="form" text="Form">
     <VBox gridHeight="33" gridWidth="155" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="6" gridWidth="155" name="xactdemo_db_schema1" posX="0" posY="1">
+      <Grid gridHeight="6" gridWidth="155" name="demoapp_db1" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="10" name="sa31_hdr_doc_no_label1" posX="1" posY="1" text="doc_no">
           <Initializer text="dbschema:sa31_hdr.doc_no/@label"/>
         </Label>
@@ -86,7 +86,7 @@
       </Grid>
       <Grid gridHeight="25" gridWidth="155" name="xactapp_db1" posX="0" posY="7">
         <Group gridHeight="20" gridWidth="154" name="group1" posX="1" posY="1" text="">
-          <Table gridHeight="6" gridWidth="152" name="xactdemo_db_schema2" posX="1" posY="1" totalRows="5">
+          <Table gridHeight="6" gridWidth="152" name="demoapp_db2" posX="1" posY="1" totalRows="5">
             <Edit colName="doc_no" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa31_det.doc_no" posX="1" posY="0" scroll="true" sqlTabName="sa31_det" tabIndex="-1" title="doc_no" widget="Edit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </Edit>

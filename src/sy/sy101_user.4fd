@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{5468a855-04b2-49c6-a366-bd67ff6239fc}">
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{5468a855-04b2-49c6-a366-bd67ff6239fc}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="sy00_user" name="record1" uid="{2c894517-2e0a-4058-9cf7-24f039359c1f}">
+  <Record masterTable="sy00_user" name="rec_sy00_user" uid="{2c894517-2e0a-4058-9cf7-24f039359c1f}">
     <RecordField colName="username" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy00_user.username" sqlTabName="sy00_user" uid="{69026fe9-24eb-4255-b1cd-908f573ea943}"/>
     <RecordField colName="full_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy00_user.full_name" sqlTabName="sy00_user" uid="{38ae19c9-0563-4fce-a7a5-a00ee170e1c9}"/>
     <RecordField colName="phone" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy00_user.phone" sqlTabName="sy00_user" uid="{917a520b-1d18-4a5c-b7b4-06378840c586}"/>
     <RecordField colName="email" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy00_user.email" sqlTabName="sy00_user" uid="{14f1706e-e97a-4ade-997b-b700b2026c27}"/>
     <RecordField colName="status" defaultValue="1" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sy00_user.status" sqlTabName="sy00_user" uid="{ea5531e1-618a-4c99-b6c7-6975df489bfb}"/>
-    <RecordField colName="role_id" fieldIdRef="5" fieldType="NON_DATABASE" length="1" name="lbl_sy00_user_role" sqlTabName="sy00_user" sqlType="BIGINT" uid="{ca61054a-19b7-42de-a2ff-0aa9735a5626}"/>
+    <RecordField colName="role_id" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sy00_user.role_id" sqlTabName="sy00_user" uid="{ca61054a-19b7-42de-a2ff-0aa9735a5626}"/>
   </Record>
-  <Form gridHeight="8" gridWidth="88" name="frm_sy101_user" text="Form">
+  <Form gridHeight="8" gridWidth="88" name="sy101_user" text="Form">
     <HBox gridHeight="8" gridWidth="88" name="hbox1" posX="0" posY="0">
       <Grid gridHeight="8" gridWidth="84" name="xactapp_db1" posX="2" posY="0">
         <Label gridHeight="1" gridWidth="8" name="lbl_sy00_user_user" posX="1" posY="1" text="Username">
@@ -41,7 +41,7 @@
         <Label gridHeight="1" gridWidth="8" name="lbl_sy00_user_role_id" posX="1" posY="3" text="User Role ">
           <Initializer text="dbschema:sy00_user.role_id/@label"/>
         </Label>
-        <ButtonEdit action="role_search" colName="role_id" fieldId="5" fieldType="NON_DATABASE" gridHeight="1" gridWidth="20" image="zoom" length="1" name="lbl_sy00_user_role" notNull="true" posX="10" posY="3" required="true" scroll="true" sqlTabName="sy00_user" sqlType="BIGINT" tabIndex="-1" widget="ButtonEdit">
+        <ButtonEdit action="role_search" colName="role_id" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="zoom" name="sy00_user.role_id" notNull="true" posX="10" posY="3" required="true" scroll="true" sqlTabName="sy00_user" tabIndex="-1" widget="ButtonEdit">
           <Initializer action="role_search" title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ButtonEdit>
         <Label gridHeight="1" gridWidth="9" name="lbl_sy00_user_status" posX="41" posY="3" text="Status">

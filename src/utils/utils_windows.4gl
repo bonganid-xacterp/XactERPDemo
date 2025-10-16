@@ -18,16 +18,17 @@ IMPORT FGL fgldialog
 --                 EXIT INPUT/MENU/DIALOG
 --             END IF
 -- ==============================================================
-PUBLIC FUNCTION handle_window_close() RETURNS SMALLINT
+FUNCTION handle_window_close() RETURNS SMALLINT
     DEFINE answer STRING
 
-    LET answer = fgldialog.fgl_winquestion(
-        "Confirm Close",
-        "Are you sure you want to close this window?",
-        "no",
-        "yes|no",
-        "question",
-        0)
+    LET answer =
+        fgldialog.fgl_winquestion(
+            "Confirm Close",
+            "Are you sure you want to close this window?",
+            "no",
+            "yes|no",
+            "question",
+            0)
 
     RETURN (answer = "yes")
 END FUNCTION
@@ -39,7 +40,7 @@ END FUNCTION
 --             CALL utils_windows.handle_window_close_no_confirm()
 --             EXIT INPUT/MENU/DIALOG
 -- ==============================================================
-PUBLIC FUNCTION handle_window_close_no_confirm() RETURNS SMALLINT
+FUNCTION handle_window_close_no_confirm() RETURNS SMALLINT
     RETURN TRUE
 END FUNCTION
 
@@ -51,7 +52,7 @@ END FUNCTION
 --                 EXIT MENU
 --             END IF
 -- ==============================================================
-PUBLIC FUNCTION handle_exit_with_confirm(p_message STRING) RETURNS SMALLINT
+FUNCTION handle_exit_with_confirm(p_message STRING) RETURNS SMALLINT
     DEFINE answer STRING
     DEFINE message STRING
 
@@ -61,13 +62,9 @@ PUBLIC FUNCTION handle_exit_with_confirm(p_message STRING) RETURNS SMALLINT
         LET message = p_message
     END IF
 
-    LET answer = fgldialog.fgl_winquestion(
-        "Confirm",
-        message,
-        "no",
-        "yes|no",
-        "question",
-        0)
+    LET answer =
+        fgldialog.fgl_winquestion(
+            "Confirm", message, "no", "yes|no", "question", 0)
 
     RETURN (answer = "yes")
 END FUNCTION
@@ -76,7 +73,7 @@ END FUNCTION
 -- FUNCTION: close_current_window
 -- Purpose : Close the current window safely
 -- ==============================================================
-PUBLIC FUNCTION close_current_window()
+FUNCTION close_current_window()
     DEFINE w ui.Window
     DEFINE win_name STRING
 
@@ -98,16 +95,17 @@ END FUNCTION
 -- Purpose : Standard dialog for unsaved changes
 -- Returns : TRUE if user wants to discard changes
 -- ==============================================================
-PUBLIC FUNCTION confirm_unsaved_changes() RETURNS SMALLINT
+FUNCTION confirm_unsaved_changes() RETURNS SMALLINT
     DEFINE answer STRING
 
-    LET answer = fgldialog.fgl_winquestion(
-        "Unsaved Changes",
-        "You have unsaved changes.\n\nDiscard changes and close?",
-        "no",
-        "yes|no",
-        "exclamation",
-        0)
+    LET answer =
+        fgldialog.fgl_winquestion(
+            "Unsaved Changes",
+            "You have unsaved changes.\n\nDiscard changes and close?",
+            "no",
+            "yes|no",
+            "exclamation",
+            0)
 
     RETURN (answer = "yes")
 END FUNCTION
@@ -120,12 +118,12 @@ END FUNCTION
 --                 EXIT INPUT
 --             END IF
 -- ==============================================================
-PUBLIC FUNCTION standard_close_handler(p_has_changes SMALLINT) RETURNS SMALLINT
-    
+FUNCTION standard_close_handler(p_has_changes SMALLINT) RETURNS SMALLINT
+
     IF p_has_changes THEN
         RETURN confirm_unsaved_changes()
     ELSE
         RETURN handle_window_close()
     END IF
-    
+
 END FUNCTION

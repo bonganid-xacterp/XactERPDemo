@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo_db" fileVersion="31400" gstVersion="3140a" name="ManagedForm" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="ManagedForm" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="27" gridWidth="103" name="mdi_wrapper" text="" version="0.1">
+  <Form gridHeight="27" gridWidth="103" name="mdi_wrapper" style="mdi" text="" version="0.1">
     <TopMenu name="top_menu">
       <TopMenuGroup name="tm_main" text="File">
         <TopMenuSeparator name="sep_01"/>
@@ -17,6 +17,10 @@
         <TopMenuCommand image="open" name="cl_enq" text="Creditors Enquiry"/>
         <TopMenuCommand image="pen" name="cl_maint" text="Creditors Maintanance"/>
         <TopMenuSeparator name="topmenuseparator1"/>
+        <TopMenuGroup name="topmenugroup1" text="Creditors Reports">
+          <TopMenuCommand name="rp_supp_agng" text="Age Analysis"/>
+          <TopMenuCommand name="rp_prod_by_supp" text="Products By Supplier"/>
+        </TopMenuGroup>
       </TopMenuGroup>
       <TopMenuGroup name="tm_st" text="Stock">
         <TopMenuCommand image="open" name="st_enq" text="Stock Enquiry"/>
@@ -74,14 +78,23 @@
         <TopMenuCommand image="open2" name="sys_logs" text="Logs"/>
         <TopMenuSeparator name="topmenuseparator14"/>
       </TopMenuGroup>
+      <TopMenuGroup name="tm_rp" text="Reports">
+        <TopMenuCommand name="rp_cl_ageing" text="Creditors Age Analysis"/>
+        <TopMenuSeparator name="topmenuseparator16"/>
+        <TopMenuCommand name="rp_dl_stmt" text="Debtors Statement"/>
+        <TopMenuCommand name="rp_dl_unpaid_inv" text="Debtors Unpaid Invoices"/>
+        <TopMenuSeparator name="topmenuseparator17"/>
+        <TopMenuCommand name="rp_st_status" text="Stock Status Report"/>
+      </TopMenuGroup>
       <TopMenuGroup name="tm_app" text="Help">
         <TopMenuCommand image="fa-info-circle" name="sy_about" text="About"/>
       </TopMenuGroup>
+      <TopMenuGroup hidden="true" name="tm_wrapper" text="MAIN">
+        <TopMenuCommand hidden="true" name="sy_main" text=""/>
+      </TopMenuGroup>
     </TopMenu>
-    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" hidden="true" name="mdi_group" posX="0" posY="0" style="mdi_container" text="">
-      <Grid gridHeight="20" gridWidth="91" name="main_grid" posX="1" posY="1" style="mdi_wrapper">
-        <Label gridHeight="1" gridWidth="89" hidden="true" justify="center" name="lbl_top_title" posX="1" posY="0" text=""/>
-      </Grid>
+    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" hidden="true" name="mdi_container" posX="0" posY="0" style="mdi_container" text="">
+      <Grid gridHeight="20" gridWidth="91" name="mdi_wrapper" posX="1" posY="1" style="mdi_wrapper"/>
     </Group>
   </Form>
   <DiagramLayout>

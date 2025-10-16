@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{772a245c-c471-4fbe-af77-3557e53ef499}">
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{772a245c-c471-4fbe-af77-3557e53ef499}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
@@ -26,70 +26,68 @@
     <RecordField colName="notes" fieldIdRef="19" fieldType="TABLE_COLUMN" name="dl30_trans.notes" sqlTabName="dl30_trans" uid="{fc86171c-3c38-46da-bb04-4fccb0b91df6}"/>
     <RecordField colName="id" fieldIdRef="11" fieldType="TABLE_COLUMN" name="dl30_trans.id" sqlTabName="dl30_trans" uid="{3316bad4-7e88-4aa1-96aa-91a71dec46c3}"/>
   </Record>
-  <Form fourSTFile="../_main/main_styles.4st" gridHeight="25" gridWidth="140" name="dl120_enq" text="Debtor Enquiry" windowStyle="child">
-    <HBox gridHeight="19" gridWidth="140" name="hbox1" posX="0" posY="0">
-      <VBox gridHeight="19" gridWidth="136" name="vbox1" posX="2" posY="0">
-        <Grid gridHeight="6" gridWidth="136" name="dl01_mast" posX="0" posY="1">
-          <Label gridHeight="1" gridWidth="135" justify="center" name="lbl_form_title" posX="1" posY="0" style="title" text="DEBTORS MASTER"/>
-          <Label gridHeight="1" gridWidth="6" name="lbl_dl_acc_code" posX="1" posY="1" text="Acc Code"/>
-          <ButtonEdit action="find" colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" image="zoom" justify="left" name="dl01_mast.acc_code" posX="8" posY="1" program="" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="ButtonEdit"/>
-          <Label gridHeight="1" gridWidth="10" name="lbl_dl_name" posX="21" posY="1" text="Debtor Name"/>
-          <Edit colName="cust_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="44" name="dl01_mast.cust_name" posX="32" posY="1" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
-          <Label gridHeight="1" gridWidth="6" name="lbl_dl_phone" posX="1" posY="2" text="Phone"/>
-          <Edit colName="phone" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="dl01_mast.phone" posX="8" posY="2" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
-          <Label gridHeight="1" gridWidth="10" name="lbl_dl_email" posX="21" posY="2" text="Email"/>
-          <Edit colName="email" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="28" name="dl01_mast.email" posX="32" posY="2" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
-          <Label gridHeight="1" gridWidth="5" name="lbl_dl_status" posX="61" posY="2" text="Status"/>
-          <ComboBox colName="status" defaultValue="0" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" items="" name="dl01_mast.status" posX="67" posY="2" sqlTabName="dl01_mast" tabIndex="-1" title="buttonedit1" widget="ComboBox"/>
-          <Label gridHeight="1" gridWidth="6" name="lbl_dl_add1" posX="1" posY="4" text="Address 1"/>
-          <Edit colName="address1" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="29" name="dl01_mast.address1" posX="8" posY="4" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
-          <Label gridHeight="1" gridWidth="8" name="lbl_dl_add2" posX="38" posY="4" text="Address 2"/>
-          <Edit colName="address2" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="28" name="dl01_mast.address2" posX="48" posY="4" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
-          <Label gridHeight="1" gridWidth="6" name="lbl_dl_add3" posX="1" posY="5" text="Address 3"/>
-          <Edit colName="address3" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="29" name="dl01_mast.address3" posX="8" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
-          <Label gridHeight="1" gridWidth="8" name="lbl_dl_cr_lmt" posX="38" posY="5" text="Credit Limit"/>
-          <Edit colName="cr_limit" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="dl01_mast.cr_limit" posX="48" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
-          <Label gridHeight="1" gridWidth="8" name="lbl_dl_bal" posX="58" posY="5" text="Balance"/>
-          <Edit colName="balance" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="dl01_mast.balance" posX="67" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
-        </Grid>
-        <Folder gridHeight="11" gridWidth="136" name="docs" posX="0" posY="7">
-          <Page image="fa-file-text-o" name="trans_group" text="Documents">
-            <Grid gridHeight="10" gridWidth="135" name="trans_grid" posX="0" posY="0">
-              <Table gridHeight="9" gridWidth="134" name="dl30_trans_tb" posX="1" posY="0" totalRows="8">
-                <Edit colName="id" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="dl30_trans.id" posX="0" posY="0" sqlTabName="dl30_trans" tabIndex="-1" title="#ID" widget="Edit"/>
-                <Edit colName="date" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.date" posX="8" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
-                  <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-                </Edit>
-                <Edit colName="doc_no" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="dl30_trans.doc_no" posX="18" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
-                  <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-                </Edit>
-                <Edit colName="trans_type" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.trans_type" posX="38" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Type" widget="Edit">
-                  <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-                </Edit>
-                <Edit colName="doc_type" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.doc_type" posX="48" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
-                  <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-                </Edit>
-                <Edit colName="gross_val" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="dl30_trans.gross_val" posX="58" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Total Excl" widget="Edit">
-                  <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-                </Edit>
-                <Edit colName="vat" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="dl30_trans.vat" posX="72" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="VAT" widget="Edit">
-                  <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-                </Edit>
-                <Edit defaultValue="0.00" fieldId="18" gridHeight="1" gridWidth="8" length="10" name="dl30_trans_tot_incl" posX="86" posY="0" tabIndex="-1" title="Total Incl" widget="Edit"/>
-                <Edit colName="notes" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="dl30_trans.notes" posX="94" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Notes" widget="Edit">
-                  <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-                </Edit>
-              </Table>
-            </Grid>
-          </Page>
-          <Page image="fa-align-left" name="pg_logs" text="Logs">
-            <Grid gridHeight="5" gridWidth="80" name="grid1" posX="0" posY="0"/>
-          </Page>
-        </Folder>
-      </VBox>
-    </HBox>
+  <Form gridHeight="25" gridWidth="140" name="dl120_enq" text="Debtor Enquiry" windowStyle="child">
+    <VBox gridHeight="19" gridWidth="136" name="vbox1" posX="2" posY="0">
+      <Grid gridHeight="6" gridWidth="136" name="grd_dl120_enq" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="135" justify="center" name="lbl_form_title" posX="1" posY="0" style="title" text="DEBTORS MASTER"/>
+        <Label gridHeight="1" gridWidth="6" name="lbl_dl_acc_code" posX="1" posY="1" text="Acc Code"/>
+        <ButtonEdit action="find" colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" image="zoom" justify="left" name="dl01_mast.acc_code" posX="8" posY="1" program="" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="ButtonEdit"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_dl_name" posX="21" posY="1" text="Debtor Name"/>
+        <Edit colName="cust_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="44" name="dl01_mast.cust_name" posX="32" posY="1" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="6" name="lbl_dl_phone" posX="1" posY="2" text="Phone"/>
+        <Edit colName="phone" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="dl01_mast.phone" posX="8" posY="2" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_dl_email" posX="21" posY="2" text="Email"/>
+        <Edit colName="email" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="28" name="dl01_mast.email" posX="32" posY="2" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="5" name="lbl_dl_status" posX="61" posY="2" text="Status"/>
+        <ComboBox colName="status" defaultValue="0" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" items="" name="dl01_mast.status" posX="67" posY="2" sqlTabName="dl01_mast" tabIndex="-1" title="buttonedit1" widget="ComboBox"/>
+        <Label gridHeight="1" gridWidth="6" name="lbl_dl_add1" posX="1" posY="4" text="Address 1"/>
+        <Edit colName="address1" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="29" name="dl01_mast.address1" posX="8" posY="4" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="8" name="lbl_dl_add2" posX="38" posY="4" text="Address 2"/>
+        <Edit colName="address2" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="28" name="dl01_mast.address2" posX="48" posY="4" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="6" name="lbl_dl_add3" posX="1" posY="5" text="Address 3"/>
+        <Edit colName="address3" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="29" name="dl01_mast.address3" posX="8" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="8" name="lbl_dl_cr_lmt" posX="38" posY="5" text="Credit Limit"/>
+        <Edit colName="cr_limit" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="dl01_mast.cr_limit" posX="48" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="8" name="lbl_dl_bal" posX="58" posY="5" text="Balance"/>
+        <Edit colName="balance" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="dl01_mast.balance" posX="67" posY="5" repeat="false" sqlTabName="dl01_mast" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+      <Folder gridHeight="11" gridWidth="136" name="docs" posX="0" posY="7">
+        <Page image="fa-file-text-o" name="trans_group" text="Documents">
+          <Grid gridHeight="10" gridWidth="135" name="trans_grid" posX="0" posY="0">
+            <Table gridHeight="9" gridWidth="134" name="dl30_trans_tb" posX="1" posY="0" totalRows="8">
+              <Edit colName="id" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="dl30_trans.id" posX="0" posY="0" sqlTabName="dl30_trans" tabIndex="-1" title="#ID" widget="Edit"/>
+              <Edit colName="date" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.date" posX="8" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="doc_no" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="dl30_trans.doc_no" posX="18" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="trans_type" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.trans_type" posX="38" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Type" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="doc_type" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.doc_type" posX="48" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="gross_val" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="dl30_trans.gross_val" posX="58" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Total Excl" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="vat" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="dl30_trans.vat" posX="72" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="VAT" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit defaultValue="0.00" fieldId="18" gridHeight="1" gridWidth="8" length="10" name="dl30_trans_tot_incl" posX="86" posY="0" tabIndex="-1" title="Total Incl" widget="Edit"/>
+              <Edit colName="notes" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="dl30_trans.notes" posX="94" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Notes" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+            </Table>
+          </Grid>
+        </Page>
+        <Page image="fa-align-left" name="pg_logs" text="Logs">
+          <Grid gridHeight="5" gridWidth="80" name="grid1" posX="0" posY="0"/>
+        </Page>
+      </Folder>
+    </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAxADAANAA5AGQANgA0ADkALQAxADAANQBjAC0ANABhADEANgAtAGEANwAwADAALQAwADEANQBiADIANQAxAGIANgA1ADUAYQB9QDgAAAYAAABAOAAABgAAAAAAAAAAAAAAAQAAAEwAewA0ADAAOABiADkANgA2ADgALQAyADUAYgBjAC0ANAA0ADUAMQAtAGIAMgA2AGMALQA0AGMANQA2AGQANwAxADYAYgA2ADIANgB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA0ADAAOABiADkANgA2ADgALQAyADUAYgBjAC0ANAA0ADUAMQAtAGIAMgA2AGMALQA0AGMANQA2AGQANwAxADYAYgA2ADIANgB9QDAAAAgAAAFAMAAACAAAAQAAAAAAAAAAAQAAAEwAewAxADAANAA5AGQANgA0ADkALQAxADAANQBjAC0ANABhADEANgAtAGEANwAwADAALQAwADEANQBiADIANQAxAGIANgA1ADUAYQB9QDgAAAwAAAJAOAAADAAAAgAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

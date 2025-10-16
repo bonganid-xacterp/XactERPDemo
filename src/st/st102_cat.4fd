@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0ea3406e-18c8-4527-a827-c6b038300d76}">
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0ea3406e-18c8-4527-a827-c6b038300d76}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
@@ -9,7 +9,7 @@
     <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st02_cat.description" sqlTabName="st02_cat" uid="{bbced228-51a1-4e00-8591-03ca75b03341}"/>
     <RecordField colName="status" defaultValue="1" fieldIdRef="4" fieldType="TABLE_COLUMN" name="st02_cat.status" sqlTabName="st02_cat" uid="{b3c65faa-c287-4ea3-92a8-54fb859cc8c6}"/>
   </Record>
-  <Record masterTable="st01_mast" name="record1" uid="{854f6255-98b3-4839-8c80-2081b7d38501}">
+  <Record masterTable="st01_mast" name="arr_stock" uid="{854f6255-98b3-4839-8c80-2081b7d38501}">
     <RecordField colName="stock_code" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st01_mast.stock_code" sqlTabName="st01_mast" uid="{b81395c6-8beb-4037-b0db-95031fd4bada}"/>
     <RecordField colName="description" fieldIdRef="6" fieldType="TABLE_COLUMN" name="st01_mast.description" sqlTabName="st01_mast" uid="{993351f3-085f-4796-9d2d-dc728dedf49c}"/>
     <RecordField colName="cost" fieldIdRef="7" fieldType="TABLE_COLUMN" name="st01_mast.cost" sqlTabName="st01_mast" uid="{04e48624-2947-434b-9733-548c1f605a5f}"/>
@@ -53,9 +53,9 @@
           <Item lstrtext="true" name="-1" text="Archived"/>
         </ComboBox>
       </Grid>
-      <Folder gridHeight="10" gridWidth="106" name="fld_st_cat_grp" posX="0" posY="7">
+      <Folder gridHeight="10" gridWidth="106" hidden="true" name="fld_st_cat_grp" posX="0" posY="7">
         <Page image="fa-sitemap" name="st_cat_trans" text="Stock">
-          <Table gridHeight="6" gridWidth="105" name="xactdemo_db1" posX="1" posY="0" totalRows="5">
+          <Table gridHeight="6" gridWidth="105" name="demoapp_db1" posX="1" posY="0" totalRows="5">
             <ButtonEdit colName="stock_code" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st01_mast.stock_code" posX="1" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Stock Code" widget="ButtonEdit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </ButtonEdit>
@@ -86,6 +86,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9QCAAAAwAAANAIAAADAAAAwAAAAAAAAAAAQAAAEwAewA4ADUANABmADYAMgA1ADUALQA5ADgAYgAzAC0ANAA4ADMAOQAtADgAYwA4ADAALQAyADAAOAAxAGIANwBkADMAOAA1ADAAMQB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewBlAGQANQA1ADkANgA4ADMALQA1AGMAYwAwAC0ANABiADUAOQAtAGEAOABmADIALQBjAGUAMgBmAGEAZABmADYAOABjADgANwB9QDgAAAYAAABAOAAABgAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9QFSZmaBAAADAZczM0YAAAD90euFHrhR7AQAAAEwAewA4ADUANABmADYAMgA1ADUALQA5ADgAYgAzAC0ANAA4ADMAOQAtADgAYwA4ADAALQAyADAAOAAxAGIANwBkADMAOAA1ADAAMQB9wGXMzNIAAADAb7MzOuAAAD9wYk3S8an8AQAAAEwAewBlAGQANQA1ADkANgA4ADMALQA1AGMAYwAwAC0ANABiADUAOQAtAGEAOABmADIALQBjAGUAMgBmAGEAZABmADYAOABjADgANwB9QHSZmZ8gAADASmZmaf///z+AYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

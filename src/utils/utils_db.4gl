@@ -5,15 +5,12 @@
 -- Version   : Genero ver 3.20.10
 -- ==============================================================
 
-
-
-
 -- Establish connection to PostgreSQL database
 FUNCTION initialize_database() RETURNS SMALLINT
     TRY
-        CONNECT TO "xactdemo_db@localhost:5432+driver='dbmpgs_9'"
+        CONNECT TO "demoapp_db@localhost:5432+driver='dbmpgs_9'"
             USER "postgres" USING "napoleon"
-        DISPLAY "Connected to database: xactdemo_db"
+        DISPLAY "Connected to database: demoapp_db"
         RETURN TRUE
     CATCH
         DISPLAY "Database connection failed!"
@@ -21,6 +18,7 @@ FUNCTION initialize_database() RETURNS SMALLINT
         DISPLAY "Error: ", SQLCA.SQLERRM
         RETURN FALSE
     END TRY
+
 END FUNCTION
 
 -- Disconnect from database cleanly
@@ -59,8 +57,8 @@ END FUNCTION
 
 -- Attempt to reconnect to database
 FUNCTION reconnect_database() RETURNS SMALLINT
-DEFINE db_result SMALLINT 
-LET db_result = close_database()
+    DEFINE db_result SMALLINT
+    LET db_result = close_database()
     SLEEP 1
     RETURN initialize_database()
 END FUNCTION
@@ -68,7 +66,7 @@ END FUNCTION
 -- Return current database connection information
 FUNCTION get_database_info() RETURNS STRING
     DEFINE info STRING
-    LET info = "Database: xactdemo_db\n"
+    LET info = "Database: demoapp_db\n"
     LET info = info || "Server  : localhost:5432\n"
     LET info = info || "Driver  : dbmpgs_9 (PostgreSQL)\n"
     LET info = info || "User    : postgres\n"
@@ -82,7 +80,6 @@ FUNCTION get_database_info() RETURNS STRING
 END FUNCTION
 
 -- Run diagnostic tests on database connectivity
-
 FUNCTION test_database_connection() RETURNS SMALLINT
     DEFINE test_result SMALLINT
     DISPLAY "=========================================="
@@ -112,7 +109,6 @@ FUNCTION test_database_connection() RETURNS SMALLINT
 END FUNCTION
 
 -- Start a database transaction
-
 FUNCTION begin_transaction() RETURNS SMALLINT
     TRY
         BEGIN WORK
@@ -125,7 +121,6 @@ FUNCTION begin_transaction() RETURNS SMALLINT
 END FUNCTION
 
 -- Commit current transaction
-
 FUNCTION commit_transaction() RETURNS SMALLINT
     TRY
         COMMIT WORK
@@ -138,7 +133,6 @@ FUNCTION commit_transaction() RETURNS SMALLINT
 END FUNCTION
 
 -- Rollback current transaction
-
 FUNCTION rollback_transaction() RETURNS SMALLINT
     TRY
         ROLLBACK WORK

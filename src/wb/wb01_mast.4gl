@@ -1,13 +1,12 @@
-# ==============================================================
-# Program   :   wb01_mast.4gl
-# Purpose   :   A warehouse bin master program for maintaining the
-#               bin records.
-# Module    :   Warehouse Bin (wb)
-# Number    :   01
-# Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.2.1
-# ==============================================================
-IMPORT FGL utils_ui
+-- ==============================================================
+-- Program   : wb01_mast.4gl
+-- Purpose   : Warehouse Bin Master maintenance
+-- Module    : Warehouse Bin (wb)
+-- Number    : 01
+-- Author    : Bongani Dlamini
+-- Version   : Genero ver 3.20.10
+-- ==============================================================
+IMPORT FGL utils_globals
 
 FUNCTION open_wbbin_form()
     DEFINE int_flag_saved SMALLINT
@@ -22,7 +21,7 @@ FUNCTION open_wbbin_form()
         ATTRIBUTE(STYLE = "child", TEXT = "Warehouse Bin")
 
     -- Set page title (top bar, if defined in form)
-    CALL utils_ui.set_page_title("Dashboard")
+    CALL utils_globals.set_page_title("Warehouse Bin")
 
     -- Main loop: keep the container alive with a menu
 

@@ -13,9 +13,7 @@ DEFINE log_rec RECORD
     level STRING,
     user_action STRING,
     details STRING
-    END RECORD 
-    
-    
+END RECORD
 
 -- Log an activity
 -- TODOS: add the logic for logging activity

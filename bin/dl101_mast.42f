@@ -1,134 +1,126 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="xactdemo_db_schema" spacing="compact" text="Debtors" style="child" windowStyle="child" width="137" height="16">
+<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="demoapp_db" spacing="compact" text="Debtors" style="child" windowStyle="child" width="137" height="17">
   <LStr text="Debtors"/>
-  <HBox name="hbox1">
-    <VBox name="vbox1">
-      <Grid name="dl01_mast" width="137" height="6">
-        <Label name="lbl_form_title" width="135" text="DEBTORS MASTER" justify="center" style="header" posY="0" posX="1" gridWidth="135">
-          <LStr text="DEBTORS MASTER"/>
-        </Label>
-        <Label name="lbl_dl_acc_code" width="6" text="Acc Code" posY="1" posX="1" gridWidth="6">
-          <LStr text="Acc Code"/>
-        </Label>
-        <FormField name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" tabIndex="1">
-          <ButtonEdit width="10" action="find" image="zoom" justify="left" program="" posY="1" posX="8" gridWidth="12"/>
-        </FormField>
-        <Label name="lbl_dl_name" width="10" text="Debtor Name" posY="1" posX="21" gridWidth="10">
-          <LStr text="Debtor Name"/>
-        </Label>
-        <FormField name="dl01_mast.cust_name" colName="cust_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="dl01_mast" tabIndex="2">
-          <Edit width="44" posY="1" posX="32" gridWidth="44"/>
-        </FormField>
-        <Label name="lbl_dl_phone" width="6" text="Phone" posY="2" posX="1" gridWidth="6">
-          <LStr text="Phone"/>
-        </Label>
-        <FormField name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="dl01_mast" tabIndex="3">
-          <Edit width="12" posY="2" posX="8" gridWidth="12"/>
-        </FormField>
-        <Label name="lbl_dl_email" width="10" text="Email" posY="2" posX="21" gridWidth="10">
-          <LStr text="Email"/>
-        </Label>
-        <FormField name="dl01_mast.email" colName="email" sqlType="VARCHAR(100)" fieldId="3" sqlTabName="dl01_mast" tabIndex="4">
-          <Edit width="28" posY="2" posX="32" gridWidth="28"/>
-        </FormField>
-        <Label name="lbl_dl_status" width="5" text="Status" posY="2" posX="61" gridWidth="5">
-          <LStr text="Status"/>
-        </Label>
-        <FormField name="dl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="4" sqlTabName="dl01_mast" tabIndex="5" defaultValue="0">
-          <ComboBox width="7" posY="2" posX="67" gridWidth="9">
-            <Item name="0" text="Active">
-              <LStr text="Active"/>
-            </Item>
-            <Item name="1" text="Inactive">
-              <LStr text="Inactive"/>
-            </Item>
-            <Item name="-1" text="Archived">
-              <LStr text="Archived"/>
-            </Item>
-          </ComboBox>
-        </FormField>
-        <Label name="lbl_dl_add1" width="6" text="Address 1" posY="4" posX="1" gridWidth="6">
-          <LStr text="Address 1"/>
-        </Label>
-        <FormField name="dl01_mast.address1" colName="address1" sqlType="VARCHAR(100)" fieldId="5" sqlTabName="dl01_mast" tabIndex="6">
-          <Edit width="29" posY="4" posX="8" gridWidth="29"/>
-        </FormField>
-        <Label name="lbl_dl_add2" width="8" text="Address 2" posY="4" posX="38" gridWidth="8">
-          <LStr text="Address 2"/>
-        </Label>
-        <FormField name="dl01_mast.address2" colName="address2" sqlType="VARCHAR(100)" fieldId="6" sqlTabName="dl01_mast" tabIndex="7">
-          <Edit width="28" posY="4" posX="48" gridWidth="28"/>
-        </FormField>
-        <Label name="lbl_dl_add3" width="6" text="Address 3" posY="5" posX="1" gridWidth="6">
-          <LStr text="Address 3"/>
-        </Label>
-        <FormField name="dl01_mast.address3" colName="address3" sqlType="VARCHAR(100)" fieldId="7" sqlTabName="dl01_mast" tabIndex="8">
-          <Edit width="29" posY="5" posX="8" gridWidth="29"/>
-        </FormField>
-        <Label name="lbl_dl_cr_lmt" width="8" text="Credit Limit" posY="5" posX="38" gridWidth="8">
-          <LStr text="Credit Limit"/>
-        </Label>
-        <FormField name="dl01_mast.cr_limit" colName="cr_limit" sqlType="DECIMAL(12,2)" fieldId="8" sqlTabName="dl01_mast" tabIndex="9">
-          <Edit width="9" posY="5" posX="48" gridWidth="9"/>
-        </FormField>
-        <Label name="lbl_dl_bal" width="8" text="Balance" posY="5" posX="58" gridWidth="8">
-          <LStr text="Balance"/>
-        </Label>
-        <FormField name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="dl01_mast" tabIndex="0" noEntry="1">
-          <Edit width="9" posY="5" posX="67" gridWidth="9"/>
-        </FormField>
-      </Grid>
-      <Folder name="docs">
-        <Page name="trans_group" text="Documents" image="fa-file-text-o">
-          <LStr text="Documents"/>
-          <Grid name="trans_grid" width="135" height="10">
-            <Table pageSize="8" name="dl30_trans_tb" width="134" posY="0" posX="1" gridWidth="134" gridHeight="9" tabName="+tn_0">
-              <TableColumn name="dl30_trans.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="10" sqlTabName="dl30_trans" text="#ID" tabIndex="10" numAlign="1">
-                <Edit width="8"/>
-                <LStr text="#ID"/>
-              </TableColumn>
-              <TableColumn name="dl30_trans.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="11" sqlTabName="dl30_trans" text="Trans Date" tabIndex="11">
-                <Edit width="10" scroll="1"/>
-                <LStr text="Trans Date"/>
-              </TableColumn>
-              <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="12" sqlTabName="dl30_trans" text="Doc No" tabIndex="12">
-                <Edit width="20" scroll="1"/>
-                <LStr text="Doc No"/>
-              </TableColumn>
-              <TableColumn name="dl30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="13" sqlTabName="dl30_trans" text="Trans Type" tabIndex="13">
-                <Edit width="10" scroll="1"/>
-                <LStr text="Trans Type"/>
-              </TableColumn>
-              <TableColumn name="dl30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="14" sqlTabName="dl30_trans" text="Doc Type" tabIndex="14">
-                <Edit width="10" scroll="1"/>
-                <LStr text="Doc Type"/>
-              </TableColumn>
-              <TableColumn name="dl30_trans.gross_val" colName="gross_val" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="15" sqlTabName="dl30_trans" text="Total Excl" tabIndex="15" numAlign="1">
-                <Edit width="14" scroll="1"/>
-                <LStr text="Total Excl"/>
-              </TableColumn>
-              <TableColumn name="dl30_trans.vat" colName="vat" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="16" sqlTabName="dl30_trans" text="VAT" tabIndex="16" numAlign="1">
-                <Edit width="14" scroll="1"/>
-                <LStr text="VAT"/>
-              </TableColumn>
-              <TableColumn name="formonly.dl30_trans_tot_incl" colName="dl30_trans_tot_incl" fieldId="17" sqlTabName="formonly" defaultValue="0.00" text="Total Incl" tabIndex="17">
-                <Edit width="8"/>
-                <LStr text="Total Incl"/>
-              </TableColumn>
-              <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="18" sqlTabName="dl30_trans" text="Notes" tabIndex="18">
-                <Edit width="30" scroll="1"/>
-                <LStr text="Notes"/>
-              </TableColumn>
-            </Table>
-          </Grid>
-        </Page>
-        <Page name="pg_logs" text="Logs" image="fa-align-left">
-          <LStr text="Logs"/>
-          <Grid name="grid1" width="0" height="5"/>
-        </Page>
-      </Folder>
-    </VBox>
-  </HBox>
+  <VBox name="vbox1">
+    <Grid name="dl101_mast" width="137" height="7">
+      <Label name="lbl_form_title" width="135" text="DEBTORS MASTER" justify="center" style="header" posY="0" posX="1" gridWidth="135">
+        <LStr text="DEBTORS MASTER"/>
+      </Label>
+      <Label name="lbl_dl_acc_code" width="6" text="Acc Code" posY="1" posX="1" gridWidth="6">
+        <LStr text="Acc Code"/>
+      </Label>
+      <FormField name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" tabIndex="1">
+        <ButtonEdit width="10" action="find" image="zoom" justify="left" program="" posY="1" posX="8" gridWidth="12"/>
+      </FormField>
+      <Label name="lbl_dl_name" width="10" text="Debtor Name" posY="1" posX="21" gridWidth="10">
+        <LStr text="Debtor Name"/>
+      </Label>
+      <FormField name="dl01_mast.cust_name" colName="cust_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="dl01_mast" tabIndex="2">
+        <Edit width="44" posY="1" posX="32" gridWidth="44"/>
+      </FormField>
+      <Label name="lbl_dl_phone" width="6" text="Phone" posY="2" posX="1" gridWidth="6">
+        <LStr text="Phone"/>
+      </Label>
+      <FormField name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="dl01_mast" tabIndex="3">
+        <Edit width="12" posY="2" posX="8" gridWidth="12"/>
+      </FormField>
+      <Label name="lbl_dl_email" width="10" text="Email" posY="2" posX="21" gridWidth="10">
+        <LStr text="Email"/>
+      </Label>
+      <FormField name="dl01_mast.email" colName="email" sqlType="VARCHAR(100)" fieldId="3" sqlTabName="dl01_mast" tabIndex="4">
+        <Edit width="28" posY="2" posX="32" gridWidth="28"/>
+      </FormField>
+      <Label name="lbl_dl_status" width="5" text="Status" posY="2" posX="61" gridWidth="5">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="dl01_mast.status" colName="status" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="dl01_mast" tabIndex="5" defaultValue="0">
+        <ComboBox width="7" posY="2" posX="67" gridWidth="9">
+          <Item name="0" text="Active"/>
+          <Item name="1" text="Inactive"/>
+          <Item name="-1" text="Archived"/>
+        </ComboBox>
+      </FormField>
+      <Label name="lbl_dl_add1" width="6" text="Address 1" posY="4" posX="1" gridWidth="6">
+        <LStr text="Address 1"/>
+      </Label>
+      <FormField name="dl01_mast.address1" colName="address1" sqlType="VARCHAR(100)" fieldId="5" sqlTabName="dl01_mast" tabIndex="6">
+        <Edit width="29" posY="4" posX="8" gridWidth="29"/>
+      </FormField>
+      <Label name="lbl_dl_add2" width="8" text="Address 2" posY="4" posX="38" gridWidth="8">
+        <LStr text="Address 2"/>
+      </Label>
+      <FormField name="dl01_mast.address2" colName="address2" sqlType="VARCHAR(100)" fieldId="6" sqlTabName="dl01_mast" tabIndex="7">
+        <Edit width="28" posY="4" posX="48" gridWidth="28"/>
+      </FormField>
+      <Label name="lbl_dl_add3" width="6" text="Address 3" posY="5" posX="1" gridWidth="6">
+        <LStr text="Address 3"/>
+      </Label>
+      <FormField name="dl01_mast.address3" colName="address3" sqlType="VARCHAR(100)" fieldId="7" sqlTabName="dl01_mast" tabIndex="8">
+        <Edit width="29" posY="5" posX="8" gridWidth="29"/>
+      </FormField>
+      <Label name="lbl_dl_cr_lmt" width="8" text="Credit Limit" posY="5" posX="38" gridWidth="8">
+        <LStr text="Credit Limit"/>
+      </Label>
+      <FormField name="dl01_mast.cr_limit" colName="cr_limit" sqlType="DECIMAL(12,2)" fieldId="8" sqlTabName="dl01_mast" tabIndex="9">
+        <Edit width="9" posY="5" posX="48" gridWidth="9"/>
+      </FormField>
+      <Label name="lbl_dl_bal" width="8" text="Balance" posY="5" posX="58" gridWidth="8">
+        <LStr text="Balance"/>
+      </Label>
+      <FormField name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="dl01_mast" tabIndex="0" noEntry="1">
+        <Edit width="9" posY="5" posX="67" gridWidth="9"/>
+      </FormField>
+    </Grid>
+    <Folder name="docs">
+      <Page name="trans_group" text="Documents" image="fa-file-text-o">
+        <LStr text="Documents"/>
+        <Grid name="trans_grid" width="135" height="10">
+          <Table pageSize="8" name="dl30_trans_trans" width="134" posY="0" posX="1" gridWidth="134" gridHeight="9" tabName="+tn_0">
+            <TableColumn name="dl30_trans.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="10" sqlTabName="dl30_trans" text="#ID" tabIndex="10" numAlign="1">
+              <Edit width="8"/>
+              <LStr text="#ID"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="11" sqlTabName="dl30_trans" text="Trans Date" tabIndex="11">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Trans Date"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="12" sqlTabName="dl30_trans" text="Doc No" tabIndex="12">
+              <Edit width="20" scroll="1"/>
+              <LStr text="Doc No"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="13" sqlTabName="dl30_trans" text="Trans Type" tabIndex="13">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Trans Type"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="14" sqlTabName="dl30_trans" text="Doc Type" tabIndex="14">
+              <Edit width="10" scroll="1"/>
+              <LStr text="Doc Type"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.gross_val" colName="gross_val" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="15" sqlTabName="dl30_trans" text="Total Excl" tabIndex="15" numAlign="1">
+              <Edit width="14" scroll="1"/>
+              <LStr text="Total Excl"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.vat" colName="vat" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="16" sqlTabName="dl30_trans" text="VAT" tabIndex="16" numAlign="1">
+              <Edit width="14" scroll="1"/>
+              <LStr text="VAT"/>
+            </TableColumn>
+            <TableColumn name="formonly.dl30_trans_tot_incl" colName="dl30_trans_tot_incl" fieldId="17" sqlTabName="formonly" defaultValue="0.00" text="Total Incl" tabIndex="17">
+              <Edit width="8"/>
+              <LStr text="Total Incl"/>
+            </TableColumn>
+            <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="18" sqlTabName="dl30_trans" text="Notes" tabIndex="18">
+              <Edit width="30" scroll="1"/>
+              <LStr text="Notes"/>
+            </TableColumn>
+          </Table>
+        </Grid>
+      </Page>
+      <Page name="pg_logs" text="Logs" image="fa-align-left">
+        <LStr text="Logs"/>
+        <Grid name="grid1" width="0" height="5"/>
+      </Page>
+    </Folder>
+  </VBox>
   <RecordView tabName="dl30_trans">
     <Link colName="id" fieldIdRef="10"/>
     <Link colName="date" fieldIdRef="11"/>
@@ -166,7 +158,7 @@
     <Link colName="cr_limit" fieldIdRef="8"/>
     <Link colName="balance" fieldIdRef="9"/>
   </RecordView>
-  <RecordView tabName="rec_debt_trans">
+  <RecordView tabName="arr_debt_trans">
     <Link colName="date" fieldIdRef="11"/>
     <Link colName="trans_type" fieldIdRef="13"/>
     <Link colName="doc_type" fieldIdRef="14"/>

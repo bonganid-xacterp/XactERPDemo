@@ -1,0 +1,254 @@
+---- ==============================================================
+---- Program   : wh140_hist.4gl
+---- Purpose   : Warehouse Transaction History inquiry
+---- Module    : Warehouse (wh)
+---- Number    : 140
+---- Author    : Bongani Dlamini
+---- Version   : Genero ver 3.20.10
+---- Description: Display complete transaction history for warehouses
+----              Shows all stock movements with running balances
+---- ==============================================================
+--
+--IMPORT ui
+--IMPORT FGL utils_globals
+--
+--SCHEMA demoapp_db  -- Use correct schema name
+--
+---- Warehouse transaction history record structure
+--TYPE history_t RECORD
+--    trans_no    STRING,                    -- Transaction number
+--    trans_date  DATE,                      -- Transaction date
+--    wh_code     STRING,                    -- Warehouse code
+--    stock_code  STRING,                    -- Stock item code
+--    trans_type  STRING,                    -- Transaction type (IN/OUT/TRANSFER)
+--    qty_in      DECIMAL(10,2),            -- Quantity IN
+--    qty_out     DECIMAL(10,2),            -- Quantity OUT
+--    balance     DECIMAL(10,2),            -- Running balance
+--    reference   STRING,                    -- Reference document
+--    user_id     STRING,                    -- User who created transaction
+--    timestamp   DATETIME YEAR TO SECOND   -- Transaction timestamp
+--END RECORD
+--
+--DEFINE arr_history DYNAMIC ARRAY OF history_t
+--DEFINE curr_idx INTEGER
+--
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        EXIT PROGRAM 1
+--    END IF
+--
+--    OPEN WINDOW w_wh140 WITH FORM "wh140_hist" ATTRIBUTES(STYLE = "main")
+--    CALL init_module()
+--    CLOSE WINDOW w_wh140
+--END MAIN
+--
+--FUNCTION init_module()
+--    DIALOG ATTRIBUTES(UNBUFFERED)
+--        DISPLAY ARRAY arr_history TO history.*
+--            ATTRIBUTES(COUNT=arr_history.getLength())
+--
+--            ON ACTION query ATTRIBUTES(TEXT="Query", IMAGE="zoom")
+--                CALL query_history()
+--
+--            ON ACTION print ATTRIBUTES(TEXT="Print", IMAGE="print")
+--                CALL print_history()
+--
+--            ON ACTION export ATTRIBUTES(TEXT="Export", IMAGE="export")
+--                CALL export_history()
+--
+--            ON ACTION FIRST ATTRIBUTES(TEXT="First", IMAGE="first")
+--                LET curr_idx = 1
+--
+--            ON ACTION PREVIOUS ATTRIBUTES(TEXT="Previous", IMAGE="prev")
+--                IF curr_idx > 1 THEN
+--                    LET curr_idx = curr_idx - 1
+--                ELSE
+--                    CALL utils_globals.msg_start_of_list()
+--                END IF
+--
+--            ON ACTION NEXT ATTRIBUTES(TEXT="Next", IMAGE="next")
+--                IF curr_idx < arr_history.getLength() THEN
+--                    LET curr_idx = curr_idx + 1
+--                ELSE
+--                    CALL utils_globals.msg_end_of_list()
+--                END IF
+--
+--            ON ACTION LAST ATTRIBUTES(TEXT="Last", IMAGE="last")
+--                LET curr_idx = arr_history.getLength()
+--
+--            ON ACTION QUIT ATTRIBUTES(TEXT="Quit", IMAGE="quit")
+--                EXIT DIALOG
+--        END DISPLAY
+--
+--        BEFORE DIALOG
+--            CALL load_all_history()
+--    END DIALOG
+--END FUNCTION
+--
+--FUNCTION load_all_history()
+--    DEFINE idx INTEGER
+--
+--    CALL arr_history.clear()
+--    LET idx = 0
+--
+--    DECLARE c_hist CURSOR FOR
+--        SELECT hist_id, trans_no, trans_date, wh_code, action_type,
+--               old_value, new_value, user_id, timestamp
+--        FROM wh40_hist
+--        ORDER BY timestamp DESC
+--
+--    FOREACH c_hist INTO arr_history[idx + 1].*
+--        LET idx = idx + 1
+--    END FOREACH
+--    FREE c_hist
+--
+--    IF arr_history.getLength() = 0 THEN
+--        CALL utils_globals.msg_no_record()
+--    ELSE
+--        LET curr_idx = 1
+--    END IF
+--END FUNCTION
+--
+--FUNCTION query_history()
+--    DEFINE from_date DATE
+--    DEFINE to_date DATE
+--    DEFINE wh_code STRING
+--    DEFINE whereClause STRING
+--
+--    OPEN WINDOW w_query WITH FORM "wh140_query" ATTRIBUTES(STYLE="dialog")
+--
+--    LET from_date = TODAY - 30
+--    LET to_date = TODAY
+--
+--    INPUT BY NAME from_date, to_date, wh_code
+--        ATTRIBUTES(WITHOUT DEFAULTS)
+--
+--        ON ACTION accept
+--            LET whereClause = "1=1"
+--
+--            IF from_date IS NOT NULL THEN
+--                LET whereClause = whereClause || " AND trans_date >= '" || from_date || "'"
+--            END IF
+--
+--            IF to_date IS NOT NULL THEN
+--                LET whereClause = whereClause || " AND trans_date <= '" || to_date || "'"
+--            END IF
+--
+--            IF NOT utils_globals.is_empty(wh_code) THEN
+--                LET whereClause = whereClause || " AND wh_code = '" || wh_code || "'"
+--            END IF
+--
+--            CALL load_filtered_history(whereClause)
+--            EXIT INPUT
+--
+--        ON ACTION cancel
+--            EXIT INPUT
+--    END INPUT
+--
+--    CLOSE WINDOW w_query
+--END FUNCTION
+--
+--FUNCTION load_filtered_history(whereClause STRING)
+--    DEFINE idx INTEGER
+--    DEFINE sql STRING
+--
+--    CALL arr_history.clear()
+--    LET idx = 0
+--
+--    LET sql = "SELECT hist_id, trans_no, trans_date, wh_code, action_type, " ||
+--              "       old_value, new_value, user_id, timestamp " ||
+--              "FROM wh40_hist WHERE " || whereClause || " ORDER BY timestamp DESC"
+--
+--    DECLARE c_filtered CURSOR FROM sql
+--
+--    FOREACH c_filtered INTO arr_history[idx + 1].*
+--        LET idx = idx + 1
+--    END FOREACH
+--    FREE c_filtered
+--
+--    IF arr_history.getLength() = 0 THEN
+--        CALL utils_globals.msg_no_record()
+--    ELSE
+--        LET curr_idx = 1
+--        CALL utils_globals.show_info("Found " || arr_history.getLength() || " records.")
+--    END IF
+--END FUNCTION
+--
+--FUNCTION print_history()
+--    DEFINE i INTEGER
+--    DEFINE report_file STRING
+--
+--    IF arr_history.getLength() = 0 THEN
+--        CALL utils_globals.show_info("No data to print.")
+--        RETURN
+--    END IF
+--
+--    LET report_file = "warehouse_history_" || TODAY USING "yyyymmdd" || ".txt"
+--
+--    START REPORT warehouse_history_report TO report_file
+--
+--    FOR i = 1 TO arr_history.getLength()
+--        OUTPUT TO REPORT warehouse_history_report(arr_history[i].*)
+--    END FOR
+--
+--    FINISH REPORT warehouse_history_report
+--
+--    CALL utils_globals.show_success("Report saved to: " || report_file)
+--END FUNCTION
+--
+--FUNCTION export_history()
+--    DEFINE i INTEGER
+--    DEFINE export_file STRING
+--    DEFINE ch base.Channel
+--
+--    IF arr_history.getLength() = 0 THEN
+--        CALL utils_globals.show_info("No data to export.")
+--        RETURN
+--    END IF
+--
+--    LET export_file = "warehouse_history_" || TODAY USING "yyyymmdd" || ".csv"
+--
+--    TRY
+--        LET ch = base.Channel.create()
+--        CALL ch.openFile(export_file, "w")
+--
+--        -- Write header
+--        CALL ch.writeLine("ID,Trans No,Date,Warehouse,Action,Old Value,New Value,User,Timestamp")
+--
+--        -- Write data
+--        FOR i = 1 TO arr_history.getLength()
+--            CALL ch.writeLine(arr_history[i].hist_id || "," ||
+--                             arr_history[i].trans_no || "," ||
+--                             arr_history[i].trans_date || "," ||
+--                             arr_history[i].wh_code || "," ||
+--                             arr_history[i].action_type || "," ||
+--                             arr_history[i].old_value || "," ||
+--                             arr_history[i].new_value || "," ||
+--                             arr_history[i].user_id || "," ||
+--                             arr_history[i].timestamp)
+--        END FOR
+--
+--        CALL ch.close()
+--        CALL utils_globals.show_success("Data exported to: " || export_file)
+--
+--    CATCH
+--        CALL utils_globals.show_error("Export failed: " || STATUS)
+--    END TRY
+--END FUNCTION
+--
+--REPORT warehouse_history_report(rec history_t)
+--    FORMAT
+--        PAGE HEADER
+--            PRINT "Warehouse History Report"
+--            PRINT "Generated: ", TODAY USING "dd/mm/yyyy", " at ", TIME
+--            PRINT "=" USING "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+--            PRINT "ID", COLUMN 10, "Trans No", COLUMN 20, "Date", COLUMN 32, "Warehouse", COLUMN 45, "Action"
+--            PRINT "-" USING "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+--
+--        ON EVERY ROW
+--            PRINT rec.hist_id USING "######",
+--                  COLUMN 10, rec.trans_no,
+--                  COLUMN 20, rec.trans_date USING "dd/mm/yyyy",
+--                  COLUMN 32, rec.wh_code,
+--                  COLUMN 45, rec.action_type
+--END REPORT

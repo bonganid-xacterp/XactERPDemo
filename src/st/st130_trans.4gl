@@ -13,7 +13,7 @@ IMPORT FGL utils_db
 IMPORT FGL utils_lookup
 IMPORT FGL utils_status_const
 
-SCHEMA xactdemo_db
+SCHEMA demoapp_db
 
 -- ==============================================================
 -- Record definition

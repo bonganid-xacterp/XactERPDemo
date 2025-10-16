@@ -1,25 +1,32 @@
-# ==============================================================
-# Program   :   sy00_user.4gl
-# Purpose   :   Users Maintanance program (C R U D)
-# Module    :   System (sy)
-# Number    :   00
-# Author    :   Bongani Dlamini
-# Version   :   Genero BDL 3.20.10
-# ==============================================================
-SCHEMA xactapp_db
+-- ==============================================================
+-- File     : sy00_user.4gl
+-- Purpose  : System (SY) - User utilities (no UI)
+-- Module   : System (sy)
+-- Number   : 00
+-- Author   : Bongani Dlamini
+-- Version  : Genero BDL 3.20.10
+-- Description: User utility functions for system operations
+-- ==============================================================
 
--- List users
-FUNCTION list_users()
+IMPORT FGL utils_globals
 
+SCHEMA demoapp_db
+
+-- List all users
+FUNCTION list_users() RETURNS DYNAMIC ARRAY OF STRING
+    DEFINE arr DYNAMIC ARRAY OF STRING
+    -- Implementation for listing users
+    RETURN arr
 END FUNCTION
 
--- search user profile
-FUNCTION search_user()
-
+-- Search user profile
+FUNCTION search_user(search_val STRING) RETURNS STRING
+    -- Implementation for user search
+    RETURN ""
 END FUNCTION
 
--- function for adding
-FUNCTION add_user()
-    --DEFINE r_user
-
+-- Add user utility function
+FUNCTION add_user(user_id STRING, user_name STRING) RETURNS BOOLEAN
+    -- Implementation for adding user
+    RETURN FALSE
 END FUNCTION

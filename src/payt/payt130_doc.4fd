@@ -1,92 +1,92 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="xactdemo_db_schema" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{6b5b4c31-7592-4fad-8491-ac199fc58d0b}">
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{6b5b4c31-7592-4fad-8491-ac199fc58d0b}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="payt30_hdr" name="record1" uid="{31825222-a80d-4a96-b752-b11d6172a66b}">
-    <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="payt30_hdr.doc_no" sqlTabName="payt30_hdr" uid="{cfc43b52-096d-4894-a074-714a4a4c7958}"/>
-    <RecordField colName="pay_type" fieldIdRef="2" fieldType="TABLE_COLUMN" name="payt30_hdr.pay_type" sqlTabName="payt30_hdr" uid="{f6e89ee9-c493-4200-b6d9-c71aab0359dc}"/>
-    <RecordField colName="acc_code" fieldIdRef="3" fieldType="TABLE_COLUMN" name="payt30_hdr.acc_code" sqlTabName="payt30_hdr" uid="{411b9b46-388f-4606-b903-69b4dbbff8e7}"/>
-    <RecordField colName="date" fieldIdRef="4" fieldType="TABLE_COLUMN" name="payt30_hdr.date" sqlTabName="payt30_hdr" uid="{701b32bb-a403-4a01-95a3-a693510b9018}"/>
-    <RecordField colName="method" fieldIdRef="5" fieldType="TABLE_COLUMN" name="payt30_hdr.method" sqlTabName="payt30_hdr" uid="{fe0e11c8-0027-4933-9e09-86c6c4c0c366}"/>
-    <RecordField colName="bank_account" fieldIdRef="6" fieldType="TABLE_COLUMN" name="payt30_hdr.bank_account" sqlTabName="payt30_hdr" uid="{1e0fba13-d50c-4acb-b971-d52056810076}"/>
-    <RecordField colName="amount" fieldIdRef="7" fieldType="TABLE_COLUMN" name="payt30_hdr.amount" sqlTabName="payt30_hdr" uid="{19275cf2-8d28-408b-9e54-b16b864996df}"/>
-    <RecordField colName="notes" fieldIdRef="8" fieldType="TABLE_COLUMN" name="payt30_hdr.notes" sqlTabName="payt30_hdr" uid="{90c09a97-0a14-4f7c-914c-bacfe418fa2b}"/>
-    <RecordField colName="status" fieldIdRef="9" fieldType="TABLE_COLUMN" name="payt30_hdr.status" sqlTabName="payt30_hdr" uid="{5324a32c-6d30-41e3-ad4a-37de4734f7cb}"/>
-    <RecordField colName="created_at" fieldIdRef="10" fieldType="TABLE_COLUMN" name="payt30_hdr.created_at" sqlTabName="payt30_hdr" uid="{9e091b80-2c82-483d-a141-d0cc797f4ddc}"/>
-    <RecordField colName="created_by" fieldIdRef="11" fieldType="TABLE_COLUMN" name="payt30_hdr.created_by" sqlTabName="payt30_hdr" uid="{dbadb5d5-3e2f-47e8-9f3c-35bf77a5a19d}"/>
+  <Record masterTable="payt30_hdr" name="rec_py130_doc" uid="{31825222-a80d-4a96-b752-b11d6172a66b}">
+    <RecordField fieldIdRef="1" length="1" name="doc_no" sqlType="CHAR" uid="{cfc43b52-096d-4894-a074-714a4a4c7958}"/>
+    <RecordField fieldIdRef="2" length="1" name="pay_type" sqlType="CHAR" uid="{f6e89ee9-c493-4200-b6d9-c71aab0359dc}"/>
+    <RecordField fieldIdRef="3" length="1" name="acc_code" sqlType="CHAR" uid="{411b9b46-388f-4606-b903-69b4dbbff8e7}"/>
+    <RecordField fieldIdRef="4" length="1" name="date" sqlType="CHAR" uid="{701b32bb-a403-4a01-95a3-a693510b9018}"/>
+    <RecordField fieldIdRef="5" length="1" name="method" sqlType="CHAR" uid="{fe0e11c8-0027-4933-9e09-86c6c4c0c366}"/>
+    <RecordField fieldIdRef="6" length="1" name="bank_account" sqlType="CHAR" uid="{1e0fba13-d50c-4acb-b971-d52056810076}"/>
+    <RecordField fieldIdRef="7" length="1" name="amount" sqlType="CHAR" uid="{19275cf2-8d28-408b-9e54-b16b864996df}"/>
+    <RecordField fieldIdRef="8" length="1" name="notes" sqlType="CHAR" uid="{90c09a97-0a14-4f7c-914c-bacfe418fa2b}"/>
+    <RecordField fieldIdRef="9" length="1" name="status" sqlType="CHAR" uid="{5324a32c-6d30-41e3-ad4a-37de4734f7cb}"/>
+    <RecordField fieldIdRef="10" length="1" name="created_at" sqlType="CHAR" uid="{9e091b80-2c82-483d-a141-d0cc797f4ddc}"/>
+    <RecordField fieldIdRef="11" length="1" name="created_by" sqlType="CHAR" uid="{dbadb5d5-3e2f-47e8-9f3c-35bf77a5a19d}"/>
   </Record>
-  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
-    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="12" gridWidth="80" name="xactdemo_db_schema1" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_doc_no_label1" posX="1" posY="1" text="doc_no">
+  <Form gridHeight="25" gridWidth="89" name="py130_doc" text="Payment ">
+    <VBox gridHeight="11" gridWidth="89" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="9" gridWidth="89" name="frm_py130_doc" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="88" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="PAYMENTS"/>
+        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
           <Initializer text="dbschema:payt30_hdr.doc_no/@label"/>
         </Label>
-        <Edit colName="doc_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="payt30_hdr.doc_no" posX="21" posY="1" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="doc_no" widget="Edit">
+        <Edit fieldId="1" gridHeight="1" gridWidth="11" length="1" name="doc_no" posX="12" posY="1" scroll="true" sqlType="CHAR" tabIndex="-1" title="doc_no" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_pay_type_label1" posX="33" posY="1" text="pay_type">
+        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_pay_type_label1" posX="33" posY="1" text="Pay Type">
           <Initializer text="dbschema:payt30_hdr.pay_type/@label"/>
         </Label>
-        <Edit colName="pay_type" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="payt30_hdr.pay_type" posX="66" posY="1" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="pay_type" widget="Edit">
+        <Edit fieldId="2" gridHeight="1" gridWidth="21" length="1" name="pay_type" posX="46" posY="1" scroll="true" sqlType="CHAR" tabIndex="-1" title="pay_type" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_acc_code_label1" posX="1" posY="2" text="acc_code">
+        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_acc_code_label1" posX="1" posY="2" text="Account Code">
           <Initializer text="dbschema:payt30_hdr.acc_code/@label"/>
         </Label>
-        <Edit colName="acc_code" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="payt30_hdr.acc_code" posX="12" posY="2" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="acc_code" widget="Edit">
+        <ButtonEdit fieldId="3" gridHeight="1" gridWidth="20" length="1" name="acc_code" posX="12" posY="2" scroll="true" sqlType="CHAR" tabIndex="-1" title="acc_code" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_date_label1" posX="33" posY="2" text="date">
+        </ButtonEdit>
+        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_date_label1" posX="33" posY="2" text="Date">
           <Initializer text="dbschema:payt30_hdr.date/@label"/>
         </Label>
-        <Edit colName="date" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="payt30_hdr.date" posX="66" posY="2" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="date" widget="Edit">
+        <DateEdit fieldId="4" gridHeight="1" gridWidth="14" length="1" name="date" posX="46" posY="2" sqlType="CHAR" tabIndex="-1" title="date" widget="DateEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_method_label1" posX="1" posY="3" text="method">
+        </DateEdit>
+        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_method_label1" posX="1" posY="3" text="Pay Method">
           <Initializer text="dbschema:payt30_hdr.method/@label"/>
         </Label>
-        <Edit colName="method" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="payt30_hdr.method" posX="12" posY="3" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="method" widget="Edit">
+        <ComboBox fieldId="5" gridHeight="1" gridWidth="20" items="" length="1" name="method" posX="12" posY="3" scroll="true" sqlType="CHAR" tabIndex="-1" title="method" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_bank_account_label1" posX="33" posY="3" text="bank_account">
+        </ComboBox>
+        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_bank_account_label1" posX="33" posY="3" text="Bank Account">
           <Initializer text="dbschema:payt30_hdr.bank_account/@label"/>
         </Label>
-        <Edit colName="bank_account" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="payt30_hdr.bank_account" posX="46" posY="3" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="bank_account" widget="Edit">
+        <Edit fieldId="6" gridHeight="1" gridWidth="30" length="1" name="bank_account" posX="46" posY="3" scroll="true" sqlType="CHAR" tabIndex="-1" title="bank_account" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_amount_label1" posX="1" posY="4" text="amount">
+        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_amount_label1" posX="1" posY="4" text="Amount">
           <Initializer text="dbschema:payt30_hdr.amount/@label"/>
         </Label>
-        <Edit colName="amount" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="payt30_hdr.amount" posX="18" posY="4" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="amount" widget="Edit">
+        <Edit fieldId="7" gridHeight="1" gridWidth="14" length="1" name="amount" posX="12" posY="4" scroll="true" sqlType="CHAR" tabIndex="-1" title="amount" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_notes_label1" posX="33" posY="4" text="notes">
-          <Initializer text="dbschema:payt30_hdr.notes/@label"/>
-        </Label>
-        <Edit colName="notes" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="payt30_hdr.notes" posX="46" posY="4" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="notes" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_status_label1" posX="1" posY="5" text="status">
+        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_status_label1" posX="1" posY="5" text="Status">
           <Initializer text="dbschema:payt30_hdr.status/@label"/>
         </Label>
-        <Edit colName="status" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="payt30_hdr.status" posX="26" posY="5" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="status" widget="Edit">
+        <Edit fieldId="9" gridHeight="1" gridWidth="6" length="1" name="status" posX="12" posY="5" scroll="true" sqlType="CHAR" tabIndex="-1" title="status" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_created_at_label1" posX="33" posY="5" text="created_at">
+        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_created_at_label1" posX="33" posY="5" text="Created At">
           <Initializer text="dbschema:payt30_hdr.created_at/@label"/>
         </Label>
-        <Edit colName="created_at" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="25" name="payt30_hdr.created_at" posX="51" posY="5" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="created_at" widget="Edit">
+        <Edit fieldId="10" gridHeight="1" gridWidth="25" length="1" name="created_at" noEntry="true" posX="46" posY="5" scroll="true" sqlType="CHAR" tabIndex="-1" title="created_at" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_created_by_label1" posX="1" posY="6" text="created_by">
+        <Label gridHeight="1" gridWidth="10" name="payt30_hdr_created_by_label1" posX="1" posY="6" text="Created By">
           <Initializer text="dbschema:payt30_hdr.created_by/@label"/>
         </Label>
-        <Edit colName="created_by" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="payt30_hdr.created_by" posX="12" posY="6" scroll="true" sqlTabName="payt30_hdr" tabIndex="-1" title="created_by" widget="Edit">
+        <Edit fieldId="11" gridHeight="1" gridWidth="20" length="1" name="created_by" noEntry="true" posX="12" posY="6" scroll="true" sqlType="CHAR" tabIndex="-1" title="created_by" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="12" name="payt30_hdr_notes_label1" posX="33" posY="6" text="Notes">
+          <Initializer text="dbschema:payt30_hdr.notes/@label"/>
+        </Label>
+        <Edit fieldId="8" gridHeight="1" gridWidth="30" length="1" name="notes" posX="46" posY="6" scroll="true" sqlType="CHAR" tabIndex="-1" title="notes" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
       </Grid>
-      <Grid gridHeight="6" gridWidth="80" name="grid1" posX="0" posY="13"/>
     </VBox>
   </Form>
   <DiagramLayout>

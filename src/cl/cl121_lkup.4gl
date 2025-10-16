@@ -6,9 +6,9 @@
 -- Version : Genero ver 3.20.10
 -- ==========================================
 IMPORT FGL utils_globals
-IMPORT ui   
+IMPORT ui
 
-SCHEMA xactdemo_db
+SCHEMA demoapp_db
 
 -- display creditor form
 FUNCTION fetch_cred_list() RETURNS STRING
@@ -16,40 +16,30 @@ FUNCTION fetch_cred_list() RETURNS STRING
     DEFINE idx INTEGER
     DEFINE dlg ui.Dialog
     DEFINE sel INTEGER
-    DEFINE r INTEGER
 
-
-    DEFINE  cred_arr DYNAMIC ARRAY OF RECORD
+    DEFINE
+        cred_arr DYNAMIC ARRAY OF RECORD
             acc_code LIKE cl01_mast.acc_code,
             supp_name LIKE cl01_mast.supp_name,
-            status LIKE cl01_mast.status,
-            lbl_status STRING
+            status LIKE cl01_mast.status
         END RECORD,
 
         cred_rec RECORD
             acc_code LIKE cl01_mast.acc_code,
             supp_name LIKE cl01_mast.supp_name,
-            status LIKE cl01_mast.status,
-            lbl_status STRING
+            status LIKE cl01_mast.status
         END RECORD
 
     LET idx = 0
     LET selected_code = NULL
 
-    OPEN WINDOW w_debt WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
+    OPEN WINDOW w_cred WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
     -- Load data of all active creditors
     DECLARE creditors_curs CURSOR FOR
         SELECT acc_code,
             supp_name,
-            status,
-            CASE status
-                WHEN 1 THEN 'Active'
-                WHEN 0 THEN 'Inactive'
-                WHEN -1 THEN 'Archived'
-                ELSE 'Unknown' 
-            END
-                AS lbl_status
+            status
             FROM cl01_mast
             ORDER BY acc_code
 
@@ -83,24 +73,6 @@ FUNCTION fetch_cred_list() RETURNS STRING
 
                     EXIT DIALOG
 
-                ON ACTION next
-                    LET r = DIALOG.getCurrentRow("r_creditors_list")
-                    IF r < cred_arr.getLength() THEN
-                        CALL DIALOG.setCurrentRow("r_creditors_list", r + 1)
-                    ELSE
-                        -- wrap to first (optional)
-                        CALL DIALOG.setCurrentRow("r_creditors_list", 1)
-                    END IF
-
-                ON ACTION previous
-                    LET r = DIALOG.getCurrentRow("r_creditors_list")
-                    IF r < cred_arr.getLength() THEN
-                        CALL DIALOG.setCurrentRow("r_creditors_list", r + 1)
-                    ELSE
-                        -- wrap to first (optional)
-                        CALL DIALOG.setCurrentRow("r_creditors_list", 1)
-                    END IF
-
                 ON KEY(RETURN)
                     LET sel = dlg.getCurrentRow("r_creditors_list")
                     IF sel > 0 AND sel <= cred_arr.getLength() THEN
@@ -109,14 +81,14 @@ FUNCTION fetch_cred_list() RETURNS STRING
                     EXIT DIALOG
                 ON KEY(ESCAPE)
                     LET selected_code = NULL
-                     EXIT DIALOG
+                    EXIT DIALOG
             END DISPLAY
         END DIALOG
     ELSE
         CALL utils_globals.show_info("No creditor records found.")
     END IF
 
-    CLOSE WINDOW w_debt
+    CLOSE WINDOW w_cred
     RETURN selected_code
 END FUNCTION
 
@@ -128,21 +100,17 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
     DEFINE selected_code STRING
     DEFINE cred_arr DYNAMIC ARRAY OF RECORD
         acc_code LIKE cl01_mast.acc_code,
-        supp_name LIKE cl01_mast.supp_name,
+        name LIKE cl01_mast.supp_name,
         status LIKE cl01_mast.status,
         lbl_status STRING
     END RECORD
-    
+
     DEFINE f_search STRING
     DEFINE sel SMALLINT
     DEFINE row_count INTEGER
 
-
     LET selected_code = NULL
-    LET f_search = ""
-
-    -- Load all records initially
-    CALL load_creditors_for_lookup(f_search) RETURNING cred_arr, row_count
+    LET f_search = NULL
 
     IF row_count = 0 THEN
         CALL utils_globals.show_info("No creditor records found.")
@@ -155,11 +123,14 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
 
         INPUT BY NAME f_search
             AFTER FIELD f_search
-                CALL load_creditors_for_lookup(f_search)
+                CALL load_creditors_for_lookup(
+                    f_search)
                     RETURNING cred_arr, row_count
-                CALL DIALOG.setArrayLength("r_creditors_list", cred_arr.getLength())
+                CALL DIALOG.setArrayLength(
+                    "r_creditors_list", cred_arr.getLength())
                 -- keep table on row 1 but return focus to filter
-                CALL DIALOG.setCurrentRow("r_creditors_list", IIF(row_count>0,1,0))
+                CALL DIALOG.setCurrentRow(
+                    "r_creditors_list", IIF(row_count > 0, 1, 0))
                 NEXT FIELD f_search
         END INPUT
 
@@ -208,7 +179,7 @@ FUNCTION load_creditors_for_lookup(search_filter STRING)
     RETURNS(
         DYNAMIC ARRAY OF RECORD
             acc_code LIKE cl01_mast.acc_code,
-            supp_name LIKE cl01_mast.supp_name,
+            name LIKE cl01_mast.supp_name,
             status LIKE cl01_mast.status,
             lbl_status STRING
         END RECORD,
@@ -216,14 +187,14 @@ FUNCTION load_creditors_for_lookup(search_filter STRING)
 
     DEFINE rec RECORD
         acc_code LIKE cl01_mast.acc_code,
-        supp_name LIKE cl01_mast.supp_name,
+        name LIKE cl01_mast.supp_name,
         status LIKE cl01_mast.status,
         lbl_status STRING
     END RECORD
 
     DEFINE cred_arr DYNAMIC ARRAY OF RECORD
         acc_code LIKE cl01_mast.acc_code,
-        supp_name LIKE cl01_mast.supp_name,
+        name LIKE cl01_mast.supp_name,
         status LIKE cl01_mast.status,
         lbl_status STRING
     END RECORD
@@ -245,28 +216,27 @@ FUNCTION load_creditors_for_lookup(search_filter STRING)
                 || " WHERE acc_code LIKE '%"
                 || search_filter
                 || "%'"
-                || " OR supp_name LIKE '%"
+                || " OR name LIKE '%"
                 || search_filter
                 || "%'"
     END IF
 
     LET sql_stmt = sql_stmt || " ORDER BY acc_code"
 
-
     WHENEVER ERROR CONTINUE
-    PREPARE cred_prep FROM
-      "SELECT acc_code, supp_name, status, " ||
-      " CASE status " ||
-      "  WHEN 1 THEN 'Active' "   ||
-      "  WHEN 0 THEN 'Inactive' " ||
-      "  WHEN -1 THEN 'Archived' "||
-      "  ELSE 'Unknown' END AS lbl_status " ||
-      "FROM cl01_mast " ||
-      "WHERE acc_code ILIKE ? OR supp_name ILIKE ? " ||
-      "ORDER BY acc_code";
+    PREPARE cred_prep
+        FROM "SELECT acc_code, supp_name, status, "
+            || " CASE status "
+            || "  WHEN 1 THEN 'Active' "
+            || "  WHEN 0 THEN 'Inactive' "
+            || "  WHEN -1 THEN 'Archived' "
+            || "  ELSE 'Unknown' END AS lbl_status "
+            || "FROM cl01_mast "
+            || "WHERE acc_code ILIKE ? OR name ILIKE ? "
+            || "ORDER BY acc_code";
     DECLARE cred_csr2 CURSOR FOR cred_prep
 
-      OPEN cred_csr2 USING search_pat, search_pat
+    OPEN cred_csr2 USING search_pat, search_pat
 
     IF SQLCA.SQLCODE = 0 THEN
         FETCH cred_csr2 INTO rec.*

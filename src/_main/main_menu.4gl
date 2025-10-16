@@ -20,7 +20,7 @@ IMPORT FGL sy100_login
 -- ==============================================================
 -- DATABASE CONTEXT
 -- ==============================================================
-SCHEMA xactdemo_db
+SCHEMA demoapp_db
 
 -- ==============================================================
 -- CONFIGURATION CONSTANTS
@@ -33,22 +33,22 @@ CONSTANT MENU_TIMEOUT_MINUTES = 30 -- Inactivity timeout
 -- MODULE VARIABLES
 -- ==============================================================
 
-DEFINE g_debug_mode SMALLINT
-DEFINE g_last_activity DATETIME YEAR TO SECOND
+DEFINE m_debug_mode SMALLINT
+DEFINE m_last_activity DATETIME YEAR TO SECOND
 
 -- ==============================================================
 -- MAIN ENTRY: Application Menu
 -- ==============================================================
-PUBLIC FUNCTION main_application_menu()
+FUNCTION main_application_menu()
     DEFINE current_user STRING
 
     -- Get logged-in username
     LET current_user = sy100_login.get_current_user()
 
     -- Track session start time
-    LET g_last_activity = CURRENT
+    LET m_last_activity = CURRENT
 
-    IF g_debug_mode THEN
+    IF m_debug_mode THEN
         DISPLAY "Main menu started for user: ", current_user
     END IF
 
@@ -163,7 +163,7 @@ PUBLIC FUNCTION main_application_menu()
 
     END MENU
 
-    IF g_debug_mode THEN
+    IF m_debug_mode THEN
         DISPLAY "Main menu closed for user: ", current_user
     END IF
 
@@ -178,7 +178,7 @@ PRIVATE FUNCTION launch_module(formname STRING, title STRING, permission STRING)
     DEFINE current_user STRING
     DEFINE has_permission SMALLINT
 
-    LET g_last_activity = CURRENT
+    LET m_last_activity = CURRENT
     LET current_user = sy100_login.get_current_user()
 
     -- (Stub) Check user permission
@@ -194,7 +194,7 @@ PRIVATE FUNCTION launch_module(formname STRING, title STRING, permission STRING)
 
     -- Open module as a new child window (under parent main window)
     IF main_shell.launch_child_window(formname, title) THEN
-        IF g_debug_mode THEN
+        IF m_debug_mode THEN
             DISPLAY "Module opened: ", title
         END IF
     ELSE
@@ -220,7 +220,7 @@ PRIVATE FUNCTION setup_menu_display(p_username STRING)
         -- TODO: hide or disable certain menu items based on permissions
         -- e.g. CALL d.setActionHidden("sy_usr_maint", TRUE)
 
-        IF g_debug_mode THEN
+        IF m_debug_mode THEN
             DISPLAY "Menu configured for user: ", p_username
         END IF
     END IF
@@ -265,7 +265,7 @@ PRIVATE FUNCTION show_about_dialog()
             || "Logged in as: "
             || current_user
             || "\n"
-            || "Database: xactdemo_db\n\n"
+            || "Database: demoapp_db\n\n"
             || "© 2025 XACT ERP Demo"
 
     CALL fgldialog.fgl_winmessage("About", text, "information")
@@ -328,13 +328,13 @@ PRIVATE FUNCTION cleanup_before_exit()
     DEFINE current_user STRING
     LET current_user = sy100_login.get_current_user()
 
-    IF g_debug_mode THEN
+    IF m_debug_mode THEN
         DISPLAY "Closing all open child windows..."
     END IF
 
     CALL main_shell.close_all_child_windows()
 
-    IF g_debug_mode THEN
+    IF m_debug_mode THEN
         DISPLAY "Exit complete for user: ", current_user
     END IF
 END FUNCTION
@@ -349,7 +349,7 @@ PRIVATE FUNCTION check_session_timeout() RETURNS SMALLINT
     DEFINE elapsed INTEGER
 
     LET now = CURRENT
-    LET elapsed = (now - g_last_activity) UNITS MINUTE
+    LET elapsed = (now - m_last_activity) UNITS MINUTE
 
     IF elapsed >= MENU_TIMEOUT_MINUTES THEN
         RETURN TRUE
@@ -363,9 +363,9 @@ END FUNCTION
 -- Purpose : Enable/disable debug display
 -- ==============================================================
 
-PUBLIC FUNCTION menu_set_debug_mode(p_enabled SMALLINT)
-    LET g_debug_mode = p_enabled
-    IF g_debug_mode THEN
+FUNCTION menu_set_debug_mode(p_enabled SMALLINT)
+    LET m_debug_mode = p_enabled
+    IF m_debug_mode THEN
         DISPLAY "Main menu debug mode enabled"
     END IF
 END FUNCTION
@@ -379,7 +379,7 @@ PRIVATE FUNCTION check_user_permission(
     p_username STRING, p_permission STRING)
     RETURNS SMALLINT
 
-    IF g_debug_mode THEN
+    IF m_debug_mode THEN
         DISPLAY "Checking permission: ", p_permission, " for user: ", p_username
     END IF
 
