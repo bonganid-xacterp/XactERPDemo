@@ -42,14 +42,13 @@ DEFINE g_debug_mode SMALLINT
 -- ==============================================================
 
 MAIN
-    -- Prevent program crash when user presses CTRL+C
-    --CALL utils_globals.hide_screen()
 
     -- Enable debug messages (set to FALSE in production)
     LET g_debug_mode = TRUE
 
     -- Initialize the application environment
-    IF NOT initialize_application() THEN
+    
+    IF NOT utils_globals.initialize_application() THEN
         CALL utils_globals.show_error(
             "Application initialization failed!"
                 || "\n\nPlease contact your system administrator.")
@@ -58,6 +57,9 @@ MAIN
 
     -- Run login screen with retry logic
     IF run_login_with_retry() THEN
+        -- Initialize debug modes in all modules
+        CALL initialize_debug_modes()
+
         -- If login successful, open main MDI container
         CALL open_main_container()
     ELSE
@@ -70,43 +72,15 @@ MAIN
 END MAIN
 
 -- ==============================================================
--- INITIALIZATION SECTION
+-- DEBUG MODE INITIALIZATION
 -- ==============================================================
 
-FUNCTION initialize_application() RETURNS SMALLINT
-    DEFINE db_result SMALLINT
-
-    TRY
-        -- Load the visual style for the application
-        -- CALL ui.Interface.loadStyles(STYLE_FILE)
-
-        IF g_debug_mode THEN
-            DISPLAY "Stylesheet loaded from: ", STYLE_FILE
-        END IF
-
-        -- Initialize database connection
-        LET db_result = utils_db.initialize_database()
-
-        IF NOT db_result THEN
-            CALL utils_globals.show_error("Database initialization failed!")
-            RETURN FALSE
-        END IF
-
-        -- Initialize global flags
-        LET g_user_authenticated = FALSE
-
-        IF g_debug_mode THEN
-            DISPLAY "Application initialized successfully"
-            DISPLAY "Version: ", APP_VERSION
-        END IF
-
-        RETURN TRUE
-
-    CATCH
-        DISPLAY "ERROR during initialization: ", STATUS
-        RETURN FALSE
-    END TRY
-
+FUNCTION initialize_debug_modes()
+    IF g_debug_mode THEN
+        CALL main_menu.menu_set_debug_mode(TRUE)
+        CALL main_shell.shell_set_debug_mode(TRUE)
+        DISPLAY "Debug modes initialized across all modules"
+    END IF
 END FUNCTION
 
 -- ==============================================================
@@ -142,9 +116,11 @@ FUNCTION run_login_with_retry() RETURNS SMALLINT
                             || "\n\nAccount will be locked after one more failed attempt.")
                 ELSE
                     CALL utils_globals.show_warning(
-                        "Login failed. Attempt "
+                        "Login failed.\n\nAttempt "
                             || retry_count
-                            || MAX_LOGIN_ATTEMPTS)
+                            || " of "
+                            || MAX_LOGIN_ATTEMPTS
+                            || "\n\nPlease try again.")
                 END IF
             END IF
         END IF
@@ -197,12 +173,9 @@ FUNCTION open_main_container()
         -- Launch the main menu after login
         CALL main_menu.main_application_menu()
 
-        -- After user exits menu, close main window
-        IF ui.Window.getCurrent() IS NOT NULL THEN
-            CLOSE WINDOW w_main
-            IF g_debug_mode THEN
-                DISPLAY "Main window closed successfully."
-            END IF
+        -- Menu cleanup handles all window closures
+        IF g_debug_mode THEN
+            DISPLAY "Main menu closed. Windows cleaned up by menu."
         END IF
 
     CATCH
@@ -223,7 +196,7 @@ END FUNCTION
 FUNCTION cleanup_application()
     TRY
         -- Close database connections if open
-        -- CALL utils_db.close_database()
+        CALL utils_db.close_database()
 
         -- Clear user session variables
         LET g_user_authenticated = FALSE

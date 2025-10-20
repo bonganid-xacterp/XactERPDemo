@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------------- 
+-- File created from C:\Users\dlami\OneDrive\Documents\GeneroDev\XactERPDemo\src\st\st101_mast.4fd by Genero Studio
+-- WARNING! All changes made in this file will be lost!
+----------------------------------------------------------------------------------
+
+SCHEMA demoapp_db
+
+LAYOUT (text=%"Stock", windowStyle="child")
+VBOX vbox1
+GRID st01_mast_hdr
+{
+[lbl_form_title                                                                          ]
+
+[lbl_st01_mast|stock_code          ]         [lbl_st01_mas1|description                   ]
+[lbl_st01_mas2|barcode             ]         [lbl_st01_mas3|batch_control       ]
+[st01_mast_cat|category_id         ]         [st01_mast_cos|cost          ]
+[st01_mast_sel|selling_price ]               [st01_mast_sto|stock_on_hand ]
+[st01_mast_tot|total_purch   ]               [st01_mast_to1|total_sales   ]
+[st01_mast_sta|status        ]
+
+ <T st30_trans                                                                              >
+ [trans_date|trans_type|directi|qty           |edit1   |unit_cost     |expiry_dat|doc_type  ]
+ [trans_date|trans_type|directi|qty           |edit1   |unit_cost     |expiry_dat|doc_type  ]
+ [trans_date|trans_type|directi|qty           |edit1   |unit_cost     |expiry_dat|doc_type  ]
+ [trans_date|trans_type|directi|qty           |edit1   |unit_cost     |expiry_dat|doc_type  ]
+ [trans_date|trans_type|directi|qty           |edit1   |unit_cost     |expiry_dat|doc_type  ]
+}
+END -- st01_mast_hdr
+END -- vbox1
+END -- st01_mast
+
+TABLES
+st30_trans,
+st01_mast
+ATTRIBUTES
+LABEL lbl_form_title:lbl_form_title, text=%"STOCK MASTER", justify=center, style="bold header";
+LABEL lbl_st01_mast:lbl_st01_mast_stock_code, text=%"Stock Code";
+BUTTONEDIT stock_code=st01_mast.stock_code, image="fa-binoculars", scroll;
+LABEL lbl_st01_mas1:lbl_st01_mast_description, text=%"Description";
+EDIT description=st01_mast.description, scroll;
+LABEL lbl_st01_mas2:lbl_st01_mast_barcode, text=%"Barcode";
+EDIT barcode=st01_mast.barcode, scroll;
+LABEL lbl_st01_mas3:lbl_st01_mast_batch_control, text=%"Batch Control";
+CHECKBOX batch_control=st01_mast.batch_control, text=%"";
+LABEL st01_mast_cat:st01_mast_category_id_label1, text=%"Stock Category";
+BUTTONEDIT category_id=st01_mast.category_id, image="fa-binoculars", scroll, picture="";
+LABEL st01_mast_cos:st01_mast_cost_label1, text=%"Cost Price";
+EDIT cost=st01_mast.cost, scroll;
+LABEL st01_mast_sel:st01_mast_selling_price_label1, text=%"Selling Price";
+EDIT selling_price=st01_mast.selling_price, scroll;
+LABEL st01_mast_sto:st01_mast_stock_on_hand_label1, text=%"Stock On Hand";
+EDIT stock_on_hand=st01_mast.stock_on_hand, noEntry, scroll;
+LABEL st01_mast_tot:st01_mast_total_purch_label1, text=%"Total Purchases";
+EDIT total_purch=st01_mast.total_purch, noEntry, scroll;
+LABEL st01_mast_to1:st01_mast_total_sales_label1, text=%"Total Sales";
+EDIT total_sales=st01_mast.total_sales, noEntry, scroll;
+LABEL st01_mast_sta:st01_mast_status_label1, text=%"Status";
+COMBOBOX status=st01_mast.status, scroll, items=(("0", "Inactive"),("1", "Active"));
+TABLE st30_trans:st30_trans;
+EDIT trans_date=st30_trans.trans_date, title=%"Date", scroll;
+EDIT trans_type=st30_trans.trans_type, title=%"Trans Type", scroll;
+EDIT directi=st30_trans.direction, title=%"Direction", scroll;
+EDIT qty=st30_trans.qty, title=%"Quantity", scroll;
+EDIT edit1=formonly.edit1 type like st30_trans.id, title=%"edit1";
+EDIT unit_cost=st30_trans.unit_cost, title=%"Unit Cost", scroll;
+DATEEDIT expiry_dat=st30_trans.expiry_date, title=%"Expiry Date";
+EDIT doc_type=st30_trans.doc_type, title=%"Doc Type", scroll;
+END -- ATTRIBUTES
+
+INSTRUCTIONS
+SCREEN RECORD rec_st_mast(st01_mast.stock_code,st01_mast.description,st01_mast.barcode,st01_mast.batch_control,st01_mast.category_id,st01_mast.cost,st01_mast.selling_price,st01_mast.stock_on_hand,st01_mast.total_purch,st01_mast.total_sales,st01_mast.status)
+SCREEN RECORD arr_st30_trans(st30_trans.trans_date,st30_trans.trans_type,st30_trans.direction,st30_trans.qty,formonly.edit1,st30_trans.unit_cost,st30_trans.expiry_date,st30_trans.doc_type)
+END -- INSTRUCTIONS
+

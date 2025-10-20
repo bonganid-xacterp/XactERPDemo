@@ -1,14 +1,113 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{485db246-fd85-4a95-aad7-046e0b58ce37}">
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{8a5db246-fd85-4a95-aad7-046e0b58ce37}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
-    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="80" name="grid1" posX="0" posY="1"/>
+  <Record masterTable="st01_mast" name="rec_search" uid="{1c6fb53d-5529-4512-aafc-e90e27b120b2}">
+    <RecordField colName="stock_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="rec_search.stock_code" sqlTabName="st01_mast" uid="{a793abe1-0f6c-4489-8500-4e55f1fe67fe}"/>
+    <RecordField colName="description" fieldIdRef="2" fieldType="TABLE_COLUMN" name="rec_search.description" sqlTabName="st01_mast" uid="{b12193fc-919e-4789-bfcf-71a402308def}"/>
+    <RecordField colName="category_id" fieldIdRef="3" fieldType="TABLE_COLUMN" name="rec_search.category_id" sqlTabName="st01_mast" uid="{c342a89f-f00c-467e-a1fa-693b22b693a9}"/>
+    <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="rec_search.status" sqlTabName="st01_mast" uid="{dde0e03f-19c7-46dc-8749-a1b366c0a61b}"/>
+    <RecordField colName="barcode" fieldIdRef="5" fieldType="TABLE_COLUMN" name="rec_search.barcode" sqlTabName="st01_mast" uid="{e6e190d2-52f4-78cb-f95e-3006452e120}"/>
+    <RecordField colName="batch_control" fieldIdRef="6" fieldType="TABLE_COLUMN" name="rec_search.batch_control" sqlTabName="st01_mast" uid="{f588bdd2-bcf4-4d7b-a67c-cae3e4f3dc55}"/>
+    <RecordField colName="cost" fieldIdRef="7" fieldType="TABLE_COLUMN" name="rec_search.min_cost" sqlTabName="st01_mast" uid="{01d11ab6-ae16-4ebb-9d74-488f1d1c2751}"/>
+    <RecordField colName="cost" fieldIdRef="8" fieldType="TABLE_COLUMN" name="rec_search.max_cost" sqlTabName="st01_mast" uid="{12bc73d2-dd38-46c5-a3f3-e201d453fb4c}"/>
+    <RecordField colName="selling_price" fieldIdRef="9" fieldType="TABLE_COLUMN" name="rec_search.min_selling" sqlTabName="st01_mast" uid="{23e5db2-534e-4781-8841-5d26dc6c50cc}"/>
+    <RecordField colName="selling_price" fieldIdRef="10" fieldType="TABLE_COLUMN" name="rec_search.max_selling" sqlTabName="st01_mast" uid="{34ae137-178d-4576-ad7d-bbecc4baafd2}"/>
+    <RecordField colName="stock_on_hand" fieldIdRef="11" fieldType="TABLE_COLUMN" name="rec_search.min_stock" sqlTabName="st01_mast" uid="{45669673-df17-4929-9f75-a1167d06b9f4}"/>
+    <RecordField colName="stock_on_hand" fieldIdRef="12" fieldType="TABLE_COLUMN" name="rec_search.max_stock" sqlTabName="st01_mast" uid="{56ac94f1-fd1d-4cc5-aac9-0009f205ee9d}"/>
+  </Record>
+  <Record name="arr_stock_results" uid="{67bce7f6-87aa-47b3-bca3-c57e2d4faa58}">
+    <RecordField colName="stock_code" fieldIdRef="20" fieldType="COLUMN_LIKE" name="arr_stock_results.stock_code" sqlTabName="st01_mast" uid="{78f481-9079-420c-a88b-9cd0da7b7ca9}"/>
+    <RecordField colName="description" fieldIdRef="21" fieldType="COLUMN_LIKE" name="arr_stock_results.description" sqlTabName="st01_mast" uid="{89a444-cc6e-4481-ba97-243fdb8b7cff}"/>
+    <RecordField colName="barcode" fieldIdRef="22" fieldType="COLUMN_LIKE" name="arr_stock_results.barcode" sqlTabName="st01_mast" uid="{9088a28-ed4d-4b66-9563-ebdbfdc68486}"/>
+    <RecordField colName="category_id" fieldIdRef="23" fieldType="COLUMN_LIKE" name="arr_stock_results.category_id" sqlTabName="st01_mast" uid="{a1552c21-c8f4-494e-9399-57f874127358}"/>
+    <RecordField colName="cost" fieldIdRef="24" fieldType="COLUMN_LIKE" name="arr_stock_results.cost" sqlTabName="st01_mast" uid="{b20b3f3-962e-4564-89e7-dfd47706d430}"/>
+    <RecordField colName="selling_price" fieldIdRef="25" fieldType="COLUMN_LIKE" name="arr_stock_results.selling_price" sqlTabName="st01_mast" uid="{c3c2b3a-a2e7-4c98-a9ff-1eb629c4d7b7}"/>
+    <RecordField colName="stock_on_hand" fieldIdRef="26" fieldType="COLUMN_LIKE" name="arr_stock_results.stock_on_hand" sqlTabName="st01_mast" uid="{d4f221ce-7583-44e0-8402-3e0eafb0a4bd}"/>
+    <RecordField colName="total_purch" fieldIdRef="27" fieldType="COLUMN_LIKE" name="arr_stock_results.total_purch" sqlTabName="st01_mast" uid="{e5e83e6-7476-453c-918f-d7753bda5996}"/>
+    <RecordField colName="total_sales" fieldIdRef="28" fieldType="COLUMN_LIKE" name="arr_stock_results.total_sales" sqlTabName="st01_mast" uid="{f693abe1-0f6c-4489-8500-4e55f1fe67fe}"/>
+    <RecordField colName="status" fieldIdRef="29" fieldType="COLUMN_LIKE" name="arr_stock_results.status" sqlTabName="st01_mast" uid="{071193fc-919e-4789-bfcf-71a402308def}"/>
+    <RecordField fieldIdRef="30" name="arr_stock_results.profit_margin" uid="{18342a89-f00c-467e-a1fa-693b22b693a9}"/>
+  </Record>
+  <Record masterTable="st30_trans" name="arr_trans_detail" uid="{29bce7f6-87aa-47b3-bca3-c57e2d4faa58}">
+    <RecordField colName="date" fieldIdRef="40" fieldType="TABLE_COLUMN" name="arr_trans_detail.trans_date" sqlTabName="st30_trans" uid="{30ac94f1-fd1d-4cc5-aac9-0009f205ee9d}"/>
+    <RecordField colName="trans_type" fieldIdRef="41" fieldType="TABLE_COLUMN" name="arr_trans_detail.trans_type" sqlTabName="st30_trans" uid="{41f481-9079-420c-a88b-9cd0da7b7ca9}"/>
+    <RecordField colName="direction" fieldIdRef="42" fieldType="TABLE_COLUMN" name="arr_trans_detail.direction" sqlTabName="st30_trans" uid="{52a444-cc6e-4481-ba97-243fdb8b7cff}"/>
+    <RecordField colName="qty" fieldIdRef="43" fieldType="TABLE_COLUMN" name="arr_trans_detail.qty" sqlTabName="st30_trans" uid="{63588a28-ed4d-4b66-9563-ebdbfdc68486}"/>
+    <RecordField colName="unit_cost" fieldIdRef="44" fieldType="TABLE_COLUMN" name="arr_trans_detail.unit_cost" sqlTabName="st30_trans" uid="{74b3f3-962e-4564-89e7-dfd47706d430}"/>
+    <RecordField colName="unit_sell" fieldIdRef="45" fieldType="TABLE_COLUMN" name="arr_trans_detail.unit_sell" sqlTabName="st30_trans" uid="{85c2b3a-a2e7-4c98-a9ff-1eb629c4d7b7}"/>
+    <RecordField colName="batch_id" fieldIdRef="46" fieldType="TABLE_COLUMN" name="arr_trans_detail.batch_id" sqlTabName="st30_trans" uid="{96f221ce-7583-44e0-8402-3e0eafb0a4bd}"/>
+    <RecordField colName="expiry_date" fieldIdRef="47" fieldType="TABLE_COLUMN" name="arr_trans_detail.expiry_date" sqlTabName="st30_trans" uid="{a7e83e6-7476-453c-918f-d7753bda5996}"/>
+    <RecordField colName="doc_type" fieldIdRef="48" fieldType="TABLE_COLUMN" name="arr_trans_detail.doc_type" sqlTabName="st30_trans" uid="{b8693abe1-0f6c-4489-8500-4e55f1fe67fe}"/>
+    <RecordField colName="doc_no" fieldIdRef="49" fieldType="TABLE_COLUMN" name="arr_trans_detail.doc_no" sqlTabName="st30_trans" uid="{c91193fc-919e-4789-bfcf-71a402308def}"/>
+    <RecordField colName="notes" fieldIdRef="50" fieldType="TABLE_COLUMN" name="arr_trans_detail.notes" sqlTabName="st30_trans" uid="{da342a89-f00c-467e-a1fa-693b22b693a9}"/>
+  </Record>
+  <Form gridHeight="40" gridWidth="120" name="st120_enq" text="Stock Enquiry" windowStyle="child">
+    <VBox gridHeight="40" gridWidth="120" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="10" gridWidth="120" name="search_grid" posX="0" posY="0">
+        <Label gridHeight="1" gridWidth="110" justify="center" name="lbl_title" posX="5" posY="0" style="bold header" text="STOCK ENQUIRY"/>
+        <Label gridHeight="1" gridWidth="12" name="lbl_stock_code" posX="1" posY="2" text="Stock Code"/>
+        <Edit colName="stock_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="rec_search.stock_code" posX="14" posY="2" sqlTabName="st01_mast" tabIndex="1" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="12" name="lbl_description" posX="40" posY="2" text="Description"/>
+        <Edit colName="description" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="rec_search.description" posX="53" posY="2" sqlTabName="st01_mast" tabIndex="2" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="12" name="lbl_category" posX="1" posY="3" text="Category"/>
+        <ButtonEdit action="lookup_category" colName="category_id" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="fa-binoculars" name="rec_search.category_id" posX="14" posY="3" sqlTabName="st01_mast" tabIndex="3" widget="ButtonEdit"/>
+        <Label gridHeight="1" gridWidth="12" name="lbl_status" posX="40" posY="3" text="Status"/>
+        <ComboBox colName="status" defaultValue="1" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="rec_search.status" posX="53" posY="3" sqlTabName="st01_mast" tabIndex="4" widget="ComboBox">
+          <Item name="" text="All"/>
+          <Item name="1" text="Active"/>
+          <Item name="0" text="Inactive"/>
+        </ComboBox>
+        <Label gridHeight="1" gridWidth="12" name="lbl_barcode" posX="1" posY="4" text="Barcode"/>
+        <Edit colName="barcode" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="rec_search.barcode" posX="14" posY="4" sqlTabName="st01_mast" tabIndex="5" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="12" name="lbl_batch" posX="40" posY="4" text="Batch Control"/>
+        <CheckBox colName="batch_control" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="5" name="rec_search.batch_control" posX="53" posY="4" sqlTabName="st01_mast" tabIndex="6" widget="CheckBox"/>
+        <Label gridHeight="1" gridWidth="12" name="lbl_cost_range" posX="1" posY="5" text="Cost Range"/>
+        <Edit colName="cost" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="rec_search.min_cost" posX="14" posY="5" sqlTabName="st01_mast" tabIndex="7" title="Min" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="3" justify="center" name="lbl_to1" posX="27" posY="5" text="to"/>
+        <Edit colName="cost" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="rec_search.max_cost" posX="31" posY="5" sqlTabName="st01_mast" tabIndex="8" title="Max" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="12" name="lbl_selling_range" posX="1" posY="6" text="Selling Range"/>
+        <Edit colName="selling_price" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="rec_search.min_selling" posX="14" posY="6" sqlTabName="st01_mast" tabIndex="9" title="Min" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="3" justify="center" name="lbl_to2" posX="27" posY="6" text="to"/>
+        <Edit colName="selling_price" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="rec_search.max_selling" posX="31" posY="6" sqlTabName="st01_mast" tabIndex="10" title="Max" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="12" name="lbl_stock_range" posX="1" posY="7" text="Stock Range"/>
+        <Edit colName="stock_on_hand" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="rec_search.min_stock" posX="14" posY="7" sqlTabName="st01_mast" tabIndex="11" title="Min" widget="Edit"/>
+        <Label gridHeight="1" gridWidth="3" justify="center" name="lbl_to3" posX="27" posY="7" text="to"/>
+        <Edit colName="stock_on_hand" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="rec_search.max_stock" posX="31" posY="7" sqlTabName="st01_mast" tabIndex="12" title="Max" widget="Edit"/>
+      </Grid>
+      <Folder gridHeight="28" gridWidth="120" name="fld_results" posX="0" posY="11">
+        <Page image="fa-list" name="page_stock" text="Stock Results">
+          <Table gridHeight="16" gridWidth="119" name="sa_stock" posX="0" posY="0" totalRows="10">
+            <Edit colName="stock_code" fieldId="20" fieldType="COLUMN_LIKE" gridHeight="1" gridWidth="15" name="arr_stock_results.stock_code" noEntry="true" posX="0" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="Stock Code" widget="Edit"/>
+            <Edit colName="description" fieldId="21" fieldType="COLUMN_LIKE" gridHeight="1" gridWidth="25" name="arr_stock_results.description" noEntry="true" posX="15" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="Description" widget="Edit"/>
+            <Edit colName="barcode" fieldId="22" fieldType="COLUMN_LIKE" gridHeight="1" gridWidth="12" name="arr_stock_results.barcode" noEntry="true" posX="40" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="Barcode" widget="Edit"/>
+            <Edit colName="category_id" fieldId="23" fieldType="COLUMN_LIKE" gridHeight="1" gridWidth="8" name="arr_stock_results.category_id" noEntry="true" posX="52" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="Cat ID" widget="Edit"/>
+            <Edit colName="cost" fieldId="24" fieldType="COLUMN_LIKE" gridHeight="1" gridWidth="10" name="arr_stock_results.cost" noEntry="true" posX="60" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="Cost" widget="Edit"/>
+            <Edit colName="selling_price" fieldId="25" fieldType="COLUMN_LIKE" gridHeight="1" gridWidth="10" name="arr_stock_results.selling_price" noEntry="true" posX="70" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="Selling" widget="Edit"/>
+            <Edit colName="stock_on_hand" fieldId="26" fieldType="COLUMN_LIKE" gridHeight="1" gridWidth="10" name="arr_stock_results.stock_on_hand" noEntry="true" posX="80" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="On Hand" widget="Edit"/>
+            <Edit fieldId="30" gridHeight="1" gridWidth="10" name="arr_stock_results.profit_margin" noEntry="true" posX="90" posY="0" tabIndex="-1" title="Margin %" widget="Edit"/>
+            <Edit colName="status" fieldId="29" fieldType="COLUMN_LIKE" gridHeight="1" gridWidth="8" name="arr_stock_results.status" noEntry="true" posX="100" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="Status" widget="Edit"/>
+          </Table>
+        </Page>
+        <Page image="fa-exchange" name="page_trans" text="Transactions">
+          <Table gridHeight="16" gridWidth="119" name="sa_trans" posX="0" posY="0" totalRows="10">
+            <DateEdit colName="date" fieldId="40" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="arr_trans_detail.trans_date" noEntry="true" posX="0" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Date" widget="DateEdit"/>
+            <Edit colName="trans_type" fieldId="41" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="arr_trans_detail.trans_type" noEntry="true" posX="10" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Type" widget="Edit"/>
+            <Edit colName="direction" fieldId="42" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="arr_trans_detail.direction" noEntry="true" posX="20" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Dir" widget="Edit"/>
+            <Edit colName="qty" fieldId="43" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="arr_trans_detail.qty" noEntry="true" posX="28" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Quantity" widget="Edit"/>
+            <Edit colName="unit_cost" fieldId="44" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="arr_trans_detail.unit_cost" noEntry="true" posX="38" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Unit Cost" widget="Edit"/>
+            <Edit colName="unit_sell" fieldId="45" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="arr_trans_detail.unit_sell" noEntry="true" posX="48" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Unit Sell" widget="Edit"/>
+            <Edit colName="batch_id" fieldId="46" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="arr_trans_detail.batch_id" noEntry="true" posX="58" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Batch" widget="Edit"/>
+            <DateEdit colName="expiry_date" fieldId="47" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="arr_trans_detail.expiry_date" noEntry="true" posX="70" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Expiry" widget="DateEdit"/>
+            <Edit colName="doc_type" fieldId="48" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="arr_trans_detail.doc_type" noEntry="true" posX="80" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Doc Type" widget="Edit"/>
+            <Edit colName="doc_no" fieldId="49" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="arr_trans_detail.doc_no" noEntry="true" posX="88" posY="0" sqlTabName="st30_trans" tabIndex="-1" title="Doc No" widget="Edit"/>
+          </Table>
+        </Page>
+      </Folder>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAg==]]>
+    <![CDATA[AAAAAwAAAEwAewAxAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9QEAAAAAAAABAQAAAAAAAAAAAAAAAAAAAQAAAAEwAewA2ADcAYgBjAGUANwBmADYALQA4ADcAYQBhAC0ANAA3AGIAMwAtAGIAYwBhADMALQBjADUANwBlADIAZAA0AGYAYQBhADUAOAB9QEgAAAAAAABAUAAAAAAAAAAAAAAAAAAAAQAAAEwAewAyADkAYgBjAGUANwBmADYALQA4ADcAYQBhAC0ANAA3AGIAMwAtAGIAYwBhADMALQBjADUANwBlADIAZAA0AGYAYQBhADUAOAB9QFAAAAAAAABAVAAAAAAAAAAAAAAAAAAAAgAAAA==]]>
   </DiagramLayout>
 </ManagedForm>

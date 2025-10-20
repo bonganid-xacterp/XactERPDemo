@@ -80,7 +80,7 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS SMALLINT
         -- Tell Genero this is an MDI child
         CALL ui.Interface.setContainer(MDI_CONTAINER)
         CALL ui.Interface.setType("child")
-        CALL ui.Interface.loadStyles("main_styles.4st")
+        CALL ui.Interface.loadStyles("_main/main_styles.4st")
 
         IF m_debug_mode THEN
             DISPLAY "Opening child window..."

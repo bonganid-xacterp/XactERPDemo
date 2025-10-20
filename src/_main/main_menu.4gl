@@ -17,6 +17,13 @@ IMPORT FGL utils_globals
 IMPORT FGL main_shell
 IMPORT FGL sy100_login
 
+-- Module imports for execution
+IMPORT FGL dl101_mast
+IMPORT FGL dl120_enq
+IMPORT FGL st101_mast
+IMPORT FGL st120_enq
+IMPORT FGL st102_cat
+
 -- ==============================================================
 -- DATABASE CONTEXT
 -- ==============================================================
@@ -79,14 +86,17 @@ FUNCTION main_application_menu()
 --        ON ACTION cl_maint
 --            -- CALL launch_module("cl101_mast", "Creditors Maintenance", "CL_EDIT")
 --
---            -- ------------------------------------------------------
---            -- STOCK MODULE
---            -- ------------------------------------------------------
---        ON ACTION st_enq
---            -- CALL launch_module("st120_enq", "Stock Enquiry", "ST_VIEW")
---
---        ON ACTION st_maint
---            -- CALL launch_module("st101_mast", "Stock Maintenance", "ST_EDIT")
+            -- ------------------------------------------------------
+            -- STOCK MODULE
+            -- ------------------------------------------------------
+        ON ACTION st_enq
+            CALL launch_module("st120_enq", "Stock Enquiry", "ST_VIEW")
+
+        ON ACTION st_maint
+            CALL launch_module("st101_mast", "Stock Maintenance", "ST_EDIT")
+
+        ON ACTION st_cat
+            CALL launch_module("st102_cat", "Stock Categories", "ST_EDIT")
 --
 --            -- ------------------------------------------------------
 --            -- GENERAL LEDGER MODULE
@@ -197,10 +207,51 @@ PRIVATE FUNCTION launch_module(formname STRING, title STRING, permission STRING)
         IF m_debug_mode THEN
             DISPLAY "Module opened: ", title
         END IF
+
+        -- Execute the module's main function
+        TRY
+            CALL execute_module(formname)
+        CATCH
+            CALL utils_globals.show_error(
+                "Error executing module: "
+                || title
+                || "\n\nError: "
+                || STATUS)
+        END TRY
     ELSE
         CALL utils_globals.show_info("This module is already open.")
     END IF
 
+END FUNCTION
+
+-- ==============================================================
+-- FUNCTION: execute_module
+-- Purpose : Execute the appropriate module function based on form name
+-- ==============================================================
+
+PRIVATE FUNCTION execute_module(formname STRING)
+    IF m_debug_mode THEN
+        DISPLAY "Executing module: ", formname
+    END IF
+
+    CASE formname
+        WHEN "dl101_mast"
+            CALL dl101_mast.run_debtors_mast()
+        WHEN "dl120_enq"
+            CALL dl120_enq.debt_enq()
+        WHEN "st101_mast"
+            CALL st101_mast.run_stock_mast()
+        WHEN "st120_enq"
+            CALL st120_enq.run_stock_enquiry()
+        WHEN "st102_cat"
+            CALL st102_cat.run_stock_cat()
+        OTHERWISE
+            CALL utils_globals.show_error("Module not implemented: " || formname)
+    END CASE
+
+    IF m_debug_mode THEN
+        DISPLAY "Module execution completed: ", formname
+    END IF
 END FUNCTION
 
 -- ==============================================================
@@ -233,11 +284,11 @@ END FUNCTION
 
 PRIVATE FUNCTION show_window_manager()
     DEFINE window_list STRING
-    DEFINE count INTEGER
+    DEFINE w_count INTEGER
 
-    LET count = main_shell.get_open_window_count()
+    LET w_count = main_shell.get_open_window_count()
 
-    IF COUNT = 0 THEN
+    IF w_count = 0 THEN
         CALL utils_globals.show_info("No windows are currently open.")
         RETURN
     END IF
@@ -266,7 +317,7 @@ PRIVATE FUNCTION show_about_dialog()
             || current_user
             || "\n"
             || "Database: demoapp_db\n\n"
-            || "© 2025 XACT ERP Demo"
+            || "(c) 2025 XACT ERP Demo"
 
     CALL fgldialog.fgl_winmessage("About", text, "information")
 END FUNCTION
@@ -282,13 +333,13 @@ PRIVATE FUNCTION show_help()
     LET help_text =
         "XACT ERP System Help\n\n"
             || "Navigation:\n"
-            || "• Use the menu to access modules\n"
-            || "• Each module opens in its own child window\n"
-            || "• Switch windows via tabs or the Window Manager\n\n"
+            || "- Use the menu to access modules\n"
+            || "- Each module opens in its own child window\n"
+            || "- Switch windows via tabs or the Window Manager\n\n"
             || "Shortcuts:\n"
-            || "• ESC - Cancel current action\n"
-            || "• ENTER - Confirm or next field\n"
-            || "• F1 - Context Help"
+            || "- ESC - Cancel current action\n"
+            || "- ENTER - Confirm or next field\n"
+            || "- F1 - Context Help"
 
     CALL fgldialog.fgl_winmessage("Help", help_text, "information")
 END FUNCTION
@@ -305,9 +356,9 @@ PRIVATE FUNCTION confirm_exit() RETURNS SMALLINT
 
     LET count = main_shell.get_open_window_count()
 
-    IF COUNT > 0 THEN
+    IF count > 0 THEN
         LET msg =
-            "You still have " || COUNT || " open window(s).\n\nExit anyway?"
+            "You still have " || count || " open window(s).\n\nExit anyway?"
     ELSE
         LET msg = "Are you sure you want to exit?"
     END IF
