@@ -26,7 +26,7 @@ SCHEMA demoapp_db
 -- CONFIGURATION CONSTANTS
 -- ==============================================================
 
-CONSTANT MDI_CONTAINER = "mdi_wrapper" -- Name of MDI container form element
+CONSTANT MDI_CONTAINER = "mdi_container" -- Name of MDI container form element (Group)
 CONSTANT WINDOW_PREFIX = "w_" -- Prefix for child window names
 
 -- ==============================================================

@@ -194,9 +194,10 @@ END FUNCTION
 -- ==============================================================
 
 FUNCTION cleanup_application()
+    DEFINE l_db_ok  SMALLINT 
     TRY
         -- Close database connections if open
-        CALL utils_db.close_database()
+        LET l_db_ok = utils_db.close_database()
 
         -- Clear user session variables
         LET g_user_authenticated = FALSE

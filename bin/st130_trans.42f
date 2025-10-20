@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="st130_trans.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Form" width="155" height="13">
+  <LStr text="Form"/>
+  <VBox name="vbox1">
+    <Grid name="grid1" width="155" height="13">
+      <Table pageSize="5" name="st30_trans" width="154" posY="1" posX="1" gridWidth="154" gridHeight="6" tabName="+tn_0">
+        <TableColumn name="st30_trans.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="st30_trans" text="Stock Code" tabIndex="1">
+          <Edit width="14" scroll="1"/>
+          <LStr text="Stock Code"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="1" sqlTabName="st30_trans" text="Doc No" tabIndex="2">
+          <Edit width="13" scroll="1"/>
+          <LStr text="Doc No"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="2" sqlTabName="st30_trans" text="Date" tabIndex="3">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Date"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="3" sqlTabName="st30_trans" text="Trans Type" tabIndex="4">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Trans Type"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.direction" colName="direction" sqlType="VARCHAR(3)" required="1" notNull="1" fieldId="4" sqlTabName="st30_trans" text="Direction" tabIndex="5">
+          <Edit width="3" scroll="1"/>
+          <LStr text="Direction"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.qty" colName="qty" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="5" sqlTabName="st30_trans" text="Quantity" tabIndex="6" numAlign="1">
+          <Edit width="14" scroll="1"/>
+          <LStr text="Quantity"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.unit_cost" colName="unit_cost" sqlType="DECIMAL(12,2)" fieldId="6" sqlTabName="st30_trans" text="Cost Price" tabIndex="7" numAlign="1">
+          <Edit width="14" scroll="1"/>
+          <LStr text="Cost Price"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.unit_sell" colName="unit_sell" sqlType="DECIMAL(12,2)" fieldId="7" sqlTabName="st30_trans" text="Selling Price" tabIndex="8" numAlign="1">
+          <Edit width="14" scroll="1"/>
+          <LStr text="Selling Price"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.expiry_date" colName="expiry_date" sqlType="DATE" fieldId="8" sqlTabName="st30_trans" text="Expiry Date" tabIndex="9">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Expiry Date"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="9" sqlTabName="st30_trans" text="Doc Type" tabIndex="10">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Doc Type"/>
+        </TableColumn>
+        <TableColumn name="st30_trans.notes" colName="notes" sqlType="TEXT" fieldId="10" sqlTabName="st30_trans" text="notes" tabIndex="11">
+          <Edit width="30" scroll="1"/>
+          <LStr text="notes"/>
+        </TableColumn>
+      </Table>
+    </Grid>
+  </VBox>
+  <RecordView tabName="st30_trans">
+    <Link colName="stock_code" fieldIdRef="0"/>
+    <Link colName="doc_no" fieldIdRef="1"/>
+    <Link colName="trans_date" fieldIdRef="2"/>
+    <Link colName="trans_type" fieldIdRef="3"/>
+    <Link colName="direction" fieldIdRef="4"/>
+    <Link colName="qty" fieldIdRef="5"/>
+    <Link colName="unit_cost" fieldIdRef="6"/>
+    <Link colName="unit_sell" fieldIdRef="7"/>
+    <Link colName="expiry_date" fieldIdRef="8"/>
+    <Link colName="doc_type" fieldIdRef="9"/>
+    <Link colName="notes" fieldIdRef="10"/>
+  </RecordView>
+  <RecordView tabName="arr_st30_trans">
+    <Link colName="stock_code" fieldIdRef="0"/>
+    <Link colName="trans_date" fieldIdRef="2"/>
+    <Link colName="trans_type" fieldIdRef="3"/>
+    <Link colName="direction" fieldIdRef="4"/>
+    <Link colName="qty" fieldIdRef="5"/>
+    <Link colName="unit_cost" fieldIdRef="6"/>
+    <Link colName="unit_sell" fieldIdRef="7"/>
+    <Link colName="expiry_date" fieldIdRef="8"/>
+    <Link colName="doc_type" fieldIdRef="9"/>
+    <Link colName="doc_no" fieldIdRef="1"/>
+    <Link colName="notes" fieldIdRef="10"/>
+  </RecordView>
+</Form>

@@ -4,8 +4,7 @@
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record masterTable="cl30_trans" name="rec_cl_trans" uid="{730d7653-bc97-494e-a50f-9eebfb9749c0}">
-    <RecordField colName="date" fieldIdRef="10" fieldType="TABLE_COLUMN" name="cl30_trans.date" sqlTabName="cl30_trans" uid="{94c04ee2-8cd3-4e79-a657-e26e092c87eb}"/>
-    <RecordField colName="trans_type" fieldIdRef="11" fieldType="TABLE_COLUMN" name="cl30_trans.trans_type" sqlTabName="cl30_trans" uid="{e0db06ba-338c-4f42-b20e-a74d99398fdb}"/>
+    <RecordField colName="trans_date" fieldIdRef="10" fieldType="TABLE_COLUMN" name="cl30_trans.trans_date" sqlTabName="cl30_trans" uid="{94c04ee2-8cd3-4e79-a657-e26e092c87eb}"/>
     <RecordField colName="doc_type" fieldIdRef="12" fieldType="TABLE_COLUMN" name="cl30_trans.doc_type" sqlTabName="cl30_trans" uid="{790a6b9c-0a70-434d-a0bf-7a4a3c68f1ff}"/>
     <RecordField colName="doc_no" fieldIdRef="13" fieldType="TABLE_COLUMN" name="cl30_trans.doc_no" sqlTabName="cl30_trans" uid="{3838b686-8481-45e4-b647-91958a642315}"/>
     <RecordField colName="gross_val" fieldIdRef="14" fieldType="TABLE_COLUMN" name="cl30_trans.gross_val" sqlTabName="cl30_trans" uid="{35130ec8-472a-4b27-b839-064626116dfb}"/>
@@ -16,32 +15,29 @@
   <Form gridHeight="27" gridWidth="126" name="form" text="Creditor Transactions">
     <VBox gridHeight="20" gridWidth="126" name="vbox1" posX="0" posY="0" splitter="false">
       <Table gridHeight="18" gridWidth="126" name="xactapp_db1" posX="0" posY="1" totalRows="15">
-        <Edit colName="date" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.date" posX="0" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
+        <Edit colName="trans_date" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.trans_date" posX="0" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="trans_type" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.trans_type" posX="10" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Trans Type" widget="Edit">
+        <Edit colName="doc_type" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.doc_type" posX="10" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="doc_type" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.doc_type" posX="20" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
+        <Edit colName="doc_no" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="cl30_trans.doc_no" posX="20" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="doc_no" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="cl30_trans.doc_no" posX="30" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
+        <Edit colName="gross_val" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.gross_val" posX="40" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Total Excl" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="gross_val" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.gross_val" posX="50" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Total Excl" widget="Edit">
+        <Edit colName="vat" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.vat" posX="54" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="VAT" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="vat" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.vat" posX="64" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="VAT" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Edit fieldId="17" gridHeight="1" gridWidth="8" name="net_tot" posX="78" posY="0" tabIndex="-1" title="Total Excl" widget="Edit"/>
-        <Edit colName="notes" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="cl30_trans.notes" posX="86" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Notes" widget="Edit">
+        <Edit fieldId="17" gridHeight="1" gridWidth="8" name="net_tot" posX="68" posY="0" tabIndex="-1" title="Total Excl" widget="Edit"/>
+        <Edit colName="notes" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="cl30_trans.notes" posX="76" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Notes" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
       </Table>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA3ADMAMABkADcANgA1ADMALQBiAGMAOQA3AC0ANAA5ADQAZQAtAGEANQAwAGYALQA5AGUAZQBiAGYAYgA5ADcANAA5AGMAMAB9QGtMzOXGZnFARAAAIQAAFj9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA3ADMAMABkADcANgA1ADMALQBiAGMAOQA3AC0ANAA5ADQAZQAtAGEANQAwAGYALQA5AGUAZQBiAGYAYgA5ADcANAA5AGMAMAB9QGtMzOyZmatARAAAJgAAHz9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

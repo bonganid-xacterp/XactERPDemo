@@ -93,7 +93,7 @@
         <TopMenuCommand hidden="true" name="sy_main" text=""/>
       </TopMenuGroup>
     </TopMenu>
-    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" hidden="true" name="mdi_container" posX="0" posY="0" style="mdi_container" text="">
+    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" name="mdi_container" posX="0" posY="0" style="mdi_container" text="">
       <Grid gridHeight="20" gridWidth="91" name="mdi_wrapper" posX="1" posY="1" style="mdi_wrapper"/>
     </Group>
   </Form>

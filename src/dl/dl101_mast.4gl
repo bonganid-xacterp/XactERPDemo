@@ -36,7 +36,6 @@ DEFINE arr_debt_trans DYNAMIC ARRAY OF RECORD
     id LIKE dl30_trans.id,
     trans_date LIKE dl30_trans.trans_date,
     doc_no LIKE dl30_trans.doc_no,
-    trans_type LIKE dl30_trans.trans_type,
     doc_type LIKE dl30_trans.doc_type,
     gross_tot LIKE dl30_trans.gross_tot,
     vat LIKE dl30_trans.vat,
@@ -61,7 +60,7 @@ MAIN
     END IF
 
     OPEN WINDOW w_dl101 WITH FORM "dl101_mast" ATTRIBUTES(STYLE = "main")
-    CALL init_module()
+    CALL init_dl_module()
     CLOSE WINDOW w_dl101
 END MAIN
 
@@ -545,6 +544,7 @@ END FUNCTION
 FUNCTION load_debtor_transactions(p_acc_code STRING)
     DEFINE trans_count INTEGER
 
+    DISPLAY  p_acc_code
     CALL arr_debt_trans.clear()
     LET trans_count = 0
 

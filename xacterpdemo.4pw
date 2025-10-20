@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Project defaultApplication="757682379" gstVersion="3140a" version="3.3">
+<Project defaultApplication="221858380" gstVersion="3140a" version="3.3">
   <Settings>
     <DynamicProperties version="2">
       <DynamicProperty description="Accent color (Android 5.0 and later)" initialValue="#9575CD" isDefaultInherited="false" isHidden="false" label="Accent color" name="gma-accent-color" readOnly="false" type="COLOR"/>
@@ -88,6 +88,7 @@
       </Application>
       <Library binaryName="database" id="31764552" label="database">
         <File filePath="database/demoapp_db.4db"/>
+        <File filePath="database/demoapp_db_pgs_update_db.4gl"/>
       </Library>
       <Application binaryName="dl" dependencies="497700,56784492,104908716,31764552,782461791,221924664" id="409572948" label="dl">
         <File filePath="src/dl/dl101_mast.4fd"/>

@@ -21,7 +21,7 @@ IMPORT FGL sy100_login
 IMPORT FGL dl101_mast
 IMPORT FGL dl120_enq
 IMPORT FGL st101_mast
-IMPORT FGL st120_enq
+--IMPORT FGL st120_enq
 IMPORT FGL st102_cat
 
 -- ==============================================================
@@ -236,13 +236,14 @@ PRIVATE FUNCTION execute_module(formname STRING)
 
     CASE formname
         WHEN "dl101_mast"
-            CALL dl101_mast.run_debtors_mast()
+            CALL dl101_mast.init_module()
         WHEN "dl120_enq"
             CALL dl120_enq.debt_enq()
         WHEN "st101_mast"
             CALL st101_mast.run_stock_mast()
         WHEN "st120_enq"
-            CALL st120_enq.run_stock_enquiry()
+            -- CALL st120_enq.()
+            DISPLAY "Stock Enq"
         WHEN "st102_cat"
             CALL st102_cat.run_stock_cat()
         OTHERWISE

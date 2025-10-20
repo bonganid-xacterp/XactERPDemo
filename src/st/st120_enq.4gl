@@ -53,7 +53,7 @@ END RECORD
 
 -- Transaction detail array
 DEFINE arr_trans_detail DYNAMIC ARRAY OF RECORD
-    trans_date LIKE st30_trans.date,
+    trans_date LIKE st30_trans.trans_date,
     trans_type LIKE st30_trans.trans_type,
     direction LIKE st30_trans.direction,
     qty LIKE st30_trans.qty,
@@ -121,7 +121,6 @@ FUNCTION init_enquiry_module()
 
         -- Stock Results Display Array
         DISPLAY ARRAY arr_stock_results TO sa_stock.*
-            ATTRIBUTES(COUNT = 0, UNBUFFERED)
 
             BEFORE ROW
                 LET curr_stock_idx = arr_curr()
@@ -142,7 +141,6 @@ FUNCTION init_enquiry_module()
 
         -- Transaction Details Display Array
         DISPLAY ARRAY arr_trans_detail TO sa_trans.*
-            ATTRIBUTES(COUNT = 0, UNBUFFERED)
             -- Display only, no actions
         END DISPLAY
 
@@ -181,7 +179,7 @@ END FUNCTION
 FUNCTION lookup_category_for_search()
     DEFINE selected_cat_id INTEGER
 
-    LET selected_cat_id = st122_cat_lkup.display_catlist()
+    LET selected_cat_id = st122_cat_lkup.load_lookup()
 
     IF selected_cat_id IS NOT NULL THEN
         LET rec_search.category_id = selected_cat_id
@@ -340,7 +338,7 @@ FUNCTION load_transaction_details(p_stock_code STRING)
     LET idx = 0
 
     DECLARE c_trans_curs CURSOR FOR
-        SELECT date,
+        SELECT trans_date,
             trans_type,
             direction,
             qty,
@@ -353,7 +351,7 @@ FUNCTION load_transaction_details(p_stock_code STRING)
             notes
         FROM st30_trans
         WHERE stock_code = p_stock_code
-        ORDER BY date DESC, id DESC
+        ORDER BY trans_date DESC, id DESC
 
     FOREACH c_trans_curs INTO arr_trans_detail[idx + 1].*
         LET idx = idx + 1
