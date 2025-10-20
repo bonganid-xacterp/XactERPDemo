@@ -57,7 +57,7 @@
       <Label name="cl01_mast_status_label1" width="8" text="Status" posY="6" posX="1" gridWidth="8">
         <LStr text="Status"/>
       </Label>
-      <FormField name="cl01_mast.status" colName="status" sqlType="SMALLINT" fieldId="8" sqlTabName="cl01_mast" defaultValue="0" notNull="1" required="1" tabIndex="9">
+      <FormField name="cl01_mast.status" colName="status" sqlType="VARCHAR(20)" fieldId="8" sqlTabName="cl01_mast" defaultValue="0" notNull="1" required="1" tabIndex="9">
         <ComboBox width="8" autoNext="1" scroll="1" posY="6" posX="10" gridWidth="10">
           <Item name="0" text="Inactive"/>
           <Item name="1" text="Active"/>

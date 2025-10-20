@@ -8,6 +8,6 @@
 # ==============================================================
 
 -- Search
-FUNCTION saerch()
+FUNCTION debt_enq()
 
 END FUNCTION

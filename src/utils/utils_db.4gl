@@ -107,39 +107,3 @@ FUNCTION test_database_connection() RETURNS SMALLINT
     DISPLAY "=========================================="
     RETURN test_result
 END FUNCTION
-
--- Start a database transaction
-FUNCTION begin_transaction() RETURNS SMALLINT
-    TRY
-        BEGIN WORK
-        DISPLAY "Transaction started"
-        RETURN TRUE
-    CATCH
-        DISPLAY "Error starting transaction: ", SQLCA.SQLCODE
-        RETURN FALSE
-    END TRY
-END FUNCTION
-
--- Commit current transaction
-FUNCTION commit_transaction() RETURNS SMALLINT
-    TRY
-        COMMIT WORK
-        DISPLAY "Transaction committed"
-        RETURN TRUE
-    CATCH
-        DISPLAY "Error committing transaction: ", SQLCA.SQLCODE
-        RETURN FALSE
-    END TRY
-END FUNCTION
-
--- Rollback current transaction
-FUNCTION rollback_transaction() RETURNS SMALLINT
-    TRY
-        ROLLBACK WORK
-        DISPLAY "Transaction rolled back"
-        RETURN TRUE
-    CATCH
-        DISPLAY "Error rolling back transaction: ", SQLCA.SQLCODE
-        RETURN FALSE
-    END TRY
-END FUNCTION

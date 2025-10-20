@@ -5,30 +5,23 @@
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/cl" type="pm/application"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/database" type="pm/library"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/gl" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/payt" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/pu" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sa" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/dl" type="pm/application"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/st" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/utils" type="pm/library"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/wb" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/wh" type="pm/application"/>
   </ExpandedNodes>
   <OpenDocuments>
-    <Document container="true" filePath="src/dl/dl101_mast.4gl" locator="222:13" module="mod-ce3">
+    <Document container="true" filePath="src/sa/sa130_order.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/st/st101_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/sa/sa131_invoice.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/sa/sa130_order.4gl" locator="1:1" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/dl/dl101_mast.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/dl/dl121_lkup.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/dl/dl120_enq.4gl" locator="13:13" module="mod-ce3">
+    <Document container="true" filePath="src/sa/sa131_invoice.4gl" locator="1:1" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/dl/dl121_lkup.4gl" locator="78:67" module="mod-ce3">
+    <Document container="true" filePath="src/st/st101_mast.4gl" locator="1:1" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
   </OpenDocuments>
-  <CurrentDocument filePath="src/dl/dl101_mast.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="src/st/st101_mast.4gl" module="mod-ce3"/>
 </WorkspaceViewState>

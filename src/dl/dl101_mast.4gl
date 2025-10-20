@@ -31,6 +31,21 @@ TYPE debtor_t RECORD
     balance LIKE dl01_mast.balance
 END RECORD
 
+-- Transaction array (linked to detail grid in form)
+DEFINE arr_debt_trans DYNAMIC ARRAY OF RECORD
+    id LIKE dl30_trans.id,
+    trans_date LIKE dl30_trans.trans_date,
+    doc_no LIKE dl30_trans.doc_no,
+    trans_type LIKE dl30_trans.trans_type,
+    doc_type LIKE dl30_trans.doc_type,
+    gross_tot LIKE dl30_trans.gross_tot,
+    vat LIKE dl30_trans.vat,
+    net_tot LIKE dl30_trans.net_tot,
+    notes LIKE dl30_trans.notes
+END RECORD
+
+DEFINE arr_debt_trans_idx INTEGER -- index for current row
+
 DEFINE rec_debt debtor_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
@@ -49,7 +64,6 @@ MAIN
     CALL init_module()
     CLOSE WINDOW w_dl101
 END MAIN
-
 
 -- ==============================================================
 -- Lookup popup
@@ -75,10 +89,10 @@ FUNCTION set_fields_editable(editable SMALLINT)
     LET field_list[1] = "cust_name"
     LET field_list[2] = "phone"
     LET field_list[3] = "email"
-    LET field_list[4] = "address1"
-    LET field_list[5] = "address2"
-    LET field_list[6] = "address3"
-    LET field_list[7] = "status"
+    LET field_list[4] = "status"
+    LET field_list[5] = "address1"
+    LET field_list[6] = "address2"
+    LET field_list[7] = "address3"
     LET field_list[8] = "cr_limit"
     LET field_list[9] = "balance"
 
@@ -101,7 +115,6 @@ END FUNCTION
 FUNCTION init_module()
 
     DEFINE ok SMALLINT
-    --DEFINE dlg ui.Dialog
 
     -- Start in read-only mode
     LET is_edit_mode = FALSE
@@ -119,7 +132,7 @@ FUNCTION init_module()
                 CALL DIALOG.setActionActive("edit", TRUE)
 
             ON ACTION find ATTRIBUTES(TEXT = "Search", IMAGE = "zoom")
-                CALL query_debtors_lookup()
+                CALL query_debtors()
                 LET is_edit_mode = FALSE
                 CALL DIALOG.setActionActive("save", FALSE)
                 CALL DIALOG.setActionActive("edit", TRUE)
@@ -138,7 +151,8 @@ FUNCTION init_module()
                     LET is_edit_mode = TRUE
                     CALL DIALOG.setActionActive("save", TRUE)
                     CALL DIALOG.setActionActive("edit", FALSE)
-                    MESSAGE "Edit mode enabled. Make changes and click Update to save."
+                    CALL utils_globals.show_info(
+                        "Edit mode enabled. Make changes and click Update to save.")
                 END IF
 
             ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
@@ -182,10 +196,10 @@ FUNCTION init_module()
             BEFORE FIELD cust_name,
                 phone,
                 email,
+                status,
                 address1,
                 address2,
                 address3,
-                status,
                 cr_limit,
                 balance
                 IF NOT is_edit_mode THEN
@@ -204,10 +218,28 @@ FUNCTION init_module()
     END DIALOG
 END FUNCTION
 
+--FUNCTION show_transaction_detail()
+--    DEFINE doc_id STRING
+--    DIALOG ATTRIBUTES(UNBUFFERED)
+--
+--        INPUT BY NAME rec_debt.*
+--            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "Transactions")
+--            ON ACTION view_doc
+--                ATTRIBUTES(TEXT = "Transactions", IMAGE = "textlistbullet")
+--                IF arr_debt_trans.getLength() > 0 THEN
+--                    LET doc_id = arr_debt_trans[arr_debt_trans_idx].id
+--                    CALL view_transaction(doc_id)
+--                END IF
+--
+--        END INPUT
+--
+--    END DIALOG
+--END FUNCTION
+
 -- ==============================================================
 -- Query using Lookup Window
 -- ==============================================================
-FUNCTION query_debtors_lookup()
+FUNCTION query_debtors()
     DEFINE selected_code STRING
 
     LET selected_code = query_debtor()
@@ -219,31 +251,6 @@ FUNCTION query_debtors_lookup()
         LET arr_codes[1] = selected_code
         LET curr_idx = 1
     END IF
-END FUNCTION
-
--- ==============================================================
--- Query  (CONSTRUCT)
--- ==============================================================
-FUNCTION query_debtors()
-    DEFINE where_clause STRING
-    DEFINE ok SMALLINT
-
-    CLEAR FORM
-
-    CONSTRUCT BY NAME where_clause
-        ON dl01_mast.acc_code, dl01_mast.cust_name, dl01_mast.phone
-
-    IF int_flag THEN
-        -- user pressed ESC or Cancel
-        MESSAGE "Search cancelled."
-        RETURN
-    END IF
-
-    IF where_clause IS NULL OR where_clause = "" THEN
-        LET where_clause = "1=1" -- default (show all)
-    END IF
-
-    LET ok = select_debtors(where_clause)
 END FUNCTION
 
 -- ==============================================================
@@ -265,6 +272,7 @@ FUNCTION select_debtors(where_clause) RETURNS SMALLINT
         LET idx = idx + 1
         LET arr_codes[idx] = code
     END FOREACH
+
     FREE c_curs
 
     IF arr_codes.getLength() == 0 THEN
@@ -275,6 +283,7 @@ FUNCTION select_debtors(where_clause) RETURNS SMALLINT
     LET curr_idx = 1
     CALL load_debtor(arr_codes[curr_idx])
     RETURN TRUE
+
 END FUNCTION
 
 -- ==============================================================
@@ -286,10 +295,10 @@ FUNCTION load_debtor(p_code STRING)
         cust_name,
         phone,
         email,
+        status,
         address1,
         address2,
         address3,
-        status,
         cr_limit,
         balance
         INTO rec_debt.*
@@ -298,6 +307,7 @@ FUNCTION load_debtor(p_code STRING)
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_debt.*
+        CALL load_debtor_transactions(rec_debt.acc_code)
     END IF
 END FUNCTION
 
@@ -348,8 +358,6 @@ FUNCTION new_debtor()
     LET rec_debt.balance = 0.00
     LET rec_debt.cr_limit = 0.00
 
-    DISPLAY BY NAME rec_debt.*
-
     MESSAGE "Enter new debtor details, then click Save or Cancel."
 
     DIALOG ATTRIBUTES(UNBUFFERED)
@@ -385,31 +393,7 @@ FUNCTION new_debtor()
                         rec_debt.email)
 
                 IF dup_found = 0 THEN
-                    INSERT INTO dl01_mast(
-                        acc_code,
-                        cust_name,
-                        phone,
-                        email,
-                        status,
-                        address1,
-                        address2,
-                        address3,
-                        cr_limit,
-                        balance)
-                        VALUES(rec_debt.acc_code,
-                            rec_debt.cust_name,
-                            rec_debt.phone,
-                            rec_debt.email,
-                            rec_debt.status,
-                            rec_debt.address1,
-                            rec_debt.address2,
-                            rec_debt.address3,
-                            rec_debt.cr_limit,
-                            rec_debt.balance)
-
-                    CALL utils_globals.show_success(
-                        "Debtor saved successfully.")
-                    LET new_acc_code = rec_debt.acc_code
+                    CALL save_debtor()
                     EXIT DIALOG
                 END IF
 
@@ -451,20 +435,20 @@ FUNCTION save_debtor()
             cust_name,
             phone,
             email,
+            status,
             address1,
             address2,
             address3,
-            status,
             cr_limit,
             balance)
             VALUES(rec_debt.acc_code,
                 rec_debt.cust_name,
                 rec_debt.phone,
                 rec_debt.email,
+                rec_debt.status,
                 rec_debt.address1,
                 rec_debt.address2,
                 rec_debt.address3,
-                rec_debt.status,
                 rec_debt.cr_limit,
                 rec_debt.balance)
         CALL utils_globals.msg_saved()
@@ -474,10 +458,10 @@ FUNCTION save_debtor()
             SET cust_name = rec_debt.cust_name,
                 phone = rec_debt.phone,
                 email = rec_debt.email,
+                status = rec_debt.status,
                 address1 = rec_debt.address1,
                 address2 = rec_debt.address2,
                 address3 = rec_debt.address3,
-                status = rec_debt.status,
                 cr_limit = rec_debt.cr_limit,
                 balance = rec_debt.balance
             WHERE acc_code = rec_debt.acc_code
@@ -553,4 +537,25 @@ FUNCTION check_debtor_unique(
         RETURN exists
     END IF
     RETURN exists
+END FUNCTION
+
+-- ==============================================================
+-- Load Debtor Transactions (Documents Tab)
+-- ==============================================================
+FUNCTION load_debtor_transactions(p_acc_code STRING)
+    DEFINE trans_count INTEGER
+
+    CALL arr_debt_trans.clear()
+    LET trans_count = 0
+
+END FUNCTION
+
+FUNCTION view_transaction(p_id STRING)
+    DEFINE doc_id INTEGER
+    LET doc_id = p_id
+
+    IF arr_debt_trans_idx > 0 THEN
+        LET doc_id = arr_debt_trans[arr_debt_trans_idx].id
+        CALL utils_globals.show_info("Viewing transaction ID: " || doc_id)
+    END IF
 END FUNCTION

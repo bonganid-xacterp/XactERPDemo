@@ -176,20 +176,21 @@ FUNCTION init_module()
             ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
                 EXIT DIALOG
 
-            BEFORE FIELD acc_code,
-                supp_name,
-                phone,
-                email,
-                status,
-                address1,
-                address2,
-                address3,
-                balance
-                IF NOT is_edit_mode THEN
-                    CALL utils_globals.show_info(
-                        "Click Edit button to modify this record.")
-                    NEXT FIELD supp_name
-                END IF
+            --BEFORE FIELD acc_code,
+            --    supp_name,
+            --    phone,
+            --    email,
+            --    status,
+            --    address1,
+            --    address2,
+            --    address3,
+            --    balance
+            --    --IF NOT is_edit_mode THEN
+            --    --    CALL utils_globals.show_info(
+            --    --        "Click Edit button to modify this record.")
+            --    --    NEXT FIELD supp_name
+            --    --END IF
+            --    CALL set_fields_editable(false)
 
         END INPUT
 
@@ -445,19 +446,20 @@ FUNCTION save_creditor()
             supp_name,
             phone,
             email,
+            status,
             address1,
             address2,
             address3,
-            status,
             balance)
-            VALUES(rec_cred.acc_code,
+            VALUES(
+                rec_cred.acc_code,
                 rec_cred.supp_name,
                 rec_cred.phone,
-                rec_cred.email,
+                rec_cred.email, 
+                rec_cred.status,
                 rec_cred.address1,
                 rec_cred.address2,
                 rec_cred.address3,
-                rec_cred.status,
                 rec_cred.balance)
         CALL utils_globals.msg_saved()
     ELSE
@@ -466,15 +468,15 @@ FUNCTION save_creditor()
             SET supp_name = rec_cred.supp_name,
                 phone = rec_cred.phone,
                 email = rec_cred.email,
+                status = rec_cred.status,
                 address1 = rec_cred.address1,
                 address2 = rec_cred.address2,
                 address3 = rec_cred.address3,
-                status = rec_cred.status,
                 balance = rec_cred.balance
             WHERE acc_code = rec_cred.acc_code
         CALL utils_globals.msg_updated()
     END IF
-
+    DISPLAY rec_cred.*
     CALL load_creditor_enq(rec_cred.acc_code)
 END FUNCTION
 

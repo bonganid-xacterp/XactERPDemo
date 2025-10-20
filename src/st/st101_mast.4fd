@@ -17,7 +17,7 @@
     <RecordField colName="status" fieldIdRef="11" fieldType="TABLE_COLUMN" name="st01_mast.status" sqlTabName="st01_mast" uid="{4669673a-df17-4929-9f75-a1167d06b9f4}"/>
   </Record>
   <Record masterTable="st30_trans" name="arr_st30_trans" uid="{d5bce7f6-87aa-47b3-bca3-c57e2d4faa58}">
-    <RecordField colName="date" fieldIdRef="12" fieldType="TABLE_COLUMN" name="st30_trans.date" sqlTabName="st30_trans" uid="{777ac94f-1fd1-4cc5-aac9-0009f205ee9d}"/>
+    <RecordField colName="trans_date" fieldIdRef="12" fieldType="TABLE_COLUMN" name="st30_trans.trans_date" sqlTabName="st30_trans" uid="{777ac94f-1fd1-4cc5-aac9-0009f205ee9d}"/>
     <RecordField colName="trans_type" fieldIdRef="13" fieldType="TABLE_COLUMN" name="st30_trans.trans_type" sqlTabName="st30_trans" uid="{f712f481-9079-420c-a88b-9cd0da7b7ca9}"/>
     <RecordField colName="direction" fieldIdRef="14" fieldType="TABLE_COLUMN" name="st30_trans.direction" sqlTabName="st30_trans" uid="{7342a444-cc6e-4481-ba97-243fdb8b7cff}"/>
     <RecordField colName="qty" fieldIdRef="15" fieldType="TABLE_COLUMN" name="st30_trans.qty" sqlTabName="st30_trans" uid="{54588a28-ed4d-4b66-9563-ebdbfdc68486}"/>
@@ -99,7 +99,7 @@
           <Item lstrtext="false" name="1" text="Active"/>
         </ComboBox>
         <Table gridHeight="6" gridWidth="92" name="st30_trans" posX="1" posY="9" totalRows="5">
-          <Edit colName="date" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.date" posX="0" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Date" widget="Edit">
+          <Edit colName="trans_date" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.trans_date" posX="0" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Date" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Edit colName="trans_type" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.trans_type" posX="10" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Trans Type" widget="Edit">
@@ -126,6 +126,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA1ADcAMwBlADgAMwBlADYALQA3ADQANwA2AC0ANAA1ADMAYwAtADkAMQA4AGYALQBkADcANwA1ADMAYgBkAGEANQA5ADkANgB9QDAAABAAAAZAMAAAEAAABgAAAAAAAAAAAQAAAEwAewBkADUAYgBjAGUANwBmADYALQA4ADcAYQBhAC0ANAA3AGIAMwAtAGIAYwBhADMALQBjADUANwBlADIAZAA0AGYAYQBhADUAOAB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA1ADcAMwBlADgAMwBlADYALQA3ADQANwA2AC0ANAA1ADMAYwAtADkAMQA4AGYALQBkADcANwA1ADMAYgBkAGEANQA5ADkANgB9QDAAABQAAApAMAAAFAAACgAAAAAAAAAAAQAAAEwAewBkADUAYgBjAGUANwBmADYALQA4ADcAYQBhAC0ANAA3AGIAMwAtAGIAYwBhADMALQBjADUANwBlADIAZAA0AGYAYQBhADUAOAB9QG0AAAfAAABAMAAACAAAAT9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

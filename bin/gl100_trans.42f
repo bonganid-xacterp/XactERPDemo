@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="gl100_trans.tmp" build="3.20.14" sqlDbName="demoapp_db" text="GL Transactions" width="117" height="12">
+  <LStr text="GL Transactions"/>
+  <VBox name="vbox1">
+    <Grid name="grd_gl130_jnls" width="117" height="12">
+      <Label name="lbl_form_title" width="113" text="GL JOURNALS" justify="center" style="header" posY="1" posX="2" gridWidth="113">
+        <LStr text="GL JOURNALS"/>
+      </Label>
+      <Table pageSize="5" name="gl130_jnls" width="115" posY="2" posX="2" gridWidth="115" gridHeight="9" tabName="arr_gl130_jnls">
+        <TableColumn name="gl30_journals.jrn_no" colName="jrn_no" noEntry="1" sqlType="INTEGER" required="1" notNull="1" fieldId="0" sqlTabName="gl30_journals" text="JNL No" tabIndex="1" numAlign="1">
+          <Edit width="11" scroll="1"/>
+          <LStr text="JNL No"/>
+        </TableColumn>
+        <TableColumn name="gl30_journals.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="1" sqlTabName="gl30_journals" text="date" tabIndex="2">
+          <Edit width="10" scroll="1"/>
+          <LStr text="date"/>
+        </TableColumn>
+        <TableColumn name="gl30_journals.source_module" colName="source_module" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="2" sqlTabName="gl30_journals" text="Source" tabIndex="3">
+          <Edit width="20" scroll="1"/>
+          <LStr text="Source"/>
+        </TableColumn>
+        <TableColumn name="gl30_journals.doc_type" colName="doc_type" sqlType="VARCHAR(10)" fieldId="3" sqlTabName="gl30_journals" text="Doc Type" tabIndex="4">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Doc Type"/>
+        </TableColumn>
+        <TableColumn name="gl30_journals.doc_no" colName="doc_no" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="gl30_journals" text="Doc no" tabIndex="5">
+          <Edit width="20" scroll="1"/>
+          <LStr text="Doc no"/>
+        </TableColumn>
+        <TableColumn name="gl30_journals.description" colName="description" sqlType="TEXT" fieldId="5" sqlTabName="gl30_journals" text="Description" tabIndex="6">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Description"/>
+        </TableColumn>
+        <TableColumn name="gl30_journals.status" colName="status" sqlType="VARCHAR(20)" fieldId="6" sqlTabName="gl30_journals" text="Status" tabIndex="7">
+          <Edit width="6" scroll="1"/>
+          <LStr text="Status"/>
+        </TableColumn>
+      </Table>
+    </Grid>
+  </VBox>
+  <RecordView tabName="gl30_journals">
+    <Link colName="jrn_no" fieldIdRef="0"/>
+    <Link colName="date" fieldIdRef="1"/>
+    <Link colName="source_module" fieldIdRef="2"/>
+    <Link colName="doc_type" fieldIdRef="3"/>
+    <Link colName="doc_no" fieldIdRef="4"/>
+    <Link colName="description" fieldIdRef="5"/>
+    <Link colName="status" fieldIdRef="6"/>
+  </RecordView>
+</Form>

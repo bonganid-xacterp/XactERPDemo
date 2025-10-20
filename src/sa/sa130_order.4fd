@@ -3,12 +3,95 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
-    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="80" name="grid1" posX="0" posY="1"/>
+  <Record masterTable="sa30_hdr" name="rec_sa_hdr" uid="{a6f0fb98-93b4-4106-adb8-95a943408f5d}">
+    <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sa30_hdr.doc_no" sqlTabName="sa30_hdr" uid="{3e71b499-dbe1-4acf-968c-09cabd4c3a04}"/>
+    <RecordField colName="acc_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sa30_hdr.acc_code" sqlTabName="sa30_hdr" uid="{dd626073-a083-439b-919b-d45640018c88}"/>
+    <RecordField colName="date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sa30_hdr.date" sqlTabName="sa30_hdr" uid="{34dff47a-6476-4903-99ff-4064ba9a66fc}"/>
+    <RecordField colName="total_excl" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sa30_hdr.total_excl" sqlTabName="sa30_hdr" uid="{eca3b52f-7b87-4374-a055-7d09ec510f28}"/>
+    <RecordField colName="vat" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sa30_hdr.vat" sqlTabName="sa30_hdr" uid="{c17428b4-2457-44f9-9de4-1b979586cb18}"/>
+    <RecordField colName="total_cost" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sa30_hdr.total_cost" sqlTabName="sa30_hdr" uid="{11988de2-33bc-4306-bded-79b0edc3fef3}"/>
+    <RecordField colName="status" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sa30_hdr.status" sqlTabName="sa30_hdr" uid="{0e11520b-3384-4f31-a0d3-e99be870ec96}"/>
+  </Record>
+  <Record masterTable="sa30_det" name="arr_sa_items" uid="{c3d074cf-79fe-4bad-aa26-4fe29a4005d3}">
+    <RecordField colName="doc_no" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sa30_det.doc_no" sqlTabName="sa30_det" uid="{faa3d95d-7258-4c67-b151-074a300107d9}"/>
+    <RecordField colName="stock_code" fieldIdRef="10" fieldType="TABLE_COLUMN" name="sa30_det.stock_code" sqlTabName="sa30_det" uid="{57784bc7-04fa-4cba-bb3e-9b6d2e2d0785}"/>
+    <RecordField colName="qty" fieldIdRef="12" fieldType="TABLE_COLUMN" name="sa30_det.qty" sqlTabName="sa30_det" uid="{05915efb-f893-41af-a2e9-b6e1655eca37}"/>
+    <RecordField colName="cost_price" fieldIdRef="13" fieldType="TABLE_COLUMN" name="sa30_det.cost_price" sqlTabName="sa30_det" uid="{c18342fb-ed0c-4655-a9c5-fbdb06068599}"/>
+    <RecordField colName="sell_price" fieldIdRef="14" fieldType="TABLE_COLUMN" name="sa30_det.sell_price" sqlTabName="sa30_det" uid="{56454f87-7559-45fc-a55a-7e769ce0644c}"/>
+    <RecordField colName="disc" fieldIdRef="15" fieldType="TABLE_COLUMN" name="sa30_det.disc" sqlTabName="sa30_det" uid="{06c61985-50c7-4b3b-a391-f754b7066d9f}"/>
+    <RecordField colName="line_total" fieldIdRef="16" fieldType="TABLE_COLUMN" name="sa30_det.line_total" sqlTabName="sa30_det" uid="{b634651e-4f9b-483d-8bd3-4793dcd74df5}"/>
+  </Record>
+  <Form gridHeight="25" gridWidth="101" name="form" text="Form">
+    <VBox gridHeight="20" gridWidth="101" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="18" gridWidth="153" name="sa130_ord_hdr" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="88" justify="center" name="lbl_form_title" posX="1" posY="0" style="bold header" text="SALES ORDER"/>
+        <Label gridHeight="1" gridWidth="6" name="sa30_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
+          <Initializer text="dbschema:sa30_hdr.doc_no/@label"/>
+        </Label>
+        <Edit colName="doc_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa30_hdr.doc_no" posX="8" posY="1" scroll="true" sqlTabName="sa30_hdr" tabIndex="-1" title="Doc No" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="12" name="sa30_hdr_acc_code_label1" posX="29" posY="1" text="Account Code">
+          <Initializer text="dbschema:sa30_hdr.acc_code/@label"/>
+        </Label>
+        <ButtonEdit colName="acc_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sa30_hdr.acc_code" posX="42" posY="1" scroll="true" sqlTabName="sa30_hdr" tabIndex="-1" title="Account Code" widget="ButtonEdit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ButtonEdit>
+        <Label gridHeight="1" gridWidth="6" name="sa30_hdr_date_label1" posX="1" posY="2" text="Date">
+          <Initializer text="dbschema:sa30_hdr.date/@label"/>
+        </Label>
+        <DateEdit colName="date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa30_hdr.date" posX="8" posY="2" sqlTabName="sa30_hdr" tabIndex="-1" title="Date" widget="DateEdit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </DateEdit>
+        <Label gridHeight="1" gridWidth="12" name="sa30_hdr_total_excl_label1" posX="29" posY="2" text="Total Excl">
+          <Initializer text="dbschema:sa30_hdr.total_excl/@label"/>
+        </Label>
+        <Edit colName="total_excl" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_hdr.total_excl" posX="42" posY="2" scroll="true" sqlTabName="sa30_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="sa30_hdr_vat_label1" posX="1" posY="3" text="VAT">
+          <Initializer text="dbschema:sa30_hdr.vat/@label"/>
+        </Label>
+        <Edit colName="vat" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_hdr.vat" posX="8" posY="3" scroll="true" sqlTabName="sa30_hdr" tabIndex="-1" title="VAT" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="12" name="sa30_hdr_total_cost_label1" posX="29" posY="3" text="Total Cost">
+          <Initializer text="dbschema:sa30_hdr.total_cost/@label"/>
+        </Label>
+        <Edit colName="total_cost" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_hdr.total_cost" posX="42" posY="3" scroll="true" sqlTabName="sa30_hdr" tabIndex="-1" title="Total Cost" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="sa30_hdr_status_label1" posX="1" posY="4" text="Status">
+          <Initializer text="dbschema:sa30_hdr.status/@label"/>
+        </Label>
+        <ComboBox colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" items="" name="sa30_hdr.status" posX="8" posY="4" scroll="true" sqlTabName="sa30_hdr" tabIndex="-1" title="Status" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ComboBox>
+        <Table gridHeight="6" gridWidth="97" name="sa30_items" posX="1" posY="6" totalRows="5">
+          <Phantom colName="doc_no" fieldId="8" fieldType="TABLE_COLUMN" name="sa30_det.doc_no" sqlTabName="sa30_det" widget="Phantom"/>
+          <Edit colName="stock_code" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sa30_det.stock_code" posX="0" posY="0" scroll="true" sqlTabName="sa30_det" tabIndex="-1" title="Stock Code" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="qty" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_det.qty" posX="20" posY="0" scroll="true" sqlTabName="sa30_det" tabIndex="-1" title="Quantity" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="cost_price" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_det.cost_price" posX="34" posY="0" scroll="true" sqlTabName="sa30_det" tabIndex="-1" title="Unit Cost" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="sell_price" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_det.sell_price" posX="48" posY="0" scroll="true" sqlTabName="sa30_det" tabIndex="-1" title="Selling Price" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="disc" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_det.disc" posX="62" posY="0" scroll="true" sqlTabName="sa30_det" tabIndex="-1" title="Discount" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="line_total" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_det.line_total" posX="76" posY="0" scroll="true" sqlTabName="sa30_det" tabIndex="-1" title="Line Total" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+        </Table>
+      </Grid>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAg==]]>
+    <![CDATA[AAAAAgAAAEwAewBhADYAZgAwAGYAYgA5ADgALQA5ADMAYgA0AC0ANAAxADAANgAtAGEAZABiADgALQA5ADUAYQA5ADQAMwA0ADAAOABmADUAZAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewBjADMAZAAwADcANABjAGYALQA3ADkAZgBlAC0ANABiAGEAZAAtAGEAYQAyADYALQA0AGYAZQAyADkAYQA0ADAAMAA1AGQAMwB9wHFmZmrAAADAFmZmbAAAAD9gYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

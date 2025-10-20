@@ -43,63 +43,63 @@ DEFINE dlg ui.Dialog
 --    CLOSE WINDOW w_wh130
 --END MAIN
 
-FUNCTION init_module()
-    CALL utils_globals.populate_status_combo("status")
-    LET is_edit_mode = FALSE
-
-    DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_trans.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "transaction")
-
-            BEFORE INPUT
-                CALL dlg.setActionActive("save", FALSE)
-                CALL dlg.setActionActive("edit", TRUE)
-
-            ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
-                CALL new_transaction()
-
-            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
-                IF utils_globals.is_empty(rec_trans.trans_no) THEN
-                    CALL utils_globals.show_info("No record selected to edit.")
-                ELSE
-                    LET is_edit_mode = TRUE
-                    CALL dlg.setActionActive("save", TRUE)
-                    CALL dlg.setActionActive("edit", FALSE)
-                END IF
-
-            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
-                IF is_edit_mode THEN
-                    CALL save_transaction()
-                    LET is_edit_mode = FALSE
-                    CALL dlg.setActionActive("save", FALSE)
-                    CALL dlg.setActionActive("edit", TRUE)
-                END IF
-
-            ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
-                CALL delete_transaction()
-
-            ON ACTION FIRST ATTRIBUTES(TEXT = "First", IMAGE = "first")
-                CALL move_record(-2)
-            ON ACTION PREVIOUS ATTRIBUTES(TEXT = "Previous", IMAGE = "prev")
-                CALL move_record(-1)
-            ON ACTION NEXT ATTRIBUTES(TEXT = "Next", IMAGE = "next")
-                CALL move_record(1)
-            ON ACTION LAST ATTRIBUTES(TEXT = "Last", IMAGE = "last")
-                CALL move_record(2)
-            ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
-                EXIT DIALOG
-
-            BEFORE FIELD trans_date, wh_code, trans_type, reference, status
-                IF NOT is_edit_mode THEN
-                    CALL utils_globals.show_info("Click Edit to modify.")
-                    NEXT FIELD trans_no
-                END IF
-        END INPUT
-
-        BEFORE DIALOG
-            CALL select_transactions("1=1")
-    END DIALOG
-END FUNCTION
+--FUNCTION init_module()
+--    CALL utils_globals.populate_status_combo("status")
+--    LET is_edit_mode = FALSE
+--
+--    DIALOG ATTRIBUTES(UNBUFFERED)
+--        INPUT BY NAME rec_trans.*
+--            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "transaction")
+--
+--            BEFORE INPUT
+--                CALL dlg.setActionActive("save", FALSE)
+--                CALL dlg.setActionActive("edit", TRUE)
+--
+--            ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
+--                CALL new_transaction()
+--
+--            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
+--                IF utils_globals.is_empty(rec_trans.trans_no) THEN
+--                    CALL utils_globals.show_info("No record selected to edit.")
+--                ELSE
+--                    LET is_edit_mode = TRUE
+--                    CALL dlg.setActionActive("save", TRUE)
+--                    CALL dlg.setActionActive("edit", FALSE)
+--                END IF
+--
+--            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
+--                IF is_edit_mode THEN
+--                    CALL save_transaction()
+--                    LET is_edit_mode = FALSE
+--                    CALL dlg.setActionActive("save", FALSE)
+--                    CALL dlg.setActionActive("edit", TRUE)
+--                END IF
+--
+--            ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
+--                CALL delete_transaction()
+--
+--            ON ACTION FIRST ATTRIBUTES(TEXT = "First", IMAGE = "first")
+--                CALL move_record(-2)
+--            ON ACTION PREVIOUS ATTRIBUTES(TEXT = "Previous", IMAGE = "prev")
+--                CALL move_record(-1)
+--            ON ACTION NEXT ATTRIBUTES(TEXT = "Next", IMAGE = "next")
+--                CALL move_record(1)
+--            ON ACTION LAST ATTRIBUTES(TEXT = "Last", IMAGE = "last")
+--                CALL move_record(2)
+--            ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
+--                EXIT DIALOG
+--
+--            BEFORE FIELD trans_date, wh_code, trans_type, reference, status
+--                IF NOT is_edit_mode THEN
+--                    CALL utils_globals.show_info("Click Edit to modify.")
+--                    NEXT FIELD trans_no
+--                END IF
+--        END INPUT
+--
+--        BEFORE DIALOG
+--            CALL select_transactions("1=1")
+--    END DIALOG
+--END FUNCTION
 
 FUNCTION select_transactions(whereClause STRING)
     DEFINE code STRING
@@ -135,33 +135,33 @@ FUNCTION load_transaction(p_code STRING)
     END IF
 END FUNCTION
 
-FUNCTION move_record(dir SMALLINT)
-    CASE dir
-        WHEN -2
-            LET curr_idx = 1
-        WHEN -1
-            IF curr_idx > 1 THEN
-                LET curr_idx = curr_idx - 1
-            ELSE
-                CALL utils_globals.msg_start_of_list()
-                RETURN
-            END IF
-        WHEN 1
-            IF curr_idx < arr_codes.getLength() THEN
-                LET curr_idx = curr_idx + 1
-            ELSE
-                CALL utils_globals.msg_end_of_list()
-                RETURN
-            END IF
-        WHEN 2
-            LET curr_idx = arr_codes.getLength()
-    END CASE
-
-    CALL load_transaction(arr_codes[curr_idx])
-    LET is_edit_mode = FALSE
-    CALL dlg.setActionActive("save", FALSE)
-    CALL dlg.setActionActive("edit", TRUE)
-END FUNCTION
+--FUNCTION move_record(dir SMALLINT)
+--    CASE dir
+--        WHEN -2
+--            LET curr_idx = 1
+--        WHEN -1
+--            IF curr_idx > 1 THEN
+--                LET curr_idx = curr_idx - 1
+--            ELSE
+--                CALL utils_globals.msg_start_of_list()
+--                RETURN
+--            END IF
+--        WHEN 1
+--            IF curr_idx < arr_codes.getLength() THEN
+--                LET curr_idx = curr_idx + 1
+--            ELSE
+--                CALL utils_globals.msg_end_of_list()
+--                RETURN
+--            END IF
+--        WHEN 2
+--            LET curr_idx = arr_codes.getLength()
+--    END CASE
+--
+--    CALL load_transaction(arr_codes[curr_idx])
+--    LET is_edit_mode = FALSE
+--    CALL dlg.setActionActive("save", FALSE)
+--    CALL dlg.setActionActive("edit", TRUE)
+--END FUNCTION
 
 FUNCTION new_transaction()
     DEFINE new_trans_no STRING

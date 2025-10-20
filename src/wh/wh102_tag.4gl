@@ -29,16 +29,16 @@ DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
 DEFINE master_config utils_globals.master_record
 
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        EXIT PROGRAM 1
-    END IF
-
-    CALL initMasterConfig()
-    OPEN WINDOW w_wh102 WITH FORM "wh102_tag" ATTRIBUTES(STYLE = "main")
-    CALL init_module()
-    CLOSE WINDOW w_wh102
-END MAIN
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        EXIT PROGRAM 1
+--    END IF
+--
+--    CALL initMasterConfig()
+--    OPEN WINDOW w_wh102 WITH FORM "wh102_tag" ATTRIBUTES(STYLE = "main")
+--    CALL init_module()
+--    CLOSE WINDOW w_wh102
+--END MAIN
 
 FUNCTION initMasterConfig()
     LET master_config.table_name = "wh02_tag"
@@ -48,64 +48,64 @@ FUNCTION initMasterConfig()
     LET master_config.email_field = ""
 END FUNCTION
 
-FUNCTION init_module()
-    CALL utils_globals.populate_status_combo("status")
-    LET is_edit_mode = FALSE
-
-    DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_tag.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "tag")
-
-            BEFORE INPUT
-                -- CALL MasterCRUD.setEditMode(DIALOG, FALSE)
-
-            ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
-                CALL new_tag()
-                -- CALL MasterCRUD.setEditMode(DIALOG, FALSE)
-
-            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
-                IF utils_globals.is_empty(rec_tag.tag_code) THEN
-                    CALL utils_globals.show_info("No record selected to edit.")
-                ELSE
-                    LET is_edit_mode = TRUE
-                    -- CALL MasterCRUD.setEditMode(DIALOG, TRUE)
-                END IF
-
-            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
-                IF is_edit_mode THEN
-                    CALL save_tag()
-                    LET is_edit_mode = FALSE
-                    -- CALL MasterCRUD.setEditMode(DIALOG, FALSE)
-                END IF
-
-            ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
-                CALL delete_tag()
-
-            ON ACTION FIRST ATTRIBUTES(TEXT = "First", IMAGE = "first")
-                CALL move_record(-2)
-            ON ACTION PREVIOUS ATTRIBUTES(TEXT = "Previous", IMAGE = "prev")
-                CALL move_record(-1)
-            ON ACTION NEXT ATTRIBUTES(TEXT = "Next", IMAGE = "next")
-                CALL move_record(1)
-            ON ACTION LAST ATTRIBUTES(TEXT = "Last", IMAGE = "last")
-                CALL move_record(2)
-            ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
-                EXIT DIALOG
-
-            BEFORE FIELD tag_name, wh_code, description, status
-                IF NOT is_edit_mode THEN
-                    CALL utils_globals.show_info("Click Edit to modify.")
-                    NEXT FIELD tag_code
-                END IF
-        END INPUT
-
-        BEFORE DIALOG
-            --LET arr_codes = utils_globals.select_records(master_config.table_name, "1=1")
-            --IF arr_codes.getLength() > 0 THEN
-            --    LET curr_idx = 1
-            --    CALL load_tag(arr_codes[curr_idx])
-            --END IF
-    END DIALOG
-END FUNCTION
+--FUNCTION init_module()
+--    CALL utils_globals.populate_status_combo("status")
+--    LET is_edit_mode = FALSE
+--
+--    DIALOG ATTRIBUTES(UNBUFFERED)
+--        INPUT BY NAME rec_tag.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "tag")
+--
+--            BEFORE INPUT
+--                -- CALL MasterCRUD.setEditMode(DIALOG, FALSE)
+--
+--            ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
+--                CALL new_tag()
+--                -- CALL MasterCRUD.setEditMode(DIALOG, FALSE)
+--
+--            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
+--                IF utils_globals.is_empty(rec_tag.tag_code) THEN
+--                    CALL utils_globals.show_info("No record selected to edit.")
+--                ELSE
+--                    LET is_edit_mode = TRUE
+--                    -- CALL MasterCRUD.setEditMode(DIALOG, TRUE)
+--                END IF
+--
+--            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
+--                IF is_edit_mode THEN
+--                    CALL save_tag()
+--                    LET is_edit_mode = FALSE
+--                    -- CALL MasterCRUD.setEditMode(DIALOG, FALSE)
+--                END IF
+--
+--            ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
+--                CALL delete_tag()
+--
+--            ON ACTION FIRST ATTRIBUTES(TEXT = "First", IMAGE = "first")
+--                CALL move_record(-2)
+--            ON ACTION PREVIOUS ATTRIBUTES(TEXT = "Previous", IMAGE = "prev")
+--                CALL move_record(-1)
+--            ON ACTION NEXT ATTRIBUTES(TEXT = "Next", IMAGE = "next")
+--                CALL move_record(1)
+--            ON ACTION LAST ATTRIBUTES(TEXT = "Last", IMAGE = "last")
+--                CALL move_record(2)
+--            ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
+--                EXIT DIALOG
+--
+--            BEFORE FIELD tag_name, wh_code, description, status
+--                IF NOT is_edit_mode THEN
+--                    CALL utils_globals.show_info("Click Edit to modify.")
+--                    NEXT FIELD tag_code
+--                END IF
+--        END INPUT
+--
+--        BEFORE DIALOG
+--            --LET arr_codes = utils_globals.select_records(master_config.table_name, "1=1")
+--            --IF arr_codes.getLength() > 0 THEN
+--            --    LET curr_idx = 1
+--            --    CALL load_tag(arr_codes[curr_idx])
+--            --END IF
+--    END DIALOG
+--END FUNCTION
 
 FUNCTION load_tag(p_code STRING)
     SELECT tag_code, tag_name, wh_code, description, status
@@ -118,12 +118,12 @@ FUNCTION load_tag(p_code STRING)
     END IF
 END FUNCTION
 
-FUNCTION move_record(dir SMALLINT)
-    LET curr_idx = utils_globals.navigate_records(arr_codes, curr_idx, dir)
-    CALL load_tag(arr_codes[curr_idx])
-    -- CALL MasterCRUD.setEditMode(DIALOG, FALSE)
-    LET is_edit_mode = FALSE
-END FUNCTION
+--FUNCTION move_record(dir SMALLINT)
+--    LET curr_idx = utils_globals.navigate_records(arr_codes, curr_idx, dir)
+--    CALL load_tag(arr_codes[curr_idx])
+--    -- CALL MasterCRUD.setEditMode(DIALOG, FALSE)
+--    LET is_edit_mode = FALSE
+--END FUNCTION
 
 FUNCTION new_tag()
     DEFINE new_code STRING

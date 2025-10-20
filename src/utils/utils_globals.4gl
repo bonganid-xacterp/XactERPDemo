@@ -1,9 +1,9 @@
--- ==============================================================
--- Consolidated Global Utilities
--- File: utils_globals.4gl
--- Purpose: Single source of truth for all utility functions
--- Version: 2.0.0
--- ==============================================================
+# ==============================================================
+# Consolidated Global Utilities
+# File: utils_globals.4gl
+# Purpose: Single source of truth for all utility functions
+# Version: 2.0.0
+# ==============================================================
 
 IMPORT ui
 IMPORT FGL fgldialog
@@ -235,7 +235,7 @@ PUBLIC FUNCTION show_confirm(message STRING, title STRING) RETURNS BOOLEAN
     RETURN (answer = "yes")
 END FUNCTION
 
--- Standard message functions
+-- Standard constant message functions
 PUBLIC FUNCTION msg_no_record()
     CALL show_info(MSG_NO_RECORD)
 END FUNCTION
@@ -330,7 +330,7 @@ PUBLIC FUNCTION is_valid_phone(phone STRING) RETURNS BOOLEAN
     LET clean_phone = trim_string(phone)
     -- Check for exactly 10 digits only (no other characters)
     RETURN (clean_phone
-        MATCHES "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]")
+        MATCHES "[0-9]{11}")
 END FUNCTION
 
 -- Generic field validation for master records
@@ -733,3 +733,125 @@ PRIVATE FUNCTION get_field_count(
         RETURN 0
     END TRY
 END FUNCTION
+
+-- ==============================================================
+-- Utility : Document Numbering Helper
+-- Author  : Bongani Dlamini
+-- Version : Genero 3.20.10
+-- ==============================================================
+
+--FUNCTION doc_numbering(p_table STRING, p_field STRING, p_prefix STRING)
+--    RETURNS STRING
+--
+--    DEFINE l_sql      STRING
+--    DEFINE l_last_no  STRING
+--    DEFINE l_next_no  STRING
+--    DEFINE l_num_part STRING
+--    DEFINE l_num      INTEGER
+--
+--    -- ==========================
+--    -- 1. Build dynamic SQL
+--    -- ==========================
+--    LET l_sql = "SELECT MAX(" || p_field || ") FROM " || p_table ||
+--                " WHERE " || p_field || " LIKE ?"
+--
+--    -- ==========================
+--    -- 2. Execute dynamic SQL
+--    -- ==========================
+--    PREPARE stmt_doc FROM l_sql
+--    EXECUTE stmt_doc USING p_prefix || '%' INTO l_last_no
+--    FREE stmt_doc
+--
+--    IF l_last_no IS NULL OR l_last_no = "" THEN
+--        -- No previous document exists
+--        LET l_next_no = p_prefix || "0001"
+--    ELSE
+--        -- ==========================
+--        -- 3. Extract numeric part
+--        -- ==========================
+--        LET l_num_part = l_last_no[ (length(p_prefix)+1) TO length(l_last_no) ]
+--        LET l_num = l_num_part USING "#####"
+--        LET l_num = l_num + 1
+--
+--        -- ==========================
+--        -- 4. Format back to new number
+--        -- ==========================
+--        LET l_next_no = p_prefix || l_num USING "0000"
+--    END IF
+--
+--    RETURN l_next_no
+--END FUNCTION
+
+
+
+-- ==============================================================
+-- DB  UTILITIES
+-- ==============================================================
+
+-- Start a database transaction
+FUNCTION begin_transaction() RETURNS SMALLINT
+    TRY
+        BEGIN WORK
+        DISPLAY "Transaction started"
+        RETURN TRUE
+    CATCH
+        DISPLAY "Error starting transaction: ", SQLCA.SQLCODE
+        RETURN FALSE
+    END TRY
+END FUNCTION
+
+-- Commit current transaction
+FUNCTION commit_transaction() RETURNS SMALLINT
+    TRY
+        COMMIT WORK
+        DISPLAY "Transaction committed"
+        RETURN TRUE
+    CATCH
+        DISPLAY "Error committing transaction: ", SQLCA.SQLCODE
+        RETURN FALSE
+    END TRY
+END FUNCTION
+
+-- Rollback current transaction
+FUNCTION rollback_transaction() RETURNS SMALLINT
+    TRY
+        ROLLBACK WORK
+        DISPLAY "Transaction rolled back"
+        RETURN TRUE
+    CATCH
+        DISPLAY "Error rolling back transaction: ", SQLCA.SQLCODE
+        RETURN FALSE
+    END TRY
+END FUNCTION
+
+
+-- ==============================================================
+-- SQL Error Handler
+-- ==============================================================
+
+-- Displays a standardized SQL error message using global SQLCA variables.
+FUNCTION show_sql_error(p_context STRING)
+    DEFINE full_message STRING
+    DEFINE sql_code INTEGER = SQLCA.SQLCODE
+    DEFINE sql_errm STRING = SQLCA.SQLERRM
+    --DEFINE sql_state STRING = SQLCA.SQLSTATE
+    
+    -- Check if the error is "No Data Found" or "End of Cursor" (often handled gracefully)
+    IF sql_code = NOTFOUND THEN
+        LET full_message = SFMT("SQL WARNING (Not Found): %1 - No records matched the query criteria.", p_context)
+    ELSE
+        -- Format the detailed error message
+        LET full_message = SFMT(
+            "Database Error: %1\n(SQLCODE: %2 / SQLSTATE: %3)\nError: %4",
+            p_context,
+            sql_code,
+            -- sql_state,
+            sql_errm
+        )
+    END IF
+
+    CALL show_error(full_message)
+
+END FUNCTION
+
+

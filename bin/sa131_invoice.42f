@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="sa131_invoice.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Form" width="0" height="18">
+  <LStr text="Form"/>
+  <VBox name="vbox1">
+    <Grid name="grid1" width="0" height="18"/>
+  </VBox>
+</Form>

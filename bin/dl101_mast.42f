@@ -21,7 +21,7 @@
       <Label name="lbl_dl_phone" width="6" text="Phone" posY="2" posX="1" gridWidth="6">
         <LStr text="Phone"/>
       </Label>
-      <FormField name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="dl01_mast" tabIndex="3">
+      <FormField name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(11)" fieldId="2" sqlTabName="dl01_mast" tabIndex="3">
         <Edit width="12" posY="2" posX="8" gridWidth="12"/>
       </FormField>
       <Label name="lbl_dl_email" width="10" text="Email" posY="2" posX="21" gridWidth="10">
@@ -33,11 +33,11 @@
       <Label name="lbl_dl_status" width="5" text="Status" posY="2" posX="61" gridWidth="5">
         <LStr text="Status"/>
       </Label>
-      <FormField name="dl01_mast.status" colName="status" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="dl01_mast" tabIndex="5" defaultValue="0">
+      <FormField name="dl01_mast.status" colName="status" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="dl01_mast" tabIndex="5" defaultValue="active">
         <ComboBox width="7" posY="2" posX="67" gridWidth="9">
-          <Item name="0" text="Active"/>
-          <Item name="1" text="Inactive"/>
-          <Item name="-1" text="Archived"/>
+          <Item name="active" text="Active"/>
+          <Item name="inactive" text="Inactive"/>
+          <Item name="archived" text="Archived"/>
         </ComboBox>
       </FormField>
       <Label name="lbl_dl_add1" width="6" text="Address 1" posY="4" posX="1" gridWidth="6">
@@ -70,45 +70,66 @@
       <FormField name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="dl01_mast" tabIndex="0" noEntry="1">
         <Edit width="9" posY="5" posX="67" gridWidth="9"/>
       </FormField>
+      <PhantomFormField name="cl01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="10" sqlTabName="cl01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="dl01_mast.cost_ytd" colName="cost_ytd" sqlType="DECIMAL(12,2)" fieldId="11" sqlTabName="dl01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="dl01_mast.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="12" sqlTabName="dl01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="dl01_mast.created_by" colName="created_by" sqlType="BIGINT" fieldId="13" sqlTabName="dl01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="dl01_mast.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="14" sqlTabName="dl01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="dl01_mast.sales_ytd" colName="sales_ytd" sqlType="DECIMAL(12,2)" fieldId="15" sqlTabName="dl01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="dl01_mast.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="16" sqlTabName="dl01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
     </Grid>
     <Folder name="docs">
       <Page name="trans_group" text="Documents" image="fa-file-text-o">
         <LStr text="Documents"/>
         <Grid name="trans_grid" width="135" height="10">
-          <Table pageSize="8" name="dl30_trans_trans" width="134" posY="0" posX="1" gridWidth="134" gridHeight="9" tabName="+tn_0">
-            <TableColumn name="dl30_trans.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="10" sqlTabName="dl30_trans" text="#ID" tabIndex="10" numAlign="1">
+          <Table pageSize="5" name="dl30_trans_trans" width="134" posY="0" posX="1" gridWidth="134" gridHeight="9" tabName="+tn_0">
+            <TableColumn name="dl30_trans.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="17" sqlTabName="dl30_trans" text="#ID" tabIndex="10" numAlign="1">
               <Edit width="8"/>
               <LStr text="#ID"/>
             </TableColumn>
-            <TableColumn name="dl30_trans.date" colName="date" sqlType="DATE" required="1" notNull="1" fieldId="11" sqlTabName="dl30_trans" text="Trans Date" tabIndex="11">
+            <TableColumn name="dl30_trans.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="18" sqlTabName="dl30_trans" text="Trans Date" tabIndex="11">
               <Edit width="10" scroll="1"/>
               <LStr text="Trans Date"/>
             </TableColumn>
-            <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="12" sqlTabName="dl30_trans" text="Doc No" tabIndex="12">
+            <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="19" sqlTabName="dl30_trans" text="Doc No" tabIndex="12">
               <Edit width="20" scroll="1"/>
               <LStr text="Doc No"/>
             </TableColumn>
-            <TableColumn name="dl30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="13" sqlTabName="dl30_trans" text="Trans Type" tabIndex="13">
+            <TableColumn name="dl30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="20" sqlTabName="dl30_trans" text="Trans Type" tabIndex="13">
               <Edit width="10" scroll="1"/>
               <LStr text="Trans Type"/>
             </TableColumn>
-            <TableColumn name="dl30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="14" sqlTabName="dl30_trans" text="Doc Type" tabIndex="14">
+            <TableColumn name="dl30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="21" sqlTabName="dl30_trans" text="Doc Type" tabIndex="14">
               <Edit width="10" scroll="1"/>
               <LStr text="Doc Type"/>
             </TableColumn>
-            <TableColumn name="dl30_trans.gross_val" colName="gross_val" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="15" sqlTabName="dl30_trans" text="Total Excl" tabIndex="15" numAlign="1">
+            <TableColumn name="dl30_trans.gross_tot" colName="gross_tot" sqlType="DECIMAL(10,2)" required="1" notNull="1" fieldId="22" sqlTabName="dl30_trans" text="Total Excl" tabIndex="15" numAlign="1">
               <Edit width="14" scroll="1"/>
               <LStr text="Total Excl"/>
             </TableColumn>
-            <TableColumn name="dl30_trans.vat" colName="vat" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="16" sqlTabName="dl30_trans" text="VAT" tabIndex="16" numAlign="1">
+            <TableColumn name="dl30_trans.vat" colName="vat" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="23" sqlTabName="dl30_trans" text="VAT" tabIndex="16" numAlign="1">
               <Edit width="14" scroll="1"/>
               <LStr text="VAT"/>
             </TableColumn>
-            <TableColumn name="formonly.dl30_trans_tot_incl" colName="dl30_trans_tot_incl" fieldId="17" sqlTabName="formonly" defaultValue="0.00" text="Total Incl" tabIndex="17">
+            <TableColumn name="dl30_trans.net_tot" colName="net_tot" sqlType="DECIMAL(10,2)" fieldId="24" sqlTabName="dl30_trans" text="Net Total" tabIndex="17" numAlign="1">
               <Edit width="8"/>
-              <LStr text="Total Incl"/>
+              <LStr text="Net Total"/>
             </TableColumn>
-            <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="18" sqlTabName="dl30_trans" text="Notes" tabIndex="18">
+            <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="25" sqlTabName="dl30_trans" text="Notes" tabIndex="18">
               <Edit width="30" scroll="1"/>
               <LStr text="Notes"/>
             </TableColumn>
@@ -121,16 +142,6 @@
       </Page>
     </Folder>
   </VBox>
-  <RecordView tabName="dl30_trans">
-    <Link colName="id" fieldIdRef="10"/>
-    <Link colName="date" fieldIdRef="11"/>
-    <Link colName="doc_no" fieldIdRef="12"/>
-    <Link colName="trans_type" fieldIdRef="13"/>
-    <Link colName="doc_type" fieldIdRef="14"/>
-    <Link colName="gross_val" fieldIdRef="15"/>
-    <Link colName="vat" fieldIdRef="16"/>
-    <Link colName="notes" fieldIdRef="18"/>
-  </RecordView>
   <RecordView tabName="dl01_mast">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="cust_name" fieldIdRef="1"/>
@@ -142,9 +153,26 @@
     <Link colName="address3" fieldIdRef="7"/>
     <Link colName="cr_limit" fieldIdRef="8"/>
     <Link colName="balance" fieldIdRef="9"/>
+    <Link colName="cost_ytd" fieldIdRef="11"/>
+    <Link colName="created_at" fieldIdRef="12"/>
+    <Link colName="created_by" fieldIdRef="13"/>
+    <Link colName="deleted_at" fieldIdRef="14"/>
+    <Link colName="sales_ytd" fieldIdRef="15"/>
+    <Link colName="updated_at" fieldIdRef="16"/>
   </RecordView>
-  <RecordView tabName="formonly">
-    <Link colName="dl30_trans_tot_incl" fieldIdRef="17"/>
+  <RecordView tabName="cl01_mast">
+    <Link colName="id" fieldIdRef="10"/>
+  </RecordView>
+  <RecordView tabName="dl30_trans">
+    <Link colName="id" fieldIdRef="17"/>
+    <Link colName="trans_date" fieldIdRef="18"/>
+    <Link colName="doc_no" fieldIdRef="19"/>
+    <Link colName="trans_type" fieldIdRef="20"/>
+    <Link colName="doc_type" fieldIdRef="21"/>
+    <Link colName="gross_tot" fieldIdRef="22"/>
+    <Link colName="vat" fieldIdRef="23"/>
+    <Link colName="net_tot" fieldIdRef="24"/>
+    <Link colName="notes" fieldIdRef="25"/>
   </RecordView>
   <RecordView tabName="rec_debt_mast">
     <Link colName="acc_code" fieldIdRef="0"/>
@@ -157,16 +185,23 @@
     <Link colName="address3" fieldIdRef="7"/>
     <Link colName="cr_limit" fieldIdRef="8"/>
     <Link colName="balance" fieldIdRef="9"/>
+    <Link colName="id" fieldIdRef="10"/>
+    <Link colName="cost_ytd" fieldIdRef="11"/>
+    <Link colName="created_at" fieldIdRef="12"/>
+    <Link colName="created_by" fieldIdRef="13"/>
+    <Link colName="deleted_at" fieldIdRef="14"/>
+    <Link colName="sales_ytd" fieldIdRef="15"/>
+    <Link colName="updated_at" fieldIdRef="16"/>
   </RecordView>
   <RecordView tabName="arr_debt_trans">
-    <Link colName="date" fieldIdRef="11"/>
-    <Link colName="trans_type" fieldIdRef="13"/>
-    <Link colName="doc_type" fieldIdRef="14"/>
-    <Link colName="doc_no" fieldIdRef="12"/>
-    <Link colName="gross_val" fieldIdRef="15"/>
-    <Link colName="vat" fieldIdRef="16"/>
-    <Link colName="dl30_trans_tot_incl" fieldIdRef="17"/>
-    <Link colName="notes" fieldIdRef="18"/>
-    <Link colName="id" fieldIdRef="10"/>
+    <Link colName="trans_date" fieldIdRef="18"/>
+    <Link colName="trans_type" fieldIdRef="20"/>
+    <Link colName="doc_type" fieldIdRef="21"/>
+    <Link colName="doc_no" fieldIdRef="19"/>
+    <Link colName="gross_tot" fieldIdRef="22"/>
+    <Link colName="vat" fieldIdRef="23"/>
+    <Link colName="notes" fieldIdRef="25"/>
+    <Link colName="net_tot" fieldIdRef="24"/>
+    <Link colName="id" fieldIdRef="17"/>
   </RecordView>
 </Form>
