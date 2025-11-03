@@ -7,6 +7,7 @@
 
 -- Establish connection to PostgreSQL database
 FUNCTION initialize_database() RETURNS SMALLINT
+
     TRY
         CONNECT TO "demoapp_db@localhost:5432+driver='dbmpgs_9'"
             USER "postgres" USING "napoleon"
@@ -23,6 +24,7 @@ END FUNCTION
 
 -- Disconnect from database cleanly
 FUNCTION close_database() RETURNS SMALLINT
+
     TRY
         DISCONNECT CURRENT
         DISPLAY "Database connection closed successfully"
@@ -32,6 +34,7 @@ FUNCTION close_database() RETURNS SMALLINT
         DISPLAY "Error message: ", SQLCA.SQLERRM
         RETURN FALSE
     END TRY
+    
 END FUNCTION
 
 -- Verify database connection is active
@@ -65,33 +68,43 @@ END FUNCTION
 
 -- Return current database connection information
 FUNCTION get_database_info() RETURNS STRING
+
     DEFINE info STRING
+    
     LET info = "Database: demoapp_db\n"
     LET info = info || "Server  : localhost:5432\n"
     LET info = info || "Driver  : dbmpgs_9 (PostgreSQL)\n"
     LET info = info || "User    : postgres\n"
     LET info = info || "Status  : "
+    
     IF check_database_connection() THEN
         LET info = info || "Connected"
     ELSE
         LET info = info || "Disconnected"
     END IF
+    
     RETURN info
+    
 END FUNCTION
 
 -- Run diagnostic tests on database connectivity
 FUNCTION test_database_connection() RETURNS SMALLINT
+
     DEFINE test_result SMALLINT
+
     DISPLAY "=========================================="
     DISPLAY "Database Connection Test"
     DISPLAY "=========================================="
     DISPLAY "Test 1: Checking connection..."
+    
     IF NOT check_database_connection() THEN
         DISPLAY "? Connection failed"
         RETURN FALSE
     END IF
+    
     DISPLAY "? Connection active"
     DISPLAY "Test 2: Querying system tables..."
+
     TRY
         DECLARE test_cursor CURSOR FOR
             SELECT tablename FROM pg_tables WHERE schemaname = 'public'
@@ -104,6 +117,9 @@ FUNCTION test_database_connection() RETURNS SMALLINT
         DISPLAY "? System table query failed: ", SQLCA.SQLCODE
         LET test_result = FALSE
     END TRY
+    
     DISPLAY "=========================================="
+
     RETURN test_result
+    
 END FUNCTION

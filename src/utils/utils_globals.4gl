@@ -1,13 +1,14 @@
 # ==============================================================
 # Consolidated Global Utilities
 # File: utils_globals.4gl
-# Purpose: Single source of truth for all utility functions
+#
 # Version: 2.0.0
 # ==============================================================
 
 IMPORT ui
-IMPORT FGL fgldialog
 IMPORT FGL utils_db
+IMPORT FGL fgldialog
+IMPORT util
 
 -- ==============================================================
 -- GLOBALS
@@ -15,6 +16,9 @@ IMPORT FGL utils_db
 GLOBALS
     DEFINE g_debug_mode SMALLINT
     DEFINE g_user_authenticated SMALLINT
+    DEFINE g_current_user STRING
+    DEFINE g_standalone_mode
+        SMALLINT -- TRUE if module running standalone, FALSE if in MDI
 END GLOBALS
 
 -- ==============================================================
@@ -25,16 +29,82 @@ CONSTANT APP_VERSION = "2.0.0"
 CONSTANT STYLE_FILE = "main_styles.4st"
 
 -- Message constants
-CONSTANT MSG_NO_RECORD = "No records found."
-CONSTANT MSG_SAVED = "Record saved successfully."
-CONSTANT MSG_UPDATED = "Record updated successfully."
-CONSTANT MSG_DELETED = "Record deleted successfully."
-CONSTANT MSG_EOL = "End of list."
-CONSTANT MSG_SOL = "Start of list."
-CONSTANT MSG_NO_SEARCH = "Enter account code or name to search."
-CONSTANT MSG_CONFIRM_DELETE = "Do you want to delete this record?"
-CONSTANT MSG_ERROR_DUPLICATES = "Duplicate record was found."
-CONSTANT MSG_CONFIRM_EXIT = "You are about to close the application, continue ?"
+-- Message constants - Standard Operations
+CONSTANT MSG_NO_RECORD = "No records found matching your criteria."
+CONSTANT MSG_SAVED = "Record has been saved successfully."
+CONSTANT MSG_UPDATED = "Record has been updated successfully."
+CONSTANT MSG_DELETED = "Record has been deleted successfully."
+CONSTANT MSG_ERROR_SAVE = "Unable to save record. Please try again."
+CONSTANT MSG_ERROR_UPDATE = "Unable to update record. Please try again."
+CONSTANT MSG_ERROR_DELETE = "Unable to delete record. Please try again."
+CONSTANT MSG_ERROR_LOAD = "Unable to load record. Please try again."
+
+-- Message constants - Navigation
+CONSTANT MSG_EOL = "End of list reached."
+CONSTANT MSG_SOL = "Beginning of list reached."
+CONSTANT MSG_NO_NEXT = "No more records available."
+CONSTANT MSG_NO_PREVIOUS = "No previous records available."
+CONSTANT MSG_RECORD_OF = "Record %1 of %2"
+CONSTANT MSG_LOADING = "Loading records, please wait..."
+
+-- Message constants - Search & Validation
+CONSTANT MSG_NO_SEARCH = "Please enter an account code or name to search."
+CONSTANT MSG_SEARCH_RESULTS = "%1 record(s) found."
+CONSTANT MSG_INVALID_INPUT = "Invalid input. Please check your entry."
+CONSTANT MSG_REQUIRED_FIELD = "This field is required."
+CONSTANT MSG_INVALID_FORMAT = "Invalid format. Please check your entry."
+CONSTANT MSG_VALUE_OUT_RANGE = "Value is out of acceptable range."
+
+-- Message constants - Confirmations
+CONSTANT MSG_CONFIRM_DELETE = "Are you sure you want to delete this record?"
+CONSTANT MSG_CONFIRM_EXIT =
+    "You have unsaved changes. Do you want to exit anyway?"
+CONSTANT MSG_CONFIRM_CANCEL =
+    "Are you sure you want to cancel? Any unsaved changes will be lost."
+CONSTANT MSG_CONFIRM_OVERWRITE =
+    "A record with this key already exists. Do you want to overwrite it?"
+CONSTANT MSG_CONFIRM_PROCEED = "Do you want to proceed with this action?"
+
+-- Message constants - Errors & Warnings
+CONSTANT MSG_ERROR_DUPLICATES =
+    "A duplicate record already exists in the system."
+CONSTANT MSG_ERROR_DUPLICATE_KEY =
+    "This %1 is already in use. Please enter a unique value."
+CONSTANT MSG_DELETE_FAILED =
+    "Record deletion failed. The operation has been rolled back."
+CONSTANT MSG_SAVE_FAILED =
+    "Record save failed. The operation has been rolled back."
+CONSTANT MSG_UPDATE_FAILED =
+    "Record update failed. The operation has been rolled back."
+CONSTANT MSG_ERROR_DATABASE =
+    "Database error occurred. Please contact your system administrator."
+CONSTANT MSG_ERROR_NETWORK =
+    "Network connection error. Please check your connection."
+CONSTANT MSG_ERROR_PERMISSION =
+    "You do not have permission to perform this action."
+CONSTANT MSG_ERROR_LOCKED = "This record is currently locked by another user."
+CONSTANT MSG_ERROR_NOT_FOUND = "The requested record could not be found."
+
+-- Message constants - Warnings
+CONSTANT MSG_WARN_UNSAVED = "You have unsaved changes."
+CONSTANT MSG_WARN_READONLY = "This record is read-only and cannot be modified."
+CONSTANT MSG_WARN_INACTIVE = "This record is marked as inactive."
+CONSTANT MSG_WARN_EXPIRED = "This record has expired."
+
+-- Message constants - Success Operations
+CONSTANT MSG_OPERATION_COMPLETE = "Operation completed successfully."
+CONSTANT MSG_RECORDS_IMPORTED = "%1 record(s) imported successfully."
+CONSTANT MSG_RECORDS_EXPORTED = "%1 record(s) exported successfully."
+CONSTANT MSG_BATCH_COMPLETE =
+    "Batch operation completed: %1 successful, %2 failed."
+
+-- Message constants - General UI
+CONSTANT MSG_PROCESSING = "Processing, please wait..."
+CONSTANT MSG_READY = "Ready"
+CONSTANT MSG_CANCELED = "Operation canceled."
+CONSTANT MSG_TIMEOUT = "Operation timed out. Please try again."
+CONSTANT MSG_NO_DATA = "No data available to display."
+CONSTANT MSG_SELECT_RECORD = "Please select a record first."
 
 -- Status constants
 PUBLIC CONSTANT STATUS_ACTIVE = 1
@@ -64,10 +134,13 @@ END RECORD
 -- APPLICATION INITIALIZATION
 -- ==============================================================
 PUBLIC FUNCTION initialize_application() RETURNS BOOLEAN
+    
     DEFINE db_result SMALLINT
-
     LET g_debug_mode = FALSE
     LET g_user_authenticated = FALSE
+
+    -- Detect standalone mode: TRUE if no current window exists
+    LET g_standalone_mode = (ui.Window.getCurrent() IS NULL)
 
     -- Hide default screen and disable Ctrl+C
     DEFER INTERRUPT
@@ -76,10 +149,6 @@ PUBLIC FUNCTION initialize_application() RETURNS BOOLEAN
     TRY
         -- Load the visual style for the application
         CALL ui.Interface.loadStyles(STYLE_FILE)
-
-        IF g_debug_mode THEN
-            DISPLAY "Stylesheet loaded from: ", STYLE_FILE
-        END IF
 
         -- Initialize database connection
         LET db_result = utils_db.initialize_database()
@@ -100,6 +169,20 @@ PUBLIC FUNCTION initialize_application() RETURNS BOOLEAN
         DISPLAY "ERROR during initialization: ", STATUS
         RETURN FALSE
     END TRY
+END FUNCTION
+
+-- ==============================================================
+-- STANDALONE MODE FUNCTIONS
+-- ==============================================================
+
+-- Check if module is running in standalone mode (detects based on window)
+PUBLIC FUNCTION is_standalone() RETURNS SMALLINT
+    RETURN g_standalone_mode
+END FUNCTION
+
+-- Set standalone mode (called by modules)
+PUBLIC FUNCTION set_standalone_mode(p_standalone SMALLINT)
+    LET g_standalone_mode = p_standalone
 END FUNCTION
 
 -- ==============================================================
@@ -187,7 +270,8 @@ END FUNCTION
 -- ==============================================================
 
 -- Base message function
-PUBLIC FUNCTION show_message(message STRING, message_type STRING, title STRING)
+PUBLIC FUNCTION show_message(
+    p_message STRING, message_type STRING, title STRING)
     DEFINE icon STRING
     DEFINE window_title STRING
 
@@ -206,7 +290,7 @@ PUBLIC FUNCTION show_message(message STRING, message_type STRING, title STRING)
             LET icon = "information"
     END CASE
 
-    CALL fgldialog.fgl_winmessage(window_title, message, icon)
+    CALL fgldialog.fgl_winmessage(window_title, p_message, icon)
 END FUNCTION
 
 -- Simplified message wrappers
@@ -228,11 +312,19 @@ END FUNCTION
 
 -- Confirmation dialog
 PUBLIC FUNCTION show_confirm(message STRING, title STRING) RETURNS BOOLEAN
-    DEFINE answer STRING
+    DEFINE answer SMALLINT
     LET title = IIF(title IS NULL, "Confirm", title)
-    LET answer =
-        fgldialog.fgl_winQuestion(title, message, "no", "yes|no", "question", 0)
-    RETURN (answer = "yes")
+
+    MENU title ATTRIBUTES(STYLE = "dialog", COMMENT = message)
+        COMMAND "Yes"
+            LET answer = TRUE
+            EXIT MENU
+        COMMAND "No"
+            LET answer = FALSE
+            EXIT MENU
+    END MENU
+
+    RETURN answer
 END FUNCTION
 
 -- Standard constant message functions
@@ -250,6 +342,10 @@ END FUNCTION
 
 PUBLIC FUNCTION msg_deleted()
     CALL show_info(MSG_DELETED)
+END FUNCTION
+
+PUBLIC FUNCTION msg_delete_failed()
+    CALL show_info(MSG_DELETE_FAILED)
 END FUNCTION
 
 PUBLIC FUNCTION msg_end_of_list()
@@ -329,8 +425,7 @@ PUBLIC FUNCTION is_valid_phone(phone STRING) RETURNS BOOLEAN
 
     LET clean_phone = trim_string(phone)
     -- Check for exactly 10 digits only (no other characters)
-    RETURN (clean_phone
-        MATCHES "[0-9]{11}")
+    RETURN (clean_phone MATCHES "[0-9]{11}")
 END FUNCTION
 
 -- Generic field validation for master records
@@ -374,10 +469,10 @@ PUBLIC FUNCTION set_page_title(title STRING)
     END IF
 END FUNCTION
 
-PUBLIC FUNCTION set_form_label(label_name STRING, text STRING)
+PUBLIC FUNCTION set_form_label(label_name STRING, p_text STRING)
     DEFINE f ui.Form
     LET f = ui.Window.getCurrent().getForm()
-    CALL f.setElementText(label_name, text)
+    CALL f.setElementText(label_name, p_text)
 END FUNCTION
 
 PUBLIC FUNCTION set_fields_visibility(
@@ -434,6 +529,7 @@ PUBLIC FUNCTION connect_database() RETURNS BOOLEAN
     END TRY
 END FUNCTION
 
+-- disconnect the database
 PUBLIC FUNCTION disconnect_database() RETURNS BOOLEAN
     TRY
         DISCONNECT CURRENT
@@ -463,118 +559,7 @@ PUBLIC FUNCTION execute_transaction(operation STRING) RETURNS BOOLEAN
 END FUNCTION
 
 -- ==============================================================
--- LOOKUP UTILITIES
--- ==============================================================
-
--- Generic lookup function (replaces multiple specific lookup functions)
-PUBLIC FUNCTION generic_lookup(
-    table_name STRING,
-    code_field STRING,
-    desc_field STRING,
-    search_value STRING,
-    title STRING,
-    return_field STRING)
-    RETURNS STRING
-
-    DEFINE sql STRING
-    DEFINE results DYNAMIC ARRAY OF r_lookup_result
-    DEFINE selected_index INTEGER
-    DEFINE where_clause STRING
-
-    -- Build WHERE clause if search value provided
-    IF NOT is_empty(search_value) THEN
-        LET where_clause =
-            " WHERE "
-                || code_field
-                || " ILIKE '%"
-                || search_value
-                || "%' OR "
-                || desc_field
-                || " ILIKE '%"
-                || search_value
-                || "%'"
-    ELSE
-        LET where_clause = ""
-    END IF
-
-    LET sql =
-        "SELECT "
-            || code_field
-            || ", "
-            || desc_field
-            || " FROM "
-            || table_name
-            || where_clause
-            || " ORDER BY "
-            || code_field
-
-    CALL execute_lookup_query(sql, results)
-
-    IF results.getLength() > 0 THEN
-        LET selected_index = display_lookup_dialog(results, title)
-        IF selected_index > 0 THEN
-            CASE return_field
-                WHEN "code"
-                    RETURN results[selected_index].code
-                WHEN "description"
-                    RETURN results[selected_index].description
-                OTHERWISE
-                    RETURN results[selected_index].code
-            END CASE
-        END IF
-    END IF
-
-    RETURN ""
-END FUNCTION
-
--- Specific lookup wrappers
-PUBLIC FUNCTION lookup_debtor(search STRING) RETURNS STRING
-    RETURN generic_lookup(
-        "dl01_mast", "acc_code", "name", search, "Customer Lookup", "code")
-END FUNCTION
-
-PUBLIC FUNCTION lookup_supplier(search STRING) RETURNS STRING
-    RETURN generic_lookup(
-        "cl01_mast", "acc_code", "name", search, "Supplier Lookup", "code")
-END FUNCTION
-
--- Helper function for lookup queries
-PRIVATE FUNCTION execute_lookup_query(
-    sql STRING, results DYNAMIC ARRAY OF r_lookup_result)
-    DEFINE idx INTEGER
-    LET idx = 0
-
-    TRY
-        DECLARE lookup_cursor CURSOR FROM sql
-        FOREACH lookup_cursor
-            INTO results[idx + 1].code, results[idx + 1].description
-            LET idx = idx + 1
-        END FOREACH
-        CLOSE lookup_cursor
-        FREE lookup_cursor
-    CATCH
-        CALL show_error("Lookup query failed: " || SQLCA.SQLERRM)
-    END TRY
-END FUNCTION
-
-PRIVATE FUNCTION display_lookup_dialog(
-    results DYNAMIC ARRAY OF r_lookup_result, title STRING)
-    RETURNS INTEGER
-    -- Simplified dialog implementation
-    IF g_debug_mode THEN
-        DISPLAY "Lookup dialog: ", title
-    END IF
-    -- In real implementation, would show proper lookup form
-    IF results.getLength() = 1 THEN
-        RETURN 1 -- Auto-select if only one result
-    END IF
-
-    -- For now, return first result
-    RETURN IIF(results.getLength() > 0, 1, 0)
-END FUNCTION
-
--- ==============================================================
--- MASTER CRUD UTILITIES
+-- MASTER CRUD, NAV UTILITIES
 -- ==============================================================
 
 -- Generic navigation
@@ -609,14 +594,15 @@ END FUNCTION
 
 -- Generic record selection
 PUBLIC FUNCTION select_records(master master_record, where_clause STRING)
-    DEFINE codes DYNAMIC ARRAY OF STRING
-    DEFINE code STRING
-    DEFINE idx INTEGER
-    DEFINE sql STRING
+    DEFINE l_codes DYNAMIC ARRAY OF STRING
+    DEFINE l_code STRING
+    DEFINE l_idx INTEGER
+    DEFINE l_sql STRING
 
-    CALL codes.clear()
-    LET idx = 0
-    LET sql =
+    CALL l_codes.clear()
+
+    LET l_idx = 0
+    LET l_sql =
         "SELECT "
             || master.key_field
             || " FROM "
@@ -627,21 +613,21 @@ PUBLIC FUNCTION select_records(master master_record, where_clause STRING)
             || master.key_field
 
     TRY
-        DECLARE c_select CURSOR FROM sql
-        FOREACH c_select INTO code
-            LET idx = idx + 1
-            LET codes[idx] = code
+        DECLARE c_select CURSOR FROM l_sql
+        FOREACH c_select INTO l_code
+            LET l_idx = l_idx + 1
+            LET l_codes[l_idx] = l_code
         END FOREACH
         FREE c_select
     CATCH
         CALL show_error("Query failed: " || SQLCA.SQLERRM)
     END TRY
 
-    IF codes.getLength() = 0 THEN
+    IF l_codes.getLength() = 0 THEN
         CALL msg_no_record()
     END IF
 
-    RETURN codes
+    RETURN l_codes
 END FUNCTION
 
 -- Generic uniqueness check
@@ -736,52 +722,87 @@ END FUNCTION
 
 -- ==============================================================
 -- Utility : Document Numbering Helper
--- Author  : Bongani Dlamini
--- Version : Genero 3.20.10
+-- ==============================================================
+FUNCTION lpad_number(p_num INTEGER, p_width INTEGER) RETURNS STRING
+    DEFINE s_num STRING
+    DEFINE zeros STRING
+    DEFINE need INTEGER
+    DEFINE i INTEGER
+
+    LET s_num = "" || p_num -- force to string
+    LET need = p_width - LENGTH(s_num)
+    IF need <= 0 THEN
+        RETURN s_num
+    END IF
+
+    LET zeros = ""
+    FOR i = 1 TO need
+        LET zeros = zeros || "0"
+    END FOR
+    RETURN zeros || s_num
+END FUNCTION
+
+-- ==============================================================
+-- Generate next numeric and full account codes (3.20-safe)
 -- ==============================================================
 
---FUNCTION doc_numbering(p_table STRING, p_field STRING, p_prefix STRING)
---    RETURNS STRING
---
---    DEFINE l_sql      STRING
---    DEFINE l_last_no  STRING
---    DEFINE l_next_no  STRING
---    DEFINE l_num_part STRING
---    DEFINE l_num      INTEGER
---
---    -- ==========================
---    -- 1. Build dynamic SQL
---    -- ==========================
---    LET l_sql = "SELECT MAX(" || p_field || ") FROM " || p_table ||
---                " WHERE " || p_field || " LIKE ?"
---
---    -- ==========================
---    -- 2. Execute dynamic SQL
---    -- ==========================
---    PREPARE stmt_doc FROM l_sql
---    EXECUTE stmt_doc USING p_prefix || '%' INTO l_last_no
---    FREE stmt_doc
---
---    IF l_last_no IS NULL OR l_last_no = "" THEN
---        -- No previous document exists
---        LET l_next_no = p_prefix || "0001"
---    ELSE
---        -- ==========================
---        -- 3. Extract numeric part
---        -- ==========================
---        LET l_num_part = l_last_no[ (length(p_prefix)+1) TO length(l_last_no) ]
---        LET l_num = l_num_part USING "#####"
---        LET l_num = l_num + 1
---
---        -- ==========================
---        -- 4. Format back to new number
---        -- ==========================
---        LET l_next_no = p_prefix || l_num USING "0000"
---    END IF
---
---    RETURN l_next_no
---END FUNCTION
+FUNCTION get_next_number(p_table STRING, p_prefix STRING)
+    DEFINE last_num INTEGER
+    DEFINE next_num INTEGER
+    DEFINE next_full STRING
+    DEFINE sql_stmt STRING
+    DEFINE stmt STRING
+    DEFINE formatted_num STRING
 
+    LET last_num = 0
+    LET sql_stmt = SFMT("SELECT MAX(acc_code) FROM %1", p_table)
+    PREPARE stmt FROM sql_stmt
+    EXECUTE stmt INTO last_num
+    FREE stmt
+
+    IF last_num IS NULL THEN
+        LET last_num = 0
+    END IF
+
+    LET next_num = last_num + 1
+
+    -- Format the number with leading zeros (4 digits)
+    LET formatted_num = next_num
+    LET next_full = p_prefix || formatted_num
+
+    RETURN next_num, next_full
+END FUNCTION
+
+
+-- ==============================================================
+-- Generate next numeric
+-- ==============================================================
+
+FUNCTION get_next_code(p_table STRING, p_field STRING) RETURNS INTEGER
+
+    DEFINE last_num INTEGER
+    DEFINE next_num INTEGER
+
+    DEFINE sql_stmt STRING
+    DEFINE stmt STRING
+
+    LET last_num = 0
+    LET sql_stmt = SFMT("SELECT MAX(" ||p_field||") FROM %1", p_table)
+
+    PREPARE stmt FROM sql_stmt
+    EXECUTE stmt INTO last_num
+
+    FREE stmt
+
+    IF last_num IS NULL THEN
+        LET last_num = 0
+    END IF
+
+    LET next_num = last_num + 1
+
+    RETURN next_num
+    
+END FUNCTION
 
 
 -- ==============================================================
@@ -824,6 +845,74 @@ FUNCTION rollback_transaction() RETURNS SMALLINT
     END TRY
 END FUNCTION
 
+-- ==============================================================
+-- Get Username by User ID
+-- ==============================================================
+PUBLIC FUNCTION get_username(p_user_id INTEGER) RETURNS STRING
+    DEFINE l_username STRING
+
+    -- Handle null or system user IDs first
+    IF p_user_id IS NULL OR p_user_id = 0 THEN
+        RETURN "System"
+    END IF
+
+    TRY
+        SELECT username INTO l_username
+          FROM sy00_user
+         WHERE id = p_user_id
+
+        IF SQLCA.SQLCODE = 100 THEN
+            -- No record found
+            RETURN "Unknown"
+        END IF
+
+        RETURN l_username
+
+    CATCH
+        -- Any SQL or runtime error (DB down, bad schema, etc.)
+        DISPLAY "get_username(): SQL error ", SQLCA.SQLCODE, " - ", SQLCA.SQLERRM
+        RETURN "Error"
+
+    END TRY
+END FUNCTION
+
+-- ==============================================================
+-- Get Random User ID
+-- ==============================================================
+FUNCTION get_random_user()
+    DEFINE r_user_id INTEGER
+    
+    LET r_user_id = util.Math.rand(10)
+    
+    RETURN r_user_id
+END FUNCTION
+
+-- ==============================================================
+-- Get Current User ID (useful for audit trails)
+-- ==============================================================
+PUBLIC FUNCTION get_current_user_id() RETURNS INTEGER
+
+    DEFINE user_id INTEGER
+
+    -- Get from your session/globals
+    -- Adjust based on how you store current user
+    --LET user_id = g_current_user_id  -- Or however you track this
+
+    RETURN user_id
+
+END FUNCTION
+
+-- ==============================================================
+-- Get Current Username
+-- ==============================================================
+PUBLIC FUNCTION get_current_username() RETURNS STRING
+    DEFINE username STRING
+
+    --LET username = get_username(g_current_user_id)
+
+    RETURN username
+
+END FUNCTION
 
 -- ==============================================================
 -- SQL Error Handler
@@ -835,23 +924,22 @@ FUNCTION show_sql_error(p_context STRING)
     DEFINE sql_code INTEGER = SQLCA.SQLCODE
     DEFINE sql_errm STRING = SQLCA.SQLERRM
     --DEFINE sql_state STRING = SQLCA.SQLSTATE
-    
+
     -- Check if the error is "No Data Found" or "End of Cursor" (often handled gracefully)
     IF sql_code = NOTFOUND THEN
-        LET full_message = SFMT("SQL WARNING (Not Found): %1 - No records matched the query criteria.", p_context)
+        LET full_message =
+            SFMT("SQL WARNING (Not Found): %1 - No records matched the query criteria.",
+                p_context)
     ELSE
         -- Format the detailed error message
-        LET full_message = SFMT(
-            "Database Error: %1\n(SQLCODE: %2 / SQLSTATE: %3)\nError: %4",
-            p_context,
-            sql_code,
-            -- sql_state,
-            sql_errm
-        )
+        LET full_message =
+            SFMT("Database Error: %1\n(SQLCODE: %2 / SQLSTATE: %3)\nError: %4",
+                p_context,
+                sql_code,
+                -- sql_state,
+                sql_errm)
     END IF
 
     CALL show_error(full_message)
 
 END FUNCTION
-
-
