@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Project defaultApplication="221858380" gstVersion="3140a" version="3.3">
+<Project defaultApplication="409572948" gstVersion="3140a" version="3.3">
   <Settings>
     <DynamicProperties version="2">
       <DynamicProperty description="Accent color (Android 5.0 and later)" initialValue="#9575CD" isDefaultInherited="false" isHidden="false" label="Accent color" name="gma-accent-color" readOnly="false" type="COLOR"/>
@@ -66,56 +66,46 @@
   <PlatformList version="1.0"/>
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
     <Group environment="dir:FGLRESOURCEPATH=$(ProjectDir)/src/res,filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile,dir:FGLDATABASE=$(ProjectDir)/database,file:Logo=$(ProjectDir)/src/res/logo.png" id="39840687" label="src">
-      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,31393700,409572948,45766396,95666062,276307902,206295008,757682379,39599040,396525034,782461791,33552074,960354642,221924664" id="221858380" label="_main">
+      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,409572948,45766396,396525034,782461791,960354642,221924664,31393700,206295008,757682379" id="221858380" label="_main">
         <File filePath="src/_main/main_app.4gl"/>
         <File filePath="src/_main/main_menu.4gl"/>
         <File filePath="src/_main/main_shell.4fd"/>
         <File filePath="src/_main/main_shell.4gl"/>
         <File filePath="src/_main/main_styles.4st"/>
-        <File filePath="src/_main/main_toolbar.4tb"/>
       </Application>
-      <Application binaryName="cl" dependencies="497700,56784492,104908716,31764552,782461791" id="396525034" label="cl">
+      <Application binaryName="cl" dependencies="497700,56784492,104908716,31764552,782461791,39599040" id="396525034" label="cl">
         <File filePath="src/cl/cl101_mast.4fd"/>
         <File filePath="src/cl/cl101_mast.4gl"/>
-        <File filePath="src/cl/cl120_enq.4fd"/>
-        <File filePath="src/cl/cl120_enq.4gl"/>
         <File filePath="src/cl/cl121_lkup.4fd"/>
         <File filePath="src/cl/cl121_lkup.4gl"/>
         <File filePath="src/cl/cl130_trans.4fd"/>
         <File filePath="src/cl/cl130_trans.4gl"/>
-        <File filePath="src/cl/cl140_hist.4fd"/>
-        <File filePath="src/cl/cl140_hist.4gl"/>
+        <File filePath="src/cl/libs_mast_lkup_1.4fd"/>
       </Application>
       <Library binaryName="database" id="31764552" label="database">
         <File filePath="database/demoapp_db.4db"/>
-        <File filePath="database/demoapp_db_pgs_update_db.4gl"/>
+        <File filePath="database/demoapp_db.sch"/>
+        <File filePath="database/seeder.sql"/>
       </Library>
-      <Application binaryName="dl" dependencies="497700,56784492,104908716,31764552,782461791,221924664" id="409572948" label="dl">
+      <Application binaryName="dl" dependencies="497700,56784492,104908716,31764552,782461791,221924664,95666062,33552074,276307902" id="409572948" label="dl">
         <File filePath="src/dl/dl101_mast.4fd"/>
         <File filePath="src/dl/dl101_mast.4gl"/>
-        <File filePath="src/dl/dl120_enq.4fd"/>
-        <File filePath="src/dl/dl120_enq.4gl"/>
         <File filePath="src/dl/dl121_lkup.4fd"/>
         <File filePath="src/dl/dl121_lkup.4gl"/>
         <File filePath="src/dl/dl130_trans.4fd"/>
         <File filePath="src/dl/dl130_trans.4gl"/>
         <File filePath="src/dl/dl140_hist.4fd"/>
         <File filePath="src/dl/dl140_hist.4gl"/>
-        <File filePath="src/dl/dl_model.4gl"/>
       </Application>
       <Application binaryName="gl" dependencies="497700,56784492,104908716,31764552,782461791" id="276307902" label="gl">
         <File filePath="src/gl/gl100_trans.4fd"/>
         <File filePath="src/gl/gl100_trans.4gl"/>
         <File filePath="src/gl/gl101_acc.4fd"/>
         <File filePath="src/gl/gl101_acc.4gl"/>
-        <File filePath="src/gl/gl130_journal.4fd"/>
-        <File filePath="src/gl/gl130_journal.4gl"/>
+        <File filePath="src/gl/gl130_jnls.4fd"/>
+        <File filePath="src/gl/gl130_jnls.4gl"/>
         <File filePath="src/gl/gl140_hist.4fd"/>
         <File filePath="src/gl/gl140_hist.4gl"/>
-        <File filePath="src/gl/gl220_trial_balance.4fd"/>
-        <File filePath="src/gl/gl220_trial_balance.4gl"/>
-        <File filePath="src/gl/gl221_income_stmt.4fd"/>
-        <File filePath="src/gl/gl221_income_stmt.4gl"/>
       </Application>
       <Library binaryName="libs" id="104908716" label="libs">
         <File filePath=".fglprofile"/>
@@ -135,8 +125,6 @@
         <File filePath="src/pu/pu131_invoice.4gl"/>
         <File filePath="src/pu/pu140_hist.4fd"/>
         <File filePath="src/pu/pu140_hist.4gl"/>
-        <File filePath="src/pu/pu30_inv_hdr.4fd"/>
-        <File filePath="src/pu/pu31_ord_hdr.4fd"/>
       </Application>
       <Library binaryName="resources" id="221924664" label="resources">
         <File filePath="src/res/company_logo.png"/>
@@ -144,17 +132,16 @@
         <File filePath="src/res/main_styles.4st"/>
       </Library>
       <Application binaryName="sa" dependencies="497700,104908716,31764552,782461791" id="95666062" label="sa">
-        <File filePath="src/sa/sa130_order.4fd"/>
-        <File filePath="src/sa/sa130_order.4gl"/>
-        <File filePath="src/sa/sa131_invoice.4fd"/>
-        <File filePath="src/sa/sa131_invoice.4gl"/>
-        <File filePath="src/sa/sa132_delivery.4fd"/>
-        <File filePath="src/sa/sa132_delivery.4gl"/>
-        <File filePath="src/sa/sa133_return.4fd"/>
-        <File filePath="src/sa/sa133_return.4gl"/>
+        <File filePath="src/sa/sa130_quote.4fd"/>
+        <File filePath="src/sa/sa130_quote.4gl"/>
+        <File filePath="src/sa/sa131_order.4fd"/>
+        <File filePath="src/sa/sa131_order.4gl"/>
+        <File filePath="src/sa/sa132_invoice.4fd"/>
+        <File filePath="src/sa/sa132_invoice.4gl"/>
+        <File filePath="src/sa/sa133_crn.4fd"/>
+        <File filePath="src/sa/sa133_crn.4gl"/>
         <File filePath="src/sa/sa140_hist.4fd"/>
         <File filePath="src/sa/sa140_hist.4gl"/>
-        <File filePath="src/sa/sa31_ord_hdr.4fd"/>
       </Application>
       <Application binaryName="st" dependencies="497700,104908716,31764552,782461791" id="757682379" label="st">
         <File filePath="src/st/st101_mast.4fd"/>
@@ -199,26 +186,22 @@
         <File filePath="src/utils/utils_globals.4gl"/>
         <File filePath="src/utils/utils_lookup.4gl"/>
         <File filePath="src/utils/utils_lookup_form.4fd"/>
-        <File filePath="src/utils/utils_notify.4gl"/>
+        <File filePath="src/utils/utils_mast_lkup_form.4fd"/>
+        <File filePath="src/utils/utils_sa_doc_lkup_form.4fd"/>
         <File filePath="src/utils/utils_sidemenu.4gl"/>
         <File filePath="src/utils/utils_status_const.4gl"/>
         <File filePath="src/utils/utils_windows.4gl"/>
       </Library>
       <Application binaryName="wb" dependencies="31764552,497700,104908716" id="206295008" label="wb">
-        <File filePath="src/wb/wb01_mast.4fd"/>
-        <File filePath="src/wb/wb01_mast.4gl"/>
         <File filePath="src/wb/wb101_mast.4fd"/>
         <File filePath="src/wb/wb101_mast.4gl"/>
         <File filePath="src/wb/wb102_lkup.4gl"/>
-        <File filePath="src/wb/wb130_trans.4fd"/>
-        <File filePath="src/wb/wb130_trans.4gl"/>
         <File filePath="src/wb/wb140_hist.4fd"/>
         <File filePath="src/wb/wb140_hist.4gl"/>
         <File filePath="src/wb/wb30_hdr.4fd"/>
         <File filePath="src/wb/wb30_hdr.4gl"/>
         <File filePath="src/wb/wb31_det.4fd"/>
         <File filePath="src/wb/wb31_det.4gl"/>
-        <File filePath="src/wb/wh30_hdr.4fd"/>
       </Application>
       <Application binaryName="wh" dependencies="31764552,497700,104908716" id="45766396" label="wh">
         <File filePath="src/wh/wh101_mast.4fd"/>
@@ -231,11 +214,6 @@
         <File filePath="src/wh/wh130_trans.4gl"/>
         <File filePath="src/wh/wh140_hist.4fd"/>
         <File filePath="src/wh/wh140_hist.4gl"/>
-        <File filePath="src/wh/wh30_hdr.4gl"/>
-        <File filePath="src/wh/wh30_trans.4fd"/>
-        <File filePath="src/wh/wh30_trans.4gl"/>
-        <File filePath="src/wh/wh31_det.4fd"/>
-        <File filePath="src/wh/wh31_det.4gl"/>
       </Application>
     </Group>
   </Group>
