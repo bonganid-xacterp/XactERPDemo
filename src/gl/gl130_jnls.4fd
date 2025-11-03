@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{adf10b20-8e42-47a2-9932-a613a025820a}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="gl30_jnls" name="rec_gl_jnls" uid="{7626850e-3d04-4cec-9146-b9908014800b}">
+    <RecordField colName="jrn_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="gl30_jnls.jrn_no" sqlTabName="gl30_jnls" uid="{27cc28c4-5b3e-4bf3-93cb-4af4e497422f}"/>
+    <RecordField colName="trans_date" fieldIdRef="2" fieldType="TABLE_COLUMN" name="gl30_jnls.trans_date" sqlTabName="gl30_jnls" uid="{bfe72335-c90a-481e-ab68-f5e427ae5e85}"/>
+    <RecordField colName="doc_type" fieldIdRef="3" fieldType="TABLE_COLUMN" name="gl30_jnls.doc_type" sqlTabName="gl30_jnls" uid="{0f3b2de1-1c60-4520-89f0-4a0e8a551325}"/>
+    <RecordField colName="ref_no" fieldIdRef="4" fieldType="TABLE_COLUMN" name="gl30_jnls.ref_no" sqlTabName="gl30_jnls" uid="{386369de-5f15-4aed-ae23-cc19f214b8db}"/>
+    <RecordField colName="doc_no" fieldIdRef="5" fieldType="TABLE_COLUMN" name="gl30_jnls.doc_no" sqlTabName="gl30_jnls" uid="{fcaae3cb-9ff0-47a8-aeb4-d84318cdb14e}"/>
+    <RecordField colName="description" fieldIdRef="6" fieldType="TABLE_COLUMN" name="gl30_jnls.description" sqlTabName="gl30_jnls" uid="{98bd8bc7-8240-4f0e-854b-2db21fb490ea}"/>
+    <RecordField colName="status" fieldIdRef="7" fieldType="TABLE_COLUMN" name="gl30_jnls.status" sqlTabName="gl30_jnls" uid="{0319689f-7afa-4cce-9f6a-3e3e3216845e}"/>
+    <RecordField colName="id" fieldIdRef="8" fieldType="TABLE_COLUMN" name="gl30_jnls.id" sqlTabName="gl30_jnls" uid="{a51d853b-fed0-4bcf-930c-7d8bef9df924}"/>
+    <RecordField colName="created_at" fieldIdRef="9" fieldType="TABLE_COLUMN" name="gl30_jnls.created_at" sqlTabName="gl30_jnls" uid="{655bc753-b332-4e29-b63a-8d0c8a8cf7e9}"/>
+    <RecordField colName="deleted_at" fieldIdRef="10" fieldType="TABLE_COLUMN" name="gl30_jnls.deleted_at" sqlTabName="gl30_jnls" uid="{b9c71e58-5a7c-4f4e-bce8-e2a86927d424}"/>
+    <RecordField colName="created_by" fieldIdRef="12" fieldType="TABLE_COLUMN" name="gl30_jnls.created_by" sqlTabName="gl30_jnls" uid="{db3c9d08-15cd-4f4d-b5ab-6ba79eb24dde}"/>
+  </Record>
+  <Form gridHeight="9" gridWidth="79" name="gl30_jnls" text="GL Journals">
+    <VBox gridHeight="8" gridWidth="78" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="6" gridWidth="78" name="gl30_jnls" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="76" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="GL JOURNALS"/>
+        <Label gridHeight="1" gridWidth="13" name="gl30_jnls_jrn_no_label1" posX="1" posY="1" text="JNL No">
+          <Initializer text="dbschema:gl30_jnls.jrn_no/@label"/>
+        </Label>
+        <Edit colName="jrn_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl30_jnls.jrn_no" posX="15" posY="1" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="JNL No" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="gl30_jnls_date_label1" posX="36" posY="1" text="Date">
+          <Initializer text="dbschema:gl30_jnls.date/@label"/>
+        </Label>
+        <DateEdit colName="trans_date" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="gl30_jnls.trans_date" posX="48" posY="1" sqlTabName="gl30_jnls" tabIndex="-1" title="Date" widget="DateEdit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </DateEdit>
+        <Label gridHeight="1" gridWidth="13" name="gl30_jnls_source_module_label1" posX="1" posY="2" text="Doc Type">
+          <Initializer text="dbschema:gl30_jnls.source_module/@label"/>
+        </Label>
+        <Edit colName="doc_type" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl30_jnls.doc_type" posX="15" posY="2" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Source Module" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="gl30_jnls_doc_type_label1" posX="36" posY="2" text="Doc Type">
+          <Initializer text="dbschema:gl30_jnls.doc_type/@label"/>
+        </Label>
+        <Edit colName="ref_no" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="23" name="gl30_jnls.ref_no" posX="48" posY="2" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Doc Type" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="13" name="gl30_jnls_doc_no_label1" posX="1" posY="3" text="Doc No">
+          <Initializer text="dbschema:gl30_jnls.doc_no/@label"/>
+        </Label>
+        <Edit colName="doc_no" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl30_jnls.doc_no" posX="15" posY="3" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Doc No" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="gl30_jnls_description_label1" posX="36" posY="3" text="Description">
+          <Initializer text="dbschema:gl30_jnls.description/@label"/>
+        </Label>
+        <Edit colName="description" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="23" name="gl30_jnls.description" posX="48" posY="3" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Description" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="13" name="gl30_jnls_status_label1" posX="1" posY="4" text="Status">
+          <Initializer text="dbschema:gl30_jnls.status/@label"/>
+        </Label>
+        <ComboBox colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" items="" name="gl30_jnls.status" posX="15" posY="4" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Status" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ComboBox>
+        <Label gridHeight="1" gridWidth="11" name="gl30_jnls_doc_type_label2" posX="36" posY="4" text="Created By">
+          <Initializer text="dbschema:gl30_jnls.doc_type/@label"/>
+        </Label>
+        <Edit colName="created_by" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="23" name="gl30_jnls.created_by" posX="48" posY="4" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Doc Type" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Phantom colName="id" fieldId="8" fieldType="TABLE_COLUMN" name="gl30_jnls.id" sqlTabName="gl30_jnls" widget="Phantom"/>
+        <Phantom colName="created_at" fieldId="9" fieldType="TABLE_COLUMN" name="gl30_jnls.created_at" sqlTabName="gl30_jnls" widget="Phantom"/>
+        <Phantom colName="deleted_at" fieldId="10" fieldType="TABLE_COLUMN" name="gl30_jnls.deleted_at" sqlTabName="gl30_jnls" widget="Phantom"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA3ADYAMgA2ADgANQAwAGUALQAzAGQAMAA0AC0ANABjAGUAYwAtADkAMQA0ADYALQBiADkAOQAwADgAMAAxADQAOAAwADAAYgB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

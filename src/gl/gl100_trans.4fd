@@ -3,39 +3,35 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="gl30_journals" name="arr_gl130_jnls" uid="{f1e33727-1926-44be-b34e-e3949dd72729}">
-    <RecordField colName="jrn_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="gl30_journals.jrn_no" sqlTabName="gl30_journals" uid="{4d15a0a7-9908-406c-baeb-bbc515590177}"/>
-    <RecordField colName="date" fieldIdRef="2" fieldType="TABLE_COLUMN" name="gl30_journals.date" sqlTabName="gl30_journals" uid="{a96e4fa3-816f-44ed-ac07-dea4b2354a4d}"/>
-    <RecordField colName="source_module" fieldIdRef="3" fieldType="TABLE_COLUMN" name="gl30_journals.source_module" sqlTabName="gl30_journals" uid="{1534ac04-11ff-42ff-b6b6-0c0457b1231d}"/>
-    <RecordField colName="doc_type" fieldIdRef="4" fieldType="TABLE_COLUMN" name="gl30_journals.doc_type" sqlTabName="gl30_journals" uid="{d616c6fb-d21e-4b7d-966c-6fd3ccd953ec}"/>
-    <RecordField colName="doc_no" fieldIdRef="5" fieldType="TABLE_COLUMN" name="gl30_journals.doc_no" sqlTabName="gl30_journals" uid="{e4e761e7-19ed-468c-a72d-8ddd783b8478}"/>
-    <RecordField colName="description" fieldIdRef="6" fieldType="TABLE_COLUMN" name="gl30_journals.description" sqlTabName="gl30_journals" uid="{2ab38b43-9652-4abe-8926-40a9940b575b}"/>
-    <RecordField colName="status" fieldIdRef="7" fieldType="TABLE_COLUMN" name="gl30_journals.status" sqlTabName="gl30_journals" uid="{ac542356-5e73-4fb9-9330-e045bbd9751b}"/>
+  <Record masterTable="gl30_jnls" name="arr_gl30_jnls" uid="{f1e33727-1926-44be-b34e-e3949dd72729}">
+    <RecordField colName="jrn_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="gl30_jnls.jrn_no" sqlTabName="gl30_jnls" uid="{4d15a0a7-9908-406c-baeb-bbc515590177}"/>
+    <RecordField colName="trans_date" fieldIdRef="2" fieldType="TABLE_COLUMN" name="gl30_jnls.trans_date" sqlTabName="gl30_jnls" uid="{a96e4fa3-816f-44ed-ac07-dea4b2354a4d}"/>
+    <RecordField colName="doc_type" fieldIdRef="4" fieldType="TABLE_COLUMN" name="gl30_jnls.doc_type" sqlTabName="gl30_jnls" uid="{d616c6fb-d21e-4b7d-966c-6fd3ccd953ec}"/>
+    <RecordField colName="doc_no" fieldIdRef="5" fieldType="TABLE_COLUMN" name="gl30_jnls.doc_no" sqlTabName="gl30_jnls" uid="{e4e761e7-19ed-468c-a72d-8ddd783b8478}"/>
+    <RecordField colName="description" fieldIdRef="6" fieldType="TABLE_COLUMN" name="gl30_jnls.description" sqlTabName="gl30_jnls" uid="{2ab38b43-9652-4abe-8926-40a9940b575b}"/>
+    <RecordField colName="status" fieldIdRef="7" fieldType="TABLE_COLUMN" name="gl30_jnls.status" sqlTabName="gl30_jnls" uid="{ac542356-5e73-4fb9-9330-e045bbd9751b}"/>
   </Record>
-  <Form gridHeight="16" gridWidth="120" name="gl130_trans" text="GL Transactions">
-    <VBox gridHeight="14" gridWidth="118" name="vbox1" posX="1" posY="1">
-      <Grid gridHeight="12" gridWidth="141" name="grd_gl130_jnls" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="113" justify="center" name="lbl_form_title" posX="2" posY="1" style="header" text="GL JOURNALS"/>
-        <Table gridHeight="9" gridWidth="115" name="gl130_jnls" posX="2" posY="2" totalRows="5">
-          <Edit colName="jrn_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="gl30_journals.jrn_no" posX="0" posY="0" scroll="true" sqlTabName="gl30_journals" tabIndex="-1" title="JNL No" widget="Edit">
+  <Form gridHeight="16" gridWidth="97" name="gl130_trans" text="GL Transactions">
+    <VBox gridHeight="14" gridWidth="96" name="vbox1" posX="1" posY="1">
+      <Grid gridHeight="12" gridWidth="118" name="grd_gl30_jnls" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="94" justify="center" name="lbl_form_title" posX="2" posY="1" style="header" text="GL JOURNALS"/>
+        <Table gridHeight="9" gridWidth="94" name="gl30_jnls" posX="2" posY="2" totalRows="5">
+          <Edit colName="jrn_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="gl30_jnls.jrn_no" posX="0" posY="0" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="JNL No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="date" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="gl30_journals.date" posX="11" posY="0" scroll="true" sqlTabName="gl30_journals" tabIndex="-1" widget="Edit">
+          <Edit colName="trans_date" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="gl30_jnls.trans_date" posX="11" posY="0" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="source_module" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl30_journals.source_module" posX="21" posY="0" scroll="true" sqlTabName="gl30_journals" tabIndex="-1" title="Source" widget="Edit">
+          <Edit colName="doc_type" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="gl30_jnls.doc_type" posX="21" posY="0" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Doc Type" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="doc_type" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="gl30_journals.doc_type" posX="41" posY="0" scroll="true" sqlTabName="gl30_journals" tabIndex="-1" title="Doc Type" widget="Edit">
+          <Edit colName="doc_no" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="gl30_jnls.doc_no" posX="31" posY="0" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Doc no" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="doc_no" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl30_journals.doc_no" posX="51" posY="0" scroll="true" sqlTabName="gl30_journals" tabIndex="-1" title="Doc no" widget="Edit">
+          <Edit colName="description" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="gl30_jnls.description" posX="39" posY="0" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Description" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="description" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="gl30_journals.description" posX="71" posY="0" scroll="true" sqlTabName="gl30_journals" tabIndex="-1" title="Description" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
-          <Edit colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="gl30_journals.status" posX="101" posY="0" scroll="true" sqlTabName="gl30_journals" tabIndex="-1" title="Status" widget="Edit">
+          <Edit colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="gl30_jnls.status" posX="69" posY="0" scroll="true" sqlTabName="gl30_jnls" tabIndex="-1" title="Status" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
         </Table>
@@ -43,6 +39,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmADEAZQAzADMANwAyADcALQAxADkAMgA2AC0ANAA0AGIAZQAtAGIAMwA0AGUALQBlADMAOQA0ADkAZABkADcAMgA3ADIAOQB9QDgAAAYAAABAOAAABgAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmADEAZQAzADMANwAyADcALQAxADkAMgA2AC0ANAA0AGIAZQAtAGIAMwA0AGUALQBlADMAOQA0ADkAZABkADcAMgA3ADIAOQB9QDgAAAwAAAJAOAAADAAAAgAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>
