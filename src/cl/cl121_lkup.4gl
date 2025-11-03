@@ -32,7 +32,7 @@ FUNCTION fetch_cred_list() RETURNS STRING
 
     LET idx = 0
     LET selected_code = NULL
-
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_cred WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
     -- Load data of all active creditors
@@ -98,11 +98,11 @@ END FUNCTION
 FUNCTION load_lookup_form_with_search() RETURNS STRING
 
     DEFINE selected_code STRING
+    
     DEFINE cred_arr DYNAMIC ARRAY OF RECORD
         acc_code LIKE cl01_mast.acc_code,
-        name LIKE cl01_mast.supp_name,
-        status LIKE cl01_mast.status,
-        lbl_status STRING
+        supp_name LIKE cl01_mast.supp_name,
+        status LIKE cl01_mast.status
     END RECORD
 
     DEFINE f_search STRING
@@ -116,18 +116,16 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
         CALL utils_globals.show_info("No creditor records found.")
         RETURN NULL
     END IF
-
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_lkup WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
 
         INPUT BY NAME f_search
             AFTER FIELD f_search
-                CALL load_creditors_for_lookup(
-                    f_search)
+                CALL load_creditors_for_lookup(f_search)
                     RETURNING cred_arr, row_count
-                CALL DIALOG.setArrayLength(
-                    "r_creditors_list", cred_arr.getLength())
+                CALL DIALOG.setArrayLength("r_creditors_list", cred_arr.getLength())
                 -- keep table on row 1 but return focus to filter
                 CALL DIALOG.setCurrentRow(
                     "r_creditors_list", IIF(row_count > 0, 1, 0))
@@ -139,7 +137,8 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
             BEFORE DISPLAY
                 CALL DIALOG.setCurrentRow("r_creditors_list", 1)
 
-            ON ACTION accept
+            ON ACTION ACCEPT
+            
                 LET sel = DIALOG.getCurrentRow("r_creditors_list")
                 IF sel > 0 AND sel <= cred_arr.getLength() THEN
                     LET selected_code = cred_arr[sel].acc_code
@@ -224,16 +223,13 @@ FUNCTION load_creditors_for_lookup(search_filter STRING)
     LET sql_stmt = sql_stmt || " ORDER BY acc_code"
 
     WHENEVER ERROR CONTINUE
+    
     PREPARE cred_prep
-        FROM "SELECT acc_code, supp_name, status, "
-            || " CASE status "
-            || "  WHEN 1 THEN 'Active' "
-            || "  WHEN 0 THEN 'Inactive' "
-            || "  WHEN -1 THEN 'Archived' "
-            || "  ELSE 'Unknown' END AS lbl_status "
+        FROM "SELECT acc_code, supp_name, status"
             || "FROM cl01_mast "
             || "WHERE acc_code ILIKE ? OR name ILIKE ? "
             || "ORDER BY acc_code";
+            
     DECLARE cred_csr2 CURSOR FOR cred_prep
 
     OPEN cred_csr2 USING search_pat, search_pat
@@ -249,6 +245,7 @@ FUNCTION load_creditors_for_lookup(search_filter STRING)
 
     CLOSE cred_csr2
     FREE cred_prep
+    
     WHENEVER ERROR STOP
 
     RETURN cred_arr, row_count
