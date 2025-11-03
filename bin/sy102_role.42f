@@ -12,7 +12,7 @@
       <Label name="lbl_sy04_role1_status" width="6" text="Status" posY="1" posX="42" gridWidth="6">
         <LStr text="Status"/>
       </Label>
-      <FormField name="sy04_role.status" colName="status" sqlType="VARCHAR(20)" fieldId="1" sqlTabName="sy04_role" defaultValue="1" notNull="1" required="1" tabIndex="2">
+      <FormField name="sy04_role.status" colName="status" sqlType="VARCHAR(10)" fieldId="1" sqlTabName="sy04_role" defaultValue="1" notNull="1" required="1" tabIndex="2">
         <ComboBox width="12" scroll="1" posY="1" posX="49" gridWidth="14">
           <Item name="0" text="Inactive"/>
           <Item name="1" text="Active"/>

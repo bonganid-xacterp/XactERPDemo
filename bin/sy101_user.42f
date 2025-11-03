@@ -18,7 +18,7 @@
       <Label name="lbl_sy00_user_phone" width="8" text="Phone Number" posY="2" posX="1" gridWidth="8">
         <LStr text="Phone Number"/>
       </Label>
-      <FormField name="sy00_user.phone" colName="phone" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="sy00_user" tabIndex="3">
+      <FormField name="sy00_user.phone" colName="phone" sqlType="VARCHAR(11)" fieldId="2" sqlTabName="sy00_user" tabIndex="3">
         <Edit width="20" scroll="1" posY="2" posX="10" gridWidth="20"/>
       </FormField>
       <Label name="lbl_sy00_user_email" width="9" text="Email" posY="2" posX="41" gridWidth="9">
@@ -36,7 +36,7 @@
       <Label name="lbl_sy00_user_status" width="9" text="Status" posY="3" posX="41" gridWidth="9">
         <LStr text="Status"/>
       </Label>
-      <FormField name="sy00_user.status" colName="status" sqlType="VARCHAR(20)" fieldId="5" sqlTabName="sy00_user" defaultValue="1" tabIndex="6">
+      <FormField name="sy00_user.status" colName="status" sqlType="VARCHAR(10)" fieldId="5" sqlTabName="sy00_user" defaultValue="1" tabIndex="6">
         <ComboBox width="8" scroll="1" posY="3" posX="51" gridWidth="10">
           <Item name="1" text="Active"/>
           <Item name="0" text="Inactive"/>

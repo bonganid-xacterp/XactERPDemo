@@ -7,7 +7,7 @@
         <LStr text="DEBTOR TRANSACTIONS"/>
       </Label>
       <Table pageSize="5" name="dl130_trans" width="126" posY="1" posX="1" gridWidth="126" gridHeight="6" tabName="+tn_0">
-        <TableColumn name="dl30_trans.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl30_trans" text="Account Code" tabIndex="1">
+        <TableColumn name="dl30_trans.acc_code" colName="acc_code" sqlType="DECIMAL(20,0)" required="1" notNull="1" fieldId="0" sqlTabName="dl30_trans" text="Account Code" tabIndex="1" numAlign="1">
           <Edit width="10" scroll="1"/>
           <LStr text="Account Code"/>
         </TableColumn>
@@ -23,7 +23,7 @@
           <Edit width="10" scroll="1"/>
           <LStr text="Doc Type"/>
         </TableColumn>
-        <TableColumn name="dl30_trans.gross_tot" colName="gross_tot" sqlType="DECIMAL(10,2)" required="1" notNull="1" fieldId="4" sqlTabName="dl30_trans" text="Gross Val" tabIndex="5" numAlign="1">
+        <TableColumn name="dl30_trans.gross_tot" colName="gross_tot" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="4" sqlTabName="dl30_trans" text="Gross Val" tabIndex="5" numAlign="1">
           <Edit width="14" scroll="1"/>
           <LStr text="Gross Val"/>
         </TableColumn>

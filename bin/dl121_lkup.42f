@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Debtors Lookup" windowStyle="dialog4" width="62" height="15">
+<Form name="dl121_lkup.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Debtors Lookup" width="52" height="15">
   <LStr text="Debtors Lookup"/>
   <VBox name="vbox1">
-    <Grid name="grid1" width="62" height="15">
-      <Label name="lbl_title" width="60" text="DEBTORS LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="60">
+    <Grid name="grid1" width="52" height="15">
+      <Label name="lbl_title" width="50" text="DEBTORS LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="50">
         <LStr text="DEBTORS LOOKUP"/>
       </Label>
-      <Table pageSize="5" name="f_debtors_list" width="59" posY="1" posX="1" gridWidth="59" gridHeight="12" tabName="r_debtors_list">
-        <TableColumn name="dl01_mast.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" text="Code" tabIndex="1">
+      <Table pageSize="5" name="f_debtors_list" width="50" posY="1" posX="1" gridWidth="50" gridHeight="12" tabName="r_debtors_list">
+        <TableColumn name="dl01_mast.acc_code" colName="acc_code" sqlType="DECIMAL(20,0)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" text="Code" tabIndex="1" numAlign="1">
           <Edit width="10" scroll="1"/>
           <LStr text="Code"/>
         </TableColumn>
@@ -15,7 +15,7 @@
           <Edit width="30" scroll="1"/>
           <LStr text="Customer Name"/>
         </TableColumn>
-        <TableColumn name="dl01_mast.status" colName="status" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="dl01_mast" text="Status" tabIndex="3">
+        <TableColumn name="dl01_mast.status" colName="status" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="dl01_mast" text="Status" tabIndex="3">
           <Edit width="6" scroll="1"/>
           <LStr text="Status"/>
         </TableColumn>

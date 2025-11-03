@@ -9,7 +9,7 @@
       <Label name="gl01_acc_acc_code_label1" width="13" text="Aaccount Code" posY="1" posX="1" gridWidth="13">
         <LStr text="Aaccount Code"/>
       </Label>
-      <FormField name="gl01_acc.acc_code" colName="acc_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="gl01_acc" tabIndex="1">
+      <FormField name="gl01_acc.acc_code" colName="acc_code" sqlType="DECIMAL(20,0)" required="1" notNull="1" fieldId="0" sqlTabName="gl01_acc" tabIndex="1">
         <Edit width="20" scroll="1" posY="1" posX="15" gridWidth="20"/>
       </FormField>
       <Label name="gl01_acc_acc_name_label1" width="14" text="Account Name" posY="1" posX="36" gridWidth="14">
@@ -33,7 +33,7 @@
       <Label name="gl01_acc_status_label1" width="13" text="Status" posY="3" posX="1" gridWidth="13">
         <LStr text="Status"/>
       </Label>
-      <FormField name="gl01_acc.status" colName="status" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="gl01_acc" tabIndex="5">
+      <FormField name="gl01_acc.status" colName="status" sqlType="VARCHAR(10)" fieldId="4" sqlTabName="gl01_acc" tabIndex="5">
         <ComboBox width="9" scroll="1" posY="3" posX="15" gridWidth="11"/>
       </FormField>
     </Grid>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="main_shell.tmp" build="3.20.14" sqlDbName="demoapp_db" text="" style="mdi" version="0.1" width="0" height="20">
+<Form name="main_shell.tmp" build="3.20.14" sqlDbName="demoapp_db" text="" style="" version="0.1" width="0" height="20">
   <TopMenu name="top_menu">
     <TopMenuGroup name="tm_main" text="File">
       <LStr text="File"/>
@@ -10,60 +10,57 @@
     </TopMenuGroup>
     <TopMenuGroup name="tm_dl" text="Debtors">
       <LStr text="Debtors"/>
-      <TopMenuCommand name="dl_enq" image="open" text="Debtor Enquiry">
+      <TopMenuCommand name="open_debtors" image="open" text="Debtor Enquiry">
         <LStr text="Debtor Enquiry"/>
       </TopMenuCommand>
-      <TopMenuCommand name="dl_maint" image="pen" text="Debtor Maintanance">
-        <LStr text="Debtor Maintanance"/>
+      <TopMenuCommand name="open_debtors_trans" image="database" text="Debtor Transactions">
+        <LStr text="Debtor Transactions"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_cl" text="Creditors">
       <LStr text="Creditors"/>
-      <TopMenuCommand name="cl_enq" image="open" text="Creditors Enquiry">
+      <TopMenuCommand name="open_creditors" image="open" text="Creditors Enquiry">
         <LStr text="Creditors Enquiry"/>
       </TopMenuCommand>
-      <TopMenuCommand name="cl_maint" image="pen" text="Creditors Maintanance">
+      <TopMenuCommand name="open_creditors" image="pen" text="Creditors Maintanance">
         <LStr text="Creditors Maintanance"/>
       </TopMenuCommand>
       <TopMenuSeparator name="topmenuseparator1"/>
       <TopMenuGroup name="topmenugroup1" text="Creditors Reports">
         <LStr text="Creditors Reports"/>
-        <TopMenuCommand name="rp_supp_agng" text="Age Analysis">
+        <TopMenuCommand name="view_cred_age_report" text="Age Analysis">
           <LStr text="Age Analysis"/>
-        </TopMenuCommand>
-        <TopMenuCommand name="rp_prod_by_supp" text="Products By Supplier">
-          <LStr text="Products By Supplier"/>
         </TopMenuCommand>
       </TopMenuGroup>
     </TopMenuGroup>
     <TopMenuGroup name="tm_st" text="Stock">
       <LStr text="Stock"/>
-      <TopMenuCommand name="st_enq" image="open" text="Stock Enquiry">
+      <TopMenuCommand name="open_ro_stock" image="open" text="Stock Enquiry">
         <LStr text="Stock Enquiry"/>
       </TopMenuCommand>
-      <TopMenuCommand name="st_maint" image="pen" text="Stock Maintainance">
+      <TopMenuCommand name="open_stock" image="pen" text="Stock Maintainance">
         <LStr text="Stock Maintainance"/>
       </TopMenuCommand>
       <TopMenuSeparator name="topmenuseparator4"/>
-      <TopMenuCommand name="st_cat_enq" image="open" text="S/Category Enquiry">
+      <TopMenuCommand name="open_ro_st_cat" image="open" text="S/Category Enquiry">
         <LStr text="S/Category Enquiry"/>
       </TopMenuCommand>
-      <TopMenuCommand name="st_cat_maint" image="pen" text="S/Category Maintanance">
+      <TopMenuCommand name="open_st_cat" image="pen" text="S/Category Maintanance">
         <LStr text="S/Category Maintanance"/>
       </TopMenuCommand>
       <TopMenuSeparator name="topmenuseparator3"/>
-      <TopMenuCommand name="wh_maint" image="pen" text="WH Maintanance">
-        <LStr text="WH Maintanance"/>
-      </TopMenuCommand>
-      <TopMenuCommand name="wh_enq" image="open" text="WH Enquiry">
+      <TopMenuCommand name="open_ro_wh" image="open" text="WH Enquiry">
         <LStr text="WH Enquiry"/>
       </TopMenuCommand>
-      <TopMenuSeparator name="topmenuseparator5"/>
-      <TopMenuCommand name="wb_enq" image="open" text="WH Bin Enquiry">
-        <LStr text="WH Bin Enquiry"/>
+      <TopMenuCommand name="open_wh" image="pen" text="Wh Stock Movement">
+        <LStr text="Wh Stock Movement"/>
       </TopMenuCommand>
-      <TopMenuCommand name="wb_maint" image="pen" text="WH Bin Maintanance">
-        <LStr text="WH Bin Maintanance"/>
+      <TopMenuSeparator name="topmenuseparator5"/>
+      <TopMenuCommand name="open_bins" image="open" text="WH Bins">
+        <LStr text="WH Bins"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="open_bins_hist" image="database" text="Bins History">
+        <LStr text="Bins History"/>
       </TopMenuCommand>
     </TopMenuGroup>
     <TopMenuGroup name="tm_gl" tag="" text="Finance">
@@ -140,11 +137,11 @@
         <LStr text="Users Maintainance"/>
       </TopMenuCommand>
       <TopMenuSeparator name="topmenuseparator13"/>
-      <TopMenuCommand name="sy_perm_maint" image="pen" text="Permissions Maintainance">
-        <LStr text="Permissions Maintainance"/>
-      </TopMenuCommand>
       <TopMenuCommand name="sys_perm_enq" image="open" text="Permissions Enquiry">
         <LStr text="Permissions Enquiry"/>
+      </TopMenuCommand>
+      <TopMenuCommand name="sy_perm_maint" image="pen" text="Permissions Maintainance">
+        <LStr text="Permissions Maintainance"/>
       </TopMenuCommand>
       <TopMenuCommand name="sy_roles_maint" image="pen" text="Roles Maintainance">
         <LStr text="Roles Maintainance"/>
@@ -192,8 +189,8 @@
     </TopMenuGroup>
   </TopMenu>
   <LStr text=""/>
-  <Group name="mdi_container" text="" style="mdi_container">
+  <Group name="workarea" text="">
     <LStr text=""/>
-    <Grid name="mdi_wrapper" width="0" height="20" style="mdi_wrapper"/>
+    <Grid name="main_shell_grid" width="0" height="20"/>
   </Group>
 </Form>

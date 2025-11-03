@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="st102_cat.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Stock Category" windowStyle="child" width="105" height="11">
+<Form name="st102_cat.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Stock Category" windowStyle="child" width="96" height="11">
   <LStr text="Stock Category"/>
   <VBox name="vbox1">
-    <Grid name="st02_cat_grd" width="84" height="6">
-      <Label name="lbl_form_title" width="80" text="Stock Category" justify="center" style="title" posY="0" posX="1" gridWidth="80">
-        <LStr text="Stock Category"/>
+    <Grid name="st02_cat_grd" width="82" height="6">
+      <Label name="lbl_form_title" width="80" text="STOCK CATEGORY" justify="center" style="title" posY="0" posX="1" gridWidth="80">
+        <LStr text="STOCK CATEGORY"/>
       </Label>
       <Label name="st02_mast_cat_code" width="11" text="Category Code" posY="1" posX="1" gridWidth="11">
         <LStr text="Category Code"/>
@@ -16,7 +16,7 @@
         <LStr text="Category Name"/>
       </Label>
       <FormField name="st02_cat.cat_name" colName="cat_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="st02_cat" tabIndex="2">
-        <Edit width="30" scroll="1" posY="1" posX="53" gridWidth="30"/>
+        <Edit width="28" scroll="1" posY="1" posX="53" gridWidth="28"/>
       </FormField>
       <Label name="st02_mast_description" width="11" text="Description" posY="2" posX="1" gridWidth="11">
         <LStr text="Description"/>
@@ -27,7 +27,7 @@
       <Label name="st02_mast_status" width="8" text="Status" posY="2" posX="44" gridWidth="8">
         <LStr text="Status"/>
       </Label>
-      <FormField name="st02_cat.status" colName="status" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="st02_cat" tabIndex="4" defaultValue="1" notNull="1" required="1">
+      <FormField name="st02_cat.status" colName="status" sqlType="VARCHAR(10)" fieldId="3" sqlTabName="st02_cat" tabIndex="4" defaultValue="1" notNull="1" required="1">
         <ComboBox width="8" scroll="1" posY="2" posX="53" gridWidth="10">
           <Item name="1" text="Inactive">
             <LStr text="Inactive"/>
@@ -46,18 +46,18 @@
         <LStr text="Stock"/>
         <Table pageSize="5" name="demoapp_db1" tabName="arr_stock">
           <TableColumn name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="4" sqlTabName="st01_mast" text="Stock Code" tabIndex="5">
-            <ButtonEdit width="18" scroll="1"/>
+            <ButtonEdit width="9" scroll="1"/>
             <LStr text="Stock Code"/>
           </TableColumn>
           <TableColumn name="st01_mast.description" colName="description" sqlType="VARCHAR(150)" required="1" notNull="1" fieldId="5" sqlTabName="st01_mast" text="Ddescription" tabIndex="6">
             <Edit width="30" scroll="1"/>
             <LStr text="Ddescription"/>
           </TableColumn>
-          <TableColumn name="st01_mast.cost" colName="cost" sqlType="DECIMAL(12,2)" fieldId="6" sqlTabName="st01_mast" text="Product Cost" tabIndex="7" numAlign="1">
+          <TableColumn name="st01_mast.unit_cost" colName="unit_cost" sqlType="DECIMAL(12,2)" fieldId="6" sqlTabName="st01_mast" text="Product Cost" tabIndex="7" numAlign="1">
             <Edit width="14" scroll="1"/>
             <LStr text="Product Cost"/>
           </TableColumn>
-          <TableColumn name="st01_mast.selling_price" colName="selling_price" sqlType="DECIMAL(12,2)" fieldId="7" sqlTabName="st01_mast" text="Selling Price" tabIndex="8" numAlign="1">
+          <TableColumn name="st01_mast.sell_price" colName="sell_price" sqlType="DECIMAL(12,2)" fieldId="7" sqlTabName="st01_mast" text="Selling Price" tabIndex="8" numAlign="1">
             <Edit width="14" scroll="1"/>
             <LStr text="Selling Price"/>
           </TableColumn>
@@ -65,22 +65,9 @@
             <Edit width="14" scroll="1"/>
             <LStr text="Stock On Hand"/>
           </TableColumn>
-          <TableColumn name="st01_mast.status" colName="status" sqlType="VARCHAR(20)" fieldId="9" sqlTabName="st01_mast" text="Status" tabIndex="10">
+          <TableColumn name="st01_mast.status" colName="status" sqlType="VARCHAR(10)" fieldId="9" sqlTabName="st01_mast" text="Status" tabIndex="10">
             <Edit width="6" scroll="1"/>
             <LStr text="Status"/>
-          </TableColumn>
-        </Table>
-      </Page>
-      <Page name="st_cat_hist" text="Logs" image="fa-area-chart">
-        <LStr text="Logs"/>
-        <Table pageSize="5" name="table1" tabName="record2">
-          <TableColumn name="formonly.edit1" colName="edit1" fieldId="10" sqlTabName="formonly" text="edit1" tabIndex="11">
-            <Edit width="8"/>
-            <LStr text="edit1"/>
-          </TableColumn>
-          <TableColumn name="formonly.edit2" colName="edit2" fieldId="11" sqlTabName="formonly" text="edit2" tabIndex="12">
-            <Edit width="8"/>
-            <LStr text="edit2"/>
           </TableColumn>
         </Table>
       </Page>
@@ -95,14 +82,10 @@
   <RecordView tabName="st01_mast">
     <Link colName="stock_code" fieldIdRef="4"/>
     <Link colName="description" fieldIdRef="5"/>
-    <Link colName="cost" fieldIdRef="6"/>
-    <Link colName="selling_price" fieldIdRef="7"/>
+    <Link colName="unit_cost" fieldIdRef="6"/>
+    <Link colName="sell_price" fieldIdRef="7"/>
     <Link colName="stock_on_hand" fieldIdRef="8"/>
     <Link colName="status" fieldIdRef="9"/>
-  </RecordView>
-  <RecordView tabName="formonly">
-    <Link colName="edit1" fieldIdRef="10"/>
-    <Link colName="edit2" fieldIdRef="11"/>
   </RecordView>
   <RecordView tabName="rec_st_cat">
     <Link colName="cat_code" fieldIdRef="0"/>

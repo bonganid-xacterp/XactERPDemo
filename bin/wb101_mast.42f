@@ -1,44 +1,74 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="wb101_mast.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Form" width="80" height="18">
+<Form name="wb101_mast.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Form" width="77" height="4">
   <LStr text="Form"/>
   <VBox name="vbox1">
-    <Grid name="xactapp_db1" width="80" height="18">
+    <Grid name="xactapp_db1" width="77" height="4">
+      <Label name="lbl_title" width="75" text="WAREHOUSE BIN" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="75">
+        <LStr text="WAREHOUSE BIN"/>
+      </Label>
       <Label name="wb01_mast_wb_code_label1" width="11" text="Bin Code" posY="1" posX="1" gridWidth="11">
         <LStr text="Bin Code"/>
       </Label>
       <FormField name="wb01_mast.wb_code" colName="wb_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="wb01_mast" tabIndex="1">
-        <Edit width="20" scroll="1" posY="1" posX="13" gridWidth="20"/>
+        <ButtonEdit width="18" image="zoom" scroll="1" posY="1" posX="13" gridWidth="20"/>
       </FormField>
-      <Label name="wb01_mast_wh_id_label1" width="14" text="Warehouse Code" posY="1" posX="44" gridWidth="14">
+      <Label name="wb01_mast_wh_wh_code_lbl" width="14" text="Warehouse Code" posY="1" posX="41" gridWidth="14">
         <LStr text="Warehouse Code"/>
       </Label>
-      <FormField name="wb01_mast.wh_id" colName="wh_id" sqlType="BIGINT" required="1" notNull="1" fieldId="1" sqlTabName="wb01_mast" tabIndex="2">
-        <ButtonEdit width="18" scroll="1" posY="1" posX="59" gridWidth="20"/>
+      <FormField name="wh01_mast.wh_code" colName="wh_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="1" sqlTabName="wh01_mast" tabIndex="2">
+        <ButtonEdit width="18" image="zoom" scroll="1" posY="1" posX="56" gridWidth="20"/>
       </FormField>
       <Label name="wb01_mast_description_label1" width="11" text="Description" posY="2" posX="1" gridWidth="11">
         <LStr text="Description"/>
       </Label>
       <FormField name="wb01_mast.description" colName="description" sqlType="VARCHAR(100)" fieldId="2" sqlTabName="wb01_mast" tabIndex="3">
-        <Edit width="30" scroll="1" posY="2" posX="13" gridWidth="30"/>
+        <Edit width="26" scroll="1" posY="2" posX="13" gridWidth="26"/>
       </FormField>
-      <Label name="wb01_mast_status_label1" width="14" text="Status" posY="2" posX="44" gridWidth="14">
+      <Label name="wb01_mast_status_label1" width="14" text="Status" posY="2" posX="41" gridWidth="14">
         <LStr text="Status"/>
       </Label>
-      <FormField name="wb01_mast.status" colName="status" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="wb01_mast" tabIndex="4">
-        <ComboBox width="4" scroll="1" posY="2" posX="59" gridWidth="6"/>
+      <FormField name="wb01_mast.status" colName="status" sqlType="VARCHAR(10)" fieldId="3" sqlTabName="wb01_mast" tabIndex="4">
+        <ComboBox width="8" scroll="1" posY="2" posX="56" gridWidth="10"/>
       </FormField>
+      <PhantomFormField name="wb01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="4" sqlTabName="wb01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="wb01_mast.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="5" sqlTabName="wb01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="wb01_mast.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="6" sqlTabName="wb01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="wb01_mast.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="7" sqlTabName="wb01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="wb01_mast.created_by" colName="created_by" sqlType="BIGINT" fieldId="8" sqlTabName="wb01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
     </Grid>
   </VBox>
+  <RecordView tabName="wh01_mast">
+    <Link colName="wh_code" fieldIdRef="1"/>
+  </RecordView>
   <RecordView tabName="wb01_mast">
     <Link colName="wb_code" fieldIdRef="0"/>
-    <Link colName="wh_id" fieldIdRef="1"/>
     <Link colName="description" fieldIdRef="2"/>
     <Link colName="status" fieldIdRef="3"/>
+    <Link colName="id" fieldIdRef="4"/>
+    <Link colName="created_at" fieldIdRef="5"/>
+    <Link colName="updated_at" fieldIdRef="6"/>
+    <Link colName="deleted_at" fieldIdRef="7"/>
+    <Link colName="created_by" fieldIdRef="8"/>
   </RecordView>
-  <RecordView tabName="record1">
+  <RecordView tabName="record2">
     <Link colName="wb_code" fieldIdRef="0"/>
-    <Link colName="wh_id" fieldIdRef="1"/>
+    <Link colName="wh_code" fieldIdRef="1"/>
     <Link colName="description" fieldIdRef="2"/>
     <Link colName="status" fieldIdRef="3"/>
+    <Link colName="id" fieldIdRef="4"/>
+    <Link colName="created_at" fieldIdRef="5"/>
+    <Link colName="updated_at" fieldIdRef="6"/>
+    <Link colName="deleted_at" fieldIdRef="7"/>
+    <Link colName="created_by" fieldIdRef="8"/>
   </RecordView>
 </Form>

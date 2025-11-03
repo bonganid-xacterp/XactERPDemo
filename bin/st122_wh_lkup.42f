@@ -15,7 +15,7 @@
           <Edit width="30" scroll="1"/>
           <LStr text="Name"/>
         </TableColumn>
-        <TableColumn name="wh01_mast.status" colName="status" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="wh01_mast" text="Status" hidden="1" tabIndex="3">
+        <TableColumn name="wh01_mast.status" colName="status" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="wh01_mast" text="Status" hidden="1" tabIndex="3">
           <Edit width="6" scroll="1"/>
           <LStr text="Status"/>
         </TableColumn>

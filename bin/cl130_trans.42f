@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="cl130_trans.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Creditor Transactions" width="114" height="17">
+<Form name="cl130_trans.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Creditor Transactions" width="89" height="17">
   <LStr text="Creditor Transactions"/>
   <VBox name="vbox1">
-    <Table pageSize="15" name="xactapp_db1" tabName="rec_cl_trans">
+    <Table pageSize="15" name="tbl_cl_trans" tabName="arr_cl_trans">
       <TableColumn name="cl30_trans.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="0" sqlTabName="cl30_trans" text="Trans Date" tabIndex="1">
         <Edit width="10" scroll="1"/>
         <LStr text="Trans Date"/>
@@ -15,7 +15,7 @@
         <Edit width="20" scroll="1"/>
         <LStr text="Doc No"/>
       </TableColumn>
-      <TableColumn name="cl30_trans.gross_val" colName="gross_val" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="3" sqlTabName="cl30_trans" text="Total Excl" tabIndex="4" numAlign="1">
+      <TableColumn name="cl30_trans.gross_tot" colName="gross_tot" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="3" sqlTabName="cl30_trans" text="Total Excl" tabIndex="4" numAlign="1">
         <Edit width="14" scroll="1"/>
         <LStr text="Total Excl"/>
       </TableColumn>
@@ -23,13 +23,9 @@
         <Edit width="14" scroll="1"/>
         <LStr text="VAT"/>
       </TableColumn>
-      <TableColumn name="formonly.net_tot" colName="net_tot" fieldId="5" sqlTabName="formonly" text="Total Excl" tabIndex="6">
-        <Edit width="8"/>
-        <LStr text="Total Excl"/>
-      </TableColumn>
-      <TableColumn name="cl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="6" sqlTabName="cl30_trans" text="Notes" tabIndex="7">
-        <Edit width="30" scroll="1"/>
-        <LStr text="Notes"/>
+      <TableColumn name="cl30_trans.net_tot" colName="net_tot" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="5" sqlTabName="cl30_trans" text="Net Total" tabIndex="6" numAlign="1">
+        <Edit width="14" scroll="1"/>
+        <LStr text="Net Total"/>
       </TableColumn>
     </Table>
   </VBox>
@@ -37,11 +33,8 @@
     <Link colName="trans_date" fieldIdRef="0"/>
     <Link colName="doc_type" fieldIdRef="1"/>
     <Link colName="doc_no" fieldIdRef="2"/>
-    <Link colName="gross_val" fieldIdRef="3"/>
+    <Link colName="gross_tot" fieldIdRef="3"/>
     <Link colName="vat" fieldIdRef="4"/>
-    <Link colName="notes" fieldIdRef="6"/>
-  </RecordView>
-  <RecordView tabName="formonly">
     <Link colName="net_tot" fieldIdRef="5"/>
   </RecordView>
 </Form>

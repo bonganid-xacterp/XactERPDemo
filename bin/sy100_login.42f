@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="sy100_login.tmp" build="3.20.14" sqlDbName="demoapp_db" text="" style="" windowStyle="" width="32" height="14">
-  <LStr text=""/>
+<Form name="sy100_login.tmp" build="3.20.14" sqlDbName="demoapp_db" text="xactDemo App - Login " windowStyle="" width="32" height="14">
+  <LStr text="xactDemo App - Login "/>
   <VBox name="vbox1">
     <Grid name="login_grid" width="32" height="14">
-      <Image name="company_logo" width="30" height="8" image="logo.png" autoScale="1" stretch="both" sizePolicy="dynamic" posY="1" posX="1" gridWidth="30" gridHeight="8"/>
+      <Image name="company_logo" width="30" height="8" image="/company_logo.png" stretch="both" sizePolicy="dynamic" posY="1" posX="1" gridWidth="30" gridHeight="8"/>
       <Label name="lbl_username" width="10" text="Username" posY="10" posX="1" gridWidth="10">
         <LStr text="Username"/>
       </Label>

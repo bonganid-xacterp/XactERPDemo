@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="st122_cat_lkup.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Stock Category Lookup " width="64" height="16">
+<Form name="st122_cat_lkup.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Stock Category Lookup " width="55" height="16">
   <LStr text="Stock Category Lookup "/>
   <VBox name="vbox1">
-    <Grid name="grd_wh" width="64" height="16">
-      <Label name="lbl_title" width="62" text="STOCK CATEGORY LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="62">
+    <Grid name="grd_wh" width="55" height="16">
+      <Label name="lbl_title" width="53" text="STOCK CATEGORY LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="53">
         <LStr text="STOCK CATEGORY LOOKUP"/>
       </Label>
-      <Table pageSize="11" name="f_st_list" width="62" posY="1" posX="1" gridWidth="62" gridHeight="12" tabName="r_st_cat_list">
-        <TableColumn name="st02_cat.cat_code" colName="cat_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="st02_cat" text="Stock Code" tabIndex="1">
-          <Edit width="20" scroll="1"/>
-          <LStr text="Stock Code"/>
+      <Table pageSize="11" name="f_st_list" width="54" posY="1" posX="1" gridWidth="54" gridHeight="12" tabName="r_st_cat_list">
+        <TableColumn name="st02_cat.cat_code" colName="cat_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="st02_cat" text="Code" tabIndex="1">
+          <Edit width="12" scroll="1"/>
+          <LStr text="Code"/>
         </TableColumn>
         <TableColumn name="st02_cat.cat_name" colName="cat_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="st02_cat" text="Description" tabIndex="2">
           <Edit width="30" scroll="1"/>
@@ -20,11 +20,11 @@
           <LStr text="Status"/>
         </TableColumn>
       </Table>
-      <Label name="lbl_filter" width="9" text="Filter" posY="14" posX="1" gridWidth="9">
+      <Label name="lbl_filter" width="9" text="Filter" posY="13" posX="1" gridWidth="9">
         <LStr text="Filter"/>
       </Label>
       <FormField name="formonly.f_search" colName="f_search" fieldId="3" sqlTabName="formonly" tabIndex="4">
-        <Edit width="29" placeholder="Search category" posY="14" posX="11" gridWidth="29">
+        <Edit width="29" placeholder="Search category" posY="13" posX="11" gridWidth="29">
           <LStr placeholder="Search category"/>
         </Edit>
       </FormField>
