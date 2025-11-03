@@ -3,100 +3,130 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="pu30_hdr" name="rec_pu130_odr" uid="{b5655c7c-d242-412d-b2de-b41c56f6a82e}">
-    <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="pu30_hdr.doc_no" sqlTabName="pu30_hdr" uid="{c670d0fe-0718-417d-8a57-75831945ba34}"/>
-    <RecordField colName="acc_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="pu30_hdr.acc_code" sqlTabName="pu30_hdr" uid="{fdd8e2ea-da5d-4505-84d8-fcef59a3bc9f}"/>
-    <RecordField colName="date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="pu30_hdr.date" sqlTabName="pu30_hdr" uid="{bf53cc76-d938-4c20-9f1a-21ea422e8d89}"/>
-    <RecordField colName="total_value" fieldIdRef="4" fieldType="TABLE_COLUMN" name="pu30_hdr.total_value" sqlTabName="pu30_hdr" uid="{ebf6b83e-740b-4f23-9d5d-f83ea65a3b1a}"/>
-    <RecordField colName="vat" fieldIdRef="5" fieldType="TABLE_COLUMN" name="pu30_hdr.vat" sqlTabName="pu30_hdr" uid="{02f564cf-7dff-4eee-9513-b1d7b9a35f1c}"/>
-    <RecordField colName="status" fieldIdRef="6" fieldType="TABLE_COLUMN" name="pu30_hdr.status" sqlTabName="pu30_hdr" uid="{dfae6f90-cade-41ff-a404-00dcb9b22537}"/>
-    <RecordField colName="created_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="pu30_hdr.created_at" sqlTabName="pu30_hdr" uid="{70c6f921-da0c-413a-86e8-8c5c1f449f52}"/>
-    <RecordField colName="created_by" fieldIdRef="8" fieldType="TABLE_COLUMN" name="pu30_hdr.created_by" sqlTabName="pu30_hdr" uid="{a7c45437-7ed0-4464-9301-b1fc66baefe4}"/>
+  <Record masterTable="pu30_ord_hdr" name="po_hdr_rec" uid="{b5655c7c-d242-412d-b2de-b41c56f6a82e}">
+    <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.doc_no" sqlTabName="pu30_ord_hdr" uid="{c670d0fe-0718-417d-8a57-75831945ba34}"/>
+    <RecordField colName="acc_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.acc_code" sqlTabName="pu30_ord_hdr" uid="{fdd8e2ea-da5d-4505-84d8-fcef59a3bc9f}"/>
+    <RecordField colName="trans_date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.trans_date" sqlTabName="pu30_ord_hdr" uid="{bf53cc76-d938-4c20-9f1a-21ea422e8d89}"/>
+    <RecordField colName="gross_tot" fieldIdRef="4" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.gross_tot" sqlTabName="pu30_ord_hdr" uid="{ebf6b83e-740b-4f23-9d5d-f83ea65a3b1a}"/>
+    <RecordField colName="vat" fieldIdRef="5" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.vat" sqlTabName="pu30_ord_hdr" uid="{02f564cf-7dff-4eee-9513-b1d7b9a35f1c}"/>
+    <RecordField colName="status" fieldIdRef="6" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.status" sqlTabName="pu30_ord_hdr" uid="{dfae6f90-cade-41ff-a404-00dcb9b22537}"/>
+    <RecordField colName="ref_no" fieldIdRef="7" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.ref_no" sqlTabName="pu30_ord_hdr" uid="{70c6f921-da0c-413a-86e8-8c5c1f449f52}"/>
+    <RecordField colName="created_by" fieldIdRef="8" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.created_by" sqlTabName="pu30_ord_hdr" uid="{a7c45437-7ed0-4464-9301-b1fc66baefe4}"/>
+    <RecordField colName="id" fieldIdRef="12" fieldType="TABLE_COLUMN" name="pu30_ord_det.id" sqlTabName="pu30_ord_det" uid="{0c17e6e9-d71e-4352-b73a-04795256a021}"/>
+    <RecordField colName="batch_id" fieldIdRef="17" fieldType="TABLE_COLUMN" name="pu30_ord_det.batch_id" sqlTabName="pu30_ord_det" uid="{cbe22a59-c461-49c1-a0c3-20ec598f34a4}"/>
+    <RecordField colName="net_tot" fieldIdRef="9" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.net_tot" sqlTabName="pu30_ord_hdr" uid="{da7ca626-213b-401c-a2ea-05eb7be0f56a}"/>
+    <RecordField colName="id" fieldIdRef="13" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.id" sqlTabName="pu30_ord_hdr" uid="{a942a654-ff36-4971-a7c9-7748938cef9f}"/>
+    <RecordField colName="disc" fieldIdRef="18" fieldType="TABLE_ALIAS" name="pu30_ord_hdr1.disc" sqlTabName="pu30_ord_hdr" table_alias_name="pu30_ord_hdr1" uid="{2b01b349-3ef1-4ee6-a425-171f86d81494}"/>
+    <RecordField colName="acc_code" fieldIdRef="20" fieldType="TABLE_ALIAS" name="pu30_ord_hdr1.acc_code" sqlTabName="pu30_ord_hdr" table_alias_name="pu30_ord_hdr1" uid="{ae86b310-f925-4bfe-8138-d983a641c678}"/>
+    <RecordField colName="created_at" fieldIdRef="21" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.created_at" sqlTabName="pu30_ord_hdr" uid="{52ec4dea-6396-4f25-9a17-91bfd28d89ab}"/>
+    <RecordField colName="updated_at" fieldIdRef="22" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.updated_at" sqlTabName="pu30_ord_hdr" uid="{857cbb04-0ff5-4bee-a6a8-12a7a6a9dd43}"/>
+    <RecordField colName="deleted_at" fieldIdRef="23" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.deleted_at" sqlTabName="pu30_ord_hdr" uid="{a81ecd06-836d-40c9-b535-0671b56cf407}"/>
   </Record>
-  <Record masterTable="pu30_det" name="record1" uid="{3a025588-01b6-4b86-b3f4-20ba0a35d4f9}">
-    <RecordField colName="doc_no" fieldIdRef="9" fieldType="TABLE_COLUMN" name="pu30_det.doc_no" sqlTabName="pu30_det" uid="{49f16b20-bd0a-409f-81f6-48dca5a41315}"/>
-    <RecordField colName="item_no" fieldIdRef="10" fieldType="TABLE_COLUMN" name="pu30_det.item_no" sqlTabName="pu30_det" uid="{14fd425d-a49c-42f0-be2b-43398ee61512}"/>
-    <RecordField colName="stock_code" fieldIdRef="11" fieldType="TABLE_COLUMN" name="pu30_det.stock_code" sqlTabName="pu30_det" uid="{e4041e85-92af-41fa-8738-1374ebc76737}"/>
-    <RecordField colName="qty" fieldIdRef="14" fieldType="TABLE_COLUMN" name="pu30_det.qty" sqlTabName="pu30_det" uid="{9b2a1748-eb3e-488f-8c48-e36f20e7e2c6}"/>
-    <RecordField colName="unit_cost" fieldIdRef="15" fieldType="TABLE_COLUMN" name="pu30_det.unit_cost" sqlTabName="pu30_det" uid="{2974fb8f-3bbe-4489-ab94-b52aadcca81d}"/>
-    <RecordField colName="total" fieldIdRef="16" fieldType="TABLE_COLUMN" name="pu30_det.total" sqlTabName="pu30_det" uid="{a32377ea-ffa3-40c4-b96d-ddaff7aa76dd}"/>
+  <Record masterTable="pu30_ord_det" name="po_lines_arr" uid="{80c318dd-6b83-47a9-b0f1-e19755ab48c0}">
+    <RecordField colName="vat" fieldIdRef="16" fieldType="TABLE_COLUMN" name="pu30_ord_det.vat" sqlTabName="pu30_ord_det" uid="{b07efed3-1ac5-435e-b4c5-a9f13cae493f}"/>
+    <RecordField colName="stock_code" fieldIdRef="10" fieldType="TABLE_COLUMN" name="pu30_ord_det.stock_code" sqlTabName="pu30_ord_det" uid="{ccb596d5-8868-463b-af7f-842d2c32cea1}"/>
+    <RecordField colName="qnty" fieldIdRef="11" fieldType="TABLE_COLUMN" name="pu30_ord_det.qnty" sqlTabName="pu30_ord_det" uid="{8a03b244-cf21-4f65-8616-03e20b5e8a37}"/>
+    <RecordField colName="description" fieldIdRef="15" fieldType="TABLE_COLUMN" name="st01_mast.description" sqlTabName="st01_mast" uid="{8c279ff2-791f-4bab-9511-1e4549c208ef}"/>
+    <RecordField colName="unit_cost" fieldIdRef="14" fieldType="TABLE_COLUMN" name="pu30_ord_det.unit_cost" sqlTabName="pu30_ord_det" uid="{a68816b2-f79b-400b-97c7-fa577c4a96ef}"/>
+    <RecordField colName="line_tot" fieldIdRef="19" fieldType="TABLE_COLUMN" name="pu30_ord_det.line_tot" sqlTabName="pu30_ord_det" uid="{5a7d22bd-73c8-4fef-b0e1-9146543a0134}"/>
   </Record>
-  <Form gridHeight="25" gridWidth="92" name="pu130_ord" text="Purchase Order">
-    <VBox gridHeight="20" gridWidth="92" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="134" name="pu130_ord_hdr" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="88" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="PURCHASE ORDER"/>
-        <Label gridHeight="1" gridWidth="10" name="pu30_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
-          <Initializer text="dbschema:pu30_hdr.doc_no/@label"/>
+  <Form gridHeight="25" gridWidth="68" name="pu130_ord" text="Purchase Order">
+    <VBox gridHeight="21" gridWidth="68" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="6" gridWidth="68" name="pu130_ord_hdr" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="67" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="PURCHASE ORDER"/>
+        <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
+          <Initializer text="dbschema:pu30_ord_hdr.doc_no/@label"/>
         </Label>
-        <Edit colName="doc_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu30_hdr.doc_no" noEntry="true" notNull="false" posX="12" posY="1" required="false" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="Doc No" widget="Edit">
+        <Edit colName="doc_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_ord_hdr.doc_no" noEntry="true" notNull="false" posX="8" posY="1" required="false" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Doc No" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="10" name="pu30_hdr_date_label1" posX="38" posY="1" text="Date">
-          <Initializer text="dbschema:pu30_hdr.date/@label"/>
+        <Label gridHeight="1" gridWidth="7" name="pu30_ord_hdr_date_label1" posX="20" posY="1" text="Date">
+          <Initializer text="dbschema:pu30_ord_hdr.date/@label"/>
         </Label>
-        <DateEdit colName="date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_hdr.date" posX="49" posY="1" sqlTabName="pu30_hdr" tabIndex="-1" title="Date" widget="DateEdit">
+        <DateEdit colName="trans_date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_ord_hdr.trans_date" posX="33" posY="1" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Date" widget="DateEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </DateEdit>
-        <Label gridHeight="1" gridWidth="10" name="pu30_hdr_acc_code_label1" posX="1" posY="2" text="Account Code">
-          <Initializer text="dbschema:pu30_hdr.acc_code/@label"/>
+        <Label gridHeight="1" gridWidth="8" name="pu30_ord_hdr_total_value_label1" posX="44" posY="1" text="Gross Total">
+          <Initializer text="dbschema:pu30_ord_hdr.total_value/@label"/>
         </Label>
-        <ButtonEdit colName="acc_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="pu30_hdr.acc_code" posX="12" posY="2" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="Account Code" widget="ButtonEdit">
+        <Edit colName="gross_tot" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_ord_hdr.gross_tot" noEntry="true" posX="53" posY="1" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Total Value" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_acc_code_label1" posX="1" posY="2" text="Supplier">
+          <Initializer text="dbschema:pu30_ord_hdr.acc_code/@label"/>
+        </Label>
+        <ButtonEdit colName="acc_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" image="zoom" name="pu30_ord_hdr.acc_code" picture="" posX="8" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Account Code" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ButtonEdit>
-        <Label gridHeight="1" gridWidth="12" name="pu30_hdr_total_value_label1" posX="38" posY="2" text="Total Value">
-          <Initializer text="dbschema:pu30_hdr.total_value/@label"/>
-        </Label>
-        <Edit colName="total_value" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_hdr.total_value" noEntry="true" posX="51" posY="2" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="Total Value" widget="Edit">
+        <Edit colName="acc_code" fieldId="20" fieldType="TABLE_ALIAS" gridHeight="1" gridWidth="23" name="pu30_ord_hdr1.acc_code" picture="" posX="20" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" table_alias_name="pu30_ord_hdr1" title="Account Code" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="10" name="pu30_hdr_vat_label1" posX="1" posY="3" text="VAT">
-          <Initializer text="dbschema:pu30_hdr.vat/@label"/>
+        <Label gridHeight="1" gridWidth="8" name="pu30_ord_hdr_vat_label1" posX="44" posY="2" text="VAT">
+          <Initializer text="dbschema:pu30_ord_hdr.vat/@label"/>
         </Label>
-        <Edit colName="vat" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_hdr.vat" posX="12" posY="3" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="VAT" widget="Edit">
+        <Edit colName="vat" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_ord_hdr.vat" posX="53" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="VAT" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="12" name="pu30_hdr_status_label1" posX="38" posY="3" text="Status">
-          <Initializer text="dbschema:pu30_hdr.status/@label"/>
+        <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_created_at_label1" posX="1" posY="3" text="Ref No">
+          <Initializer text="dbschema:pu30_ord_hdr.created_at/@label"/>
         </Label>
-        <ComboBox colName="status" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" items="" name="pu30_hdr.status" posX="51" posY="3" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="Status" widget="ComboBox">
+        <Edit autoNext="false" colName="ref_no" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_ord_hdr.ref_no" noEntry="true" posX="8" posY="3" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Created At" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="8" name="pu30_ord_hdr_vat_label2" posX="44" posY="3" text="Discount">
+          <Initializer text="dbschema:pu30_ord_hdr.vat/@label"/>
+        </Label>
+        <Edit colName="disc" fieldId="18" fieldType="TABLE_ALIAS" gridHeight="1" gridWidth="14" name="pu30_ord_hdr1.disc" posX="53" posY="3" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" table_alias_name="pu30_ord_hdr1" title="VAT" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_status_label1" posX="1" posY="4" text="Status">
+          <Initializer text="dbschema:pu30_ord_hdr.status/@label"/>
+        </Label>
+        <ComboBox colName="status" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="" name="pu30_ord_hdr.status" posX="8" posY="4" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Status" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ComboBox>
-        <Label gridHeight="1" gridWidth="10" name="pu30_hdr_created_at_label1" posX="1" posY="4" text="Created At">
-          <Initializer text="dbschema:pu30_hdr.created_at/@label"/>
+        <Label gridHeight="1" gridWidth="7" name="pu30_ord_hdr_created_by_label1" posX="20" posY="4" text="Created by">
+          <Initializer text="dbschema:pu30_ord_hdr.created_by/@label"/>
         </Label>
-        <Edit autoNext="false" colName="created_at" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="25" name="pu30_hdr.created_at" noEntry="true" posX="12" posY="4" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="Created At" widget="Edit">
+        <Edit colName="created_by" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_ord_hdr.created_by" noEntry="true" posX="29" posY="4" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Created by" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="12" name="pu30_hdr_created_by_label1" posX="38" posY="4" text="Created by">
-          <Initializer text="dbschema:pu30_hdr.created_by/@label"/>
+        <Label gridHeight="1" gridWidth="8" name="pu30_ord_hdr_total_value_label2" posX="44" posY="4" text="Net Total">
+          <Initializer text="dbschema:pu30_ord_hdr.total_value/@label"/>
         </Label>
-        <Edit colName="created_by" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="pu30_hdr.created_by" noEntry="true" posX="51" posY="4" scroll="true" sqlTabName="pu30_hdr" tabIndex="-1" title="Created by" widget="Edit">
+        <Edit colName="net_tot" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_ord_hdr.net_tot" noEntry="true" posX="53" posY="4" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Total Value" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Table gridHeight="6" gridWidth="91" name="pu130_ord_lines" posX="1" posY="6" totalRows="5">
-          <Edit colName="doc_no" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu30_det.doc_no" posX="0" posY="0" scroll="true" sqlTabName="pu30_det" tabIndex="-1" title="Doc No" widget="Edit">
+        <Phantom colName="id" fieldId="12" fieldType="TABLE_COLUMN" name="pu30_ord_det.id" sqlTabName="pu30_ord_det" widget="Phantom"/>
+        <Phantom colName="batch_id" fieldId="17" fieldType="TABLE_COLUMN" name="pu30_ord_det.batch_id" sqlTabName="pu30_ord_det" widget="Phantom"/>
+        <Phantom colName="id" fieldId="13" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.id" sqlTabName="pu30_ord_hdr" widget="Phantom"/>
+        <Phantom colName="created_at" fieldId="21" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.created_at" sqlTabName="pu30_ord_hdr" widget="Phantom"/>
+        <Phantom colName="updated_at" fieldId="22" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.updated_at" sqlTabName="pu30_ord_hdr" widget="Phantom"/>
+        <Phantom colName="deleted_at" fieldId="23" fieldType="TABLE_COLUMN" name="pu30_ord_hdr.deleted_at" sqlTabName="pu30_ord_hdr" widget="Phantom"/>
+      </Grid>
+      <VBox gridHeight="13" gridWidth="68" name="vbox2" posX="0" posY="7">
+        <Table gridHeight="11" gridWidth="68" name="pu130_ord_lines" posX="0" posY="1" totalRows="5">
+          <Edit colName="stock_code" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_ord_det.stock_code" posX="0" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Stock Code" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="item_no" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu30_det.item_no" posX="11" posY="0" scroll="true" sqlTabName="pu30_det" tabIndex="-1" title="Item No" widget="Edit">
+          <Edit colName="qnty" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.qnty" posX="10" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Quantity" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="stock_code" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="pu30_det.stock_code" posX="22" posY="0" scroll="true" sqlTabName="pu30_det" tabIndex="-1" title="Stock Code" widget="Edit">
+          <Edit colName="unit_cost" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_ord_det.unit_cost" posX="19" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Unit Code" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="qty" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_det.qty" posX="42" posY="0" scroll="true" sqlTabName="pu30_det" tabIndex="-1" title="Quantity" widget="Edit">
+          <Edit colName="description" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="st01_mast.description" posX="29" posY="0" sqlTabName="st01_mast" tabIndex="-1" title="Item Description" widget="Edit"/>
+          <Edit colName="vat" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="pu30_ord_det.vat" posX="43" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="VAT" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="unit_cost" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_det.unit_cost" posX="56" posY="0" scroll="true" sqlTabName="pu30_det" tabIndex="-1" title="Unit Code" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
-          <Edit colName="total" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="pu30_det.total" posX="70" posY="0" scroll="true" sqlTabName="pu30_det" tabIndex="-1" title="Line Total" widget="Edit">
+          <Edit colName="line_tot" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.line_tot" posX="51" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Line Total" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
         </Table>
-      </Grid>
+      </VBox>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAzAGEAMAAyADUANQA4ADgALQAwADEAYgA2AC0ANABiADgANgAtAGIAMwBmADQALQAyADAAYgBhADAAYQAzADUAZAA0AGYAOQB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewBiADUANgA1ADUAYwA3AGMALQBkADIANAAyAC0ANAAxADIAZAAtAGIAMgBkAGUALQBiADQAMQBjADUANgBmADYAYQA4ADIAZQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBiADUANgA1ADUAYwA3AGMALQBkADIANAAyAC0ANAAxADIAZAAtAGIAMgBkAGUALQBiADQAMQBjADUANgBmADYAYQA4ADIAZQB9AAAAAAAAAAAAAAAAAAAAAD+RaHKwIMSeAQAAAEwAewA4ADAAYwAzADEAOABkAGQALQA2AGIAOAAzAC0ANAA3AGEAOQAtAGIAMABmADEALQBlADEAOQA3ADUANQBhAGIANAA4AGMAMAB9QGiZmZ/AAABAEzMzOAAAAD+SbpeNT98+AQ==]]>
   </DiagramLayout>
 </ManagedForm>
