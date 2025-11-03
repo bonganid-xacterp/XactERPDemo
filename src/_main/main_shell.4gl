@@ -1,9 +1,7 @@
 -- ==============================================================
 -- Program   : main_shell.4gl
--- Purpose   : Centralized MDI (Multiple Document Interface)
---              container and child window manager.
---              Handles opening, closing, listing, and cleanup
---              of all child forms (modules).
+-- Purpose   : MDI (Multiple Document Interface) window manager
+--             Handles opening, closing, and tracking child windows
 -- Module    : Main
 -- Author    : Bongani Dlamini
 -- Version   : Genero ver 3.20.10
@@ -14,47 +12,46 @@
 -- ==============================================================
 
 IMPORT ui
-IMPORT FGL fgldialog
 IMPORT FGL utils_globals
 
 -- ==============================================================
 -- DATABASE SCHEMA
 -- ==============================================================
+
 SCHEMA demoapp_db
 
 -- ==============================================================
 -- CONFIGURATION CONSTANTS
 -- ==============================================================
 
-CONSTANT MDI_CONTAINER = "mdi_container" -- Name of MDI container form element (Group)
-CONSTANT WINDOW_PREFIX = "w_" -- Prefix for child window names
+CONSTANT MDI_CONTAINER = "w_main"
+CONSTANT WINDOW_PREFIX = "w_"
 
 -- ==============================================================
 -- MODULE VARIABLES
 -- ==============================================================
 
--- Array to track open windows
 DEFINE m_open_modules DYNAMIC ARRAY OF RECORD
-    prog STRING, -- Program/form name
-    winname STRING, -- Window identifier
-    title STRING, -- Display title
-    opened DATETIME YEAR TO SECOND -- When opened
+    prog STRING,
+    winname STRING,
+    title STRING,
+    opened DATETIME YEAR TO SECOND
 END RECORD
 
-DEFINE m_debug_mode SMALLINT -- Enables debug output
+DEFINE m_debug_mode BOOLEAN
 
 -- ==============================================================
 -- FUNCTION: launch_child_window
 -- Purpose : Open a new MDI child window (prevents duplicates)
+-- Returns : TRUE if window opened, FALSE if already open or error
 -- ==============================================================
 
-FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS SMALLINT
+FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS BOOLEAN
     DEFINE i INTEGER
     DEFINE winname STRING
-    DEFINE existing_win ui.Window
 
-    -- Validate parameters
-    IF formname IS NULL THEN
+    -- Validate input
+    IF formname IS NULL OR formname.getLength() = 0 THEN
         CALL utils_globals.show_error("Invalid form name provided.")
         RETURN FALSE
     END IF
@@ -63,7 +60,7 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS SMALLINT
         LET wintitle = formname
     END IF
 
-    -- Check if already open
+    -- Check if window is already open
     FOR i = 1 TO m_open_modules.getLength()
         IF m_open_modules[i].prog = formname THEN
             CALL utils_globals.show_info(wintitle || " is already open.")
@@ -72,71 +69,52 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS SMALLINT
         END IF
     END FOR
 
-    -- Create unique window name
-    LET winname =
-        WINDOW_PREFIX || formname || "_" || m_open_modules.getLength() + 1
+    -- Generate unique window name
+    LET winname = WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
 
-    TRY
-        -- Tell Genero this is an MDI child
-        CALL ui.Interface.setContainer(MDI_CONTAINER)
-        CALL ui.Interface.setType("child")
-        CALL ui.Interface.loadStyles("_main/main_styles.4st")
+    -- Configure as MDI child window
+    CALL ui.Interface.setType("child")
+    CALL ui.Interface.setName(formname)
+    CALL ui.Interface.setContainer(MDI_CONTAINER)
 
-        IF m_debug_mode THEN
-            DISPLAY "Opening child window..."
-            DISPLAY "  Form: ", formname
-            DISPLAY "  Window: ", winname
-            DISPLAY "  Title: ", wintitle
-        END IF
+    -- Open the child window
+    OPTIONS INPUT WRAP
+    OPEN WINDOW winname
+        WITH FORM formname
+        ATTRIBUTES(STYLE = "normal", TEXT = wintitle)
 
-        -- Open window as child
-        OPEN WINDOW winname
-            WITH
-            FORM formname
-            ATTRIBUTES(STYLE = "child", TEXT = wintitle)
+    -- Register window
+    LET i = m_open_modules.getLength() + 1
+    LET m_open_modules[i].prog = formname
+    LET m_open_modules[i].winname = winname
+    LET m_open_modules[i].title = wintitle
+    LET m_open_modules[i].opened = CURRENT
 
-        -- Confirm it opened successfully
-        LET existing_win = ui.Window.forName(winname)
-        IF existing_win IS NULL THEN
-            CALL utils_globals.show_error("Failed to open window: " || wintitle)
-            RETURN FALSE
-        END IF
+    IF m_debug_mode THEN
+        DISPLAY SFMT("Opened: %1 (%2) - Total windows: %3",
+            winname, wintitle, m_open_modules.getLength())
+    END IF
 
-        -- Register window in tracking list
-        LET i = m_open_modules.getLength() + 1
-        LET m_open_modules[i].prog = formname
-        LET m_open_modules[i].winname = winname
-        LET m_open_modules[i].title = wintitle
-        LET m_open_modules[i].opened = CURRENT
+    RETURN TRUE
 
-        IF m_debug_mode THEN
-            DISPLAY "Registered window: ", winname
-            DISPLAY "Total open: ", m_open_modules.getLength()
-        END IF
-
-        RETURN TRUE
-
-    CATCH
-        CALL utils_globals.show_error(
-            "Error opening " || wintitle || ":\n" || STATUS)
-        RETURN FALSE
-    END TRY
 END FUNCTION
 
 -- ==============================================================
 -- FUNCTION: close_child_window
--- Purpose : Close one specific child window by form name
+-- Purpose : Close specific child window by form name
+-- Returns : TRUE if closed, FALSE if not found
 -- ==============================================================
 
-FUNCTION close_child_window(formname STRING) RETURNS SMALLINT
+FUNCTION close_child_window(formname STRING) RETURNS BOOLEAN
     DEFINE i INTEGER
     DEFINE winname STRING
     DEFINE w ui.Window
 
-    IF formname IS NULL OR formname = "" THEN
+    IF formname IS NULL OR formname.getLength() = 0 THEN
         RETURN FALSE
     END IF
 
+    -- Find and close the window
     FOR i = 1 TO m_open_modules.getLength()
         IF m_open_modules[i].prog = formname THEN
             LET winname = m_open_modules[i].winname
@@ -152,7 +130,7 @@ FUNCTION close_child_window(formname STRING) RETURNS SMALLINT
             CALL m_open_modules.deleteElement(i)
 
             IF m_debug_mode THEN
-                DISPLAY "Removed from registry: ", winname
+                DISPLAY "Removed from registry: ", formname
             END IF
 
             RETURN TRUE
@@ -160,10 +138,11 @@ FUNCTION close_child_window(formname STRING) RETURNS SMALLINT
     END FOR
 
     IF m_debug_mode THEN
-        DISPLAY "Window not found in registry: ", formname
+        DISPLAY "Window not found: ", formname
     END IF
 
     RETURN FALSE
+
 END FUNCTION
 
 -- ==============================================================
@@ -221,11 +200,8 @@ PRIVATE FUNCTION bring_window_to_front(winname STRING)
     IF w IS NOT NULL THEN
         TRY
             CALL ui.Interface.refresh()
-            IF m_debug_mode THEN
-                DISPLAY "Window refreshed (front): ", winname
-            END IF
         CATCH
-            DISPLAY "Warning: Could not refresh window: ", winname
+            ERROR "Warning: Could not refresh window: ", winname
         END TRY
     END IF
 END FUNCTION
@@ -340,5 +316,5 @@ FUNCTION show_window_manager()
 
     LET window_list = get_open_window_list()
 
-    CALL fgldialog.fgl_winmessage("Window Manager", window_list, "information")
+    CALL utils_globals.show_info(window_list)
 END FUNCTION

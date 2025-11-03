@@ -19,10 +19,11 @@ IMPORT FGL sy100_login
 
 -- Module imports for execution
 IMPORT FGL dl101_mast
-IMPORT FGL dl120_enq
+IMPORT FGL cl101_mast
 IMPORT FGL st101_mast
---IMPORT FGL st120_enq
+IMPORT FGL st101_mast
 IMPORT FGL st102_cat
+IMPORT FGL wh101_mast
 
 -- ==============================================================
 -- DATABASE CONTEXT
@@ -71,68 +72,79 @@ FUNCTION main_application_menu()
             -- ------------------------------------------------------
             -- DEBTORS MODULE
             -- ------------------------------------------------------
-        ON ACTION dl_enq
-            CALL launch_module("dl120_enq", "Debtors Enquiry", "DL_VIEW")
+        ON ACTION dl_mast
+            CALL launch_module("dl101_mast", "Debtors")
 
         ON ACTION dl_maint
-            CALL launch_module("dl101_mast", "Debtors Maintenance", "DL_EDIT")
+            CALL launch_module("dl101_mast", "Debtors Ageing Report")
 
             -- ------------------------------------------------------
             -- CREDITORS MODULE
             -- ------------------------------------------------------
---        ON ACTION cl_enq
---            CALL launch_module("cl120_enq", "Creditors Enquiry", "CL_VIEW")
---
---        ON ACTION cl_maint
---            -- CALL launch_module("cl101_mast", "Creditors Maintenance", "CL_EDIT")
---
+        ON ACTION cl_mast
+            CALL launch_module("cl101_mast", "Creditors")
+
+        ON ACTION cl_maint
+             CALL launch_module("cl101_mast", "Creditors Age Report")
+
             -- ------------------------------------------------------
-            -- STOCK MODULE
+            -- STOCK & WAREHOUSE MODULES
             -- ------------------------------------------------------
-        ON ACTION st_enq
-            CALL launch_module("st120_enq", "Stock Enquiry", "ST_VIEW")
+        ON ACTION st_mast
+            CALL launch_module("st101_mast", "Stocks")
 
         ON ACTION st_maint
-            CALL launch_module("st101_mast", "Stock Maintenance", "ST_EDIT")
+            CALL launch_module("st101_mast", "Stock Maintenance")
 
         ON ACTION st_cat
-            CALL launch_module("st102_cat", "Stock Categories", "ST_EDIT")
---
---            -- ------------------------------------------------------
---            -- GENERAL LEDGER MODULE
---            -- ------------------------------------------------------
---        ON ACTION gl_enq
---            -- CALL launch_module("gl120_enq", "GL Enquiry", "GL_VIEW")
---
---        ON ACTION gl_maint
---            -- CALL launch_module("gl101_acc", "GL Maintenance", "GL_EDIT")
---
---            -- ------------------------------------------------------
---            -- SALES MODULE
---            -- ------------------------------------------------------
---        ON ACTION sa_ord_enq
---            -- CALL launch_module("sa120_enq", "Sales Orders Enquiry", "SA_VIEW")
---
---        ON ACTION sa_ord_maint
---            -- CALL launch_module("sa130_hdr", "Sales Orders Maintenance", "SA_EDIT")
---
---            -- ------------------------------------------------------
---            -- PURCHASES MODULE
---            -- ------------------------------------------------------
---        ON ACTION pu_po_enq
---            -- CALL launch_module("pu120_enq", "Purchase Orders Enquiry", "PU_VIEW")
---
---        ON ACTION pu_po_maint
---            -- CALL launch_module("pu130_hdr", "Purchase Orders Maintenance", "PU_EDIT")
---
---            -- ------------------------------------------------------
---            -- SYSTEM ADMINISTRATION
---            -- ------------------------------------------------------
---        ON ACTION sy_usr_enq
---            -- CALL launch_module("sy120_enq", "Users Enquiry", "SY_VIEW")
---
---        ON ACTION sy_usr_maint
---            -- CALL launch_module("sy100_user", "Users Maintenance", "SY_ADMIN")
+            CALL launch_module("st102_cat", "Stock Categories")
+
+        ON ACTION wh_mast
+            CALL launch_module("wh101_mast", "Warehouses")
+
+        ON ACTION wb_mast
+            CALL launch_module("wb101_mast", "Warehouse Bins")
+            -- ------------------------------------------------------
+            -- GENERAL LEDGER MODULE
+            -- ------------------------------------------------------
+        ON ACTION gl_maint
+             CALL launch_module("gl101_acc", "GL Accounts")
+
+        ON ACTION gl_jnls
+             CALL launch_module("gl130_jnls", "Journals")
+
+            -- ------------------------------------------------------
+            -- SALES MODULE
+            -- ------------------------------------------------------
+        ON ACTION sa_qt
+             CALL launch_module("sa130_quote", "Sales Quotes")
+
+            ON ACTION sa_ord
+             CALL launch_module("sa131_order", "Sales Orders")
+
+        ON ACTION sa_inv
+             CALL launch_module("sa132_invoice", "Sales Invoices")
+             
+        ON ACTION sa_crn
+             CALL launch_module("sa132_invoice", "Sales Invoices")
+
+            -- ------------------------------------------------------
+            -- PURCHASES MODULE
+            -- ------------------------------------------------------
+        ON ACTION pu_po_inv
+             CALL launch_module("pu120_enq", "Purchase Orders Enquiry")
+
+        ON ACTION pu_po_maint
+             CALL launch_module("pu130_hdr", "Purchase Orders Maintenance")
+
+            -- ------------------------------------------------------
+            -- SYSTEM ADMINISTRATION
+            -- ------------------------------------------------------
+        ON ACTION sy_usr
+             CALL launch_module("sy101_user", "Users")
+
+        ON ACTION sy_role
+             CALL launch_module("sy102_role", "User Roles")
 
             -- ------------------------------------------------------
             -- UTILITIES / INFO
@@ -161,16 +173,6 @@ FUNCTION main_application_menu()
                 EXIT MENU
             END IF
 
-            -- ------------------------------------------------------
-            -- (Optional) AUTO LOGOUT ON INACTIVITY
-            -- ------------------------------------------------------
-            -- ON IDLE MENU_TIMEOUT_MINUTES * 60
-            --     IF check_session_timeout() THEN
-            --         CALL utils_globals.show_warning(
-            --             "Session timed out. Please log in again.")
-            --         EXIT MENU
-            --     END IF
-
     END MENU
 
     IF m_debug_mode THEN
@@ -184,29 +186,14 @@ END FUNCTION
 -- Purpose : Open a module inside a child window under the MDI parent
 -- ==============================================================
 
-PRIVATE FUNCTION launch_module(formname STRING, title STRING, permission STRING)
+PRIVATE FUNCTION launch_module(formname STRING, title STRING)
     DEFINE current_user STRING
-    DEFINE has_permission SMALLINT
 
     LET m_last_activity = CURRENT
     LET current_user = sy100_login.get_current_user()
 
-    -- (Stub) Check user permission
-    CALL check_user_permission(
-        current_user, permission)
-        RETURNING has_permission
-
-    IF NOT has_permission THEN
-        CALL utils_globals.show_warning(
-            "You do not have permission to access:\n" || title)
-        RETURN
-    END IF
-
     -- Open module as a new child window (under parent main window)
     IF main_shell.launch_child_window(formname, title) THEN
-        IF m_debug_mode THEN
-            DISPLAY "Module opened: ", title
-        END IF
 
         -- Execute the module's main function
         TRY
@@ -236,16 +223,16 @@ PRIVATE FUNCTION execute_module(formname STRING)
 
     CASE formname
         WHEN "dl101_mast"
-            CALL dl101_mast.init_module()
-        WHEN "dl120_enq"
-            CALL dl120_enq.debt_enq()
+            CALL dl101_mast.init_dl_module()
+        WHEN "cl101_mast"
+            CALL cl101_mast.init_cl_module()
         WHEN "st101_mast"
-            CALL st101_mast.run_stock_mast()
-        WHEN "st120_enq"
-            -- CALL st120_enq.()
+            CALL st101_mast.init_st_module()
+        WHEN "wh0101_mast"
+             CALL wh101_mast.init_wh_module()
             DISPLAY "Stock Enq"
         WHEN "st102_cat"
-            CALL st102_cat.run_stock_cat()
+            CALL st102_cat.init_cat_module()
         OTHERWISE
             CALL utils_globals.show_error("Module not implemented: " || formname)
     END CASE

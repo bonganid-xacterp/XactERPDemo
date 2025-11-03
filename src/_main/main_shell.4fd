@@ -3,37 +3,36 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="27" gridWidth="103" name="mdi_wrapper" style="mdi" text="" version="0.1">
+  <Form gridHeight="22" gridWidth="93" name="container" style="" text="" version="0.1">
     <TopMenu name="top_menu">
       <TopMenuGroup name="tm_main" text="File">
         <TopMenuSeparator name="sep_01"/>
         <TopMenuCommand acceleratorName="quit" image="quit" name="main_exit" text="Quit"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_dl" text="Debtors">
-        <TopMenuCommand image="open" name="dl_enq" text="Debtor Enquiry"/>
-        <TopMenuCommand image="pen" name="dl_maint" text="Debtor Maintanance"/>
+        <TopMenuCommand image="open" name="open_debtors" text="Debtor Enquiry"/>
+        <TopMenuCommand image="database" name="open_debtors_trans" text="Debtor Transactions"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_cl" text="Creditors">
-        <TopMenuCommand image="open" name="cl_enq" text="Creditors Enquiry"/>
-        <TopMenuCommand image="pen" name="cl_maint" text="Creditors Maintanance"/>
+        <TopMenuCommand image="open" name="open_creditors" text="Creditors Enquiry"/>
+        <TopMenuCommand image="pen" name="open_creditors" text="Creditors Maintanance"/>
         <TopMenuSeparator name="topmenuseparator1"/>
         <TopMenuGroup name="topmenugroup1" text="Creditors Reports">
-          <TopMenuCommand name="rp_supp_agng" text="Age Analysis"/>
-          <TopMenuCommand name="rp_prod_by_supp" text="Products By Supplier"/>
+          <TopMenuCommand name="view_cred_age_report" text="Age Analysis"/>
         </TopMenuGroup>
       </TopMenuGroup>
       <TopMenuGroup name="tm_st" text="Stock">
-        <TopMenuCommand image="open" name="st_enq" text="Stock Enquiry"/>
-        <TopMenuCommand image="pen" name="st_maint" text="Stock Maintainance"/>
+        <TopMenuCommand image="open" name="open_ro_stock" text="Stock Enquiry"/>
+        <TopMenuCommand image="pen" name="open_stock" text="Stock Maintainance"/>
         <TopMenuSeparator name="topmenuseparator4"/>
-        <TopMenuCommand image="open" name="st_cat_enq" text="S/Category Enquiry"/>
-        <TopMenuCommand image="pen" name="st_cat_maint" text="S/Category Maintanance"/>
+        <TopMenuCommand image="open" name="open_ro_st_cat" text="S/Category Enquiry"/>
+        <TopMenuCommand image="pen" name="open_st_cat" text="S/Category Maintanance"/>
         <TopMenuSeparator name="topmenuseparator3"/>
-        <TopMenuCommand image="pen" name="wh_maint" text="WH Maintanance"/>
-        <TopMenuCommand image="open" name="wh_enq" text="WH Enquiry"/>
+        <TopMenuCommand image="open" name="open_ro_wh" text="WH Enquiry"/>
+        <TopMenuCommand image="pen" name="open_wh" text="Wh Stock Movement"/>
         <TopMenuSeparator name="topmenuseparator5"/>
-        <TopMenuCommand image="open" name="wb_enq" text="WH Bin Enquiry"/>
-        <TopMenuCommand image="pen" name="wb_maint" text="WH Bin Maintanance"/>
+        <TopMenuCommand image="open" name="open_bins" text="WH Bins"/>
+        <TopMenuCommand image="database" name="open_bins_hist" text="Bins History"/>
       </TopMenuGroup>
       <TopMenuGroup name="tm_gl" tag="" text="Finance">
         <TopMenuCommand image="open" name="gl_enq" text="G/L Enquiry"/>
@@ -69,8 +68,8 @@
         <TopMenuCommand image="open2" name="sy_usr_enq" text="Users Enquiry"/>
         <TopMenuCommand image="pen" name="sy_usr_maint" text="Users Maintainance"/>
         <TopMenuSeparator name="topmenuseparator13"/>
-        <TopMenuCommand image="pen" name="sy_perm_maint" text="Permissions Maintainance"/>
         <TopMenuCommand image="open" name="sys_perm_enq" text="Permissions Enquiry"/>
+        <TopMenuCommand image="pen" name="sy_perm_maint" text="Permissions Maintainance"/>
         <TopMenuCommand image="pen" name="sy_roles_maint" text="Roles Maintainance"/>
         <TopMenuCommand image="open" name="sy_roles_enq" text="Roles Enquiry"/>
         <TopMenuSeparator name="topmenuseparator15"/>
@@ -93,8 +92,8 @@
         <TopMenuCommand hidden="true" name="sy_main" text=""/>
       </TopMenuGroup>
     </TopMenu>
-    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" name="mdi_container" posX="0" posY="0" style="mdi_container" text="">
-      <Grid gridHeight="20" gridWidth="91" name="mdi_wrapper" posX="1" posY="1" style="mdi_wrapper"/>
+    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" name="workarea" posX="0" posY="0" text="">
+      <Grid gridHeight="20" gridWidth="91" name="main_shell_grid" posX="1" posY="1"/>
     </Group>
   </Form>
   <DiagramLayout>
