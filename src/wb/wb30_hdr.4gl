@@ -34,17 +34,17 @@ DEFINE is_edit_mode SMALLINT
 
 DEFINE dlg ui.Dialog
 
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        EXIT PROGRAM 1
-    END IF
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        EXIT PROGRAM 1
+--    END IF
+--      OPTIONS INPUT WRAP
+--    OPEN WINDOW w_wb30 WITH FORM "wb30_hdr" ATTRIBUTES(STYLE = "main")
+--    CALL init_wb30_module()
+--    CLOSE WINDOW w_wb30
+--END MAIN
 
-    OPEN WINDOW w_wb30 WITH FORM "wb30_hdr" ATTRIBUTES(STYLE = "main")
-    CALL init_module()
-    CLOSE WINDOW w_wb30
-END MAIN
-
-FUNCTION init_module()
+FUNCTION init_wb30_module()
     CALL utils_globals.populate_status_combo("status")
     LET is_edit_mode = FALSE
 
@@ -153,7 +153,7 @@ FUNCTION load_transfer(p_code STRING)
     END IF
 END FUNCTION
 
-FUNCTION move_record(dir SMALLINT)
+PRIVATE FUNCTION move_record(dir SMALLINT)
     CASE dir
         WHEN -2
             LET curr_idx = 1
@@ -181,7 +181,7 @@ FUNCTION move_record(dir SMALLINT)
     CALL dlg.setActionActive("edit", TRUE)
 END FUNCTION
 
-FUNCTION new_transfer()
+PRIVATE FUNCTION new_transfer()
 
     INITIALIZE rec_hdr.* TO NULL
     LET rec_hdr.trans_date = TODAY
@@ -194,7 +194,7 @@ FUNCTION new_transfer()
     MESSAGE "Enter new transfer details, then click Update to save."
 END FUNCTION
 
-FUNCTION save_transfer()
+PRIVATE FUNCTION save_transfer()
     DEFINE exists INTEGER
 
     IF NOT validateFields() THEN
@@ -242,7 +242,7 @@ FUNCTION save_transfer()
     CALL load_transfer(rec_hdr.trans_no)
 END FUNCTION
 
-FUNCTION delete_transfer()
+PRIVATE FUNCTION delete_transfer()
     IF utils_globals.is_empty(rec_hdr.trans_no) THEN
         CALL utils_globals.show_info("No transfer selected for deletion.")
         RETURN
@@ -269,7 +269,7 @@ FUNCTION show_transfer_details()
     -- RUN "wb31_det " || rec_hdr.trans_no
 END FUNCTION
 
-FUNCTION set_curr_idx_by_code(p_code STRING)
+PRIVATE FUNCTION set_curr_idx_by_code(p_code STRING)
     DEFINE i INTEGER
     FOR i = 1 TO arr_codes.getLength()
         IF arr_codes[i] = p_code THEN
@@ -279,7 +279,7 @@ FUNCTION set_curr_idx_by_code(p_code STRING)
     END FOR
 END FUNCTION
 
-FUNCTION validateFields() RETURNS BOOLEAN
+PRIVATE FUNCTION validate_fields() RETURNS BOOLEAN
     IF utils_globals.is_empty(rec_hdr.trans_no) THEN
         CALL utils_globals.show_error("Transfer Number is required.")
         RETURN FALSE

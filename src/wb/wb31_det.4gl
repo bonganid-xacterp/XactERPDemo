@@ -32,26 +32,26 @@ DEFINE arr_details DYNAMIC ARRAY OF bin_detail_t
 DEFINE current_trans_no STRING
 DEFINE is_edit_mode SMALLINT
 
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        EXIT PROGRAM 1
-    END IF
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        EXIT PROGRAM 1
+--    END IF
+--
+--    -- Get transaction number from command line or prompt
+--    LET current_trans_no = ARG_VAL(1)
+--    IF utils_globals.is_empty(current_trans_no) THEN
+--        PROMPT "Enter Transaction Number:" FOR current_trans_no
+--        IF utils_globals.is_empty(current_trans_no) THEN
+--            EXIT PROGRAM
+--        END IF
+--    END IF
+--      OPTIONS INPUT WRAP
+--    OPEN WINDOW w_wb31 WITH FORM "wb31_det" ATTRIBUTES(STYLE = "main")
+--    CALL init_module()
+--    CLOSE WINDOW w_wb31
+--END MAIN
 
-    -- Get transaction number from command line or prompt
-    LET current_trans_no = ARG_VAL(1)
-    IF utils_globals.is_empty(current_trans_no) THEN
-        PROMPT "Enter Transaction Number:" FOR current_trans_no
-        IF utils_globals.is_empty(current_trans_no) THEN
-            EXIT PROGRAM
-        END IF
-    END IF
-
-    OPEN WINDOW w_wb31 WITH FORM "wb31_det" ATTRIBUTES(STYLE = "main")
-    CALL init_module()
-    CLOSE WINDOW w_wb31
-END MAIN
-
-FUNCTION init_module()
+FUNCTION init_wb31_module()
     LET is_edit_mode = FALSE
 
     DIALOG ATTRIBUTES(UNBUFFERED)

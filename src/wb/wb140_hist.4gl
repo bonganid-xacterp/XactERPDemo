@@ -37,7 +37,7 @@
 --    IF NOT utils_globals.initialize_application() THEN
 --        EXIT PROGRAM 1
 --    END IF
---
+--      OPTIONS INPUT WRAP
 --    OPEN WINDOW w_wb140 WITH FORM "wb140_hist" ATTRIBUTES(STYLE = "main")
 --    CALL init_module()
 --    CLOSE WINDOW w_wb140

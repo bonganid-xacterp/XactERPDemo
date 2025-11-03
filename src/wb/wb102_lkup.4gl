@@ -27,15 +27,15 @@ DEFINE arr_bins DYNAMIC ARRAY OF bin_lookup_t
 DEFINE search_criteria STRING
 DEFINE selected_bin STRING
 
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        EXIT PROGRAM 1
-    END IF
-
-    OPEN WINDOW w_wb102 WITH FORM "wb102_lkup" ATTRIBUTES(STYLE = "main")
-    CALL init_lookup()
-    CLOSE WINDOW w_wb102
-END MAIN
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        EXIT PROGRAM 1
+--    END IF
+--      OPTIONS INPUT WRAP
+--    OPEN WINDOW w_wb102 WITH FORM "wb102_lkup" ATTRIBUTES(STYLE = "main")
+--    CALL init_lookup()
+--    CLOSE WINDOW w_wb102
+--END MAIN
 
 -- Initialize lookup dialog and load all bins
 FUNCTION init_lookup()

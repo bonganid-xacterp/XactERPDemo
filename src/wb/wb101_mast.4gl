@@ -14,12 +14,7 @@ IMPORT FGL utils_globals
 
 SCHEMA demoapp_db
 
-TYPE bin_t RECORD
-    wb_code LIKE wb01_mast.wb_code,
-    wh_id LIKE wb01_mast.wh_id,
-    description LIKE wb01_mast.description,
-    status LIKE wb01_mast.status
-END RECORD
+TYPE bin_t RECORD LIKE wb01_mast.*
 
 DEFINE rec_bin bin_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
@@ -33,6 +28,7 @@ DEFINE master_config utils_globals.master_record
 --    END IF
 --
 --    CALL initMasterConfig()
+--      OPTIONS INPUT WRAP
 --    OPEN WINDOW w_wb101 WITH FORM "wb101_mast" ATTRIBUTES(STYLE = "main")
 --    CALL init_module()
 --    CLOSE WINDOW w_wb101
@@ -48,9 +44,9 @@ FUNCTION initMasterConfig()
 END FUNCTION
 
 -- Main module initialization and dialog handling
-FUNCTION init_module()
+FUNCTION init_wb_module()
     -- Setup status dropdown values
-    CALL utils_globals.populate_status_combo("status")
+    --CALL utils_globals.populate_status_combo("status")
     LET is_edit_mode = FALSE -- Start in view mode
 
     DIALOG ATTRIBUTES(UNBUFFERED)
@@ -213,7 +209,3 @@ FUNCTION validateFields() RETURNS BOOLEAN
     RETURN TRUE -- All validations passed
 END FUNCTION
 
--- Entry point function for external calls
-FUNCTION open_wbbin_form()
-    CALL init_module() -- Start the main dialog
-END FUNCTION

@@ -1,12 +1,12 @@
 -- ==============================================================
--- Program   : wb130_trans.4gl
--- Purpose   : Warehouse Bin Transaction processing
--- Module    : Warehouse Bin (wb)
--- Number    : 130
--- Author    : Bongani Dlamini
--- Version   : Genero ver 3.20.10
--- Description: Process bin transactions (IN/OUT/TRANSFER)
---              Handles stock movements between bins
+-- Program      : wb31_trf_det.4gl
+-- Purpose      : Warehouse Bin Transaction processing
+-- Module       : Warehouse Bin (wb)
+-- Number       : 130
+-- Author       : Bongani Dlamini
+-- Version      : Genero ver 3.20.10
+-- Description  : Process bin transactions (IN/OUT/TRANSFER)
+--                  Handles stock movements between bins
 -- ==============================================================
 
 IMPORT ui
@@ -15,41 +15,33 @@ IMPORT FGL utils_globals
 SCHEMA demoapp_db
 
 -- Transaction record structure
-TYPE bin_trans_t RECORD
-    trans_no STRING, -- Transaction number
-    trans_date DATE, -- Transaction date
-    wb_code STRING, -- Bin code
-    wh_id STRING, -- Warehouse ID
-    trans_type STRING, -- IN/OUT/TRANSFER
-    stock_code STRING, -- Stock item code
-    qty DECIMAL(10, 2), -- Quantity moved
-    reference STRING, -- Reference document
-    status SMALLINT -- Transaction status
-END RECORD
+TYPE bin_trans_t RECORD LIKE wb31_trf_det.*
 
-DEFINE rec_trans bin_trans_t
+DEFINE rec_wb_trans bin_trans_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
 
 DEFINE dlg ui.Dialog
 
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        EXIT PROGRAM 1
---    END IF
---
---    OPEN WINDOW w_wb130 WITH FORM "wb130_trans" ATTRIBUTES(STYLE = "main")
---    CALL init_module()
---    CLOSE WINDOW w_wb130
---END MAIN
+-- main program 
+MAIN
+    IF NOT utils_globals.initialize_application() THEN
+        EXIT PROGRAM 1
+    END IF
 
-FUNCTION init_module()
+    OPEN WINDOW w_wb130 WITH FORM "wb130_trans" ATTRIBUTES(STYLE = "main")
+    CALL init_wb130_trans_module()
+    CLOSE WINDOW w_wb130
+END MAIN
+
+-- module init
+FUNCTION init_wb130_trans_module()
     CALL utils_globals.populate_status_combo("status")
     LET is_edit_mode = FALSE
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_trans.*
+        INPUT BY NAME rec_wb_trans.*
             ATTRIBUTES(WITHOUT DEFAULTS, NAME = "bin_transaction")
 
             BEFORE INPUT
@@ -59,13 +51,15 @@ FUNCTION init_module()
             ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
                 CALL new_transaction()
 
-            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
-                IF utils_globals.is_empty(rec_trans.trans_no) THEN
+           ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
+                IF rec_wb_trans.stock_code IS NULL OR rec_wb_trans.stock_code = "" THEN
                     CALL utils_globals.show_info("No record selected to edit.")
                 ELSE
                     LET is_edit_mode = TRUE
-                    CALL dlg.setActionActive("save", TRUE)
-                    CALL dlg.setActionActive("edit", FALSE)
+                    CALL DIALOG.setActionActive("save", TRUE)
+                    CALL DIALOG.setActionActive("edit", FALSE)
+                    CALL utils_globals.show_info(
+                        "Edit mode enabled. Make changes and click Update to save.")
                 END IF
 
             ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
@@ -90,17 +84,6 @@ FUNCTION init_module()
             ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
                 EXIT DIALOG
 
-            BEFORE FIELD trans_date,
-                wb_code,
-                wh_id,
-                trans_type,
-                qty,
-                reference,
-                status
-                IF NOT is_edit_mode THEN
-                    CALL utils_globals.show_info("Click Edit to modify.")
-                    NEXT FIELD trans_no
-                END IF
         END INPUT
 
         BEFORE DIALOG
@@ -108,6 +91,7 @@ FUNCTION init_module()
     END DIALOG
 END FUNCTION
 
+-- select transaction
 FUNCTION select_transactions(whereClause STRING)
     DEFINE code STRING
     DEFINE idx INTEGER
@@ -115,9 +99,9 @@ FUNCTION select_transactions(whereClause STRING)
     CALL arr_codes.clear()
     LET idx = 0
 
-    DECLARE c_trans CURSOR FROM "SELECT trans_no FROM wb30_trans WHERE "
+    DECLARE c_trans CURSOR FROM "SELECT stock_code FROM wb30_trans WHERE "
         || whereClause
-        || " ORDER BY trans_no DESC"
+        || " ORDER BY stock_code DESC"
 
     FOREACH c_trans INTO code
         LET idx = idx + 1
@@ -131,25 +115,18 @@ FUNCTION select_transactions(whereClause STRING)
     END IF
 END FUNCTION
 
+-- load transaction
 FUNCTION load_transaction(p_code STRING)
-    SELECT trans_no,
-        trans_date,
-        wb_code,
-        wh_id,
-        trans_type,
-        qty,
-        reference,
-        status
-        INTO rec_trans.*
-        FROM wb30_trans
-        WHERE trans_no = p_code
+
+    SELECT * INTO rec_wb_trans.* FROM wb31_trf_det  WHERE stock_code = p_code
 
     IF SQLCA.SQLCODE = 0 THEN
-        DISPLAY BY NAME rec_trans.*
+        DISPLAY BY NAME rec_wb_trans.*
     END IF
 END FUNCTION
 
-FUNCTION move_record(dir SMALLINT)
+-- navigate records
+PRIVATE FUNCTION move_record(dir SMALLINT)
     CASE dir
         WHEN -2
             LET curr_idx = 1
@@ -177,81 +154,74 @@ FUNCTION move_record(dir SMALLINT)
     CALL dlg.setActionActive("edit", TRUE)
 END FUNCTION
 
+--new bin transaction
 FUNCTION new_transaction()
-    INITIALIZE rec_trans.* TO NULL
-    LET rec_trans.trans_date = TODAY
-    LET rec_trans.qty = 0.00
-    LET rec_trans.status = 1
-    DISPLAY BY NAME rec_trans.*
+
+    INITIALIZE rec_wb_trans.* TO NULL
+        
+    DISPLAY BY NAME rec_wb_trans.*
+    
     LET is_edit_mode = TRUE
+    
     CALL dlg.setActionActive("save", TRUE)
     CALL dlg.setActionActive("edit", FALSE)
+    
     MESSAGE "Enter new transaction details, then click Update to save."
+    
 END FUNCTION
 
+-- save transaction
 FUNCTION save_transaction()
     DEFINE exists INTEGER
 
-    IF NOT validateFields() THEN
+    IF NOT validate_fields() THEN
         RETURN
     END IF
 
     SELECT COUNT(*)
         INTO exists
         FROM wb30_trans
-        WHERE trans_no = rec_trans.trans_no
+        WHERE stock_code = rec_wb_trans.stock_code
 
     IF exists = 0 THEN
-        INSERT INTO wb30_trans(
-            trans_no,
-            trans_date,
-            wb_code,
-            wh_id,
-            trans_type,
-            qty,
-            reference,
-            status)
-            VALUES(rec_trans.trans_no,
-                rec_trans.trans_date,
-                rec_trans.wb_code,
-                rec_trans.wh_id,
-                rec_trans.trans_type,
-                rec_trans.qty,
-                rec_trans.reference,
-                rec_trans.status)
+    
+        INSERT INTO wb31_trf_det VALUES rec_wb_trans.*
+        
         CALL utils_globals.msg_saved()
         CALL select_transactions("1=1")
-        CALL set_curr_idx_by_code(rec_trans.trans_no)
+        CALL set_curr_idx_by_code(rec_wb_trans.stock_code)
+        
     ELSE
-        UPDATE wb30_trans
-            SET trans_date = rec_trans.trans_date,
-                wb_code = rec_trans.wb_code,
-                wh_id = rec_trans.wh_id,
-                trans_type = rec_trans.trans_type,
-                qty = rec_trans.qty,
-                reference = rec_trans.reference,
-                status = rec_trans.status
-            WHERE trans_no = rec_trans.trans_no
+        UPDATE wb31_trf_det SET wb31_trf_det = rec_wb_trans.stock_code WHERE stock_code = rec_wb_trans.stock_code
+
         CALL utils_globals.msg_updated()
+        
     END IF
-    CALL load_transaction(rec_trans.trans_no)
+    
+    CALL load_transaction(rec_wb_trans.stock_code)
+    
 END FUNCTION
 
+-- delete transaction
 FUNCTION delete_transaction()
-    IF utils_globals.is_empty(rec_trans.trans_no) THEN
+
+    IF utils_globals.is_empty(rec_wb_trans.stock_code) THEN
         CALL utils_globals.show_info("No transaction selected for deletion.")
         RETURN
     END IF
 
     IF utils_globals.show_confirm(
-        "Delete transaction: " || rec_trans.trans_no || "?",
+        "Delete transaction: " || rec_wb_trans.stock_code || "?",
         "Confirm Delete") THEN
-        DELETE FROM wb30_trans WHERE trans_no = rec_trans.trans_no
+        DELETE FROM wb31_trf_det WHERE wb31_trf_det.stock_code = rec_wb_trans.stock_code
+        
         CALL utils_globals.msg_deleted()
         CALL select_transactions("1=1")
+        
     END IF
 END FUNCTION
 
+-- set record to be current
 FUNCTION set_curr_idx_by_code(p_code STRING)
     DEFINE i INTEGER
     FOR i = 1 TO arr_codes.getLength()
@@ -262,22 +232,16 @@ FUNCTION set_curr_idx_by_code(p_code STRING)
     END FOR
 END FUNCTION
 
-FUNCTION validateFields() RETURNS BOOLEAN
-    IF utils_globals.is_empty(rec_trans.trans_no) THEN
+-- validate fields on save
+FUNCTION validate_fields() RETURNS BOOLEAN
+    IF utils_globals.is_empty(rec_wb_trans.stock_code) THEN
         CALL utils_globals.show_error("Transaction Number is required.")
         RETURN FALSE
     END IF
-    IF rec_trans.trans_date IS NULL THEN
+    IF rec_wb_trans.qnty IS NULL THEN
         CALL utils_globals.show_error("Transaction Date is required.")
         RETURN FALSE
     END IF
-    IF utils_globals.is_empty(rec_trans.wb_code) THEN
-        CALL utils_globals.show_error("Bin Code is required.")
-        RETURN FALSE
-    END IF
-    IF utils_globals.is_empty(rec_trans.wh_id) THEN
-        CALL utils_globals.show_error("Warehouse ID is required.")
-        RETURN FALSE
-    END IF
+   
     RETURN TRUE
 END FUNCTION

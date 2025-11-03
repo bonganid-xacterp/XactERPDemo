@@ -3,43 +3,55 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="wb01_mast" name="record1" uid="{4db88bf9-b3f8-4964-9eda-46bff85fd515}">
-    <RecordField colName="wb_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wb01_mast.wb_code" sqlTabName="wb01_mast" uid="{7ab099c1-55fe-4ba8-93ee-d4b25be9c7c9}"/>
-    <RecordField colName="wh_id" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wb01_mast.wh_id" sqlTabName="wb01_mast" uid="{e5b2e031-22f8-463b-9250-ff970a256eef}"/>
-    <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wb01_mast.description" sqlTabName="wb01_mast" uid="{8b2a5480-986e-4253-b81c-dfa6cb09d905}"/>
-    <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wb01_mast.status" sqlTabName="wb01_mast" uid="{70aacbb8-aa45-4cda-b644-9b2c6a306171}"/>
+  <Record masterTable="wb01_mast" name="record1" uid="{4db88bf9-b3f8-4964-9eda-46bff85fd515}"/>
+  <Record masterTable="wb01_mast" name="record2" uid="{133099dd-4f1b-4638-865a-429706126a3c}">
+    <RecordField colName="wb_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wb01_mast.wb_code" sqlTabName="wb01_mast" uid="{12be9cef-a21b-493c-b9a0-5ba0a96d0ea4}"/>
+    <RecordField colName="wh_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wh01_mast.wh_code" sqlTabName="wh01_mast" uid="{2725ebdb-b71d-4b98-9ffc-856a5723df78}"/>
+    <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wb01_mast.description" sqlTabName="wb01_mast" uid="{b10aa371-7c7e-4949-8dcf-ec2b0ecdccbb}"/>
+    <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wb01_mast.status" sqlTabName="wb01_mast" uid="{a0936c0e-5c4f-4c72-aa10-7a24ae1f23ac}"/>
+    <RecordField colName="id" fieldIdRef="5" fieldType="TABLE_COLUMN" name="wb01_mast.id" sqlTabName="wb01_mast" uid="{740f97d8-01c0-461a-a43a-e2eaf1f5a387}"/>
+    <RecordField colName="created_at" fieldIdRef="6" fieldType="TABLE_COLUMN" name="wb01_mast.created_at" sqlTabName="wb01_mast" uid="{56ae5c85-95d8-4371-b7a1-f5b4610cd2ed}"/>
+    <RecordField colName="updated_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="wb01_mast.updated_at" sqlTabName="wb01_mast" uid="{881015bb-d338-4ffd-af05-5fcdbe90bcf7}"/>
+    <RecordField colName="deleted_at" fieldIdRef="8" fieldType="TABLE_COLUMN" name="wb01_mast.deleted_at" sqlTabName="wb01_mast" uid="{ee28e826-6eff-43ca-a3c7-41d8c159d6c1}"/>
+    <RecordField colName="created_by" fieldIdRef="9" fieldType="TABLE_COLUMN" name="wb01_mast.created_by" sqlTabName="wb01_mast" uid="{a90da6ef-cb90-4b31-aa4b-bfcd997ab5f4}"/>
   </Record>
-  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
-    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="80" name="xactapp_db1" posX="0" posY="1">
+  <Form gridHeight="6" gridWidth="77" name="form" text="Form">
+    <VBox gridHeight="6" gridWidth="77" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="4" gridWidth="77" name="xactapp_db1" posX="0" posY="1">
+        <Label color="green" gridHeight="1" gridWidth="75" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text="WAREHOUSE BIN"/>
         <Label gridHeight="1" gridWidth="11" name="wb01_mast_wb_code_label1" posX="1" posY="1" text="Bin Code">
           <Initializer text="dbschema:wb01_mast.wb_code/@label"/>
         </Label>
-        <Edit colName="wb_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wb01_mast.wb_code" posX="13" posY="1" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Bin Code" widget="Edit">
+        <ButtonEdit colName="wb_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="zoom" name="wb01_mast.wb_code" posX="13" posY="1" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Bin Code" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="14" name="wb01_mast_wh_id_label1" posX="44" posY="1" text="Warehouse Code">
+        </ButtonEdit>
+        <Label gridHeight="1" gridWidth="14" name="wb01_mast_wh_wh_code_lbl" posX="41" posY="1" text="Warehouse Code">
           <Initializer text="dbschema:wb01_mast.wh_id/@label"/>
         </Label>
-        <ButtonEdit colName="wh_id" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wb01_mast.wh_id" posX="59" posY="1" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Warehouse Code" widget="ButtonEdit">
+        <ButtonEdit colName="wh_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="zoom" name="wh01_mast.wh_code" posX="56" posY="1" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Warehouse Code" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ButtonEdit>
         <Label gridHeight="1" gridWidth="11" name="wb01_mast_description_label1" posX="1" posY="2" text="Description">
           <Initializer text="dbschema:wb01_mast.description/@label"/>
         </Label>
-        <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="wb01_mast.description" posX="13" posY="2" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Description" widget="Edit">
+        <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="26" name="wb01_mast.description" posX="13" posY="2" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Description" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="14" name="wb01_mast_status_label1" posX="44" posY="2" text="Status">
+        <Label gridHeight="1" gridWidth="14" name="wb01_mast_status_label1" posX="41" posY="2" text="Status">
           <Initializer text="dbschema:wb01_mast.status/@label"/>
         </Label>
-        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" items="" name="wb01_mast.status" posX="59" posY="2" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Status" widget="ComboBox">
+        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="" name="wb01_mast.status" posX="56" posY="2" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Status" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ComboBox>
+        <Phantom colName="id" fieldId="5" fieldType="TABLE_COLUMN" name="wb01_mast.id" sqlTabName="wb01_mast" widget="Phantom"/>
+        <Phantom colName="created_at" fieldId="6" fieldType="TABLE_COLUMN" name="wb01_mast.created_at" sqlTabName="wb01_mast" widget="Phantom"/>
+        <Phantom colName="updated_at" fieldId="7" fieldType="TABLE_COLUMN" name="wb01_mast.updated_at" sqlTabName="wb01_mast" widget="Phantom"/>
+        <Phantom colName="deleted_at" fieldId="8" fieldType="TABLE_COLUMN" name="wb01_mast.deleted_at" sqlTabName="wb01_mast" widget="Phantom"/>
+        <Phantom colName="created_by" fieldId="9" fieldType="TABLE_COLUMN" name="wb01_mast.created_by" sqlTabName="wb01_mast" widget="Phantom"/>
       </Grid>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA0AGQAYgA4ADgAYgBmADkALQBiADMAZgA4AC0ANAA5ADYANAAtADkAZQBkAGEALQA0ADYAYgBmAGYAOAA1AGYAZAA1ADEANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA0AGQAYgA4ADgAYgBmADkALQBiADMAZgA4AC0ANAA5ADYANAAtADkAZQBkAGEALQA0ADYAYgBmAGYAOAA1AGYAZAA1ADEANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewAxADMAMwAwADkAOQBkAGQALQA0AGYAMQBiAC0ANAA2ADMAOAAtADgANgA1AGEALQA0ADIAOQA3ADAANgAxADIANgBhADMAYwB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>
