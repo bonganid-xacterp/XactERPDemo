@@ -6,51 +6,47 @@
   <Record masterTable="st30_trans" name="arr_st30_trans" uid="{6d3a0a99-b9d9-4427-a3e2-7fa28124074c}">
     <RecordField colName="stock_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="st30_trans.stock_code" sqlTabName="st30_trans" uid="{3821e344-d279-4490-9397-84d829743ff6}"/>
     <RecordField colName="trans_date" fieldIdRef="2" fieldType="TABLE_COLUMN" name="st30_trans.trans_date" sqlTabName="st30_trans" uid="{22784024-e1e6-4785-ab83-9a922d3014b8}"/>
-    <RecordField colName="trans_type" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st30_trans.trans_type" sqlTabName="st30_trans" uid="{9ef480e6-1b54-4fcd-8bfa-4a6d89ad1e87}"/>
+    <RecordField colName="doc_type" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st30_trans.doc_type" sqlTabName="st30_trans" uid="{9ef480e6-1b54-4fcd-8bfa-4a6d89ad1e87}"/>
     <RecordField colName="direction" fieldIdRef="4" fieldType="TABLE_COLUMN" name="st30_trans.direction" sqlTabName="st30_trans" uid="{85476b9b-31d4-4717-b0c2-234ae52cd2a5}"/>
-    <RecordField colName="qty" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st30_trans.qty" sqlTabName="st30_trans" uid="{8ca4d448-c04b-441d-b28a-044d3e52e1e4}"/>
+    <RecordField colName="qnty" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st30_trans.qnty" sqlTabName="st30_trans" uid="{8ca4d448-c04b-441d-b28a-044d3e52e1e4}"/>
     <RecordField colName="unit_cost" fieldIdRef="6" fieldType="TABLE_COLUMN" name="st30_trans.unit_cost" sqlTabName="st30_trans" uid="{7440f725-7570-473d-a14c-f4e443673828}"/>
-    <RecordField colName="unit_sell" fieldIdRef="7" fieldType="TABLE_COLUMN" name="st30_trans.unit_sell" sqlTabName="st30_trans" uid="{6060634f-f386-4ae9-a941-97c736ebf736}"/>
+    <RecordField colName="sell_price" fieldIdRef="7" fieldType="TABLE_COLUMN" name="st30_trans.sell_price" sqlTabName="st30_trans" uid="{6060634f-f386-4ae9-a941-97c736ebf736}"/>
     <RecordField colName="expiry_date" fieldIdRef="9" fieldType="TABLE_COLUMN" name="st30_trans.expiry_date" sqlTabName="st30_trans" uid="{e1f9acdf-eb94-47ef-831d-7e3a53007fe3}"/>
-    <RecordField colName="doc_type" fieldIdRef="10" fieldType="TABLE_COLUMN" name="st30_trans.doc_type" sqlTabName="st30_trans" uid="{f331aaa2-11aa-4eed-b880-7291aaedad4d}"/>
-    <RecordField colName="doc_no" fieldIdRef="11" fieldType="TABLE_COLUMN" name="st30_trans.doc_no" sqlTabName="st30_trans" uid="{26f73a7a-918f-48e8-9784-a4ba58dab0e0}"/>
+    <RecordField colName="batch_id" fieldIdRef="11" fieldType="TABLE_COLUMN" name="st30_trans.batch_id" sqlTabName="st30_trans" uid="{26f73a7a-918f-48e8-9784-a4ba58dab0e0}"/>
     <RecordField colName="notes" fieldIdRef="12" fieldType="TABLE_COLUMN" name="st30_trans.notes" sqlTabName="st30_trans" uid="{b426ea9e-d64e-4f32-a825-684b7577bc1e}"/>
   </Record>
-  <Form gridHeight="25" gridWidth="163" name="frm_st30_trans" text="Form">
-    <VBox gridHeight="15" gridWidth="163" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="13" gridWidth="163" name="grid1" posX="0" posY="1">
-        <Table gridHeight="6" gridWidth="154" name="st30_trans" posX="1" posY="1" totalRows="5">
-          <Edit colName="stock_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="st30_trans.stock_code" posX="0" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Stock Code" widget="Edit">
+  <Form gridHeight="11" gridWidth="131" name="frm_st30_trans" text="Form">
+    <VBox gridHeight="11" gridWidth="131" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="9" gridWidth="158" name="grid1" posX="0" posY="1">
+        <Table gridHeight="6" gridWidth="130" name="st30_trans" posX="1" posY="1" totalRows="5">
+          <Edit colName="stock_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.stock_code" posX="0" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Stock Code" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="doc_no" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" name="st30_trans.doc_no" posX="14" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Doc No" widget="Edit">
+          <Edit colName="batch_id" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" name="st30_trans.batch_id" posX="10" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Doc No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="trans_date" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.trans_date" posX="27" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Date" widget="Edit">
+          <Edit colName="trans_date" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.trans_date" posX="23" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Date" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="trans_type" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.trans_type" posX="37" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Trans Type" widget="Edit">
+          <Edit colName="doc_type" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.doc_type" posX="33" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Trans Type" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="direction" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="3" name="st30_trans.direction" posX="47" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Direction" widget="Edit">
+          <Edit colName="direction" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.direction" posX="43" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Direction" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="qty" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="st30_trans.qty" posX="50" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Quantity" widget="Edit">
+          <Edit colName="qnty" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="st30_trans.qnty" posX="53" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Quantity" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="unit_cost" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="st30_trans.unit_cost" posX="64" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Cost Price" widget="Edit">
+          <Edit colName="unit_cost" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="st30_trans.unit_cost" posX="61" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Cost Price" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="unit_sell" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="st30_trans.unit_sell" posX="78" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Selling Price" widget="Edit">
+          <Edit colName="sell_price" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="st30_trans.sell_price" posX="70" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Selling Price" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="expiry_date" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.expiry_date" posX="92" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Expiry Date" widget="Edit">
+          <Edit colName="expiry_date" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.expiry_date" posX="79" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Expiry Date" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="doc_type" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="st30_trans.doc_type" posX="102" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
-          <Edit colName="notes" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st30_trans.notes" posX="112" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="notes" widget="Edit">
+          <Edit colName="notes" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st30_trans.notes" posX="89" posY="0" scroll="true" sqlTabName="st30_trans" tabIndex="-1" title="notes" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
         </Table>

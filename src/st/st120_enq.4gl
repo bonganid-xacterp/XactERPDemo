@@ -21,50 +21,13 @@ SCHEMA demoapp_db
 -- ==============================================================
 
 -- Search criteria record
-DEFINE rec_search RECORD
-    stock_code LIKE st01_mast.stock_code,
-    description LIKE st01_mast.description,
-    category_id LIKE st01_mast.category_id,
-    status LIKE st01_mast.status,
-    min_cost LIKE st01_mast.cost,
-    max_cost LIKE st01_mast.cost,
-    min_selling LIKE st01_mast.selling_price,
-    max_selling LIKE st01_mast.selling_price,
-    min_stock LIKE st01_mast.stock_on_hand,
-    max_stock LIKE st01_mast.stock_on_hand,
-    barcode LIKE st01_mast.barcode,
-    batch_control LIKE st01_mast.batch_control
-END RECORD
+DEFINE stock_r RECORD LIKE st01_mast.*
 
 -- Stock results array
-DEFINE arr_stock_results DYNAMIC ARRAY OF RECORD
-    stock_code LIKE st01_mast.stock_code,
-    description LIKE st01_mast.description,
-    barcode LIKE st01_mast.barcode,
-    category_id LIKE st01_mast.category_id,
-    cost LIKE st01_mast.cost,
-    selling_price LIKE st01_mast.selling_price,
-    stock_on_hand LIKE st01_mast.stock_on_hand,
-    total_purch LIKE st01_mast.total_purch,
-    total_sales LIKE st01_mast.total_sales,
-    status LIKE st01_mast.status,
-    profit_margin DECIMAL(10, 2)
-END RECORD
+DEFINE arr_stock_results DYNAMIC ARRAY OF RECORD LIKE st01_mast.*
 
 -- Transaction detail array
-DEFINE arr_trans_detail DYNAMIC ARRAY OF RECORD
-    trans_date LIKE st30_trans.trans_date,
-    trans_type LIKE st30_trans.trans_type,
-    direction LIKE st30_trans.direction,
-    qty LIKE st30_trans.qty,
-    unit_cost LIKE st30_trans.unit_cost,
-    unit_sell LIKE st30_trans.unit_sell,
-    batch_id LIKE st30_trans.batch_id,
-    expiry_date LIKE st30_trans.expiry_date,
-    doc_type LIKE st30_trans.doc_type,
-    doc_no LIKE st30_trans.doc_no,
-    notes LIKE st30_trans.notes
-END RECORD
+DEFINE arr_trans_detail DYNAMIC ARRAY OF RECORD LIKE st30_trans.*
 
 DEFINE curr_stock_idx INTEGER
 DEFINE total_value DECIMAL(15, 2)
@@ -73,16 +36,16 @@ DEFINE total_profit DECIMAL(15, 2)
 -- ==============================================================
 -- MAIN - Entry point when run standalone
 -- ==============================================================
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        DISPLAY "Initialization failed."
-        EXIT PROGRAM 1
-    END IF
-
-    OPEN WINDOW w_st120 WITH FORM "st120_enq" ATTRIBUTES(STYLE = "main")
-    CALL run_stock_enquiry()
-    CLOSE WINDOW w_st120
-END MAIN
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        DISPLAY "Initialization failed."
+--        EXIT PROGRAM 1
+--    END IF
+--      OPTIONS INPUT WRAP
+--    OPEN WINDOW w_st120 WITH FORM "st120_enq" ATTRIBUTES(STYLE = "main")
+--    CALL run_stock_enquiry()
+--    CLOSE WINDOW w_st120
+--END MAIN
 
 -- ==============================================================
 -- Run Stock Enquiry - Main entry function
@@ -96,26 +59,26 @@ END FUNCTION
 -- ==============================================================
 FUNCTION init_enquiry_module()
     -- Initialize search criteria
-    INITIALIZE rec_search.* TO NULL
+    INITIALIZE stock_r.* TO NULL
 
     DIALOG ATTRIBUTES(UNBUFFERED)
 
         -- Search Criteria Input
-        INPUT BY NAME rec_search.*
+        INPUT BY NAME stock_r.*
             ATTRIBUTES(WITHOUT DEFAULTS, NAME = "search_criteria")
 
             BEFORE INPUT
                 -- Set default search to show all active items
-                LET rec_search.status = "1"
+                LET stock_r.status = "1"
 
             ON ACTION lookup_category
                 ATTRIBUTES(TEXT = "Lookup Category", DEFAULTVIEW = NO)
                 CALL lookup_category_for_search()
 
             ON ACTION clear_search ATTRIBUTES(TEXT = "Clear", IMAGE = "clear")
-                INITIALIZE rec_search.* TO NULL
-                LET rec_search.status = "1"
-                DISPLAY BY NAME rec_search.*
+                INITIALIZE stock_r.* TO NULL
+                LET stock_r.status = "1"
+                DISPLAY BY NAME stock_r.*
 
         END INPUT
 
@@ -182,8 +145,8 @@ FUNCTION lookup_category_for_search()
     LET selected_cat_id = st122_cat_lkup.load_lookup()
 
     IF selected_cat_id IS NOT NULL THEN
-        LET rec_search.category_id = selected_cat_id
-        DISPLAY BY NAME rec_search.category_id
+        LET stock_r.category_id = selected_cat_id
+        DISPLAY BY NAME stock_r.category_id
     END IF
 END FUNCTION
 
@@ -198,68 +161,17 @@ FUNCTION search_stock_items()
     -- Build WHERE clause based on search criteria
     LET where_clause = "1=1"
 
-    IF rec_search.stock_code IS NOT NULL AND rec_search.stock_code != "" THEN
+    IF stock_r.stock_code IS NOT NULL AND stock_r.stock_code != "" THEN
         LET where_clause =
-            where_clause || " AND stock_code LIKE '" || rec_search.stock_code || "%'"
+            where_clause || " AND stock_code LIKE '" || stock_r.stock_code || "%'"
     END IF
 
-    IF rec_search.description IS NOT NULL AND rec_search.description != "" THEN
+    IF stock_r.description IS NOT NULL AND stock_r.description != "" THEN
         LET where_clause =
             where_clause
             || " AND description LIKE '%"
-            || rec_search.description
+            || stock_r.description
             || "%'"
-    END IF
-
-    IF rec_search.barcode IS NOT NULL AND rec_search.barcode != "" THEN
-        LET where_clause =
-            where_clause || " AND barcode = '" || rec_search.barcode || "'"
-    END IF
-
-    IF rec_search.category_id IS NOT NULL THEN
-        LET where_clause =
-            where_clause || " AND category_id = " || rec_search.category_id
-    END IF
-
-    IF rec_search.status IS NOT NULL AND rec_search.status != "" THEN
-        LET where_clause =
-            where_clause || " AND status = '" || rec_search.status || "'"
-    END IF
-
-    IF rec_search.batch_control IS NOT NULL THEN
-        LET where_clause =
-            where_clause || " AND batch_control = " || rec_search.batch_control
-    END IF
-
-    -- Cost range
-    IF rec_search.min_cost IS NOT NULL THEN
-        LET where_clause = where_clause || " AND cost >= " || rec_search.min_cost
-    END IF
-
-    IF rec_search.max_cost IS NOT NULL THEN
-        LET where_clause = where_clause || " AND cost <= " || rec_search.max_cost
-    END IF
-
-    -- Selling price range
-    IF rec_search.min_selling IS NOT NULL THEN
-        LET where_clause =
-            where_clause || " AND selling_price >= " || rec_search.min_selling
-    END IF
-
-    IF rec_search.max_selling IS NOT NULL THEN
-        LET where_clause =
-            where_clause || " AND selling_price <= " || rec_search.max_selling
-    END IF
-
-    -- Stock on hand range
-    IF rec_search.min_stock IS NOT NULL THEN
-        LET where_clause =
-            where_clause || " AND stock_on_hand >= " || rec_search.min_stock
-    END IF
-
-    IF rec_search.max_stock IS NOT NULL THEN
-        LET where_clause =
-            where_clause || " AND stock_on_hand <= " || rec_search.max_stock
     END IF
 
     -- Execute search
@@ -277,38 +189,28 @@ FUNCTION search_stock_items()
 
     DECLARE c_search_curs CURSOR FROM sql_stmt
 
-    FOREACH c_search_curs
-        INTO arr_stock_results[idx + 1].stock_code,
-            arr_stock_results[idx + 1].description,
-            arr_stock_results[idx + 1].barcode,
-            arr_stock_results[idx + 1].category_id,
-            arr_stock_results[idx + 1].cost,
-            arr_stock_results[idx + 1].selling_price,
-            arr_stock_results[idx + 1].stock_on_hand,
-            arr_stock_results[idx + 1].total_purch,
-            arr_stock_results[idx + 1].total_sales,
-            arr_stock_results[idx + 1].status
+    FOREACH c_search_curs INTO arr_stock_results[idx + 1].*
 
-        -- Calculate profit margin
-        IF arr_stock_results[idx + 1].cost > 0 THEN
-            LET arr_stock_results[idx + 1].profit_margin =
-                ((arr_stock_results[idx + 1].selling_price
-                    - arr_stock_results[idx + 1].cost)
-                    / arr_stock_results[idx + 1].cost)
-                * 100
-        ELSE
-            LET arr_stock_results[idx + 1].profit_margin = 0
-        END IF
+        ---- Calculate profit margin
+        --IF arr_stock_results[idx + 1].unit_cost > 0 THEN
+        --    LET arr_stock_results[idx + 1].profit_margin =
+        --        ((arr_stock_results[idx + 1].sell_price
+        --            - arr_stock_results[idx + 1].unit_cost)
+        --            / arr_stock_results[idx + 1].unit_cost)
+        --        * 100
+        --ELSE
+        --    LET arr_stock_results[idx + 1].profit_margin = 0
+        --END IF
 
         -- Accumulate totals
         LET total_value =
             total_value
-            + (arr_stock_results[idx + 1].cost
+            + (arr_stock_results[idx + 1].unit_cost
                 * arr_stock_results[idx + 1].stock_on_hand)
         LET total_profit =
             total_profit
-            + ((arr_stock_results[idx + 1].selling_price
-                - arr_stock_results[idx + 1].cost)
+            + ((arr_stock_results[idx + 1].sell_price
+                - arr_stock_results[idx + 1].unit_cost)
                 * arr_stock_results[idx + 1].stock_on_hand)
 
         LET idx = idx + 1
@@ -338,17 +240,7 @@ FUNCTION load_transaction_details(p_stock_code STRING)
     LET idx = 0
 
     DECLARE c_trans_curs CURSOR FOR
-        SELECT trans_date,
-            trans_type,
-            direction,
-            qty,
-            unit_cost,
-            unit_sell,
-            batch_id,
-            expiry_date,
-            doc_type,
-            doc_no,
-            notes
+        SELECT *
         FROM st30_trans
         WHERE stock_code = p_stock_code
         ORDER BY trans_date DESC, id DESC
@@ -364,40 +256,13 @@ END FUNCTION
 -- View Stock Detail - Show full item information
 -- ==============================================================
 FUNCTION view_stock_detail(p_stock_code STRING)
-    DEFINE rec_detail RECORD
-        stock_code LIKE st01_mast.stock_code,
-        description LIKE st01_mast.description,
-        barcode LIKE st01_mast.barcode,
-        batch_control LIKE st01_mast.batch_control,
-        category_id LIKE st01_mast.category_id,
-        cost LIKE st01_mast.cost,
-        selling_price LIKE st01_mast.selling_price,
-        stock_on_hand LIKE st01_mast.stock_on_hand,
-        total_purch LIKE st01_mast.total_purch,
-        total_sales LIKE st01_mast.total_sales,
-        status LIKE st01_mast.status,
-        created_at LIKE st01_mast.created_at,
-        updated_at LIKE st01_mast.updated_at
-    END RECORD
-
+    DEFINE rec_detail RECORD LIKE st01_mast.*
     DEFINE profit_margin DECIMAL(10, 2)
     DEFINE stock_value DECIMAL(15, 2)
     DEFINE detail_msg STRING
 
     -- Load stock details
-    SELECT stock_code,
-        description,
-        barcode,
-        batch_control,
-        category_id,
-        cost,
-        selling_price,
-        stock_on_hand,
-        total_purch,
-        total_sales,
-        status,
-        created_at,
-        updated_at
+    SELECT * 
         INTO rec_detail.*
         FROM st01_mast
         WHERE stock_code = p_stock_code
@@ -408,14 +273,14 @@ FUNCTION view_stock_detail(p_stock_code STRING)
     END IF
 
     -- Calculate metrics
-    IF rec_detail.cost > 0 THEN
+    IF rec_detail.unit_cost > 0 THEN
         LET profit_margin =
-            ((rec_detail.selling_price - rec_detail.cost) / rec_detail.cost) * 100
+            ((rec_detail.sell_price - rec_detail.unit_cost) / rec_detail.unit_cost) * 100
     ELSE
         LET profit_margin = 0
     END IF
 
-    LET stock_value = rec_detail.cost * rec_detail.stock_on_hand
+    LET stock_value = rec_detail.unit_cost * rec_detail.stock_on_hand
 
     -- Build detail message
     LET detail_msg = "STOCK ITEM DETAILS\n\n"
@@ -434,8 +299,8 @@ FUNCTION view_stock_detail(p_stock_code STRING)
         LET detail_msg = detail_msg || "No\n"
     END IF
     LET detail_msg = detail_msg || "\n--- PRICING ---\n"
-    LET detail_msg = detail_msg || "Cost Price: " || rec_detail.cost || "\n"
-    LET detail_msg = detail_msg || "Selling Price: " || rec_detail.selling_price || "\n"
+    LET detail_msg = detail_msg || "Cost Price: " || rec_detail.unit_cost || "\n"
+    LET detail_msg = detail_msg || "Selling Price: " || rec_detail.sell_price || "\n"
     LET detail_msg =
         detail_msg || "Profit Margin: " || profit_margin USING "<<<.<<" || "%\n"
     LET detail_msg = detail_msg || "\n--- STOCK LEVELS ---\n"
@@ -492,13 +357,12 @@ FUNCTION print_stock_report()
             || " | "
             || arr_stock_results[i].description
             || " | "
-            || arr_stock_results[i].cost
+            || arr_stock_results[i].unit_cost
             || " | "
-            || arr_stock_results[i].selling_price
+            || arr_stock_results[i].sell_price
             || " | "
             || arr_stock_results[i].stock_on_hand
             || " | "
-            || arr_stock_results[i].profit_margin
             || "\n"
     END FOR
 
@@ -548,12 +412,10 @@ FUNCTION show_stock_analysis()
         END IF
 
         -- Count high value items (cost > 100)
-        IF arr_stock_results[i].cost > 100 THEN
+        IF arr_stock_results[i].unit_cost > 100 THEN
             LET high_value_count = high_value_count + 1
         END IF
 
-        -- Accumulate margin
-        LET avg_margin = avg_margin + arr_stock_results[i].profit_margin
     END FOR
 
     LET avg_margin = avg_margin / arr_stock_results.getLength()

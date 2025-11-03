@@ -24,7 +24,7 @@ FUNCTION load_lookup() RETURNS STRING
         END RECORD,
         ret_code STRING,
         curr_pa, idx SMALLINT
-
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_st122_cat_lkup
         WITH
         FORM "st122_cat_lkup"
