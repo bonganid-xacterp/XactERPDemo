@@ -18,28 +18,44 @@ DEFINE g_login_tries SMALLINT
 
 CONSTANT MAX_LOGIN_ATTEMPTS = 3
 
--- --------------------------------------------------------------
--- MAIN LOGIN FUNCTION
--- --------------------------------------------------------------
+
 FUNCTION login_user() RETURNS SMALLINT
     DEFINE f_username, f_password STRING
     DEFINE f ui.Form
     DEFINE ok SMALLINT
 
-    LET g_login_tries = 0
+    -- Initialize
     LET ok = FALSE
+    LET g_login_tries = 0
 
-    -- Open login window
-    OPEN WINDOW w_login
-        WITH
-        FORM "sy100_login"
-        ATTRIBUTES(STYLE = "dialog", TEXT = "XACT ERP Login")
+    -- ------------------------------------------------------------
+    -- Open login window (dialog style)
+    -- ------------------------------------------------------------
+    OPTIONS INPUT WRAP
+    OPEN WINDOW w_login WITH FORM "sy100_login" ATTRIBUTES(STYLE = "dialog")
 
-    -- Show company logo if available
+    -- Attach current form reference
+    IF ui.Window.getCurrent() IS NULL THEN
+        DISPLAY "ERROR: Failed to get window reference"
+        RETURN FALSE
+    END IF
+
     LET f = ui.Window.getCurrent().getForm()
-    CALL f.setElementImage("company_logo", "logo.png")
 
-    DIALOG
+    -- Optional: Set company logo dynamically (if element exists)
+    WHENEVER ERROR CONTINUE
+        CALL f.setElementImage("company_logo", "company_logo.png")
+    WHENEVER ERROR STOP
+
+    IF STATUS != 0 THEN
+        DISPLAY "Warning: Could not load company logo (company_logo.png)"
+    END IF
+
+    -- ------------------------------------------------------------
+    -- Start dialog for login input
+    -- ------------------------------------------------------------
+    DIALOG ATTRIBUTES(UNBUFFERED)
+
         INPUT BY NAME f_username, f_password
 
             BEFORE INPUT
@@ -47,14 +63,26 @@ FUNCTION login_user() RETURNS SMALLINT
                 NEXT FIELD f_username
 
             AFTER FIELD f_password
-                IF try_login(f_username, f_password) THEN
-                    LET ok = TRUE
-                    EXIT DIALOG
-                ELSE
-                    IF g_login_tries < MAX_LOGIN_ATTEMPTS THEN
-                        NEXT FIELD f_password
-                    ELSE
+                -- Validate after user tabs out of password field
+                IF f_password IS NOT NULL AND f_password.getLength() > 0 THEN
+                    IF validate_login(f_username.trim(), f_password.trim()) THEN
+                        LET g_current_user = f_username
+                        MESSAGE "Welcome " || f_username || "!"
+                        LET ok = TRUE
                         EXIT DIALOG
+                    ELSE
+                        LET g_login_tries = g_login_tries + 1
+
+                        IF g_login_tries < MAX_LOGIN_ATTEMPTS THEN
+                            ERROR SFMT("Invalid credentials (%1/%2)",
+                                       g_login_tries, MAX_LOGIN_ATTEMPTS)
+                            LET f_password = NULL
+                            NEXT FIELD f_username
+                        ELSE
+                            CALL utils_globals.show_error(
+                                "Maximum login attempts reached.")
+                            EXIT DIALOG
+                        END IF
                     END IF
                 END IF
 
@@ -62,58 +90,47 @@ FUNCTION login_user() RETURNS SMALLINT
                 IF confirm_exit_login() THEN
                     EXIT DIALOG
                 END IF
+
         END INPUT
+
     END DIALOG
 
+    -- ------------------------------------------------------------
+    -- Close login window and return result
+    -- ------------------------------------------------------------
     CLOSE WINDOW w_login
     RETURN ok
 END FUNCTION
 
 -- --------------------------------------------------------------
--- TRY LOGIN (handles retry and validation)
--- --------------------------------------------------------------
-FUNCTION try_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
-    DEFINE valid SMALLINT
-    LET g_login_tries = g_login_tries + 1
-    LET valid = FALSE
-
-    IF validate_login(p_user.trim(), p_pass.trim()) THEN
-        LET g_current_user = p_user
-        MESSAGE "Welcome " || p_user || "!"
-        LET valid = TRUE
-    ELSE
-        IF g_login_tries >= MAX_LOGIN_ATTEMPTS THEN
-            ERROR "Maximum login attempts exceeded."
-        ELSE
-            ERROR "Invalid credentials ("
-                || g_login_tries
-                || "/"
-                || MAX_LOGIN_ATTEMPTS
-                || ")"
-        END IF
-    END IF
-
-    RETURN valid
-END FUNCTION
-
--- --------------------------------------------------------------
 -- SIMPLE DEMO VALIDATION (to replace with DB query later)
+-- TODO: Replace hardcoded credentials with database lookup
+-- TODO: Implement password hashing (BCrypt or similar)
+-- TODO: Add audit logging for failed login attempts
 -- --------------------------------------------------------------
 FUNCTION validate_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
+    -- WARNING: HARDCODED CREDENTIALS - FOR DEMO PURPOSES ONLY!
+    -- This is a SECURITY RISK in production environments
+    -- Production implementation should:
+    --   1. Query sy101_user and sy104_user_pwd tables
+    --   2. Use password hashing (security.BCrypt.verify())
+    --   3. Log attempts to sy130_logs table
+    --   4. Implement account lockout after failed attempts
+
     CASE p_user.toLowerCase()
         WHEN "admin"
-            IF p_pass = "1234" THEN
-                LET g_user_role = "Administrator";
+            IF p_pass = "1234" THEN  -- WEAK PASSWORD - CHANGE IN PRODUCTION
+                LET g_user_role = "Administrator"
                 RETURN TRUE
             END IF
         WHEN "user"
-            IF p_pass = "user123" THEN
-                LET g_user_role = "User";
+            IF p_pass = "user123" THEN  -- WEAK PASSWORD - CHANGE IN PRODUCTION
+                LET g_user_role = "User"
                 RETURN TRUE
             END IF
         WHEN "demo"
-            IF p_pass = "demo" THEN
-                LET g_user_role = "Demo User";
+            IF p_pass = "demo" THEN  -- WEAK PASSWORD - CHANGE IN PRODUCTION
+                LET g_user_role = "Demo User"
                 RETURN TRUE
             END IF
     END CASE
@@ -140,3 +157,4 @@ FUNCTION confirm_exit_login() RETURNS SMALLINT
         utils_globals.show_confirm("Exit Login", "Do you want to cancel login?")
     RETURN ans = "yes"
 END FUNCTION
+
