@@ -31,7 +31,7 @@ FUNCTION fetch_debt_list() RETURNS STRING
 
     LET idx = 0
     LET selected_code = NULL
-
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_debt WITH FORM "dl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
     -- Load data of all active debtors
@@ -117,7 +117,7 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
         CALL utils_globals.show_info("No debtor records found.")
         RETURN NULL
     END IF
-
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_lkup WITH FORM "dl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
