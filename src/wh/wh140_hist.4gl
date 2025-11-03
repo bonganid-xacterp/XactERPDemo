@@ -36,7 +36,7 @@
 --    IF NOT utils_globals.initialize_application() THEN
 --        EXIT PROGRAM 1
 --    END IF
---
+--      OPTIONS INPUT WRAP
 --    OPEN WINDOW w_wh140 WITH FORM "wh140_hist" ATTRIBUTES(STYLE = "main")
 --    CALL init_module()
 --    CLOSE WINDOW w_wh140
@@ -114,7 +114,7 @@
 --    DEFINE to_date DATE
 --    DEFINE wh_code STRING
 --    DEFINE whereClause STRING
---
+--      OPTIONS INPUT WRAP
 --    OPEN WINDOW w_query WITH FORM "wh140_query" ATTRIBUTES(STYLE="dialog")
 --
 --    LET from_date = TODAY - 30

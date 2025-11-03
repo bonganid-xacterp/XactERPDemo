@@ -3,12 +3,44 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
-    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="80" name="grid1" posX="0" posY="1"/>
+  <Record masterTable="wh30_tag" name="rec_wh_tag" uid="{6d7e9f08-92bc-4bb4-8339-5c564cc4f2a2}">
+    <RecordField colName="tag_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wh30_tag.tag_code" sqlTabName="wh30_tag" uid="{f1c29c3d-877c-49dc-8870-7220a1625072}"/>
+    <RecordField colName="tag_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wh30_tag.tag_name" sqlTabName="wh30_tag" uid="{f278a9ff-6c02-4033-958c-3d77ff78af6b}"/>
+    <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wh30_tag.description" sqlTabName="wh30_tag" uid="{e4980c0c-040c-499d-a422-2f7818c6b3e7}"/>
+    <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wh30_tag.status" sqlTabName="wh30_tag" uid="{9584fd32-d821-4e34-8c60-306c73e6f8bd}"/>
+  </Record>
+  <Form gridHeight="6" gridWidth="73" name="frm_wh_tags" style="dialog2" text="Form">
+    <VBox gridHeight="6" gridWidth="73" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="4" gridWidth="73" name="grd_wh_tags" posX="0" posY="1">
+        <Label color="black" gridHeight="1" gridWidth="72" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" style="bold title" text="WAREHOUSE TAGS"/>
+        <Label gridHeight="1" gridWidth="11" name="wh30_tag_tag_code_label1" posX="1" posY="1" text="Tag Code">
+          <Initializer text="dbschema:wh30_tag.tag_code/@label"/>
+        </Label>
+        <ButtonEdit colName="tag_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="zoom" name="wh30_tag.tag_code" posX="13" posY="1" scroll="true" sqlTabName="wh30_tag" tabIndex="-1" widget="ButtonEdit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ButtonEdit>
+        <Label gridHeight="1" gridWidth="8" name="wh30_tag_tag_name_label1" posX="44" posY="1" text="Tag Name">
+          <Initializer text="dbschema:wh30_tag.tag_name/@label"/>
+        </Label>
+        <Edit colName="tag_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_tag.tag_name" posX="53" posY="1" scroll="true" sqlTabName="wh30_tag" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="11" name="wh30_tag_description_label1" posX="1" posY="2" text="Description">
+          <Initializer text="dbschema:wh30_tag.description/@label"/>
+        </Label>
+        <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="28" name="wh30_tag.description" posX="13" posY="2" scroll="true" sqlTabName="wh30_tag" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="8" name="wh30_tag_status_label1" posX="44" posY="2" text="Status">
+          <Initializer text="dbschema:wh30_tag.status/@label"/>
+        </Label>
+        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="" name="wh30_tag.status" posX="53" posY="2" sqlTabName="wh30_tag" tabIndex="-1" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </ComboBox>
+      </Grid>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAg==]]>
+    <![CDATA[AAAAAgAAAEwAewA2AGQANwBlADkAZgAwADgALQA5ADIAYgBjAC0ANABiAGIANAAtADgAMwAzADkALQA1AGMANQA2ADQAYwBjADQAZgAyAGEAMgB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

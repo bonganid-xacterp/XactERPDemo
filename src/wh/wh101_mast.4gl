@@ -17,19 +17,11 @@ IMPORT FGL utils_status_const
 SCHEMA demoapp_db -- Use correct schema name
 
 -- Warehouse master record structure
-TYPE warehouse_t RECORD
-    wh_code LIKE wh01_mast.wh_code, -- Warehouse code (primary key)
-    wh_name LIKE wh01_mast.wh_name, -- Warehouse name
-    location LIKE wh01_mast.location, -- Physical location
-    status LIKE wh01_mast.status -- Status (1=Active, 0=Inactive)
-END RECORD
+TYPE warehouse_t RECORD LIKE wh01_mast.*
 
 DEFINE rec_wh warehouse_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
-DEFINE can_save SMALLINT -- TRUE when creating or editing (enables Save)
-
-DEFINE dlg ui.Dialog
 
 -- ==============================================================
 -- Main
@@ -39,144 +31,57 @@ MAIN
         DISPLAY "Initialization failed."
         EXIT PROGRAM 1
     END IF
-
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_wh101 WITH FORM "wh101_mast" ATTRIBUTES(STYLE = "main")
-    CALL init_module()
+    CALL init_wh_module()
     CLOSE WINDOW w_wh101
 END MAIN
 
 -- ==============================================================
--- DIALOG Controller
+-- Menu Controller
 -- ==============================================================
-FUNCTION init_module()
-    DEFINE ok SMALLINT
-    DEFINE code STRING
+FUNCTION init_wh_module()
+    DEFINE is_edit_mode SMALLINT
+    DEFINE selected_code STRING
 
-    CALL utils_status_const.populate_status_combobox()
-    LET can_save = FALSE
+    -- ===========================================
+    -- MAIN MENU (top-level)
+    -- ===========================================
+    MENU "warehouses Menu"
 
-    DIALOG ATTRIBUTES(UNBUFFERED)
+        COMMAND "Find"
+            --LET selected_code = query_warehouse()
+            LET is_edit_mode = FALSE
 
-        -- Bind the record to the form
-        INPUT BY NAME rec_wh.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "warehouse")
+        COMMAND "New"
+            CALL new_warehouse()
+            LET is_edit_mode = FALSE
 
-            -- -----------------------
-            -- Entering input phase
-            -- -----------------------
-            BEFORE INPUT
-                LET can_save = FALSE
-                CALL dlg.setActionActive("save", FALSE)
-                CALL dlg.setActionActive("edit", TRUE)
+        COMMAND "Edit"
+            IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN
+                CALL utils_globals.show_info("No record selected to edit.")
+            ELSE
+                LET is_edit_mode = TRUE
+                CALL edit_warehouse() -- call subdialog function
+            END IF
 
-                -- -----------------------
-                -- Lookup / Find
-                -- -----------------------
-            ON ACTION find ATTRIBUTES(TEXT = "Search", IMAGE = "zoom")
-                LET code = query_warehouse()
-                IF code IS NOT NULL AND code <> "" THEN
-                    CALL load_warehouse(code)
-                    CALL set_curr_idx_by_code(code)
-                ELSE
-                    CALL utils_globals.show_info("No record selected.")
-                END IF
-                LET can_save = FALSE
-                CALL dlg.setActionActive("save", FALSE)
-                CALL dlg.setActionActive("edit", TRUE)
+        COMMAND "Delete"
+            CALL delete_warehouse()
+            LET is_edit_mode = FALSE
 
-                -- -----------------------
-                -- Create new record
-                -- -----------------------
-            ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
-                CALL new_warehouse()
-                -- For NEW we allow editing immediately and enable Save
-                LET can_save = TRUE
-                CALL dlg.setActionActive("save", TRUE)
-                CALL dlg.setActionActive("edit", FALSE)
+        COMMAND "First"
+            CALL move_record(-2)
+        COMMAND "Previous"
+            CALL move_record(-1)
+        COMMAND "Next"
+            CALL move_record(1)
+        COMMAND "Last"
+            CALL move_record(2)
 
-                -- -----------------------
-                -- Enter Edit mode
-                -- -----------------------
-            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
-                IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN
-                    CALL utils_globals.show_info("No record selected to edit.")
-                ELSE
-                    LET can_save = TRUE
-                    CALL dlg.setActionActive("save", TRUE)
-                    CALL dlg.setActionActive("edit", FALSE)
-                    MESSAGE "Edit mode enabled. Make changes and click Update to save."
-                END IF
+        COMMAND "Exit"
+            EXIT MENU
 
-                -- -----------------------
-                -- Save (Insert or Update)
-                -- -----------------------
-            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
-                IF can_save THEN
-                    CALL save_warehouse()
-                    LET can_save = FALSE
-                    CALL dlg.setActionActive("save", FALSE)
-                    CALL dlg.setActionActive("edit", TRUE)
-                END IF
-
-                -- -----------------------
-                -- Delete current record
-                -- -----------------------
-            ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
-                CALL delete_warehouse()
-                LET can_save = FALSE
-                CALL dlg.setActionActive("save", FALSE)
-                CALL dlg.setActionActive("edit", TRUE)
-
-                -- -----------------------
-                -- Navigation
-                -- -----------------------
-            ON ACTION FIRST ATTRIBUTES(TEXT = "First Record", IMAGE = "first")
-                CALL move_record(-2)
-                LET can_save = FALSE
-                CALL dlg.setActionActive("save", FALSE)
-                CALL dlg.setActionActive("edit", TRUE)
-
-            ON ACTION PREVIOUS ATTRIBUTES(TEXT = "Previous", IMAGE = "prev")
-                CALL move_record(-1)
-                LET can_save = FALSE
-                CALL dlg.setActionActive("save", FALSE)
-                CALL dlg.setActionActive("edit", TRUE)
-
-            ON ACTION NEXT ATTRIBUTES(TEXT = "Next", IMAGE = "next")
-                CALL move_record(1)
-                LET can_save = FALSE
-                CALL dlg.setActionActive("save", FALSE)
-                CALL dlg.setActionActive("edit", TRUE)
-
-            ON ACTION LAST ATTRIBUTES(TEXT = "Last Record", IMAGE = "last")
-                CALL move_record(2)
-                LET can_save = FALSE
-                CALL dlg.setActionActive("save", FALSE)
-                CALL dlg.setActionActive("edit", TRUE)
-
-                -- -----------------------
-                -- Exit dialog
-                -- -----------------------
-            ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
-                EXIT DIALOG
-
-                -- -----------------------
-                -- Guard fields when not in edit/new mode
-                -- -----------------------
-            BEFORE FIELD wh_name, location, status
-                IF NOT can_save THEN
-                    CALL utils_globals.show_info(
-                        "Click New or Edit to modify this record.")
-                    NEXT FIELD wh_code
-                END IF
-
-        END INPUT
-
-        -- Load list on dialog start
-        BEFORE DIALOG
-            LET ok = select_warehouses("1=1")
-            LET can_save = FALSE
-
-    END DIALOG
+    END MENU
 END FUNCTION
 
 -- ==============================================================
@@ -184,7 +89,7 @@ END FUNCTION
 -- ==============================================================
 FUNCTION query_warehouse() RETURNS STRING
     DEFINE selected_code STRING
-    LET selected_code = wh121_lkup.fetch_wh_list()
+    LET selected_code = wh121_lkup.fetch_wh_list(NULL)
     RETURN selected_code
 END FUNCTION
 
@@ -228,10 +133,7 @@ END FUNCTION
 -- ==============================================================
 FUNCTION load_warehouse(p_code STRING)
     -- Select fields in the SAME order/count as rec_wh.*
-    SELECT wh_code, wh_name, location, status
-        INTO rec_wh.*
-        FROM wh01_mast
-        WHERE wh_code = p_code
+    SELECT * INTO rec_wh.* FROM wh01_mast WHERE wh_code = p_code
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_wh.*
@@ -289,7 +191,7 @@ END FUNCTION
 FUNCTION new_warehouse()
     -- Prepare blank record with sensible defaults
     INITIALIZE rec_wh.* TO NULL
-    LET rec_wh.status = 1
+    LET rec_wh.status = 'active'
     DISPLAY BY NAME rec_wh.*
     MESSAGE "Enter new warehouse details, then click Save."
 END FUNCTION
@@ -298,7 +200,7 @@ END FUNCTION
 -- Save / Update
 -- ==============================================================
 FUNCTION save_warehouse()
-    DEFINE v_exists INTEGER
+    DEFINE r_exists INTEGER
     DEFINE ok SMALLINT
 
     IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN
@@ -306,29 +208,52 @@ FUNCTION save_warehouse()
         RETURN
     END IF
 
-    SELECT COUNT(*) INTO v_exists FROM wh01_mast WHERE wh_code = rec_wh.wh_code
+    SELECT COUNT(*) INTO r_exists FROM wh01_mast WHERE wh_code = rec_wh.wh_code
 
-    IF v_exists = 0 THEN
-        INSERT INTO wh01_mast(
-            wh_code, wh_name, location, status)
-            VALUES(rec_wh.wh_code,
-                rec_wh.wh_name,
-                rec_wh.location,
-                rec_wh.status)
+    IF r_exists = 0 THEN
+        INSERT INTO wh01_mast VALUES rec_wh.*
         CALL utils_globals.show_info("Record saved.")
         -- refresh navigation list and index to the newly saved code
         LET ok = select_warehouses("1=1")
         CALL set_curr_idx_by_code(rec_wh.wh_code)
     ELSE
         UPDATE wh01_mast
-            SET wh_name = rec_wh.wh_name,
-                location = rec_wh.location,
-                status = rec_wh.status
+            SET wh01_mast.* = rec_wh.*
             WHERE wh_code = rec_wh.wh_code
         CALL utils_globals.show_info("Record updated.")
         -- keep current index; reload to reflect changes
         CALL load_warehouse(rec_wh.wh_code)
     END IF
+END FUNCTION
+
+-- ===========================================
+-- Separate function for data dialog
+-- ===========================================
+FUNCTION edit_warehouse()
+    --DEFINE ok SMALLINT
+
+    DIALOG ATTRIBUTES(UNBUFFERED)
+
+        INPUT BY NAME rec_wh.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "creditors")
+
+            BEFORE INPUT
+
+            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
+                CALL save_warehouse()
+                EXIT DIALOG
+
+            ON ACTION cancel
+                EXIT DIALOG
+
+            AFTER FIELD supp_name
+                IF rec_wh.wh_name IS NULL OR rec_wh.wh_name = "" THEN
+                    CALL utils_globals.show_error("Supplier Name is required.")
+                    NEXT FIELD supp_name
+                END IF
+
+        END INPUT
+
+    END DIALOG
 END FUNCTION
 
 -- ==============================================================

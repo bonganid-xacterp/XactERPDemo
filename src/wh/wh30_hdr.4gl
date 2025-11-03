@@ -1,5 +1,5 @@
 -- ==============================================================
--- Program   : wh30_hdr.4gl
+-- Program   : wh30_trf_hdr.4gl
 -- Purpose   : Warehouse Transfer Header maintenance
 -- Module    : Warehouse (wh)
 -- Number    : 30
@@ -15,15 +15,7 @@ IMPORT FGL utils_globals
 SCHEMA demoapp_db -- Use correct schema name
 
 -- Warehouse transfer header record structure
-TYPE transfer_hdr_t RECORD
-    trans_no STRING, -- Transfer transaction number (primary key)
-    from_wh STRING, -- Source warehouse code
-    to_wh STRING, -- Destination warehouse code
-    trans_date DATE, -- Transfer date
-    reference STRING, -- Reference document
-    total_qty DECIMAL(10, 2), -- Total quantity transferred
-    status SMALLINT -- Transfer status (0=Draft, 1=Confirmed)
-END RECORD
+TYPE transfer_hdr_t RECORD LIKE wh30_trf_hdr.*
 
 DEFINE rec_hdr transfer_hdr_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
@@ -32,76 +24,76 @@ DEFINE is_edit_mode SMALLINT
 
 DEFINE dlg ui.Dialog
 
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        EXIT PROGRAM 1
---    END IF
---
---    OPEN WINDOW w_wh30 WITH FORM "wh30_hdr" ATTRIBUTES(STYLE = "main")
---    CALL init_module()
---    CLOSE WINDOW w_wh30
---END MAIN
+MAIN
+    IF NOT utils_globals.initialize_application() THEN
+        EXIT PROGRAM 1
+    END IF
 
---FUNCTION init_module()
---    CALL utils_globals.populate_status_combo("status")
---    LET is_edit_mode = FALSE
---
---    DIALOG ATTRIBUTES(UNBUFFERED)
---        INPUT BY NAME rec_hdr.*
---            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "transfer_header")
---
---            BEFORE INPUT
---                CALL dlg.setActionActive("save", FALSE)
---                CALL dlg.setActionActive("edit", TRUE)
---
---            ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
---                CALL new_transfer()
---
---            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
---                IF utils_globals.is_empty(rec_hdr.trans_no) THEN
---                    CALL utils_globals.show_info("No record selected to edit.")
---                ELSE
---                    LET is_edit_mode = TRUE
---                    CALL dlg.setActionActive("save", TRUE)
---                    CALL dlg.setActionActive("edit", FALSE)
---                END IF
---
---            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
---                IF is_edit_mode THEN
---                    CALL save_transfer()
---                    LET is_edit_mode = FALSE
---                    CALL dlg.setActionActive("save", FALSE)
---                    CALL dlg.setActionActive("edit", TRUE)
---                END IF
---
---            ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
---                CALL delete_transfer()
---
---            ON ACTION details ATTRIBUTES(TEXT = "Details", IMAGE = "detail")
---                CALL show_transfer_details()
---
---            ON ACTION FIRST ATTRIBUTES(TEXT = "First", IMAGE = "first")
---                CALL move_record(-2)
---            ON ACTION PREVIOUS ATTRIBUTES(TEXT = "Previous", IMAGE = "prev")
---                CALL move_record(-1)
---            ON ACTION NEXT ATTRIBUTES(TEXT = "Next", IMAGE = "next")
---                CALL move_record(1)
---            ON ACTION LAST ATTRIBUTES(TEXT = "Last", IMAGE = "last")
---                CALL move_record(2)
---            ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
---                EXIT DIALOG
---
---            BEFORE FIELD from_wh, to_wh, trans_date, reference, status
---                IF NOT is_edit_mode THEN
---                    CALL utils_globals.show_info("Click Edit to modify.")
---                    NEXT FIELD trans_no
---                END IF
---        END INPUT
---
---        BEFORE DIALOG
---            CALL select_transfers("1=1")
---    END DIALOG
---END FUNCTION
+    OPEN WINDOW w_wh30 WITH FORM "wh30_trf_hdr" ATTRIBUTES(STYLE = "main")
+    CALL run_wh_transfer()
+    CLOSE WINDOW w_wh30
+END MAIN
+
+FUNCTION run_wh_transfer()
+    CALL utils_globals.populate_status_combo("status")
+    LET is_edit_mode = FALSE
+
+    DIALOG ATTRIBUTES(UNBUFFERED)
+        INPUT BY NAME rec_hdr.*
+            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "transfer_header")
+
+            BEFORE INPUT
+                CALL dlg.setActionActive("save", FALSE)
+                CALL dlg.setActionActive("edit", TRUE)
+
+            ON ACTION new ATTRIBUTES(TEXT = "Create", IMAGE = "new")
+                CALL new_transfer()
+
+            ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
+                IF utils_globals.is_empty(rec_hdr.trans_no) THEN
+                    CALL utils_globals.show_info("No record selected to edit.")
+                ELSE
+                    LET is_edit_mode = TRUE
+                    CALL dlg.setActionActive("save", TRUE)
+                    CALL dlg.setActionActive("edit", FALSE)
+                END IF
+
+            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
+                IF is_edit_mode THEN
+                    CALL save_transfer()
+                    LET is_edit_mode = FALSE
+                    CALL dlg.setActionActive("save", FALSE)
+                    CALL dlg.setActionActive("edit", TRUE)
+                END IF
+
+            ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
+                CALL delete_transfer()
+
+            ON ACTION details ATTRIBUTES(TEXT = "Details", IMAGE = "detail")
+                CALL show_transfer_details()
+
+            ON ACTION FIRST ATTRIBUTES(TEXT = "First", IMAGE = "first")
+                CALL move_record(-2)
+            ON ACTION PREVIOUS ATTRIBUTES(TEXT = "Previous", IMAGE = "prev")
+                CALL move_record(-1)
+            ON ACTION NEXT ATTRIBUTES(TEXT = "Next", IMAGE = "next")
+                CALL move_record(1)
+            ON ACTION LAST ATTRIBUTES(TEXT = "Last", IMAGE = "last")
+                CALL move_record(2)
+            ON ACTION QUIT ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
+                EXIT DIALOG
+
+            BEFORE FIELD rec_mast
+                IF NOT is_edit_mode THEN
+                    CALL utils_globals.show_info("Click Edit to modify.")
+                    NEXT FIELD trans_no
+                END IF
+        END INPUT
+
+        BEFORE DIALOG
+            CALL select_transfers("1=1")
+    END DIALOG
+END FUNCTION
 
 FUNCTION select_transfers(whereClause STRING)
     DEFINE code STRING
@@ -110,7 +102,7 @@ FUNCTION select_transfers(whereClause STRING)
     CALL arr_codes.clear()
     LET idx = 0
 
-    DECLARE c_trans CURSOR FROM "SELECT trans_no FROM wh30_hdr WHERE "
+    DECLARE c_trans CURSOR FROM "SELECT trans_no FROM wh30_trf_hdr WHERE "
         || whereClause
         || " ORDER BY trans_no DESC"
 
@@ -126,18 +118,17 @@ FUNCTION select_transfers(whereClause STRING)
     END IF
 END FUNCTION
 
+-- load transfer
 FUNCTION load_transfer(p_code STRING)
-    SELECT trans_no, from_wh, to_wh, trans_date, reference, total_qty, status
-        INTO rec_hdr.*
-        FROM wh30_hdr
-        WHERE trans_no = p_code
+    SELECT rec_hdr.* INTO rec_hdr.* FROM wh30_trf_hdr WHERE trans_no = p_code
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_hdr.*
     END IF
 END FUNCTION
 
-FUNCTION move_record(dir SMALLINT)
+-- navigate record
+PRIVATE FUNCTION move_record(dir SMALLINT)
     CASE dir
         WHEN -2
             LET curr_idx = 1
@@ -165,14 +156,15 @@ FUNCTION move_record(dir SMALLINT)
     CALL dlg.setActionActive("edit", TRUE)
 END FUNCTION
 
+-- new transfer
 FUNCTION new_transfer()
     DEFINE new_trans_no STRING
 
-    OPEN WINDOW w_new WITH FORM "wh30_hdr" ATTRIBUTES(STYLE = "dialog")
+    OPEN WINDOW w_new WITH FORM "wh30_trf_hdr" ATTRIBUTES(STYLE = "dialog")
     INITIALIZE rec_hdr.* TO NULL
     LET rec_hdr.trans_date = TODAY
     LET rec_hdr.status = 1
-    LET rec_hdr.total_qty = 0.00
+
     DISPLAY BY NAME rec_hdr.*
 
     DIALOG ATTRIBUTES(UNBUFFERED)
@@ -180,24 +172,9 @@ FUNCTION new_transfer()
             ATTRIBUTES(WITHOUT DEFAULTS, NAME = "new_transfer")
 
             ON ACTION save ATTRIBUTES(TEXT = "Save")
-                IF validateTransferFields() THEN
-                    IF checkTransferUniqueness() THEN
-                        INSERT INTO wh30_hdr(
-                            trans_no,
-                            from_wh,
-                            to_wh,
-                            trans_date,
-                            reference,
-                            total_qty,
-                            status)
-                            VALUES(rec_hdr.trans_no,
-                                rec_hdr.from_wh,
-                                rec_hdr.to_wh,
-                                rec_hdr.trans_date,
-                                rec_hdr.reference,
-                                rec_hdr.total_qty,
-                                rec_hdr.status)
-
+                IF validate_transfer_fields() THEN
+                    IF check_transfer_uniqueness() THEN
+                        INSERT INTO wh30_trf_hdr VALUES rec_hdr.*
                         CALL utils_globals.show_success(
                             "Transfer saved successfully.")
                         LET new_trans_no = rec_hdr.trans_no
@@ -221,35 +198,28 @@ FUNCTION new_transfer()
     END IF
 END FUNCTION
 
+-- save warehouse transfer
 FUNCTION save_transfer()
     DEFINE exists INTEGER
-    SELECT COUNT(*) INTO exists FROM wh30_hdr WHERE trans_no = rec_hdr.trans_no
+    SELECT COUNT(*) INTO exists FROM wh30_trf_hdr WHERE trans_no = rec_hdr.trans_no
 
     IF exists = 0 THEN
-        INSERT INTO wh30_hdr(
-            trans_no, from_wh, to_wh, trans_date, reference, total_qty, status)
-            VALUES(rec_hdr.trans_no,
-                rec_hdr.from_wh,
-                rec_hdr.to_wh,
-                rec_hdr.trans_date,
-                rec_hdr.reference,
-                rec_hdr.total_qty,
-                rec_hdr.status)
+
+        INSERT INTO wh30_trf_hdr VALUES rec_hdr.*
+        
         CALL utils_globals.msg_saved()
     ELSE
-        UPDATE wh30_hdr
-            SET from_wh = rec_hdr.from_wh,
-                to_wh = rec_hdr.to_wh,
-                trans_date = rec_hdr.trans_date,
-                reference = rec_hdr.reference,
-                total_qty = rec_hdr.total_qty,
-                status = rec_hdr.status
+    
+        UPDATE wh30_trf_hdr SET wh30_trf_hdr.* = rec_hdr.* 
             WHERE trans_no = rec_hdr.trans_no
+            
         CALL utils_globals.msg_updated()
+        
     END IF
     CALL load_transfer(rec_hdr.trans_no)
 END FUNCTION
 
+-- delete warehouse transfer
 FUNCTION delete_transfer()
     IF utils_globals.is_empty(rec_hdr.trans_no) THEN
         CALL utils_globals.show_info("No transfer selected for deletion.")
@@ -258,15 +228,23 @@ FUNCTION delete_transfer()
 
     IF utils_globals.show_confirm(
         "Delete transfer: " || rec_hdr.trans_no || "?", "Confirm Delete") THEN
-        -- Delete details first
-        DELETE FROM wh31_det WHERE trans_no = rec_hdr.trans_no
-        -- Delete header
-        DELETE FROM wh30_hdr WHERE trans_no = rec_hdr.trans_no
-        CALL utils_globals.msg_deleted()
-        CALL select_transfers("1=1")
+        BEGIN WORK
+        TRY
+            -- Delete details first
+            DELETE FROM wh31_det WHERE trans_no = rec_hdr.trans_no
+            -- Delete header
+            DELETE FROM wh30_trf_hdr WHERE trans_no = rec_hdr.trans_no
+            COMMIT WORK
+            CALL utils_globals.msg_deleted()
+            CALL select_transfers("1=1")
+        CATCH
+            ROLLBACK WORK
+            CALL utils_globals.msg_delete_failed()
+        END TRY
     END IF
 END FUNCTION
 
+--show transfer details
 FUNCTION show_transfer_details()
     IF utils_globals.is_empty(rec_hdr.trans_no) THEN
         CALL utils_globals.show_info("No transfer selected.")
@@ -278,7 +256,8 @@ FUNCTION show_transfer_details()
     -- RUN "wh31_det " || rec_hdr.trans_no
 END FUNCTION
 
-FUNCTION validateTransferFields() RETURNS BOOLEAN
+-- validate the transfer fields
+FUNCTION validate_transfer_fields() RETURNS BOOLEAN
     IF utils_globals.is_empty(rec_hdr.trans_no) THEN
         CALL utils_globals.show_error("Transfer Number is required.")
         RETURN FALSE
@@ -303,10 +282,11 @@ FUNCTION validateTransferFields() RETURNS BOOLEAN
     RETURN TRUE
 END FUNCTION
 
-FUNCTION checkTransferUniqueness() RETURNS BOOLEAN
-    DEFINE count INTEGER
-    SELECT COUNT(*) INTO count FROM wh30_hdr WHERE trans_no = rec_hdr.trans_no
-    IF COUNT > 0 THEN
+--check transfer uniqueness
+FUNCTION check_transfer_uniqueness() RETURNS BOOLEAN
+    DEFINE l_count INTEGER
+    SELECT COUNT(*) INTO l_count FROM wh30_trf_hdr WHERE trans_no = rec_hdr.trans_no
+    IF l_count > 0 THEN
         CALL utils_globals.show_error("Transfer number already exists.")
         RETURN FALSE
     END IF

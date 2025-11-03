@@ -37,7 +37,7 @@ DEFINE dlg ui.Dialog
 --    IF NOT utils_globals.initialize_application() THEN
 --        EXIT PROGRAM 1
 --    END IF
---
+--      OPTIONS INPUT WRAP
 --    OPEN WINDOW w_wh130 WITH FORM "wh130_trans" ATTRIBUTES(STYLE = "main")
 --    CALL init_module()
 --    CLOSE WINDOW w_wh130
@@ -165,7 +165,7 @@ END FUNCTION
 
 FUNCTION new_transaction()
     DEFINE new_trans_no STRING
-
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_new WITH FORM "wh130_trans" ATTRIBUTES(STYLE = "dialog")
     INITIALIZE rec_trans.* TO NULL
     LET rec_trans.trans_date = TODAY

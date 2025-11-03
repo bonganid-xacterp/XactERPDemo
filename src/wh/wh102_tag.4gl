@@ -35,6 +35,7 @@ DEFINE master_config utils_globals.master_record
 --    END IF
 --
 --    CALL initMasterConfig()
+--        OPTIONS INPUT WRAP
 --    OPEN WINDOW w_wh102 WITH FORM "wh102_tag" ATTRIBUTES(STYLE = "main")
 --    CALL init_module()
 --    CLOSE WINDOW w_wh102
@@ -127,7 +128,7 @@ END FUNCTION
 
 FUNCTION new_tag()
     DEFINE new_code STRING
-
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_new WITH FORM "wh102_tag" ATTRIBUTES(STYLE = "dialog")
     INITIALIZE rec_tag.* TO NULL
     LET rec_tag.status = 1

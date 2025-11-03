@@ -32,27 +32,27 @@ DEFINE arr_details DYNAMIC ARRAY OF transfer_detail_t
 DEFINE current_trans_no STRING
 DEFINE is_edit_mode SMALLINT
 
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        EXIT PROGRAM 1
-    END IF
-
-    -- Get transaction number from command line or prompt
-    LET current_trans_no = ARG_VAL(1)
-    IF utils_globals.is_empty(current_trans_no) THEN
-        PROMPT "Enter Transaction Number:" FOR current_trans_no
-        IF utils_globals.is_empty(current_trans_no) THEN
-            EXIT PROGRAM
-        END IF
-    END IF
-
-    OPEN WINDOW w_wh31 WITH FORM "wh31_det" ATTRIBUTES(STYLE = "main")
-    CALL init_module()
-    CLOSE WINDOW w_wh31
-END MAIN
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        EXIT PROGRAM 1
+--    END IF
+--
+--    -- Get transaction number from command line or prompt
+--    LET current_trans_no = ARG_VAL(1)
+--    IF utils_globals.is_empty(current_trans_no) THEN
+--        PROMPT "Enter Transaction Number:" FOR current_trans_no
+--        IF utils_globals.is_empty(current_trans_no) THEN
+--            EXIT PROGRAM
+--        END IF
+--    END IF
+--
+--    OPEN WINDOW w_wh31 WITH FORM "wh31_det" ATTRIBUTES(STYLE = "main")
+--    CALL init_wh31_module()
+--    CLOSE WINDOW w_wh31
+--END MAIN
 
 -- Initialize detail maintenance dialog
-FUNCTION init_module()
+FUNCTION init_wh31_module()
     LET is_edit_mode = FALSE
 
     DIALOG ATTRIBUTES(UNBUFFERED)
@@ -195,7 +195,7 @@ FUNCTION add_detail_to_array(detail transfer_detail_t)
 END FUNCTION
 
 -- Delete selected detail line
-FUNCTION delete_detail_line()
+PRIVATE FUNCTION delete_detail_line()
     DEFINE current_row INTEGER
     DEFINE confirmed BOOLEAN
 
@@ -348,7 +348,7 @@ FUNCTION get_next_line_number() RETURNS INTEGER
 END FUNCTION
 
 -- Renumber all lines sequentially
-FUNCTION renumber_lines()
+PRIVATE FUNCTION renumber_lines()
     DEFINE i INTEGER
 
     FOR i = 1 TO arr_details.getLength()
