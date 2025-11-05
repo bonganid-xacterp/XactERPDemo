@@ -118,7 +118,7 @@
         <File filePath="src/payt/payt220_cashbook.4fd"/>
         <File filePath="src/payt/payt220_cashbook.4gl"/>
       </Application>
-      <Application binaryName="pu" dependencies="497700,56784492,104908716,31764552,782461791" id="39599040" label="pu">
+      <Application binaryName="pu" dependencies="497700,56784492,104908716,31764552,782461791,757682379,33552074,276307902,206295008,45766396" id="39599040" label="pu">
         <File filePath="src/pu/pu130_order.4fd"/>
         <File filePath="src/pu/pu130_order.4gl"/>
         <File filePath="src/pu/pu131_invoice.4fd"/>
@@ -131,7 +131,7 @@
         <File filePath="src/res/logo.png"/>
         <File filePath="src/res/main_styles.4st"/>
       </Library>
-      <Application binaryName="sa" dependencies="497700,104908716,31764552,782461791" id="95666062" label="sa">
+      <Application binaryName="sa" dependencies="497700,104908716,31764552,782461791,757682379,206295008,45766396,276307902" id="95666062" label="sa">
         <File filePath="src/sa/sa130_quote.4fd"/>
         <File filePath="src/sa/sa130_quote.4gl"/>
         <File filePath="src/sa/sa131_order.4fd"/>
@@ -182,6 +182,7 @@
       </Application>
       <Library binaryName="utils" dependencies="782461791,31764552" id="497700" label="utils">
         <File filePath="src/utils/utils_db.4gl"/>
+        <File filePath="src/utils/utils_doc_totals.4gl"/>
         <File filePath="src/utils/utils_enq.4gl"/>
         <File filePath="src/utils/utils_globals.4gl"/>
         <File filePath="src/utils/utils_lookup.4gl"/>

@@ -30,16 +30,16 @@ DEFINE is_edit SMALLINT
 -- =======================
 -- MAIN
 -- =======================
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        DISPLAY "Initialization failed."
-        EXIT PROGRAM 1
-    END IF
-        OPTIONS INPUT WRAP
-    OPEN WINDOW w_po WITH FORM "pu132_invoice" ATTRIBUTES(STYLE = "normal")
-    CALL init_inv_module()
-    CLOSE WINDOW w_po
-END MAIN
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        DISPLAY "Initialization failed."
+--        EXIT PROGRAM 1
+--    END IF
+--        OPTIONS INPUT WRAP
+--    OPEN WINDOW w_pu_inv WITH FORM "pu132_invoice" ATTRIBUTES(STYLE = "normal")
+--    CALL init_inv_module()
+--    CLOSE WINDOW w_pu_inv
+--END MAIN
 
 -- =======================
 -- init Module
@@ -72,7 +72,7 @@ FUNCTION init_inv_module()
                 END IF
 
             ON ACTION new ATTRIBUTES(TEXT = "New", IMAGE = "new")
-                CALL new_po()
+                CALL new_pu_inv()
                 LET is_edit = TRUE
 
             ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
@@ -90,7 +90,7 @@ FUNCTION init_inv_module()
 
             ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "filesave")
                 IF is_edit THEN
-                    CALL save_po()
+                    CALL save_pu_inv()
                     LET is_edit = FALSE
                 END IF
 
@@ -126,7 +126,7 @@ END FUNCTION
 -- =======================
 -- New Purchase Order
 -- =======================
-FUNCTION new_po()
+FUNCTION new_pu_inv()
     DEFINE next_doc INTEGER
     DEFINE ok SMALLINT
 
@@ -139,7 +139,6 @@ FUNCTION new_po()
     LET inv_hdr_rec.trans_date = TODAY
     LET inv_hdr_rec.status = "draft"
     LET inv_hdr_rec.gross_tot = 0
-    LET inv_hdr_rec.disc = 0
     LET inv_hdr_rec.vat = 0
     LET inv_hdr_rec.net_tot = 0
     LET inv_hdr_rec.created_at = CURRENT
@@ -180,7 +179,7 @@ FUNCTION new_po()
             next_doc, inv_hdr_rec.id)
 
         -- Now call function to input lines
-        CALL input_po_lines()
+        CALL input_pu_inv_lines()
 
     CATCH
         ROLLBACK WORK
@@ -191,7 +190,7 @@ FUNCTION new_po()
 END FUNCTION
 
 -- input the order lines
---FUNCTION input_po_lines()
+--FUNCTION input_pu_inv_lines()
 --    INPUT ARRAY inv_lines_arr FROM scr_lines.*
 --        ATTRIBUTES(UNBUFFERED, APPEND ROW=TRUE, DELETE ROW=TRUE)
 --
@@ -201,7 +200,7 @@ END FUNCTION
 --
 --        ON ACTION save_lines
 --            -- Save all lines to database
---            CALL save_po_lines()
+--            CALL save_pu_inv_lines()
 --            EXIT INPUT
 --
 --    END INPUT
@@ -209,7 +208,7 @@ END FUNCTION
 
 -- save the po lines to the database
 -- Save PO lines to database
-FUNCTION save_po_lines()
+FUNCTION save_pu_inv_lines()
     DEFINE i INTEGER
     DEFINE line_rec RECORD LIKE pu32_inv_det.*
 
@@ -230,12 +229,11 @@ FUNCTION save_po_lines()
         END FOR
 
         -- Recalculate header totals
-        CALL recalc_po_totals()
+        CALL recalc_pu_inv_totals()
 
         -- Update header with new totals
         UPDATE pu32_inv_hdr
             SET gross_tot = inv_hdr_rec.gross_tot,
-                disc = inv_hdr_rec.,
                 vat = inv_hdr_rec.vat,
                 net_tot = inv_hdr_rec.net_tot,
                 updated_at = CURRENT
@@ -251,8 +249,8 @@ FUNCTION save_po_lines()
     END TRY
 END FUNCTION
 
--- Enhanced input_po_lines with validation
-FUNCTION input_po_lines()
+-- Enhanced input_pu_inv_lines with validation
+FUNCTION input_pu_inv_lines()
     DEFINE item_code STRING
     DEFINE line_tot DECIMAL(15, 2)
 
@@ -294,7 +292,7 @@ FUNCTION input_po_lines()
                 END IF
             END IF
 
-        ON CHANGE qnty, price, disc_pct
+        ON CHANGE qnty, price
             -- Recalculate line amount
             IF inv_lines_arr[curr_idx].qnty IS NOT NULL
                 AND inv_lines_arr[curr_idx].unit_cost IS NOT NULL THEN
@@ -328,11 +326,11 @@ FUNCTION input_po_lines()
             END IF
 
             -- Check all lines have required fields
-            IF NOT validate_lines() THEN
+            IF NOT validate_pu_inv_lines() THEN
                 CONTINUE INPUT
             END IF
 
-            CALL save_po_lines()
+            CALL save_pu_inv_lines()
             EXIT INPUT
 
         ON ACTION cancel
@@ -344,7 +342,7 @@ FUNCTION input_po_lines()
 END FUNCTION
 
 -- Validate all lines
-FUNCTION validate_lines()
+FUNCTION validate_pu_inv_lines()
     DEFINE i INTEGER
     DEFINE is_valid SMALLINT
 
@@ -375,10 +373,9 @@ FUNCTION validate_lines()
 END FUNCTION
 
 -- Recalculate header totals from lines
-FUNCTION recalc_po_totals()
+FUNCTION recalc_pu_inv_totals()
     DEFINE i INTEGER
     DEFINE gross DECIMAL(15, 2)
-    DEFINE disc_amt DECIMAL(15, 2)
     DEFINE vat_amt DECIMAL(15, 2)
     DEFINE vat_rate DECIMAL(5, 2)
 
@@ -392,20 +389,18 @@ FUNCTION recalc_po_totals()
     END FOR
 
     LET inv_hdr_rec.gross_tot = gross
-    LET inv_hdr_rec.disc = 0 -- Or calculate if you have header-level discount
-    LET vat_amt = (gross - inv_hdr_rec.disc) * (vat_rate / 100)
+    LET vat_amt = gross  * (vat_rate / 100)
     LET inv_hdr_rec.vat = vat_amt
-    LET inv_hdr_rec.net_tot = gross - inv_hdr_rec.disc + vat_amt
+    LET inv_hdr_rec.net_tot = gross + vat_amt
 
     -- Update display
     DISPLAY BY NAME inv_hdr_rec.gross_tot,
-        inv_hdr_rec.disc,
         inv_hdr_rec.vat,
         inv_hdr_rec.net_tot
 END FUNCTION
 
 -- Confirm cancel action
-FUNCTION confirm_cancel()
+FUNCTION confirm_pu_inv_cancel()
     DEFINE answer STRING
 
     MENU "Cancel PO Lines"
@@ -418,7 +413,7 @@ FUNCTION confirm_cancel()
 END FUNCTION
 
 -- Item lookup helper (optional)
-FUNCTION lookup_item()
+FUNCTION lookup_pu_inv_item()
     DEFINE selected_code STRING
     -- Implement your item lookup window here
     -- OPEN WINDOW w_lookup...
@@ -429,7 +424,7 @@ END FUNCTION
 -- =======================
 -- Save (insert/update)
 -- =======================
-FUNCTION save_po()
+FUNCTION save_pu_inv()
     DEFINE exists_cnt INTEGER
     DEFINE i INTEGER
 
@@ -488,7 +483,7 @@ END FUNCTION
 -- =======================
 -- Post (mark posted + update stock_on_order)
 -- =======================
-FUNCTION do_post()
+FUNCTION do_pu_inv_post()
     DEFINE i INTEGER
     DEFINE answer STRING
 
@@ -539,19 +534,19 @@ END FUNCTION
 -- =======================
 -- Find by doc_no
 -- =======================
-FUNCTION do_find()
+FUNCTION do_pu_inv_find()
     DEFINE n INTEGER
     PROMPT "Enter PO number: " FOR n
     IF n IS NULL THEN
         RETURN
     END IF
-    CALL load_po(n)
+    CALL load_pu_inv(n)
 END FUNCTION
 
 -- =======================
 -- Load header + lines
 -- =======================
-FUNCTION load_po(p_doc INTEGER)
+FUNCTION load_pu_inv(p_doc INTEGER)
     DEFINE i INTEGER
 
     INITIALIZE inv_hdr_rec.* TO NULL
@@ -579,7 +574,7 @@ END FUNCTION
 -- =======================
 -- Calc helpers
 -- =======================
-FUNCTION calc_line_total(idx INTEGER)
+FUNCTION calc_pu_inv_line_total(idx INTEGER)
     IF idx < 1 OR idx > inv_lines_arr.getLength() THEN
         RETURN
     END IF
@@ -594,17 +589,17 @@ FUNCTION calc_line_total(idx INTEGER)
     CALL recalc_totals()
 END FUNCTION
 
-FUNCTION recalc_totals()
-    DEFINE i INTEGER
-    DEFINE subtotal DECIMAL(15, 2)
-    LET subtotal = 0
-    FOR i = 1 TO inv_lines_arr.getLength()
-        IF inv_lines_arr[i].line_tot IS NOT NULL THEN
-            LET subtotal =
-                subtotal + inv_lines_arr[i].line_tot -- FIX: sum line_tot
-        END IF
-    END FOR
-    LET inv_hdr_rec.gross_tot = subtotal
-    LET inv_hdr_rec.vat = subtotal * 0.15
-    DISPLAY BY NAME inv_hdr_rec.gross_tot, inv_hdr_rec.vat
-END FUNCTION
+--FUNCTION recalc_pu_inv_totals()
+--    DEFINE i INTEGER
+--    DEFINE subtotal DECIMAL(15, 2)
+--    LET subtotal = 0
+--    FOR i = 1 TO inv_lines_arr.getLength()
+--        IF inv_lines_arr[i].line_tot IS NOT NULL THEN
+--            LET subtotal =
+--                subtotal + inv_lines_arr[i].line_tot -- FIX: sum line_tot
+--        END IF
+--    END FOR
+--    LET inv_hdr_rec.gross_tot = subtotal
+--    LET inv_hdr_rec.vat = subtotal * 0.15
+--    DISPLAY BY NAME inv_hdr_rec.gross_tot, inv_hdr_rec.vat
+--END FUNCTION

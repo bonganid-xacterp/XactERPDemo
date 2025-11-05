@@ -90,7 +90,7 @@
     </Grid>
     <VBox name="vbox2">
       <Table pageSize="5" name="pu130_ord_lines" tabName="+tn_0">
-        <TableColumn name="pu30_ord_det.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="17" sqlTabName="pu30_ord_det" text="Stock Code" tabIndex="12">
+        <TableColumn name="pu30_ord_det.stock_code" colName="stock_code" sqlType="BIGINT" required="1" notNull="1" fieldId="17" sqlTabName="pu30_ord_det" text="Stock Code" tabIndex="12" numAlign="1">
           <Edit width="10" scroll="1"/>
           <LStr text="Stock Code"/>
         </TableColumn>
@@ -117,13 +117,6 @@
       </Table>
     </VBox>
   </VBox>
-  <RecordView tabName="st01_mast">
-    <Link colName="description" fieldIdRef="20"/>
-  </RecordView>
-  <RecordView tabName="pu30_ord_hdr1">
-    <Link colName="acc_code" fieldIdRef="4"/>
-    <Link colName="disc" fieldIdRef="7"/>
-  </RecordView>
   <RecordView tabName="pu30_ord_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>
     <Link colName="trans_date" fieldIdRef="1"/>
@@ -139,6 +132,10 @@
     <Link colName="updated_at" fieldIdRef="15"/>
     <Link colName="deleted_at" fieldIdRef="16"/>
   </RecordView>
+  <RecordView tabName="pu30_ord_hdr1">
+    <Link colName="acc_code" fieldIdRef="4"/>
+    <Link colName="disc" fieldIdRef="7"/>
+  </RecordView>
   <RecordView tabName="pu30_ord_det">
     <Link colName="id" fieldIdRef="11"/>
     <Link colName="batch_id" fieldIdRef="12"/>
@@ -147,6 +144,9 @@
     <Link colName="unit_cost" fieldIdRef="19"/>
     <Link colName="vat" fieldIdRef="21"/>
     <Link colName="line_tot" fieldIdRef="22"/>
+  </RecordView>
+  <RecordView tabName="st01_mast">
+    <Link colName="description" fieldIdRef="20"/>
   </RecordView>
   <RecordView tabName="po_hdr_rec">
     <Link colName="doc_no" fieldIdRef="0"/>

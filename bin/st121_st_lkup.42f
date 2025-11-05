@@ -7,7 +7,7 @@
         <LStr text="STOCK LOOKUP"/>
       </Label>
       <Table pageSize="10" name="f_st_list" width="46" posY="1" posX="1" gridWidth="46" gridHeight="12" tabName="f_st_list">
-        <TableColumn name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="0" sqlTabName="st01_mast" text="Stock Code" tabIndex="1">
+        <TableColumn name="st01_mast.stock_code" colName="stock_code" sqlType="BIGINT" required="1" notNull="1" fieldId="0" sqlTabName="st01_mast" text="Stock Code" tabIndex="1" numAlign="1">
           <Edit width="13" scroll="1"/>
           <LStr text="Stock Code"/>
         </TableColumn>

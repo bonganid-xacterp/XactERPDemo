@@ -17,8 +17,8 @@ GLOBALS
     DEFINE g_debug_mode SMALLINT
     DEFINE g_user_authenticated SMALLINT
     DEFINE g_current_user STRING
-    DEFINE g_standalone_mode
-        SMALLINT -- TRUE if module running standalone, FALSE if in MDI
+    DEFINE g_standalone_mode SMALLINT -- TRUE if module running standalone, FALSE if in MDI
+    DEFINE g_currency_symbol STRING -- currency prefix
 END GLOBALS
 
 -- ==============================================================
@@ -684,17 +684,25 @@ END FUNCTION
 
 -- Generic delete confirmation
 PUBLIC FUNCTION confirm_delete(
-    entity_name STRING, record_name STRING)
-    RETURNS BOOLEAN
+                entity_name STRING, 
+                record_name STRING)
+                RETURNS BOOLEAN
+    
     DEFINE message STRING
+    
     LET message = "Delete this " || entity_name || ": " || record_name || "?"
+    
     RETURN show_confirm(message, "Confirm Delete")
+    
 END FUNCTION
 
 -- Helper function for count queries
 PRIVATE FUNCTION get_field_count(
-    table_name STRING, field_name STRING, value STRING)
-    RETURNS INTEGER
+                table_name STRING, 
+                field_name STRING, 
+                p_value STRING)
+                RETURNS INTEGER
+                
     DEFINE count INTEGER
     DEFINE sql STRING
 
@@ -712,8 +720,10 @@ PRIVATE FUNCTION get_field_count(
 
     TRY
         PREPARE stmt_count FROM sql
-        EXECUTE stmt_count USING value INTO count
+        EXECUTE stmt_count USING p_value INTO COUNT
+
         FREE stmt_count
+        
         RETURN COUNT
     CATCH
         RETURN 0
@@ -778,7 +788,7 @@ END FUNCTION
 -- Generate next numeric
 -- ==============================================================
 
-FUNCTION get_next_code(p_table STRING, p_field STRING) RETURNS INTEGER
+FUNCTION get_next_code(p_table STRING, p_field STRING)
 
     DEFINE last_num INTEGER
     DEFINE next_num INTEGER
@@ -799,7 +809,7 @@ FUNCTION get_next_code(p_table STRING, p_field STRING) RETURNS INTEGER
     END IF
 
     LET next_num = last_num + 1
-
+    DISPLAY "New Stock Code :" || next_num
     RETURN next_num
     
 END FUNCTION
@@ -879,7 +889,8 @@ END FUNCTION
 -- ==============================================================
 -- Get Random User ID
 -- ==============================================================
-FUNCTION get_random_user()
+FUNCTION get_random_user() RETURNS INTEGER
+
     DEFINE r_user_id INTEGER
     
     LET r_user_id = util.Math.rand(10)
@@ -890,7 +901,7 @@ END FUNCTION
 -- ==============================================================
 -- Get Current User ID (useful for audit trails)
 -- ==============================================================
-PUBLIC FUNCTION get_current_user_id() RETURNS INTEGER
+PUBLIC FUNCTION get_current_user_id() RETURNS SMALLINT
 
     DEFINE user_id INTEGER
 
@@ -943,3 +954,37 @@ FUNCTION show_sql_error(p_context STRING)
     CALL show_error(full_message)
 
 END FUNCTION
+
+
+-- ============================================================
+-- Function : apply_currency_prefix()
+-- Purpose  : Dynamically set "R " prefix to all tagged currency fields
+-- ============================================================
+PUBLIC FUNCTION apply_currency_prefix()
+--    DEFINE f ui.Form
+--    DEFINE field_name STRING
+--    DEFINE fields DYNAMIC ARRAY OF STRING
+--    DEFINE i INTEGER
+--
+--    LET f = ui.Window.getCurrent().getForm()
+--    IF f IS NULL THEN
+--        RETURN
+--    END IF
+--
+--    -- Enumerate all fields on the form
+--    CALL f.getNode(fields)
+--
+--    FOR i = 1 TO fields.getLength()
+--        LET field_name = fields[i]
+--
+--        IF fgl_getFieldTag(field_name) = "currency" THEN
+--            -- Get current value (string)
+--            DEFINE val DECIMAL(12,2)
+--            LET val = fgl_getFieldValue(field_name)
+--
+--            -- Re-display with currency prefix (R)
+--            CALL f.setFieldValue(field_name, SFMT("R %1", val))
+--        END IF
+--    END FOR
+END FUNCTION
+

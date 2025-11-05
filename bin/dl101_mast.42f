@@ -159,18 +159,6 @@
       </PhantomColumn>
     </Table>
   </VBox>
-  <RecordView tabName="cl30_trans">
-    <Link colName="doc_no" fieldIdRef="22"/>
-    <Link colName="doc_type" fieldIdRef="23"/>
-    <Link colName="gross_tot" fieldIdRef="24"/>
-    <Link colName="vat" fieldIdRef="25"/>
-    <Link colName="disc" fieldIdRef="26"/>
-    <Link colName="net_tot" fieldIdRef="27"/>
-  </RecordView>
-  <RecordView tabName="cl01_mast">
-    <Link colName="deleted_at" fieldIdRef="12"/>
-    <Link colName="updated_at" fieldIdRef="13"/>
-  </RecordView>
   <RecordView tabName="dl30_trans">
     <Link colName="id" fieldIdRef="19"/>
     <Link colName="acc_code" fieldIdRef="20"/>
@@ -195,6 +183,18 @@
     <Link colName="cost_ytd" fieldIdRef="16"/>
     <Link colName="sales_ytd" fieldIdRef="17"/>
     <Link colName="created_at" fieldIdRef="18"/>
+  </RecordView>
+  <RecordView tabName="cl01_mast">
+    <Link colName="deleted_at" fieldIdRef="12"/>
+    <Link colName="updated_at" fieldIdRef="13"/>
+  </RecordView>
+  <RecordView tabName="cl30_trans">
+    <Link colName="doc_no" fieldIdRef="22"/>
+    <Link colName="doc_type" fieldIdRef="23"/>
+    <Link colName="gross_tot" fieldIdRef="24"/>
+    <Link colName="vat" fieldIdRef="25"/>
+    <Link colName="disc" fieldIdRef="26"/>
+    <Link colName="net_tot" fieldIdRef="27"/>
   </RecordView>
   <RecordView tabName="rec_debt_mast">
     <Link colName="id" fieldIdRef="11"/>

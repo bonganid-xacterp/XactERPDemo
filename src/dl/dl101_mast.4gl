@@ -57,7 +57,6 @@ END MAIN
 FUNCTION init_dl_module()
 
     DEFINE chosen_row SMALLINT
-    DEFINE l_doc_no INTEGER
 
     LET is_edit_mode = FALSE
 
@@ -225,15 +224,20 @@ FUNCTION new_debtor()
                 END IF
 
             ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "filesave")
-                IF check_debtor_unique(
+
+            LET dup_found = check_debtor_unique(
                         rec_debt.acc_code,
                         rec_debt.cust_name,
                         rec_debt.phone,
                         rec_debt.email)
-                    = 0 THEN
+                        
+                   IF dup_found = 0 THEN
+                   
                     CALL save_debtor()
                     LET new_acc_code = rec_debt.acc_code
+                    
                     CALL utils_globals.show_info("Debtor saved successfully.")
+                    
                     EXIT DIALOG
                 ELSE
                     CALL utils_globals.show_error("Duplicate debtor found.")
@@ -521,25 +525,25 @@ END FUNCTION
 -- ==============================================================
 -- Open Related Document (inactive case block)
 -- ==============================================================
-FUNCTION open_transaction_window(p_doc_no INTEGER, l_type STRING)
-    -- SELECT doc_type, doc_ INTO l_type FROM dl30_trans WHERE doc_no = p_doc_no
+FUNCTION open_transaction_window(p_doc_id INTEGER, l_type STRING)
+    -- SELECT doc_type, doc_ INTO l_type FROM dl30_trans WHERE doc_no = p_doc_id
 
     IF SQLCA.SQLCODE != 0 THEN
         CALL utils_globals.show_error("Document not found.")
         RETURN
     END IF
 
-    DISPLAY "Loaded the doc no for doc : " || p_doc_no
+    DISPLAY "Loaded the doc no for doc : " || p_doc_id
 
     CASE l_type
         WHEN "QT"
-            CALL sa130_quote.show_quote(p_doc_no)
+            CALL sa130_quote.load_quote(p_doc_id)
         WHEN "ORD"
-            CALL sa131_order.show_order(p_doc_no)
+            CALL sa131_order.load_order(p_doc_id)
         WHEN "INV"
-            CALL sa132_invoice.show_invoice(p_doc_no)
+            CALL sa132_invoice.show_invoice(p_doc_id)
         WHEN "CRN"
-            CALL sa133_crn.show_cr_note(p_doc_no)
+            CALL sa133_crn.load_credit_note(p_doc_id)
         OTHERWISE
             CALL utils_globals.show_info("Unknown document type: " || l_type)
     END CASE

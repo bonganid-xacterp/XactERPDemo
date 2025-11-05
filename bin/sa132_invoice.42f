@@ -106,7 +106,7 @@
         <PhantomColumn name="sa32_inv_det.hdr_id" colName="hdr_id" sqlType="BIGINT" required="1" notNull="1" fieldId="15" sqlTabName="sa32_inv_det">
           <PhantomEdit width="1"/>
         </PhantomColumn>
-        <TableColumn name="sa32_inv_det.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="16" sqlTabName="sa32_inv_det" text="Stock Code" tabIndex="16">
+        <TableColumn name="sa32_inv_det.stock_code" colName="stock_code" sqlType="BIGINT" required="1" notNull="1" fieldId="16" sqlTabName="sa32_inv_det" text="Stock Code" tabIndex="16" numAlign="1">
           <Edit width="10" scroll="1"/>
           <LStr text="Stock Code"/>
         </TableColumn>
@@ -133,16 +133,6 @@
       </Table>
     </Grid>
   </VBox>
-  <RecordView tabName="sa32_inv_hdr">
-    <Link colName="doc_no" fieldIdRef="0"/>
-    <Link colName="trans_date" fieldIdRef="1"/>
-    <Link colName="gross_tot" fieldIdRef="2"/>
-    <Link colName="disc" fieldIdRef="3"/>
-    <Link colName="vat" fieldIdRef="4"/>
-    <Link colName="net_tot" fieldIdRef="5"/>
-    <Link colName="acc_code" fieldIdRef="6"/>
-    <Link colName="status" fieldIdRef="7"/>
-  </RecordView>
   <RecordView tabName="dl01_mast">
     <Link colName="cust_name" fieldIdRef="8"/>
     <Link colName="phone" fieldIdRef="9"/>
@@ -160,6 +150,16 @@
     <Link colName="sell_price" fieldIdRef="19"/>
     <Link colName="disc" fieldIdRef="20"/>
     <Link colName="line_tot" fieldIdRef="21"/>
+  </RecordView>
+  <RecordView tabName="sa32_inv_hdr">
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="trans_date" fieldIdRef="1"/>
+    <Link colName="gross_tot" fieldIdRef="2"/>
+    <Link colName="disc" fieldIdRef="3"/>
+    <Link colName="vat" fieldIdRef="4"/>
+    <Link colName="net_tot" fieldIdRef="5"/>
+    <Link colName="acc_code" fieldIdRef="6"/>
+    <Link colName="status" fieldIdRef="7"/>
   </RecordView>
   <RecordView tabName="rec_sa_ord_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>

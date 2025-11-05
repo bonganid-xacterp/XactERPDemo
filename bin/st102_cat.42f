@@ -45,7 +45,7 @@
       <Page name="st_cat_trans" text="Stock" image="fa-sitemap">
         <LStr text="Stock"/>
         <Table pageSize="5" name="demoapp_db1" tabName="arr_stock">
-          <TableColumn name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="4" sqlTabName="st01_mast" text="Stock Code" tabIndex="5">
+          <TableColumn name="st01_mast.stock_code" colName="stock_code" sqlType="BIGINT" required="1" notNull="1" fieldId="4" sqlTabName="st01_mast" text="Stock Code" tabIndex="5" numAlign="1">
             <ButtonEdit width="9" scroll="1"/>
             <LStr text="Stock Code"/>
           </TableColumn>

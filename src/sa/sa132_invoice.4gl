@@ -26,13 +26,13 @@ DEFINE curr_idx   INTEGER
 -- ==============================================================
 -- Show Invoice
 -- ==============================================================
-PUBLIC FUNCTION show_invoice(p_doc_no INTEGER)
+PUBLIC FUNCTION show_invoice(p_doc_id INTEGER)
     -- Open the invoice window inside the MDI container
     OPTIONS INPUT WRAP
     OPEN WINDOW w_inv WITH FORM "sa131_invoice" ATTRIBUTES(STYLE="child")
 
     -- Load header + lines
-    CALL load_invoice(p_doc_no)
+    CALL load_invoice(p_doc_id)
 
     -- View/edit the invoice
     CALL edit_invoice_dialog()
@@ -43,19 +43,19 @@ END FUNCTION
 -- ==============================================================
 -- Load invoice Header and Lines
 -- ==============================================================
-FUNCTION load_invoice(p_doc_no INTEGER)
+FUNCTION load_invoice(p_doc_id INTEGER)
     DEFINE idx INTEGER
 
     INITIALIZE rec_inv.* TO NULL
     CALL arr_inv_line.clear()
 
-    SELECT * INTO rec_inv.* FROM sa32_inv_hdr WHERE doc_no = p_doc_no
+    SELECT * INTO rec_inv.* FROM sa32_inv_hdr WHERE id = p_doc_id
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_inv.*
         -- Load lines for this invoice
         DECLARE c_lines CURSOR FOR
-            SELECT * FROM sa32_inv_det WHERE doc_no = p_doc_no ORDER BY line_no
+            SELECT * FROM sa32_inv_det WHERE id = p_doc_id ORDER BY line_no
 
         FOREACH c_lines INTO arr_inv_line[idx + 1].*
             LET idx = idx + 1
@@ -145,18 +145,18 @@ END FUNCTION
 FUNCTION save_invoice()
     DEFINE exists INTEGER
 
-    SELECT COUNT(*) INTO exists FROM sa32_inv_hdr WHERE doc_no = rec_inv.doc_no
+    SELECT COUNT(*) INTO exists FROM sa32_inv_hdr WHERE id = rec_inv.id
 
     IF exists = 0 THEN
         INSERT INTO sa32_inv_hdr VALUES rec_inv.*
         CALL utils_globals.msg_saved()
     ELSE
-        UPDATE sa32_inv_hdr SET sa32_inv_hdr.* = rec_inv.* WHERE doc_no = rec_inv.doc_no
+        UPDATE sa32_inv_hdr SET sa32_inv_hdr.* = rec_inv.* WHERE id = rec_inv.id
         CALL utils_globals.msg_updated()
     END IF
 
     -- Save lines
-    DELETE FROM sa32_inv_det WHERE doc_no = rec_inv.doc_no
+    DELETE FROM sa32_inv_det WHERE id = rec_inv.id
     FOR curr_idx = 1 TO arr_inv_line.getLength()
         INSERT INTO sa32_inv_det VALUES arr_inv_line[curr_idx].*
     END FOR
@@ -165,10 +165,10 @@ END FUNCTION
 -- ==============================================================
 -- Delete invoice
 -- ==============================================================
-FUNCTION delete_inv(p_doc_no INTEGER)
+FUNCTION delete_inv(p_doc_id INTEGER)
     DEFINE ok SMALLINT
 
-    IF p_doc_no IS NULL THEN
+    IF p_doc_id IS NULL THEN
         CALL utils_globals.show_info("No invoice selected for deletion.")
         RETURN
     END IF
@@ -180,8 +180,8 @@ FUNCTION delete_inv(p_doc_no INTEGER)
         RETURN
     END IF
 
-    DELETE FROM sa32_inv_det WHERE doc_no = p_doc_no
-    DELETE FROM sa32_inv_hdr WHERE doc_no = p_doc_no
+    DELETE FROM sa32_inv_det WHERE id = p_doc_id
+    DELETE FROM sa32_inv_hdr WHERE id = p_doc_id
     CALL utils_globals.msg_deleted()
 END FUNCTION
 

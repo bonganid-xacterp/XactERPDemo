@@ -593,12 +593,14 @@ FUNCTION load_po_via_cred(p_doc INTEGER)
     END IF
 
     LET i = 0
-    DECLARE c CURSOR FOR
+    DECLARE pu_ord_c CURSOR FOR
         SELECT * FROM pu30_ord_det WHERE doc_no = p_doc ORDER BY stock_code
-    FOREACH c INTO po_lines_arr[i + 1].*
+    FOREACH pu_ord_c INTO po_lines_arr[i + 1].*
         LET i = i + 1
     END FOREACH
-    FREE c
+
+    CLOSE pu_ord_c
+    FREE pu_ord_c
 
     DISPLAY BY NAME po_hdr_rec.*
     -- DISPLAY BY NAME po_lines_arr.getLength()

@@ -106,20 +106,12 @@ FUNCTION init_st_module()
             CALL delete_stock()
             LET is_edit_mode = FALSE
 
-        COMMAND "First"
-            CALL move_record(-2)
-            LET is_edit_mode = FALSE
-
         COMMAND "Previous"
             CALL move_record(-1)
             LET is_edit_mode = FALSE
 
         COMMAND "Next"
             CALL move_record(1)
-            LET is_edit_mode = FALSE
-
-        COMMAND "Last"
-            CALL move_record(2)
             LET is_edit_mode = FALSE
 
         COMMAND "Exit"
@@ -226,7 +218,7 @@ END FUNCTION
 -- ==============================================================
 -- Load Single Stock Item
 -- ==============================================================
-FUNCTION load_stock_item(p_code STRING)
+FUNCTION load_stock_item(p_code integer)
 
     SELECT * INTO rec_stock.* FROM st01_mast WHERE stock_code = p_code
 
@@ -328,11 +320,13 @@ END FUNCTION
 -- New Stock Item
 -- ==============================================================
 FUNCTION new_stock()
-    DEFINE new_stock_code STRING
+    DEFINE new_stock_code STRING 
     DEFINE rec_new stock_t
+    DEFINE random_id INTEGER
     
     -- Initialize with defaults
     INITIALIZE rec_new.* TO NULL
+    
     LET rec_new.status = "active"
     LET rec_new.batch_control = 0
     LET rec_new.unit_cost = 0.00
@@ -340,8 +334,13 @@ FUNCTION new_stock()
     LET rec_new.stock_on_hand = 0.00
     LET rec_new.total_purch = 0.00
     LET rec_new.total_sales = 0.00
-    LET rec_new.created_by = utils_globals.get_random_user()
-    LET rec_new.stock_code = utils_globals.get_next_code("st01_mast", "stock_code")
+    
+
+    LET random_id = utils_globals.get_random_user() RETURN random_id 
+    LET new_stock_code = utils_globals.get_next_code("st01_mast", "stock_code")
+
+    LET rec_new.created_by =  random_id
+    LET rec_new.stock_code = new_stock_code
     
     -- Use the record for input
     INPUT BY NAME rec_new.*
@@ -354,6 +353,7 @@ FUNCTION new_stock()
             IF (rec_new.stock_code IS NULL OR rec_new.stock_code = "") OR
                (rec_new.description IS NULL OR rec_new.description = "") THEN
                 NEXT FIELD stock_code
+                
             END IF
             
         ON ACTION save

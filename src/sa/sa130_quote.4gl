@@ -1,5 +1,5 @@
 -- ==============================================================
--- Program   : sa130_qt.4gl
+-- Program   : 130_quote.4gl
 -- Purpose   : Sales Quote Program
 -- Module    : Sales Quote (sa)
 -- Number    : 130
@@ -9,241 +9,355 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
+IMPORT FGL st121_st_lkup
+IMPORT FGL utils_doc_totals
+
 
 SCHEMA demoapp_db
 
 -- ==============================================================
 -- Record Definitions
 -- ==============================================================
-TYPE quote_hdr_t RECORD LIKE sa30_quo_hdr.*
-DEFINE qt_hdr_rec quote_hdr_t
+TYPE qt_hdr_t RECORD LIKE sa30_quo_hdr.*
+TYPE debt_t RECORD LIKE dl01_mast.*
+ 
+DEFINE m_rec_qt qt_hdr_t
+DEFINE m_debt_mast debt_t 
 
-DEFINE arr_sa_ord_lines DYNAMIC ARRAY OF RECORD LIKE sa30_quo_det.*
+DEFINE m_arr_qt_lines DYNAMIC ARRAY OF RECORD LIKE sa30_quo_det.*
 
-DEFINE arr_codes  DYNAMIC ARRAY OF STRING
-DEFINE curr_idx   INTEGER
+DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
+DEFINE m_curr_idx INTEGER
 --DEFINE is_edit_mode SMALLINT
 
-
 -- ==============================================================
--- MAIN
+-- Add or Edit an quote line
 -- ==============================================================
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        DISPLAY "Initialization failed."
-        EXIT PROGRAM 1
-    END IF
-        OPTIONS INPUT WRAP
-        OPEN WINDOW w_dl101 WITH FORM "sa130_quote" ATTRIBUTES(STYLE = "child")
-
-    CALL init_dl_module()
-
-        CLOSE WINDOW w_dl101
-END MAIN
-
--- new sales quote
-FUNCTION init_dl_module()
-
-    DEFINE l_debtor RECORD LIKE dl01_mast.*
-    DEFINE next_num INTEGER
-    DEFINE next_full STRING
-
-    CLEAR FORM
-
-    -- (p_table STRING, p_prefix STRING
-    CALL utils_globals.get_next_number("sa30_quo_hdr", "QT")
-        RETURNING next_num, next_full
-
-        LET qt_hdr_rec.doc_no = next_num
-        LET qt_hdr_rec.trans_date = TODAY
-        LET qt_hdr_rec.status = 'draft'
-        LET qt_hdr_rec.gross_tot = 0.00
-        LET qt_hdr_rec.disc = 0.00
-        LET qt_hdr_rec.vat = 0.00
-        LET qt_hdr_rec.net_tot = 0.00
-
-        
+FUNCTION edit_or_add_qt_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
+    DEFINE l_line RECORD LIKE sa30_quo_det.*
+    DEFINE l_stock_code STRING
+    DEFINE l_vat_rate DECIMAL(10,2)
+    DEFINE l_gross, l_net, l_vat DECIMAL(15,2)
     
-     DIALOG ATTRIBUTES(UNBUFFERED)
+    -- Initialize new line
+    IF p_is_new THEN
+        INITIALIZE l_line.* TO NULL
+        LET l_line.hdr_id = p_doc_id
+        LET l_line.line_no = m_arr_qt_lines.getLength() + 1
+        LET l_vat_rate = 15.00
+    ELSE
+        -- Load from existing array line
+        LET l_line.* = m_arr_qt_lines[p_row].*
+        LET l_vat_rate = 15.00
+    END IF
 
-        -- Header section fields
-        INPUT BY NAME qt_hdr_rec.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME="order_header")
+    -- ==============================
+    -- Input Dialog for editing/adding
+    -- ==============================
+    DIALOG
+        INPUT BY NAME l_line.stock_code, l_line.qnty, l_line.disc, l_line.vat
+            ATTRIBUTES(WITHOUT DEFAULTS)
 
-            ON ACTION save ATTRIBUTES(TEXT="Save",IMAGE="filesave")
-                CALL save_quote()
+            BEFORE FIELD stock_code
+                -- call lookup popup
+                LET l_stock_code = lookup_stock_item()
+                
+                IF l_stock_code IS NOT NULL THEN
+                
+                    LET l_line.stock_code = l_stock_code
+                    
+                    CALL load_stock_defaults(l_stock_code, l_line.unit_cost, l_line.sell_price)
+
+                    DISPLAY BY NAME l_line.unit_cost, l_line.sell_price
+                    
+                END IF
+
+            AFTER FIELD qnty, disc, vat
+                -- calculate the line total 
+                LET l_line.line_tot =  utils_doc_totals.calc_line_total(
+                                    l_line.qnty, 
+                                    l_line.unit_cost, 
+                                    l_line.disc, 
+                                    l_line.vat
+                )
+                
+                DISPLAY BY NAME l_line.line_tot, l_line.vat
+
+            ON ACTION save
+                IF p_is_new THEN
+                    LET m_arr_qt_lines[m_arr_qt_lines.getLength() + 1].* = l_line.*
+                ELSE
+                    LET m_arr_qt_lines[p_row].* = l_line.*
+                END IF
+                CALL utils_globals.msg_saved()
                 EXIT DIALOG
 
-            ON ACTION close ATTRIBUTES(TEXT="Close",IMAGE="exit")
+            ON ACTION cancel
                 EXIT DIALOG
         END INPUT
-
-        -- Lines section (display array for order details)
-        DISPLAY ARRAY arr_sa_ord_lines TO arr_sa_ord_lines.*
-
-            ON ACTION add
-                CALL add_quote_line()
-            ON ACTION delete
-               CALL delete_line(arr_curr())
-            ON ACTION save
-                CALL save_quote()
-            ON ACTION close
-                EXIT DIALOG
-        END DISPLAY
     END DIALOG
-
-    
-    
-END FUNCTION 
-
--- ==============================================================
--- Public entry point (called from Debtors or MDI menu)
--- ==============================================================
-PUBLIC FUNCTION show_quote(p_doc_no INTEGER)
-    -- Open the quote window inside the MDI container
-    OPTIONS INPUT WRAP
-    OPEN WINDOW w_qt130 WITH FORM "sa130_quote" ATTRIBUTES(STYLE="child")
-
-    -- Load header + lines
-   CALL load_quote(p_doc_no)
-
-    -- View/edit the quote
-    CALL edit_quote_dialog()
-
-    CLOSE WINDOW w_qt130
 END FUNCTION
 
 -- ==============================================================
--- Load Quote Header and Lines
+-- Lookup item from Stock Master
 -- ==============================================================
-FUNCTION load_quote(p_doc_no INTEGER)
-    DEFINE idx INTEGER
+PRIVATE FUNCTION lookup_stock_item() RETURNS STRING
+    DEFINE l_stock_code STRING
+    LET l_stock_code = st121_st_lkup.display_stocklist() -- your lookup popup
+    RETURN l_stock_code
+END FUNCTION
 
-    ERROR p_doc_no
+-- ==============================================================
+-- Lookup item from Stock Master
+-- ==============================================================
+PRIVATE FUNCTION load_stock_defaults(p_stock_code STRING, p_cost DECIMAL, p_price DECIMAL)
+    SELECT cost_price, sell_price
+      INTO p_cost, p_price
+      FROM st01_mast
+     WHERE stock_code = p_stock_code
 
-    INITIALIZE qt_hdr_rec.* TO NULL
-    CALL arr_sa_ord_lines.clear()
+    IF SQLCA.SQLCODE != 0 THEN
+        LET p_cost = 0
+        LET p_price = 0
+    END IF
+END FUNCTION
 
-    SELECT * INTO qt_hdr_rec.* FROM sa30_quo_hdr WHERE doc_no = p_doc_no
+-- ==============================================================
+-- Delete selected quote line
+-- ==============================================================
+FUNCTION delete_qt_line(p_doc_id INTEGER, p_row INTEGER)
+    IF p_row > 0 THEN
+        IF utils_globals.confirm_delete(p_row, p_doc_id) THEN
+            CALL m_arr_qt_lines.deleteElement(p_row)
+            CALL utils_globals.msg_deleted()
+        END IF
+    END IF
+END FUNCTION
+
+
+-- ==============================================================
+-- Save all lines to database
+-- ==============================================================
+FUNCTION save_qt_lines(p_doc_id INTEGER)
+    DEFINE i INTEGER
+
+    DELETE FROM sa30_quo_det WHERE hdr_id = p_doc_id
+
+    FOR i = 1 TO m_arr_qt_lines.getLength()
+        INSERT INTO sa30_quo_det VALUES m_arr_qt_lines[i].*
+    END FOR
+END FUNCTION
+
+
+-- ==============================================================
+-- Function : load_customer
+-- ==============================================================
+PRIVATE FUNCTION load_customer(p_acc_code STRING)
+
+    DEFINE rec_cust RECORD
+        cust_name LIKE dl01_mast.cust_name,
+        phone     LIKE dl01_mast.phone,
+        email     LIKE dl01_mast.email,
+        address1  LIKE dl01_mast.address1,
+        address2  LIKE dl01_mast.address2,
+        address3  LIKE dl01_mast.address3,
+        postal_code LIKE dl01_mast.postal_code
+    END RECORD
+
+    SELECT cust_name, phone, email, address1, address2, address3, postal_code
+      INTO rec_cust.*
+      FROM dl01_mast
+     WHERE acc_code = p_acc_code
 
     IF SQLCA.SQLCODE = 0 THEN
-        DISPLAY BY NAME qt_hdr_rec.*
-        -- Load lines for this quote
-        DECLARE c_lines CURSOR FOR
-            SELECT * FROM sa30_quo_det WHERE doc_no = p_doc_no ORDER BY line_no
+        DISPLAY BY NAME rec_cust.*
+    ELSE
+        CALL utils_globals.show_error("Customer not found for account " || p_acc_code)
+    END IF
+END FUNCTION
 
-        FOREACH c_lines INTO arr_sa_ord_lines[idx + 1].*
+-- ==============================================================
+-- Function : load_quote
+-- ==============================================================
+
+FUNCTION load_quote(p_doc_id INTEGER)
+    DEFINE idx INTEGER
+    DEFINE user_choice SMALLINT
+
+    OPTIONS INPUT WRAP
+
+    -- Open window and attach form
+    OPEN WINDOW w_qt WITH FORM "sa130_quote" ATTRIBUTES(STYLE = "normal")
+
+    -- Initialize variables
+    INITIALIZE m_rec_qt.* TO NULL
+    CALL m_arr_qt_lines.clear()
+
+    -- ===========================================
+    -- Load header record
+    -- ===========================================
+    SELECT * INTO m_rec_qt.* 
+      FROM sa30_quo_hdr 
+     WHERE id = p_doc_id
+
+    IF SQLCA.SQLCODE = 0 THEN
+        -- ===========================================
+        -- Load quote lines
+        -- ===========================================
+        LET idx = 0
+        DECLARE ord_lines_cur CURSOR FOR
+            SELECT * 
+              FROM sa30_quo_det 
+             WHERE hdr_id = p_doc_id 
+             ORDER BY line_no
+
+        FOREACH ord_lines_cur INTO m_arr_qt_lines[idx + 1].*
             LET idx = idx + 1
         END FOREACH
 
-        CLOSE c_lines
-        FREE c_lines
+        CLOSE ord_lines_cur
+        FREE ord_lines_cur
+
+        -- ===========================================
+        -- Show form in view mode first
+        -- ===========================================
+        DISPLAY BY NAME m_rec_qt.*
+        DISPLAY ARRAY m_arr_qt_lines TO arr_sa_qt_lines.*
+
+            BEFORE DISPLAY
+                CALL DIALOG.setActionHidden("cancel", TRUE)
+                CALL DIALOG.setActionHidden("accept", TRUE)
+
+            ON ACTION edit ATTRIBUTES(TEXT="Edit quote", IMAGE="pen")
+                LET user_choice = prompt_edit_choice()
+
+                CASE user_choice
+                    WHEN 1
+                        CALL edit_qt_header(p_doc_id)
+                        DISPLAY BY NAME m_rec_qt.*  -- Refresh
+                    WHEN 2
+                        CALL edit_qt_lines(p_doc_id)
+                    OTHERWISE
+                        CALL utils_globals.show_info("Edit cancelled.")
+                END CASE
+
+            ON ACTION close ATTRIBUTES(TEXT="Close", IMAGE="exit")
+                EXIT DISPLAY
+        END DISPLAY
     ELSE
-        CALL utils_globals.show_error("Quote not found.")
+        CALL utils_globals.show_error("quote not found.")
     END IF
+
+    CLOSE WINDOW w_qt
 END FUNCTION
 
 -- ==============================================================
--- Edit / View Quote (dialog)
+-- Prompt Edit Choices
 -- ==============================================================
-FUNCTION edit_quote_dialog()
-    DIALOG ATTRIBUTES(UNBUFFERED)
+PRIVATE FUNCTION prompt_edit_choice() RETURNS SMALLINT
+    DEFINE choice SMALLINT
 
-        -- Header section fields
-        INPUT BY NAME qt_hdr_rec.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME="quote_header")
+    MENU "Edit Quote"
+        COMMAND "Header"
+            RETURN 1
+        COMMAND "Lines"
+            RETURN 2
+        COMMAND "Cancel"
+            RETURN 0
+    END MENU
 
-            ON ACTION save ATTRIBUTES(TEXT="Save",IMAGE="filesave")
-                CALL save_quote()
-                EXIT DIALOG
+    RETURN choice
+    
+END FUNCTION
 
-            ON ACTION close ATTRIBUTES(TEXT="Close",IMAGE="exit")
+-- ==============================================================
+-- Edit quote header
+-- ==============================================================
+FUNCTION edit_qt_header(p_doc_id INTEGER)
+    DEFINE new_hdr RECORD LIKE sa30_quo_hdr.*
+
+    LET new_hdr.* = m_rec_qt.*
+
+    DIALOG
+        INPUT BY NAME new_hdr.*
+        
+            ON ACTION save
+            
+                UPDATE sa30_quo_hdr SET sa30_quo_hdr.* = new_hdr.* 
+                 WHERE id = p_doc_id
+                LET m_rec_qt.* = new_hdr.*
+                
+                CALL utils_globals.msg_saved()
+
+            ON ACTION cancel
                 EXIT DIALOG
         END INPUT
+        
+    END DIALOG
+END FUNCTION
 
-        -- Lines section (display array for quote details)
-        DISPLAY ARRAY arr_sa_ord_lines TO sr_quote_lines.*
 
-            ON ACTION add
-                CALL add_quote_line()
-            ON ACTION delete
-               CALL delete_line(arr_curr())
-            ON ACTION save
-                CALL save_quote()
-            ON ACTION close
+FUNCTION edit_qt_lines(p_doc_id INTEGER)
+    DIALOG
+        DISPLAY ARRAY m_arr_qt_lines TO arr_sa_qt_lines.*
+            BEFORE DISPLAY
+                CALL DIALOG.setActionHidden("accept", TRUE)
+
+            ON ACTION add ATTRIBUTES(TEXT="Add Line", IMAGE="new")
+                CALL edit_or_add_qt_line(p_doc_id, 0, TRUE)
+
+            ON ACTION edit ATTRIBUTES(TEXT="Edit Line", IMAGE="pen")
+                CALL edit_or_add_qt_line(p_doc_id, arr_curr(), FALSE)
+
+            ON ACTION delete ATTRIBUTES(TEXT="Delete", IMAGE="delete")
+                CALL delete_qt_line(p_doc_id, arr_curr())
+
+            ON ACTION save ATTRIBUTES(TEXT="Save", IMAGE="save")
+                CALL save_qt_lines(p_doc_id)
+                CALL utils_globals.msg_saved()
+                EXIT DIALOG
+
+            ON ACTION cancel
                 EXIT DIALOG
         END DISPLAY
     END DIALOG
 END FUNCTION
 
--- ==============================================================
--- Add Quote Line
--- ==============================================================
-FUNCTION add_quote_line()
-    DEFINE new_line RECORD LIKE sa30_quo_det.*
-    LET new_line.line_no = arr_sa_ord_lines.getLength() + 1
-
-    INPUT BY NAME new_line.*
-        ATTRIBUTES(WITHOUT DEFAULTS, NAME="new_line")
-
-        ON ACTION save
-            LET arr_sa_ord_lines[arr_sa_ord_lines.getLength() + 1] = new_line
-            CALL utils_globals.show_info("Line added.")
-            EXIT INPUT
-
-        ON ACTION cancel
-            EXIT INPUT
-    END INPUT
-END FUNCTION
 
 -- ==============================================================
--- Delete Selected Line
--- ==============================================================
-FUNCTION delete_line(p_curr_row INTEGER)  -- FIX: Added parameter
-    IF arr_sa_ord_lines.getLength() = 0 THEN
-        CALL utils_globals.show_info("No line to delete.")
-        RETURN
-    END IF
-
-    IF p_curr_row < 1 OR p_curr_row > arr_sa_ord_lines.getLength() THEN
-        CALL utils_globals.show_info("Invalid line selected.")
-        RETURN
-    END IF
-
-    CALL arr_sa_ord_lines.deleteElement(p_curr_row)  -- FIX: Use correct method
-    CALL utils_globals.show_info("Line deleted.")
-END FUNCTION
-
--- ==============================================================
--- Save Quote (Header + Lines)
+-- Save quote (Header + Lines)
 -- ==============================================================
 FUNCTION save_quote()
     DEFINE exists INTEGER
 
-    SELECT COUNT(*) INTO exists FROM sa30_quo_hdr WHERE doc_no = qt_hdr_rec.doc_no
+    SELECT COUNT(*) INTO exists FROM sa30_quo_hdr WHERE id = m_rec_qt.id
 
     IF exists = 0 THEN
-        INSERT INTO sa30_quo_hdr VALUES qt_hdr_rec.*
+        INSERT INTO sa30_quo_hdr VALUES m_rec_qt.*
         CALL utils_globals.msg_saved()
     ELSE
-        UPDATE sa30_quo_hdr SET sa30_quo_hdr.* = qt_hdr_rec.* WHERE doc_no = qt_hdr_rec.doc_no
+        UPDATE sa30_quo_hdr
+            SET sa30_quo_hdr.* = m_rec_qt.*
+            WHERE id = m_rec_qt.id
         CALL utils_globals.msg_updated()
     END IF
 
     -- Save lines
-    DELETE FROM sa30_quo_det WHERE doc_no = qt_hdr_rec.doc_no
-    FOR curr_idx = 1 TO arr_sa_ord_lines.getLength()
-        INSERT INTO sa30_quo_det VALUES arr_sa_ord_lines[curr_idx].*
+    DELETE FROM sa30_quo_det WHERE hdr_id = m_rec_qt.id
+
+    FOR m_curr_idx = 1 TO m_arr_qt_lines.getLength()
+        INSERT INTO sa30_quo_det VALUES m_arr_qt_lines[m_curr_idx].*
     END FOR
+
 END FUNCTION
 
 -- ==============================================================
--- Delete Quote
+-- Delete quote
 -- ==============================================================
-FUNCTION delete_qt(p_doc_no INTEGER)
+FUNCTION delete_quote(p_doc_id INTEGER)
     DEFINE ok SMALLINT
 
-    IF p_doc_no IS NULL THEN
+    IF p_doc_id IS NULL THEN
         CALL utils_globals.show_info("No quote selected for deletion.")
         RETURN
     END IF
@@ -255,8 +369,8 @@ FUNCTION delete_qt(p_doc_no INTEGER)
         RETURN
     END IF
 
-    DELETE FROM sa30_quo_det WHERE doc_no = p_doc_no
-    DELETE FROM sa30_quo_hdr WHERE doc_no = p_doc_no
+    DELETE FROM sa30_quo_det WHERE hdr_id = p_doc_id
+    DELETE FROM sa30_quo_hdr WHERE id = p_doc_id
     CALL utils_globals.msg_deleted()
 END FUNCTION
 
@@ -266,12 +380,12 @@ END FUNCTION
 PRIVATE FUNCTION move_record(dir SMALLINT)
     DEFINE new_idx INTEGER
 
-    IF arr_codes.getLength() == 0 THEN
+    IF m_arr_codes.getLength() == 0 THEN
         CALL utils_globals.show_info("No records to navigate.")
         RETURN
     END IF
 
-    LET new_idx = utils_globals.navigate_records(arr_codes, curr_idx, dir)
-    LET curr_idx = new_idx
-    CALL load_quote(arr_codes[curr_idx])
+    LET new_idx = utils_globals.navigate_records(m_arr_codes, m_curr_idx, dir)
+    LET m_curr_idx = new_idx
+    CALL load_quote(m_arr_codes[m_curr_idx])
 END FUNCTION

@@ -51,7 +51,7 @@
           <Edit width="11" scroll="1"/>
           <LStr text="Item No"/>
         </TableColumn>
-        <TableColumn name="pu32_inv_det.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="8" sqlTabName="pu32_inv_det" text="Stock Code" tabIndex="9">
+        <TableColumn name="pu32_inv_det.stock_code" colName="stock_code" sqlType="BIGINT" required="1" notNull="1" fieldId="8" sqlTabName="pu32_inv_det" text="Stock Code" tabIndex="9" numAlign="1">
           <Edit width="20" scroll="1"/>
           <LStr text="Stock Code"/>
         </TableColumn>
@@ -92,6 +92,9 @@
   <RecordView tabName="pu30_ord_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>
   </RecordView>
+  <RecordView tabName="pu30_ord_det">
+    <Link colName="id" fieldIdRef="6"/>
+  </RecordView>
   <RecordView tabName="pu32_inv_hdr">
     <Link colName="trans_date" fieldIdRef="1"/>
     <Link colName="acc_code" fieldIdRef="2"/>
@@ -100,9 +103,6 @@
     <Link colName="created_by" fieldIdRef="5"/>
     <Link colName="vat" fieldIdRef="12"/>
     <Link colName="gross_tot" fieldIdRef="13"/>
-  </RecordView>
-  <RecordView tabName="pu30_ord_det">
-    <Link colName="id" fieldIdRef="6"/>
   </RecordView>
   <RecordView tabName="rec_pu131_inv">
     <Link colName="doc_no" fieldIdRef="0"/>

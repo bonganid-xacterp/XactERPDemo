@@ -106,7 +106,7 @@ payt31_trans_det^created_at^10^4622^6^
 pu30_ord_det^id^309^8^1^
 pu30_ord_det^hdr_id^308^8^2^
 pu30_ord_det^line_no^258^4^3^
-pu30_ord_det^stock_code^457^20^4^
+pu30_ord_det^stock_code^308^8^4^
 pu30_ord_det^batch_id^201^30^5^
 pu30_ord_det^qnty^5^3074^6^
 pu30_ord_det^unit_cost^5^3074^7^
@@ -131,7 +131,7 @@ pu30_ord_hdr^created_by^52^8^14^
 pu31_grn_det^id^309^8^1^
 pu31_grn_det^hdr_id^308^8^2^
 pu31_grn_det^item_no^258^4^3^
-pu31_grn_det^stock_code^457^20^4^
+pu31_grn_det^stock_code^308^8^4^
 pu31_grn_det^batch_id^201^30^5^
 pu31_grn_det^expiry_date^7^4^6^
 pu31_grn_det^qnty^5^3074^7^
@@ -155,7 +155,7 @@ pu31_grn_hdr^created_by^52^8^14^
 pu32_inv_det^id^309^8^1^
 pu32_inv_det^hdr_id^308^8^2^
 pu32_inv_det^item_no^258^4^3^
-pu32_inv_det^stock_code^457^20^4^
+pu32_inv_det^stock_code^308^8^4^
 pu32_inv_det^batch_id^201^30^5^
 pu32_inv_det^expiry_date^7^4^6^
 pu32_inv_det^qnty^5^3074^7^
@@ -180,7 +180,7 @@ pu32_inv_hdr^created_by^52^8^14^
 sa30_quo_det^id^309^8^1^
 sa30_quo_det^hdr_id^308^8^2^
 sa30_quo_det^line_no^258^4^3^
-sa30_quo_det^stock_code^457^20^4^
+sa30_quo_det^stock_code^308^8^4^
 sa30_quo_det^batch_id^201^30^5^
 sa30_quo_det^qnty^5^3074^6^
 sa30_quo_det^unit_cost^5^3074^7^
@@ -205,7 +205,7 @@ sa30_quo_hdr^created_by^52^8^14^
 sa31_ord_det^id^309^8^1^
 sa31_ord_det^hdr_id^308^8^2^
 sa31_ord_det^line_no^258^4^3^
-sa31_ord_det^stock_code^457^20^4^
+sa31_ord_det^stock_code^308^8^4^
 sa31_ord_det^batch_id^201^30^5^
 sa31_ord_det^qnty^5^3074^6^
 sa31_ord_det^unit_cost^5^3074^7^
@@ -214,10 +214,10 @@ sa31_ord_det^vat^5^3074^9^
 sa31_ord_det^line_tot^5^3074^10^
 sa31_ord_det^disc^5^3074^11^
 sa31_ord_hdr^id^309^8^1^
-sa31_ord_hdr^doc_no^201^20^2^
+sa31_ord_hdr^doc_no^52^8^2^
 sa31_ord_hdr^ref_doc_type^201^10^3^
-sa31_ord_hdr^ref_doc_no^201^20^4^
-sa31_ord_hdr^acc_code^261^5122^5^
+sa31_ord_hdr^ref_doc_no^52^8^4^
+sa31_ord_hdr^acc_code^308^8^5^
 sa31_ord_hdr^trans_date^263^4^6^
 sa31_ord_hdr^gross_tot^5^3074^7^
 sa31_ord_hdr^disc^5^3074^8^
@@ -231,7 +231,7 @@ sa31_ord_hdr^created_by^52^8^15^
 sa32_inv_det^id^309^8^1^
 sa32_inv_det^hdr_id^308^8^2^
 sa32_inv_det^line_no^258^4^3^
-sa32_inv_det^stock_code^457^20^4^
+sa32_inv_det^stock_code^308^8^4^
 sa32_inv_det^batch_id^201^30^5^
 sa32_inv_det^qnty^5^3074^6^
 sa32_inv_det^unit_cost^5^3074^7^
@@ -257,7 +257,7 @@ sa32_inv_hdr^created_by^52^8^15^
 sa33_crn_det^id^309^8^1^
 sa33_crn_det^hdr_id^308^8^2^
 sa33_crn_det^line_no^258^4^3^
-sa33_crn_det^stock_code^457^20^4^
+sa33_crn_det^stock_code^308^8^4^
 sa33_crn_det^batch_id^201^30^5^
 sa33_crn_det^qnty^5^3074^6^
 sa33_crn_det^unit_cost^5^3074^7^
@@ -281,7 +281,7 @@ sa33_crn_hdr^updated_at^10^4622^13^
 sa33_crn_hdr^deleted_at^10^4622^14^
 sa33_crn_hdr^created_by^52^8^15^
 st01_mast^id^309^8^1^
-st01_mast^stock_code^457^20^2^
+st01_mast^stock_code^308^8^2^
 st01_mast^description^457^150^3^
 st01_mast^barcode^201^50^4^
 st01_mast^batch_control^45^1^5^
@@ -310,7 +310,7 @@ st30_tag_link^id^309^8^1^
 st30_tag_link^stock_id^308^8^2^
 st30_tag_link^tag_id^308^8^3^
 st30_trans^id^309^8^1^
-st30_trans^stock_code^457^20^2^
+st30_trans^stock_code^308^8^2^
 st30_trans^trans_date^263^4^3^
 st30_trans^doc_type^457^10^4^
 st30_trans^direction^457^3^5^
@@ -378,7 +378,7 @@ wb30_trf_hdr^deleted_at^10^4622^9^
 wb31_trf_det^id^309^8^1^
 wb31_trf_det^hdr_id^308^8^2^
 wb31_trf_det^item_no^258^4^3^
-wb31_trf_det^stock_code^457^20^4^
+wb31_trf_det^stock_code^308^8^4^
 wb31_trf_det^qnty^261^3074^5^
 wb31_trf_det^batch_id^201^30^6^
 wb31_trf_det^expiry_date^7^4^7^
@@ -421,7 +421,7 @@ wh30_trf_hdr^deleted_at^10^4622^10^
 wh31_trf_det^id^309^8^1^
 wh31_trf_det^hdr_id^308^8^2^
 wh31_trf_det^item_no^258^4^3^
-wh31_trf_det^stock_code^457^20^4^
+wh31_trf_det^stock_code^308^8^4^
 wh31_trf_det^qnty^261^3074^5^
 wh31_trf_det^unit_cost^5^3074^6^
 wh31_trf_det^batch_id^201^30^7^

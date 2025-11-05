@@ -3,12 +3,12 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="sy04_role1" name="record4" uid="{c22879cb-f428-423b-8db7-18faa1cf3076}">
+  <Record masterTable="sy04_role1" name="rec_role" uid="{c22879cb-f428-423b-8db7-18faa1cf3076}">
     <RecordField colName="role_name" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy04_role.role_name" sqlTabName="sy04_role" uid="{5672fa15-93a3-4d68-8ef9-0c56c04f1619}"/>
     <RecordField colName="status" defaultValue="1" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy04_role.status" sqlTabName="sy04_role" uid="{f03f13ff-2b09-446c-a3c2-5343b397427d}"/>
   </Record>
-  <Record name="record1" uid="{064e0908-e50b-480d-bf9f-b50f4299480b}">
-    <RecordField colName="perm_name" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy05_perm.perm_name" sqlTabName="sy05_perm" uid="{5426b97a-23f2-4fc1-8b36-eb516127ed25}"/>
+  <Record name="arr_perms" uid="{064e0908-e50b-480d-bf9f-b50f4299480b}">
+    <RecordField fieldIdRef="3" fieldType="NON_DATABASE" length="1" name="perm_name" sqlType="CHAR" uid="{5426b97a-23f2-4fc1-8b36-eb516127ed25}"/>
   </Record>
   <Form fourSTFile="../_main/main_styles.4st" gridHeight="25" gridWidth="267" name="frm_sy102_role" text="Form" windowStyle="main">
     <VBox gridHeight="20" gridWidth="267" name="vbox1" posX="0" posY="0">
@@ -28,12 +28,12 @@
           <Item lstrtext="false" name="1" text="Active"/>
         </ComboBox>
         <Group gridHeight="15" gridWidth="266" name="group1" posX="1" posY="3" text="Permissions">
-          <CheckBox colName="perm_name" columnCount="4" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="18" name="sy05_perm.perm_name" posX="2" posY="1" repeat="true" rowCount="6" sqlTabName="sy05_perm" stepX="10" stepY="1" tabIndex="-1" text="" title="checkbox1" widget="CheckBox"/>
+          <CheckBox columnCount="4" fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="18" length="1" name="perm_name" posX="2" posY="1" repeat="true" rowCount="6" sqlType="CHAR" stepX="10" stepY="1" tabIndex="-1" text="" title="checkbox1" widget="CheckBox"/>
         </Group>
       </Grid>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBjADIAMgA4ADcAOQBjAGIALQBmADQAMgA4AC0ANAAyADMAYgAtADgAZABiADcALQAxADgAZgBhAGEAMQBjAGYAMwAwADcANgB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewAwADYANABlADAAOQAwADgALQBlADUAMABiAC0ANAA4ADAAZAAtAGIAZgA5AGYALQBiADUAMABmADQAMgA5ADkANAA4ADAAYgB9QCAAAAwAAANAIAAADAAAAwAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBjADIAMgA4ADcAOQBjAGIALQBmADQAMgA4AC0ANAAyADMAYgAtADgAZABiADcALQAxADgAZgBhAGEAMQBjAGYAMwAwADcANgB9AAAAAAAAAAAAAAAAAAAAAD9ok3S8an76AQAAAEwAewAwADYANABlADAAOQAwADgALQBlADUAMABiAC0ANAA4ADAAZAAtAGIAZgA5AGYALQBiADUAMABmADQAMgA5ADkANAA4ADAAYgB9QGMAAAWAAAA/6ZmaYAAAYz9gYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

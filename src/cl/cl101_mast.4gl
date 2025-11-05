@@ -11,7 +11,7 @@ IMPORT ui
 
 IMPORT FGL utils_globals
 IMPORT FGL cl121_lkup -- Creditor lookup module
-IMPORT FGL pu130_order
+
 IMPORT FGL pu131_invoice
 
 SCHEMA demoapp_db
@@ -167,7 +167,7 @@ FUNCTION load_menu()
             IF rec_cred.acc_code IS NULL OR rec_cred.acc_code = 0 THEN
                 CALL utils_globals.show_info("No creditor selected.")
             ELSE
-                CALL load_and_display_transactions(rec_cred.acc_code)
+                --CALL load_and_display_transactions(rec_cred.acc_code)
             END IF
 
         COMMAND "Previous"
@@ -700,9 +700,9 @@ FUNCTION open_transaction_window(p_doc_no INTEGER)
 
     CASE l_type
             WHEN "ORD"
-                CALL pu130_order.
+                --CALL pu130_order.
             WHEN "INV"
-                CALL pu131_invoice.load_invoice_via_cred(p_doc_no)
+                --CALL pu131_invoice.load_invoice_via_cred(p_doc_no)
         OTHERWISE
             CALL utils_globals.show_info("Unknown document type: " || l_type)
     END CASE

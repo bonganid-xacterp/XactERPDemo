@@ -9,136 +9,365 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
+IMPORT FGL st121_st_lkup
+IMPORT FGL utils_doc_totals
 
 SCHEMA demoapp_db
+
 
 -- ==============================================================
 -- Record Definitions
 -- ==============================================================
-TYPE order_hdr_t RECORD LIKE sa31_ord_hdr.*
-DEFINE rec_ord order_hdr_t
+TYPE order_hdr_t RECORD 
+                    sa31_hdr LIKE sa31_ord_hdr.*,
+                    -- Customer information
+                    cust_name LIKE dl01_mast.cust_name,
+                    phone LIKE dl01_mast.phone,
+                    email LIKE dl01_mast.email,
+                    address1 LIKE dl01_mast.address1,
+                    address2 LIKE dl01_mast.address2,
+                    address3 LIKE dl01_mast.address3,
+                    postal_code LIKE dl01_mast.postal_code,
+                    -- User information
+                    created_by_username STRING
+                END RECORD 
 
-DEFINE arr_ord_line DYNAMIC ARRAY OF RECORD LIKE sa31_ord_det.*
+TYPE order_line_t RECORD 
+                    sa31_det LIKE sa31_ord_det.*,
+                    item_name LIKE st01_mast.description,    -- Item description
+                    unit_cost LIKE st01_mast.unit_cost,
+                    sell_price LIKE st01_mast.sell_price,
+                    line_total DECIMAL(15,2)
+                END RECORD
 
-DEFINE arr_codes  DYNAMIC ARRAY OF STRING
-DEFINE curr_idx   INTEGER
---DEFINE is_edit_mode SMALLINT
+DEFINE m_rec_ord order_hdr_t
+DEFINE m_debt_mast debt_t 
+
+DEFINE m_arr_ord_lines DYNAMIC ARRAY OF RECORD LIKE sa31_ord_det.*
+
+DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
+DEFINE m_curr_idx INTEGER
 
 -- ==============================================================
--- Public entry point (called from Debtors or MDI menu)
+-- Add or Edit an order line
 -- ==============================================================
-PUBLIC FUNCTION show_order(p_doc_no INTEGER)
-    -- Open the order window inside the MDI container
+FUNCTION edit_or_add_order_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
+    DEFINE l_line RECORD LIKE sa31_ord_det.*
+    DEFINE l_stock_code STRING
+    DEFINE l_vat_rate DECIMAL(10,2)
+    DEFINE l_gross, l_net, l_vat DECIMAL(15,2)
+
+    IF p_is_new THEN
+        -- Initialize new line
+        INITIALIZE l_line.* TO NULL
+        LET l_line.hdr_id = p_doc_id
+        LET l_line.line_no = m_arr_ord_lines.getLength() + 1
+        LET l_vat_rate = 15.00
+    ELSE
+        -- Load from existing array line
+        LET l_line.* = m_arr_ord_lines[p_row].*
+        LET l_vat_rate = 15.00
+    END IF
+
+    -- ==============================
+    -- Input Dialog for editing/adding
+    -- ==============================
+    DIALOG
+        INPUT BY NAME l_line.stock_code, l_line.qnty, l_line.disc, l_line.vat
+            ATTRIBUTES(WITHOUT DEFAULTS)
+
+            BEFORE FIELD stock_code
+                -- call lookup popup
+                LET l_stock_code = lookup_stock_item()
+                
+                IF l_stock_code IS NOT NULL THEN
+                
+                    LET l_line.stock_code = l_stock_code
+                    
+                    CALL load_stock_defaults(l_stock_code, l_line.unit_cost, l_line.sell_price)
+
+                    DISPLAY BY NAME l_line.unit_cost, l_line.sell_price
+                    
+                END IF
+
+            AFTER FIELD qnty, disc, vat
+                -- calculate the line total 
+                LET l_line.line_tot =  utils_doc_totals.calc_line_total(
+                                    l_line.qnty, 
+                                    l_line.unit_cost, 
+                                    l_line.disc, 
+                                    l_line.vat
+                )
+                
+                DISPLAY BY NAME l_line.line_tot, l_line.vat
+
+            ON ACTION save
+                IF p_is_new THEN
+                    LET m_arr_ord_lines[m_arr_ord_lines.getLength() + 1].* = l_line.*
+                ELSE
+                    LET m_arr_ord_lines[p_row].* = l_line.*
+                END IF
+                CALL utils_globals.msg_saved()
+                EXIT DIALOG
+
+            ON ACTION cancel
+                EXIT DIALOG
+        END INPUT
+    END DIALOG
+END FUNCTION
+
+-- ==============================================================
+-- Lookup item from Stock Master
+-- ==============================================================
+FUNCTION lookup_stock_item() RETURNS STRING
+    DEFINE l_stock_code STRING
+    LET l_stock_code = st121_st_lkup.display_stocklist() -- your lookup popup
+    RETURN l_stock_code
+END FUNCTION
+
+-- ==============================================================
+-- Lookup item from Stock Master
+-- ==============================================================
+FUNCTION load_stock_defaults(p_stock_code STRING, p_cost DECIMAL, p_price DECIMAL)
+    SELECT cost_price, sell_price
+      INTO p_cost, p_price
+      FROM st01_mast
+     WHERE stock_code = p_stock_code
+
+    IF SQLCA.SQLCODE != 0 THEN
+        LET p_cost = 0
+        LET p_price = 0
+    END IF
+END FUNCTION
+
+-- ==============================================================
+-- Delete selected order line
+-- ==============================================================
+FUNCTION delete_order_line(p_doc_id INTEGER, p_row INTEGER)
+    IF p_row > 0 THEN
+        IF utils_globals.confirm_delete(p_row, p_doc_id) THEN
+            CALL m_arr_ord_lines.deleteElement(p_row)
+            CALL utils_globals.msg_deleted()
+        END IF
+    END IF
+END FUNCTION
+
+
+-- ==============================================================
+-- Save all lines to database
+-- ==============================================================
+FUNCTION save_order_lines(p_doc_id INTEGER)
+    DEFINE i INTEGER
+
+    DELETE FROM sa31_ord_det WHERE hdr_id = p_doc_id
+
+    FOR i = 1 TO m_arr_ord_lines.getLength()
+        INSERT INTO sa31_ord_det VALUES m_arr_ord_lines[i].*
+    END FOR
+END FUNCTION
+
+
+-- ==============================================================
+-- Function : load_customer
+-- ==============================================================
+FUNCTION load_customer(p_debt_id STRING)
+
+    DEFINE rec_cust RECORD
+        cust_name LIKE dl01_mast.cust_name,
+        phone     LIKE dl01_mast.phone,
+        email     LIKE dl01_mast.email,
+        address1  LIKE dl01_mast.address1,
+        address2  LIKE dl01_mast.address2,
+        address3  LIKE dl01_mast.address3,
+        postal_code LIKE dl01_mast.postal_code
+    END RECORD
+
+    SELECT cust_name, phone, email, address1, address2, address3, postal_code
+      INTO rec_cust.*
+      FROM dl01_mast
+     WHERE acc_code = p_debt_id
+
+    IF SQLCA.SQLCODE = 0 THEN
+        LET rec_cust.cust_name   = rec_cust.cust_name
+        LET rec_cust.phone       = rec_cust.phone
+        LET rec_cust.email       = rec_cust.email
+        LET rec_cust.address1    = rec_cust.address1
+        LET rec_cust.address2    = rec_cust.address2
+        LET rec_cust.address3    = rec_cust.address3
+        LET rec_cust.postal_code = rec_cust.postal_code
+        DISPLAY BY NAME rec_cust.*
+    ELSE
+        CALL utils_globals.show_error("Customer not found for account " || p_debt_id)
+    END IF
+END FUNCTION
+
+-- ==============================================================
+-- Function : load_order
+-- ==============================================================
+
+FUNCTION load_order(p_doc_id INTEGER)
+    DEFINE idx INTEGER
+    DEFINE user_choice SMALLINT
+
     OPTIONS INPUT WRAP
-    OPEN WINDOW w_ord WITH FORM "sa131_order" ATTRIBUTES(STYLE="child")
 
-    -- Load header + lines
-    CALL load_order(p_doc_no)
+    -- Open window and attach form
+    OPEN WINDOW w_ord WITH FORM "sa131_order" ATTRIBUTES(STYLE = "normal")
 
-    -- View/edit the order
-    CALL edit_order_dialog()
+    -- Initialize variables
+    INITIALIZE m_rec_ord.* TO NULL
+    CALL m_arr_ord_lines.clear()
+
+    -- ===========================================
+    -- Load header record
+    -- ===========================================
+    -- Load header with customer and user information
+    SELECT sa31.*,
+           dl01.debtor_name,
+           dl01.phone,
+           dl01.email,
+           dl01.address1,
+           dl01.address2,
+           dl01.address3,
+           dl01.postal_code,
+           usr.username,
+           0.00,  -- gross_total (calculated)
+           0.00,  -- doc_disc (calculated)
+           0.00,  -- vat_amount (calculated)
+           0.00   -- net_total (calculated)
+    INTO m_rec_ord.*
+    FROM sa31_ord_hdr sa31
+    LEFT JOIN dl01_mast dl01 
+        ON sa31.customer_code = dl01.debtor_code
+    LEFT JOIN user_table usr 
+        ON sa31.created_by = usr.user_id
+    WHERE sa31.doc_no = p_doc_no
+
+    IF SQLCA.SQLCODE = 0 THEN
+        -- ===========================================
+        -- Load order lines
+        -- ===========================================
+        LET idx = 0
+        DECLARE ord_lines_cur CURSOR FOR
+            SELECT * 
+              FROM sa31_ord_det 
+             WHERE hdr_id = p_doc_id 
+             ORDER BY line_no
+
+        FOREACH ord_lines_cur INTO m_arr_ord_lines[idx + 1].*
+            LET idx = idx + 1
+        END FOREACH
+
+        CLOSE ord_lines_cur
+        FREE ord_lines_cur
+
+        -- ===========================================
+        -- Show form in view mode first
+        -- ===========================================
+        DISPLAY BY NAME m_rec_ord.*
+        DISPLAY ARRAY m_arr_ord_lines TO arr_sa_ord_items.*
+
+            BEFORE DISPLAY
+                CALL DIALOG.setActionHidden("accept", TRUE)
+
+            ON ACTION edit ATTRIBUTES(TEXT="Edit Order", IMAGE="pen")
+                LET user_choice = prompt_edit_choice()
+
+                CASE user_choice
+                    WHEN 1
+                        CALL edit_order_header(p_doc_id)
+                        INPUT BY NAME m_rec_ord.* ATTRIBUTES (WITHOUT DEFAULTS)  -- Refresh
+                    WHEN 2
+                        CALL edit_order_lines(p_doc_id)
+                    OTHERWISE
+                        CALL utils_globals.show_info("Edit cancelled.")
+                END CASE
+
+            ON ACTION close ATTRIBUTES(TEXT="Close", IMAGE="exit")
+                EXIT DISPLAY
+        END DISPLAY
+    ELSE
+        CALL utils_globals.show_error("Order not found.")
+    END IF
 
     CLOSE WINDOW w_ord
 END FUNCTION
 
 -- ==============================================================
--- Load order Header and Lines
+-- Prompt Edit Choices
 -- ==============================================================
-FUNCTION load_order(p_doc_no INTEGER)
-    DEFINE idx INTEGER
+FUNCTION prompt_edit_choice() RETURNS SMALLINT
+    DEFINE choice SMALLINT
 
-    INITIALIZE rec_ord.* TO NULL
-    CALL arr_ord_line.clear()
+    MENU "Edit Order"
+        COMMAND "Header"
+            RETURN 1
+        COMMAND "Lines"
+            RETURN 2
+        COMMAND "Cancel"
+            RETURN 0
+    END MENU
 
-    SELECT * INTO rec_ord.* FROM sa31_ord_hdr WHERE doc_no = p_doc_no
-
-    IF SQLCA.SQLCODE = 0 THEN
-        DISPLAY BY NAME rec_ord.*
-        -- Load lines for this order
-        DECLARE c_lines CURSOR FOR
-            SELECT * FROM sa31_ord_det WHERE doc_no = p_doc_no ORDER BY line_no
-
-        FOREACH c_lines INTO arr_ord_line[idx + 1].*
-            LET idx = idx + 1
-        END FOREACH
-
-        CLOSE c_lines
-        FREE c_lines
-    ELSE
-        CALL utils_globals.show_error("order not found.")
-    END IF
+    RETURN choice
+    
 END FUNCTION
 
 -- ==============================================================
--- Edit / View order (dialog)
+-- Edit order header
 -- ==============================================================
-FUNCTION edit_order_dialog()
-    DIALOG ATTRIBUTES(UNBUFFERED)
+FUNCTION edit_order_header(p_doc_id INTEGER)
+    DEFINE new_hdr RECORD LIKE sa31_ord_hdr.*
 
-        -- Header section fields
-        INPUT BY NAME rec_ord.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME="order_header")
+    LET new_hdr.* = m_rec_ord.*
 
-            ON ACTION save ATTRIBUTES(TEXT="Save",IMAGE="filesave")
-                CALL save_order()
-                EXIT DIALOG
+    DIALOG
+        INPUT BY NAME new_hdr.*
+        
+            ON ACTION save
+            
+                UPDATE sa31_ord_hdr SET sa31_ord_hdr.* = new_hdr.* 
+                 WHERE id = p_doc_id
 
-            ON ACTION close ATTRIBUTES(TEXT="Close",IMAGE="exit")
+                 LET m_rec_ord.* = new_hdr.*
+                
+                CALL utils_globals.msg_saved()
+
+            ON ACTION cancel
                 EXIT DIALOG
         END INPUT
+        
+    END DIALOG
+END FUNCTION
 
-        -- Lines section (display array for order details)
-        DISPLAY ARRAY arr_ord_line TO sr_order_lines.*
+-- ==============================================================
+-- Edit Order Lines
+-- ==============================================================
+FUNCTION edit_order_lines(p_doc_id INTEGER)
+    DIALOG
+        DISPLAY ARRAY m_arr_ord_lines TO arr_sa_ord_items.*
+            BEFORE DISPLAY
+                CALL DIALOG.setActionHidden("accept", TRUE)
 
-            ON ACTION add
-                CALL add_order_line()
-            ON ACTION delete
-               CALL delete_order_line(arr_curr())
-            ON ACTION save
-                CALL save_order()
-            ON ACTION close
+            ON ACTION add ATTRIBUTES(TEXT="Add Line", IMAGE="new")
+                CALL edit_or_add_order_line(p_doc_id, 0, TRUE)
+
+            ON ACTION edit ATTRIBUTES(TEXT="Edit Line", IMAGE="pen")
+                CALL edit_or_add_order_line(p_doc_id, arr_curr(), FALSE)
+
+            ON ACTION delete ATTRIBUTES(TEXT="Delete", IMAGE="delete")
+                CALL delete_order_line(p_doc_id, arr_curr())
+
+            ON ACTION save ATTRIBUTES(TEXT="Save", IMAGE="save")
+                CALL save_order_lines(p_doc_id)
+                CALL utils_globals.msg_saved()
+                EXIT DIALOG
+
+            ON ACTION cancel
                 EXIT DIALOG
         END DISPLAY
     END DIALOG
 END FUNCTION
 
--- ==============================================================
--- Add order Line
--- ==============================================================
-FUNCTION add_order_line()
-    DEFINE new_line RECORD LIKE sa31_ord_det.*
-    LET new_line.line_no = arr_ord_line.getLength() + 1
-
-    INPUT BY NAME new_line.*
-        ATTRIBUTES(WITHOUT DEFAULTS, NAME="new_line")
-
-        ON ACTION save
-            LET arr_ord_line[arr_ord_line.getLength() + 1] = new_line
-            CALL utils_globals.show_info("Line added.")
-            EXIT INPUT
-
-        ON ACTION cancel
-            EXIT INPUT
-    END INPUT
-END FUNCTION
-
--- ==============================================================
--- Delete Selected Line
--- ==============================================================
-FUNCTION delete_order_line(p_curr_row INTEGER)  -- FIX: Added parameter
-    IF arr_ord_line.getLength() = 0 THEN
-        CALL utils_globals.show_info("No line to delete.")
-        RETURN
-    END IF
-
-    IF p_curr_row < 1 OR p_curr_row > arr_ord_line.getLength() THEN
-        CALL utils_globals.show_info("Invalid line selected.")
-        RETURN
-    END IF
-
-    CALL arr_ord_line.deleteElement(p_curr_row)  -- FIX: Use correct method
-    CALL utils_globals.show_info("Line deleted.")
-END FUNCTION
 
 -- ==============================================================
 -- Save order (Header + Lines)
@@ -146,30 +375,34 @@ END FUNCTION
 FUNCTION save_order()
     DEFINE exists INTEGER
 
-    SELECT COUNT(*) INTO exists FROM sa31_ord_hdr WHERE doc_no = rec_ord.doc_no
+    SELECT COUNT(*) INTO exists FROM sa31_ord_hdr WHERE id = m_rec_ord.id
 
     IF exists = 0 THEN
-        INSERT INTO sa31_ord_hdr VALUES rec_ord.*
+        INSERT INTO sa31_ord_hdr VALUES m_rec_ord.*
         CALL utils_globals.msg_saved()
     ELSE
-        UPDATE sa31_ord_hdr SET sa31_ord_hdr.* = rec_ord.* WHERE doc_no = rec_ord.doc_no
+        UPDATE sa31_ord_hdr
+            SET sa31_ord_hdr.* = m_rec_ord.*
+            WHERE id = m_rec_ord.id
         CALL utils_globals.msg_updated()
     END IF
 
     -- Save lines
-    DELETE FROM sa31_ord_det WHERE doc_no = rec_ord.doc_no
-    FOR curr_idx = 1 TO arr_ord_line.getLength()
-        INSERT INTO sa31_ord_det VALUES arr_ord_line[curr_idx].*
+    DELETE FROM sa31_ord_det WHERE hdr_id = m_rec_ord.id
+
+    FOR m_curr_idx = 1 TO m_arr_ord_lines.getLength()
+        INSERT INTO sa31_ord_det VALUES m_arr_ord_lines[m_curr_idx].*
     END FOR
+
 END FUNCTION
 
 -- ==============================================================
 -- Delete order
 -- ==============================================================
-FUNCTION delete_order(p_doc_no INTEGER)
+FUNCTION delete_order(p_doc_id INTEGER)
     DEFINE ok SMALLINT
 
-    IF p_doc_no IS NULL THEN
+    IF p_doc_id IS NULL THEN
         CALL utils_globals.show_info("No order selected for deletion.")
         RETURN
     END IF
@@ -181,8 +414,8 @@ FUNCTION delete_order(p_doc_no INTEGER)
         RETURN
     END IF
 
-    DELETE FROM sa31_ord_det WHERE doc_no = p_doc_no
-    DELETE FROM sa31_ord_hdr WHERE doc_no = p_doc_no
+    DELETE FROM sa31_ord_det WHERE id = p_doc_id
+    DELETE FROM sa31_ord_hdr WHERE id = p_doc_id
     CALL utils_globals.msg_deleted()
 END FUNCTION
 
@@ -192,12 +425,12 @@ END FUNCTION
 PRIVATE FUNCTION move_record(dir SMALLINT)
     DEFINE new_idx INTEGER
 
-    IF arr_codes.getLength() == 0 THEN
+    IF m_arr_codes.getLength() == 0 THEN
         CALL utils_globals.show_info("No records to navigate.")
         RETURN
     END IF
 
-    LET new_idx = utils_globals.navigate_records(arr_codes, curr_idx, dir)
-    LET curr_idx = new_idx
-    CALL load_order(arr_codes[curr_idx])
+    LET new_idx = utils_globals.navigate_records(m_arr_codes, m_curr_idx, dir)
+    LET m_curr_idx = new_idx
+    CALL load_order(m_arr_codes[m_curr_idx])
 END FUNCTION

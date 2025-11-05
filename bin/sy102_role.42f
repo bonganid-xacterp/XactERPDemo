@@ -20,7 +20,7 @@
       </FormField>
       <Group name="group1" text="Permissions" posY="3" posX="1" gridWidth="266" gridHeight="15">
         <LStr text="Permissions"/>
-        <Matrix pageSize="24" stepY="2" stepX="28" columnCount="4" name="sy05_perm.perm_name" colName="perm_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="2" sqlTabName="sy05_perm" tabIndex="3">
+        <Matrix pageSize="24" stepY="2" stepX="28" columnCount="4" name="formonly.perm_name" colName="perm_name" sqlType="CHAR" fieldId="2" sqlTabName="formonly" tabIndex="3">
           <CheckBox width="18" text="" posY="1" posX="2" gridWidth="18">
             <LStr text=""/>
           </CheckBox>
@@ -32,14 +32,14 @@
     <Link colName="role_name" fieldIdRef="0"/>
     <Link colName="status" fieldIdRef="1"/>
   </RecordView>
-  <RecordView tabName="sy05_perm">
+  <RecordView tabName="formonly">
     <Link colName="perm_name" fieldIdRef="2"/>
   </RecordView>
-  <RecordView tabName="record4">
+  <RecordView tabName="rec_role">
     <Link colName="role_name" fieldIdRef="0"/>
     <Link colName="status" fieldIdRef="1"/>
   </RecordView>
-  <RecordView tabName="record1">
+  <RecordView tabName="arr_perms">
     <Link colName="perm_name" fieldIdRef="2"/>
   </RecordView>
 </Form>
