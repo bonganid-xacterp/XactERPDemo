@@ -88,9 +88,6 @@
       <TopMenuGroup name="tm_app" text="Help">
         <TopMenuCommand image="fa-info-circle" name="sy_about" text="About"/>
       </TopMenuGroup>
-      <TopMenuGroup hidden="true" name="tm_wrapper" text="MAIN">
-        <TopMenuCommand hidden="true" name="sy_main" text=""/>
-      </TopMenuGroup>
     </TopMenu>
     <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" name="workarea" posX="0" posY="0" text="">
       <Grid gridHeight="20" gridWidth="91" name="main_shell_grid" posX="1" posY="1"/>

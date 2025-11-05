@@ -3,8 +3,8 @@
   <LStr text="SALES QUOTE"/>
   <VBox name="vbox1">
     <Grid name="sa130_ord_hdr" width="117" height="11">
-      <Label name="lbl_form_title" width="115" text="SALES ORDER" justify="center" style="bold header" posY="0" posX="1" gridWidth="115">
-        <LStr text="SALES ORDER"/>
+      <Label name="lbl_form_title" width="115" text="" justify="center" style="bold header" posY="0" posX="1" gridWidth="115">
+        <LStr text=""/>
       </Label>
       <Group name="cust_info" text="" posY="1" posX="1" gridWidth="53" gridHeight="9">
         <LStr text=""/>
@@ -30,7 +30,13 @@
           <LStr text="Status"/>
         </Label>
         <FormField name="sa30_quo_hdr.status" colName="status" sqlType="VARCHAR(10)" fieldId="3" sqlTabName="sa30_quo_hdr" tabIndex="4">
-          <ComboBox width="12" scroll="1" posY="2" posX="36" gridWidth="14"/>
+          <ComboBox width="12" scroll="1" posY="2" posX="36" gridWidth="14">
+            <Item name="new" text="New"/>
+            <Item name="converted" text="Converted"/>
+            <Item name="cancelled" text="Cancelled"/>
+            <Item name="rejected" text="Rejected"/>
+            <Item name="approved" text="Approved"/>
+          </ComboBox>
         </FormField>
         <Label name="sa30_quo_hdr_cust_name_lbl" width="9" text="Customer " posY="4" posX="1" gridWidth="9">
           <LStr text="Customer "/>
@@ -171,6 +177,19 @@
       </TableColumn>
     </Table>
   </VBox>
+  <RecordView tabName="sa30_quo_det">
+    <Link colName="id" fieldIdRef="19"/>
+    <Link colName="hdr_id" fieldIdRef="20"/>
+    <Link colName="line_no" fieldIdRef="21"/>
+    <Link colName="stock_code" fieldIdRef="22"/>
+    <Link colName="batch_id" fieldIdRef="23"/>
+    <Link colName="qnty" fieldIdRef="24"/>
+    <Link colName="unit_cost" fieldIdRef="25"/>
+    <Link colName="sell_price" fieldIdRef="26"/>
+    <Link colName="disc" fieldIdRef="27"/>
+    <Link colName="vat" fieldIdRef="28"/>
+    <Link colName="line_tot" fieldIdRef="29"/>
+  </RecordView>
   <RecordView tabName="sa30_quo_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>
     <Link colName="trans_date" fieldIdRef="1"/>
@@ -185,19 +204,6 @@
     <Link colName="disc" fieldIdRef="16"/>
     <Link colName="vat" fieldIdRef="17"/>
     <Link colName="net_tot" fieldIdRef="18"/>
-  </RecordView>
-  <RecordView tabName="sa30_quo_det">
-    <Link colName="id" fieldIdRef="19"/>
-    <Link colName="hdr_id" fieldIdRef="20"/>
-    <Link colName="line_no" fieldIdRef="21"/>
-    <Link colName="stock_code" fieldIdRef="22"/>
-    <Link colName="batch_id" fieldIdRef="23"/>
-    <Link colName="qnty" fieldIdRef="24"/>
-    <Link colName="unit_cost" fieldIdRef="25"/>
-    <Link colName="sell_price" fieldIdRef="26"/>
-    <Link colName="disc" fieldIdRef="27"/>
-    <Link colName="vat" fieldIdRef="28"/>
-    <Link colName="line_tot" fieldIdRef="29"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="cust_name" fieldIdRef="4"/>

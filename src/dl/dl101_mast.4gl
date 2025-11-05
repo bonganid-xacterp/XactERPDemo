@@ -87,7 +87,7 @@ FUNCTION init_dl_module()
                 CALL open_transaction_window(arr_debt_trans[arr_curr()].doc_no, arr_debt_trans[arr_curr()].doc_type)
             END IF
 
-        ON ACTION List ATTRIBUTES(TEXT = "Load Debtors", IMAGE = "fa-list")
+        ON ACTION List ATTRIBUTES(TEXT = "Reload List", IMAGE = "fa-list")
             DISPLAY "List All"
             CALL load_all_debtors()
             LET is_edit_mode = FALSE
@@ -120,6 +120,14 @@ FUNCTION init_dl_module()
                 BEFORE DISPLAY
                     EXIT DISPLAY
             END DISPLAY
+
+        ON ACTION add_quote ATTRIBUTES(TEXT = "Add S/Quote", IMAGE = "new")
+            DISPLAY "Add Quote"
+            CALL sa130_quote.new_quote()
+
+         ON ACTION add_order ATTRIBUTES(TEXT = "Add S/Order", IMAGE = "fa-reorder")
+            DISPLAY "Add Quote"
+            --CALL sa131_order.new_order()
 
         ON ACTION EXIT ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close")
             EXIT DISPLAY

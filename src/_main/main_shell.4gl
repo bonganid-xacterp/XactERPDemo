@@ -70,31 +70,36 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS BOOLEAN
     END FOR
 
     -- Generate unique window name
-    LET winname = WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
+    LET winname =
+        WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
 
-    -- Configure as MDI child window
-    CALL ui.Interface.setType("child")
-    CALL ui.Interface.setName(formname)
-    CALL ui.Interface.setContainer(MDI_CONTAINER)
+    TRY
+        -- Configure as MDI child window
+        CALL ui.Interface.setType("child")
+        CALL ui.Interface.setName(formname)
+        CALL ui.Interface.setContainer(MDI_CONTAINER)
 
-    -- Open the child window
-    OPTIONS INPUT WRAP
-    OPEN WINDOW winname
-        WITH FORM formname
-        ATTRIBUTES(STYLE = "normal", TEXT = wintitle)
+        -- Open the child window
+        OPTIONS INPUT WRAP
+        OPEN WINDOW winname WITH FORM formname
+            ATTRIBUTES(STYLE = "Window.child", TEXT = wintitle)
 
-    -- Register window
-    LET i = m_open_modules.getLength() + 1
-    LET m_open_modules[i].prog = formname
-    LET m_open_modules[i].winname = winname
-    LET m_open_modules[i].title = wintitle
-    LET m_open_modules[i].opened = CURRENT
+        -- Register window
+        LET i = m_open_modules.getLength() + 1
+        LET m_open_modules[i].prog = formname
+        LET m_open_modules[i].winname = winname
+        LET m_open_modules[i].title = wintitle
+        LET m_open_modules[i].opened = CURRENT
 
-    IF m_debug_mode THEN
-        DISPLAY SFMT("Opened: %1 (%2) - Total windows: %3",
-            winname, wintitle, m_open_modules.getLength())
-    END IF
+        IF m_debug_mode THEN
+            DISPLAY SFMT("Opened: %1 (%2) - Total windows: %3",
+                winname, wintitle, m_open_modules.getLength())
+        END IF
 
+    CATCH
+        CALL utils_globals.show_error('Error opening program ' ||  formname || winname )
+    END TRY
+    
     RETURN TRUE
 
 END FUNCTION

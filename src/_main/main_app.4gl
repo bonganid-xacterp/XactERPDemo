@@ -129,10 +129,10 @@ FUNCTION open_main_container()
         CALL ui.Interface.setName('Main_container')
         CALL ui.Interface.setContainer('main_shell')
         -- Open the main container window (parent for all child windows)
-        OPTIONS INPUT WRAP
+        
         OPEN WINDOW w_main
             WITH FORM "main_shell"
-            ATTRIBUTES(STYLE = "container", TEXT = APP_NAME || " - " || username)
+            ATTRIBUTES(STYLE = "Window.container", TEXT = APP_NAME || " - " || username)
 
         LET w = ui.Window.getCurrent()
 

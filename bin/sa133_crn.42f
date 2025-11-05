@@ -180,6 +180,19 @@
       </TableColumn>
     </Table>
   </VBox>
+  <RecordView tabName="sa33_crn_det">
+    <Link colName="id" fieldIdRef="21"/>
+    <Link colName="hdr_id" fieldIdRef="22"/>
+    <Link colName="line_no" fieldIdRef="23"/>
+    <Link colName="stock_code" fieldIdRef="24"/>
+    <Link colName="batch_id" fieldIdRef="25"/>
+    <Link colName="qnty" fieldIdRef="26"/>
+    <Link colName="unit_cost" fieldIdRef="27"/>
+    <Link colName="sell_price" fieldIdRef="28"/>
+    <Link colName="disc" fieldIdRef="29"/>
+    <Link colName="vat" fieldIdRef="30"/>
+    <Link colName="line_tot" fieldIdRef="31"/>
+  </RecordView>
   <RecordView tabName="sa33_crn_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>
     <Link colName="trans_date" fieldIdRef="1"/>
@@ -195,19 +208,6 @@
     <Link colName="disc" fieldIdRef="18"/>
     <Link colName="vat" fieldIdRef="19"/>
     <Link colName="net_tot" fieldIdRef="20"/>
-  </RecordView>
-  <RecordView tabName="sa33_crn_det">
-    <Link colName="id" fieldIdRef="21"/>
-    <Link colName="hdr_id" fieldIdRef="22"/>
-    <Link colName="line_no" fieldIdRef="23"/>
-    <Link colName="stock_code" fieldIdRef="24"/>
-    <Link colName="batch_id" fieldIdRef="25"/>
-    <Link colName="qnty" fieldIdRef="26"/>
-    <Link colName="unit_cost" fieldIdRef="27"/>
-    <Link colName="sell_price" fieldIdRef="28"/>
-    <Link colName="disc" fieldIdRef="29"/>
-    <Link colName="vat" fieldIdRef="30"/>
-    <Link colName="line_tot" fieldIdRef="31"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="cust_name" fieldIdRef="4"/>

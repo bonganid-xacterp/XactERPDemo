@@ -11,6 +11,8 @@ IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL st121_st_lkup
 IMPORT FGL utils_doc_totals
+IMPORT FGL dl121_lkup
+IMPORT FGL dl101_mast
 
 
 SCHEMA demoapp_db
@@ -28,7 +30,157 @@ DEFINE m_arr_qt_lines DYNAMIC ARRAY OF RECORD LIKE sa30_quo_det.*
 
 DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
 DEFINE m_curr_idx INTEGER
---DEFINE is_edit_mode SMALLINT
+
+-- ==============================================================
+-- Add or Edit an quote line
+-- ==============================================================
+FUNCTION new_quote()
+    DEFINE l_hdr RECORD LIKE sa30_quo_hdr.*                    
+    DEFINE l_arr_lines DYNAMIC ARRAY OF RECORD LIKE sa30_quo_det.*
+    DEFINE l_new_line RECORD LIKE sa30_quo_det.*
+
+    DEFINE l_next_doc_no INTEGER
+    DEFINE l_stock_code STRING
+    DEFINE l_cost, l_price DECIMAL(15,2)
+
+    DEFINE l_idx INTEGER
+
+    -- ==========================================================
+    -- 1. Generate next document number
+    -- ==========================================================
+    SELECT COALESCE(MAX(doc_no), 0) + 1 INTO l_next_doc_no
+      FROM sa30_quo_hdr
+
+    LET l_hdr.doc_no = l_next_doc_no
+    LET l_hdr.trans_date = TODAY
+    LET l_hdr.status = "NEW"
+    LET l_hdr.created_at = CURRENT
+    LET l_hdr.created_by = utils_globals.get_current_user_id()
+    LET l_hdr.gross_tot = 0
+    LET l_hdr.vat = 0
+    LET l_hdr.disc = 0
+    LET l_hdr.net_tot = 0
+
+    CALL l_arr_lines.clear()
+
+    -- ==========================================================
+    -- 2. Open quote entry form
+    -- ==========================================================
+    OPEN WINDOW w_quote WITH FORM "sa130_quote" ATTRIBUTES(STYLE="normal")
+
+    CALL utils_globals.set_form_label("lbl_form_title", "New Sales Quote")
+
+    -- ==========================================================
+    -- 3. Enter Quote Header
+    -- ==========================================================
+    DIALOG
+        INPUT BY NAME l_hdr.*
+            BEFORE FIELD acc_code
+                -- Customer lookup (optional popup)
+                 CALL utils_globals.get_next_code("sa30_quo_hdr", "acc_code")
+                    RETURNING l_next_doc_no
+                --CALL dl101_mast.load_all_debtors()
+                
+            ON ACTION next ATTRIBUTES(TEXT="Next", IMAGE="next")
+                -- Go to lines input once header is ready
+                EXIT DIALOG
+
+            ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="exit")
+                CALL utils_globals.show_info("Quote creation cancelled.")
+                CLOSE WINDOW w_quote
+                RETURN
+        END INPUT
+    END DIALOG
+
+    -- ==========================================================
+    -- 4. Enter Quote Lines
+    -- ==========================================================
+    DIALOG
+        DISPLAY ARRAY l_arr_lines TO arr_sa_quote_lines.*
+            BEFORE DISPLAY
+                CALL DIALOG.setActionHidden("accept", TRUE)
+
+            -- --------------------------------------------------
+            -- Add new quote line
+            -- --------------------------------------------------
+            ON ACTION add ATTRIBUTES(TEXT="Add Line", IMAGE="new")
+
+                INITIALIZE l_new_line.* TO NULL
+                LET l_new_line.hdr_id = l_hdr.id
+                LET l_new_line.line_no = l_arr_lines.getLength() + 1
+
+                DIALOG
+                    INPUT BY NAME l_new_line.stock_code, l_new_line.qnty, 
+                                   l_new_line.unit_cost, l_new_line.sell_price, 
+                                   l_new_line.disc, l_new_line.vat
+                        BEFORE FIELD stock_code
+                            LET l_stock_code = st121_st_lkup.display_stocklist()
+                            IF l_stock_code IS NOT NULL THEN
+                            
+                                LET l_new_line.stock_code = l_stock_code
+                                
+                                --CALL load_stock_defaults(l_stock_code, l_cost, l_price, l_desc)
+                                
+                                LET l_new_line.unit_cost = l_cost
+                                LET l_new_line.sell_price = l_price
+                                DISPLAY BY NAME l_new_line.unit_cost, l_new_line.sell_price
+                            END IF
+
+                        AFTER FIELD qnty, unit_cost, sell_price, disc, vat
+                            LET l_new_line.line_tot = utils_doc_totals.calc_line_total(
+                                l_new_line.qnty,
+                                l_new_line.sell_price,
+                                l_new_line.disc,
+                                l_new_line.vat
+                            )
+                            DISPLAY BY NAME l_new_line.line_tot
+
+                        ON ACTION save ATTRIBUTES(TEXT="Save Line", IMAGE="save")
+                            LET l_arr_lines[l_arr_lines.getLength() + 1].* = l_new_line.*
+                            CALL utils_globals.msg_saved()
+                            EXIT DIALOG
+
+                        ON ACTION cancel
+                            EXIT DIALOG
+                    END INPUT
+                END DIALOG
+
+            -- --------------------------------------------------
+            -- Edit existing line
+            -- --------------------------------------------------
+            ON ACTION edit ATTRIBUTES(TEXT="Edit Line", IMAGE="pen")
+                LET l_idx = arr_curr()
+                IF l_idx > 0 THEN
+                    --CALL edit_quote_line(l_arr_lines[l_idx])
+                END IF
+
+            -- --------------------------------------------------
+            -- Delete line
+            -- --------------------------------------------------
+            ON ACTION delete ATTRIBUTES(TEXT="Delete Line", IMAGE="delete")
+                IF arr_curr() > 0 THEN
+                    --CALL utils_globals.confirm_delete(arr_curr(), 0)
+                    CALL l_arr_lines.deleteElement(arr_curr())
+                    CALL utils_globals.msg_deleted()
+                END IF
+
+            -- --------------------------------------------------
+            -- Save header + lines
+            -- --------------------------------------------------
+            ON ACTION save ATTRIBUTES(TEXT="Save Quote", IMAGE="save")
+               -- CALL save_quote(l_hdr, l_arr_lines)
+                CALL utils_globals.msg_saved()
+                EXIT DIALOG
+
+            ON ACTION cancel
+                CALL utils_globals.show_info("Quote cancelled.")
+                EXIT DIALOG
+        END DISPLAY
+    END DIALOG
+
+    CLOSE WINDOW w_quote
+END FUNCTION
+
 
 -- ==============================================================
 -- Add or Edit an quote line
@@ -134,7 +286,6 @@ FUNCTION delete_qt_line(p_doc_id INTEGER, p_row INTEGER)
     END IF
 END FUNCTION
 
-
 -- ==============================================================
 -- Save all lines to database
 -- ==============================================================
@@ -147,7 +298,6 @@ FUNCTION save_qt_lines(p_doc_id INTEGER)
         INSERT INTO sa30_quo_det VALUES m_arr_qt_lines[i].*
     END FOR
 END FUNCTION
-
 
 -- ==============================================================
 -- Function : load_customer
@@ -179,7 +329,6 @@ END FUNCTION
 -- ==============================================================
 -- Function : load_quote
 -- ==============================================================
-
 FUNCTION load_quote(p_doc_id INTEGER)
     DEFINE idx INTEGER
     DEFINE user_choice SMALLINT
@@ -322,7 +471,6 @@ FUNCTION edit_qt_lines(p_doc_id INTEGER)
         END DISPLAY
     END DIALOG
 END FUNCTION
-
 
 -- ==============================================================
 -- Save quote (Header + Lines)

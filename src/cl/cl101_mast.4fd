@@ -21,7 +21,7 @@
     <RecordField colName="full_acc_code" fieldIdRef="23" fieldType="TABLE_ALIAS" name="cl01_mast1.full_acc_code" sqlTabName="cl01_mast" table_alias_name="cl01_mast1" uid="{f5e516c7-7d47-4c5e-b978-598c1200696e}"/>
     <RecordField colName="acc_code" fieldIdRef="24" fieldType="TABLE_COLUMN" name="cl01_mast.acc_code" sqlTabName="cl01_mast" uid="{e9de326a-a8f2-4359-9f7d-9f2a8ede4f35}"/>
   </Record>
-  <Record masterTable="" name="arr_cred_trans" uid="{a7935bb4-f5fa-4a88-a246-b8fec9f5b0ab}">
+  <Record masterTable="" name="arr_cred_lines" uid="{a7935bb4-f5fa-4a88-a246-b8fec9f5b0ab}">
     <RecordField colName="doc_no" fieldIdRef="13" fieldType="TABLE_COLUMN" name="cl30_trans.doc_no" sqlTabName="cl30_trans" uid="{d84f6263-636f-4b5e-90d7-54eb4d300a16}"/>
     <RecordField colName="trans_date" fieldIdRef="12" fieldType="TABLE_COLUMN" name="dl30_trans.trans_date" sqlTabName="dl30_trans" uid="{7677f0c2-d748-41c0-8aca-5a7ea5c0533b}"/>
     <RecordField colName="doc_type" fieldIdRef="15" fieldType="TABLE_COLUMN" name="cl30_trans.doc_type" sqlTabName="cl30_trans" uid="{b1329f91-8031-4fcb-a664-a0fad292baaa}"/>
@@ -95,6 +95,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBhADcAOQAzADUAYgBiADQALQBmADUAZgBhAC0ANABhADgAOAAtAGEAMgA0ADYALQBiADgAZgBlAGMAOQBmADUAYgAwAGEAYgB9wGeZmfgAALFANAAAUAAAlD90euFHrhR7AQAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QDAAAEAAAHhAMAAAQAAAeD94k3S8an76AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBhADcAOQAzADUAYgBiADQALQBmADUAZgBhAC0ANABhADgAOAAtAGEAMgA0ADYALQBiADgAZgBlAGMAOQBmADUAYgAwAGEAYgB9wGeZmf3mZy9ANAAAVQAAqD90euFHrhR7AQAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QDAAAEQAAIhAMAAARAAAiD94k3S8an76AQ==]]>
   </DiagramLayout>
 </ManagedForm>

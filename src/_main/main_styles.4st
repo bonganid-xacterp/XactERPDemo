@@ -44,6 +44,15 @@
     <StyleAttribute name="backgroundColor" value="#F5F5F5"/>
   </Style>
 
+  <Style name="Window.container">
+      <StyleAttribute name="windowType" value="container" />
+      <StyleAttribute name="statusBarType" value="normal" />
+      <StyleAttribute name="toolBarPosition" value="top" />
+      <StyleAttribute name="position" value="center" />
+      <StyleAttribute name="border" value="title" />
+      <StyleAttribute name="sizable" value="yes" />
+    </Style>
+
   <Style name="Window.dialog">
      <StyleAttribute name="windowType" value="modal"/>
      <StyleAttribute name="position" value="center"/>

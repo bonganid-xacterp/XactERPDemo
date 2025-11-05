@@ -47,9 +47,6 @@
       </PhantomFormField>
     </Grid>
   </VBox>
-  <RecordView tabName="wh01_mast">
-    <Link colName="wh_code" fieldIdRef="1"/>
-  </RecordView>
   <RecordView tabName="wb01_mast">
     <Link colName="wb_code" fieldIdRef="0"/>
     <Link colName="description" fieldIdRef="2"/>
@@ -59,6 +56,9 @@
     <Link colName="updated_at" fieldIdRef="6"/>
     <Link colName="deleted_at" fieldIdRef="7"/>
     <Link colName="created_by" fieldIdRef="8"/>
+  </RecordView>
+  <RecordView tabName="wh01_mast">
+    <Link colName="wh_code" fieldIdRef="1"/>
   </RecordView>
   <RecordView tabName="record2">
     <Link colName="wb_code" fieldIdRef="0"/>

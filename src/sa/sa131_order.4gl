@@ -14,48 +14,43 @@ IMPORT FGL utils_doc_totals
 
 SCHEMA demoapp_db
 
-
 -- ==============================================================
 -- Record Definitions
 -- ==============================================================
 TYPE order_hdr_t RECORD 
-                    sa31_hdr LIKE sa31_ord_hdr.*,
-                    -- Customer information
-                    cust_name LIKE dl01_mast.cust_name,
-                    phone LIKE dl01_mast.phone,
-                    email LIKE dl01_mast.email,
-                    address1 LIKE dl01_mast.address1,
-                    address2 LIKE dl01_mast.address2,
-                    address3 LIKE dl01_mast.address3,
-                    postal_code LIKE dl01_mast.postal_code,
-                    -- User information
-                    created_by_username STRING
-                END RECORD 
+    LIKE sa31_ord_hdr.*,
+    -- Customer information
+    cust_name LIKE dl01_mast.cust_name,
+    phone LIKE dl01_mast.phone,
+    email LIKE dl01_mast.email,
+    address1 LIKE dl01_mast.address1,
+    address2 LIKE dl01_mast.address2,
+    address3 LIKE dl01_mast.address3,
+    postal_code LIKE dl01_mast.postal_code,
+    -- User information
+    username LIKE sy00_user.username
+--END RECORD
 
-TYPE order_line_t RECORD 
-                    sa31_det LIKE sa31_ord_det.*,
-                    item_name LIKE st01_mast.description,    -- Item description
-                    unit_cost LIKE st01_mast.unit_cost,
-                    sell_price LIKE st01_mast.sell_price,
-                    line_total DECIMAL(15,2)
-                END RECORD
+TYPE order_line_t RECORD
+    LIKE sa31_ord_det.*,
+    item_name LIKE st01_mast.description
+--END RECORD
 
+-- Variable definitions using the types above
 DEFINE m_rec_ord order_hdr_t
-DEFINE m_debt_mast debt_t 
-
-DEFINE m_arr_ord_lines DYNAMIC ARRAY OF RECORD LIKE sa31_ord_det.*
-
+DEFINE m_arr_ord_lines DYNAMIC ARRAY OF order_line_t
 DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
 DEFINE m_curr_idx INTEGER
 
 -- ==============================================================
 -- Add or Edit an order line
 -- ==============================================================
-FUNCTION edit_or_add_order_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
+FUNCTION edit_or_add_order_line(
+    p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
     DEFINE l_line RECORD LIKE sa31_ord_det.*
     DEFINE l_stock_code STRING
-    DEFINE l_vat_rate DECIMAL(10,2)
-    DEFINE l_gross, l_net, l_vat DECIMAL(15,2)
+    DEFINE l_vat_rate DECIMAL(10, 2)
+    DEFINE l_gross, l_net, l_vat DECIMAL(15, 2)
 
     IF p_is_new THEN
         -- Initialize new line
@@ -79,31 +74,30 @@ FUNCTION edit_or_add_order_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLI
             BEFORE FIELD stock_code
                 -- call lookup popup
                 LET l_stock_code = lookup_stock_item()
-                
+
                 IF l_stock_code IS NOT NULL THEN
-                
+
                     LET l_line.stock_code = l_stock_code
-                    
-                    CALL load_stock_defaults(l_stock_code, l_line.unit_cost, l_line.sell_price)
+
+                    CALL load_stock_defaults(
+                        l_stock_code, l_line.unit_cost, l_line.sell_price)
 
                     DISPLAY BY NAME l_line.unit_cost, l_line.sell_price
-                    
+
                 END IF
 
             AFTER FIELD qnty, disc, vat
-                -- calculate the line total 
-                LET l_line.line_tot =  utils_doc_totals.calc_line_total(
-                                    l_line.qnty, 
-                                    l_line.unit_cost, 
-                                    l_line.disc, 
-                                    l_line.vat
-                )
-                
+                -- calculate the line total
+                LET l_line.line_tot =
+                    utils_doc_totals.calc_line_total(
+                        l_line.qnty, l_line.unit_cost, l_line.disc, l_line.vat)
+
                 DISPLAY BY NAME l_line.line_tot, l_line.vat
 
             ON ACTION save
                 IF p_is_new THEN
-                    LET m_arr_ord_lines[m_arr_ord_lines.getLength() + 1].* = l_line.*
+                    LET m_arr_ord_lines[m_arr_ord_lines.getLength() + 1].*
+                        = l_line.*
                 ELSE
                     LET m_arr_ord_lines[p_row].* = l_line.*
                 END IF
@@ -128,11 +122,12 @@ END FUNCTION
 -- ==============================================================
 -- Lookup item from Stock Master
 -- ==============================================================
-FUNCTION load_stock_defaults(p_stock_code STRING, p_cost DECIMAL, p_price DECIMAL)
+FUNCTION load_stock_defaults(
+    p_stock_code STRING, p_cost DECIMAL, p_price DECIMAL)
     SELECT cost_price, sell_price
-      INTO p_cost, p_price
-      FROM st01_mast
-     WHERE stock_code = p_stock_code
+        INTO p_cost, p_price
+        FROM st01_mast
+        WHERE stock_code = p_stock_code
 
     IF SQLCA.SQLCODE != 0 THEN
         LET p_cost = 0
@@ -152,7 +147,6 @@ FUNCTION delete_order_line(p_doc_id INTEGER, p_row INTEGER)
     END IF
 END FUNCTION
 
-
 -- ==============================================================
 -- Save all lines to database
 -- ==============================================================
@@ -166,7 +160,6 @@ FUNCTION save_order_lines(p_doc_id INTEGER)
     END FOR
 END FUNCTION
 
-
 -- ==============================================================
 -- Function : load_customer
 -- ==============================================================
@@ -174,85 +167,86 @@ FUNCTION load_customer(p_debt_id STRING)
 
     DEFINE rec_cust RECORD
         cust_name LIKE dl01_mast.cust_name,
-        phone     LIKE dl01_mast.phone,
-        email     LIKE dl01_mast.email,
-        address1  LIKE dl01_mast.address1,
-        address2  LIKE dl01_mast.address2,
-        address3  LIKE dl01_mast.address3,
+        phone LIKE dl01_mast.phone,
+        email LIKE dl01_mast.email,
+        address1 LIKE dl01_mast.address1,
+        address2 LIKE dl01_mast.address2,
+        address3 LIKE dl01_mast.address3,
         postal_code LIKE dl01_mast.postal_code
     END RECORD
 
     SELECT cust_name, phone, email, address1, address2, address3, postal_code
-      INTO rec_cust.*
-      FROM dl01_mast
-     WHERE acc_code = p_debt_id
+        INTO rec_cust.*
+        FROM dl01_mast
+        WHERE acc_code = p_debt_id
 
     IF SQLCA.SQLCODE = 0 THEN
-        LET rec_cust.cust_name   = rec_cust.cust_name
-        LET rec_cust.phone       = rec_cust.phone
-        LET rec_cust.email       = rec_cust.email
-        LET rec_cust.address1    = rec_cust.address1
-        LET rec_cust.address2    = rec_cust.address2
-        LET rec_cust.address3    = rec_cust.address3
+        LET rec_cust.cust_name = rec_cust.cust_name
+        LET rec_cust.phone = rec_cust.phone
+        LET rec_cust.email = rec_cust.email
+        LET rec_cust.address1 = rec_cust.address1
+        LET rec_cust.address2 = rec_cust.address2
+        LET rec_cust.address3 = rec_cust.address3
         LET rec_cust.postal_code = rec_cust.postal_code
         DISPLAY BY NAME rec_cust.*
     ELSE
-        CALL utils_globals.show_error("Customer not found for account " || p_debt_id)
+        CALL utils_globals.show_error(
+            "Customer not found for account " || p_debt_id)
     END IF
 END FUNCTION
 
 -- ==============================================================
 -- Function : load_order
+-- Notes    : Includes customer info and username lookup
 -- ==============================================================
-
 FUNCTION load_order(p_doc_id INTEGER)
     DEFINE idx INTEGER
     DEFINE user_choice SMALLINT
 
     OPTIONS INPUT WRAP
 
-    -- Open window and attach form
+    -- ==========================================================
+    -- Open window and attach the form
+    -- ==========================================================
     OPEN WINDOW w_ord WITH FORM "sa131_order" ATTRIBUTES(STYLE = "normal")
 
     -- Initialize variables
     INITIALIZE m_rec_ord.* TO NULL
     CALL m_arr_ord_lines.clear()
 
-    -- ===========================================
-    -- Load header record
-    -- ===========================================
-    -- Load header with customer and user information
-    SELECT sa31.*,
-           dl01.debtor_name,
+    -- ==========================================================
+    -- Load header record with customer and user information
+    -- ==========================================================
+    SELECT sa31_hdr.*,
+           dl01.cust_name,
            dl01.phone,
            dl01.email,
            dl01.address1,
            dl01.address2,
            dl01.address3,
            dl01.postal_code,
-           usr.username,
-           0.00,  -- gross_total (calculated)
-           0.00,  -- doc_disc (calculated)
-           0.00,  -- vat_amount (calculated)
-           0.00   -- net_total (calculated)
-    INTO m_rec_ord.*
-    FROM sa31_ord_hdr sa31
-    LEFT JOIN dl01_mast dl01 
-        ON sa31.customer_code = dl01.debtor_code
-    LEFT JOIN user_table usr 
-        ON sa31.created_by = usr.user_id
-    WHERE sa31.doc_no = p_doc_no
+           sy00.username AS username
+      INTO m_rec_ord.*
+      FROM sa31_ord_hdr sa31_hdr
+           LEFT JOIN dl01_mast dl01
+                ON sa31_hdr.acc_code = dl01.acc_code
+           LEFT JOIN sy00_user sy00
+                ON sa31_hdr.created_by = sy00.id
+     WHERE sa31_hdr.id = p_doc_id
 
     IF SQLCA.SQLCODE = 0 THEN
-        -- ===========================================
-        -- Load order lines
-        -- ===========================================
+        -- ======================================================
+        -- Load order line items with item descriptions
+        -- ======================================================
         LET idx = 0
+
         DECLARE ord_lines_cur CURSOR FOR
-            SELECT * 
-              FROM sa31_ord_det 
-             WHERE hdr_id = p_doc_id 
-             ORDER BY line_no
+            SELECT sa31_det.*, st01.description AS item_name
+              FROM sa31_ord_det sa31_det
+                   LEFT JOIN st01_mast st01
+                        ON sa31_det.stock_code = st01.stock_code
+             WHERE sa31_det.hdr_id = p_doc_id
+             ORDER BY sa31_det.line_no
 
         FOREACH ord_lines_cur INTO m_arr_ord_lines[idx + 1].*
             LET idx = idx + 1
@@ -261,37 +255,46 @@ FUNCTION load_order(p_doc_id INTEGER)
         CLOSE ord_lines_cur
         FREE ord_lines_cur
 
-        -- ===========================================
-        -- Show form in view mode first
-        -- ===========================================
+        -- ======================================================
+        -- Display header and lines
+        -- ======================================================
         DISPLAY BY NAME m_rec_ord.*
-        DISPLAY ARRAY m_arr_ord_lines TO arr_sa_ord_items.*
+        DISPLAY ARRAY m_arr_ord_lines TO arr_sa_ord_lines.*
 
             BEFORE DISPLAY
+                -- Hide the implicit accept action for view-only
                 CALL DIALOG.setActionHidden("accept", TRUE)
 
-            ON ACTION edit ATTRIBUTES(TEXT="Edit Order", IMAGE="pen")
+            -- --------------------------------------------------
+            -- Allow editing via prompt menu
+            -- --------------------------------------------------
+            ON ACTION edit ATTRIBUTES(TEXT = "Edit Order", IMAGE = "pen")
                 LET user_choice = prompt_edit_choice()
 
                 CASE user_choice
                     WHEN 1
                         CALL edit_order_header(p_doc_id)
-                        INPUT BY NAME m_rec_ord.* ATTRIBUTES (WITHOUT DEFAULTS)  -- Refresh
+                        DISPLAY BY NAME m_rec_ord.* -- Refresh header
                     WHEN 2
                         CALL edit_order_lines(p_doc_id)
                     OTHERWISE
                         CALL utils_globals.show_info("Edit cancelled.")
                 END CASE
 
-            ON ACTION close ATTRIBUTES(TEXT="Close", IMAGE="exit")
+            -- --------------------------------------------------
+            -- Close action
+            -- --------------------------------------------------
+            ON ACTION close ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
                 EXIT DISPLAY
         END DISPLAY
+
     ELSE
         CALL utils_globals.show_error("Order not found.")
     END IF
 
     CLOSE WINDOW w_ord
 END FUNCTION
+
 
 -- ==============================================================
 -- Prompt Edit Choices
@@ -309,7 +312,7 @@ FUNCTION prompt_edit_choice() RETURNS SMALLINT
     END MENU
 
     RETURN choice
-    
+
 END FUNCTION
 
 -- ==============================================================
@@ -322,20 +325,21 @@ FUNCTION edit_order_header(p_doc_id INTEGER)
 
     DIALOG
         INPUT BY NAME new_hdr.*
-        
-            ON ACTION save
-            
-                UPDATE sa31_ord_hdr SET sa31_ord_hdr.* = new_hdr.* 
-                 WHERE id = p_doc_id
 
-                 LET m_rec_ord.* = new_hdr.*
-                
+            ON ACTION save
+
+                UPDATE sa31_ord_hdr
+                    SET sa31_ord_hdr.* = new_hdr.*
+                    WHERE id = p_doc_id
+
+                LET m_rec_ord.* = new_hdr.*
+
                 CALL utils_globals.msg_saved()
 
             ON ACTION cancel
                 EXIT DIALOG
         END INPUT
-        
+
     END DIALOG
 END FUNCTION
 
@@ -344,20 +348,20 @@ END FUNCTION
 -- ==============================================================
 FUNCTION edit_order_lines(p_doc_id INTEGER)
     DIALOG
-        DISPLAY ARRAY m_arr_ord_lines TO arr_sa_ord_items.*
+        DISPLAY ARRAY m_arr_ord_lines TO arr_sa_ord_lines.*
             BEFORE DISPLAY
                 CALL DIALOG.setActionHidden("accept", TRUE)
 
-            ON ACTION add ATTRIBUTES(TEXT="Add Line", IMAGE="new")
+            ON ACTION add ATTRIBUTES(TEXT = "Add Line", IMAGE = "new")
                 CALL edit_or_add_order_line(p_doc_id, 0, TRUE)
 
-            ON ACTION edit ATTRIBUTES(TEXT="Edit Line", IMAGE="pen")
+            ON ACTION edit ATTRIBUTES(TEXT = "Edit Line", IMAGE = "pen")
                 CALL edit_or_add_order_line(p_doc_id, arr_curr(), FALSE)
 
-            ON ACTION delete ATTRIBUTES(TEXT="Delete", IMAGE="delete")
+            ON ACTION delete ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
                 CALL delete_order_line(p_doc_id, arr_curr())
 
-            ON ACTION save ATTRIBUTES(TEXT="Save", IMAGE="save")
+            ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "save")
                 CALL save_order_lines(p_doc_id)
                 CALL utils_globals.msg_saved()
                 EXIT DIALOG
@@ -367,7 +371,6 @@ FUNCTION edit_order_lines(p_doc_id INTEGER)
         END DISPLAY
     END DIALOG
 END FUNCTION
-
 
 -- ==============================================================
 -- Save order (Header + Lines)

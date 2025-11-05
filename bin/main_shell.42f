@@ -181,12 +181,6 @@
         <LStr text="About"/>
       </TopMenuCommand>
     </TopMenuGroup>
-    <TopMenuGroup name="tm_wrapper" text="MAIN" hidden="1">
-      <LStr text="MAIN"/>
-      <TopMenuCommand name="sy_main" text="" hidden="1">
-        <LStr text=""/>
-      </TopMenuCommand>
-    </TopMenuGroup>
   </TopMenu>
   <LStr text=""/>
   <Group name="workarea" text="">

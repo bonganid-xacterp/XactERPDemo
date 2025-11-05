@@ -75,8 +75,8 @@ FUNCTION init_cl_module()
     -- Load all creditors on startup
     CALL load_all_creditors()
 
-    DISPLAY ARRAY arr_cred_trans TO arr_cred_trans.*
-        BEFORE DISPLAY
+    DISPLAY ARRAY arr_cred_trans TO arr_cred_lines.*
+        --BEFORE DISPLAY
 
         ON ACTION Find
             CALL query_creditors()
@@ -117,6 +117,7 @@ FUNCTION init_cl_module()
 
         ON ACTION Next
             CALL move_record(1)
+            
             DISPLAY ARRAY arr_cred_trans TO arr_cred_trans.*
                 BEFORE DISPLAY
                     EXIT DISPLAY

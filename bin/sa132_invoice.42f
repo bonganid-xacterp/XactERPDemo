@@ -133,15 +133,6 @@
       </Table>
     </Grid>
   </VBox>
-  <RecordView tabName="dl01_mast">
-    <Link colName="cust_name" fieldIdRef="8"/>
-    <Link colName="phone" fieldIdRef="9"/>
-    <Link colName="email" fieldIdRef="10"/>
-    <Link colName="address1" fieldIdRef="11"/>
-    <Link colName="address2" fieldIdRef="12"/>
-    <Link colName="address3" fieldIdRef="13"/>
-    <Link colName="postal_code" fieldIdRef="14"/>
-  </RecordView>
   <RecordView tabName="sa32_inv_det">
     <Link colName="hdr_id" fieldIdRef="15"/>
     <Link colName="stock_code" fieldIdRef="16"/>
@@ -160,6 +151,15 @@
     <Link colName="net_tot" fieldIdRef="5"/>
     <Link colName="acc_code" fieldIdRef="6"/>
     <Link colName="status" fieldIdRef="7"/>
+  </RecordView>
+  <RecordView tabName="dl01_mast">
+    <Link colName="cust_name" fieldIdRef="8"/>
+    <Link colName="phone" fieldIdRef="9"/>
+    <Link colName="email" fieldIdRef="10"/>
+    <Link colName="address1" fieldIdRef="11"/>
+    <Link colName="address2" fieldIdRef="12"/>
+    <Link colName="address3" fieldIdRef="13"/>
+    <Link colName="postal_code" fieldIdRef="14"/>
   </RecordView>
   <RecordView tabName="rec_sa_ord_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>

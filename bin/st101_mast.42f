@@ -139,6 +139,16 @@
       </Table>
     </Grid>
   </VBox>
+  <RecordView tabName="st30_trans">
+    <Link colName="trans_date" fieldIdRef="14"/>
+    <Link colName="doc_type" fieldIdRef="15"/>
+    <Link colName="direction" fieldIdRef="16"/>
+    <Link colName="qnty" fieldIdRef="17"/>
+    <Link colName="id" fieldIdRef="18"/>
+    <Link colName="unit_cost" fieldIdRef="19"/>
+    <Link colName="sell_price" fieldIdRef="20"/>
+    <Link colName="expiry_date" fieldIdRef="21"/>
+  </RecordView>
   <RecordView tabName="st01_mast">
     <Link colName="stock_code" fieldIdRef="0"/>
     <Link colName="description" fieldIdRef="1"/>
@@ -156,16 +166,6 @@
     <Link colName="created_at" fieldIdRef="23"/>
     <Link colName="deleted_at" fieldIdRef="24"/>
     <Link colName="updated_at" fieldIdRef="25"/>
-  </RecordView>
-  <RecordView tabName="st30_trans">
-    <Link colName="trans_date" fieldIdRef="14"/>
-    <Link colName="doc_type" fieldIdRef="15"/>
-    <Link colName="direction" fieldIdRef="16"/>
-    <Link colName="qnty" fieldIdRef="17"/>
-    <Link colName="id" fieldIdRef="18"/>
-    <Link colName="unit_cost" fieldIdRef="19"/>
-    <Link colName="sell_price" fieldIdRef="20"/>
-    <Link colName="expiry_date" fieldIdRef="21"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="m_username" fieldIdRef="4"/>
