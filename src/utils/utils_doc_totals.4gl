@@ -1,74 +1,91 @@
 -- ==============================================================
--- Module  : utils_doc_totals.4gl
--- Purpose : Generic document line and header total calculations
--- Used by : SA (Sales), PU (Purchases), GRN, INV, etc.
--- Author  : Bongani Dlamini
--- Version : Genero 3.20.10
+-- File      : utils_doc_totals.4gl
+-- Purpose   : Shared totals calculation and header update
+-- Version   : Genero 3.20.10
 -- ==============================================================
 
 IMPORT FGL utils_globals
+SCHEMA demoapp_db
 
--- --------------------------------------------------------------
--- Calculate a single line total (Qty * Price - Discount + VAT)
--- --------------------------------------------------------------
-PUBLIC FUNCTION calc_line_total(
-                                p_qty DECIMAL, 
-                                p_price DECIMAL,
-                                p_disc DECIMAL,
-                                p_vat DECIMAL) 
-                                RETURNS DECIMAL
-    DEFINE l_sub, l_disc_amt, l_vat_amt, l_total DECIMAL(15,2)
+-- ==============================================================
+-- Function : calculate_line_total
+-- Purpose  : Calculates totals for a single document line
+-- Parameters:
+--      p_qty         - Quantity
+--      p_unit_price  - Unit selling price (excl. VAT)
+--      p_disc_perc   - Discount percentage (0-100)
+--      p_vat_rate    - VAT percentage (0-100)
+-- Returns:
+--      (gross, discount, vat, net_total)
+-- ==============================================================
+PUBLIC FUNCTION calculate_line_total(
+        p_qty        DECIMAL(15,2),
+        p_unit_price DECIMAL(15,2),
+        p_disc_perc  DECIMAL(9,2),
+        p_vat_rate   DECIMAL(9,2)
+    )
+    RETURNS (DECIMAL(15,2), DECIMAL(15,2), DECIMAL(15,2), DECIMAL(15,2))
 
-    LET l_sub = NVL(p_qty,0) * NVL(p_price,0)
-    LET l_disc_amt = (NVL(p_disc,0) / 100) * l_sub
-    LET l_sub = l_sub - l_disc_amt
-    LET l_vat_amt = (NVL(p_vat,0) / 100) * l_sub
-    LET l_total = l_sub + l_vat_amt
+    DEFINE l_gross, l_disc_amt, l_vat_amt, l_net DECIMAL(15,2)
 
-    RETURN l_total
+    LET l_gross    = NVL(p_qty,0) * NVL(p_unit_price,0)
+    LET l_disc_amt = (l_gross * NVL(p_disc_perc,0)) / 100
+    LET l_vat_amt  = ((l_gross - l_disc_amt) * NVL(p_vat_rate,0)) / 100
+    LET l_net      = (l_gross - l_disc_amt) + l_vat_amt
+
+    RETURN l_gross, l_disc_amt, l_vat_amt, l_net
 END FUNCTION
 
 
--- --------------------------------------------------------------
--- Recalculate and update document totals dynamically
--- --------------------------------------------------------------
---PUBLIC FUNCTION recalc_doc_totals(p_doc_type STRING,
---                                  p_arr DYNAMIC ARRAY OF RECORD
---                                      qnty DECIMAL(15,2),
---                                      sell_price DECIMAL(15,2),
---                                      disc DECIMAL(15,2),
---                                      vat DECIMAL(15,2),
---                                      line_tot DECIMAL(15,2)
---                                  END RECORD,
---                                  p_hdr RECORD ,
---                                 p_hdr_id INTEGER)
---    DEFINE i INTEGER
---    DEFINE l_gross, l_vat, l_net DECIMAL(15,2)
---
---    LET l_gross, l_vat, l_net = 0, 0, 0
---
---    --get headear data
---    SELECT * FROM p_hdr WHERE id = prd_id
---
---    -- Iterate through all line records
---    FOR i = 1 TO p_arr.getLength()
---        LET p_arr[i].line_tot = calc_line_total(p_arr[i].qnty, p_arr[i].sell_price,
---                                                p_arr[i].disc, p_arr[i].vat)
---        LET l_net = l_net + (p_arr[i].qnty * p_arr[i].sell_price)
---        LET l_vat = l_vat + ((NVL(p_arr[i].vat,0) / 100) *
---                    ((p_arr[i].qnty * p_arr[i].sell_price) -
---                    ((NVL(p_arr[i].disc,0) / 100) * (p_arr[i].qnty * p_arr[i].sell_price))))
---        LET l_gross = l_gross + p_arr[i].line_tot
---    END FOR
---
---    -- Update header record (generic field names)
---    LET p_hdr.gross_tot = l_gross
---    LET p_hdr.vat = l_vat
---    LET p_hdr.net_tot = l_net
---
---    -- Log info for clarity (optional for dev)
---    CALL utils_globals.debug_log(
---        SFMT("[%1] Totals recalculated ? Net:%2 VAT:%3 Gross:%4",
---             p_doc_type, l_net, l_vat, l_gross)
---    )
---END FUNCTION
+-- ==============================================================
+-- Function : calculate_doc_totals
+-- Purpose  : Recalculate totals for any document array
+-- ==============================================================
+
+PUBLIC FUNCTION calculate_doc_totals(
+                                    p_gross_amt DECIMAL, 
+                                    p_disc_amt DECIMAL,
+                                    p_vat_amt DECIMAL, 
+                                    p_net_total DECIMAL)
+                                    RETURNS (DECIMAL, DECIMAL, DECIMAL, DECIMAL)
+
+    DEFINE l_gross, l_disc_tot, l_vat_tot DECIMAL(15,2)
+
+    LET l_gross     = 0.00
+    LET l_disc_tot  = 0.00
+    LET l_vat_tot   = 0.00
+
+    LET l_gross     = l_gross + NVL(p_gross_amt, 0)
+    LET l_disc_tot  = l_disc_tot + NVL(p_disc_amt, 0)
+    LET l_vat_tot   = l_vat_tot + NVL(p_vat_amt, 0)
+    LET p_net_total = l_gross - l_disc_tot + l_vat_tot
+
+    RETURN l_gross, l_disc_tot, l_vat_tot, p_net_total
+    
+END FUNCTION
+
+
+-- ==============================================================
+-- Function : update_doc_header_totals
+-- Purpose  : Persist totals back to header table dynamically
+-- ==============================================================
+
+PUBLIC FUNCTION update_doc_header_totals(p_table STRING, p_id INTEGER,
+                                         p_gross DECIMAL, p_disc DECIMAL,
+                                         p_vat DECIMAL, p_net DECIMAL)
+    DEFINE sql_stmt STRING
+
+    LET sql_stmt = SFMT(
+        "UPDATE %1 SET gross_tot=%2, disc=%3, vat=%4, net_tot=%5, updated_at=CURRENT WHERE id=%6",
+        p_table, p_gross, p_disc, p_vat, p_net, p_id)
+
+    BEGIN WORK
+    TRY
+        EXECUTE IMMEDIATE sql_stmt
+        COMMIT WORK
+    CATCH
+        ROLLBACK WORK
+        CALL utils_globals.show_error(
+            SFMT("Failed to update totals for %1: %2", p_table, SQLCA.SQLERRM))
+    END TRY
+END FUNCTION

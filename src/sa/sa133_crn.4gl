@@ -194,7 +194,7 @@ FUNCTION load_credit_note(p_doc_id INTEGER)
     OPTIONS INPUT WRAP
 
     -- Open window and attach form
-    OPEN WINDOW w_crn WITH FORM "sa133_crn" ATTRIBUTES(STYLE = "normal")
+    OPEN WINDOW w_crn WITH FORM "sa133_crn" ATTRIBUTES(STYLE = "dialog")
 
     -- Initialize variables
     INITIALIZE m_rec_crn.* TO NULL

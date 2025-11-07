@@ -18,12 +18,12 @@ IMPORT FGL main_shell
 IMPORT FGL sy100_login
 
 -- Module imports for execution
-IMPORT FGL dl101_mast
-IMPORT FGL cl101_mast
 IMPORT FGL st101_mast
 IMPORT FGL st101_mast
 IMPORT FGL st102_cat
 IMPORT FGL wh101_mast
+IMPORT FGL cl101_mast
+IMPORT FGL dl101_mast
 
 -- ==============================================================
 -- DATABASE CONTEXT

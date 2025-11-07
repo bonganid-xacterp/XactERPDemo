@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="pu131_grn.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Purchase Invoice" width="86" height="22">
+  <LStr text="Purchase Invoice"/>
+  <VBox name="vbox1">
+    <Grid name="pu131_inv_hdr" width="86" height="22">
+      <Label name="lbl_form_title" width="84" text="GOOD RECEIVED NOTE" justify="center" style="header" posY="0" posX="1" gridWidth="84">
+        <LStr text="GOOD RECEIVED NOTE"/>
+      </Label>
+      <Group name="grn_grp" text="" posY="1" posX="1" gridWidth="77" gridHeight="8">
+        <PhantomFormField name="pu31_grn_hdr.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="11" sqlTabName="pu31_grn_hdr">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <LStr text=""/>
+        <Label name="pu31_grn_hdr_doc_no_label1" width="12" text="Doc No" posY="1" posX="1" gridWidth="12">
+          <LStr text="Doc No"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.doc_no" colName="doc_no" sqlType="VARCHAR(20)" fieldId="0" sqlTabName="pu31_grn_hdr" notNull="1" required="1" tabIndex="1">
+          <Edit width="6" scroll="1" posY="1" posX="14" gridWidth="6"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_trans_date_label1" width="6" text="Trans Date" posY="1" posX="21" gridWidth="6">
+          <LStr text="Trans Date"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="1" sqlTabName="pu31_grn_hdr" tabIndex="2">
+          <DateEdit width="8" posY="1" posX="28" gridWidth="10"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_status_label1" width="10" text="Status" posY="1" posX="40" gridWidth="10">
+          <LStr text="Status"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.status" colName="status" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="pu31_grn_hdr" tabIndex="3">
+          <ComboBox width="14" scroll="1" posY="1" posX="51" gridWidth="16"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_ref_doc_type_label1" width="12" text="Ref Doc Type" posY="2" posX="1" gridWidth="12">
+          <LStr text="Ref Doc Type"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.ref_doc_type" colName="ref_doc_type" sqlType="VARCHAR(10)" fieldId="3" sqlTabName="pu31_grn_hdr" tabIndex="4">
+          <Edit width="6" scroll="1" posY="2" posX="14" gridWidth="6"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_ref_doc_no_label1" width="6" text="Ref Doc No" posY="2" posX="21" gridWidth="6">
+          <LStr text="Ref Doc No"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.ref_doc_no" colName="ref_doc_no" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="pu31_grn_hdr" tabIndex="5">
+          <Edit width="10" scroll="1" posY="2" posX="28" gridWidth="10"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_created_by_label1" width="10" text="Created By" posY="2" posX="40" gridWidth="10">
+          <LStr text="Created By"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.created_by" colName="created_by" sqlType="BIGINT" fieldId="5" sqlTabName="pu31_grn_hdr" tabIndex="6">
+          <Edit width="20" scroll="1" posY="2" posX="51" gridWidth="20"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_acc_code_label1" width="12" text="Supplier Code" posY="3" posX="1" gridWidth="12">
+          <LStr text="Supplier Code"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.acc_code" colName="acc_code" sqlType="DECIMAL(20,2)" required="1" notNull="1" fieldId="6" sqlTabName="pu31_grn_hdr" tabIndex="7">
+          <Edit width="6" scroll="1" posY="3" posX="14" gridWidth="6"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_created_at_label1" width="10" text="Created At" posY="3" posX="40" gridWidth="10">
+          <LStr text="Created At"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="7" sqlTabName="pu31_grn_hdr" tabIndex="8">
+          <Edit width="12" scroll="1" posY="3" posX="51" gridWidth="12"/>
+        </FormField>
+      </Group>
+      <Label name="pu31_grn_hdr_gross_tot_label1" width="12" text="Gross Total" posY="15" posX="42" gridWidth="12">
+        <LStr text="Gross Total"/>
+      </Label>
+      <FormField name="pu31_grn_hdr.gross_tot" colName="gross_tot" sqlType="DECIMAL(12,2)" fieldId="8" sqlTabName="pu31_grn_hdr" tabIndex="9">
+        <Edit width="14" scroll="1" posY="15" posX="55" gridWidth="14"/>
+      </FormField>
+      <Label name="pu31_grn_hdr_vat_label1" width="12" text="VAT" posY="16" posX="42" gridWidth="12">
+        <LStr text="VAT"/>
+      </Label>
+      <FormField name="pu31_grn_hdr.vat" colName="vat" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="pu31_grn_hdr" tabIndex="10">
+        <Edit width="14" scroll="1" posY="16" posX="55" gridWidth="14"/>
+      </FormField>
+      <Label name="pu31_grn_hdr_net_tot_label1" width="12" text="Net Total" posY="17" posX="42" gridWidth="12">
+        <LStr text="Net Total"/>
+      </Label>
+      <FormField name="pu31_grn_hdr.net_tot" colName="net_tot" sqlType="DECIMAL(12,2)" fieldId="10" sqlTabName="pu31_grn_hdr" tabIndex="11">
+        <Edit width="14" scroll="1" posY="17" posX="55" gridWidth="14"/>
+      </FormField>
+    </Grid>
+  </VBox>
+  <RecordView tabName="pu31_grn_hdr">
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="trans_date" fieldIdRef="1"/>
+    <Link colName="status" fieldIdRef="2"/>
+    <Link colName="ref_doc_type" fieldIdRef="3"/>
+    <Link colName="ref_doc_no" fieldIdRef="4"/>
+    <Link colName="created_by" fieldIdRef="5"/>
+    <Link colName="acc_code" fieldIdRef="6"/>
+    <Link colName="created_at" fieldIdRef="7"/>
+    <Link colName="gross_tot" fieldIdRef="8"/>
+    <Link colName="vat" fieldIdRef="9"/>
+    <Link colName="net_tot" fieldIdRef="10"/>
+    <Link colName="id" fieldIdRef="11"/>
+  </RecordView>
+  <RecordView tabName="record1">
+    <Link colName="id" fieldIdRef="11"/>
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="ref_doc_type" fieldIdRef="3"/>
+    <Link colName="ref_doc_no" fieldIdRef="4"/>
+    <Link colName="acc_code" fieldIdRef="6"/>
+    <Link colName="trans_date" fieldIdRef="1"/>
+    <Link colName="gross_tot" fieldIdRef="8"/>
+    <Link colName="vat" fieldIdRef="9"/>
+    <Link colName="net_tot" fieldIdRef="10"/>
+    <Link colName="status" fieldIdRef="2"/>
+    <Link colName="created_at" fieldIdRef="7"/>
+    <Link colName="created_by" fieldIdRef="5"/>
+  </RecordView>
+</Form>

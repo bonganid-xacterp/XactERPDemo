@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="pu131_invoice.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Purchase Invoice" width="134" height="18">
+<Form name="pu132_inv.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Purchase Invoice" width="134" height="18">
   <LStr text="Purchase Invoice"/>
   <VBox name="vbox1">
     <Grid name="pu131_inv_hdr" width="134" height="18">
@@ -82,19 +82,6 @@
       </FormField>
     </Grid>
   </VBox>
-  <RecordView tabName="pu32_inv_det">
-    <Link colName="item_no" fieldIdRef="7"/>
-    <Link colName="stock_code" fieldIdRef="8"/>
-    <Link colName="qnty" fieldIdRef="9"/>
-    <Link colName="unit_cost" fieldIdRef="10"/>
-    <Link colName="sell_price" fieldIdRef="11"/>
-  </RecordView>
-  <RecordView tabName="pu30_ord_hdr">
-    <Link colName="doc_no" fieldIdRef="0"/>
-  </RecordView>
-  <RecordView tabName="pu30_ord_det">
-    <Link colName="id" fieldIdRef="6"/>
-  </RecordView>
   <RecordView tabName="pu32_inv_hdr">
     <Link colName="trans_date" fieldIdRef="1"/>
     <Link colName="acc_code" fieldIdRef="2"/>
@@ -103,6 +90,19 @@
     <Link colName="created_by" fieldIdRef="5"/>
     <Link colName="vat" fieldIdRef="12"/>
     <Link colName="gross_tot" fieldIdRef="13"/>
+  </RecordView>
+  <RecordView tabName="pu32_inv_det">
+    <Link colName="item_no" fieldIdRef="7"/>
+    <Link colName="stock_code" fieldIdRef="8"/>
+    <Link colName="qnty" fieldIdRef="9"/>
+    <Link colName="unit_cost" fieldIdRef="10"/>
+    <Link colName="sell_price" fieldIdRef="11"/>
+  </RecordView>
+  <RecordView tabName="pu30_ord_det">
+    <Link colName="id" fieldIdRef="6"/>
+  </RecordView>
+  <RecordView tabName="pu30_ord_hdr">
+    <Link colName="doc_no" fieldIdRef="0"/>
   </RecordView>
   <RecordView tabName="rec_pu131_inv">
     <Link colName="doc_no" fieldIdRef="0"/>

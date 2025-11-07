@@ -4,22 +4,64 @@
     <Node path="xacterpdemo.4pw" type="pm/main-project"/>
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/cl" type="pm/application"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/database" type="pm/library"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/dl" type="pm/application"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/sa" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/st" type="pm/application"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy" type="pm/application"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/utils" type="pm/library"/>
   </ExpandedNodes>
   <OpenDocuments>
+    <Document container="true" filePath="src/dl/dl101_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/sa/sa130_quote.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/sa/sa130_quote.4gl" locator="293:22:293:42" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/sy/sy101_user.4gl" locator="34:4:44:8" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/sy/sy101_user.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/dl/dl101_mast.4gl" locator="568:41" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/sa/sa132_invoice.4gl" locator="608:60" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/sa/sa132_invoice.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/sa/sa131_order.4gl" locator="345:1" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
     <Document container="true" filePath="src/sa/sa131_order.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/dl/dl101_mast.4gl" locator="126:30:126:38" module="mod-ce3">
+    <Document container="true" filePath="src/utils/utils_doc_lines.4gl" locator="54:1" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/sa/sa130_quote.4gl" locator="171:18" module="mod-ce3">
+    <Document container="true" filePath="src/utils/utils_doc_totals.4gl" locator="29:55" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/dl/dl121_lkup.4gl" locator="1:1" module="mod-ce3">
+    <Document container="true" filePath="src/sa/sa133_crn.4gl" locator="97:18" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
+    <Document container="true" filePath="src/st/st130_trans.4gl" locator="45:31" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/st/st101_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/st/st101_mast.4gl" locator="343:43" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/utils/utils_lkup_form.4fd" locator="1:1" module="mod-ce3">
+      <Data name="8" value="UTF-8"/>
+    </Document>
+    <Document container="true" filePath="src/utils/utils_lkup.4gl" locator="126:1" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="src/utils/utils_lkup_form.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/sy/sy08_lkup_config.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/sy/sy102_role.4fd" locator="1:1" module="mod-ce3">
+      <Data name="8" value="UTF-8"/>
+    </Document>
+    <Document container="true" filePath="src/sy/sy102_role.4fd" locator="" module="mod-fd"/>
   </OpenDocuments>
-  <CurrentDocument filePath="src/sa/sa130_quote.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="src/sy/sy102_role.4fd" module="mod-fd"/>
 </WorkspaceViewState>

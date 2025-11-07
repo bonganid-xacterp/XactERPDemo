@@ -1,6 +1,6 @@
 -- ==============================================================
--- Program   : pu131_invoice.4gl (simplified)
--- Purpose   : Purchase Invoice (Header + Lines)
+-- Program   : pu132_grn.4gl
+-- Purpose   : Good Return Note (Header + Lines)
 -- Module    : Purchases (pu)
 -- Author    : Bongani Dlamini
 -- Version   : Genero 3.20.10
@@ -36,7 +36,7 @@ DEFINE is_edit SMALLINT
 --        EXIT PROGRAM 1
 --    END IF
 --        OPTIONS INPUT WRAP
---    OPEN WINDOW w_pu_inv WITH FORM "pu132_invoice" ATTRIBUTES(STYLE = "normal")
+--    OPEN WINDOW w_pu_inv WITH FORM "pu132_invoice" ATTRIBUTES(STYLE = "dialog")
 --    CALL init_inv_module()
 --    CLOSE WINDOW w_pu_inv
 --END MAIN

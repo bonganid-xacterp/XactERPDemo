@@ -3,7 +3,7 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="cl01_mast" name="rec_cred_mast" uid="{2b564bc6-b997-432d-81e5-c0221d5d9391}">
+  <Record name="rec_cred_mast" uid="{2b564bc6-b997-432d-81e5-c0221d5d9391}">
     <RecordField colName="id" fieldIdRef="9" fieldType="TABLE_COLUMN" name="cl01_mast.id" sqlTabName="cl01_mast" uid="{a71f3daf-f899-4d99-a347-77f379f227fa}"/>
     <RecordField colName="supp_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="cl01_mast.supp_name" sqlTabName="cl01_mast" uid="{5f4a68c2-2f89-4d3d-8630-cfc303b6b664}"/>
     <RecordField colName="phone" fieldIdRef="3" fieldType="TABLE_COLUMN" name="cl01_mast.phone" sqlTabName="cl01_mast" uid="{c1d3287a-3623-4e22-94e0-7655ce02b471}"/>
@@ -95,6 +95,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBhADcAOQAzADUAYgBiADQALQBmADUAZgBhAC0ANABhADgAOAAtAGEAMgA0ADYALQBiADgAZgBlAGMAOQBmADUAYgAwAGEAYgB9wGeZmf3mZy9ANAAAVQAAqD90euFHrhR7AQAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QDAAAEQAAIhAMAAARAAAiD94k3S8an76AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QDAAAEgAAJlAMAAASAAAmT94k3S8an76AQAAAEwAewBhADcAOQAzADUAYgBiADQALQBmADUAZgBhAC0ANABhADgAOAAtAGEAMgA0ADYALQBiADgAZgBlAGMAOQBmADUAYgAwAGEAYgB9wGeZmgPMza9ANAAAWgAAvT90euFHrhR7AQ==]]>
   </DiagramLayout>
 </ManagedForm>

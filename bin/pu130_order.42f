@@ -117,20 +117,8 @@
       </Table>
     </VBox>
   </VBox>
-  <RecordView tabName="pu30_ord_hdr">
-    <Link colName="doc_no" fieldIdRef="0"/>
-    <Link colName="trans_date" fieldIdRef="1"/>
-    <Link colName="gross_tot" fieldIdRef="2"/>
-    <Link colName="acc_code" fieldIdRef="3"/>
-    <Link colName="vat" fieldIdRef="5"/>
-    <Link colName="ref_no" fieldIdRef="6"/>
-    <Link colName="status" fieldIdRef="8"/>
-    <Link colName="created_by" fieldIdRef="9"/>
-    <Link colName="net_tot" fieldIdRef="10"/>
-    <Link colName="id" fieldIdRef="13"/>
-    <Link colName="created_at" fieldIdRef="14"/>
-    <Link colName="updated_at" fieldIdRef="15"/>
-    <Link colName="deleted_at" fieldIdRef="16"/>
+  <RecordView tabName="st01_mast">
+    <Link colName="description" fieldIdRef="20"/>
   </RecordView>
   <RecordView tabName="pu30_ord_hdr1">
     <Link colName="acc_code" fieldIdRef="4"/>
@@ -145,8 +133,20 @@
     <Link colName="vat" fieldIdRef="21"/>
     <Link colName="line_tot" fieldIdRef="22"/>
   </RecordView>
-  <RecordView tabName="st01_mast">
-    <Link colName="description" fieldIdRef="20"/>
+  <RecordView tabName="pu30_ord_hdr">
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="trans_date" fieldIdRef="1"/>
+    <Link colName="gross_tot" fieldIdRef="2"/>
+    <Link colName="acc_code" fieldIdRef="3"/>
+    <Link colName="vat" fieldIdRef="5"/>
+    <Link colName="ref_no" fieldIdRef="6"/>
+    <Link colName="status" fieldIdRef="8"/>
+    <Link colName="created_by" fieldIdRef="9"/>
+    <Link colName="net_tot" fieldIdRef="10"/>
+    <Link colName="id" fieldIdRef="13"/>
+    <Link colName="created_at" fieldIdRef="14"/>
+    <Link colName="updated_at" fieldIdRef="15"/>
+    <Link colName="deleted_at" fieldIdRef="16"/>
   </RecordView>
   <RecordView tabName="po_hdr_rec">
     <Link colName="doc_no" fieldIdRef="0"/>

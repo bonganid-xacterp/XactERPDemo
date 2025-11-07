@@ -17,7 +17,8 @@ GLOBALS
     DEFINE g_debug_mode SMALLINT
     DEFINE g_user_authenticated SMALLINT
     DEFINE g_current_user STRING
-    DEFINE g_standalone_mode SMALLINT -- TRUE if module running standalone, FALSE if in MDI
+    DEFINE g_standalone_mode
+        SMALLINT -- TRUE if module running standalone, FALSE if in MDI
     DEFINE g_currency_symbol STRING -- currency prefix
 END GLOBALS
 
@@ -134,7 +135,7 @@ END RECORD
 -- APPLICATION INITIALIZATION
 -- ==============================================================
 PUBLIC FUNCTION initialize_application() RETURNS BOOLEAN
-    
+
     DEFINE db_result SMALLINT
     LET g_debug_mode = FALSE
     LET g_user_authenticated = FALSE
@@ -382,7 +383,11 @@ PUBLIC FUNCTION format_decimal(value DECIMAL, pattern STRING) RETURNS STRING
 END FUNCTION
 
 PUBLIC FUNCTION format_currency(amount DECIMAL) RETURNS STRING
-    RETURN format_decimal(amount, "---,---,--&.&&")
+    DEFINE l_formatted STRING
+
+    LET l_formatted = "R ", amount USING "---,--&.&&"
+    RETURN l_formatted
+
 END FUNCTION
 
 PUBLIC FUNCTION format_quantity(qty DECIMAL) RETURNS STRING
@@ -398,6 +403,152 @@ PUBLIC FUNCTION format_date_time(
     date_time DATETIME YEAR TO SECOND)
     RETURNS STRING
     RETURN IIF(date_time IS NULL, "", date_time USING "dd/mm/yyyy hh:mm:ss")
+END FUNCTION
+
+{--------------------------------------------------------------------
+  Apply formatting based on each FormField's "tag" attribute.
+  Tags supported:
+    currency  -> picture + right justify (numeric widgets)
+    date      -> format dd/mm/yyyy       (DateEdit/Edit)
+    datetime  -> format dd/mm/yyyy hh:mi (DateEdit/Edit)
+  Call this immediately after: OPEN WINDOW ... WITH FORM "..."
+---------------------------------------------------------------------}
+PUBLIC FUNCTION apply_field_formatting() RETURNS SMALLINT
+    DEFINE win ui.Window
+    DEFINE form ui.Form
+    DEFINE root om.DomNode
+    DEFINE fields om.NodeList
+    DEFINE fld om.DomNode
+    DEFINE w om.DomNode
+    DEFINE i INTEGER
+    DEFINE tag, dtype, nm STRING
+    
+    LET win = ui.Window.getCurrent()
+    IF win IS NULL THEN RETURN 0 END IF
+    
+    LET form = win.getForm()
+    IF form IS NULL THEN RETURN 0 END IF
+    
+    LET root = form.getNode()
+    IF root IS NULL THEN RETURN 0 END IF
+    
+    LET fields = root.selectByTagName("FormField")
+    
+    FOR i = 1 TO fields.getLength()
+        LET fld = fields.item(i)
+        
+        -- Find the concrete widget under the FormField
+        LET w = first_widget_child(fld)
+        IF w IS NULL THEN
+            CONTINUE FOR
+        END IF
+        
+        -- Prefer widget.tag (your debug shows it is set there)
+        LET tag = w.getAttribute("tag")
+        IF tag IS NULL OR tag.trim() = "" THEN
+            LET tag = fld.getAttribute("tag")
+        END IF
+        IF tag IS NULL THEN LET tag = "" END IF
+        LET tag = tag.trim().toLowerCase()
+        
+        IF tag = "" THEN
+            CONTINUE FOR
+        END IF
+        
+        LET dtype = fld.getAttribute("dataType")
+        IF dtype IS NULL THEN LET dtype = "" END IF
+        LET dtype = dtype.trim().toUpperCase()
+        
+        LET nm = fld.getAttribute("name")
+        IF nm IS NULL THEN LET nm = "(unnamed)" END IF
+        
+        CASE tag
+            WHEN "currency"
+                -- Only apply to numeric types
+                IF dtype = "" OR dtype MATCHES "DECIMAL*" OR dtype MATCHES "NUMERIC*" OR 
+                   dtype MATCHES "FLOAT*" OR dtype MATCHES "MONEY*" OR
+                   dtype = "INTEGER" OR dtype = "SMALLINT" THEN
+                    CALL w.setAttribute("picture", "R <<<<,<<<,<<<,<<&.&&")
+                    CALL w.setAttribute("numAlign", "1")
+                    -- Set picture on FormField too (this is valid)
+                    CALL fld.setAttribute("picture", "R <<<<,<<<,<<<,<<&.&&")
+                END IF
+                
+            WHEN "date"
+                -- Only set format on widget, NOT on FormField
+                CALL w.setAttribute("format", "dd/mm/yyyy")
+                
+            WHEN "datetime"
+                -- Only set format on widget, NOT on FormField
+                CALL w.setAttribute("format", "dd/mm/yyyy hh:mi")
+        END CASE
+        
+        -- Debug to verify what actually got set
+        DISPLAY "Formatted ", nm, " [", tag, "]",
+                " picture=", NVL(w.getAttribute("picture"), ""),
+                " format=",  NVL(w.getAttribute("format"), ""),
+                " numAlign=", NVL(w.getAttribute("numAlign"), "")
+    END FOR
+    
+    -- Force UI refresh so new attributes take effect
+    CALL ui.Interface.refresh()
+    
+    RETURN 1
+END FUNCTION
+
+PRIVATE FUNCTION first_widget_child(fld om.DomNode) RETURNS om.DomNode
+    DEFINE nl om.NodeList
+    
+    -- Try common input widgets
+    LET nl = fld.selectByTagName("Edit")
+    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
+    
+    LET nl = fld.selectByTagName("DateEdit")
+    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
+    
+    LET nl = fld.selectByTagName("TimeEdit")
+    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
+    
+    LET nl = fld.selectByTagName("SpinEdit")
+    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
+    
+    LET nl = fld.selectByTagName("ComboBox")
+    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
+    
+    RETURN NULL
+END FUNCTION
+
+{--------------------------------------------------------------------
+  Helper: set attribute on FormField AND its first input widget.
+  We try common widget node names used in 4fd forms.
+---------------------------------------------------------------------}
+PRIVATE FUNCTION set_attr_on_field_and_widget(
+    fld om.DomNode, attr STRING, val STRING)
+    DEFINE widgets om.NodeList
+    DEFINE w om.DomNode
+
+    -- Always set on the FormField itself
+    CALL fld.setAttribute(attr, val)
+
+    -- Then set on the concrete widget node
+    LET widgets = fld.selectByTagName("Edit")
+    IF widgets.getLength() = 0 THEN
+        LET widgets = fld.selectByTagName("DateEdit")
+    END IF
+    IF widgets.getLength() = 0 THEN
+        LET widgets = fld.selectByTagName("TimeEdit")
+    END IF
+    IF widgets.getLength() = 0 THEN
+        LET widgets = fld.selectByTagName("SpinEdit")
+    END IF
+    IF widgets.getLength() = 0 THEN
+        LET widgets = fld.selectByTagName("ComboBox")
+    END IF
+
+    IF widgets.getLength() > 0 THEN
+        LET w = widgets.item(1)
+        CALL w.setAttribute(attr, val)
+    END IF
 END FUNCTION
 
 -- ==============================================================
@@ -684,25 +835,22 @@ END FUNCTION
 
 -- Generic delete confirmation
 PUBLIC FUNCTION confirm_delete(
-                entity_name STRING, 
-                record_name STRING)
-                RETURNS BOOLEAN
-    
+    entity_name STRING, record_name STRING)
+    RETURNS BOOLEAN
+
     DEFINE message STRING
-    
+
     LET message = "Delete this " || entity_name || ": " || record_name || "?"
-    
+
     RETURN show_confirm(message, "Confirm Delete")
-    
+
 END FUNCTION
 
 -- Helper function for count queries
 PRIVATE FUNCTION get_field_count(
-                table_name STRING, 
-                field_name STRING, 
-                p_value STRING)
-                RETURNS INTEGER
-                
+    table_name STRING, field_name STRING, p_value STRING)
+    RETURNS INTEGER
+
     DEFINE count INTEGER
     DEFINE sql STRING
 
@@ -723,7 +871,7 @@ PRIVATE FUNCTION get_field_count(
         EXECUTE stmt_count USING p_value INTO COUNT
 
         FREE stmt_count
-        
+
         RETURN COUNT
     CATCH
         RETURN 0
@@ -783,7 +931,6 @@ FUNCTION get_next_number(p_table STRING, p_prefix STRING)
     RETURN next_num, next_full
 END FUNCTION
 
-
 -- ==============================================================
 -- Generate next numeric
 -- ==============================================================
@@ -797,7 +944,7 @@ FUNCTION get_next_code(p_table STRING, p_field STRING)
     DEFINE stmt STRING
 
     LET last_num = 0
-    LET sql_stmt = SFMT("SELECT MAX(" ||p_field||") FROM %1", p_table)
+    LET sql_stmt = SFMT("SELECT MAX(" || p_field || ") FROM %1", p_table)
 
     PREPARE stmt FROM sql_stmt
     EXECUTE stmt INTO last_num
@@ -811,9 +958,8 @@ FUNCTION get_next_code(p_table STRING, p_field STRING)
     LET next_num = last_num + 1
     DISPLAY "New Stock Code :" || next_num
     RETURN next_num
-    
-END FUNCTION
 
+END FUNCTION
 
 -- ==============================================================
 -- DB  UTILITIES
@@ -867,9 +1013,7 @@ PUBLIC FUNCTION get_username(p_user_id INTEGER) RETURNS STRING
     END IF
 
     TRY
-        SELECT username INTO l_username
-          FROM sy00_user
-         WHERE id = p_user_id
+        SELECT username INTO l_username FROM sy00_user WHERE id = p_user_id
 
         IF SQLCA.SQLCODE = 100 THEN
             -- No record found
@@ -880,7 +1024,10 @@ PUBLIC FUNCTION get_username(p_user_id INTEGER) RETURNS STRING
 
     CATCH
         -- Any SQL or runtime error (DB down, bad schema, etc.)
-        DISPLAY "get_username(): SQL error ", SQLCA.SQLCODE, " - ", SQLCA.SQLERRM
+        DISPLAY "get_username(): SQL error ",
+            SQLCA.SQLCODE,
+            " - ",
+            SQLCA.SQLERRM
         RETURN "Error"
 
     END TRY
@@ -892,9 +1039,9 @@ END FUNCTION
 FUNCTION get_random_user() RETURNS INTEGER
 
     DEFINE r_user_id INTEGER
-    
-    LET r_user_id = util.Math.rand(10)
-    
+
+    LET r_user_id = util.Math.rand(5)
+
     RETURN r_user_id
 END FUNCTION
 
@@ -905,9 +1052,7 @@ PUBLIC FUNCTION get_current_user_id() RETURNS SMALLINT
 
     DEFINE user_id INTEGER
 
-    -- Get from your session/globals
-    -- Adjust based on how you store current user
-    --LET user_id = g_current_user_id  -- Or however you track this
+    LET user_id = util.Math.rand(5)
 
     RETURN user_id
 
@@ -916,10 +1061,10 @@ END FUNCTION
 -- ==============================================================
 -- Get Current Username
 -- ==============================================================
-PUBLIC FUNCTION get_current_username() RETURNS STRING
+PUBLIC FUNCTION get_current_username(user_id INTEGER) RETURNS STRING
     DEFINE username STRING
 
-    --LET username = get_username(g_current_user_id)
+    SELECT username INTO username FROM sy00_user WHERE id = user_id
 
     RETURN username
 
@@ -955,7 +1100,6 @@ FUNCTION show_sql_error(p_context STRING)
 
 END FUNCTION
 
-
 -- ============================================================
 -- Function : apply_currency_prefix()
 -- Purpose  : Dynamically set "R " prefix to all tagged currency fields
@@ -987,4 +1131,3 @@ PUBLIC FUNCTION apply_currency_prefix()
 --        END IF
 --    END FOR
 END FUNCTION
-

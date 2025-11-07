@@ -118,9 +118,6 @@
     </VBox>
     <Grid name="grid1" width="0" height="2"/>
   </VBox>
-  <RecordView tabName="st01_mast1">
-    <Link colName="stock_code" fieldIdRef="0"/>
-  </RecordView>
   <RecordView tabName="st30_trans">
     <Link colName="trans_date" fieldIdRef="12"/>
     <Link colName="doc_type" fieldIdRef="13"/>
@@ -143,6 +140,9 @@
     <Link colName="batch_control" fieldIdRef="9"/>
     <Link colName="total_sales" fieldIdRef="10"/>
     <Link colName="total_purch" fieldIdRef="11"/>
+  </RecordView>
+  <RecordView tabName="st01_mast1">
+    <Link colName="stock_code" fieldIdRef="0"/>
   </RecordView>
   <RecordView tabName="rec_st_mast">
     <Link colName="stock_code" fieldIdRef="1"/>

@@ -1,37 +1,42 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="st121_st_lkup.tmp" build="3.20.14" sqlDbName="demoapp_db" spacing="normal" text="STOCK LOOKUP" width="47" height="16">
+<Form name="st121_st_lkup.tmp" build="3.20.14" sqlDbName="demoapp_db" spacing="normal" text="STOCK LOOKUP" width="52" height="14">
   <LStr text="STOCK LOOKUP"/>
   <VBox name="vbox1">
-    <Grid name="grd_st" width="47" height="16">
-      <Label name="lbl_title" width="45" text="STOCK LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="45">
+    <Grid name="grd_st" width="52" height="14">
+      <Label name="lbl_title" width="50" text="STOCK LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="50">
         <LStr text="STOCK LOOKUP"/>
       </Label>
-      <Table pageSize="10" name="f_st_list" width="46" posY="1" posX="1" gridWidth="46" gridHeight="12" tabName="f_st_list">
-        <TableColumn name="st01_mast.stock_code" colName="stock_code" sqlType="BIGINT" required="1" notNull="1" fieldId="0" sqlTabName="st01_mast" text="Stock Code" tabIndex="1" numAlign="1">
-          <Edit width="13" scroll="1"/>
-          <LStr text="Stock Code"/>
+      <Table pageSize="10" name="f_st_list" width="50" posY="1" posX="1" gridWidth="50" gridHeight="12" tabName="tbl_st_list">
+        <TableColumn name="st01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="0" sqlTabName="st01_mast" text="Stock ID" tabIndex="1" numAlign="1">
+          <Edit width="7" scroll="1"/>
+          <LStr text="Stock ID"/>
         </TableColumn>
         <TableColumn name="st01_mast.description" colName="description" sqlType="VARCHAR(150)" required="1" notNull="1" fieldId="1" sqlTabName="st01_mast" text="Description" tabIndex="2">
           <Edit width="30" scroll="1"/>
           <LStr text="Description"/>
         </TableColumn>
+        <TableColumn name="st01_mast.stock_on_hand" colName="stock_on_hand" sqlType="DECIMAL(12,2)" fieldId="2" sqlTabName="st01_mast" text="Stock On Hand" tabIndex="3" numAlign="1">
+          <Edit width="8"/>
+          <LStr text="Stock On Hand"/>
+        </TableColumn>
       </Table>
-      <Label name="lbl_filter" width="9" text="Filter" posY="13" posX="1" gridWidth="9">
+      <Label name="lbl_filter" width="7" text="Filter" posY="13" posX="1" gridWidth="7">
         <LStr text="Filter"/>
       </Label>
-      <FormField name="formonly.f_search" colName="f_search" fieldId="2" sqlTabName="formonly" tabIndex="3">
-        <Edit width="29" posY="13" posX="11" gridWidth="29"/>
+      <FormField name="formonly.f_search" colName="f_search" fieldId="3" sqlTabName="formonly" tabIndex="4">
+        <Edit width="27" posY="13" posX="9" gridWidth="27"/>
       </FormField>
     </Grid>
   </VBox>
   <RecordView tabName="st01_mast">
-    <Link colName="stock_code" fieldIdRef="0"/>
+    <Link colName="id" fieldIdRef="0"/>
     <Link colName="description" fieldIdRef="1"/>
+    <Link colName="stock_on_hand" fieldIdRef="2"/>
   </RecordView>
   <RecordView tabName="formonly">
-    <Link colName="f_search" fieldIdRef="2"/>
+    <Link colName="f_search" fieldIdRef="3"/>
   </RecordView>
   <RecordView tabName="f_st_search">
-    <Link colName="f_search" fieldIdRef="2"/>
+    <Link colName="f_search" fieldIdRef="3"/>
   </RecordView>
 </Form>

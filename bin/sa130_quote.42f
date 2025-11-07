@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="sa130_quote.tmp" build="3.20.14" sqlDbName="demoapp_db" text="SALES QUOTE" width="117" height="17">
+<Form name="sa130_quote.tmp" build="3.20.14" sqlDbName="demoapp_db" text="SALES QUOTE" width="115" height="17">
   <LStr text="SALES QUOTE"/>
   <VBox name="vbox1">
-    <Grid name="sa130_ord_hdr" width="117" height="11">
-      <Label name="lbl_form_title" width="115" text="" justify="center" style="bold header" posY="0" posX="1" gridWidth="115">
+    <Grid name="sa130_ord_hdr" width="115" height="11">
+      <Label name="lbl_form_title" width="113" text="" justify="center" style="bold header" posY="0" posX="1" gridWidth="113">
         <LStr text=""/>
       </Label>
       <Group name="cust_info" text="" posY="1" posX="1" gridWidth="53" gridHeight="9">
@@ -11,7 +11,7 @@
         <Label name="sa30_quo_hdr_doc_no_label1" width="9" text="Doc No" posY="1" posX="1" gridWidth="9">
           <LStr text="Doc No"/>
         </Label>
-        <FormField name="sa30_quo_hdr.doc_no" colName="doc_no" sqlType="VARCHAR(20)" fieldId="0" sqlTabName="sa30_quo_hdr" tabIndex="1">
+        <FormField name="sa30_quo_hdr.doc_no" colName="doc_no" sqlType="BIGINT" fieldId="0" sqlTabName="sa30_quo_hdr" tabIndex="1">
           <Edit width="14" scroll="1" posY="1" posX="11" gridWidth="14"/>
         </FormField>
         <Label name="sa30_quo_hdr_date_label1" width="8" text="Trans Date" posY="1" posX="27" gridWidth="8">
@@ -23,7 +23,7 @@
         <Label name="sa30_quo_hdr_acc_code_label1" width="9" text="Customer Code" posY="2" posX="1" gridWidth="9">
           <LStr text="Customer Code"/>
         </Label>
-        <FormField name="sa30_quo_hdr.acc_code" colName="acc_code" sqlType="DECIMAL(20,2)" required="1" notNull="1" fieldId="2" sqlTabName="sa30_quo_hdr" tabIndex="3">
+        <FormField name="sa30_quo_hdr.acc_code" colName="acc_code" sqlType="DECIMAL(20,0)" required="1" notNull="1" fieldId="2" sqlTabName="sa30_quo_hdr" tabIndex="3">
           <ButtonEdit width="12" image="zoom" scroll="1" posY="2" posX="11" gridWidth="14"/>
         </FormField>
         <Label name="sa30_quo_hdr_status_label1" width="8" text="Status" posY="2" posX="27" gridWidth="8">
@@ -111,25 +111,25 @@
           <LStr text="Gross Total"/>
         </Label>
         <FormField name="sa30_quo_hdr.gross_tot" colName="gross_tot" sqlType="DECIMAL(12,2)" fieldId="15" sqlTabName="sa30_quo_hdr" tabIndex="14">
-          <Edit width="14" scroll="1" posY="2" posX="12" gridWidth="14"/>
+          <Edit width="14" scroll="1" format="R ---,---,--&amp;.&amp;&amp;" posY="2" posX="12" gridWidth="14"/>
         </FormField>
         <Label name="sa30_quo_hdr_total_excl_label2" width="10" text="Doc Disc" posY="3" posX="1" gridWidth="10">
           <LStr text="Doc Disc"/>
         </Label>
         <FormField name="sa30_quo_hdr.disc" colName="disc" sqlType="DECIMAL(12,2)" fieldId="16" sqlTabName="sa30_quo_hdr" tabIndex="15">
-          <Edit width="14" scroll="1" posY="3" posX="12" gridWidth="14"/>
+          <Edit width="14" scroll="1" format="R ---,---,--&amp;.&amp;&amp;" posY="3" posX="12" gridWidth="14"/>
         </FormField>
         <Label name="sa30_quo_hdr_vat_label1" width="10" text="VAT" posY="5" posX="1" gridWidth="10">
           <LStr text="VAT"/>
         </Label>
         <FormField name="sa30_quo_hdr.vat" colName="vat" sqlType="DECIMAL(12,2)" fieldId="17" sqlTabName="sa30_quo_hdr" tabIndex="16">
-          <Edit width="14" scroll="1" posY="5" posX="12" gridWidth="14"/>
+          <Edit width="14" scroll="1" format="R ---,---,--&amp;.&amp;&amp;" posY="5" posX="12" gridWidth="14"/>
         </FormField>
         <Label name="sa30_quo_hdr_total_cost_label1" width="10" text="Net Total" posY="6" posX="1" gridWidth="10">
           <LStr text="Net Total"/>
         </Label>
         <FormField name="sa30_quo_hdr.net_tot" colName="net_tot" sqlType="DECIMAL(12,2)" fieldId="18" sqlTabName="sa30_quo_hdr" tabIndex="17">
-          <Edit width="14" scroll="1" posY="6" posX="12" gridWidth="14"/>
+          <Edit width="14" scroll="1" format="R ---,---,--&amp;.&amp;&amp;" posY="6" posX="12" gridWidth="14"/>
         </FormField>
       </Group>
     </Grid>
@@ -156,23 +156,23 @@
         <LStr text="Quantity"/>
       </TableColumn>
       <TableColumn name="sa30_quo_det.unit_cost" colName="unit_cost" sqlType="DECIMAL(12,2)" fieldId="25" sqlTabName="sa30_quo_det" text="Unit Cost" tabIndex="21" numAlign="1">
-        <Edit width="14" justify="right" scroll="1"/>
+        <Edit width="14" justify="right" scroll="1" format="---,---,--&amp;.&amp;&amp;"/>
         <LStr text="Unit Cost"/>
       </TableColumn>
       <TableColumn name="sa30_quo_det.sell_price" colName="sell_price" sqlType="DECIMAL(12,2)" fieldId="26" sqlTabName="sa30_quo_det" text="Sell Price" tabIndex="22" numAlign="1">
-        <Edit width="14" justify="right" scroll="1"/>
+        <Edit width="14" justify="right" scroll="1" format="---,---,--&amp;.&amp;&amp;"/>
         <LStr text="Sell Price"/>
       </TableColumn>
       <TableColumn name="sa30_quo_det.disc" colName="disc" sqlType="DECIMAL(12,2)" fieldId="27" sqlTabName="sa30_quo_det" text="Line Discount" tabIndex="23" numAlign="1">
-        <Edit width="8" justify="right"/>
+        <Edit width="8" justify="right" format="---,---,--&amp;.&amp;&amp;"/>
         <LStr text="Line Discount"/>
       </TableColumn>
       <TableColumn name="sa30_quo_det.vat" colName="vat" sqlType="DECIMAL(12,2)" fieldId="28" sqlTabName="sa30_quo_det" text="VAT" tabIndex="24" numAlign="1">
-        <Edit width="14" justify="right" scroll="1"/>
+        <Edit width="14" justify="right" scroll="1" format="---,---,--&amp;.&amp;&amp;"/>
         <LStr text="VAT"/>
       </TableColumn>
       <TableColumn name="sa30_quo_det.line_tot" colName="line_tot" sqlType="DECIMAL(12,2)" fieldId="29" sqlTabName="sa30_quo_det" text="Line Total" tabIndex="25" numAlign="1">
-        <Edit width="14" justify="right" scroll="1"/>
+        <Edit width="14" justify="right" scroll="1" format="---,---,--&amp;.&amp;&amp;"/>
         <LStr text="Line Total"/>
       </TableColumn>
     </Table>

@@ -37,10 +37,10 @@
     <RecordField colName="line_tot" fieldIdRef="32" fieldType="TABLE_COLUMN" name="sa30_quo_det.line_tot" sqlTabName="sa30_quo_det" uid="{304a27ba-5d61-403a-82fa-1cb6ff7c3eb0}"/>
     <RecordField colName="disc" fieldIdRef="30" fieldType="TABLE_COLUMN" name="sa30_quo_det.disc" sqlTabName="sa30_quo_det" uid="{854d8914-deee-44ec-a530-2789010b9f0c}"/>
   </Record>
-  <Form gridHeight="25" gridWidth="125" name="frm_sa_ord" text="SALES QUOTE">
-    <VBox gridHeight="20" gridWidth="125" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="11" gridWidth="125" name="sa130_ord_hdr" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="115" justify="center" name="lbl_form_title" posX="1" posY="0" style="bold header" text=""/>
+  <Form gridHeight="20" gridWidth="114" name="frm_sa_ord" text="SALES QUOTE">
+    <VBox gridHeight="20" gridWidth="114" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="11" gridWidth="114" name="sa130_ord_hdr" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="113" justify="center" name="lbl_form_title" posX="1" posY="0" style="bold header" text=""/>
         <Group gridHeight="9" gridWidth="53" name="cust_info" posX="1" posY="1" text="">
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
             <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
@@ -137,30 +137,30 @@
           <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_total_excl_label1" posX="1" posY="2" text="Gross Total">
             <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
           </Label>
-          <Edit colName="gross_tot" fieldId="18" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.gross_tot" posX="12" posY="2" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
+          <Edit colName="gross_tot" fieldId="18" fieldType="TABLE_COLUMN" format="R ---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.gross_tot" posX="12" posY="2" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_total_excl_label2" posX="1" posY="3" text="Doc Disc">
             <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
           </Label>
-          <Edit colName="disc" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.disc" posX="12" posY="3" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
+          <Edit colName="disc" fieldId="19" fieldType="TABLE_COLUMN" format="R ---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.disc" posX="12" posY="3" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_vat_label1" posX="1" posY="5" text="VAT">
             <Initializer text="dbschema:sa30_quo_hdr.vat/@label"/>
           </Label>
-          <Edit colName="vat" fieldId="20" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.vat" posX="12" posY="5" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="VAT" widget="Edit">
+          <Edit colName="vat" fieldId="20" fieldType="TABLE_COLUMN" format="R ---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.vat" posX="12" posY="5" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="VAT" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_total_cost_label1" posX="1" posY="6" text="Net Total">
             <Initializer text="dbschema:sa30_quo_hdr.total_cost/@label"/>
           </Label>
-          <Edit colName="net_tot" fieldId="21" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.net_tot" posX="12" posY="6" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Total Cost" widget="Edit">
+          <Edit colName="net_tot" fieldId="21" fieldType="TABLE_COLUMN" format="R ---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.net_tot" posX="12" posY="6" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Total Cost" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
         </Group>
       </Grid>
-      <Table gridHeight="7" gridWidth="125" name="sa_ord_lines" posX="0" posY="12" totalRows="5">
+      <Table gridHeight="7" gridWidth="114" name="sa_ord_lines" posX="0" posY="12" totalRows="5">
         <Phantom colName="id" fieldId="22" fieldType="TABLE_COLUMN" name="sa30_quo_det.id" sqlTabName="sa30_quo_det" widget="Phantom"/>
         <Phantom colName="hdr_id" fieldId="23" fieldType="TABLE_COLUMN" name="sa30_quo_det.hdr_id" sqlTabName="sa30_quo_det" widget="Phantom"/>
         <Phantom colName="line_no" fieldId="24" fieldType="TABLE_COLUMN" name="sa30_quo_det.line_no" sqlTabName="sa30_quo_det" widget="Phantom"/>
@@ -173,23 +173,23 @@
         <Edit colName="qnty" fieldId="27" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" justify="right" name="sa30_quo_det.qnty" posX="23" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Quantity" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="unit_cost" fieldId="28" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" justify="right" name="sa30_quo_det.unit_cost" posX="32" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Unit Cost" widget="Edit">
+        <Edit colName="unit_cost" fieldId="28" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" justify="right" name="sa30_quo_det.unit_cost" posX="32" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Unit Cost" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="sell_price" fieldId="29" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" justify="right" name="sa30_quo_det.sell_price" posX="46" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Sell Price" widget="Edit">
+        <Edit colName="sell_price" fieldId="29" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" justify="right" name="sa30_quo_det.sell_price" posX="46" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Sell Price" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="disc" fieldId="30" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" justify="right" name="sa30_quo_det.disc" posX="60" posY="0" sqlTabName="sa30_quo_det" tabIndex="-1" title="Line Discount" widget="Edit"/>
-        <Edit colName="vat" fieldId="31" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" justify="right" name="sa30_quo_det.vat" posX="68" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="VAT" widget="Edit">
+        <Edit colName="disc" fieldId="30" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="8" justify="right" name="sa30_quo_det.disc" posX="60" posY="0" sqlTabName="sa30_quo_det" tabIndex="-1" title="Line Discount" widget="Edit"/>
+        <Edit colName="vat" fieldId="31" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" justify="right" name="sa30_quo_det.vat" posX="68" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="VAT" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit case="none" colName="line_tot" fieldId="32" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" justify="right" name="sa30_quo_det.line_tot" posX="82" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Line Total" widget="Edit">
+        <Edit case="none" colName="line_tot" fieldId="32" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" justify="right" name="sa30_quo_det.line_tot" posX="82" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Line Total" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
       </Table>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAwADYANgAyADYAMAA5AGQALQBiAGMAZgBmAC0ANAA3ADkAMwAtADgANABkAGYALQBhADcANAAxADcAMwBjAGEAOABjADgAOQB9QGszM0eZmZ9APAAAFQAABT9QYk3S8an8AQAAAEwAewAzADkAZgBmADgAZAA2ADcALQA0AGQAYwAzAC0ANAA1ADQAMgAtADkAOQA1ADkALQA3ADgAYQAzAGEAOQA2AGMAYwBkAGMAOQB9QDAAAAwAAANAMAAADAAAAz9gYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAzADkAZgBmADgAZAA2ADcALQA0AGQAYwAzAC0ANAA1ADQAMgAtADkAOQA1ADkALQA3ADgAYQAzAGEAOQA2AGMAYwBkAGMAOQB9QDAAABAAAAZAMAAAEAAABj9gYk3S8an8AQAAAEwAewAwADYANgAyADYAMAA5AGQALQBiAGMAZgBmAC0ANAA3ADkAMwAtADgANABkAGYALQBhADcANAAxADcAMwBjAGEAOABjADgAOQB9QGszM05mZnBAPAAAHAAACj9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

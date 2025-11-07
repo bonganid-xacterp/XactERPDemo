@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="ANSI_X3.4-1968"?>
 <StyleList>
   <Style name="Window">
-     <StyleAttribute name="windowType" value="normal" />
+     <StyleAttribute name="windowType" value="dialog" />
   </Style>
   <Style name="Window.main">
-     <StyleAttribute name="windowType" value="normal" />
+     <StyleAttribute name="windowType" value="dialog" />
      <StyleAttribute name="startMenuPosition" value="menu" />
   </Style>
   <Style name="Window.main2">
-     <StyleAttribute name="windowType" value="normal" />
+     <StyleAttribute name="windowType" value="dialog" />
      <StyleAttribute name="actionPanelPosition" value="none" />
      <StyleAttribute name="ringMenuPosition" value="none" />
   </Style>

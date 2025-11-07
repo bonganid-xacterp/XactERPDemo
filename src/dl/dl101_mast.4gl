@@ -9,6 +9,7 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
+
 IMPORT FGL dl121_lkup
 IMPORT FGL utils_status_const
 IMPORT FGL sa132_invoice
@@ -34,14 +35,20 @@ DEFINE is_edit_mode SMALLINT
 -- MAIN
 -- ==============================================================
 MAIN
+DEFINE ret SMALLINT
+
     IF NOT utils_globals.initialize_application() THEN
         DISPLAY "Initialization failed."
         EXIT PROGRAM 1
     END IF
-
+    
     IF utils_globals.is_standalone() THEN
     OPTIONS INPUT WRAP
         OPEN WINDOW w_dl101 WITH FORM "dl101_mast" ATTRIBUTES(STYLE = "child")
+        
+        -- Call formatting HERE after form is ready
+        --CALL utils_globals.apply_field_formatting() RETURNING *
+
     END IF
 
     CALL init_dl_module()
@@ -69,9 +76,12 @@ FUNCTION init_dl_module()
         TO arr_debt_trans.*
         ATTRIBUTES(UNBUFFERED, DOUBLECLICK = row_select)
         BEFORE DISPLAY
+            
             CALL DIALOG.setActionHidden("accept", TRUE)
             CALL DIALOG.setActionHidden("cancel", TRUE)
             CALL DIALOG.setActionHidden("row_select", TRUE)
+            
+
 
         ON ACTION Find ATTRIBUTES(TEXT = "Find", IMAGE = "zoom")
             CALL query_debtors()
@@ -123,7 +133,7 @@ FUNCTION init_dl_module()
 
         ON ACTION add_quote ATTRIBUTES(TEXT = "Add S/Quote", IMAGE = "new")
             DISPLAY "Add Quote"
-            CALL sa130_quote.new_quote()
+            --CALL sa130_quote.()
 
          ON ACTION add_order ATTRIBUTES(TEXT = "Add S/Order", IMAGE = "fa-reorder")
             DISPLAY "Add Quote"
@@ -197,13 +207,19 @@ END FUNCTION
 FUNCTION new_debtor()
     DEFINE dup_found, new_acc_code, next_num, i, array_size INTEGER
     DEFINE next_full STRING
+    DEFINE username STRING 
 
     INITIALIZE rec_debt.* TO NULL
+    CLEAR FORM 
     LET rec_debt.status = 'active'
     LET rec_debt.balance = 0.00
     LET rec_debt.cr_limit = 0.00
     LET rec_debt.created_at = CURRENT
     LET rec_debt.created_by = utils_globals.get_random_user()
+
+    LET username = utils_globals.get_username(rec_debt.created_by)
+    
+    DISPLAY username 
 
     CALL utils_globals.set_form_label('lbl_form_title', 'DEBTORS MAINTENANCE')
 
@@ -337,10 +353,8 @@ FUNCTION select_debtors(where_clause STRING) RETURNS SMALLINT
     LET sql_stmt = "SELECT acc_code FROM dl01_mast"
 
     IF where_clause IS NOT NULL AND where_clause != "" THEN
-        LET sql_stmt = sql_stmt || " WHERE " || where_clause
+        LET sql_stmt = sql_stmt || " WHERE " || where_clause || " ORDER BY acc_code"
     END IF
-
-    LET sql_stmt = sql_stmt || " ORDER BY acc_code"
 
     PREPARE stmt_select FROM sql_stmt
     DECLARE c_curs CURSOR FOR stmt_select
@@ -374,6 +388,7 @@ FUNCTION load_debtor(p_code INTEGER)
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_debt.*
+
         LET l_found = TRUE
         CALL load_debtor_transactions(p_code)
     ELSE
@@ -523,6 +538,8 @@ FUNCTION load_debtor_transactions(p_acc_code INTEGER)
             arr_debt_trans[idx].vat,
             arr_debt_trans[idx].disc,
             arr_debt_trans[idx].net_tot
+
+            
         LET idx = idx + 1
     END FOREACH
 
@@ -534,7 +551,6 @@ END FUNCTION
 -- Open Related Document (inactive case block)
 -- ==============================================================
 FUNCTION open_transaction_window(p_doc_id INTEGER, l_type STRING)
-    -- SELECT doc_type, doc_ INTO l_type FROM dl30_trans WHERE doc_no = p_doc_id
 
     IF SQLCA.SQLCODE != 0 THEN
         CALL utils_globals.show_error("Document not found.")

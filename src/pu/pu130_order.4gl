@@ -36,7 +36,7 @@ MAIN
         EXIT PROGRAM 1
     END IF
     OPTIONS INPUT WRAP
-    OPEN WINDOW w_po WITH FORM "pu130_order" ATTRIBUTES(STYLE = "normal")
+    OPEN WINDOW w_po WITH FORM "pu130_order" ATTRIBUTES(STYLE = "dialog")
     CALL init_po_module()
     CLOSE WINDOW w_po
 END MAIN

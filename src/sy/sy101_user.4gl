@@ -31,17 +31,17 @@ DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
 DEFINE master_config utils_globals.master_record
 
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        EXIT PROGRAM 1
---    END IF
---
---    CALL initMasterConfig()
---      OPTIONS INPUT WRAP
---    OPEN WINDOW w_sy101 WITH FORM "sy101_user" ATTRIBUTES(STYLE = "main")
---    CALL init_module()
---    CLOSE WINDOW w_sy101
---END MAIN
+MAIN
+    IF NOT utils_globals.initialize_application() THEN
+        EXIT PROGRAM 1
+    END IF
+
+    CALL initMasterConfig()
+      OPTIONS INPUT WRAP
+    OPEN WINDOW w_sy101 WITH FORM "sy101_user" ATTRIBUTES(STYLE = "main")
+    CALL init_module()
+    CLOSE WINDOW w_sy101
+END MAIN
 
 -- Initialize master configuration for CRUD operations
 FUNCTION initMasterConfig()

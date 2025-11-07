@@ -77,12 +77,12 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS BOOLEAN
         -- Configure as MDI child window
         CALL ui.Interface.setType("child")
         CALL ui.Interface.setName(formname)
-        CALL ui.Interface.setContainer(MDI_CONTAINER)
+        CALL ui.Interface.setContainer("Main_container")
 
         -- Open the child window
         OPTIONS INPUT WRAP
         OPEN WINDOW winname WITH FORM formname
-            ATTRIBUTES(STYLE = "Window.child", TEXT = wintitle)
+            --ATTRIBUTES(STYLE = "Window.program", TEXT = wintitle)
 
         -- Register window
         LET i = m_open_modules.getLength() + 1
@@ -97,7 +97,9 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS BOOLEAN
         END IF
 
     CATCH
-        CALL utils_globals.show_error('Error opening program ' ||  formname || winname )
+        CALL utils_globals.show_error('Error opening program ' 
+                                    || ' ' || formname || ' '
+                                    || winname )
     END TRY
     
     RETURN TRUE

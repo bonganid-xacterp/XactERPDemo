@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="ManagedForm" uid="{7274ca9f-4264-4ee1-8400-0e9a9e311535}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Form gridHeight="22" gridWidth="93" name="main_container" style="" text="" version="0.1">
+    <TopMenu name="top_menu">
+      <TopMenuGroup name="tm_main" text="File">
+        <TopMenuSeparator name="sep_01"/>
+        <TopMenuCommand acceleratorName="quit" image="quit" name="main_exit" text="Quit"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_dl" text="Debtors">
+        <TopMenuCommand image="open" name="open_debtors" text="Debtor Enquiry"/>
+        <TopMenuCommand image="database" name="open_debtors_trans" text="Debtor Transactions"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_cl" text="Creditors">
+        <TopMenuCommand image="open" name="open_creditors" text="Creditors Enquiry"/>
+        <TopMenuCommand image="pen" name="open_creditors" text="Creditors Maintanance"/>
+        <TopMenuSeparator name="topmenuseparator1"/>
+        <TopMenuGroup name="topmenugroup1" text="Creditors Reports">
+          <TopMenuCommand name="view_cred_age_report" text="Age Analysis"/>
+        </TopMenuGroup>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_st" text="Stock">
+        <TopMenuCommand image="open" name="open_ro_stock" text="Stock Enquiry"/>
+        <TopMenuCommand image="pen" name="open_stock" text="Stock Maintainance"/>
+        <TopMenuSeparator name="topmenuseparator4"/>
+        <TopMenuCommand image="open" name="open_ro_st_cat" text="S/Category Enquiry"/>
+        <TopMenuCommand image="pen" name="open_st_cat" text="S/Category Maintanance"/>
+        <TopMenuSeparator name="topmenuseparator3"/>
+        <TopMenuCommand image="open" name="open_ro_wh" text="WH Enquiry"/>
+        <TopMenuCommand image="pen" name="open_wh" text="Wh Stock Movement"/>
+        <TopMenuSeparator name="topmenuseparator5"/>
+        <TopMenuCommand image="open" name="open_bins" text="WH Bins"/>
+        <TopMenuCommand image="database" name="open_bins_hist" text="Bins History"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_gl" tag="" text="Finance">
+        <TopMenuCommand image="open" name="gl_enq" text="G/L Enquiry"/>
+        <TopMenuCommand image="pen" name="gl_maint" text="G/L Maintanance"/>
+        <TopMenuSeparator name="topmenuseparator6"/>
+        <TopMenuCommand image="open" name="jnl_enq" text="JNL Enquiry"/>
+        <TopMenuCommand image="pen" name="jnl_maint" text="JNL Maintanance"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_sa" text="Sales">
+        <TopMenuSeparator name="topmenuseparator8"/>
+        <TopMenuCommand image="open" name="sa_qt_enq" text="Quotes Enquiry"/>
+        <TopMenuCommand image="pen" name="sa_qt_maint" text="Quotes Maintanance"/>
+        <TopMenuSeparator name="topmenuseparator10"/>
+        <TopMenuCommand image="open" name="sa_ord_enq" text="Orders Enquiry"/>
+        <TopMenuCommand image="pen" name="sa_ord_maint" text="Orders Maintanance"/>
+        <TopMenuSeparator name="topmenuseparator9"/>
+        <TopMenuCommand image="open" name="sa_inv_enq" text="Invoices Enquiry"/>
+        <TopMenuCommand image="pen" name="sa_inv_maint" text="Invoices Maintanance"/>
+        <TopMenuSeparator name="topmenuseparator11"/>
+        <TopMenuCommand image="open" name="sa_crn_enq" text="C/N Enquiry"/>
+        <TopMenuCommand image="pen" name="sa_crn_maint" text="C/N Maintanance"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_pu" text="Purchases">
+        <TopMenuSeparator name="topmenuseparator7"/>
+        <TopMenuCommand image="open" name="pu_po_enq" text="Orders Enquiry"/>
+        <TopMenuCommand image="pen" name="pu_po_maint" text="Orders Maintanance"/>
+        <TopMenuSeparator name="topmenuseparator12"/>
+        <TopMenuCommand image="open" name="pu_grn_enq" text="GRN Enquiry"/>
+        <TopMenuCommand image="pen" name="pu_grn_maint" text="GRN Maintainance"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_sys" text="System">
+        <TopMenuSeparator name="topmenuseparator2"/>
+        <TopMenuCommand image="open2" name="sy_usr_enq" text="Users Enquiry"/>
+        <TopMenuCommand image="pen" name="sy_usr_maint" text="Users Maintainance"/>
+        <TopMenuSeparator name="topmenuseparator13"/>
+        <TopMenuCommand image="open" name="sys_perm_enq" text="Permissions Enquiry"/>
+        <TopMenuCommand image="pen" name="sy_perm_maint" text="Permissions Maintainance"/>
+        <TopMenuCommand image="pen" name="sy_roles_maint" text="Roles Maintainance"/>
+        <TopMenuCommand image="open" name="sy_roles_enq" text="Roles Enquiry"/>
+        <TopMenuSeparator name="topmenuseparator15"/>
+        <TopMenuCommand image="open2" name="sys_sett" text="Settings"/>
+        <TopMenuCommand image="open2" name="sys_logs" text="Logs"/>
+        <TopMenuSeparator name="topmenuseparator14"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_rp" text="Reports">
+        <TopMenuCommand name="rp_cl_ageing" text="Creditors Age Analysis"/>
+        <TopMenuSeparator name="topmenuseparator16"/>
+        <TopMenuCommand name="rp_dl_stmt" text="Debtors Statement"/>
+        <TopMenuCommand name="rp_dl_unpaid_inv" text="Debtors Unpaid Invoices"/>
+        <TopMenuSeparator name="topmenuseparator17"/>
+        <TopMenuCommand name="rp_st_status" text="Stock Status Report"/>
+      </TopMenuGroup>
+      <TopMenuGroup name="tm_app" text="Help">
+        <TopMenuCommand image="fa-info-circle" name="sy_about" text="About"/>
+      </TopMenuGroup>
+    </TopMenu>
+    <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" name="workarea" posX="0" posY="0" text="">
+      <Grid gridHeight="20" gridWidth="91" name="main_shell_grid" posX="1" posY="1"/>
+    </Group>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAg==]]>
+  </DiagramLayout>
+</ManagedForm>
