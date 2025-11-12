@@ -1,6 +1,6 @@
 -- ==============================================================
 -- Program   : sa131_order.4gl
--- Purpose   : Sales Order Program (COMPLETE & CORRECTED)
+-- Purpose   : Sales Order Program
 -- Module    : Sales Order (sa)
 -- Number    : 131
 -- Author    : Bongani Dlamini
@@ -14,16 +14,14 @@ IMPORT FGL st121_st_lkup
 IMPORT FGL utils_doc_totals
 IMPORT FGL dl121_lkup
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Record Definitions
 -- ==============================================================
 TYPE order_hdr_t RECORD LIKE sa31_ord_hdr.*
-TYPE cust_t RECORD LIKE dl01_mast.*
 
 DEFINE m_rec_ord order_hdr_t
-DEFINE m_cust_rec cust_t
 
 -- Screen array for display (only visible fields in form)
 DEFINE m_arr_ord_lines DYNAMIC ARRAY OF RECORD
@@ -42,11 +40,9 @@ DEFINE m_arr_ord_full_lines DYNAMIC ARRAY OF RECORD LIKE sa31_ord_det.*
 
 DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
 DEFINE m_curr_idx INTEGER
-DEFINE m_is_edit SMALLINT
 
 -- ==============================================================
 -- Function : new_order (NEW - Header first, then lines)
--- Purpose  : Create new order with proper workflow
 -- ==============================================================
 FUNCTION new_order()
     DEFINE l_hdr RECORD LIKE sa31_ord_hdr.*
@@ -68,8 +64,8 @@ FUNCTION new_order()
     LET l_hdr.created_at = CURRENT
     LET l_hdr.created_by = utils_globals.get_current_user_id()
     LET l_hdr.gross_tot = 0
-    LET l_hdr.vat = 0
-    LET l_hdr.disc = 0
+    LET l_hdr.vat_tot = 0
+    LET l_hdr.disc_tot = 0
     LET l_hdr.net_tot = 0
 
     -- ==========================================================
@@ -185,7 +181,6 @@ END FUNCTION
 
 -- ==============================================================
 -- Function : input_order_lines (NEW)
--- Purpose  : Add/edit lines for a saved order
 -- ==============================================================
 FUNCTION input_order_lines(p_hdr_id INTEGER)
 
@@ -194,9 +189,9 @@ FUNCTION input_order_lines(p_hdr_id INTEGER)
     CALL utils_globals.set_form_label("lbl_form_title",
         SFMT("Order #%1 - Add Lines", m_rec_ord.id))
 
-    DISPLAY BY NAME m_rec_ord.id, m_rec_ord.ref_no, m_rec_ord.cust_id,
+    DISPLAY BY NAME m_rec_ord.id, m_rec_ord.ref_doc_no, m_rec_ord.cust_id,
                     m_rec_ord.trans_date, m_rec_ord.status, m_rec_ord.gross_tot,
-                    m_rec_ord.disc, m_rec_ord.vat, m_rec_ord.net_tot
+                    m_rec_ord.disc_tot, m_rec_ord.vat_tot, m_rec_ord.net_tot
 
     DIALOG ATTRIBUTES(UNBUFFERED)
 
@@ -244,7 +239,7 @@ FUNCTION input_order_lines(p_hdr_id INTEGER)
 END FUNCTION
 
 -- ==============================================================
--- Function : edit_or_add_order_line (CORRECTED)
+-- Function : edit_or_add_order_line
 -- ==============================================================
 FUNCTION edit_or_add_order_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
     DEFINE l_line RECORD LIKE sa31_ord_det.*
@@ -339,7 +334,6 @@ FUNCTION edit_or_add_order_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLI
                 LET m_arr_ord_full_lines[m_arr_ord_full_lines.getLength() + 1].* = l_line.*
                 -- Add to display array (only visible fields)
                 LET m_arr_ord_lines[m_arr_ord_lines.getLength() + 1].stock_id = l_line.stock_id
-                LET m_arr_ord_lines[m_arr_ord_lines.getLength()].batch_id = l_line.batch_id
                 LET m_arr_ord_lines[m_arr_ord_lines.getLength()].qnty = l_line.qnty
                 LET m_arr_ord_lines[m_arr_ord_lines.getLength()].unit_price = l_line.unit_price
                 LET m_arr_ord_lines[m_arr_ord_lines.getLength()].disc_amt = l_line.disc_amt
@@ -350,7 +344,6 @@ FUNCTION edit_or_add_order_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLI
                 LET m_arr_ord_full_lines[p_row].* = l_line.*
                 -- Update display array (only visible fields)
                 LET m_arr_ord_lines[p_row].stock_id = l_line.stock_id
-                LET m_arr_ord_lines[p_row].batch_id = l_line.batch_id
                 LET m_arr_ord_lines[p_row].qnty = l_line.qnty
                 LET m_arr_ord_lines[p_row].unit_price = l_line.unit_price
                 LET m_arr_ord_lines[p_row].disc_amt = l_line.disc_amt
@@ -381,16 +374,16 @@ PRIVATE FUNCTION calculate_line_totals(p_qnty DECIMAL, p_price DECIMAL,
     -- Gross = Quantity × Price
     LET l_gross = p_qnty * p_price
 
-    -- Discount = Gross × (Disc% / 100)
+    -- Discount = Gross × (disc_tot% / 100)
     LET l_disc = l_gross * (p_disc_pct / 100)
 
     -- Net = Gross - Discount
     LET l_net = l_gross - l_disc
 
-    -- VAT = Net × (VAT% / 100)
+    -- vat_tot = Net × (vat_tot% / 100)
     LET l_vat = l_net * (p_vat_rate / 100)
 
-    -- Total = Net + VAT
+    -- Total = Net + vat_tot
     LET l_total = l_net + l_vat
 
     RETURN l_gross, l_disc, l_net, l_vat, l_total
@@ -398,7 +391,7 @@ PRIVATE FUNCTION calculate_line_totals(p_qnty DECIMAL, p_price DECIMAL,
 END FUNCTION
 
 -- ==============================================================
--- Function : load_stock_defaults (CORRECTED with stock check)
+-- Function : load_stock_defaults (with stock check)
 -- ==============================================================
 PRIVATE FUNCTION load_stock_defaults(p_stock_id INTEGER)
     RETURNS (DECIMAL, DECIMAL, VARCHAR(150))
@@ -435,7 +428,6 @@ END FUNCTION
 
 -- ==============================================================
 -- Function : get_available_stock (NEW)
--- Purpose  : Calculate available stock (on hand - reserved)
 -- ==============================================================
 FUNCTION get_available_stock(p_stock_id INTEGER)
     RETURNS DECIMAL(15,2)
@@ -470,7 +462,6 @@ END FUNCTION
 
 -- ==============================================================
 -- Function : check_stock_availability (NEW - CRITICAL)
--- Purpose  : Check if enough stock available before saving order
 -- ==============================================================
 FUNCTION check_stock_availability(p_stock_id INTEGER, p_required_qty DECIMAL,
                                   p_exclude_order_id INTEGER)
@@ -534,7 +525,6 @@ END FUNCTION
 
 -- ==============================================================
 -- Function : validate_order_stock_levels (NEW)
--- Purpose  : Validate all lines have sufficient stock before save
 -- ==============================================================
 FUNCTION validate_order_stock_levels(p_order_id INTEGER)
     RETURNS (SMALLINT, VARCHAR(1000))
@@ -579,7 +569,6 @@ END FUNCTION
 
 -- ==============================================================
 -- Function : update_stock_on_hand (NEW)
--- Purpose  : Update physical stock when invoice is posted
 -- ==============================================================
 FUNCTION update_stock_on_hand(p_stock_id INTEGER, p_quantity DECIMAL,
                               p_direction VARCHAR(3))
@@ -640,7 +629,7 @@ FUNCTION update_stock_on_hand(p_stock_id INTEGER, p_quantity DECIMAL,
 END FUNCTION
 
 -- ==============================================================
--- Function : delete_order_line (CORRECTED)
+-- Function : delete_order_line
 -- ==============================================================
 FUNCTION delete_order_line(p_doc_id INTEGER, p_row INTEGER)
     IF p_row > 0 THEN
@@ -655,7 +644,7 @@ FUNCTION delete_order_line(p_doc_id INTEGER, p_row INTEGER)
 END FUNCTION
 
 -- ==============================================================
--- Function : save_order_lines (CORRECTED with stock validation)
+-- Function : save_order_lines (with stock validation)
 -- ==============================================================
 FUNCTION save_order_lines(p_doc_id INTEGER)
     DEFINE i INTEGER
@@ -711,14 +700,14 @@ FUNCTION calculate_order_totals()
     LET l_net = l_gross - l_disc_tot + l_vat_tot
 
     LET m_rec_ord.gross_tot = l_gross
-    LET m_rec_ord.disc = l_disc_tot
-    LET m_rec_ord.vat = l_vat_tot
+    LET m_rec_ord.disc_tot = l_disc_tot
+    LET m_rec_ord.vat_tot = l_vat_tot
     LET m_rec_ord.net_tot = l_net
 
-    DISPLAY BY NAME m_rec_ord.gross_tot, m_rec_ord.disc,
-                     m_rec_ord.vat, m_rec_ord.net_tot
+    DISPLAY BY NAME m_rec_ord.gross_tot, m_rec_ord.disc_tot,
+                     m_rec_ord.vat_tot, m_rec_ord.net_tot
 
-    MESSAGE SFMT("Totals: Gross=%1, Disc=%2, VAT=%3, Net=%4",
+    MESSAGE SFMT("Totals: Gross=%1, disc_tot=%2, vat_tot=%3, Net=%4",
                  l_gross USING "<<<,<<<,<<&.&&",
                  l_disc_tot USING "<<<,<<<,<<&.&&",
                  l_vat_tot USING "<<<,<<<,<<&.&&",
@@ -735,8 +724,8 @@ FUNCTION save_order_header_totals()
     TRY
         UPDATE sa31_ord_hdr
             SET gross_tot = m_rec_ord.gross_tot,
-                disc = m_rec_ord.disc,
-                vat = m_rec_ord.vat,
+                disc_tot = m_rec_ord.disc_tot,
+                vat_tot = m_rec_ord.vat_tot,
                 net_tot = m_rec_ord.net_tot,
                 updated_at = CURRENT
             WHERE id = m_rec_ord.id
@@ -789,7 +778,7 @@ PRIVATE FUNCTION load_customer_details(p_acc_code INTEGER)
 END FUNCTION
 
 -- ==============================================================
--- Function : load_order (CORRECTED with status checks)
+-- Function : load_order (with status checks)
 -- ==============================================================
 FUNCTION load_order(p_doc_id INTEGER)
     DEFINE idx INTEGER
@@ -870,9 +859,9 @@ FUNCTION load_order(p_doc_id INTEGER)
         CALL utils_globals.set_form_label("lbl_form_title",
             SFMT("Sales Order #%1 - Status: %2", m_rec_ord.id, m_rec_ord.status))
 
-        DISPLAY BY NAME m_rec_ord.id, m_rec_ord.ref_no, m_rec_ord.cust_id,
+        DISPLAY BY NAME m_rec_ord.id, m_rec_ord.ref_doc_no, m_rec_ord.cust_id,
                         m_rec_ord.trans_date, m_rec_ord.status, m_rec_ord.gross_tot,
-                        m_rec_ord.disc, m_rec_ord.vat, m_rec_ord.net_tot
+                        m_rec_ord.disc_tot, m_rec_ord.vat_tot, m_rec_ord.net_tot
 
         DISPLAY ARRAY m_arr_ord_lines TO arr_sa_ord_lines.*
 
@@ -902,9 +891,9 @@ FUNCTION load_order(p_doc_id INTEGER)
                     WHEN 1
                         CALL edit_order_header(p_doc_id)
                         -- Refresh header display
-                        DISPLAY BY NAME m_rec_ord.id, m_rec_ord.ref_no, m_rec_ord.cust_id,
+                        DISPLAY BY NAME m_rec_ord.id, m_rec_ord.ref_doc_no, m_rec_ord.cust_id,
                                         m_rec_ord.trans_date, m_rec_ord.status, m_rec_ord.gross_tot,
-                                        m_rec_ord.disc, m_rec_ord.vat, m_rec_ord.net_tot
+                                        m_rec_ord.disc_tot, m_rec_ord.vat_tot, m_rec_ord.net_tot
                     WHEN 2
                         CALL edit_order_lines(p_doc_id)
                     OTHERWISE
@@ -1032,8 +1021,8 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
         LET l_invoice_hdr.trans_date = TODAY
         LET l_invoice_hdr.trans_date = TODAY
         LET l_invoice_hdr.gross_tot = l_order_hdr.gross_tot
-        LET l_invoice_hdr.disc = l_order_hdr.disc
-        LET l_invoice_hdr.vat = l_order_hdr.vat
+        LET l_invoice_hdr.disc_tot = l_order_hdr.disc_tot
+        LET l_invoice_hdr.vat_tot = l_order_hdr.vat_tot
         LET l_invoice_hdr.net_tot = l_order_hdr.net_tot
         LET l_invoice_hdr.status = "NEW"
         LET l_invoice_hdr.created_at = CURRENT
@@ -1059,7 +1048,7 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
         -- ===========================================
         INSERT INTO sa32_inv_det (
             hdr_id, line_no, stock_id, batch_id, qnty,
-            unit_price, sell_price, vat, line_tot, disc,
+            unit_price, sell_price, vat_tot, line_tot, disc_tot,
             stock_id, item_name, uom, unit_price,
             disc_pct, disc_amt, gross_amt, net_amt,
             vat_rate, vat_amt, line_total, status,
@@ -1067,7 +1056,7 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
         )
         SELECT
             l_new_invoice_id, line_no, stock_id, batch_id, qnty,
-            unit_price, sell_price, vat, line_tot, disc,
+            unit_price, sell_price, vat_tot, line_tot, disc_tot,
             stock_id, item_name, uom, unit_price,
             disc_pct, disc_amt, gross_amt, net_amt,
             vat_rate, vat_amt, line_total, status,
@@ -1111,9 +1100,9 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
 
         -- Update module record
         LET m_rec_ord.status = "INVOICED"
-        DISPLAY BY NAME m_rec_ord.id, m_rec_ord.ref_no, m_rec_ord.cust_id,
+        DISPLAY BY NAME m_rec_ord.id, m_rec_ord.ref_doc_no, m_rec_ord.cust_id,
                         m_rec_ord.trans_date, m_rec_ord.status, m_rec_ord.gross_tot,
-                        m_rec_ord.disc, m_rec_ord.vat, m_rec_ord.net_tot
+                        m_rec_ord.disc_tot, m_rec_ord.vat_tot, m_rec_ord.net_tot
 
     CATCH
         ROLLBACK WORK
@@ -1166,7 +1155,7 @@ PRIVATE FUNCTION prompt_edit_choice() RETURNS SMALLINT
 END FUNCTION
 
 -- ==============================================================
--- Function : edit_order_header (CORRECTED UPDATE syntax)
+-- Function : edit_order_header (UPDATE syntax)
 -- ==============================================================
 FUNCTION edit_order_header(p_doc_id INTEGER)
     DEFINE new_hdr RECORD LIKE sa31_ord_hdr.*
@@ -1231,7 +1220,7 @@ FUNCTION edit_order_header(p_doc_id INTEGER)
 END FUNCTION
 
 -- ==============================================================
--- Function : edit_order_lines (CORRECTED)
+-- Function : edit_order_lines
 -- ==============================================================
 FUNCTION edit_order_lines(p_doc_id INTEGER)
     DIALOG
@@ -1286,8 +1275,8 @@ FUNCTION save_order()
                     acc_code = m_rec_ord.cust_id,
                     trans_date = m_rec_ord.trans_date,
                     gross_tot = m_rec_ord.gross_tot,
-                    disc = m_rec_ord.disc,
-                    vat = m_rec_ord.vat,
+                    disc_tot = m_rec_ord.disc_tot,
+                    vat_tot = m_rec_ord.vat_tot,
                     net_tot = m_rec_ord.net_tot,
                     status = m_rec_ord.status,
                     updated_at = CURRENT

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{792f69ce-d049-44e7-99a4-d06a84e57cde}">
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{792f69ce-d049-44e7-99a4-d06a84e57cde}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>

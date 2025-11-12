@@ -12,7 +12,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Warehouse lookup record structure
 TYPE warehouse_lookup_t RECORD

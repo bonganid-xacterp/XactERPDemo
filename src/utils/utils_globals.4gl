@@ -671,7 +671,7 @@ END FUNCTION
 -- Single database connection function
 PUBLIC FUNCTION connect_database() RETURNS BOOLEAN
     TRY
-        CONNECT TO "demoapp_db@localhost:5432+driver='dbmpgs_9'"
+        CONNECT TO "demoappdb@localhost:5432+driver='dbmpgs_9'"
             USER "postgres" USING "napoleon"
         RETURN TRUE
     CATCH
@@ -913,7 +913,7 @@ FUNCTION get_next_number(p_table STRING, p_prefix STRING)
     DEFINE formatted_num STRING
 
     LET last_num = 0
-    LET sql_stmt = SFMT("SELECT MAX(acc_code) FROM %1", p_table)
+    LET sql_stmt = SFMT("SELECT MAX(id) FROM %1", p_table)
     PREPARE stmt FROM sql_stmt
     EXECUTE stmt INTO last_num
     FREE stmt
@@ -934,20 +934,20 @@ END FUNCTION
 -- ==============================================================
 -- Generate next numeric
 -- ==============================================================
-
-FUNCTION get_next_code(p_table STRING, p_field STRING)
-
+PUBLIC FUNCTION get_next_code(p_table STRING, p_field STRING)
     DEFINE last_num INTEGER
     DEFINE next_num INTEGER
-
     DEFINE sql_stmt STRING
-    DEFINE stmt STRING
+    DEFINE l_stmt STRING
 
     LET last_num = 0
-    LET sql_stmt = SFMT("SELECT MAX(" || p_field || ") FROM %1", p_table)
+    LET next_num = 0
 
-    PREPARE stmt FROM sql_stmt
-    EXECUTE stmt INTO last_num
+    -- Build safe dynamic SQL
+    LET sql_stmt = SFMT("SELECT MAX(%1)::INTEGER FROM %2", p_field, p_table)
+
+    PREPARE l_stmt FROM sql_stmt
+    EXECUTE l_stmt INTO last_num
 
     FREE stmt
 
@@ -956,9 +956,42 @@ FUNCTION get_next_code(p_table STRING, p_field STRING)
     END IF
 
     LET next_num = last_num + 1
-    DISPLAY "New Stock Code :" || next_num
-    RETURN next_num
 
+    DISPLAY SFMT("Next available code for %1.%2 = %3", p_table, p_field, next_num)
+
+    RETURN next_num
+END FUNCTION
+
+
+-- ==============================================================
+-- Generate next record document number
+-- ==============================================================
+PUBLIC FUNCTION set_next_doc_no(p_table STRING, p_field STRING)
+    DEFINE last_num INTEGER
+    DEFINE next_num INTEGER
+    DEFINE sql_stmt STRING
+    DEFINE l_stmt STRING
+
+    LET last_num = 0
+    LET next_num = 0
+
+    -- Build safe dynamic SQL
+    LET sql_stmt = SFMT("SELECT MAX(id)::INTEGER FROM %2", p_field, p_table)
+
+    PREPARE l_stmt FROM sql_stmt
+    EXECUTE l_stmt INTO last_num
+
+    FREE stmt
+
+    IF last_num IS NULL THEN
+        LET last_num = 0
+    END IF
+
+    LET next_num = last_num + 1
+
+    DISPLAY SFMT("Next available code for %1.%2 = %3", p_table, p_field, next_num)
+
+    RETURN next_num
 END FUNCTION
 
 -- ==============================================================
@@ -1130,4 +1163,13 @@ PUBLIC FUNCTION apply_currency_prefix()
 --            CALL f.setFieldValue(field_name, SFMT("R %1", val))
 --        END IF
 --    END FOR
+END FUNCTION
+
+
+-- =======================
+-- Confirm Exit
+-- =======================
+FUNCTION confirm_exit()
+    
+   
 END FUNCTION

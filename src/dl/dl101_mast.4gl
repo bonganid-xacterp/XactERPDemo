@@ -17,7 +17,7 @@ IMPORT FGL sa133_crn
 IMPORT FGL sa131_order
 IMPORT FGL sa130_quote
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Record Definitions
@@ -104,7 +104,7 @@ FUNCTION init_dl_module()
 
         ON ACTION Edit ATTRIBUTES(TEXT = "Edit", IMAGE = "pen")
             DISPLAY "Edit Record"
-            IF rec_debt.acc_code IS NULL OR rec_debt.acc_code = 0 THEN
+            IF rec_debt.id IS NULL OR rec_debt.id = 0 THEN
                 CALL utils_globals.show_info("No record selected to edit.")
             ELSE
                 LET is_edit_mode = TRUE
@@ -133,7 +133,7 @@ FUNCTION init_dl_module()
 
         ON ACTION add_quote ATTRIBUTES(TEXT = "Add S/Quote", IMAGE = "new")
             DISPLAY "Add Quote"
-            --CALL sa130_quote.()
+            CALL sa130_quote.()
 
          ON ACTION add_order ATTRIBUTES(TEXT = "Add S/Order", IMAGE = "fa-reorder")
             DISPLAY "Add Quote"
@@ -226,8 +226,7 @@ FUNCTION new_debtor()
     CALL utils_globals.get_next_number("dl01_mast", "DL")
         RETURNING next_num, next_full
 
-    LET rec_debt.acc_code = next_num
-    LET rec_debt.full_acc_code = next_full
+    LET rec_debt.id = next_num
 
     DIALOG ATTRIBUTES(UNBUFFERED)
         INPUT BY NAME rec_debt.*
@@ -250,7 +249,7 @@ FUNCTION new_debtor()
             ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "filesave")
 
             LET dup_found = check_debtor_unique(
-                        rec_debt.acc_code,
+                        rec_debt.id,
                         rec_debt.cust_name,
                         rec_debt.phone,
                         rec_debt.email)
@@ -258,7 +257,7 @@ FUNCTION new_debtor()
                    IF dup_found = 0 THEN
                    
                     CALL save_debtor()
-                    LET new_acc_code = rec_debt.acc_code
+                    LET new_acc_code = rec_debt.id
                     
                     CALL utils_globals.show_info("Debtor saved successfully.")
                     
@@ -304,7 +303,7 @@ END FUNCTION
 FUNCTION delete_debtor()
     DEFINE ok, deleted_code, array_size INTEGER
 
-    IF rec_debt.acc_code IS NULL OR rec_debt.acc_code = 0 THEN
+    IF rec_debt.id IS NULL OR rec_debt.id = 0 THEN
         CALL utils_globals.show_info("No debtor selected for deletion.")
         RETURN
     END IF
@@ -319,8 +318,8 @@ FUNCTION delete_debtor()
         RETURN
     END IF
 
-    LET deleted_code = rec_debt.acc_code
-    DELETE FROM dl01_mast WHERE acc_code = deleted_code
+    LET deleted_code = rec_debt.id
+    DELETE FROM dl01_mast WHERE id = deleted_code
     CALL utils_globals.msg_deleted()
 
     CALL load_all_debtors()
@@ -350,10 +349,10 @@ FUNCTION select_debtors(where_clause STRING) RETURNS SMALLINT
 
     CALL arr_codes.clear()
     LET idx = 0
-    LET sql_stmt = "SELECT acc_code FROM dl01_mast"
+    LET sql_stmt = "SELECT id FROM dl01_mast"
 
     IF where_clause IS NOT NULL AND where_clause != "" THEN
-        LET sql_stmt = sql_stmt || " WHERE " || where_clause || " ORDER BY acc_code"
+        LET sql_stmt = sql_stmt || " WHERE " || where_clause || " ORDER BY id"
     END IF
 
     PREPARE stmt_select FROM sql_stmt
@@ -384,7 +383,7 @@ END FUNCTION
 FUNCTION load_debtor(p_code INTEGER)
     DEFINE l_found SMALLINT
 
-    SELECT * INTO rec_debt.* FROM dl01_mast WHERE acc_code = p_code
+    SELECT * INTO rec_debt.* FROM dl01_mast WHERE id = p_code
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_debt.*
@@ -427,7 +426,7 @@ FUNCTION save_debtor()
     SELECT COUNT(*)
         INTO exists
         FROM dl01_mast
-        WHERE acc_code = rec_debt.acc_code
+        WHERE id = rec_debt.id
 
     IF exists = 0 THEN
         INSERT INTO dl01_mast VALUES rec_debt.*
@@ -435,11 +434,11 @@ FUNCTION save_debtor()
     ELSE
         UPDATE dl01_mast
             SET dl01_mast.* = rec_debt.*
-            WHERE acc_code = rec_debt.acc_code
+            WHERE id = rec_debt.id
         CALL utils_globals.msg_updated()
     END IF
 
-    CALL load_debtor(rec_debt.acc_code)
+    CALL load_debtor(rec_debt.id)
 END FUNCTION
 
 -- ==============================================================
@@ -457,7 +456,7 @@ FUNCTION edit_debtor()
                 EXIT DIALOG
 
             ON ACTION cancel
-                CALL load_debtor(rec_debt.acc_code)
+                CALL load_debtor(rec_debt.id)
                 EXIT DIALOG
 
             AFTER FIELD cust_name
@@ -477,7 +476,7 @@ FUNCTION check_debtor_unique(
     RETURNS SMALLINT
     DEFINE dup_count INTEGER
 
-    SELECT COUNT(*) INTO dup_count FROM dl01_mast WHERE acc_code = p_acc_code
+    SELECT COUNT(*) INTO dup_count FROM dl01_mast WHERE id = p_acc_code
     IF dup_count > 0 THEN
         CALL utils_globals.show_error("Duplicate account code already exists.")
         RETURN 1
@@ -524,13 +523,13 @@ FUNCTION load_debtor_transactions(p_acc_code INTEGER)
     DECLARE c_trans CURSOR FOR
         SELECT *
             FROM dl30_trans
-            WHERE acc_code = p_acc_code
+            WHERE id = p_acc_code
             ORDER BY trans_date DESC, doc_no DESC
 
     LET idx = 1
     FOREACH c_trans
         INTO arr_debt_trans[idx].id,
-            arr_debt_trans[idx].acc_code,
+            arr_debt_trans[idx].id,
             arr_debt_trans[idx].doc_no,
             arr_debt_trans[idx].trans_date,
             arr_debt_trans[idx].doc_type,

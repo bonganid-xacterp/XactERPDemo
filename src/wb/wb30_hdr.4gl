@@ -12,7 +12,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Transfer header record structure
 TYPE bin_transfer_hdr_t RECORD
@@ -196,10 +196,6 @@ END FUNCTION
 
 PRIVATE FUNCTION save_transfer()
     DEFINE exists INTEGER
-
-    IF NOT validateFields() THEN
-        RETURN
-    END IF
 
     SELECT COUNT(*) INTO exists FROM wb30_hdr WHERE trans_no = rec_hdr.trans_no
 

@@ -13,7 +13,7 @@ IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL MasterCRUD
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Warehouse tag record structure
 TYPE tag_t RECORD

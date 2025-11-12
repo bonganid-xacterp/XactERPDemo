@@ -18,7 +18,7 @@ IMPORT FGL utils_globals
 -- DATABASE SCHEMA
 -- ==============================================================
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- CONFIGURATION CONSTANTS

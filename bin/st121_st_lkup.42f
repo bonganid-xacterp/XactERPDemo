@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="st121_st_lkup.tmp" build="3.20.14" sqlDbName="demoapp_db" spacing="normal" text="STOCK LOOKUP" width="52" height="14">
+<Form name="st121_st_lkup.tmp" build="3.20.14" sqlDbName="demoappdb" spacing="normal" text="STOCK LOOKUP" width="52" height="14">
   <LStr text="STOCK LOOKUP"/>
   <VBox name="vbox1">
     <Grid name="grd_st" width="52" height="14">
@@ -11,11 +11,11 @@
           <Edit width="7" scroll="1"/>
           <LStr text="Stock ID"/>
         </TableColumn>
-        <TableColumn name="st01_mast.description" colName="description" sqlType="VARCHAR(150)" required="1" notNull="1" fieldId="1" sqlTabName="st01_mast" text="Description" tabIndex="2">
+        <TableColumn name="st01_mast.description" colName="description" sqlType="VARCHAR(200)" required="1" notNull="1" fieldId="1" sqlTabName="st01_mast" text="Description" tabIndex="2">
           <Edit width="30" scroll="1"/>
           <LStr text="Description"/>
         </TableColumn>
-        <TableColumn name="st01_mast.stock_on_hand" colName="stock_on_hand" sqlType="DECIMAL(12,2)" fieldId="2" sqlTabName="st01_mast" text="Stock On Hand" tabIndex="3" numAlign="1">
+        <TableColumn name="st01_mast.stock_on_hand" colName="stock_on_hand" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="2" sqlTabName="st01_mast" text="Stock On Hand" tabIndex="3" numAlign="1">
           <Edit width="8"/>
           <LStr text="Stock On Hand"/>
         </TableColumn>

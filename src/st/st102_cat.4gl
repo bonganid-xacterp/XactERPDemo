@@ -1,76 +1,76 @@
 -- ==============================================================
 -- Program   : st102_cat.4gl
--- Purpose   : Stock Category Master maintenance
+-- Purpose   : Stock Category Master Maintenance
 -- Module    : Stock Category (st)
 -- Number    : 102
 -- Author    : Bongani Dlamini
--- Version   : Genero ver 3.20.10
+-- Version   : Genero 3.20.10
 -- ==============================================================
 
 IMPORT ui
 IMPORT FGL utils_globals
+IMPORT FGL utils_lkup   -- ? Global lookup utility (replaces st122_cat_lkup)
 IMPORT FGL st122_cat_lkup
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
--- Record definitions
+-- Record Definitions
 -- ==============================================================
 TYPE category_t RECORD LIKE st02_cat.*
-
 DEFINE rec_cat category_t
+
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
 
 -- ==============================================================
--- MAIN (Standalone Mode)
+-- MAIN (Standalone or Child Mode)
 -- ==============================================================
 --MAIN
---
---    -- Initialize application (sets g_standalone_mode automatically)
 --    IF NOT utils_globals.initialize_application() THEN
---        DISPLAY "Initialization failed."
+--        CALL utils_globals.show_error("Initialization failed.")
 --        EXIT PROGRAM 1
 --    END IF
 --
---    -- If standalone mode, open window
 --    IF utils_globals.is_standalone() THEN
---      OPTIONS INPUT WRAP
---        OPEN WINDOW w_st_cat WITH FORM "st102_cat" ATTRIBUTES(STYLE = "main")
+--        OPEN WINDOW w_st_cat WITH FORM "st102_cat" ATTRIBUTES(STYLE="dialog")
+--    ELSE
+--        OPEN WINDOW w_st_cat WITH FORM "st102_cat" ATTRIBUTES(STYLE="child")
 --    END IF
 --
---    -- Run the module (works in both standalone and MDI modes)
---    CALL init_cat_module()
+--    CALL init_category_module()
 --
---    -- If standalone mode, close window on exit
 --    IF utils_globals.is_standalone() THEN
 --        CLOSE WINDOW w_st_cat
 --    END IF
---
 --END MAIN
 
+
 -- ==============================================================
--- Lookup popup
+-- Lookup Popup using utils_lookup
 -- ==============================================================
 FUNCTION query_category() RETURNS STRING
     DEFINE selected_code STRING
+
+    -- ? Use generic lookup function from utils_lookup
     LET selected_code = st122_cat_lkup.load_lookup()
+
     RETURN selected_code
 END FUNCTION
 
--- ==============================================================
--- MENU Controller
--- ==============================================================
-FUNCTION init_cat_module()
 
-    -- Start in read-only mode
+-- ==============================================================
+-- Main Controller Menu
+-- ==============================================================
+FUNCTION init_category_module()
     LET is_edit_mode = FALSE
+    CALL utils_globals.set_form_label("lbl_form_title", "STOCK CATEGORY MAINTENANCE")
 
-    -- ===========================================
-    -- MAIN MENU (top-level)
-    -- ===========================================
-    MENU "Stock Categories Menu"
+     -- initialize the list of records
+    CALL load_all_categories()
+
+    MENU "Category Menu"
 
         COMMAND "Find"
             CALL query_categories()
@@ -82,7 +82,7 @@ FUNCTION init_cat_module()
 
         COMMAND "Edit"
             IF rec_cat.cat_code IS NULL OR rec_cat.cat_code = "" THEN
-                CALL utils_globals.show_info("No record selected to edit.")
+                CALL utils_globals.show_info("No category selected to edit.")
             ELSE
                 LET is_edit_mode = TRUE
                 CALL edit_category()
@@ -92,101 +92,81 @@ FUNCTION init_cat_module()
             CALL delete_category()
             LET is_edit_mode = FALSE
 
-        COMMAND "First"
-            CALL move_record(-2)
-
         COMMAND "Previous"
             CALL move_record(-1)
 
         COMMAND "Next"
             CALL move_record(1)
 
-        COMMAND "Last"
-            CALL move_record(2)
-
         COMMAND "Exit"
             EXIT MENU
-
     END MENU
 END FUNCTION
 
--- ==============================================================
--- Edit Category (Sub-dialog)
--- ==============================================================
-FUNCTION edit_category()
-
-    DIALOG ATTRIBUTES(UNBUFFERED)
-
-        INPUT BY NAME rec_cat.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "category")
-
-            BEFORE INPUT
-                MESSAGE "Edit mode enabled. Make changes and click Save or Cancel."
-
-            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
-                CALL save_category()
-                EXIT DIALOG
-
-            ON ACTION cancel
-                CALL load_category(rec_cat.cat_code) -- Reload to discard changes
-                EXIT DIALOG
-
-            AFTER FIELD cat_code
-                IF rec_cat.cat_code IS NULL OR rec_cat.cat_code = "" THEN
-                    CALL utils_globals.show_error("Category Code is required.")
-                    NEXT FIELD cat_code
-                END IF
-
-            AFTER FIELD cat_name
-                IF rec_cat.cat_name IS NULL OR rec_cat.cat_name = "" THEN
-                    CALL utils_globals.show_error("Category Name is required.")
-                    NEXT FIELD cat_name
-                END IF
-
-        END INPUT
-
-    END DIALOG
-
-END FUNCTION
 
 -- ==============================================================
--- Query using Lookup Window
+-- Query using Lookup
 -- ==============================================================
 FUNCTION query_categories()
     DEFINE selected_code STRING
-
     LET selected_code = query_category()
 
-    IF selected_code IS NOT NULL THEN
-        CALL load_category(selected_code)
-        -- Update the array to contain just this record for navigation
-        CALL arr_codes.clear()
-        LET arr_codes[1] = selected_code
-        LET curr_idx = 1
+    IF selected_code IS NULL OR selected_code = "" THEN
+        RETURN
+    END IF
+
+    CALL load_category(selected_code)
+
+    CALL arr_codes.clear()
+    LET arr_codes[1] = selected_code
+    LET curr_idx = 1
+END FUNCTION
+
+-- ==============================================================
+-- Load all categories into array
+-- ==============================================================
+FUNCTION load_all_categories()
+    DEFINE ok SMALLINT
+    LET ok = select_categories("1=1")
+
+    IF ok THEN
+        MESSAGE SFMT("Loaded %1 category(ies)", arr_codes.getLength())
+    ELSE
+        CALL utils_globals.show_info("No categories found.")
+        INITIALIZE rec_cat.* TO NULL
+        DISPLAY BY NAME rec_cat.*
     END IF
 END FUNCTION
 
 -- ==============================================================
--- SELECT Categories into Array
+-- Select categories into array
 -- ==============================================================
-FUNCTION select_categories(where_clause) RETURNS SMALLINT
-    DEFINE where_clause STRING
+FUNCTION select_categories(where_clause STRING) RETURNS SMALLINT
     DEFINE code STRING
     DEFINE idx INTEGER
+    DEFINE sql_stmt STRING
 
     CALL arr_codes.clear()
     LET idx = 0
+    LET sql_stmt = "SELECT cat_code FROM st02_cat"
 
-    DECLARE c_cat_curs CURSOR FROM "SELECT cat_code FROM st02_cat WHERE "
-        || where_clause
-        || " ORDER BY cat_code"
+    IF where_clause IS NOT NULL AND where_clause != "" THEN
+        LET sql_stmt = sql_stmt || " WHERE " || where_clause
+    END IF
 
-    FOREACH c_cat_curs INTO code
+    LET sql_stmt = sql_stmt || " ORDER BY cat_code"
+
+    PREPARE stmt_select FROM sql_stmt
+    DECLARE c_curs CURSOR FOR stmt_select
+
+    FOREACH c_curs INTO code
         LET idx = idx + 1
         LET arr_codes[idx] = code
     END FOREACH
 
-    FREE c_cat_curs
+    CLOSE c_curs
+    FREE c_curs
+    FREE stmt_select
 
     IF arr_codes.getLength() == 0 THEN
         CALL utils_globals.msg_no_record()
@@ -196,7 +176,6 @@ FUNCTION select_categories(where_clause) RETURNS SMALLINT
     LET curr_idx = 1
     CALL load_category(arr_codes[curr_idx])
     RETURN TRUE
-
 END FUNCTION
 
 -- ==============================================================
@@ -204,65 +183,58 @@ END FUNCTION
 -- ==============================================================
 FUNCTION load_category(p_code STRING)
 
+    DISPLAY p_code
     SELECT * INTO rec_cat.* FROM st02_cat WHERE cat_code = p_code
 
     IF SQLCA.SQLCODE = 0 THEN
         DISPLAY BY NAME rec_cat.*
+    ELSE
+        INITIALIZE rec_cat.* TO NULL
+        DISPLAY BY NAME rec_cat.*
     END IF
-
 END FUNCTION
 
 -- ==============================================================
 -- Navigation
 -- ==============================================================
 PRIVATE FUNCTION move_record(dir SMALLINT)
+    DEFINE new_idx INTEGER
 
-    CASE dir
-        WHEN -2
-            LET curr_idx = 1
-        WHEN -1
-            IF curr_idx > 1 THEN
-                LET curr_idx = curr_idx - 1
-            ELSE
-                CALL utils_globals.msg_start_of_list()
-                RETURN
-            END IF
-        WHEN 1
-            IF curr_idx < arr_codes.getLength() THEN
-                LET curr_idx = curr_idx + 1
-            ELSE
-                CALL utils_globals.msg_end_of_list()
-                RETURN
-            END IF
-        WHEN 2
-            LET curr_idx = arr_codes.getLength()
-    END CASE
-
-    IF arr_codes.getLength() > 0 THEN
-        CALL load_category(arr_codes[curr_idx])
+    IF arr_codes.getLength() == 0 THEN
+        CALL utils_globals.show_info("No records to navigate.")
+        RETURN
     END IF
 
+    LET new_idx = utils_globals.navigate_records(arr_codes, curr_idx, dir)
+    LET curr_idx = new_idx
+    CALL load_category(arr_codes[curr_idx])
 END FUNCTION
 
 -- ==============================================================
 -- New Category
 -- ==============================================================
 FUNCTION new_category()
-    DEFINE dup_found SMALLINT
-    DEFINE ok SMALLINT
-    DEFINE new_cat_code STRING
+    DEFINE dup_found, new_id SMALLINT
+    DEFINE next_num INTEGER
+    DEFINE next_full STRING
+    DEFINE i, array_size INTEGER
 
-    -- Clear all fields and set defaults
     INITIALIZE rec_cat.* TO NULL
-    LET rec_cat.status = "1"
 
-    MESSAGE "Enter new category details, then click Save or Cancel."
+    CALL utils_globals.get_next_number("st02_cat", "CAT")
+        RETURNING next_num, next_full
+
+    LET rec_cat.cat_code = next_full
+    LET rec_cat.status = "active"
+    LET rec_cat.created_at = CURRENT
+    LET rec_cat.created_by = utils_globals.get_current_user_id()
+
+    CALL utils_globals.set_form_label("lbl_form_title", "NEW CATEGORY")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
         INPUT BY NAME rec_cat.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "new_category")
+            ATTRIBUTES(WITHOUT DEFAULTS, NAME="new_category")
 
-            -- validations
             AFTER FIELD cat_code
                 IF rec_cat.cat_code IS NULL OR rec_cat.cat_code = "" THEN
                     CALL utils_globals.show_error("Category Code is required.")
@@ -275,31 +247,74 @@ FUNCTION new_category()
                     NEXT FIELD cat_name
                 END IF
 
-            -- main actions
-            ON ACTION save ATTRIBUTES(TEXT = "Save")
+            ON ACTION save ATTRIBUTES(TEXT="Save", IMAGE="filesave")
                 LET dup_found = check_category_unique(rec_cat.cat_code, rec_cat.cat_name)
-
                 IF dup_found = 0 THEN
                     CALL save_category()
+                    LET new_id = rec_cat.id
+                    CALL utils_globals.show_info("Category saved successfully.")
                     EXIT DIALOG
+                ELSE
+                    CALL utils_globals.show_error("Duplicate category found.")
                 END IF
 
             ON ACTION cancel
-                LET new_cat_code = NULL
+                CALL utils_globals.show_info("Creation cancelled.")
+                LET new_id = NULL
                 EXIT DIALOG
         END INPUT
     END DIALOG
 
-    -- Load the newly added record in readonly mode
-    IF new_cat_code IS NOT NULL THEN
-        CALL load_category(new_cat_code)
-        CALL arr_codes.clear()
-        LET arr_codes[1] = new_cat_code
-        LET curr_idx = 1
+    -- Reload the list and position to the new record
+    IF new_id IS NOT NULL THEN
+        CALL load_all_categories()
+        LET array_size = arr_codes.getLength()
+        IF array_size > 0 THEN
+            FOR i = 1 TO array_size
+                IF arr_codes[i] = rec_cat.cat_code THEN
+                    LET curr_idx = i
+                    EXIT FOR
+                END IF
+            END FOR
+        END IF
+        CALL load_category(rec_cat.cat_code)
     ELSE
-        -- Cancelled, reload the list
-        LET ok = select_categories("1=1")
+        LET array_size = arr_codes.getLength()
+        IF array_size > 0 AND curr_idx >= 1 AND curr_idx <= array_size THEN
+            CALL load_category(arr_codes[curr_idx])
+        ELSE
+            LET curr_idx = 0
+            INITIALIZE rec_cat.* TO NULL
+            DISPLAY BY NAME rec_cat.*
+        END IF
     END IF
+END FUNCTION
+
+-- ==============================================================
+-- Edit Category
+-- ==============================================================
+FUNCTION edit_category()
+    CALL utils_globals.set_form_label("lbl_form_title", "EDIT CATEGORY")
+
+    DIALOG ATTRIBUTES(UNBUFFERED)
+        INPUT BY NAME rec_cat.*
+            ATTRIBUTES(WITHOUT DEFAULTS, NAME="edit_category")
+
+            ON ACTION save ATTRIBUTES(TEXT="Update", IMAGE="filesave")
+                CALL save_category()
+                EXIT DIALOG
+
+            ON ACTION cancel
+                CALL load_category(rec_cat.cat_code)
+                EXIT DIALOG
+
+            AFTER FIELD cat_name
+                IF rec_cat.cat_name IS NULL OR rec_cat.cat_name = "" THEN
+                    CALL utils_globals.show_error("Category Name is required.")
+                    NEXT FIELD cat_name
+                END IF
+        END INPUT
+    END DIALOG
 END FUNCTION
 
 -- ==============================================================
@@ -307,25 +322,36 @@ END FUNCTION
 -- ==============================================================
 FUNCTION save_category()
     DEFINE exists INTEGER
+    DEFINE l_user INTEGER
 
-    SELECT COUNT(*)
-        INTO exists
-        FROM st02_cat
-        WHERE cat_code = rec_cat.cat_code
+    LET l_user = utils_globals.get_current_user_id()
 
-    IF exists = 0 THEN
-        -- save data into the db
-        INSERT INTO st02_cat VALUES rec_cat.*
-        CALL utils_globals.msg_saved()
-    ELSE
-        -- update record
-        UPDATE st02_cat
-            SET st02_cat.* = rec_cat.*
+    BEGIN WORK
+    TRY
+        SELECT COUNT(*) INTO exists FROM st02_cat WHERE cat_code = rec_cat.cat_code
+
+        IF exists = 0 THEN
+            INSERT INTO st02_cat VALUES rec_cat.*
+            COMMIT WORK
+            CALL utils_globals.msg_saved()
+        ELSE
+            UPDATE st02_cat SET
+                cat_name = rec_cat.cat_name,
+                description = rec_cat.description,
+                status = rec_cat.status,
+                updated_at = CURRENT
             WHERE cat_code = rec_cat.cat_code
-        CALL utils_globals.msg_updated()
-    END IF
+            COMMIT WORK
+            CALL utils_globals.msg_updated()
+        END IF
 
-    CALL load_category(rec_cat.cat_code)
+        CALL load_category(rec_cat.cat_code)
+
+    CATCH
+        ROLLBACK WORK
+        CALL utils_globals.show_error(
+            SFMT("Save failed: %1", SQLCA.SQLCODE))
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -333,55 +359,65 @@ END FUNCTION
 -- ==============================================================
 FUNCTION delete_category()
     DEFINE ok SMALLINT
+    DEFINE deleted_code STRING
+    DEFINE array_size INTEGER
 
-    -- If no record is loaded, skip
     IF rec_cat.cat_code IS NULL OR rec_cat.cat_code = "" THEN
         CALL utils_globals.show_info("No category selected for deletion.")
         RETURN
     END IF
 
-    -- Confirm delete
-    LET ok =
-        utils_globals.show_confirm(
-            "Delete this category: " || rec_cat.cat_name || "?",
-            "Confirm Delete")
+    LET ok = utils_globals.show_confirm(
+        "Delete this category: " || rec_cat.cat_name || "?",
+        "Confirm Delete"
+    )
 
     IF NOT ok THEN
-        MESSAGE "Delete cancelled."
         CALL utils_globals.show_info("Delete cancelled.")
         RETURN
     END IF
 
-    DELETE FROM st02_cat WHERE cat_code = rec_cat.cat_code
+    LET deleted_code = rec_cat.cat_code
+    DELETE FROM st02_cat WHERE cat_code = deleted_code
     CALL utils_globals.msg_deleted()
-    LET ok = select_categories("1=1")
+
+    -- Reload list and navigate to valid record
+    CALL load_all_categories()
+    LET array_size = arr_codes.getLength()
+
+    IF array_size > 0 THEN
+        IF curr_idx > array_size THEN
+            LET curr_idx = array_size
+        END IF
+        IF curr_idx < 1 THEN
+            LET curr_idx = 1
+        END IF
+        CALL load_category(arr_codes[curr_idx])
+    ELSE
+        LET curr_idx = 0
+        INITIALIZE rec_cat.* TO NULL
+        DISPLAY BY NAME rec_cat.*
+    END IF
 END FUNCTION
 
+
 -- ==============================================================
--- Check category uniqueness
+-- Check Category Uniqueness
 -- ==============================================================
-FUNCTION check_category_unique(p_cat_code STRING, p_cat_name STRING)
-    RETURNS SMALLINT
+FUNCTION check_category_unique(p_cat_code STRING, p_cat_name STRING) RETURNS SMALLINT
     DEFINE dup_count INTEGER
-    DEFINE exists SMALLINT
 
-    LET exists = 0
-
-    -- check for duplicate category code
     SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE cat_code = p_cat_code
     IF dup_count > 0 THEN
-        CALL utils_globals.show_error("Duplicate category code already exists.")
-        LET exists = 1
-        RETURN exists
+        CALL utils_globals.show_error("Category code already exists.")
+        RETURN 1
     END IF
 
-    -- check for duplicate name
     SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE cat_name = p_cat_name
     IF dup_count > 0 THEN
         CALL utils_globals.show_error("Category name already exists.")
-        LET exists = 1
-        RETURN exists
+        RETURN 1
     END IF
 
-    RETURN exists
+    RETURN 0
 END FUNCTION

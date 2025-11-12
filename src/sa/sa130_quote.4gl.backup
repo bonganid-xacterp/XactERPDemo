@@ -15,7 +15,7 @@ IMPORT FGL dl121_lkup
 --IMPORT FGL dl101_mast
 
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Record Definitions

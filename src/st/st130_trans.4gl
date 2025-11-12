@@ -16,7 +16,7 @@ IMPORT FGL utils_db
 IMPORT FGL st121_st_lkup
 IMPORT FGL utils_status_const
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Record definitions

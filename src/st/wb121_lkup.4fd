@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{ddb70f6d-4b2e-45f0-b237-a57f840b26ab}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record active="false" name="tbl_list" uid="{6229daf8-8acb-43ca-b0d3-e859650452cf}">
+    <RecordField colName="wb_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wb01_mast.wb_code" sqlTabName="wb01_mast" uid="{4db96a48-716c-419c-9c16-f1732a4e6cc2}"/>
+    <RecordField colName="description" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wb01_mast.description" sqlTabName="wb01_mast" uid="{65beebe2-ece0-4fa9-b098-1c56212a039c}"/>
+    <RecordField colName="wh_id" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wb01_mast.wh_id" sqlTabName="wb01_mast" uid="{4ffe546d-dde6-48bb-a010-7bc520b084d8}"/>
+  </Record>
+  <Record active="false" masterTable="" name="f_search" uid="{72ede0cf-75f3-4ce4-a17b-5840723e100f}">
+    <RecordField fieldIdRef="4" length="100" name="f_search" uid="{2832b36c-9af7-48f4-a981-4117e95cb987}"/>
+  </Record>
+  <Form gridHeight="16" gridWidth="51" name="frm_wb_lkup" spacing="normal" text="BIN LOOKUP">
+    <VBox gridHeight="16" gridWidth="51" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="14" gridWidth="51" name="grd_st" posX="0" posY="1">
+        <Label color="green" gridHeight="1" gridWidth="50" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text="BIN LOOKUP"/>
+        <Table gridHeight="12" gridWidth="50" name="f_st_list" posX="1" posY="1" totalRows="10">
+          <Edit colName="wb_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="wb01_mast.wb_code" posX="0" posY="0" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Bin ID" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="description" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="wb01_mast.description" posX="7" posY="0" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Description" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="wh_id" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wb01_mast.wh_id" posX="37" posY="0" sqlTabName="wb01_mast" tabIndex="-1" title="WH" widget="Edit"/>
+        </Table>
+        <Label gridHeight="1" gridWidth="7" name="lbl_filter" posX="1" posY="13" text="Filter"/>
+        <Edit fieldId="4" gridHeight="1" gridWidth="27" length="100" name="f_search" posX="9" posY="13" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA2ADIAMgA5AGQAYQBmADgALQA4AGEAYwBiAC0ANAAzAGMAYQAtAGIAMABkADMALQBlADgANQA5ADYANQAwADQANQAyAGMAZgB9QEAAACAAABxAQAAAIAAAHAAAAAAAAAAAAQAAAEwAewA3ADIAZQBkAGUAMABjAGYALQA3ADUAZgAzAC0ANABjAGUANAAtAGEAMQA3AGIALQA1ADgANAAwADcAMgAzAGUAMQAwADAAZgB9QGfmZpYzM15AQMzM7mZmhD9gYk3S8an8AQ==]]>
+  </DiagramLayout>
+</ManagedForm>

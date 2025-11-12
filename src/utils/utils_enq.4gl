@@ -9,7 +9,7 @@
 
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Generic enquiry function
 FUNCTION generic_enquiry(

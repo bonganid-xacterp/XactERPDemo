@@ -8,10 +8,10 @@
 IMPORT FGL utils_globals
 IMPORT ui
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- display creditor form
-FUNCTION fetch_cred_list() RETURNS STRING
+FUNCTION fetch_list() RETURNS STRING
     DEFINE selected_code STRING
     DEFINE idx INTEGER
     DEFINE dlg ui.Dialog
@@ -19,13 +19,13 @@ FUNCTION fetch_cred_list() RETURNS STRING
 
     DEFINE
         cred_arr DYNAMIC ARRAY OF RECORD
-            acc_code LIKE cl01_mast.acc_code,
+            id LIKE cl01_mast.id,
             supp_name LIKE cl01_mast.supp_name,
             status LIKE cl01_mast.status
         END RECORD,
 
         cred_rec RECORD
-            acc_code LIKE cl01_mast.acc_code,
+            id LIKE cl01_mast.id,
             supp_name LIKE cl01_mast.supp_name,
             status LIKE cl01_mast.status
         END RECORD
@@ -37,11 +37,11 @@ FUNCTION fetch_cred_list() RETURNS STRING
 
     -- Load data of all active creditors
     DECLARE creditors_curs CURSOR FOR
-        SELECT acc_code,
+        SELECT id,
             supp_name,
             status
             FROM cl01_mast
-            ORDER BY acc_code
+            ORDER BY id
 
     CALL cred_arr.clear()
 
@@ -64,7 +64,7 @@ FUNCTION fetch_cred_list() RETURNS STRING
                 ON ACTION accept
                     LET sel = dlg.getCurrentRow("r_creditors_list")
                     IF sel > 0 AND sel <= cred_arr.getLength() THEN
-                        LET selected_code = cred_arr[sel].acc_code
+                        LET selected_code = cred_arr[sel].id
                     END IF
                     EXIT DIALOG
 
@@ -76,7 +76,7 @@ FUNCTION fetch_cred_list() RETURNS STRING
                 ON KEY(RETURN)
                     LET sel = dlg.getCurrentRow("r_creditors_list")
                     IF sel > 0 AND sel <= cred_arr.getLength() THEN
-                        LET selected_code = cred_arr[sel].acc_code
+                        LET selected_code = cred_arr[sel].id
                     END IF
                     EXIT DIALOG
                 ON KEY(ESCAPE)
@@ -100,7 +100,7 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
     DEFINE selected_code STRING
     
     DEFINE cred_arr DYNAMIC ARRAY OF RECORD
-        acc_code LIKE cl01_mast.acc_code,
+        id LIKE cl01_mast.id,
         supp_name LIKE cl01_mast.supp_name,
         status LIKE cl01_mast.status
     END RECORD
@@ -141,7 +141,7 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
             
                 LET sel = DIALOG.getCurrentRow("r_creditors_list")
                 IF sel > 0 AND sel <= cred_arr.getLength() THEN
-                    LET selected_code = cred_arr[sel].acc_code
+                    LET selected_code = cred_arr[sel].id
                     EXIT DIALOG
                 END IF
 
@@ -152,14 +152,14 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
             ON ACTION doubleclick
                 LET sel = DIALOG.getCurrentRow("r_creditors_list")
                 IF sel > 0 AND sel <= cred_arr.getLength() THEN
-                    LET selected_code = cred_arr[sel].acc_code
+                    LET selected_code = cred_arr[sel].id
                     EXIT DIALOG
                 END IF
 
             ON KEY(RETURN)
                 LET sel = DIALOG.getCurrentRow("r_creditors_list")
                 IF sel > 0 AND sel <= cred_arr.getLength() THEN
-                    LET selected_code = cred_arr[sel].acc_code
+                    LET selected_code = cred_arr[sel].id
                     EXIT DIALOG
                 END IF
 
@@ -177,26 +177,24 @@ END FUNCTION
 FUNCTION load_creditors_for_lookup(search_filter STRING)
     RETURNS(
         DYNAMIC ARRAY OF RECORD
-            acc_code LIKE cl01_mast.acc_code,
-            name LIKE cl01_mast.supp_name,
-            status LIKE cl01_mast.status,
-            lbl_status STRING
+            id LIKE cl01_mast.id,
+            l_name LIKE cl01_mast.supp_name,
+            status LIKE cl01_mast.status
         END RECORD,
         INTEGER)
 
     DEFINE rec RECORD
-        acc_code LIKE cl01_mast.acc_code,
-        name LIKE cl01_mast.supp_name,
-        status LIKE cl01_mast.status,
-        lbl_status STRING
+        id LIKE cl01_mast.id,
+        l_name LIKE cl01_mast.supp_name,
+        status LIKE cl01_mast.status
     END RECORD
 
     DEFINE cred_arr DYNAMIC ARRAY OF RECORD
-        acc_code LIKE cl01_mast.acc_code,
-        name LIKE cl01_mast.supp_name,
-        status LIKE cl01_mast.status,
-        lbl_status STRING
+        id LIKE cl01_mast.id,
+        l_name LIKE cl01_mast.supp_name,
+        status LIKE cl01_mast.status
     END RECORD
+    
     DEFINE sql_stmt STRING
     DEFINE row_count INTEGER
     DEFINE search_pat STRING
@@ -207,28 +205,28 @@ FUNCTION load_creditors_for_lookup(search_filter STRING)
     LET search_pat = "%" || NVL(search_filter, "") || "%"
 
     -- Build SQL with search filter
-    LET sql_stmt = "SELECT acc_code, supp_name, status FROM cl01_mast"
+    LET sql_stmt = "SELECT id, supp_name, status FROM cl01_mast"
 
     IF search_filter IS NOT NULL AND search_filter.getLength() > 0 THEN
         LET sql_stmt =
             sql_stmt
-                || " WHERE acc_code LIKE '%"
+                || " WHERE id LIKE '%"
                 || search_filter
                 || "%'"
-                || " OR name LIKE '%"
+                || " OR supp_name LIKE '%"
                 || search_filter
                 || "%'"
     END IF
 
-    LET sql_stmt = sql_stmt || " ORDER BY acc_code"
+    LET sql_stmt = sql_stmt || " ORDER BY id"
 
     WHENEVER ERROR CONTINUE
     
     PREPARE cred_prep
-        FROM "SELECT acc_code, supp_name, status"
+        FROM "SELECT id, supp_name, status"
             || "FROM cl01_mast "
-            || "WHERE acc_code ILIKE ? OR name ILIKE ? "
-            || "ORDER BY acc_code";
+            || "WHERE id ILIKE ? OR supp_name ILIKE ? "
+            || "ORDER BY id";
             
     DECLARE cred_csr2 CURSOR FOR cred_prep
 

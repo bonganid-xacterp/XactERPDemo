@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="gl100_trans.tmp" build="3.20.14" sqlDbName="demoapp_db" text="GL Transactions" width="97" height="12">
+<Form name="gl100_trans.tmp" build="3.20.14" sqlDbName="demoappdb" text="GL Transactions" width="97" height="12">
   <LStr text="GL Transactions"/>
   <VBox name="vbox1">
     <Grid name="grd_gl30_jnls" width="97" height="12">
@@ -7,7 +7,7 @@
         <LStr text="GL JOURNALS"/>
       </Label>
       <Table pageSize="5" name="gl30_jnls" width="94" posY="2" posX="2" gridWidth="94" gridHeight="9" tabName="arr_gl30_jnls">
-        <TableColumn name="gl30_jnls.jrn_no" colName="jrn_no" sqlType="VARCHAR(20)" fieldId="0" sqlTabName="gl30_jnls" text="JNL No" tabIndex="1">
+        <TableColumn name="gl30_jnls.jrn_no" colName="jrn_no" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="gl30_jnls" text="JNL No" tabIndex="1">
           <Edit width="11" scroll="1"/>
           <LStr text="JNL No"/>
         </TableColumn>
@@ -15,19 +15,19 @@
           <Edit width="10" scroll="1"/>
           <LStr text="trans_date"/>
         </TableColumn>
-        <TableColumn name="gl30_jnls.doc_type" colName="doc_type" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="gl30_jnls" text="Doc Type" tabIndex="3">
+        <TableColumn name="gl30_jnls.doc_type" colName="doc_type" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="gl30_jnls" text="Doc Type" tabIndex="3">
           <Edit width="10" scroll="1"/>
           <LStr text="Doc Type"/>
         </TableColumn>
-        <TableColumn name="gl30_jnls.doc_no" colName="doc_no" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="gl30_jnls" text="Doc no" tabIndex="4">
+        <TableColumn name="gl30_jnls.doc_no" colName="doc_no" sqlType="VARCHAR(30)" fieldId="3" sqlTabName="gl30_jnls" text="Doc no" tabIndex="4">
           <Edit width="8" scroll="1"/>
           <LStr text="Doc no"/>
         </TableColumn>
-        <TableColumn name="gl30_jnls.description" colName="description" sqlType="TEXT" fieldId="4" sqlTabName="gl30_jnls" text="Description" tabIndex="5">
+        <TableColumn name="gl30_jnls.description" colName="description" sqlType="VARCHAR(200)" fieldId="4" sqlTabName="gl30_jnls" text="Description" tabIndex="5">
           <Edit width="30" scroll="1"/>
           <LStr text="Description"/>
         </TableColumn>
-        <TableColumn name="gl30_jnls.status" colName="status" sqlType="VARCHAR(10)" fieldId="5" sqlTabName="gl30_jnls" text="Status" tabIndex="6">
+        <TableColumn name="gl30_jnls.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="5" sqlTabName="gl30_jnls" text="Status" tabIndex="6">
           <Edit width="6" scroll="1"/>
           <LStr text="Status"/>
         </TableColumn>

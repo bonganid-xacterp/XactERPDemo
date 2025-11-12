@@ -1,48 +1,53 @@
 -- ==============================================================
 -- Program   : start_app.4gl
--- Purpose   : XactERP Launcher / Parent MDI Container
+-- Purpose   : Simple MDI Container for XactERP
 -- Author    : Bongani Dlamini
 -- Version   : Genero 3.20.10
+-- Description: Simple MDI parent window that loads child modules
 -- ==============================================================
 
 IMPORT ui
-IMPORT om
 IMPORT FGL utils_globals
 IMPORT FGL sy100_login
-IMPORT FGL utils_db
-IMPORT FGL main_menu   -- the module that builds the StartMenu
+IMPORT FGL sy104_user_pwd
+
+-- Module imports for direct execution
+IMPORT FGL st101_mast
+IMPORT FGL st102_cat
+IMPORT FGL wh101_mast
+IMPORT FGL wb101_mast
+IMPORT FGL cl101_mast
+IMPORT FGL dl101_mast
+IMPORT FGL sy101_user
+
+SCHEMA demoappdb
 
 CONSTANT APP_NAME = "XACT ERP System"
 CONSTANT MAX_LOGIN_ATTEMPTS = 3
 
-DEFINE g_user_authenticated SMALLINT
+GLOBALS
+    DEFINE g_user_authenticated SMALLINT
+    DEFINE g_current_username STRING
+    DEFINE g_login_time DATETIME YEAR TO SECOND
+END GLOBALS
 
 MAIN
-    -- ==========================================================
-    -- 1. Initialize environment
-    -- ==========================================================
+    -- Initialize application
     IF NOT utils_globals.initialize_application() THEN
-        CALL utils_globals.show_error(
-            "Application initialization failed. Please contact your system administrator.")
+        CALL utils_globals.show_error("Application initialization failed.")
         EXIT PROGRAM 1
     END IF
 
-    -- ==========================================================
-    -- 2. Login
-    -- ==========================================================
+    -- Login
     IF NOT run_login_with_retry() THEN
         CALL utils_globals.show_info("Login cancelled or failed.")
         EXIT PROGRAM
     END IF
 
-    -- ==========================================================
-    -- 3. Open main MDI container
-    -- ==========================================================
-    CALL open_main_container()
+    -- Open MDI container and show menu
+    CALL open_mdi_container()
 
-    -- ==========================================================
-    -- 4. Application exit handling
-    -- ==========================================================
+    -- Cleanup
     CALL cleanup_application()
 END MAIN
 
@@ -59,6 +64,8 @@ FUNCTION run_login_with_retry() RETURNS SMALLINT
         LET result = sy100_login.login_user()
         IF result THEN
             LET g_user_authenticated = TRUE
+            LET g_current_username = sy100_login.get_current_user()
+            LET g_login_time = CURRENT
             RETURN TRUE
         END IF
         LET attempts = attempts + 1
@@ -74,85 +81,149 @@ END FUNCTION
 
 
 -- ==============================================================
--- OPEN MAIN CONTAINER
+-- OPEN MDI CONTAINER
 -- ==============================================================
-FUNCTION open_main_container()
-    DEFINE username STRING
-    DEFINE root, sm, smg, smc om.DomNode
+FUNCTION open_mdi_container()
+    -- Open MDI parent window
+    OPEN WINDOW w_mdi WITH FORM "main_shell"
+        ATTRIBUTES(TEXT = APP_NAME || " - " || g_current_username,
+                   STYLE = "mdi container")
 
-    LET username = sy100_login.get_current_user()
+    -- Show main menu
+    CALL show_main_menu()
 
-    -- load the style sheet
-    CALL ui.Interface.loadStyles("main_styles")
-
-    -- open the main shell (parent container)
-    OPEN WINDOW main_shell WITH FORM "main_shell"
-         ATTRIBUTES(STYLE="Window.container", TEXT=APP_NAME || " - " || username)
-
-    LET root = ui.Interface.getRootNode()
-
-    -- create StartMenu under this parent
-    LET sm = root.createChild("StartMenu")
-    CALL sm.setAttribute("text", "XactERP Main Menu")
-
-    -- SALES
-    LET smg = createStartMenuGroup(sm, "Sales")
-    LET smc = createStartMenuCommand(smg, "Sales Orders", "fglrun sa131_order --mode=child", "order.png")
-    LET smc = createStartMenuCommand(smg, "Sales Quotes", "fglrun sa133_quote --mode=child", "quote.png")
-
-    -- PURCHASES
-    LET smg = createStartMenuGroup(sm, "Purchases")
-    LET smc = createStartMenuCommand(smg, "Purchase Orders", "fglrun pu131_order --mode=child", "purchase.png")
-
-    -- STOCK
-    LET smg = createStartMenuGroup(sm, "Stock & Inventory")
-    LET smc = createStartMenuCommand(smg, "Stock Items", "fglrun st130_mast --mode=child", "stock.png")
-
-    -- SYSTEM
-    LET smg = createStartMenuGroup(sm, "System Configuration")
-    LET smc = createStartMenuCommand(smg, "User Management", "fglrun sy131_user --mode=child", "user.png")
-    LET smc = createStartMenuCommand(smg, "Roles & Permissions", "fglrun sy132_roles --mode=child", "roles.png")
-
-    --MENU "File"
-    --    COMMAND "Exit"
-    --        EXIT PROGRAM
-    --END MENU
+    CLOSE WINDOW w_mdi
 END FUNCTION
 
+-- ==============================================================
+-- MAIN MENU
+-- ==============================================================
+FUNCTION show_main_menu()
+    MENU "Main Menu"
 
--- ==============================================================
--- START MENU HELPERS
--- ==============================================================
-FUNCTION createStartMenuGroup(p, t) RETURNS om.DomNode
-    DEFINE p om.DomNode, t STRING, s om.DomNode
-    LET s = p.createChild("StartMenuGroup")
-    CALL s.setAttribute("text", t)
-    RETURN s
+        -- Stock Module
+        COMMAND "Stocks"
+            CALL launch_child_module("st101_mast", "Stock Master")
+
+        COMMAND "Stock Categories"
+            CALL launch_child_module("st102_cat", "Stock Categories")
+
+        -- Warehouse Module
+        COMMAND "Warehouses"
+            CALL launch_child_module("wh101_mast", "Warehouse Master")
+
+        COMMAND "Warehouse Bins"
+            CALL launch_child_module("wb101_mast", "Warehouse Bins")
+
+        -- Customers & Suppliers
+        COMMAND "Customers"
+            CALL launch_child_module("dl101_mast", "Customer Master")
+
+        COMMAND "Suppliers"
+            CALL launch_child_module("cl101_mast", "Supplier Master")
+
+        -- System
+        COMMAND "Users"
+            CALL launch_child_module("sy101_user", "User Management")
+
+        COMMAND "Change Password"
+            CALL change_password()
+
+        COMMAND "About"
+            CALL show_about_dialog()
+
+        COMMAND "Exit"
+            IF confirm_exit() THEN
+                EXIT MENU
+            END IF
+
+    END MENU
 END FUNCTION
 
-FUNCTION createStartMenuCommand(p, t, c, i) RETURNS om.DomNode
-    DEFINE p om.DomNode, t, c, i STRING
-    DEFINE s om.DomNode
-    LET s = p.createChild("StartMenuCommand")
-    CALL s.setAttribute("text", t)
-    CALL s.setAttribute("exec", c)
-    IF i IS NOT NULL THEN
-        CALL s.setAttribute("image", i)
+-- ==============================================================
+-- LAUNCH CHILD MODULE
+-- ==============================================================
+FUNCTION launch_child_module(module_name STRING, title STRING)
+    -- Open child window
+    CASE module_name
+        WHEN "st101_mast"
+            OPEN WINDOW w_st101 WITH FORM "st101_mast"
+                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
+            CALL st101_mast.init_st_module()
+            CLOSE WINDOW w_st101
+
+        WHEN "st102_cat"
+            OPEN WINDOW w_st102 WITH FORM "st102_cat"
+                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
+            CALL st102_cat.init_category_module()
+            CLOSE WINDOW w_st102
+
+        WHEN "wh101_mast"
+            OPEN WINDOW w_wh101 WITH FORM "wh101_mast"
+                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
+            CALL wh101_mast.init_wh_module()
+            CLOSE WINDOW w_wh101
+
+        WHEN "wb101_mast"
+            OPEN WINDOW w_wb101 WITH FORM "wb101_mast"
+                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
+            CALL wb101_mast.init_wb_module()
+            CLOSE WINDOW w_wb101
+
+        WHEN "dl101_mast"
+            OPEN WINDOW w_dl101 WITH FORM "dl101_mast"
+                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
+            CALL dl101_mast.init_dl_module()
+            CLOSE WINDOW w_dl101
+
+        WHEN "cl101_mast"
+            OPEN WINDOW w_cl101 WITH FORM "cl101_mast"
+                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
+            CALL cl101_mast.init_cl_module()
+            CLOSE WINDOW w_cl101
+
+        WHEN "sy101_user"
+            OPEN WINDOW w_sy101 WITH FORM "sy101_user"
+                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
+            CALL sy101_user.init_user_module()
+            CLOSE WINDOW w_sy101
+
+        OTHERWISE
+            CALL utils_globals.show_error("Module not implemented: " || module_name)
+    END CASE
+END FUNCTION
+
+-- ==============================================================
+-- HELPER FUNCTIONS
+-- ==============================================================
+FUNCTION change_password()
+    DEFINE result SMALLINT
+    LET result = sy104_user_pwd.change_password(g_current_username)
+    IF result THEN
+        CALL utils_globals.show_info("Password changed successfully.")
     END IF
-    RETURN s
 END FUNCTION
 
+FUNCTION show_about_dialog()
+    DEFINE about_text STRING
+    LET about_text = APP_NAME || "\n" ||
+                    "Version: 1.0\n" ||
+                    "User: " || g_current_username || "\n" ||
+                    "Login Time: " || g_login_time USING "DD/MM/YYYY HH:MM:SS" || "\n\n" ||
+                    "(c) 2025 XactERP Solutions"
+
+    CALL utils_globals.show_info(about_text)
+END FUNCTION
+
+FUNCTION confirm_exit() RETURNS SMALLINT
+    RETURN utils_globals.show_confirm("Are you sure you want to exit?", "Confirm Exit")
+END FUNCTION
 
 -- ==============================================================
 -- CLEANUP
 -- ==============================================================
 FUNCTION cleanup_application()
-    DEFINE db_ok SMALLINT
-    TRY
-        LET db_ok = utils_db.close_database()
-        LET g_user_authenticated = FALSE
-        DISPLAY "User session closed cleanly."
-    CATCH
-        DISPLAY "Warning: cleanup error (STATUS=", STATUS, ")"
-    END TRY
+    LET g_user_authenticated = FALSE
+    LET g_current_username = NULL
+    LET g_login_time = NULL
 END FUNCTION

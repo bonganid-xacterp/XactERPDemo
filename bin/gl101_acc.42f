@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="gl101_acc.tmp" build="3.20.14" sqlDbName="demoapp_db" text="GL Accounts" width="90" height="5">
+<Form name="gl101_acc.tmp" build="3.20.14" sqlDbName="demoappdb" text="GL Accounts" width="90" height="5">
   <LStr text="GL Accounts"/>
   <VBox name="vbox1">
     <Grid name="grd_gl_acc" width="90" height="5">
@@ -9,13 +9,13 @@
       <Label name="gl01_acc_acc_code_label1" width="13" text="Aaccount Code" posY="1" posX="1" gridWidth="13">
         <LStr text="Aaccount Code"/>
       </Label>
-      <FormField name="gl01_acc.acc_code" colName="acc_code" sqlType="DECIMAL(20,0)" required="1" notNull="1" fieldId="0" sqlTabName="gl01_acc" tabIndex="1">
+      <FormField name="gl01_acc.acc_code" colName="acc_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="gl01_acc" tabIndex="1">
         <Edit width="20" scroll="1" posY="1" posX="15" gridWidth="20"/>
       </FormField>
       <Label name="gl01_acc_acc_name_label1" width="14" text="Account Name" posY="1" posX="36" gridWidth="14">
         <LStr text="Account Name"/>
       </Label>
-      <FormField name="gl01_acc.acc_name" colName="acc_name" sqlType="VARCHAR(100)" required="1" notNull="1" fieldId="1" sqlTabName="gl01_acc" tabIndex="2">
+      <FormField name="gl01_acc.acc_name" colName="acc_name" sqlType="VARCHAR(120)" required="1" notNull="1" fieldId="1" sqlTabName="gl01_acc" tabIndex="2">
         <Edit width="30" scroll="1" posY="1" posX="51" gridWidth="30"/>
       </FormField>
       <Label name="gl01_acc_acc_type_label1" width="13" text="Account Type" posY="2" posX="1" gridWidth="13">
@@ -27,13 +27,13 @@
       <Label name="gl01_acc_parent_acc_label1" width="14" text="Parent Account" posY="2" posX="36" gridWidth="14">
         <LStr text="Parent Account"/>
       </Label>
-      <FormField name="gl01_acc.parent_acc" colName="parent_acc" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="gl01_acc" tabIndex="4">
+      <FormField name="gl01_acc.parent_id" colName="parent_id" sqlType="BIGINT" fieldId="3" sqlTabName="gl01_acc" tabIndex="4">
         <Edit width="20" scroll="1" posY="2" posX="51" gridWidth="20"/>
       </FormField>
       <Label name="gl01_acc_status_label1" width="13" text="Status" posY="3" posX="1" gridWidth="13">
         <LStr text="Status"/>
       </Label>
-      <FormField name="gl01_acc.status" colName="status" sqlType="VARCHAR(10)" fieldId="4" sqlTabName="gl01_acc" tabIndex="5">
+      <FormField name="gl01_acc.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="4" sqlTabName="gl01_acc" tabIndex="5">
         <ComboBox width="9" scroll="1" posY="3" posX="15" gridWidth="11"/>
       </FormField>
     </Grid>
@@ -42,14 +42,14 @@
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="acc_name" fieldIdRef="1"/>
     <Link colName="acc_type" fieldIdRef="2"/>
-    <Link colName="parent_acc" fieldIdRef="3"/>
+    <Link colName="parent_id" fieldIdRef="3"/>
     <Link colName="status" fieldIdRef="4"/>
   </RecordView>
   <RecordView tabName="rec_gl_accounts">
     <Link colName="acc_code" fieldIdRef="0"/>
     <Link colName="acc_name" fieldIdRef="1"/>
     <Link colName="acc_type" fieldIdRef="2"/>
-    <Link colName="parent_acc" fieldIdRef="3"/>
+    <Link colName="parent_id" fieldIdRef="3"/>
     <Link colName="status" fieldIdRef="4"/>
   </RecordView>
 </Form>

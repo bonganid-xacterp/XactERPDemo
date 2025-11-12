@@ -12,7 +12,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Transaction record structure
 TYPE bin_trans_t RECORD LIKE wb31_trf_det.*

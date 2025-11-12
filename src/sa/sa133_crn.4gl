@@ -13,16 +13,14 @@ IMPORT FGL st121_st_lkup
 IMPORT FGL utils_doc_totals
 
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Record Definitions
 -- ==============================================================
 TYPE crn_hdr_t RECORD LIKE sa33_crn_hdr.*
-TYPE debt_t RECORD LIKE dl01_mast.*
  
 DEFINE m_rec_crn crn_hdr_t
-DEFINE m_debt_mast debt_t 
 
 DEFINE m_arr_crn_lines DYNAMIC ARRAY OF RECORD LIKE sa33_crn_det.*
 
@@ -35,9 +33,9 @@ DEFINE m_curr_idx INTEGER
 -- ==============================================================
 FUNCTION edit_or_add_crn_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
     DEFINE l_line RECORD LIKE sa33_crn_det.*
-    DEFINE l_stock_code STRING
+    DEFINE l_stock_id STRING
     DEFINE l_vat_rate DECIMAL(10,2)
-    DEFINE l_gross, l_net, l_vat DECIMAL(15,2)
+    DEFINE l_gross, l_line_totalal, l_vat DECIMAL(15,2)
 
     IF p_is_new THEN
         -- Initialize new line
@@ -55,33 +53,33 @@ FUNCTION edit_or_add_crn_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT
     -- Input Dialog for editing/adding
     -- ==============================
     DIALOG
-        INPUT BY NAME l_line.stock_code, l_line.qnty, l_line.disc, l_line.vat
+        INPUT BY NAME l_line.stock_id, l_line.qnty, l_line.disc_amt, l_line.vat_amt
             ATTRIBUTES(WITHOUT DEFAULTS)
 
-            BEFORE FIELD stock_code
+            BEFORE FIELD stock_id
                 -- call lookup popup
-                LET l_stock_code = lookup_stock_item()
+                LET l_stock_id = lookup_stock_item()
                 
-                IF l_stock_code IS NOT NULL THEN
+                IF l_stock_id IS NOT NULL THEN
                 
-                    LET l_line.stock_code = l_stock_code
+                    LET l_line.stock_id = l_stock_id
                     
-                    CALL load_stock_defaults(l_stock_code, l_line.unit_cost, l_line.sell_price)
+                    CALL load_stock_defaults(l_stock_id)
 
-                    DISPLAY BY NAME l_line.unit_cost, l_line.sell_price
+                    DISPLAY BY NAME l_line.unit_price
                     
                 END IF
 
-            AFTER FIELD qnty, disc, vat
+            AFTER FIELD qnty, disc_amt, vat_amt
                 -- calculate the line total 
-                LET l_line.line_tot =  utils_doc_totals.calc_line_total(
-                                    l_line.qnty, 
-                                    l_line.unit_cost, 
-                                    l_line.disc, 
-                                    l_line.vat
-                )
+                --LET l_line.line_total =  utils_doc_totals.calculate_line_totals(
+                --                    l_line.qnty, 
+                --                    l_line.unit_price, 
+                --                    l_line.disc_amt, 
+                --                    l_line.vat_amt)
+
                 
-                DISPLAY BY NAME l_line.line_tot, l_line.vat
+                DISPLAY BY NAME l_line.line_total, l_line.vat_amt
 
             ON ACTION save
                 IF p_is_new THEN
@@ -102,24 +100,19 @@ END FUNCTION
 -- Lookup item from Stock Master
 -- ==============================================================
 PRIVATE FUNCTION lookup_stock_item() RETURNS STRING
-    DEFINE l_stock_code STRING
-    LET l_stock_code = st121_st_lkup.display_stocklist() -- your lookup popup
-    RETURN l_stock_code
+    DEFINE l_stock_id STRING
+    LET l_stock_id = st121_st_lkup.display_stocklist() -- your lookup popup
+    RETURN l_stock_id
 END FUNCTION
 
 -- ==============================================================
 -- Lookup item from Stock Master
 -- ==============================================================
-private FUNCTION load_stock_defaults(p_stock_code STRING, p_cost DECIMAL, p_price DECIMAL)
-    SELECT cost_price, sell_price
+private FUNCTION load_stock_defaults(p_stock_id STRING)
+    SELECT unit_price, uom,
       INTO p_cost, p_price
       FROM st01_mast
-     WHERE stock_code = p_stock_code
-
-    IF SQLCA.SQLCODE != 0 THEN
-        LET p_cost = 0
-        LET p_price = 0
-    END IF
+     WHERE stock_id = p_stock_id
 END FUNCTION
 
 -- ==============================================================

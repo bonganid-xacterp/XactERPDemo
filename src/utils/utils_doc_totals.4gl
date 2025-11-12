@@ -5,18 +5,11 @@
 -- ==============================================================
 
 IMPORT FGL utils_globals
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Function : calculate_line_total
 -- Purpose  : Calculates totals for a single document line
--- Parameters:
---      p_qty         - Quantity
---      p_unit_price  - Unit selling price (excl. VAT)
---      p_disc_perc   - Discount percentage (0-100)
---      p_vat_rate    - VAT percentage (0-100)
--- Returns:
---      (gross, discount, vat, net_total)
 -- ==============================================================
 PUBLIC FUNCTION calculate_line_total(
         p_qty        DECIMAL(15,2),
@@ -24,7 +17,7 @@ PUBLIC FUNCTION calculate_line_total(
         p_disc_perc  DECIMAL(9,2),
         p_vat_rate   DECIMAL(9,2)
     )
-    RETURNS (DECIMAL(15,2), DECIMAL(15,2), DECIMAL(15,2), DECIMAL(15,2))
+    RETURNS DECIMAL
 
     DEFINE l_gross, l_disc_amt, l_vat_amt, l_net DECIMAL(15,2)
 
@@ -33,7 +26,35 @@ PUBLIC FUNCTION calculate_line_total(
     LET l_vat_amt  = ((l_gross - l_disc_amt) * NVL(p_vat_rate,0)) / 100
     LET l_net      = (l_gross - l_disc_amt) + l_vat_amt
 
-    RETURN l_gross, l_disc_amt, l_vat_amt, l_net
+    RETURN  l_net
+END FUNCTION
+
+-- ==============================================================
+-- Function : calculate_line_totals
+-- ==============================================================
+FUNCTION calculate_line_totals(p_qnty DECIMAL, p_price DECIMAL,
+                               p_disc_pct DECIMAL, p_vat_rate DECIMAL)
+    RETURNS (DECIMAL, DECIMAL, DECIMAL, DECIMAL, DECIMAL)
+
+    DEFINE l_gross, l_disc, l_net, l_vat, l_total DECIMAL(15,2)
+
+    -- Gross = Quantity � Price
+    LET l_gross = p_qnty * p_price
+
+    -- Discount = Gross � (Disc% / 100)
+    LET l_disc = l_gross * (p_disc_pct / 100)
+
+    -- Net = Gross - Discount
+    LET l_net = l_gross - l_disc
+
+    -- VAT = Net × (VAT% / 100)
+    LET l_vat = l_net * (p_vat_rate / 100)
+
+    -- Total = Net + VAT
+    LET l_total = l_net + l_vat
+
+    RETURN l_gross, l_disc, l_net, l_vat, l_total
+
 END FUNCTION
 
 

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="utils_sa_doc_lkup_form.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Form" width="52" height="15">
+<Form name="utils_sa_doc_lkup_form.tmp" build="3.20.14" sqlDbName="demoappdb" text="Form" width="52" height="15">
   <LStr text="Form"/>
   <VBox name="vbox1">
     <Grid name="grid1" width="52" height="15">

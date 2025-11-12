@@ -1,6 +1,6 @@
 -- ==============================================================
 -- Program   : sa132_invoice.4gl
--- Purpose   : Sales Invoice Program (COMPLETE & CORRECTED)
+-- Purpose   : Sales Invoice Program
 -- Module    : Sales Invoice (sa)
 -- Number    : 132
 -- Author    : Bongani Dlamini
@@ -14,16 +14,14 @@ IMPORT FGL st121_st_lkup
 IMPORT FGL utils_doc_totals
 IMPORT FGL dl121_lkup
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Record Definitions
 -- ==============================================================
 TYPE invoice_hdr_t RECORD LIKE sa32_inv_hdr.*
-TYPE cust_t RECORD LIKE dl01_mast.*
 
 DEFINE m_rec_inv invoice_hdr_t
-DEFINE m_cust_rec cust_t
 
 -- display only lines
 DEFINE arr_sa_inv_lines DYNAMIC ARRAY OF RECORD
@@ -32,10 +30,9 @@ DEFINE arr_sa_inv_lines DYNAMIC ARRAY OF RECORD
         stock_id   LIKE sa32_inv_det.stock_id,
         item_name  LIKE sa32_inv_det.item_name,
         qnty       LIKE sa32_inv_det.qnty,
-        unit_cost  LIKE sa32_inv_det.unit_cost,
-        sell_price LIKE sa32_inv_det.sell_price,
-        disc       LIKE sa32_inv_det.disc,
-        line_tot   LIKE sa32_inv_det.line_tot
+        unit_price  LIKE sa32_inv_det.unit_price,
+        disc_amt       LIKE sa32_inv_det.disc_amt,
+        line_total   LIKE sa32_inv_det.line_total
     END RECORD
 END RECORD
 
@@ -48,7 +45,6 @@ DEFINE m_is_edit SMALLINT
 
 -- ==============================================================
 -- Function : new_invoice (NEW - Header first, then lines)
--- Purpose  : Create new invoice with proper workflow
 -- ==============================================================
 FUNCTION new_invoice()
     DEFINE l_hdr RECORD LIKE sa32_inv_hdr.*
@@ -71,8 +67,8 @@ FUNCTION new_invoice()
     LET l_hdr.created_at = CURRENT
     LET l_hdr.created_by = utils_globals.get_current_user_id()
     LET l_hdr.gross_tot = 0
-    LET l_hdr.vat = 0
-    LET l_hdr.disc = 0
+    LET l_hdr.vat_tot = 0
+    LET l_hdr.disc_tot = 0
     LET l_hdr.net_tot = 0
 
     -- ==========================================================
@@ -188,7 +184,6 @@ END FUNCTION
 
 -- ==============================================================
 -- Function : input_invoice_lines (NEW)
--- Purpose  : Add/edit lines for a saved invoice
 -- ==============================================================
 FUNCTION input_invoice_lines(p_hdr_id INTEGER)
 
@@ -290,12 +285,12 @@ FUNCTION edit_or_add_invoice_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMAL
 
                 -- Load stock defaults
                 CALL load_stock_defaults(l_stock_id)
-                    RETURNING l_line.unit_cost, l_line.unit_price, l_item_desc
+                    RETURNING l_line.unit_price, l_line.unit_price, l_item_desc
 
-                LET l_line.sell_price = l_line.unit_price
+                LET l_line.unit_price = l_line.unit_price
                 LET l_line.item_name = l_item_desc
 
-                DISPLAY BY NAME l_line.stock_id, l_line.unit_cost,
+                DISPLAY BY NAME l_line.stock_id, l_line.unit_price,
                                 l_line.unit_price, l_line.item_name
 
                 NEXT FIELD qnty
@@ -362,19 +357,19 @@ PRIVATE FUNCTION calculate_line_totals(p_qnty DECIMAL, p_price DECIMAL,
 
     DEFINE l_gross, l_disc, l_net, l_vat, l_total DECIMAL(15,2)
 
-    -- Gross = Quantity × Price
+    -- Gross = Quantity � Price
     LET l_gross = p_qnty * p_price
 
-    -- Discount = Gross × (Disc% / 100)
+    -- Discount = Gross � (disc_amt% / 100)
     LET l_disc = l_gross * (p_disc_pct / 100)
 
     -- Net = Gross - Discount
     LET l_net = l_gross - l_disc
 
-    -- VAT = Net × (VAT% / 100)
+    -- vat_tot = Net � (vat_tot% / 100)
     LET l_vat = l_net * (p_vat_rate / 100)
 
-    -- Total = Net + VAT
+    -- Total = Net + vat_tot
     LET l_total = l_net + l_vat
 
     RETURN l_gross, l_disc, l_net, l_vat, l_total
@@ -392,7 +387,7 @@ PRIVATE FUNCTION load_stock_defaults(p_stock_id INTEGER)
     DEFINE l_desc VARCHAR(150)
     DEFINE l_stock_on_hand DECIMAL(15,2)
 
-    SELECT unit_cost, sell_price, description, stock_on_hand
+    SELECT unit_price, sell_price, description, stock_on_hand
         INTO l_cost, l_price, l_desc, l_stock_on_hand
         FROM st01_mast
         WHERE stock_id = p_stock_id
@@ -471,14 +466,14 @@ FUNCTION calculate_invoice_totals()
     LET l_net = l_gross - l_disc_tot + l_vat_tot
 
     LET m_rec_inv.gross_tot = l_gross
-    LET m_rec_inv.disc = l_disc_tot
-    LET m_rec_inv.vat = l_vat_tot
+    LET m_rec_inv.disc_tot = l_disc_tot
+    LET m_rec_inv.vat_tot = l_vat_tot
     LET m_rec_inv.net_tot = l_net
 
-    DISPLAY BY NAME m_rec_inv.gross_tot, m_rec_inv.disc,
-                     m_rec_inv.vat, m_rec_inv.net_tot
+    DISPLAY BY NAME m_rec_inv.gross_tot, m_rec_inv.disc_tot,
+                     m_rec_inv.vat_tot, m_rec_inv.net_tot
 
-    MESSAGE SFMT("Totals: Gross=%1, Disc=%2, VAT=%3, Net=%4",
+    MESSAGE SFMT("Totals: Gross=%1, disc_amt=%2, vat_tot=%3, Net=%4",
                  l_gross USING "<<<,<<<,<<&.&&",
                  l_disc_tot USING "<<<,<<<,<<&.&&",
                  l_vat_tot USING "<<<,<<<,<<&.&&",
@@ -495,8 +490,8 @@ FUNCTION save_invoice_header_totals()
     TRY
         UPDATE sa32_inv_hdr
             SET gross_tot = m_rec_inv.gross_tot,
-                disc = m_rec_inv.disc,
-                vat = m_rec_inv.vat,
+                disc_tot = m_rec_inv.disc_tot,
+                vat_tot = m_rec_inv.vat_tot,
                 net_tot = m_rec_inv.net_tot,
                 updated_at = CURRENT
             WHERE id = m_rec_inv.id
@@ -549,7 +544,7 @@ PRIVATE FUNCTION load_customer_details(p_cust_id INTEGER)
 END FUNCTION
 
 -- ==============================================================
--- Function : load_invoice (CORRECTED with status checks)
+-- Function : load_invoice (with status checks)
 -- ==============================================================
 FUNCTION load_invoice(p_doc_id INTEGER)
     DEFINE idx INTEGER
@@ -579,7 +574,7 @@ FUNCTION load_invoice(p_doc_id INTEGER)
         LET l_can_edit = can_edit_invoice(m_rec_inv.id, m_rec_inv.status)
 
         -- ======================================================
-        -- Load invoice line items (CORRECTED)
+        -- Load invoice line items
         -- ======================================================
         LET idx = 0
 
@@ -672,7 +667,6 @@ END FUNCTION
 
 -- ==============================================================
 -- Function : post_invoice (NEW - CRITICAL)
--- Purpose  : Post invoice and deduct stock
 -- ==============================================================
 FUNCTION post_invoice(p_invoice_id INTEGER)
     DEFINE l_invoice_hdr RECORD LIKE sa32_inv_hdr.*
@@ -750,8 +744,7 @@ FUNCTION post_invoice(p_invoice_id INTEGER)
 END FUNCTION
 
 -- ==============================================================
--- Function : update_stock_on_hand (REUSED FROM ORDER)
--- Purpose  : Update physical stock when invoice is posted
+-- Function : update_stock_on_hand 
 -- ==============================================================
 PRIVATE FUNCTION update_stock_on_hand(p_stock_id INTEGER, p_quantity DECIMAL,
                               p_direction VARCHAR(3))
@@ -828,7 +821,7 @@ PRIVATE FUNCTION prompt_edit_choice() RETURNS SMALLINT
 END FUNCTION
 
 -- ==============================================================
--- Function : edit_invoice_header (CORRECTED UPDATE syntax)
+-- Function : edit_invoice_header (UPDATE syntax)
 -- ==============================================================
 FUNCTION edit_invoice_header(p_doc_id INTEGER)
     DEFINE new_hdr RECORD LIKE sa32_inv_hdr.*
@@ -932,7 +925,7 @@ FUNCTION edit_invoice_lines(p_doc_id INTEGER)
 END FUNCTION
 
 -- ==============================================================
--- Function : save_invoice (Legacy - CORRECTED)
+-- Function : save_invoice (Legacy)
 -- ==============================================================
 FUNCTION save_invoice()
     DEFINE exists INTEGER
@@ -951,8 +944,8 @@ FUNCTION save_invoice()
                     trans_date = m_rec_inv.trans_date,
                     due_date = m_rec_inv.due_date,
                     gross_tot = m_rec_inv.gross_tot,
-                    disc = m_rec_inv.disc,
-                    vat = m_rec_inv.vat,
+                    disc_tot = m_rec_inv.disc_tot,
+                    vat_tot = m_rec_inv.vat_tot,
                     net_tot = m_rec_inv.net_tot,
                     status = m_rec_inv.status,
                     updated_at = CURRENT
@@ -974,7 +967,7 @@ FUNCTION save_invoice()
 END FUNCTION
 
 -- ==============================================================
--- Function : delete_invoice (CORRECTED with protections)
+-- Function : delete_invoice (with protections)
 -- ==============================================================
 FUNCTION delete_invoice(p_doc_id INTEGER)
     DEFINE ok SMALLINT

@@ -12,7 +12,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db -- Use correct schema name
+SCHEMA demoappdb -- Use correct schema name
 
 -- Warehouse transaction record structure
 TYPE trans_t RECORD

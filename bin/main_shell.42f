@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='windows-1252'?>
-<Form name="main_shell.tmp" build="3.20.14" text="Container" windowStyle="mdi container" width="0" height="20">
-  <LStr text="Container"/>
-  <Group name="workarea" text="">
-    <LStr text=""/>
-    <Grid name="main_shell_grid" width="0" height="20"/>
-  </Group>
-</Form>

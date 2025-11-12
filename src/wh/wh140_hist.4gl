@@ -12,7 +12,7 @@
 --IMPORT ui
 --IMPORT FGL utils_globals
 --
---SCHEMA demoapp_db  -- Use correct schema name
+--SCHEMA demoappdb  -- Use correct schema name
 --
 ---- Warehouse transaction history record structure
 --TYPE history_t RECORD

@@ -12,7 +12,7 @@
 --IMPORT ui
 --IMPORT FGL utils_globals
 --
---SCHEMA demoapp_db
+--SCHEMA demoappdb
 --
 ---- Transaction history record structure
 --TYPE bin_history_t RECORD

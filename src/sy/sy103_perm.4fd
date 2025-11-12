@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{1c3c6af4-aaef-4d82-8bc2-f94328cc4055}">
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{1c3c6af4-aaef-4d82-8bc2-f94328cc4055}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
-    <VBox gridHeight="20" gridWidth="80" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="80" name="grid1" posX="0" posY="1"/>
+  <Record masterTable="sy05_perm" name="arr_perm" uid="{091e06fc-378f-4752-ae8f-807b5e80a05e}">
+    <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy05_perm.id" sqlTabName="sy05_perm" uid="{b149f5dd-2e97-462e-b068-0b885c4c2c73}"/>
+    <RecordField colName="perm_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy05_perm.perm_name" sqlTabName="sy05_perm" uid="{29dd5b07-5b83-464c-86d4-b2bad0f6047f}"/>
+    <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy05_perm.description" sqlTabName="sy05_perm" uid="{38df95df-559b-4f24-bfe5-56e68d49b0f2}"/>
+    <RecordField colName="perm_code" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy05_perm.perm_code" sqlTabName="sy05_perm" uid="{8acebaa4-784d-4ea2-8dcf-deabd93c52f9}"/>
+    <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sy05_perm.status" sqlTabName="sy05_perm" uid="{c1567823-ed15-4fbc-8845-ee09ff93b758}"/>
+    <RecordField colName="created_at" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sy05_perm.created_at" sqlTabName="sy05_perm" uid="{94dca2a8-a35d-4685-b34f-ffba935f9967}"/>
+    <RecordField colName="updated_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sy05_perm.updated_at" sqlTabName="sy05_perm" uid="{d231b938-efd3-45d6-a474-fdbb721cb542}"/>
+    <RecordField colName="deleted_at" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sy05_perm.deleted_at" sqlTabName="sy05_perm" uid="{bbdbf0fc-f41e-4d8c-92b5-2cb2508e251d}"/>
+    <RecordField colName="created_by" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sy05_perm.created_by" sqlTabName="sy05_perm" uid="{d7d53da5-a42c-4264-a15e-036589be9407}"/>
+  </Record>
+  <Form gridHeight="16" gridWidth="99" name="frm_perm" text="PERMISSIONS MASTER">
+    <VBox gridHeight="16" gridWidth="99" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="14" gridWidth="99" name="grid1" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="75" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="PERMISSIONS MASTER"/>
+        <Table gridHeight="6" gridWidth="95" name="frm_perm" posX="1" posY="1" totalRows="5">
+          <Phantom colName="id" fieldId="1" fieldType="TABLE_COLUMN" name="sy05_perm.id" sqlTabName="sy05_perm" widget="Phantom"/>
+          <Edit colName="perm_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sy05_perm.perm_name" posX="0" posY="0" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" title="Name" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="description" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy05_perm.description" posX="17" posY="0" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="perm_code" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sy05_perm.perm_code" posX="47" posY="0" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" title="Code" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sy05_perm.status" posX="58" posY="0" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" title="Status" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Phantom colName="created_at" fieldId="6" fieldType="TABLE_COLUMN" name="sy05_perm.created_at" sqlTabName="sy05_perm" widget="Phantom"/>
+          <Phantom colName="updated_at" fieldId="7" fieldType="TABLE_COLUMN" name="sy05_perm.updated_at" sqlTabName="sy05_perm" widget="Phantom"/>
+          <Phantom colName="deleted_at" fieldId="8" fieldType="TABLE_COLUMN" name="sy05_perm.deleted_at" sqlTabName="sy05_perm" widget="Phantom"/>
+          <Edit colName="created_by" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy05_perm.created_by" posX="68" posY="0" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+        </Table>
+      </Grid>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAg==]]>
+    <![CDATA[AAAAAgAAAEwAewAwADkAMQBlADAANgBmAGMALQAzADcAOABmAC0ANAA3ADUAMgAtAGEAZQA4AGYALQA4ADAANwBiADUAZQA4ADAAYQAwADUAZQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

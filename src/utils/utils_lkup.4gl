@@ -10,7 +10,7 @@ IMPORT om
 IMPORT FGL utils_globals
 IMPORT FGL utils_db
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Type Definitions
@@ -185,7 +185,7 @@ PUBLIC FUNCTION lookup_warehouse() RETURNS STRING
     RETURN display_lookup("warehouse")
 END FUNCTION
 
-PUBLIC FUNCTION lookup_bin() RETURNS STRING
+PUBLIC FUNCTION lookup_whbin() RETURNS STRING
     RETURN display_lookup("bin")
 END FUNCTION
 

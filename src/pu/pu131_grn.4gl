@@ -8,11 +8,10 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
--- Optional lookups (uncomment if you have them wired)
 -- IMPORT FGL cl121_lkup
 -- IMPORT FGL st121_st_lkup
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- =======================
 -- Types / Globals
@@ -23,23 +22,26 @@ DEFINE grn_hdr_rec grn_hdr_t
 
 DEFINE grn_lines_arr DYNAMIC ARRAY OF RECORD LIKE pu31_grn_det.*
 
-DEFINE arr_codes DYNAMIC ARRAY OF STRING
+--DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx SMALLINT
 DEFINE is_edit SMALLINT
 
 -- =======================
 -- MAIN
 -- =======================
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        DISPLAY "Initialization failed."
---        EXIT PROGRAM 1
---    END IF
---        OPTIONS INPUT WRAP
---    OPEN WINDOW w_pu_grn WITH FORM "pu131_grn" ATTRIBUTES(STYLE = "dialog")
---    CALL init_grn_module()
---    CLOSE WINDOW w_pu_grn
---END MAIN
+MAIN
+    IF NOT utils_globals.initialize_application() THEN
+        DISPLAY "Initialization failed."
+        EXIT PROGRAM 1
+    END IF
+
+    OPTIONS INPUT WRAP
+    OPEN WINDOW w_pu_grn WITH FORM "pu131_grn" ATTRIBUTES(STYLE = "normal")
+
+    CALL init_grn_module()
+    
+    CLOSE WINDOW w_pu_grn
+END MAIN
 
 -- =======================
 -- init Module
@@ -50,8 +52,6 @@ FUNCTION init_grn_module()
     LET is_edit = FALSE
     INITIALIZE grn_hdr_rec.* TO NULL
 
-    CLEAR SCREEN
-
     INPUT BY NAME grn_hdr_rec.*
 
     DIALOG ATTRIBUTES(UNBUFFERED)
@@ -59,7 +59,7 @@ FUNCTION init_grn_module()
         INPUT BY NAME grn_hdr_rec.*
             ATTRIBUTES(WITHOUT DEFAULTS, NAME = "grn_header")
 
-            BEFORE FIELD acc_code, trans_date, status
+            BEFORE FIELD id, trans_date, status
                 IF NOT is_edit THEN
                     CALL utils_globals.show_info("Click New or Edit to modify.")
                     NEXT FIELD doc_no
@@ -95,17 +95,16 @@ FUNCTION init_grn_module()
                 END IF
 
             ON ACTION post ATTRIBUTES(TEXT = "Post", IMAGE = "ok")
-                CALL do_post()
+                --CALL do_post()
 
             ON ACTION find ATTRIBUTES(TEXT = "Find", IMAGE = "zoom")
-                CALL do_find()
+                --CALL do_find()
 
             ON ACTION quit ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
-                EXIT DIALOG
-        END INPUT
+                END INPUT
 
         INPUT ARRAY grn_lines_arr
-            FROM pu130_ord_trans.*
+            FROM pu131_grn_trans.*
             ATTRIBUTES(INSERT ROW = TRUE, DELETE ROW = TRUE, APPEND ROW = TRUE)
             BEFORE INPUT
                 IF NOT is_edit THEN
@@ -117,7 +116,7 @@ FUNCTION init_grn_module()
                 LET row_idx = arr_curr()
 
             AFTER FIELD qnty, unit_cost
-                CALL calc_line_total(row_idx)
+                --CALL calc_line_total(row_idx)
         END INPUT
 
     END DIALOG
@@ -139,7 +138,7 @@ FUNCTION new_pu_grn()
     LET grn_hdr_rec.trans_date = TODAY
     LET grn_hdr_rec.status = "draft"
     LET grn_hdr_rec.gross_tot = 0
-    LET grn_hdr_rec.vat = 0
+    LET grn_hdr_rec.vat_tot = 0
     LET grn_hdr_rec.net_tot = 0
     LET grn_hdr_rec.created_at = CURRENT
     LET grn_hdr_rec.created_by = 1
@@ -151,9 +150,9 @@ FUNCTION new_pu_grn()
 
         ON ACTION accept
             -- Validate header
-            IF grn_hdr_rec.acc_code IS NULL THEN
+            IF grn_hdr_rec.id IS NULL THEN
                 ERROR "Supplier is required"
-                NEXT FIELD acc_code
+                NEXT FIELD id
             END IF
             ACCEPT INPUT
 
@@ -196,7 +195,7 @@ END FUNCTION
 --
 --        BEFORE INSERT
 --            LET grn_lines_arr[arr_curr()].hdr_id = grn_hdr_rec.id
---            LET grn_lines_arr[arr_curr()].stock_code = arr_curr()
+--            LET grn_lines_arr[arr_curr()].stock_id = arr_curr()
 --
 --        ON ACTION save_lines
 --            -- Save all lines to database
@@ -219,10 +218,10 @@ FUNCTION save_pu_grn_lines()
 
         -- Insert all lines
         FOR i = 1 TO grn_lines_arr.getLength()
-            IF grn_lines_arr[i].stock_code IS NOT NULL THEN
+            IF grn_lines_arr[i].stock_id IS NOT NULL THEN
                 LET line_rec.* = grn_lines_arr[i].*
                 LET line_rec.hdr_id = grn_hdr_rec.id
-                LET line_rec.stock_code = i
+                LET line_rec.stock_id = i
 
                 INSERT INTO pu31_grn_det VALUES(line_rec.*)
             END IF
@@ -234,7 +233,7 @@ FUNCTION save_pu_grn_lines()
         -- Update header with new totals
         UPDATE pu31_grn_hdr
             SET gross_tot = grn_hdr_rec.gross_tot,
-                vat = grn_hdr_rec.vat,
+                vat_tot = grn_hdr_rec.vat_tot,
                 net_tot = grn_hdr_rec.net_tot,
                 updated_at = CURRENT
             WHERE id = grn_hdr_rec.id
@@ -252,7 +251,7 @@ END FUNCTION
 -- Enhanced input_pu_grn_lines with validation
 FUNCTION input_pu_grn_lines()
     DEFINE item_code STRING
-    DEFINE line_tot DECIMAL(15, 2)
+    DEFINE line_total DECIMAL(15, 2)
 
     INPUT ARRAY grn_lines_arr
         FROM scr_lines.*
@@ -264,29 +263,29 @@ FUNCTION input_pu_grn_lines()
 
         BEFORE INSERT
             LET grn_lines_arr[arr_curr()].hdr_id = grn_hdr_rec.id
-            LET grn_lines_arr[arr_curr()].stock_code = arr_curr()
+            LET grn_lines_arr[arr_curr()].stock_id = arr_curr()
             LET grn_lines_arr[arr_curr()].qnty = 1
             LET grn_lines_arr[arr_curr()].unit_cost = 0
-            LET grn_lines_arr[arr_curr()].vat = 0
-            LET grn_lines_arr[arr_curr()].line_tot = 0
+            LET grn_lines_arr[arr_curr()].vat_amt = 0
+            LET grn_lines_arr[arr_curr()].line_total = 0
 
-        BEFORE FIELD stock_code
+        BEFORE FIELD stock_id
             LET curr_idx = arr_curr()
 
-        AFTER FIELD stock_code
-            IF grn_lines_arr[curr_idx].stock_code IS NOT NULL THEN
+        AFTER FIELD stock_id
+            IF grn_lines_arr[curr_idx].stock_id IS NOT NULL THEN
                 -- Validate item exists
                 SELECT description, unit_price
                     INTO item_code, grn_lines_arr[curr_idx].unit_cost
                     FROM st10_item
-                    WHERE stock_code = grn_lines_arr[curr_idx].stock_code
+                    WHERE stock_id = grn_lines_arr[curr_idx].stock_id
 
                 IF SQLCA.SQLCODE = NOTFOUND THEN
                     ERROR "Item not found"
-                    LET grn_lines_arr[curr_idx].stock_code = NULL
-                    NEXT FIELD stock_code
+                    LET grn_lines_arr[curr_idx].stock_id = NULL
+                    NEXT FIELD stock_id
                 ELSE
-                    LET grn_lines_arr[curr_idx].stock_code = item_code
+                    LET grn_lines_arr[curr_idx].stock_id = item_code
                     DISPLAY grn_lines_arr[curr_idx].id
                         TO grn_lines_arr[curr_idx].item_code
                 END IF
@@ -297,23 +296,23 @@ FUNCTION input_pu_grn_lines()
             IF grn_lines_arr[curr_idx].qnty IS NOT NULL
                 AND grn_lines_arr[curr_idx].unit_cost IS NOT NULL THEN
 
-                LET line_tot =
+                LET line_total =
                     grn_lines_arr[curr_idx].qnty
                         * grn_lines_arr[curr_idx].unit_cost
 
                 --IF grn_lines_arr[curr_idx].disc_pct > 0 THEN
-                --    LET line_tot =
-                --        line_tot * (1 - grn_lines_arr[curr_idx].disc_pct / 100)
+                --    LET line_total =
+                --        line_total * (1 - grn_lines_arr[curr_idx].disc_pct / 100)
                 --END IF
 
-                LET grn_lines_arr[curr_idx].line_tot = line_tot
-                DISPLAY grn_lines_arr[curr_idx].line_tot
-                    TO scr_lines[curr_idx].line_tot
+                LET grn_lines_arr[curr_idx].line_total = line_total
+                DISPLAY grn_lines_arr[curr_idx].line_total
+                    TO scr_lines[curr_idx].line_total
             END IF
 
         ON ACTION item_lookup
-            CALL lookup_item() RETURNING grn_lines_arr[curr_idx].stock_code
-            IF grn_lines_arr[curr_idx].stock_code IS NOT NULL THEN
+            -- CALL lookup_item() RETURNING grn_lines_arr[curr_idx].stock_id
+            IF grn_lines_arr[curr_idx].stock_id IS NOT NULL THEN
                 -- Trigger AFTER FIELD logic
                 CALL DIALOG.nextField("qnty")
             END IF
@@ -334,9 +333,7 @@ FUNCTION input_pu_grn_lines()
             EXIT INPUT
 
         ON ACTION cancel
-            IF confirm_cancel() THEN
-                EXIT INPUT
-            END IF
+            EXIT INPUT
 
     END INPUT
 END FUNCTION
@@ -349,7 +346,7 @@ FUNCTION validate_pu_grn_lines()
     LET is_valid = TRUE
 
     FOR i = 1 TO grn_lines_arr.getLength()
-        IF grn_lines_arr[i].stock_code IS NULL THEN
+        IF grn_lines_arr[i].stock_id IS NULL THEN
             ERROR SFMT("Line %1: Item code is required", i)
             LET is_valid = FALSE
             EXIT FOR
@@ -374,37 +371,37 @@ FUNCTION recalc_pu_grn_totals()
     DEFINE vat_rate DECIMAL(5, 2)
 
     LET gross = 0
-    LET vat_rate = 15.00 -- Adjust to your VAT rate
+    LET vat_rate = 15.00 -- Adjust to your vat_tot rate
 
     FOR i = 1 TO grn_lines_arr.getLength()
-        IF grn_lines_arr[i].line_tot IS NOT NULL THEN
-            LET gross = gross + grn_lines_arr[i].line_tot
+        IF grn_lines_arr[i].line_total IS NOT NULL THEN
+            LET gross = gross + grn_lines_arr[i].line_total
         END IF
     END FOR
 
     LET grn_hdr_rec.gross_tot = gross
-    LET vat_amt = gross  * (vat_rate / 100)
-    LET grn_hdr_rec.vat = vat_amt
+    LET vat_amt = gross * (vat_rate / 100)
+    LET grn_hdr_rec.vat_tot = vat_amt
     LET grn_hdr_rec.net_tot = gross + vat_amt
 
     -- Update display
     DISPLAY BY NAME grn_hdr_rec.gross_tot,
-        grn_hdr_rec.vat,
+        grn_hdr_rec.vat_tot,
         grn_hdr_rec.net_tot
 END FUNCTION
 
 -- Confirm cancel action
-FUNCTION confirm_pu_grn_cancel()
-
-    MENU "Cancel PO Lines"
-        ATTRIBUTES(STYLE = "dialog", COMMENT = "Discard unsaved changes?")
-        COMMAND "Yes"
-            RETURN TRUE
-        COMMAND "No"
-            RETURN FALSE
-    END MENU
-    
-END FUNCTION
+--FUNCTION confirm_pu_grn_cancel()
+--
+--    MENU "Cancel PO Lines"
+--        ATTRIBUTES(STYLE = "dialog", COMMENT = "Discard unsaved changes?")
+--        COMMAND "Yes"
+--            RETURN TRUE
+--        COMMAND "No"
+--            RETURN FALSE
+--    END MENU
+--
+--END FUNCTION
 
 -- Item lookup helper (optional)
 FUNCTION lookup_pu_grn_item()
@@ -423,8 +420,8 @@ FUNCTION save_pu_grn()
     DEFINE i INTEGER
 
     -- Basic validation
-    IF grn_hdr_rec.acc_code IS NULL THEN
-        CALL utils_globals.show_warning("Please select a supplier (acc_code).")
+    IF grn_hdr_rec.id IS NULL THEN
+        CALL utils_globals.show_warning("Please select a supplier (id).")
         RETURN
     END IF
     IF grn_lines_arr.getLength() = 0 THEN
@@ -433,7 +430,7 @@ FUNCTION save_pu_grn()
     END IF
 
     -- Final totals
-    CALL recalc_totals()
+    --CALL recalc_totals()
 
     BEGIN WORK
     TRY
@@ -454,14 +451,14 @@ FUNCTION save_pu_grn()
         DELETE FROM pu31_grn_det WHERE doc_no = grn_hdr_rec.doc_no
 
         FOR i = 1 TO grn_lines_arr.getLength()
-            IF grn_lines_arr[i].stock_code IS NOT NULL THEN
-                -- Ensure doc_no and stock_code are correct
+            IF grn_lines_arr[i].stock_id IS NOT NULL THEN
+                -- Ensure doc_no and stock_id are correct
                 LET grn_lines_arr[i].hdr_id = grn_hdr_rec.doc_no
-                IF grn_lines_arr[i].stock_code IS NULL
-                    OR grn_lines_arr[i].stock_code = 0 THEN
-                    LET grn_lines_arr[i].stock_code = i
+                IF grn_lines_arr[i].stock_id IS NULL
+                    OR grn_lines_arr[i].stock_id = 0 THEN
+                    LET grn_lines_arr[i].stock_id = i
                 END IF
-                CALL calc_line_total(i)
+                --CALL calc_line_total(i)
                 INSERT INTO pu31_grn_det VALUES grn_lines_arr[i].*
             END IF
         END FOR
@@ -502,11 +499,11 @@ FUNCTION do_pu_grn_post()
     BEGIN WORK
     TRY
         FOR i = 1 TO grn_lines_arr.getLength()
-            IF grn_lines_arr[i].stock_code IS NOT NULL THEN
+            IF grn_lines_arr[i].stock_id IS NOT NULL THEN
                 UPDATE st01_mast
                     SET stock_on_order
                         = stock_on_order + COALESCE(grn_lines_arr[i].qnty, 0)
-                    WHERE stock_code = grn_lines_arr[i].stock_code
+                    WHERE stock_id = grn_lines_arr[i].stock_id
             END IF
         END FOR
 
@@ -554,7 +551,7 @@ FUNCTION load_pu_grn(p_doc INTEGER)
 
     LET i = 0
     DECLARE c CURSOR FOR
-        SELECT * FROM pu31_grn_det WHERE doc_no = p_doc ORDER BY stock_code
+        SELECT * FROM pu31_grn_det WHERE doc_no = p_doc ORDER BY stock_id
     FOREACH c INTO grn_lines_arr[i + 1].*
         LET i = i + 1
     END FOREACH
@@ -578,9 +575,9 @@ FUNCTION calc_pu_grn_line_total(idx INTEGER)
     IF grn_lines_arr[idx].unit_cost IS NULL THEN
         LET grn_lines_arr[idx].unit_cost = 0
     END IF
-    LET grn_lines_arr[idx].line_tot =
+    LET grn_lines_arr[idx].line_total =
         grn_lines_arr[idx].qnty * grn_lines_arr[idx].unit_cost
-    CALL recalc_totals()
+    -- CALL recalc_totals()
 END FUNCTION
 
 --FUNCTION recalc_pu_grn_totals()
@@ -588,12 +585,12 @@ END FUNCTION
 --    DEFINE subtotal DECIMAL(15, 2)
 --    LET subtotal = 0
 --    FOR i = 1 TO grn_lines_arr.getLength()
---        IF grn_lines_arr[i].line_tot IS NOT NULL THEN
+--        IF grn_lines_arr[i].line_total IS NOT NULL THEN
 --            LET subtotal =
---                subtotal + grn_lines_arr[i].line_tot -- FIX: sum line_tot
+--                subtotal + grn_lines_arr[i].line_total -- FIX: sum line_total
 --        END IF
 --    END FOR
 --    LET grn_hdr_rec.gross_tot = subtotal
---    LET grn_hdr_rec.vat = subtotal * 0.15
---    DISPLAY BY NAME grn_hdr_rec.gross_tot, grn_hdr_rec.vat
+--    LET grn_hdr_rec.vat_tot = subtotal * 0.15
+--    DISPLAY BY NAME grn_hdr_rec.gross_tot, grn_hdr_rec.vat_tot
 --END FUNCTION

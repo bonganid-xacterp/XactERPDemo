@@ -12,7 +12,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Warehouse transfer detail record structure
 TYPE transfer_detail_t RECORD

@@ -7,12 +7,12 @@
 -- Description: Common include definitions and constants
 -- ==============================================================
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Application constants
 CONSTANT APP_NAME = "XactERP Demo"
 CONSTANT APP_VERSION = "3.20.10"
-CONSTANT DB_SCHEMA = "demoapp_db"
+CONSTANT DB_SCHEMA = "demoappdb"
 
 -- Status constants
 CONSTANT STATUS_ACTIVE = 1

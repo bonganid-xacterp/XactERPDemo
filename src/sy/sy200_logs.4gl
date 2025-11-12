@@ -10,7 +10,7 @@
 
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Log system activity
 FUNCTION add_log(user_id STRING, action STRING, details STRING) RETURNS BOOLEAN

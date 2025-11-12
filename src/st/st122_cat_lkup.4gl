@@ -8,48 +8,51 @@
 -- ==========================================
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 FUNCTION load_lookup() RETURNS STRING
-    DEFINE
-        arr_st_cat DYNAMIC ARRAY OF RECORD
-            cat_code LIKE st02_cat.cat_code,
-            description LIKE st02_cat.description,
-            status LIKE st02_cat.status
+    DEFINE arr_st_cat DYNAMIC ARRAY OF RECORD
+            id     LIKE st02_cat.id,
+            description  LIKE st02_cat.description,
+            status       LIKE st02_cat.status
         END RECORD,
-        rec_st_cat RECORD
-            cat_code LIKE st02_cat.cat_code,
-            description LIKE st02_cat.description,
-            status LIKE st02_cat.status
+        rec_list RECORD
+            id     LIKE st02_cat.id,
+            description  LIKE st02_cat.description,
+            status       LIKE st02_cat.status
         END RECORD,
         ret_code STRING,
-        curr_pa, idx SMALLINT
+        curr_row, idx SMALLINT
+
+    LET idx = 0
+    LET ret_code = NULL
     OPTIONS INPUT WRAP
-    OPEN WINDOW w_st122_cat_lkup
-        WITH
-        FORM "st122_cat_lkup"
+
+    OPEN WINDOW w_lkup WITH FORM "st122_cat_lkup"
         ATTRIBUTES(TYPE = POPUP, STYLE = "lookup")
 
     DECLARE st_cat_curs CURSOR FOR
-        SELECT cat_code, description
-            FROM st02_cat
-            WHERE status = 1
-            ORDER BY cat_code
+        SELECT id, description, status
+          FROM st02_cat
+         ORDER BY id
 
-    LET idx = 0
     CALL arr_st_cat.clear()
-    FOREACH st_cat_curs INTO rec_st_cat.*
+
+    FOREACH st_cat_curs INTO rec_list.*
         LET idx = idx + 1
-        LET arr_st_cat[idx].* = rec_st_cat.*
+        LET arr_st_cat[idx].* = rec_list.*
     END FOREACH
 
-    LET ret_code = NULL
     IF idx > 0 THEN
-        DISPLAY ARRAY arr_st_cat TO rec_st_cat.* ATTRIBUTES(COUNT = idx)
-        LET curr_pa = arr_curr()
-        LET ret_code = arr_st_cat[curr_pa].cat_code
+        DISPLAY ARRAY arr_st_cat TO rec_list.*
+            ATTRIBUTES(COUNT = idx, UNBUFFERED)
+        LET curr_row = arr_curr()
+        LET ret_code = arr_st_cat[curr_row].id
+    ELSE
+        CALL utils_globals.msg_no_record()
     END IF
 
-    CLOSE WINDOW w_st122_cat_lkup
+    CLOSE WINDOW w_lkup
     RETURN ret_code
 END FUNCTION
+

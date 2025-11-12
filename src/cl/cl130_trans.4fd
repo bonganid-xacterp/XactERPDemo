@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{b755d599-bb86-421f-931d-72b8f02d21bf}">
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{b755d599-bb86-421f-931d-72b8f02d21bf}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
@@ -8,12 +8,12 @@
     <RecordField colName="doc_type" fieldIdRef="12" fieldType="TABLE_COLUMN" name="cl30_trans.doc_type" sqlTabName="cl30_trans" uid="{790a6b9c-0a70-434d-a0bf-7a4a3c68f1ff}"/>
     <RecordField colName="doc_no" fieldIdRef="13" fieldType="TABLE_COLUMN" name="cl30_trans.doc_no" sqlTabName="cl30_trans" uid="{3838b686-8481-45e4-b647-91958a642315}"/>
     <RecordField colName="gross_tot" fieldIdRef="14" fieldType="TABLE_COLUMN" name="cl30_trans.gross_tot" sqlTabName="cl30_trans" uid="{35130ec8-472a-4b27-b839-064626116dfb}"/>
-    <RecordField colName="vat" fieldIdRef="15" fieldType="TABLE_COLUMN" name="cl30_trans.vat" sqlTabName="cl30_trans" uid="{3aa3b028-af86-4751-8732-02200112cb81}"/>
+    <RecordField colName="vat_tot" fieldIdRef="15" fieldType="TABLE_COLUMN" name="cl30_trans.vat_tot" sqlTabName="cl30_trans" uid="{3aa3b028-af86-4751-8732-02200112cb81}"/>
     <RecordField colName="net_tot" fieldIdRef="16" fieldType="TABLE_COLUMN" name="cl30_trans.net_tot" sqlTabName="cl30_trans" uid="{e3f8167f-acd4-4d81-ac18-cce5935e25c1}"/>
   </Record>
   <Form gridHeight="27" gridWidth="89" name="frm_cl_trans" text="Creditor Transactions">
     <VBox gridHeight="20" gridWidth="89" name="vbox1" posX="0" posY="0" splitter="false">
-      <Table gridHeight="18" gridWidth="126" name="tbl_cl_trans" posX="0" posY="1" totalRows="15">
+      <Table gridHeight="18" gridWidth="89" name="tbl_cl_trans" posX="0" posY="1" totalRows="15">
         <Edit colName="trans_date" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.trans_date" posX="0" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
@@ -26,7 +26,7 @@
         <Edit colName="gross_tot" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.gross_tot" posX="40" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Total Excl" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Edit colName="vat" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.vat" posX="54" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="VAT" widget="Edit">
+        <Edit colName="vat_tot" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.vat_tot" posX="54" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="VAT" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
         <Edit colName="net_tot" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.net_tot" posX="68" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Net Total" widget="Edit">
@@ -36,6 +36,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA3ADMAMABkADcANgA1ADMALQBiAGMAOQA3AC0ANAA5ADQAZQAtAGEANQAwAGYALQA5AGUAZQBiAGYAYgA5ADcANAA5AGMAMAB9QGtMzPNszOZARAAAKwAAKT9gYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA3ADMAMABkADcANgA1ADMALQBiAGMAOQA3AC0ANAA5ADQAZQAtAGEANQAwAGYALQA5AGUAZQBiAGYAYgA5ADcANAA5AGMAMAB9QGtMzQETM2JARAAANQAAQD9gYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

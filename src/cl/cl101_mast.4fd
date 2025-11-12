@@ -1,91 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0cca1519-2eb0-48f9-b95e-1b0f2b80b728}">
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{0cca1519-2eb0-48f9-b95e-1b0f2b80b728}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record name="rec_cred_mast" uid="{2b564bc6-b997-432d-81e5-c0221d5d9391}">
     <RecordField colName="id" fieldIdRef="9" fieldType="TABLE_COLUMN" name="cl01_mast.id" sqlTabName="cl01_mast" uid="{a71f3daf-f899-4d99-a347-77f379f227fa}"/>
-    <RecordField colName="supp_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="cl01_mast.supp_name" sqlTabName="cl01_mast" uid="{5f4a68c2-2f89-4d3d-8630-cfc303b6b664}"/>
+    <RecordField colName="supp_name" fieldIdRef="23" fieldType="TABLE_COLUMN" name="cl01_mast.supp_name" sqlTabName="cl01_mast" uid="{e90cebec-adba-4d22-aefe-509efcf1f3b8}"/>
     <RecordField colName="phone" fieldIdRef="3" fieldType="TABLE_COLUMN" name="cl01_mast.phone" sqlTabName="cl01_mast" uid="{c1d3287a-3623-4e22-94e0-7655ce02b471}"/>
     <RecordField colName="email" fieldIdRef="4" fieldType="TABLE_COLUMN" name="cl01_mast.email" sqlTabName="cl01_mast" uid="{cd4fd651-a4b4-4956-9287-ec922489ae50}"/>
+    <RecordField colName="balance" fieldIdRef="10" fieldType="TABLE_COLUMN" name="cl01_mast.balance" sqlTabName="cl01_mast" uid="{92e63429-d254-4943-8b5a-0951da7854c8}"/>
     <RecordField colName="status" defaultValue="0" fieldIdRef="5" fieldType="TABLE_COLUMN" name="cl01_mast.status" sqlTabName="cl01_mast" uid="{8064afcd-0629-4917-881f-caf6e43a494f}"/>
     <RecordField colName="address1" fieldIdRef="6" fieldType="TABLE_COLUMN" name="cl01_mast.address1" sqlTabName="cl01_mast" uid="{26af24fe-5ad6-46a5-8446-b863aa14cf65}"/>
     <RecordField colName="address2" fieldIdRef="7" fieldType="TABLE_COLUMN" name="cl01_mast.address2" sqlTabName="cl01_mast" uid="{de352054-5d3d-4787-89cd-7f73feaf0a8e}"/>
     <RecordField colName="address3" fieldIdRef="8" fieldType="TABLE_COLUMN" name="cl01_mast.address3" sqlTabName="cl01_mast" uid="{5462a65e-7033-493a-ad4e-4578dd3b1820}"/>
     <RecordField colName="postal_code" fieldIdRef="21" fieldType="TABLE_COLUMN" name="cl01_mast.postal_code" sqlTabName="cl01_mast" table_alias_name="cl01_mast.postal_code" uid="{a51c31d1-8bb9-4319-90c3-af7ff2e0b853}"/>
-    <RecordField colName="balance" fieldIdRef="10" fieldType="TABLE_COLUMN" name="cl01_mast.balance" sqlTabName="cl01_mast" uid="{92e63429-d254-4943-8b5a-0951da7854c8}"/>
     <RecordField colName="created_at" fieldIdRef="11" fieldType="TABLE_COLUMN" name="cl01_mast.created_at" sqlTabName="cl01_mast" uid="{0ebf9941-7b01-4d98-9602-2be30871ca32}"/>
-    <RecordField colName="created_by" fieldIdRef="14" fieldType="TABLE_COLUMN" name="cl01_mast.created_by" sqlTabName="cl01_mast" uid="{8e1965ac-b057-4d38-8ae2-a7c1fde744fb}"/>
-    <RecordField colName="deleted_at" fieldIdRef="18" fieldType="TABLE_COLUMN" name="cl01_mast.deleted_at" sqlTabName="cl01_mast" uid="{d0f088f2-5dbb-427c-afcd-8f32007da8fa}"/>
     <RecordField colName="updated_at" fieldIdRef="20" fieldType="TABLE_COLUMN" name="cl01_mast.updated_at" sqlTabName="cl01_mast" uid="{73f636d7-3c36-490b-b87a-11ce8ae785d7}"/>
-    <RecordField colName="full_acc_code" fieldIdRef="23" fieldType="TABLE_ALIAS" name="cl01_mast1.full_acc_code" sqlTabName="cl01_mast" table_alias_name="cl01_mast1" uid="{f5e516c7-7d47-4c5e-b978-598c1200696e}"/>
-    <RecordField colName="acc_code" fieldIdRef="24" fieldType="TABLE_COLUMN" name="cl01_mast.acc_code" sqlTabName="cl01_mast" uid="{e9de326a-a8f2-4359-9f7d-9f2a8ede4f35}"/>
+    <RecordField colName="deleted_at" fieldIdRef="18" fieldType="TABLE_COLUMN" name="cl01_mast.deleted_at" sqlTabName="cl01_mast" uid="{d0f088f2-5dbb-427c-afcd-8f32007da8fa}"/>
+    <RecordField colName="created_by" fieldIdRef="14" fieldType="TABLE_COLUMN" name="cl01_mast.created_by" sqlTabName="cl01_mast" uid="{8e1965ac-b057-4d38-8ae2-a7c1fde744fb}"/>
+    <RecordField colName="vat_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="cl01_mast.vat_no" sqlTabName="cl01_mast" uid="{73aeabee-dab5-4754-a32e-acee8048444d}"/>
+    <RecordField colName="payment_terms" fieldIdRef="25" fieldType="TABLE_COLUMN" name="cl01_mast.payment_terms" sqlTabName="cl01_mast" uid="{ed481372-bf21-4493-8b34-ce0402d8bc66}"/>
   </Record>
-  <Record masterTable="" name="arr_cred_lines" uid="{a7935bb4-f5fa-4a88-a246-b8fec9f5b0ab}">
-    <RecordField colName="doc_no" fieldIdRef="13" fieldType="TABLE_COLUMN" name="cl30_trans.doc_no" sqlTabName="cl30_trans" uid="{d84f6263-636f-4b5e-90d7-54eb4d300a16}"/>
-    <RecordField colName="trans_date" fieldIdRef="12" fieldType="TABLE_COLUMN" name="dl30_trans.trans_date" sqlTabName="dl30_trans" uid="{7677f0c2-d748-41c0-8aca-5a7ea5c0533b}"/>
-    <RecordField colName="doc_type" fieldIdRef="15" fieldType="TABLE_COLUMN" name="cl30_trans.doc_type" sqlTabName="cl30_trans" uid="{b1329f91-8031-4fcb-a664-a0fad292baaa}"/>
-    <RecordField colName="gross_tot" fieldIdRef="16" fieldType="TABLE_COLUMN" name="cl30_trans.gross_tot" sqlTabName="cl30_trans" uid="{a022e9fe-5172-4a30-ad16-f2d814dbaea1}"/>
-    <RecordField colName="vat" fieldIdRef="17" fieldType="TABLE_COLUMN" name="cl30_trans.vat" sqlTabName="cl30_trans" uid="{954aba45-aa7b-4c0d-af04-c7ea2896e3c5}"/>
-    <RecordField colName="disc" fieldIdRef="22" fieldType="TABLE_COLUMN" name="cl30_trans.disc" sqlTabName="cl30_trans" uid="{bcb0e84a-ee6d-4513-9a2c-2b99f57b7c9f}"/>
-    <RecordField colName="net_tot" fieldIdRef="19" fieldType="TABLE_COLUMN" name="cl30_trans.net_tot" sqlTabName="cl30_trans" uid="{d3692875-c9b7-4cf6-acd9-b143e2855881}"/>
+  <Record masterTable="cl30_trans" name="arr_cred_trans" uid="{715d43ea-dc32-4b11-acd1-749fb5bda3e3}">
+    <RecordField colName="id" fieldIdRef="2" fieldType="TABLE_COLUMN" name="cl30_trans.id" sqlTabName="cl30_trans" uid="{80d56014-0bad-4962-9782-cdced9cd865a}"/>
+    <RecordField colName="supp_id" fieldIdRef="12" fieldType="TABLE_COLUMN" name="cl30_trans.supp_id" sqlTabName="cl30_trans" uid="{7a911b95-9a8f-455b-843f-25c50fa529fb}"/>
+    <RecordField colName="trans_date" fieldIdRef="13" fieldType="TABLE_COLUMN" name="cl30_trans.trans_date" sqlTabName="cl30_trans" uid="{0e30c775-d8d0-4b42-a8a1-2cf9efb7870e}"/>
+    <RecordField colName="doc_no" fieldIdRef="15" fieldType="TABLE_COLUMN" name="cl30_trans.doc_no" sqlTabName="cl30_trans" uid="{60acfede-d0ac-4490-afa2-2b3af1a67c36}"/>
+    <RecordField colName="doc_type" fieldIdRef="16" fieldType="TABLE_COLUMN" name="cl30_trans.doc_type" sqlTabName="cl30_trans" uid="{9c94c43a-42d1-48fc-a63d-08a4e930cb1e}"/>
+    <RecordField colName="gross_tot" fieldIdRef="17" fieldType="TABLE_COLUMN" name="cl30_trans.gross_tot" sqlTabName="cl30_trans" uid="{f6cdfe65-1c34-4afc-9d3f-836ec90519f2}"/>
+    <RecordField colName="disc_tot" fieldIdRef="19" fieldType="TABLE_COLUMN" name="cl30_trans.disc_tot" sqlTabName="cl30_trans" uid="{4a794967-bc8e-487e-9fb9-07cae07cde83}"/>
+    <RecordField colName="vat_tot" fieldIdRef="22" fieldType="TABLE_COLUMN" name="cl30_trans.vat_tot" sqlTabName="cl30_trans" uid="{6ea50c46-bf5c-41bc-a379-8d8a59bb4503}"/>
+    <RecordField colName="net_tot" fieldIdRef="24" fieldType="TABLE_COLUMN" name="cl30_trans.net_tot" sqlTabName="cl30_trans" uid="{9c12b24f-6743-4c4e-8fbb-d03e5bbe94f9}"/>
+    <RecordField colName="notes" fieldIdRef="26" fieldType="TABLE_COLUMN" name="cl30_trans.notes" sqlTabName="cl30_trans" uid="{a44332b5-c3ec-4088-a0e2-d211c2a27eb1}"/>
   </Record>
-  <Form gridHeight="22" gridWidth="88" name="cl1011_mast" perFooterComment="" spacing="compact" text="Creditors Master">
-    <VBox gridHeight="21" gridWidth="86" name="vbox1" posX="2" posY="0">
-      <Grid gridHeight="8" gridWidth="86" name="dl101_mast_hdr" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="85" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="CREDITORS MASTER"/>
-        <Label gridHeight="1" gridWidth="9" name="lbl_dl_acc_code1" posX="1" posY="1" text="Supplier Code"/>
-        <Edit colName="acc_code" fieldId="24" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" justify="left" name="cl01_mast.acc_code" noEntry="true" posX="11" posY="1" program="" repeat="false" sqlTabName="cl01_mast" tabIndex="0" title="edit1" widget="Edit"/>
-        <ButtonEdit action="find" colName="full_acc_code" fieldId="23" fieldType="TABLE_ALIAS" gridHeight="1" gridWidth="12" image="zoom" justify="left" name="cl01_mast1.full_acc_code" noEntry="true" posX="21" posY="1" program="" repeat="false" sqlTabName="cl01_mast" tabIndex="0" table_alias_name="cl01_mast1" title="edit1" widget="ButtonEdit"/>
-        <Label gridHeight="1" gridWidth="10" name="lbl_dl_name" posX="34" posY="1" text="Supplier Name"/>
-        <Edit colName="supp_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="24" name="cl01_mast.supp_name" posX="45" posY="1" repeat="false" sqlTabName="cl01_mast" tabIndex="1" title="edit1" widget="Edit"/>
-        <Label gridHeight="1" gridWidth="9" name="lbl_dl_phone" posX="1" posY="2" text="Phone"/>
-        <Edit colName="phone" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="cl01_mast.phone" posX="11" posY="2" repeat="false" sqlTabName="cl01_mast" tabIndex="2" title="edit1" widget="Edit"/>
-        <Label gridHeight="1" gridWidth="10" name="lbl_dl_email" posX="34" posY="2" text="Email"/>
-        <Edit colName="email" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="24" name="cl01_mast.email" posX="45" posY="2" repeat="false" sqlTabName="cl01_mast" tabIndex="3" title="edit1" widget="Edit"/>
-        <Label gridHeight="1" gridWidth="9" name="lbl_dl_add1" posX="1" posY="3" text="Address 1"/>
-        <Edit colName="address1" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="cl01_mast.address1" posX="11" posY="3" repeat="false" sqlTabName="cl01_mast" tabIndex="5" title="edit1" widget="Edit"/>
-        <Label gridHeight="1" gridWidth="10" name="lbl_dl_add2" posX="34" posY="3" text="Address 2"/>
-        <Edit colName="address2" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="24" name="cl01_mast.address2" posX="45" posY="3" repeat="false" sqlTabName="cl01_mast" tabIndex="6" title="edit1" widget="Edit"/>
-        <Label gridHeight="1" gridWidth="9" name="lbl_dl_add3" posX="1" posY="4" text="Address 3"/>
-        <Edit colName="address3" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="cl01_mast.address3" posX="11" posY="4" repeat="false" sqlTabName="cl01_mast" tabIndex="7" title="edit1" widget="Edit"/>
-        <Label gridHeight="1" gridWidth="10" name="lbl_dl_post" posX="34" posY="4" text="Postal Code"/>
-        <Edit colName="postal_code" fieldId="21" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="cl01_mast.postal_code" noEntry="false" posX="45" posY="4" repeat="false" sqlTabName="cl01_mast" tabIndex="0" table_alias_name="cl01_mast.postal_code" title="edit1" widget="Edit"/>
-        <Label gridHeight="1" gridWidth="6" name="lbl_dl_bal" posX="55" posY="4" text="Balance"/>
-        <Edit colName="balance" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="cl01_mast.balance" noEntry="true" posX="62" posY="4" repeat="false" sqlTabName="cl01_mast" tabIndex="0" title="edit1" widget="Edit"/>
-        <Label gridHeight="1" gridWidth="9" name="lbl_dl_status" posX="1" posY="5" text="Status"/>
-        <ComboBox colName="status" defaultValue="0" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" items="Inactive, Active, Archived" name="cl01_mast.status" posX="11" posY="5" sqlTabName="cl01_mast" tabIndex="4" title="buttonedit1" widget="ComboBox">
-          <Item lstrtext="false" name="inactive" text="Inactive"/>
-          <Item lstrtext="false" name="active" text="Active"/>
-          <Item lstrtext="false" name="archived" text="Archived"/>
-        </ComboBox>
+  <Form gridHeight="22" gridWidth="101" name="cl1011_mast" perFooterComment="" spacing="compact" text="Creditors Master">
+    <VBox gridHeight="22" gridWidth="99" name="vbox1" posX="2" posY="0">
+      <Grid gridHeight="10" gridWidth="189" name="dl101_mast_hdr" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="98" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="CREDITORS MASTER"/>
+        <Group gridChildrenInParent="true" gridHeight="7" gridWidth="70" name="grp_1" posX="1" posY="1" text="Supplier Info">
+          <Label gridHeight="1" gridWidth="9" name="lbl_dl_name" posX="1" posY="1" text="Supplier Name"/>
+          <Edit colName="supp_name" fieldId="23" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="cl01_mast.supp_name" posX="11" posY="1" repeat="false" sqlTabName="cl01_mast" tabIndex="1" title="edit1" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="10" name="lbl_dl_status" posX="34" posY="1" text="Status"/>
+          <ComboBox colName="status" defaultValue="0" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="Inactive, Active, Archived" name="cl01_mast.status" posX="45" posY="1" sqlTabName="cl01_mast" tabIndex="8" title="buttonedit1" widget="ComboBox">
+            <Item lstrtext="false" name="inactive" text="Inactive"/>
+            <Item lstrtext="false" name="active" text="Active"/>
+            <Item lstrtext="false" name="archived" text="Archived"/>
+          </ComboBox>
+          <Label gridHeight="1" gridWidth="9" name="lbl_dl_phone" posX="1" posY="2" text="Phone"/>
+          <Edit colName="phone" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="cl01_mast.phone" posX="11" posY="2" repeat="false" sqlTabName="cl01_mast" tabIndex="2" title="edit1" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="10" name="lbl_dl_email" posX="34" posY="2" text="Email"/>
+          <Edit colName="email" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="24" name="cl01_mast.email" posX="45" posY="2" repeat="false" sqlTabName="cl01_mast" tabIndex="3" title="edit1" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="9" name="lbl_dl_add1" posX="1" posY="3" text="Address 1"/>
+          <Edit colName="address1" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="cl01_mast.address1" posX="11" posY="3" repeat="false" sqlTabName="cl01_mast" tabIndex="4" title="edit1" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="10" name="lbl_dl_add2" posX="34" posY="3" text="Address 2"/>
+          <Edit colName="address2" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="24" name="cl01_mast.address2" posX="45" posY="3" repeat="false" sqlTabName="cl01_mast" tabIndex="5" title="edit1" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="9" name="lbl_dl_add3" posX="1" posY="4" text="Address 3"/>
+          <Edit colName="address3" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="cl01_mast.address3" posX="11" posY="4" repeat="false" sqlTabName="cl01_mast" tabIndex="6" title="edit1" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="10" name="lbl_dl_post" posX="34" posY="4" text="Postal Code"/>
+          <Edit colName="postal_code" fieldId="21" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="cl01_mast.postal_code" noEntry="false" posX="45" posY="4" repeat="false" sqlTabName="cl01_mast" tabIndex="7" table_alias_name="cl01_mast.postal_code" title="edit1" widget="Edit"/>
+        </Group>
+        <Group gridChildrenInParent="true" gridHeight="7" gridWidth="27" name="grp_2" posX="72" posY="1" text="">
+          <Label gridHeight="1" gridWidth="10" name="lbl_cl_vat1" posX="1" posY="1" text="Pay Terms"/>
+          <ComboBox colName="payment_terms" fieldId="25" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" items="Cash, 30Days" name="cl01_mast.payment_terms" noEntry="false" posX="12" posY="1" repeat="false" sqlTabName="cl01_mast" tabIndex="0" title="edit1" widget="ComboBox">
+            <Item lstrtext="false" name="0" text="Cash"/>
+            <Item lstrtext="false" name="30" text="30Days"/>
+          </ComboBox>
+          <Label gridHeight="1" gridWidth="10" name="lbl_cl_vat" posX="1" posY="2" text="VAT"/>
+          <Edit colName="vat_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" name="cl01_mast.vat_no" noEntry="false" posX="12" posY="2" repeat="false" sqlTabName="cl01_mast" tabIndex="0" title="edit1" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="10" name="lbl_dl_bal" posX="1" posY="3" text="Balance"/>
+          <Edit colName="balance" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" name="cl01_mast.balance" noEntry="true" posX="12" posY="3" repeat="false" sqlTabName="cl01_mast" tabIndex="0" title="edit1" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="10" name="lbl_dl_bal2" posX="1" posY="5" text="Created By"/>
+        </Group>
         <Phantom colName="id" fieldId="9" fieldType="TABLE_COLUMN" name="cl01_mast.id" sqlTabName="cl01_mast" widget="Phantom"/>
         <Phantom colName="created_at" fieldId="11" fieldType="TABLE_COLUMN" name="cl01_mast.created_at" sqlTabName="cl01_mast" widget="Phantom"/>
         <Phantom colName="created_by" fieldId="14" fieldType="TABLE_COLUMN" name="cl01_mast.created_by" sqlTabName="cl01_mast" widget="Phantom"/>
         <Phantom colName="deleted_at" fieldId="18" fieldType="TABLE_COLUMN" name="cl01_mast.deleted_at" sqlTabName="cl01_mast" widget="Phantom"/>
         <Phantom colName="updated_at" fieldId="20" fieldType="TABLE_COLUMN" name="cl01_mast.updated_at" sqlTabName="cl01_mast" widget="Phantom"/>
       </Grid>
-      <Folder gridHeight="11" gridWidth="86" name="fld_group" posX="0" posY="9">
+      <Folder gridHeight="10" gridWidth="189" name="fld_group" posX="0" posY="11">
         <Page image="fa-file-text-o" name="trans_group" text="Documents">
-          <Grid gridHeight="9" gridWidth="85" name="trans_grid" posX="0" posY="0">
-            <Table gridHeight="9" gridWidth="84" name="dl130_trans" posX="1" posY="0" totalRows="8">
-              <Edit colName="trans_date" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.trans_date" posX="0" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
+          <Grid gridHeight="9" gridWidth="98" name="trans_grid" posX="0" posY="0">
+            <Table gridHeight="6" gridWidth="97" name="dl101_mast_det" posX="1" posY="0" totalRows="5">
+              <Phantom colName="id" fieldId="2" fieldType="TABLE_COLUMN" name="cl30_trans.id" sqlTabName="cl30_trans" widget="Phantom"/>
+              <Edit colName="supp_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="cl30_trans.supp_id" posX="0" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Supplier ID" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="doc_no" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="cl30_trans.doc_no" posX="10" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
+              <Edit colName="trans_date" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.trans_date" posX="6" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="doc_type" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.doc_type" posX="21" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
+              <Edit colName="doc_no" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.doc_no" posX="16" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="gross_tot" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="cl30_trans.gross_tot" posX="31" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Total Excl" widget="Edit">
+              <Edit colName="doc_type" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="cl30_trans.doc_type" posX="26" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc Tyoe" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="disc" fieldId="22" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="cl30_trans.disc" posX="40" posY="0" sqlTabName="cl30_trans" tabIndex="-1" title="Discount" widget="Edit"/>
-              <Edit colName="vat" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.vat" posX="48" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="VAT" widget="Edit">
+              <Edit colName="gross_tot" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.gross_tot" posX="37" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Gross Total" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="net_tot" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="cl30_trans.net_tot" posX="62" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Net Total" widget="Edit">
+              <Edit colName="disc_tot" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="cl30_trans.disc_tot" posX="47" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Disc" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="vat_tot" fieldId="22" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="cl30_trans.vat_tot" posX="55" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="VAT" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="net_tot" fieldId="24" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="cl30_trans.net_tot" posX="63" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Net Total" widget="Edit">
+                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+              </Edit>
+              <Edit colName="notes" fieldId="26" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="16" name="cl30_trans.notes" posX="71" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Notes" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
             </Table>
@@ -95,6 +116,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QDAAAEgAAJlAMAAASAAAmT94k3S8an76AQAAAEwAewBhADcAOQAzADUAYgBiADQALQBmADUAZgBhAC0ANABhADgAOAAtAGEAMgA0ADYALQBiADgAZgBlAGMAOQBmADUAYgAwAGEAYgB9wGeZmgPMza9ANAAAWgAAvT90euFHrhR7AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QG6ZmbsMzPVALmZnJTM1WT+AYk3S8an8AQAAAEwAewA3ADEANQBkADQAMwBlAGEALQBkAGMAMwAyAC0ANABiADEAMQAtAGEAYwBkADEALQA3ADQAOQBmAGIANQBiAGQAYQAzAGUAMwB9QDAAAAwAAANAMAAADAAAAz+crAgxJul+AQ==]]>
   </DiagramLayout>
 </ManagedForm>

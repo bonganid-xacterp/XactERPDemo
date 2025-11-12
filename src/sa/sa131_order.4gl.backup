@@ -12,7 +12,7 @@ IMPORT FGL utils_globals
 IMPORT FGL st121_st_lkup
 IMPORT FGL utils_doc_totals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- Record Definitions

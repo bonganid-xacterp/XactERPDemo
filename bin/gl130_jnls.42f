@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="gl130_jnls.tmp" build="3.20.14" sqlDbName="demoapp_db" text="GL Journals" width="78" height="6">
+<Form name="gl130_jnls.tmp" build="3.20.14" sqlDbName="demoappdb" text="GL Journals" width="78" height="6">
   <LStr text="GL Journals"/>
   <VBox name="vbox1">
     <Grid name="gl30_jnls" width="78" height="6">
@@ -9,7 +9,7 @@
       <Label name="gl30_jnls_jrn_no_label1" width="13" text="JNL No" posY="1" posX="1" gridWidth="13">
         <LStr text="JNL No"/>
       </Label>
-      <FormField name="gl30_jnls.jrn_no" colName="jrn_no" sqlType="VARCHAR(20)" fieldId="0" sqlTabName="gl30_jnls" tabIndex="1">
+      <FormField name="gl30_jnls.jrn_no" colName="jrn_no" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="gl30_jnls" tabIndex="1">
         <Edit width="20" scroll="1" posY="1" posX="15" gridWidth="20"/>
       </FormField>
       <Label name="gl30_jnls_date_label1" width="11" text="Date" posY="1" posX="36" gridWidth="11">
@@ -21,37 +21,37 @@
       <Label name="gl30_jnls_source_module_label1" width="13" text="Doc Type" posY="2" posX="1" gridWidth="13">
         <LStr text="Doc Type"/>
       </Label>
-      <FormField name="gl30_jnls.doc_type" colName="doc_type" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="gl30_jnls" tabIndex="3">
+      <FormField name="gl30_jnls.doc_type" colName="doc_type" sqlType="VARCHAR(20)" fieldId="2" sqlTabName="gl30_jnls" tabIndex="3">
         <Edit width="20" scroll="1" posY="2" posX="15" gridWidth="20"/>
       </FormField>
       <Label name="gl30_jnls_doc_type_label1" width="11" text="Doc Type" posY="2" posX="36" gridWidth="11">
         <LStr text="Doc Type"/>
       </Label>
-      <FormField name="gl30_jnls.ref_no" colName="ref_no" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="gl30_jnls" tabIndex="4">
+      <FormField name="gl30_jnls.ref_no" colName="ref_no" sqlType="VARCHAR(30)" fieldId="3" sqlTabName="gl30_jnls" tabIndex="4">
         <Edit width="23" scroll="1" posY="2" posX="48" gridWidth="23"/>
       </FormField>
       <Label name="gl30_jnls_doc_no_label1" width="13" text="Doc No" posY="3" posX="1" gridWidth="13">
         <LStr text="Doc No"/>
       </Label>
-      <FormField name="gl30_jnls.doc_no" colName="doc_no" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="gl30_jnls" tabIndex="5">
+      <FormField name="gl30_jnls.doc_no" colName="doc_no" sqlType="VARCHAR(30)" fieldId="4" sqlTabName="gl30_jnls" tabIndex="5">
         <Edit width="20" scroll="1" posY="3" posX="15" gridWidth="20"/>
       </FormField>
       <Label name="gl30_jnls_description_label1" width="11" text="Description" posY="3" posX="36" gridWidth="11">
         <LStr text="Description"/>
       </Label>
-      <FormField name="gl30_jnls.description" colName="description" sqlType="TEXT" fieldId="5" sqlTabName="gl30_jnls" tabIndex="6">
+      <FormField name="gl30_jnls.description" colName="description" sqlType="VARCHAR(200)" fieldId="5" sqlTabName="gl30_jnls" tabIndex="6">
         <Edit width="23" scroll="1" posY="3" posX="48" gridWidth="23"/>
       </FormField>
       <Label name="gl30_jnls_status_label1" width="13" text="Status" posY="4" posX="1" gridWidth="13">
         <LStr text="Status"/>
       </Label>
-      <FormField name="gl30_jnls.status" colName="status" sqlType="VARCHAR(10)" fieldId="6" sqlTabName="gl30_jnls" tabIndex="7">
+      <FormField name="gl30_jnls.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="6" sqlTabName="gl30_jnls" tabIndex="7">
         <ComboBox width="10" scroll="1" posY="4" posX="15" gridWidth="12"/>
       </FormField>
       <PhantomFormField name="gl30_jnls.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="8" sqlTabName="gl30_jnls">
         <PhantomEdit width="1"/>
       </PhantomFormField>
-      <PhantomFormField name="gl30_jnls.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="9" sqlTabName="gl30_jnls">
+      <PhantomFormField name="gl30_jnls.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="9" sqlTabName="gl30_jnls">
         <PhantomEdit width="1"/>
       </PhantomFormField>
       <PhantomFormField name="gl30_jnls.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="10" sqlTabName="gl30_jnls">

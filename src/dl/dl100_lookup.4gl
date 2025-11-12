@@ -10,7 +10,7 @@
 
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Search and select debtor
 FUNCTION dl_search() RETURNS STRING

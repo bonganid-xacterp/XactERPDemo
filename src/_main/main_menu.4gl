@@ -28,7 +28,7 @@ IMPORT FGL dl101_mast
 -- ==============================================================
 -- DATABASE CONTEXT
 -- ==============================================================
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==============================================================
 -- CONFIGURATION CONSTANTS
@@ -232,7 +232,7 @@ PRIVATE FUNCTION execute_module(formname STRING)
              CALL wh101_mast.init_wh_module()
             DISPLAY "Stock Enq"
         WHEN "st102_cat"
-            CALL st102_cat.init_cat_module()
+            CALL st102_cat.init_category_module()
         OTHERWISE
             CALL utils_globals.show_error("Module not implemented: " || formname)
     END CASE
@@ -304,7 +304,7 @@ PRIVATE FUNCTION show_about_dialog()
             || "Logged in as: "
             || current_user
             || "\n"
-            || "Database: demoapp_db\n\n"
+            || "Database: demoappdb\n\n"
             || "(c) 2025 XACT ERP Demo"
 
     CALL fgldialog.fgl_winmessage("About", text, "information")

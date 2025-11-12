@@ -177,7 +177,7 @@ END FUNCTION
 -- Single database connection function
 PUBLIC FUNCTION connectDatabase() RETURNS BOOLEAN
     TRY
-        CONNECT TO "demoapp_db@localhost:5432+driver='dbmpgs_9'"
+        CONNECT TO "demoappdb@localhost:5432+driver='dbmpgs_9'"
             USER "postgres" USING "napoleon"
         RETURN TRUE
     CATCH

@@ -5,26 +5,8 @@
 -- ==============================================================
 
 IMPORT FGL utils_globals
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
--- ==============================================================
--- Function : calculate_line_totals
--- Purpose  : Calculate Gross, Discount, Net, VAT, and Line Total
--- ==============================================================
-PUBLIC FUNCTION calculate_line_totals(p_qty DECIMAL, p_price DECIMAL,
-                                      p_disc_pct DECIMAL, p_vat_rate DECIMAL)
-    RETURNS (DECIMAL, DECIMAL, DECIMAL, DECIMAL, DECIMAL)
-
-    DEFINE l_gross, l_disc, l_net, l_vat, l_total DECIMAL(15,2)
-
-    LET l_gross = p_qty * p_price
-    LET l_disc  = l_gross * (p_disc_pct / 100)
-    LET l_net   = l_gross - l_disc
-    LET l_vat   = l_net * (p_vat_rate / 100)
-    LET l_total = l_net + l_vat
-
-    RETURN l_gross, l_disc, l_net, l_vat, l_total
-END FUNCTION
 
 
 -- ==============================================================

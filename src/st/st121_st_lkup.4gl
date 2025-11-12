@@ -9,7 +9,7 @@
 
 IMPORT base
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- ==========================================
 -- Main Lookup Function

@@ -12,7 +12,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db -- Use correct schema name
+SCHEMA demoappdb -- Use correct schema name
 
 -- Warehouse transfer header record structure
 TYPE transfer_hdr_t RECORD LIKE wh30_trf_hdr.*

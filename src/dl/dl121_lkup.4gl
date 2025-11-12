@@ -8,7 +8,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- display debtor form
 FUNCTION fetch_debt_list() RETURNS STRING
@@ -18,13 +18,13 @@ FUNCTION fetch_debt_list() RETURNS STRING
     DEFINE sel INTEGER
 
     DEFINE  debt_arr DYNAMIC ARRAY OF RECORD
-            acc_code LIKE dl01_mast.acc_code,
+            id LIKE dl01_mast.id,
             cust_name LIKE dl01_mast.cust_name,
             status LIKE dl01_mast.status
         END RECORD,
 
         debt_rec RECORD
-            acc_code LIKE dl01_mast.acc_code,
+            id LIKE dl01_mast.id,
             cust_name LIKE dl01_mast.cust_name,
             status LIKE dl01_mast.status
         END RECORD
@@ -36,11 +36,11 @@ FUNCTION fetch_debt_list() RETURNS STRING
 
     -- Load data of all active debtors
     DECLARE debtors_curs CURSOR FOR
-        SELECT acc_code,
+        SELECT id,
             cust_name,
             status
             FROM dl01_mast
-            ORDER BY acc_code
+            ORDER BY id
 
     CALL debt_arr.clear()
 
@@ -63,7 +63,7 @@ FUNCTION fetch_debt_list() RETURNS STRING
                 ON ACTION accept
                     LET sel = dlg.getCurrentRow("r_debtors_list")
                     IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                        LET selected_code = debt_arr[sel].acc_code
+                        LET selected_code = debt_arr[sel].id
                     END IF
                     EXIT DIALOG
 
@@ -75,7 +75,7 @@ FUNCTION fetch_debt_list() RETURNS STRING
                 ON KEY(RETURN)
                     LET sel = dlg.getCurrentRow("r_debtors_list")
                     IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                        LET selected_code = debt_arr[sel].acc_code
+                        LET selected_code = debt_arr[sel].id
                     END IF
                     EXIT DIALOG
                 ON KEY(ESCAPE)
@@ -97,7 +97,7 @@ END FUNCTION
 FUNCTION load_lookup_form_with_search() RETURNS STRING
     DEFINE selected_code STRING
     DEFINE debt_arr DYNAMIC ARRAY OF RECORD
-        acc_code LIKE dl01_mast.acc_code,
+        id LIKE dl01_mast.id,
         cust_name LIKE dl01_mast.cust_name,
         status LIKE dl01_mast.status,
         lbl_status STRING
@@ -140,7 +140,7 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
             ON ACTION accept
                 LET sel = DIALOG.getCurrentRow("r_debtors_list")
                 IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                    LET selected_code = debt_arr[sel].acc_code
+                    LET selected_code = debt_arr[sel].id
                     EXIT DIALOG
                 END IF
 
@@ -151,14 +151,14 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
             ON ACTION doubleclick
                 LET sel = DIALOG.getCurrentRow("r_debtors_list")
                 IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                    LET selected_code = debt_arr[sel].acc_code
+                    LET selected_code = debt_arr[sel].id
                     EXIT DIALOG
                 END IF
 
             ON KEY(RETURN)
                 LET sel = DIALOG.getCurrentRow("r_debtors_list")
                 IF sel > 0 AND sel <= debt_arr.getLength() THEN
-                    LET selected_code = debt_arr[sel].acc_code
+                    LET selected_code = debt_arr[sel].id
                     EXIT DIALOG
                 END IF
 
@@ -176,7 +176,7 @@ END FUNCTION
 FUNCTION load_debtors_for_lookup(search_filter STRING)
     RETURNS(
         DYNAMIC ARRAY OF RECORD
-            acc_code LIKE dl01_mast.acc_code,
+            id LIKE dl01_mast.id,
             cust_name LIKE dl01_mast.cust_name,
             status LIKE dl01_mast.status,
             lbl_status STRING
@@ -184,14 +184,14 @@ FUNCTION load_debtors_for_lookup(search_filter STRING)
         INTEGER)
 
     DEFINE rec RECORD
-        acc_code LIKE dl01_mast.acc_code,
+        id LIKE dl01_mast.id,
         cust_name LIKE dl01_mast.cust_name,
         status LIKE dl01_mast.status,
         lbl_status STRING
     END RECORD
 
     DEFINE debt_arr DYNAMIC ARRAY OF RECORD
-        acc_code LIKE dl01_mast.acc_code,
+        id LIKE dl01_mast.id,
         cust_name LIKE dl01_mast.cust_name,
         status LIKE dl01_mast.status,
         lbl_status STRING
@@ -206,12 +206,12 @@ FUNCTION load_debtors_for_lookup(search_filter STRING)
     LET search_pat = "%" || NVL(search_filter, "") || "%"
 
     -- Build SQL with search filter
-    LET sql_stmt = "SELECT acc_code, cust_name, status FROM dl01_mast"
+    LET sql_stmt = "SELECT id, cust_name, status FROM dl01_mast"
 
     IF search_filter IS NOT NULL AND search_filter.getLength() > 0 THEN
         LET sql_stmt =
             sql_stmt
-                || " WHERE acc_code LIKE '%"
+                || " WHERE id LIKE '%"
                 || search_filter
                 || "%'"
                 || " OR cust_name LIKE '%"
@@ -219,20 +219,20 @@ FUNCTION load_debtors_for_lookup(search_filter STRING)
                 || "%'"
     END IF
 
-    LET sql_stmt = sql_stmt || " ORDER BY acc_code"
+    LET sql_stmt = sql_stmt || " ORDER BY id"
 
 
     WHENEVER ERROR CONTINUE
     PREPARE debt_prep FROM
-      "SELECT acc_code, cust_name, status, " ||
+      "SELECT id, cust_name, status, " ||
       " CASE status " ||
       "  WHEN 1 THEN 'Active' "   ||
       "  WHEN 0 THEN 'Inactive' " ||
       "  WHEN -1 THEN 'Archived' "||
       "  ELSE 'Unknown' END AS lbl_status " ||
       "FROM dl01_mast " ||
-      "WHERE acc_code ILIKE ? OR cust_name ILIKE ? " ||
-      "ORDER BY acc_code";
+      "WHERE id ILIKE ? OR cust_name ILIKE ? " ||
+      "ORDER BY id";
     DECLARE debt_csr2 CURSOR FOR debt_prep
 
       OPEN debt_csr2 USING search_pat, search_pat

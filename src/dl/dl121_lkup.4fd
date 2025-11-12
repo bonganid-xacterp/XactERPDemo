@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{9dd89d7b-71e9-423e-aa86-37ef507ce419}">
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{9dd89d7b-71e9-423e-aa86-37ef507ce419}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record active="false" masterTable="dl01_mast" name="r_debtors_list" uid="{a9d33100-5c50-4b7d-a589-02471e89e472}">
-    <RecordField colName="acc_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="dl01_mast.acc_code" sqlTabName="dl01_mast" uid="{1378d25e-6b12-4a91-ba99-ea05f1b11da7}"/>
+    <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="dl01_mast.id" sqlTabName="dl01_mast" uid="{1378d25e-6b12-4a91-ba99-ea05f1b11da7}"/>
     <RecordField colName="cust_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="dl01_mast.cust_name" sqlTabName="dl01_mast" uid="{a58b3eaf-6596-460f-91f2-ad5c86e86d91}"/>
     <RecordField colName="status" fieldIdRef="6" fieldType="TABLE_COLUMN" name="dl01_mast.status" sqlTabName="dl01_mast" uid="{6c326511-fecb-47ec-9104-1f0b9ce75772}"/>
   </Record>
@@ -13,10 +13,10 @@
   </Record>
   <Form gridHeight="18" gridWidth="51" name="f_debtors_list" text="Debtors Lookup">
     <VBox gridHeight="17" gridWidth="51" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="15" gridWidth="61" name="grid1" posX="0" posY="1">
+      <Grid gridHeight="15" gridWidth="51" name="grid1" posX="0" posY="1">
         <Label color="green" gridHeight="1" gridWidth="50" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text="DEBTORS LOOKUP"/>
         <Table gridHeight="12" gridWidth="50" name="f_debtors_list" posX="1" posY="1" totalRows="5">
-          <Edit colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl01_mast.acc_code" posX="0" posY="0" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Code" widget="Edit">
+          <Edit colName="id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl01_mast.id" posX="0" posY="0" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Code" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Edit colName="cust_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="dl01_mast.cust_name" posX="10" posY="0" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Customer Name" widget="Edit">
@@ -32,6 +32,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA0ADQANAA5ADIAMQAwADkALQBlADgANQAzAC0ANAAxAGEAMAAtADgANgAzADIALQBhAGQANwBjADcAZAA1ADkANgA4ADcAMgB9QGYAACJAABZAJmZmnAAAQT9ok3S8an76AQAAAEwAewBhADkAZAAzADMAMQAwADAALQA1AGMANQAwAC0ANABiADcAZAAtAGEANQA4ADkALQAwADIANAA3ADEAZQA4ADkAZQA0ADcAMgB9AAAAAAAAAAAAAAAAAAAAAD94k3S8an76AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA0ADQANAA5ADIAMQAwADkALQBlADgANQAzAC0ANAAxAGEAMAAtADgANgAzADIALQBhAGQANwBjADcAZAA1ADkANgA4ADcAMgB9QGYAACfAAB9AJmZmoZmZ6D9ok3S8an76AQAAAEwAewBhADkAZAAzADMAMQAwADAALQA1AGMANQAwAC0ANABiADcAZAAtAGEANQA4ADkALQAwADIANAA3ADEAZQA4ADkAZQA0ADcAMgB9AAAAAAAAAAAAAAAAAAAAAD94k3S8an76AQ==]]>
   </DiagramLayout>
 </ManagedForm>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{a4362c92-ea20-46fa-be29-4755b9e864c2}">
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{a4362c92-ea20-46fa-be29-4755b9e864c2}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
@@ -7,12 +7,12 @@
     <RecordField colName="acc_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="gl01_acc.acc_code" sqlTabName="gl01_acc" uid="{06403ab7-4f58-481a-98d7-e7f11883025b}"/>
     <RecordField colName="acc_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="gl01_acc.acc_name" sqlTabName="gl01_acc" uid="{fb031943-22f4-4123-9687-c828545dae64}"/>
     <RecordField colName="acc_type" fieldIdRef="3" fieldType="TABLE_COLUMN" name="gl01_acc.acc_type" sqlTabName="gl01_acc" uid="{68df44f2-a606-45c5-a224-fd9706001c91}"/>
-    <RecordField colName="parent_acc" fieldIdRef="4" fieldType="TABLE_COLUMN" name="gl01_acc.parent_acc" sqlTabName="gl01_acc" uid="{075bd193-85ff-4f07-abe4-433e122a52e6}"/>
+    <RecordField colName="parent_id" fieldIdRef="4" fieldType="TABLE_COLUMN" name="gl01_acc.parent_id" sqlTabName="gl01_acc" uid="{075bd193-85ff-4f07-abe4-433e122a52e6}"/>
     <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="gl01_acc.status" sqlTabName="gl01_acc" uid="{991c3d3b-7057-46bf-9ec9-93f7e26bce9e}"/>
   </Record>
   <Form gridHeight="8" gridWidth="90" name="frm_gl_acc" text="GL Accounts">
     <VBox gridHeight="7" gridWidth="89" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="5" gridWidth="136" name="grd_gl_acc" posX="0" posY="1">
+      <Grid gridHeight="5" gridWidth="89" name="grd_gl_acc" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="88" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="GL ACCOUNTS"/>
         <Label gridHeight="1" gridWidth="13" name="gl01_acc_acc_code_label1" posX="1" posY="1" text="Aaccount Code">
           <Initializer text="dbschema:gl01_acc.acc_code/@label"/>
@@ -35,7 +35,7 @@
         <Label gridHeight="1" gridWidth="14" name="gl01_acc_parent_acc_label1" posX="36" posY="2" text="Parent Account">
           <Initializer text="dbschema:gl01_acc.parent_acc/@label"/>
         </Label>
-        <Edit colName="parent_acc" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl01_acc.parent_acc" posX="51" posY="2" scroll="true" sqlTabName="gl01_acc" tabIndex="-1" title="Parent Account" widget="Edit">
+        <Edit colName="parent_id" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="gl01_acc.parent_id" posX="51" posY="2" scroll="true" sqlTabName="gl01_acc" tabIndex="-1" title="Parent Account" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
         <Label gridHeight="1" gridWidth="13" name="gl01_acc_status_label1" posX="1" posY="3" text="Status">

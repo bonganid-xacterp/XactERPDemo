@@ -10,7 +10,7 @@
 
 IMPORT FGL utils_globals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- List all users
 FUNCTION list_users() RETURNS DYNAMIC ARRAY OF STRING

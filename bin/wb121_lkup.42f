@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="wb121_lkup.tmp" build="3.20.14" sqlDbName="demoappdb" spacing="normal" text="BIN LOOKUP" width="52" height="14">
+  <LStr text="BIN LOOKUP"/>
+  <VBox name="vbox1">
+    <Grid name="grd_st" width="52" height="14">
+      <Label name="lbl_title" width="50" text="BIN LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="50">
+        <LStr text="BIN LOOKUP"/>
+      </Label>
+      <Table pageSize="10" name="f_st_list" width="50" posY="1" posX="1" gridWidth="50" gridHeight="12" tabName="tbl_list">
+        <TableColumn name="wb01_mast.wb_code" colName="wb_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="wb01_mast" text="Bin ID" tabIndex="1">
+          <Edit width="7" scroll="1"/>
+          <LStr text="Bin ID"/>
+        </TableColumn>
+        <TableColumn name="wb01_mast.description" colName="description" sqlType="VARCHAR(120)" fieldId="1" sqlTabName="wb01_mast" text="Description" tabIndex="2">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Description"/>
+        </TableColumn>
+        <TableColumn name="wb01_mast.wh_id" colName="wh_id" sqlType="BIGINT" required="1" notNull="1" fieldId="2" sqlTabName="wb01_mast" text="WH" tabIndex="3" numAlign="1">
+          <Edit width="8"/>
+          <LStr text="WH"/>
+        </TableColumn>
+      </Table>
+      <Label name="lbl_filter" width="7" text="Filter" posY="13" posX="1" gridWidth="7">
+        <LStr text="Filter"/>
+      </Label>
+      <FormField name="formonly.f_search" colName="f_search" fieldId="3" sqlTabName="formonly" tabIndex="4">
+        <Edit width="27" posY="13" posX="9" gridWidth="27"/>
+      </FormField>
+    </Grid>
+  </VBox>
+  <RecordView tabName="wb01_mast">
+    <Link colName="wb_code" fieldIdRef="0"/>
+    <Link colName="description" fieldIdRef="1"/>
+    <Link colName="wh_id" fieldIdRef="2"/>
+  </RecordView>
+  <RecordView tabName="formonly">
+    <Link colName="f_search" fieldIdRef="3"/>
+  </RecordView>
+  <RecordView tabName="f_search">
+    <Link colName="f_search" fieldIdRef="3"/>
+  </RecordView>
+</Form>

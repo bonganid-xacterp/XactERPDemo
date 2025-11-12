@@ -9,9 +9,9 @@
 FUNCTION initialize_database() RETURNS SMALLINT
 
     TRY
-        CONNECT TO "demoapp_db@localhost:5432+driver='dbmpgs_9'"
+        CONNECT TO "demoappdb@localhost:5432+driver='dbmpgs_9'"
             USER "postgres" USING "napoleon"
-        DISPLAY "Connected to database: demoapp_db"
+        DISPLAY "Connected to database: demoappdb"
         RETURN TRUE
     CATCH
         DISPLAY "Database connection failed!"
@@ -71,7 +71,7 @@ FUNCTION get_database_info() RETURNS STRING
 
     DEFINE info STRING
     
-    LET info = "Database: demoapp_db\n"
+    LET info = "Database: demoappdb\n"
     LET info = info || "Server  : localhost:5432\n"
     LET info = info || "Driver  : dbmpgs_9 (PostgreSQL)\n"
     LET info = info || "User    : postgres\n"

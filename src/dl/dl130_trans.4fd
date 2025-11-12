@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ManagedForm databaseName="demoapp_db" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{c90123b2-5fc4-43e6-8cc1-597e1e0a543b}">
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{c90123b2-5fc4-43e6-8cc1-597e1e0a543b}">
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record masterTable="dl30_trans" name="rec_dl130_trans" uid="{9589b6eb-7399-4c38-81fe-485e1dafee07}">
-    <RecordField colName="acc_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="dl30_trans.acc_code" sqlTabName="dl30_trans" uid="{d9f717e5-775c-46ec-a52e-6997b93d9bca}"/>
+    <RecordField colName="cust_id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="dl30_trans.cust_id" sqlTabName="dl30_trans" uid="{d9f717e5-775c-46ec-a52e-6997b93d9bca}"/>
     <RecordField colName="trans_date" fieldIdRef="2" fieldType="TABLE_COLUMN" name="dl30_trans.trans_date" sqlTabName="dl30_trans" uid="{c67e3002-8fb8-4400-b9d4-de2ab66bd404}"/>
     <RecordField colName="doc_type" fieldIdRef="4" fieldType="TABLE_COLUMN" name="dl30_trans.doc_type" sqlTabName="dl30_trans" uid="{2609ee79-0aca-4ae1-a034-657b3795be84}"/>
     <RecordField colName="doc_no" fieldIdRef="5" fieldType="TABLE_COLUMN" name="dl30_trans.doc_no" sqlTabName="dl30_trans" uid="{c8ec3fee-9019-4094-811b-d886de76d95e}"/>
@@ -14,10 +14,10 @@
   </Record>
   <Form gridHeight="11" gridWidth="128" name="dl130_trans" text="DEBTORS TRANSACTIONS">
     <VBox gridHeight="10" gridWidth="128" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="8" gridWidth="138" name="grd_dl130_trans" posX="0" posY="1">
+      <Grid gridHeight="8" gridWidth="128" name="grd_dl130_trans" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="126" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="DEBTOR TRANSACTIONS"/>
         <Table gridHeight="6" gridWidth="126" name="dl130_trans" posX="1" posY="1" totalRows="5">
-          <Edit colName="acc_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.acc_code" posX="0" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Account Code" widget="Edit">
+          <Edit colName="cust_id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.cust_id" posX="0" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Account Code" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Edit colName="trans_date" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.trans_date" posX="10" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Date" widget="Edit">

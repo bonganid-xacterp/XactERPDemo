@@ -7,7 +7,7 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 TYPE debtor_lookup_t RECORD
     acc_code LIKE dl01_mast.acc_code,

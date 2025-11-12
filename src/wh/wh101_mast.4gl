@@ -1,56 +1,74 @@
 -- ==============================================================
 -- Program   : wh101_mast.4gl
--- Purpose   : Warehouse Master maintenance (CRUD operations)
+-- Purpose   : Warehouse Master Maintenance (CRUD)
 -- Module    : Warehouse (wh)
 -- Number    : 101
 -- Author    : Bongani Dlamini
--- Version   : Genero ver 3.20.10
--- Description: Master file maintenance for warehouses
---              Provides full CRUD operations for warehouse records
+-- Version   : Genero BDL 3.20.10
+-- Description:
+--   Master maintenance for warehouses.
+--   Provides full CRUD operations, lookup, and navigation.
 -- ==============================================================
 
 IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL wh121_lkup
-IMPORT FGL utils_status_const
 
-SCHEMA demoapp_db -- Use correct schema name
-
--- Warehouse master record structure
-TYPE warehouse_t RECORD LIKE wh01_mast.*
-
-DEFINE rec_wh warehouse_t
-DEFINE arr_codes DYNAMIC ARRAY OF STRING
-DEFINE curr_idx INTEGER
+SCHEMA demoapp_db
 
 -- ==============================================================
--- Main
+-- Record Definitions
+-- ==============================================================
+TYPE warehouse_t RECORD LIKE wh01_mast.*
+DEFINE rec_wh warehouse_t
+
+-- Array for warehouse bins (read-only list in the form)
+DEFINE arr_wh_bins DYNAMIC ARRAY OF RECORD
+    wb_code     LIKE wb01_mast.wb_code,
+    description LIKE wb01_mast.description,
+    status      LIKE wb01_mast.status
+END RECORD
+
+-- Navigation helpers
+DEFINE arr_codes  DYNAMIC ARRAY OF STRING
+DEFINE curr_idx   INTEGER
+DEFINE is_edit_mode SMALLINT
+
+-- ==============================================================
+-- MAIN
 -- ==============================================================
 MAIN
     IF NOT utils_globals.initialize_application() THEN
-        DISPLAY "Initialization failed."
+        CALL utils_globals.show_error("Initialization failed.")
         EXIT PROGRAM 1
     END IF
-    OPTIONS INPUT WRAP
-    OPEN WINDOW w_wh101 WITH FORM "wh101_mast" ATTRIBUTES(STYLE = "main")
+
+    -- Open as dialog when standalone, child otherwise
+    IF utils_globals.is_standalone() THEN
+        OPEN WINDOW w_wh101 WITH FORM "wh101_mast" ATTRIBUTES(STYLE="normal")
+    ELSE
+        OPEN WINDOW w_wh101 WITH FORM "wh101_mast" ATTRIBUTES(STYLE="child")
+    END IF
+
     CALL init_wh_module()
-    CLOSE WINDOW w_wh101
+
+    IF utils_globals.is_standalone() THEN
+        CLOSE WINDOW w_wh101
+    END IF
 END MAIN
 
 -- ==============================================================
--- Menu Controller
+-- Module Controller
 -- ==============================================================
 FUNCTION init_wh_module()
-    DEFINE is_edit_mode SMALLINT
-    DEFINE selected_code STRING
+    LET is_edit_mode = FALSE
+    CALL utils_globals.set_form_label("lbl_title", "WAREHOUSE MAINTENANCE")
 
-    -- ===========================================
-    -- MAIN MENU (top-level)
-    -- ===========================================
-    MENU "warehouses Menu"
+    CALL load_all_warehouses()
 
+    MENU "Warehouse Menu"
         COMMAND "Find"
-            --LET selected_code = query_warehouse()
+            CALL query_warehouses()
             LET is_edit_mode = FALSE
 
         COMMAND "New"
@@ -59,56 +77,83 @@ FUNCTION init_wh_module()
 
         COMMAND "Edit"
             IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN
-                CALL utils_globals.show_info("No record selected to edit.")
+                CALL utils_globals.show_info("No warehouse selected to edit.")
             ELSE
                 LET is_edit_mode = TRUE
-                CALL edit_warehouse() -- call subdialog function
+                CALL edit_warehouse()
             END IF
 
         COMMAND "Delete"
             CALL delete_warehouse()
             LET is_edit_mode = FALSE
 
-        COMMAND "First"
-            CALL move_record(-2)
         COMMAND "Previous"
             CALL move_record(-1)
+
         COMMAND "Next"
             CALL move_record(1)
-        COMMAND "Last"
-            CALL move_record(2)
 
         COMMAND "Exit"
             EXIT MENU
-
     END MENU
 END FUNCTION
 
 -- ==============================================================
--- Lookup popup
+-- Load all warehouses into navigation array; load first
 -- ==============================================================
-FUNCTION query_warehouse() RETURNS STRING
-    DEFINE selected_code STRING
-    LET selected_code = wh121_lkup.fetch_wh_list(NULL)
-    RETURN selected_code
+PRIVATE FUNCTION load_all_warehouses()
+    DEFINE ok SMALLINT
+    LET ok = select_warehouses("1=1")
+
+    IF ok THEN
+        MESSAGE SFMT("Loaded %1 warehouse(s)", arr_codes.getLength())
+    ELSE
+        CALL utils_globals.show_info("No warehouses found.")
+        INITIALIZE rec_wh.* TO NULL
+        DISPLAY BY NAME rec_wh.*
+        CALL arr_wh_bins.clear()
+    END IF
 END FUNCTION
 
 -- ==============================================================
--- Build navigation list (codes) from a WHERE clause
+-- Query via Lookup (popup)
 -- ==============================================================
-FUNCTION select_warehouses(p_where STRING) RETURNS SMALLINT
+FUNCTION query_warehouses()
+    DEFINE selected_code STRING
+
+    LET selected_code = wh121_lkup.fetch_list()
+
+    IF selected_code IS NULL OR selected_code = "" THEN
+        RETURN
+    END IF
+
+    CALL load_warehouse(selected_code)
+
+    CALL arr_codes.clear()
+    LET arr_codes[1] = selected_code
+    LET curr_idx = 1
+END FUNCTION
+
+-- ==============================================================
+-- Fill arr_codes according to where clause and load first
+-- ==============================================================
+FUNCTION select_warehouses(where_clause STRING) RETURNS SMALLINT
     DEFINE code STRING
-    DEFINE idx INTEGER
-    DEFINE s_stmt STRING
+    DEFINE idx  INTEGER
+    DEFINE sql_stmt STRING
 
     CALL arr_codes.clear()
     LET idx = 0
+    LET sql_stmt = "SELECT wh_code FROM wh01_mast"
 
-    -- Use prepared statement for dynamic SQL (3.20-compliant)
-    LET s_stmt =
-        "SELECT wh_code FROM wh01_mast WHERE " || p_where || " ORDER BY wh_code"
-    PREPARE p_sel FROM s_stmt
-    DECLARE c_curs CURSOR FOR p_sel
+    IF where_clause IS NOT NULL AND where_clause <> "" THEN
+        LET sql_stmt = sql_stmt || " WHERE " || where_clause
+    END IF
+
+    LET sql_stmt = sql_stmt || " ORDER BY wh_code"
+
+    PREPARE stmt_select FROM sql_stmt
+    DECLARE c_curs CURSOR FOR stmt_select
 
     FOREACH c_curs INTO code
         LET idx = idx + 1
@@ -116,10 +161,11 @@ FUNCTION select_warehouses(p_where STRING) RETURNS SMALLINT
     END FOREACH
 
     CLOSE c_curs
-    FREE p_sel
+    FREE c_curs
+    FREE stmt_select
 
     IF arr_codes.getLength() = 0 THEN
-        CALL utils_globals.show_info("No records found.")
+        CALL utils_globals.msg_no_record()
         RETURN FALSE
     END IF
 
@@ -129,170 +175,295 @@ FUNCTION select_warehouses(p_where STRING) RETURNS SMALLINT
 END FUNCTION
 
 -- ==============================================================
--- Load Single Warehouse
+-- Load a single warehouse and its bins
 -- ==============================================================
 FUNCTION load_warehouse(p_code STRING)
-    -- Select fields in the SAME order/count as rec_wh.*
-    SELECT * INTO rec_wh.* FROM wh01_mast WHERE wh_code = p_code
+    DEFINE l_sqlcode INTEGER
 
-    IF SQLCA.SQLCODE = 0 THEN
+    SELECT id, wh_code, wh_name, location, status, created_at, created_by, updated_at
+      INTO rec_wh.id, rec_wh.wh_code, rec_wh.wh_name, rec_wh.location,
+           rec_wh.status, rec_wh.created_at, rec_wh.created_by, rec_wh.updated_at
+      FROM wh01_mast
+     WHERE wh_code = p_code
+
+    LET l_sqlcode = SQLCA.SQLCODE
+
+    IF l_sqlcode = 0 THEN
         DISPLAY BY NAME rec_wh.*
+        MESSAGE SFMT("Loaded warehouse: %1 (%2)", rec_wh.wh_code, rec_wh.wh_name)
+        CALL load_warehouse_bins(rec_wh.id)
     ELSE
-        -- If missing, clear the screen
+        MESSAGE SFMT("Warehouse not found (%1)", SQLCA.SQLCODE)
         INITIALIZE rec_wh.* TO NULL
         DISPLAY BY NAME rec_wh.*
+        CALL arr_wh_bins.clear()
     END IF
 END FUNCTION
 
 -- ==============================================================
--- Find current index by code (for navigation after lookups)
+-- Load bins for a warehouse (read-only detail grid)
 -- ==============================================================
-FUNCTION set_curr_idx_by_code(p_code STRING)
-    DEFINE i INTEGER
-    FOR i = 1 TO arr_codes.getLength()
-        IF arr_codes[i] = p_code THEN
-            LET curr_idx = i
-            EXIT FOR
-        END IF
-    END FOR
+FUNCTION load_warehouse_bins(p_wh_id INTEGER)
+    DEFINE idx INTEGER
+
+    CALL arr_wh_bins.clear()
+
+    DECLARE c_bins CURSOR FOR
+        SELECT wb_code, description, status
+          FROM wb01_mast
+         WHERE wh_id = p_wh_id
+         ORDER BY wb_code
+
+    LET idx = 1
+    FOREACH c_bins INTO arr_wh_bins[idx].wb_code,
+                        arr_wh_bins[idx].description,
+                        arr_wh_bins[idx].status
+        LET idx = idx + 1
+    END FOREACH
+
+    CLOSE c_bins
+    FREE c_bins
+
+    IF arr_wh_bins.getLength() > 0 THEN
+        MESSAGE SFMT("Warehouse has %1 bin(s)", arr_wh_bins.getLength())
+    ELSE
+        MESSAGE "No bins found in this warehouse"
+    END IF
 END FUNCTION
 
 -- ==============================================================
--- Navigation
+-- Navigation (uses global navigate helper)
+-- dir: -1 prev, +1 next; supports -2 first, +2 last if your util does
 -- ==============================================================
-FUNCTION move_record(dir SMALLINT)
-    CASE dir
-        WHEN -2
-            LET curr_idx = 1
-        WHEN -1
-            IF curr_idx > 1 THEN
-                LET curr_idx = curr_idx - 1
-            ELSE
-                CALL utils_globals.show_info("Start of list.")
-                RETURN
-            END IF
-        WHEN 1
-            IF curr_idx < arr_codes.getLength() THEN
-                LET curr_idx = curr_idx + 1
-            ELSE
-                CALL utils_globals.show_info("End of list.")
-                RETURN
-            END IF
-        WHEN 2
-            LET curr_idx = arr_codes.getLength()
-    END CASE
+PRIVATE FUNCTION move_record(dir SMALLINT)
+    DEFINE new_idx INTEGER
 
+    IF arr_codes.getLength() = 0 THEN
+        CALL utils_globals.show_info("No records to navigate.")
+        RETURN
+    END IF
+
+    LET new_idx = utils_globals.navigate_records(arr_codes, curr_idx, dir)
+    LET curr_idx = new_idx
     CALL load_warehouse(arr_codes[curr_idx])
 END FUNCTION
 
 -- ==============================================================
--- New Warehouse
+-- New Warehouse (Dialog with Save/Cancel)
 -- ==============================================================
 FUNCTION new_warehouse()
-    -- Prepare blank record with sensible defaults
+    DEFINE dup_found SMALLINT
+    DEFINE new_id    INTEGER
+    DEFINE next_num  INTEGER
+    DEFINE next_full STRING
+    DEFINE i, array_size INTEGER
+
+    -- Start fresh record defaults
     INITIALIZE rec_wh.* TO NULL
-    LET rec_wh.status = 'active'
-    DISPLAY BY NAME rec_wh.*
-    MESSAGE "Enter new warehouse details, then click Save."
-END FUNCTION
 
--- ==============================================================
--- Save / Update
--- ==============================================================
-FUNCTION save_warehouse()
-    DEFINE r_exists INTEGER
-    DEFINE ok SMALLINT
+    -- Generate code using your global helper (prefix WH)
+    CALL utils_globals.get_next_number("wh01_mast", "WH")
+        RETURNING next_num, next_full
 
-    IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN
-        CALL utils_globals.show_info("Warehouse code is required.")
-        RETURN
-    END IF
+    LET rec_wh.wh_code    = next_full
+    LET rec_wh.status     = "active"
+    LET rec_wh.created_at = CURRENT
+    LET rec_wh.created_by = utils_globals.get_current_user_id()
 
-    SELECT COUNT(*) INTO r_exists FROM wh01_mast WHERE wh_code = rec_wh.wh_code
-
-    IF r_exists = 0 THEN
-        INSERT INTO wh01_mast VALUES rec_wh.*
-        CALL utils_globals.show_info("Record saved.")
-        -- refresh navigation list and index to the newly saved code
-        LET ok = select_warehouses("1=1")
-        CALL set_curr_idx_by_code(rec_wh.wh_code)
-    ELSE
-        UPDATE wh01_mast
-            SET wh01_mast.* = rec_wh.*
-            WHERE wh_code = rec_wh.wh_code
-        CALL utils_globals.show_info("Record updated.")
-        -- keep current index; reload to reflect changes
-        CALL load_warehouse(rec_wh.wh_code)
-    END IF
-END FUNCTION
-
--- ===========================================
--- Separate function for data dialog
--- ===========================================
-FUNCTION edit_warehouse()
-    --DEFINE ok SMALLINT
+    CALL utils_globals.set_form_label("lbl_title", "NEW WAREHOUSE")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
+        INPUT BY NAME rec_wh.* ATTRIBUTES(WITHOUT DEFAULTS, NAME="new_warehouse")
 
-        INPUT BY NAME rec_wh.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "creditors")
-
-            BEFORE INPUT
-
-            ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
-                CALL save_warehouse()
-                EXIT DIALOG
-
-            ON ACTION cancel
-                EXIT DIALOG
-
-            AFTER FIELD supp_name
-                IF rec_wh.wh_name IS NULL OR rec_wh.wh_name = "" THEN
-                    CALL utils_globals.show_error("Supplier Name is required.")
-                    NEXT FIELD supp_name
+            -- Save button shows in the dialog button bar
+            ON ACTION save ATTRIBUTES(TEXT="Save", IMAGE="filesave")
+                LET dup_found = check_warehouse_unique(rec_wh.wh_code)
+                IF dup_found = 0 THEN
+                    CALL insert_warehouse()   -- explicit INSERT + RETURNING
+                    LET new_id = rec_wh.id
+                    CALL utils_globals.show_info("Warehouse saved successfully.")
+                    EXIT DIALOG
+                ELSE
+                    CALL utils_globals.show_error("Duplicate warehouse found.")
                 END IF
 
-        END INPUT
+            ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="cancel")
+                CALL utils_globals.show_info("Creation cancelled.")
+                LET new_id = NULL
+                EXIT DIALOG
 
+        END INPUT
     END DIALOG
+
+    -- Reload list and reposition on newly created code, else restore selection
+    IF new_id IS NOT NULL THEN
+        CALL load_all_warehouses()
+        LET array_size = arr_codes.getLength()
+        IF array_size > 0 THEN
+            FOR i = 1 TO array_size
+                IF arr_codes[i] = rec_wh.wh_code THEN
+                    LET curr_idx = i
+                    EXIT FOR
+                END IF
+            END FOR
+        END IF
+        CALL load_warehouse(rec_wh.wh_code)
+    ELSE
+        LET array_size = arr_codes.getLength()
+        IF array_size > 0 AND curr_idx >= 1 AND curr_idx <= array_size THEN
+            CALL load_warehouse(arr_codes[curr_idx])
+        ELSE
+            LET curr_idx = 0
+            INITIALIZE rec_wh.* TO NULL
+            DISPLAY BY NAME rec_wh.*
+        END IF
+    END IF
+
+    CALL utils_globals.set_form_label("lbl_title", "WAREHOUSE MAINTENANCE")
 END FUNCTION
 
 -- ==============================================================
--- Delete Warehouse
+-- Edit Warehouse (Dialog with Update/Cancel)
+-- ==============================================================
+FUNCTION edit_warehouse()
+    CALL utils_globals.set_form_label("lbl_title", "EDIT WAREHOUSE")
+
+    DIALOG ATTRIBUTES(UNBUFFERED)
+        INPUT BY NAME rec_wh.* ATTRIBUTES(WITHOUT DEFAULTS, NAME="edit_warehouse")
+
+            BEFORE FIELD wh_code
+                NEXT FIELD wh_name
+
+            AFTER FIELD wh_name
+                IF rec_wh.wh_name IS NULL OR rec_wh.wh_name = "" THEN
+                    CALL utils_globals.show_error("Warehouse Name is required.")
+                    NEXT FIELD wh_name
+                END IF
+
+            ON ACTION save ATTRIBUTES(TEXT="Update", IMAGE="filesave")
+                CALL update_warehouse()
+                EXIT DIALOG
+
+            ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="cancel")
+                CALL load_warehouse(rec_wh.wh_code)
+                EXIT DIALOG
+
+        END INPUT
+    END DIALOG
+
+    CALL utils_globals.set_form_label("lbl_title", "WAREHOUSE MAINTENANCE")
+END FUNCTION
+
+-- ==============================================================
+-- Insert (explicit column list, safe; PostgreSQL RETURNING)
+-- ==============================================================
+FUNCTION insert_warehouse()
+    BEGIN WORK
+    TRY
+        INSERT INTO wh01_mast
+        VALUES
+            rec_wh.*
+
+        COMMIT WORK
+        CALL utils_globals.msg_saved()
+        CALL load_warehouse(rec_wh.wh_code)
+    CATCH
+        ROLLBACK WORK
+        CALL utils_globals.show_error(SFMT("Insert failed: %1", SQLCA.SQLCODE))
+    END TRY
+END FUNCTION
+
+-- ==============================================================
+-- Update (explicit list; keep updated_at current)
+-- ==============================================================
+FUNCTION update_warehouse()
+    BEGIN WORK
+    TRY
+        LET rec_wh.updated_at = CURRENT
+
+        UPDATE wh01_mast
+           SET wh_name   = rec_wh.wh_name,
+               location   = rec_wh.location,
+               status     = rec_wh.status,
+               updated_at = rec_wh.updated_at
+         WHERE wh_code   = rec_wh.wh_code
+
+        COMMIT WORK
+        CALL utils_globals.msg_updated()
+        CALL load_warehouse(rec_wh.wh_code)
+    CATCH
+        ROLLBACK WORK
+        CALL utils_globals.show_error(SFMT("Update failed: %1", SQLCA.SQLCODE))
+    END TRY
+END FUNCTION
+
+-- ==============================================================
+-- Delete Warehouse (with bin dependency check)
 -- ==============================================================
 FUNCTION delete_warehouse()
     DEFINE ok SMALLINT
+    DEFINE deleted_code STRING
+    DEFINE array_size   INTEGER
+    DEFINE bin_count    INTEGER
 
     IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN
         CALL utils_globals.show_info("No warehouse selected for deletion.")
         RETURN
     END IF
 
-    LET ok =
-        utils_globals.show_confirm(
-            "Delete warehouse: "
-                || rec_wh.wh_name
-                || " ("
-                || rec_wh.wh_code
-                || ")?",
-            "Confirm Delete")
+    -- Prevent delete if bins exist
+    SELECT COUNT(*) INTO bin_count FROM wb01_mast WHERE wh_id = rec_wh.id
+    IF bin_count > 0 THEN
+        CALL utils_globals.show_error(
+            SFMT("Cannot delete warehouse. It has %1 bin(s).", bin_count))
+        RETURN
+    END IF
+
+    LET ok = utils_globals.show_confirm(
+        "Delete this warehouse: " || rec_wh.wh_name || "?", "Confirm Delete")
 
     IF NOT ok THEN
         CALL utils_globals.show_info("Delete cancelled.")
         RETURN
     END IF
 
-    DELETE FROM wh01_mast WHERE wh_code = rec_wh.wh_code
-    IF SQLCA.SQLCODE = 0 THEN
-        CALL utils_globals.show_info("Record deleted.")
-    ELSE
-        CALL utils_globals.show_info("Delete failed.")
-        RETURN
-    END IF
+    LET deleted_code = rec_wh.wh_code
 
-    IF NOT select_warehouses("1=1") THEN
-        -- Nothing left; clear the form
+    BEGIN WORK
+    TRY
+        DELETE FROM wh01_mast WHERE wh_code = deleted_code
+        COMMIT WORK
+        CALL utils_globals.msg_deleted()
+    CATCH
+        ROLLBACK WORK
+        CALL utils_globals.show_error(SFMT("Delete failed: %1", SQLCA.SQLCODE))
+        RETURN
+    END TRY
+
+    CALL load_all_warehouses()
+    LET array_size = arr_codes.getLength()
+
+    IF array_size > 0 THEN
+        IF curr_idx > array_size THEN LET curr_idx = array_size END IF
+        IF curr_idx < 1 THEN LET curr_idx = 1 END IF
+        CALL load_warehouse(arr_codes[curr_idx])
+    ELSE
+        LET curr_idx = 0
         INITIALIZE rec_wh.* TO NULL
         DISPLAY BY NAME rec_wh.*
-        LET curr_idx = 0
+        CALL arr_wh_bins.clear()
     END IF
+END FUNCTION
+
+-- ==============================================================
+-- Check uniqueness by wh_code (returns 1 if duplicate)
+-- ==============================================================
+FUNCTION check_warehouse_unique(p_wh_code STRING) RETURNS SMALLINT
+    DEFINE dup_count INTEGER
+    SELECT COUNT(*) INTO dup_count FROM wh01_mast WHERE wh_code = p_wh_code
+    IF dup_count > 0 THEN
+        CALL utils_globals.show_error("Warehouse code already exists.")
+        RETURN 1
+    END IF
+    RETURN 0
 END FUNCTION

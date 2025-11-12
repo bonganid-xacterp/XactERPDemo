@@ -1,111 +1,351 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="pu131_grn.tmp" build="3.20.14" sqlDbName="demoapp_db" text="Purchase Invoice" width="86" height="22">
-  <LStr text="Purchase Invoice"/>
+<Form name="pu131_grn.tmp" build="3.20.14" sqlDbName="demoappdb" text="GRN" width="338" height="18">
+  <LStr text="GRN"/>
   <VBox name="vbox1">
-    <Grid name="pu131_inv_hdr" width="86" height="22">
-      <Label name="lbl_form_title" width="84" text="GOOD RECEIVED NOTE" justify="center" style="header" posY="0" posX="1" gridWidth="84">
+    <Grid name="pu131_inv_hdr" width="338" height="18">
+      <Label name="lbl_form_title" width="96" text="GOOD RECEIVED NOTE" justify="center" style="header" posY="0" posX="1" gridWidth="96">
         <LStr text="GOOD RECEIVED NOTE"/>
       </Label>
-      <Group name="grn_grp" text="" posY="1" posX="1" gridWidth="77" gridHeight="8">
-        <PhantomFormField name="pu31_grn_hdr.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="11" sqlTabName="pu31_grn_hdr">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
+      <Group name="supplier_info" text="" posY="1" posX="1" gridWidth="69" gridHeight="11">
         <LStr text=""/>
-        <Label name="pu31_grn_hdr_doc_no_label1" width="12" text="Doc No" posY="1" posX="1" gridWidth="12">
+        <Label name="pu31_grn_hdr_doc_no_label1" width="7" text="Doc No" posY="1" posX="1" gridWidth="7">
           <LStr text="Doc No"/>
         </Label>
-        <FormField name="pu31_grn_hdr.doc_no" colName="doc_no" sqlType="VARCHAR(20)" fieldId="0" sqlTabName="pu31_grn_hdr" notNull="1" required="1" tabIndex="1">
-          <Edit width="6" scroll="1" posY="1" posX="14" gridWidth="6"/>
+        <FormField name="pu31_grn_hdr.doc_no" colName="doc_no" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="pu31_grn_hdr" tabIndex="1">
+          <Edit width="8" scroll="1" posY="1" posX="9" gridWidth="8"/>
         </FormField>
-        <Label name="pu31_grn_hdr_trans_date_label1" width="6" text="Trans Date" posY="1" posX="21" gridWidth="6">
+        <Label name="pu31_grn_hdr_trans_date_label1" width="6" text="Trans Date" posY="1" posX="18" gridWidth="6">
           <LStr text="Trans Date"/>
         </Label>
         <FormField name="pu31_grn_hdr.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="1" sqlTabName="pu31_grn_hdr" tabIndex="2">
-          <DateEdit width="8" posY="1" posX="28" gridWidth="10"/>
+          <DateEdit width="7" posY="1" posX="25" gridWidth="9"/>
         </FormField>
-        <Label name="pu31_grn_hdr_status_label1" width="10" text="Status" posY="1" posX="40" gridWidth="10">
-          <LStr text="Status"/>
-        </Label>
-        <FormField name="pu31_grn_hdr.status" colName="status" sqlType="VARCHAR(10)" fieldId="2" sqlTabName="pu31_grn_hdr" tabIndex="3">
-          <ComboBox width="14" scroll="1" posY="1" posX="51" gridWidth="16"/>
-        </FormField>
-        <Label name="pu31_grn_hdr_ref_doc_type_label1" width="12" text="Ref Doc Type" posY="2" posX="1" gridWidth="12">
-          <LStr text="Ref Doc Type"/>
-        </Label>
-        <FormField name="pu31_grn_hdr.ref_doc_type" colName="ref_doc_type" sqlType="VARCHAR(10)" fieldId="3" sqlTabName="pu31_grn_hdr" tabIndex="4">
-          <Edit width="6" scroll="1" posY="2" posX="14" gridWidth="6"/>
-        </FormField>
-        <Label name="pu31_grn_hdr_ref_doc_no_label1" width="6" text="Ref Doc No" posY="2" posX="21" gridWidth="6">
+        <Label name="pu31_grn_hdr_ref_doc_no_label1" width="7" text="Ref Doc No" posY="1" posX="35" gridWidth="7">
           <LStr text="Ref Doc No"/>
         </Label>
-        <FormField name="pu31_grn_hdr.ref_doc_no" colName="ref_doc_no" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="pu31_grn_hdr" tabIndex="5">
-          <Edit width="10" scroll="1" posY="2" posX="28" gridWidth="10"/>
+        <FormField name="pu31_grn_hdr.ref_doc_no" colName="ref_doc_no" sqlType="VARCHAR(30)" fieldId="2" sqlTabName="pu31_grn_hdr" tabIndex="3">
+          <Edit width="9" scroll="1" posY="1" posX="43" gridWidth="9"/>
         </FormField>
-        <Label name="pu31_grn_hdr_created_by_label1" width="10" text="Created By" posY="2" posX="40" gridWidth="10">
-          <LStr text="Created By"/>
+        <Label name="pu31_grn_hdr_ref_doc_type_label1" width="7" text="Ref Doc Type" posY="1" posX="53" gridWidth="7">
+          <LStr text="Ref Doc Type"/>
         </Label>
-        <FormField name="pu31_grn_hdr.created_by" colName="created_by" sqlType="BIGINT" fieldId="5" sqlTabName="pu31_grn_hdr" tabIndex="6">
-          <Edit width="20" scroll="1" posY="2" posX="51" gridWidth="20"/>
+        <FormField name="pu31_grn_hdr.ref_doc_type" colName="ref_doc_type" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="pu31_grn_hdr" tabIndex="4">
+          <Edit width="6" scroll="1" posY="1" posX="62" gridWidth="6"/>
         </FormField>
-        <Label name="pu31_grn_hdr_acc_code_label1" width="12" text="Supplier Code" posY="3" posX="1" gridWidth="12">
-          <LStr text="Supplier Code"/>
+        <Label name="pu31_grn_hdr_supp_name_label1" width="7" text="Supplier Name" posY="2" posX="1" gridWidth="7">
+          <LStr text="Supplier Name"/>
         </Label>
-        <FormField name="pu31_grn_hdr.acc_code" colName="acc_code" sqlType="DECIMAL(20,2)" required="1" notNull="1" fieldId="6" sqlTabName="pu31_grn_hdr" tabIndex="7">
-          <Edit width="6" scroll="1" posY="3" posX="14" gridWidth="6"/>
+        <FormField name="pu31_grn_hdr.supp_id" colName="supp_id" sqlType="BIGINT" fieldId="4" sqlTabName="pu31_grn_hdr" tabIndex="5">
+          <ButtonEdit width="3" image="zoom" scroll="1" posY="2" posX="9" gridWidth="5"/>
         </FormField>
-        <Label name="pu31_grn_hdr_created_at_label1" width="10" text="Created At" posY="3" posX="40" gridWidth="10">
-          <LStr text="Created At"/>
+        <FormField name="pu31_grn_hdr.supp_name" colName="supp_name" sqlType="VARCHAR(100)" fieldId="5" sqlTabName="pu31_grn_hdr" tabIndex="6">
+          <Edit width="16" scroll="1" posY="2" posX="18" gridWidth="16"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_supp_phone_label1" width="7" text="Phone" posY="2" posX="35" gridWidth="7">
+          <LStr text="Phone"/>
         </Label>
-        <FormField name="pu31_grn_hdr.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="7" sqlTabName="pu31_grn_hdr" tabIndex="8">
-          <Edit width="12" scroll="1" posY="3" posX="51" gridWidth="12"/>
+        <FormField name="pu31_grn_hdr.supp_phone" colName="supp_phone" sqlType="VARCHAR(20)" fieldId="6" sqlTabName="pu31_grn_hdr" tabIndex="7">
+          <Edit width="9" scroll="1" posY="2" posX="43" gridWidth="9"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_supp_email_label1" width="4" text="Email" posY="2" posX="53" gridWidth="4">
+          <LStr text="Email"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.supp_email" colName="supp_email" sqlType="VARCHAR(100)" fieldId="7" sqlTabName="pu31_grn_hdr" tabIndex="8">
+          <Edit width="10" scroll="1" posY="2" posX="58" gridWidth="10"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_supp_address1_label1" width="7" text="Address1" posY="4" posX="1" gridWidth="7">
+          <LStr text="Address1"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.supp_address1" colName="supp_address1" sqlType="VARCHAR(100)" fieldId="8" sqlTabName="pu31_grn_hdr" tabIndex="9">
+          <Edit width="25" scroll="1" posY="4" posX="9" gridWidth="25"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_supp_address2_label1" width="7" text="Address2" posY="4" posX="35" gridWidth="7">
+          <LStr text="Address2"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.supp_address2" colName="supp_address2" sqlType="VARCHAR(100)" fieldId="9" sqlTabName="pu31_grn_hdr" tabIndex="10">
+          <Edit width="25" scroll="1" posY="4" posX="43" gridWidth="25"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_supp_address3_label1" width="7" text="Address3" posY="5" posX="1" gridWidth="7">
+          <LStr text="Address3"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.supp_address3" colName="supp_address3" sqlType="VARCHAR(100)" fieldId="10" sqlTabName="pu31_grn_hdr" tabIndex="11">
+          <Edit width="25" scroll="1" posY="5" posX="9" gridWidth="25"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_supp_postal_code_label1" width="7" text="Postal Code" posY="5" posX="35" gridWidth="7">
+          <LStr text="Postal Code"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.supp_postal_code" colName="supp_postal_code" sqlType="VARCHAR(10)" fieldId="11" sqlTabName="pu31_grn_hdr" tabIndex="12">
+          <Edit width="9" scroll="1" posY="5" posX="43" gridWidth="9"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_status_label1" width="7" text="Status" posY="6" posX="1" gridWidth="7">
+          <LStr text="Status"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="12" sqlTabName="pu31_grn_hdr" tabIndex="13">
+          <ComboBox width="7" scroll="1" posY="6" posX="9" gridWidth="9">
+            <Item name="active" text="active"/>
+            <Item name="inactive" text="inactive"/>
+          </ComboBox>
+        </FormField>
+        <Label name="pu31_grn_hdr_supp_payment_terms_label1" width="7" text="Pay Terms" posY="6" posX="19" gridWidth="7">
+          <LStr text="Pay Terms"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.supp_payment_terms" colName="supp_payment_terms" sqlType="VARCHAR(50)" fieldId="13" sqlTabName="pu31_grn_hdr" tabIndex="14">
+          <ComboBox width="5" scroll="1" posY="6" posX="27" gridWidth="7">
+            <Item name="0" text="Cash"/>
+            <Item name="30" text="30Days"/>
+          </ComboBox>
+        </FormField>
+        <Label name="pu31_grn_hdr_supp_vat_no_label1" width="7" text="VAT No" posY="6" posX="35" gridWidth="7">
+          <LStr text="VAT No"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.supp_vat_no" colName="supp_vat_no" sqlType="VARCHAR(20)" fieldId="14" sqlTabName="pu31_grn_hdr" tabIndex="15">
+          <Edit width="14" scroll="1" posY="6" posX="43" gridWidth="14"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_delivery_note_no_label1" width="7" text="Notes" posY="7" posX="35" gridWidth="7">
+          <LStr text="Notes"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.delivery_note_no" colName="delivery_note_no" sqlType="VARCHAR(50)" fieldId="15" sqlTabName="pu31_grn_hdr" tabIndex="16">
+          <Edit width="25" scroll="1" posY="7" posX="43" gridWidth="25"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_carrier_name_label1" width="7" text="Carrier Name" posY="8" posX="1" gridWidth="7">
+          <LStr text="Carrier Name"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.carrier_name" colName="carrier_name" sqlType="VARCHAR(50)" fieldId="16" sqlTabName="pu31_grn_hdr" tabIndex="17">
+          <Edit width="20" scroll="1" posY="8" posX="9" gridWidth="20"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_received_by_label1" width="7" text="Received By" posY="9" posX="1" gridWidth="7">
+          <LStr text="Received By"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.received_by" colName="received_by" sqlType="BIGINT" fieldId="17" sqlTabName="pu31_grn_hdr" tabIndex="18">
+          <Edit width="14" scroll="1" posY="9" posX="9" gridWidth="14"/>
         </FormField>
       </Group>
-      <Label name="pu31_grn_hdr_gross_tot_label1" width="12" text="Gross Total" posY="15" posX="42" gridWidth="12">
-        <LStr text="Gross Total"/>
-      </Label>
-      <FormField name="pu31_grn_hdr.gross_tot" colName="gross_tot" sqlType="DECIMAL(12,2)" fieldId="8" sqlTabName="pu31_grn_hdr" tabIndex="9">
-        <Edit width="14" scroll="1" posY="15" posX="55" gridWidth="14"/>
-      </FormField>
-      <Label name="pu31_grn_hdr_vat_label1" width="12" text="VAT" posY="16" posX="42" gridWidth="12">
-        <LStr text="VAT"/>
-      </Label>
-      <FormField name="pu31_grn_hdr.vat" colName="vat" sqlType="DECIMAL(12,2)" fieldId="9" sqlTabName="pu31_grn_hdr" tabIndex="10">
-        <Edit width="14" scroll="1" posY="16" posX="55" gridWidth="14"/>
-      </FormField>
-      <Label name="pu31_grn_hdr_net_tot_label1" width="12" text="Net Total" posY="17" posX="42" gridWidth="12">
-        <LStr text="Net Total"/>
-      </Label>
-      <FormField name="pu31_grn_hdr.net_tot" colName="net_tot" sqlType="DECIMAL(12,2)" fieldId="10" sqlTabName="pu31_grn_hdr" tabIndex="11">
-        <Edit width="14" scroll="1" posY="17" posX="55" gridWidth="14"/>
-      </FormField>
+      <Group name="doc_info" text="" posY="1" posX="72" gridWidth="24" gridHeight="11">
+        <LStr text=""/>
+        <Label name="pu31_grn_hdr_created_at_label1" width="7" text="Created At" posY="1" posX="1" gridWidth="7">
+          <LStr text="Created At"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="18" sqlTabName="pu31_grn_hdr" tabIndex="19">
+          <DateEdit width="9" posY="1" posX="9" gridWidth="11"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_gross_tot_label1" width="7" text="Gross Total" posY="2" posX="1" gridWidth="7">
+          <LStr text="Gross Total"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.gross_tot" colName="gross_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="19" sqlTabName="pu31_grn_hdr" tabIndex="20">
+          <Edit width="11" scroll="1" posY="2" posX="9" gridWidth="11"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_vat_tot_label1" width="7" text="VAT Total" posY="3" posX="1" gridWidth="7">
+          <LStr text="VAT Total"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.vat_tot" colName="vat_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="20" sqlTabName="pu31_grn_hdr" tabIndex="21">
+          <Edit width="11" scroll="1" posY="3" posX="9" gridWidth="11"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_net_tot_label1" width="7" text="Net Total" posY="4" posX="1" gridWidth="7">
+          <LStr text="Net Total"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.net_tot" colName="net_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="21" sqlTabName="pu31_grn_hdr" tabIndex="22">
+          <Edit width="11" scroll="1" posY="4" posX="9" gridWidth="11"/>
+        </FormField>
+        <Label name="pu31_grn_hdr_updated_at_label1" width="7" text="Updated At" posY="5" posX="1" gridWidth="7">
+          <LStr text="Updated At"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="22" sqlTabName="pu31_grn_hdr" tabIndex="23">
+          <DateEdit width="9" posY="5" posX="9" gridWidth="11"/>
+        </FormField>
+        <PhantomFormField name="pu31_grn_hdr.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="50" sqlTabName="pu31_grn_hdr">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <Label name="pu31_grn_hdr_created_by_label1" width="7" text="Created By" posY="6" posX="1" gridWidth="7">
+          <LStr text="Created By"/>
+        </Label>
+        <FormField name="pu31_grn_hdr.created_by" colName="created_by" sqlType="BIGINT" fieldId="23" sqlTabName="pu31_grn_hdr" tabIndex="24">
+          <ButtonEdit width="9" image="zoom" scroll="1" posY="6" posX="9" gridWidth="11"/>
+        </FormField>
+        <PhantomFormField name="pu31_grn_hdr.updated_by" colName="updated_by" sqlType="BIGINT" fieldId="51" sqlTabName="pu31_grn_hdr">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+      </Group>
+      <Table pageSize="5" name="grn_lines_arr" width="336" posY="12" posX="2" gridWidth="336" gridHeight="6" tabName="arr_pu131_grn">
+        <PhantomColumn name="pu31_grn_det.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="24" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+        <PhantomColumn name="pu31_grn_det.hdr_id" colName="hdr_id" sqlType="BIGINT" required="1" notNull="1" fieldId="25" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+        <PhantomColumn name="pu31_grn_det.line_no" colName="line_no" sqlType="INTEGER" required="1" notNull="1" fieldId="26" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+        <TableColumn name="pu31_grn_det.stock_id" colName="stock_id" sqlType="BIGINT" fieldId="27" sqlTabName="pu31_grn_det" text="Stock ID" tabIndex="25" numAlign="1">
+          <Edit width="20" scroll="1"/>
+          <LStr text="Stock ID"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.item_name" colName="item_name" sqlType="VARCHAR(200)" fieldId="28" sqlTabName="pu31_grn_det" text="Item Name" tabIndex="26">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Item Name"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.uom" colName="uom" sqlType="VARCHAR(20)" fieldId="29" sqlTabName="pu31_grn_det" text="UOM" tabIndex="27">
+          <Edit width="20" scroll="1"/>
+          <LStr text="UOM"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.batch_id" colName="batch_id" sqlType="VARCHAR(40)" fieldId="30" sqlTabName="pu31_grn_det" text="Batch ID" tabIndex="28">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Batch ID"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.expiry_date" colName="expiry_date" sqlType="DATE" fieldId="31" sqlTabName="pu31_grn_det" text="Expiry Date" tabIndex="29">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Expiry Date"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.qnty" colName="qnty" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="32" sqlTabName="pu31_grn_det" text="Qnty" tabIndex="30" numAlign="1">
+          <Edit width="17" scroll="1"/>
+          <LStr text="Qnty"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.unit_cost" colName="unit_cost" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="33" sqlTabName="pu31_grn_det" text="Unit Cost" tabIndex="31" numAlign="1">
+          <Edit width="17" scroll="1"/>
+          <LStr text="Unit Cost"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.disc_pct" colName="disc_pct" sqlType="DECIMAL(7,3)" required="1" notNull="1" fieldId="34" sqlTabName="pu31_grn_det" text="Disc Perct" tabIndex="32" numAlign="1">
+          <Edit width="9" scroll="1"/>
+          <LStr text="Disc Perct"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.disc_amt" colName="disc_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="35" sqlTabName="pu31_grn_det" text="Disc Amount" tabIndex="33" numAlign="1">
+          <Edit width="17" scroll="1"/>
+          <LStr text="Disc Amount"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.gross_amt" colName="gross_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="36" sqlTabName="pu31_grn_det" text="Gross Amount" tabIndex="34" numAlign="1">
+          <Edit width="17" scroll="1"/>
+          <LStr text="Gross Amount"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.vat_rate" colName="vat_rate" sqlType="DECIMAL(7,3)" required="1" notNull="1" fieldId="37" sqlTabName="pu31_grn_det" text="VAT Rate" tabIndex="35" numAlign="1">
+          <Edit width="9" scroll="1"/>
+          <LStr text="VAT Rate"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.vat_amt" colName="vat_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="38" sqlTabName="pu31_grn_det" text="VAt Amount" tabIndex="36" numAlign="1">
+          <Edit width="17" scroll="1"/>
+          <LStr text="VAt Amount"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.net_amt" colName="net_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="39" sqlTabName="pu31_grn_det" text="Net Amount" tabIndex="37" numAlign="1">
+          <Edit width="17" scroll="1"/>
+          <LStr text="Net Amount"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.line_total" colName="line_total" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="40" sqlTabName="pu31_grn_det" text="Line Total" tabIndex="38" numAlign="1">
+          <Edit width="17" scroll="1"/>
+          <LStr text="Line Total"/>
+        </TableColumn>
+        <PhantomColumn name="pu31_grn_det.po_line_id" colName="po_line_id" sqlType="BIGINT" fieldId="41" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+        <TableColumn name="pu31_grn_det.wh_id" colName="wh_id" sqlType="BIGINT" fieldId="42" sqlTabName="pu31_grn_det" text="WH ID" tabIndex="39" numAlign="1">
+          <Edit width="20" scroll="1"/>
+          <LStr text="WH ID"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.wb_id" colName="wb_id" sqlType="BIGINT" fieldId="43" sqlTabName="pu31_grn_det" text="BIN ID" tabIndex="40" numAlign="1">
+          <Edit width="20" scroll="1"/>
+          <LStr text="BIN ID"/>
+        </TableColumn>
+        <TableColumn name="pu31_grn_det.notes" colName="notes" sqlType="VARCHAR(200)" fieldId="44" sqlTabName="pu31_grn_det" text="Notes" tabIndex="41">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Notes"/>
+        </TableColumn>
+        <PhantomColumn name="pu31_grn_det.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="45" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+        <PhantomColumn name="pu31_grn_det.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="46" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+        <PhantomColumn name="pu31_grn_det.created_by" colName="created_by" sqlType="BIGINT" fieldId="47" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+        <PhantomColumn name="pu31_grn_det.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="48" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+        <PhantomColumn name="pu31_grn_det.updated_by" colName="updated_by" sqlType="BIGINT" fieldId="49" sqlTabName="pu31_grn_det">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
+      </Table>
     </Grid>
   </VBox>
+  <RecordView tabName="pu31_grn_det">
+    <Link colName="id" fieldIdRef="24"/>
+    <Link colName="hdr_id" fieldIdRef="25"/>
+    <Link colName="line_no" fieldIdRef="26"/>
+    <Link colName="stock_id" fieldIdRef="27"/>
+    <Link colName="item_name" fieldIdRef="28"/>
+    <Link colName="uom" fieldIdRef="29"/>
+    <Link colName="batch_id" fieldIdRef="30"/>
+    <Link colName="expiry_date" fieldIdRef="31"/>
+    <Link colName="qnty" fieldIdRef="32"/>
+    <Link colName="unit_cost" fieldIdRef="33"/>
+    <Link colName="disc_pct" fieldIdRef="34"/>
+    <Link colName="disc_amt" fieldIdRef="35"/>
+    <Link colName="gross_amt" fieldIdRef="36"/>
+    <Link colName="vat_rate" fieldIdRef="37"/>
+    <Link colName="vat_amt" fieldIdRef="38"/>
+    <Link colName="net_amt" fieldIdRef="39"/>
+    <Link colName="line_total" fieldIdRef="40"/>
+    <Link colName="po_line_id" fieldIdRef="41"/>
+    <Link colName="wh_id" fieldIdRef="42"/>
+    <Link colName="wb_id" fieldIdRef="43"/>
+    <Link colName="notes" fieldIdRef="44"/>
+    <Link colName="status" fieldIdRef="45"/>
+    <Link colName="created_at" fieldIdRef="46"/>
+    <Link colName="created_by" fieldIdRef="47"/>
+    <Link colName="updated_at" fieldIdRef="48"/>
+    <Link colName="updated_by" fieldIdRef="49"/>
+  </RecordView>
   <RecordView tabName="pu31_grn_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>
     <Link colName="trans_date" fieldIdRef="1"/>
-    <Link colName="status" fieldIdRef="2"/>
+    <Link colName="ref_doc_no" fieldIdRef="2"/>
     <Link colName="ref_doc_type" fieldIdRef="3"/>
-    <Link colName="ref_doc_no" fieldIdRef="4"/>
-    <Link colName="created_by" fieldIdRef="5"/>
-    <Link colName="acc_code" fieldIdRef="6"/>
-    <Link colName="created_at" fieldIdRef="7"/>
-    <Link colName="gross_tot" fieldIdRef="8"/>
-    <Link colName="vat" fieldIdRef="9"/>
-    <Link colName="net_tot" fieldIdRef="10"/>
-    <Link colName="id" fieldIdRef="11"/>
+    <Link colName="supp_id" fieldIdRef="4"/>
+    <Link colName="supp_name" fieldIdRef="5"/>
+    <Link colName="supp_phone" fieldIdRef="6"/>
+    <Link colName="supp_email" fieldIdRef="7"/>
+    <Link colName="supp_address1" fieldIdRef="8"/>
+    <Link colName="supp_address2" fieldIdRef="9"/>
+    <Link colName="supp_address3" fieldIdRef="10"/>
+    <Link colName="supp_postal_code" fieldIdRef="11"/>
+    <Link colName="status" fieldIdRef="12"/>
+    <Link colName="supp_payment_terms" fieldIdRef="13"/>
+    <Link colName="supp_vat_no" fieldIdRef="14"/>
+    <Link colName="delivery_note_no" fieldIdRef="15"/>
+    <Link colName="carrier_name" fieldIdRef="16"/>
+    <Link colName="received_by" fieldIdRef="17"/>
+    <Link colName="created_at" fieldIdRef="18"/>
+    <Link colName="gross_tot" fieldIdRef="19"/>
+    <Link colName="vat_tot" fieldIdRef="20"/>
+    <Link colName="net_tot" fieldIdRef="21"/>
+    <Link colName="updated_at" fieldIdRef="22"/>
+    <Link colName="created_by" fieldIdRef="23"/>
+    <Link colName="deleted_at" fieldIdRef="50"/>
+    <Link colName="updated_by" fieldIdRef="51"/>
   </RecordView>
-  <RecordView tabName="record1">
-    <Link colName="id" fieldIdRef="11"/>
+  <RecordView tabName="rec_pu131_grn">
     <Link colName="doc_no" fieldIdRef="0"/>
     <Link colName="ref_doc_type" fieldIdRef="3"/>
-    <Link colName="ref_doc_no" fieldIdRef="4"/>
-    <Link colName="acc_code" fieldIdRef="6"/>
+    <Link colName="ref_doc_no" fieldIdRef="2"/>
     <Link colName="trans_date" fieldIdRef="1"/>
-    <Link colName="gross_tot" fieldIdRef="8"/>
-    <Link colName="vat" fieldIdRef="9"/>
-    <Link colName="net_tot" fieldIdRef="10"/>
-    <Link colName="status" fieldIdRef="2"/>
-    <Link colName="created_at" fieldIdRef="7"/>
-    <Link colName="created_by" fieldIdRef="5"/>
+    <Link colName="supp_id" fieldIdRef="4"/>
+    <Link colName="supp_name" fieldIdRef="5"/>
+    <Link colName="supp_phone" fieldIdRef="6"/>
+    <Link colName="supp_email" fieldIdRef="7"/>
+    <Link colName="supp_address1" fieldIdRef="8"/>
+    <Link colName="supp_address2" fieldIdRef="9"/>
+    <Link colName="supp_address3" fieldIdRef="10"/>
+    <Link colName="supp_postal_code" fieldIdRef="11"/>
+    <Link colName="supp_vat_no" fieldIdRef="14"/>
+    <Link colName="supp_payment_terms" fieldIdRef="13"/>
+    <Link colName="delivery_note_no" fieldIdRef="15"/>
+    <Link colName="carrier_name" fieldIdRef="16"/>
+    <Link colName="received_by" fieldIdRef="17"/>
+    <Link colName="gross_tot" fieldIdRef="19"/>
+    <Link colName="vat_tot" fieldIdRef="20"/>
+    <Link colName="net_tot" fieldIdRef="21"/>
+    <Link colName="status" fieldIdRef="12"/>
+    <Link colName="created_at" fieldIdRef="18"/>
+    <Link colName="updated_at" fieldIdRef="22"/>
+    <Link colName="deleted_at" fieldIdRef="50"/>
+    <Link colName="created_by" fieldIdRef="23"/>
+    <Link colName="updated_by" fieldIdRef="51"/>
   </RecordView>
 </Form>

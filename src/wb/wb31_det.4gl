@@ -11,8 +11,9 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
+IMPORT FGL utils_doc_totals
 
-SCHEMA demoapp_db
+SCHEMA demoappdb
 
 -- Transfer detail record structure
 TYPE bin_detail_t RECORD
@@ -94,9 +95,6 @@ FUNCTION init_wb31_module()
                     CALL utils_globals.show_info(
                         "Click Edit to modify details.")
                 END IF
-
-            AFTER FIELD qty, cost
-                CALL calculate_line_total(arr_curr())
 
             ON ACTION add_line ATTRIBUTES(TEXT = "Add Line", IMAGE = "add")
                 IF is_edit_mode THEN
@@ -291,7 +289,7 @@ FUNCTION save_all_details()
     END TRY
 END FUNCTION
 
-FUNCTION calculate_line_total(row_num INTEGER)
+PRIVATE FUNCTION calculate_line_total(row_num INTEGER)
     IF row_num > 0 AND row_num <= arr_details.getLength() THEN
         LET arr_details[row_num].total =
             arr_details[row_num].qty * arr_details[row_num].cost
