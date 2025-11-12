@@ -84,19 +84,19 @@ END FUNCTION
 -- OPEN MDI CONTAINER
 -- ==============================================================
 FUNCTION open_mdi_container()
-    -- Open MDI parent window
+    -- Open MDI parent window with tabbed container
     OPEN WINDOW w_mdi WITH FORM "main_shell"
         ATTRIBUTES(TEXT = APP_NAME || " - " || g_current_username,
-                   STYLE = "mdi container")
+                   STYLE = "Window.w_main")
 
-    -- Show main menu
+    -- Show main menu (top menu bar)
     CALL show_main_menu()
 
     CLOSE WINDOW w_mdi
 END FUNCTION
 
 -- ==============================================================
--- MAIN MENU
+-- MAIN MENU (Top Menu Bar)
 -- ==============================================================
 FUNCTION show_main_menu()
     MENU "Main Menu"
@@ -141,52 +141,44 @@ FUNCTION show_main_menu()
 END FUNCTION
 
 -- ==============================================================
--- LAUNCH CHILD MODULE
+-- LAUNCH CHILD MODULE (as tabbed window in MDI container)
 -- ==============================================================
 FUNCTION launch_child_module(module_name STRING, title STRING)
-    -- Open child window
+    DEFINE win_name STRING
+
+    -- Generate unique window name
+    LET win_name = "w_" || module_name
+
+    -- Open child window as tab (without immediate CLOSE)
     CASE module_name
         WHEN "st101_mast"
             OPEN WINDOW w_st101 WITH FORM "st101_mast"
-                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
-            CALL st101_mast.init_st_module()
-            CLOSE WINDOW w_st101
+                ATTRIBUTES(TEXT = title)
+            -- Module runs in its own window/tab
 
         WHEN "st102_cat"
             OPEN WINDOW w_st102 WITH FORM "st102_cat"
-                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
-            CALL st102_cat.init_category_module()
-            CLOSE WINDOW w_st102
+                ATTRIBUTES(TEXT = title)
 
         WHEN "wh101_mast"
             OPEN WINDOW w_wh101 WITH FORM "wh101_mast"
-                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
-            CALL wh101_mast.init_wh_module()
-            CLOSE WINDOW w_wh101
+                ATTRIBUTES(TEXT = title)
 
         WHEN "wb101_mast"
             OPEN WINDOW w_wb101 WITH FORM "wb101_mast"
-                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
-            CALL wb101_mast.init_wb_module()
-            CLOSE WINDOW w_wb101
+                ATTRIBUTES(TEXT = title)
 
         WHEN "dl101_mast"
             OPEN WINDOW w_dl101 WITH FORM "dl101_mast"
-                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
-            CALL dl101_mast.init_dl_module()
-            CLOSE WINDOW w_dl101
+                ATTRIBUTES(TEXT = title)
 
         WHEN "cl101_mast"
             OPEN WINDOW w_cl101 WITH FORM "cl101_mast"
-                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
-            CALL cl101_mast.init_cl_module()
-            CLOSE WINDOW w_cl101
+                ATTRIBUTES(TEXT = title)
 
         WHEN "sy101_user"
             OPEN WINDOW w_sy101 WITH FORM "sy101_user"
-                ATTRIBUTES(TEXT = title, STYLE = "mdi child")
-            CALL sy101_user.init_user_module()
-            CLOSE WINDOW w_sy101
+                ATTRIBUTES(TEXT = title)
 
         OTHERWISE
             CALL utils_globals.show_error("Module not implemented: " || module_name)

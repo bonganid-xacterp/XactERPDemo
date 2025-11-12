@@ -3,7 +3,7 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Form fourSTFile="main_styles.4st" gridHeight="25" gridWidth="93" name="main_shell" text="Container" windowStyle="mdi container">
+  <Form fourSTFile="main_styles.4st" gridHeight="25" gridWidth="93" name="main_shell" text="Container">
     <Group gridChildrenInParent="true" gridHeight="22" gridWidth="93" name="workarea" posX="0" posY="0" text="">
       <Grid gridHeight="20" gridWidth="91" name="main_shell_grid" posX="1" posY="1"/>
     </Group>
