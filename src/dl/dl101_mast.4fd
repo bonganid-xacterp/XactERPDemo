@@ -36,12 +36,10 @@
     <RecordField colName="deleted_at" fieldIdRef="25" fieldType="TABLE_COLUMN" name="dl01_mast.deleted_at" sqlTabName="dl01_mast" uid="{73b78045-51f1-490b-ac54-47c9a9e43096}"/>
     <RecordField colName="created_by" fieldIdRef="26" fieldType="TABLE_COLUMN" name="dl01_mast.created_by" sqlTabName="dl01_mast" uid="{634eea55-83b8-4740-b113-99e97c54554d}"/>
   </Record>
-  <Form fourSTFile="" gridHeight="25" gridWidth="129" name="dl101_mast" perFooterComment="" spacing="normal" tag="" text="Debtors">
-    <VBox gridHeight="25" gridWidth="127" name="vbox1" posX="2" posY="0">
-      <Grid gridHeight="2" gridWidth="127" name="dl101_mast_hdr" posX="0" posY="1">
+  <Form fourSTFile="" gridHeight="32" gridWidth="129" name="dl101_mast" perFooterComment="" spacing="normal" tag="" text="Debtors">
+    <VBox gridHeight="32" gridWidth="127" name="vbox1" posX="2" posY="0">
+      <Grid gridHeight="12" gridWidth="127" name="dl101_mast_hdr" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="109" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="DEBTORS MASTER"/>
-      </Grid>
-      <Grid gridHeight="11" gridWidth="127" name="demoappdb1" posX="0" posY="3">
         <Group gridChildrenInParent="true" gridHeight="9" gridWidth="67" name="group2" posX="1" posY="1" text="">
           <Label gridHeight="1" gridWidth="10" name="dl01_mast_cust_name_label1" posX="1" posY="2" text="Cust Name">
             <Initializer text="dbschema:dl01_mast.cust_name/@label"/>
@@ -145,7 +143,7 @@
         <Phantom colName="updated_at" fieldId="24" fieldType="TABLE_COLUMN" name="dl01_mast.updated_at" sqlTabName="dl01_mast" widget="Phantom"/>
         <Phantom colName="deleted_at" fieldId="25" fieldType="TABLE_COLUMN" name="dl01_mast.deleted_at" sqlTabName="dl01_mast" widget="Phantom"/>
       </Grid>
-      <Folder gridHeight="10" gridWidth="127" name="pg_grp" posX="0" posY="14">
+      <Folder gridHeight="18" gridWidth="127" name="pg_grp" posX="0" posY="13">
         <Page name="Docuements" text="Documents">
           <Table doubleClick="row_select" gridHeight="9" gridWidth="116" name="arr_debt_trans" posX="0" posY="0" totalRows="8" wantFixedPageSize="false">
             <Phantom colName="id" fieldId="30" fieldType="TABLE_COLUMN" name="dl30_trans.id" sqlTabName="dl30_trans" widget="Phantom"/>
@@ -176,6 +174,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyADgANQA3ADUANAA1AGYALQA4AGEAOQBjAC0ANAA0ADkAMQAtAGIAOABkAGYALQA0ADYANwA1ADMAOABiADAAYwA3ADUAYgB9QDAAAAgAAAFAMAAACAAAAT+MrAgxJul8AQAAAEwAewA5ADEAYgA4AGQAMABmADMALQAwAGUAOAAzAC0ANABlAGEAMAAtADgANQAzAGYALQBhADkAMQAyADgAYwA2ADgAMQA2AGQANQB9QGx7u8iIiI1AWYiIg2IiCj+Ik3S8an78AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyADgANQA3ADUANAA1AGYALQA4AGEAOQBjAC0ANAA0ADkAMQAtAGIAOABkAGYALQA0ADYANwA1ADMAOABiADAAYwA3ADUAYgB9QDAAAAgAAAFAMAAACAAAAT+MrAgxJul8AQAAAEwAewA5ADEAYgA4AGQAMABmADMALQAwAGUAOAAzAC0ANABlAGEAMAAtADgANQAzAGYALQBhADkAMQAyADgAYwA2ADgAMQA2AGQANQB9QGx7u8iIiI1AWYiIg2IiCj+crAgxJul+AQ==]]>
   </DiagramLayout>
 </ManagedForm>
