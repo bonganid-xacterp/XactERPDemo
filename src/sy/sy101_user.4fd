@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{5468a855-04b2-49c6-a366-bd67ff6239fc}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy00_user" name="rec_user" uid="{33a6094c-6c3f-4d12-a966-0b8a7e546bd7}">
+    <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy00_user.id" sqlTabName="sy00_user" uid="{5c1524b1-cfe4-4646-ac74-7e70a92b37f1}"/>
+    <RecordField colName="username" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy00_user.username" sqlTabName="sy00_user" uid="{904de880-6c34-4a11-98b7-ca9ca44235e0}"/>
+    <RecordField colName="full_name" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy00_user.full_name" sqlTabName="sy00_user" uid="{a58dca4e-6d3e-4327-8fd8-2a627fa4caab}"/>
+    <RecordField colName="phone" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy00_user.phone" sqlTabName="sy00_user" uid="{1967aea8-c645-4ae5-9d1d-7567f5c120a7}"/>
+    <RecordField colName="email" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sy00_user.email" sqlTabName="sy00_user" uid="{dfc32b9c-3c61-4bde-a71c-e83ba6161ea2}"/>
+    <RecordField colName="password" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sy00_user.password" sqlTabName="sy00_user" uid="{b52c95d8-219b-4014-8715-71c9daff9c54}"/>
+    <RecordField colName="status" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sy00_user.status" sqlTabName="sy00_user" uid="{efc3fd20-83a3-4589-8668-e8789e59e695}"/>
+    <RecordField colName="role_id" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sy00_user.role_id" sqlTabName="sy00_user" uid="{a131adb6-5db2-43eb-b74e-47cfef462502}"/>
+    <RecordField colName="created_at" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sy00_user.created_at" sqlTabName="sy00_user" uid="{f3115800-9f68-4330-bd7c-260d7f59c2f2}"/>
+    <RecordField colName="updated_at" fieldIdRef="10" fieldType="TABLE_COLUMN" name="sy00_user.updated_at" sqlTabName="sy00_user" uid="{bc35087a-8ea0-4bab-bc40-05e18e280131}"/>
+    <RecordField colName="deleted_at" fieldIdRef="11" fieldType="TABLE_COLUMN" name="sy00_user.deleted_at" sqlTabName="sy00_user" uid="{b97de9d2-93f3-48c3-8f74-169bc7e7665f}"/>
+  </Record>
+  <Form gridHeight="11" gridWidth="82" name="frm_title" text="User Master">
+    <VBox gridHeight="11" gridWidth="80" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="9" gridWidth="80" name="frm_user" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="75" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="USER MASTER"/>
+        <Group gridHeight="5" gridWidth="54" name="group1" posX="1" posY="1" text="User Info">
+          <Label gridHeight="1" gridWidth="6" name="sy00_user_username_lbl" posX="1" posY="1" text="Username">
+            <Initializer text="dbschema:sy00_user.username/@label"/>
+          </Label>
+          <Edit colName="username" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="16" name="sy00_user.username" posX="8" posY="1" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Username" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="6" name="sy00_user_full_name_lbl" posX="25" posY="1" text="Full Name">
+            <Initializer text="dbschema:sy00_user.full_name/@label"/>
+          </Label>
+          <Edit colName="full_name" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy00_user.full_name" posX="32" posY="1" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Full Name" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="6" name="sy00_user_phone_lbl" posX="1" posY="2" text="Phone">
+            <Initializer text="dbschema:sy00_user.phone/@label"/>
+          </Label>
+          <Edit colName="phone" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="16" name="sy00_user.phone" posX="8" posY="2" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Phone" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="6" name="sy00_user_email_lbl" posX="25" posY="2" text="Email">
+            <Initializer text="dbschema:sy00_user.email/@label"/>
+          </Label>
+          <Edit colName="email" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy00_user.email" posX="32" posY="2" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Email" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="6" name="sy00_user_status_lbl" posX="1" posY="3" text="Status">
+            <Initializer text="dbschema:sy00_user.status/@label"/>
+          </Label>
+          <ComboBox colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" items="Active, Inactive" name="sy00_user.status" posX="8" posY="3" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Status" widget="ComboBox">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+            <Item lstrtext="false" name="active" text="Active"/>
+            <Item lstrtext="false" name="inactive" text="Inactive"/>
+          </ComboBox>
+          <Label gridHeight="1" gridWidth="6" name="sy00_user_role_id_lbl" posX="25" posY="3" text="Role ID">
+            <Initializer text="dbschema:sy00_user.role_id/@label"/>
+          </Label>
+          <ComboBox colName="role_id" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" items="" name="sy00_user.role_id" posX="32" posY="3" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Role ID" widget="ComboBox">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </ComboBox>
+        </Group>
+        <Group gridHeight="5" gridWidth="20" name="user_add_info" posX="56" posY="1" text="">
+          <Label gridHeight="1" gridWidth="6" name="sy00_user_password_lbl" posX="1" posY="1" text="Password">
+            <Initializer text="dbschema:sy00_user.password/@label"/>
+          </Label>
+          <Edit colName="password" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" invisible="true" name="sy00_user.password" posX="8" posY="1" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Password" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Button gridHeight="1" gridWidth="11" image="fa-shield" name="btn_change_password" posX="8" posY="3" tabIndex="-1" text="Change Password"/>
+        </Group>
+        <Phantom colName="id" fieldId="1" fieldType="TABLE_COLUMN" name="sy00_user.id" sqlTabName="sy00_user" widget="Phantom"/>
+        <Phantom colName="created_at" fieldId="9" fieldType="TABLE_COLUMN" name="sy00_user.created_at" sqlTabName="sy00_user" widget="Phantom"/>
+        <Phantom colName="updated_at" fieldId="10" fieldType="TABLE_COLUMN" name="sy00_user.updated_at" sqlTabName="sy00_user" widget="Phantom"/>
+        <Phantom colName="deleted_at" fieldId="11" fieldType="TABLE_COLUMN" name="sy00_user.deleted_at" sqlTabName="sy00_user" widget="Phantom"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewAzADMAYQA2ADAAOQA0AGMALQA2AGMAMwBmAC0ANABkADEAMgAtAGEAOQA2ADYALQAwAGIAOABhADcAZQA1ADQANgBiAGQANwB9QEpmZoDMzNfAKAAAGAAACT+CbpeNT988AQ==]]>
+  </DiagramLayout>
+</ManagedForm>

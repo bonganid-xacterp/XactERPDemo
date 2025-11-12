@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{4e72a4e3-ed0b-4744-8dcd-4e40c2447b6c}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy00_user" name="rec_login" uid="{b2f8ff33-ca1a-479b-9ead-679806005f71}">
+    <RecordField fieldIdRef="1" length="1" name="f_username" sqlType="VARCHAR" uid="{90f1e3c1-6149-4168-bca1-aa4b88672d2b}"/>
+    <RecordField fieldIdRef="2" length="1" name="f_password" sqlType="VARCHAR" uid="{31431303-7fed-4d00-bc45-13edc4387ce8}"/>
+  </Record>
+  <Form fourSTFile="" gridHeight="18" gridWidth="34" name="sy100_login" text="xactDemo App - Login " windowStyle="">
+    <VBox gridHeight="16" gridWidth="32" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="14" gridWidth="32" name="login_grid" posX="0" posY="1">
+        <Image autoScale="false" gridHeight="8" gridWidth="30" image="/company_logo.png" name="company_logo" posX="1" posY="1" sizePolicy="dynamic" stretch="both"/>
+        <Label gridHeight="1" gridWidth="10" name="lbl_username" posX="1" posY="10" text="Username">
+          <Initializer text="dbschema:sy00_user.username/@label"/>
+        </Label>
+        <Edit fieldId="1" gridHeight="1" gridWidth="15" length="1" name="f_username" posX="12" posY="10" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="f_username" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="10" name="lbl_password" posX="1" posY="11" text="Password">
+          <Initializer text="dbschema:sy00_user.password/@label"/>
+        </Label>
+        <Edit case="none" fieldId="2" gridHeight="1" gridWidth="15" invisible="true" length="1" name="f_password" posX="12" posY="11" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="f_password" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewBiADIAZgA4AGYAZgAzADMALQBjAGEAMQBhAC0ANAA3ADkAYgAtADkAZQBhAGQALQA2ADcAOQA4ADAANgAwADAANQBmADcAMQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

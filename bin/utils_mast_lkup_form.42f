@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="utils_mast_lkup_form.tmp" build="3.20.14" sqlDbName="demoappdb" text="Form" width="52" height="15">
+  <LStr text="Form"/>
+  <VBox name="vbox1">
+    <Grid name="grid1" width="52" height="15">
+      <Label name="lbl_title" width="50" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="50"/>
+      <Table pageSize="5" name="f_debtors_list" width="50" posY="1" posX="1" gridWidth="50" gridHeight="12" tabName="r_debtors_list">
+        <TableColumn name="formonly.clm_acc_code" colName="clm_acc_code" sqlType="DECIMAL(20,0)" fieldId="0" sqlTabName="formonly" text="Acc Code" tabIndex="1" numAlign="1">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Acc Code"/>
+        </TableColumn>
+        <TableColumn name="formonly.clm_desc" colName="clm_desc" sqlType="VARCHAR" fieldId="1" sqlTabName="formonly" text="Name" tabIndex="2">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Name"/>
+        </TableColumn>
+        <TableColumn name="formonly.clm_status" colName="clm_status" sqlType="VARCHAR" fieldId="2" sqlTabName="formonly" text="Status" tabIndex="3">
+          <Edit width="6" scroll="1"/>
+          <LStr text="Status"/>
+        </TableColumn>
+      </Table>
+      <Label name="lbl_filter" width="9" text="Filter" posY="13" posX="1" gridWidth="9">
+        <LStr text="Filter"/>
+      </Label>
+      <FormField name="formonly.f_search" colName="f_search" fieldId="3" sqlTabName="formonly" tabIndex="4">
+        <Edit width="29" posY="13" posX="11" gridWidth="29"/>
+      </FormField>
+    </Grid>
+  </VBox>
+  <RecordView tabName="formonly">
+    <Link colName="clm_acc_code" fieldIdRef="0"/>
+    <Link colName="clm_desc" fieldIdRef="1"/>
+    <Link colName="clm_status" fieldIdRef="2"/>
+    <Link colName="f_search" fieldIdRef="3"/>
+  </RecordView>
+  <RecordView tabName="search">
+    <Link colName="f_search" fieldIdRef="3"/>
+  </RecordView>
+</Form>

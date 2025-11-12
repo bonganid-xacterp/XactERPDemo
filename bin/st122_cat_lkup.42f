@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="st122_cat_lkup.tmp" build="3.20.14" sqlDbName="demoappdb" text="Stock Category Lookup " width="55" height="16">
+  <LStr text="Stock Category Lookup "/>
+  <VBox name="vbox1">
+    <Grid name="main_grd" width="55" height="16">
+      <Label name="lbl_title" width="53" text="STOCK CATEGORY LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="53">
+        <LStr text="STOCK CATEGORY LOOKUP"/>
+      </Label>
+      <Table pageSize="11" name="tbl_list" width="54" posY="1" posX="1" gridWidth="54" gridHeight="12" tabName="rec_list">
+        <TableColumn name="st02_cat.cat_code" colName="cat_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="st02_cat" text="Code" tabIndex="1">
+          <Edit width="12" scroll="1"/>
+          <LStr text="Code"/>
+        </TableColumn>
+        <TableColumn name="st02_cat.cat_name" colName="cat_name" sqlType="VARCHAR(120)" required="1" notNull="1" fieldId="1" sqlTabName="st02_cat" text="Description" tabIndex="2">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Description"/>
+        </TableColumn>
+        <TableColumn name="st02_cat.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="2" sqlTabName="st02_cat" text="Status" tabIndex="3">
+          <Edit width="8"/>
+          <LStr text="Status"/>
+        </TableColumn>
+      </Table>
+      <Label name="lbl_filter" width="9" text="Filter" posY="13" posX="1" gridWidth="9">
+        <LStr text="Filter"/>
+      </Label>
+      <FormField name="formonly.f_search" colName="f_search" fieldId="3" sqlTabName="formonly" tabIndex="4">
+        <Edit width="29" placeholder="Search category" posY="13" posX="11" gridWidth="29">
+          <LStr placeholder="Search category"/>
+        </Edit>
+      </FormField>
+    </Grid>
+  </VBox>
+  <RecordView tabName="st02_cat">
+    <Link colName="cat_code" fieldIdRef="0"/>
+    <Link colName="cat_name" fieldIdRef="1"/>
+    <Link colName="status" fieldIdRef="2"/>
+  </RecordView>
+  <RecordView tabName="formonly">
+    <Link colName="f_search" fieldIdRef="3"/>
+  </RecordView>
+  <RecordView tabName="rec_f_search">
+    <Link colName="f_search" fieldIdRef="3"/>
+  </RecordView>
+</Form>

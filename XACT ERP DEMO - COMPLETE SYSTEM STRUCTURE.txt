@@ -169,7 +169,7 @@ XactERPDemo/
 │   ├── payt/   # Payments
 │   └── mainapp.4gl
 ├── database/
-│   ├── xactdemoapp_db.sch
+│   ├── xactdemoappdb.sch
 │   └── xactdemoappschema.4db
 └── etc/
     └── xactdemoapp.4rp

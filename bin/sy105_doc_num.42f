@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="sy105_doc_num.tmp" build="3.20.14" sqlDbName="demoappdb" text="Form" width="0" height="20">
+  <LStr text="Form"/>
+  <HBox name="hbox1">
+    <Grid name="grid1" width="0" height="20"/>
+  </HBox>
+</Form>

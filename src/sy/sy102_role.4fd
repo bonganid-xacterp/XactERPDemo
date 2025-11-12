@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{cb2fba47-37c9-4eac-bd28-8520be682861}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy04_role1" name="rec_role" uid="{c22879cb-f428-423b-8db7-18faa1cf3076}">
+    <RecordField colName="role_name" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy04_role.role_name" sqlTabName="sy04_role" uid="{5672fa15-93a3-4d68-8ef9-0c56c04f1619}"/>
+    <RecordField colName="status" defaultValue="1" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy04_role.status" sqlTabName="sy04_role" uid="{f03f13ff-2b09-446c-a3c2-5343b397427d}"/>
+    <RecordField colName="id" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy04_role.id" sqlTabName="sy04_role" uid="{798b704c-b634-4ed9-9481-c04f951a1863}"/>
+    <RecordField colName="created_at" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sy04_role.created_at" sqlTabName="sy04_role" uid="{cbfed0ae-ed29-4014-9f57-5023a2306656}"/>
+    <RecordField colName="updated_at" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sy04_role.updated_at" sqlTabName="sy04_role" uid="{b6ab45f5-2c6f-4b38-b3c7-308ce7cd9943}"/>
+    <RecordField colName="deleted_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sy04_role.deleted_at" sqlTabName="sy04_role" uid="{058f8d5f-4358-4f45-aff5-430676c92a97}"/>
+  </Record>
+  <Record name="arr_perms" uid="{064e0908-e50b-480d-bf9f-b50f4299480b}">
+    <RecordField fieldIdRef="3" fieldType="NON_DATABASE" length="1" name="perm_name" sqlType="CHAR" uid="{5426b97a-23f2-4fc1-8b36-eb516127ed25}"/>
+  </Record>
+  <Form fourSTFile="../_main/main_styles.4st" gridHeight="20" gridWidth="110" name="frm_sy102_role" text="Form" windowStyle="main">
+    <VBox gridHeight="20" gridWidth="110" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="18" gridWidth="110" name="xactapp_db1" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="105" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="ROLES MASTER"/>
+        <Label gridHeight="1" gridWidth="9" name="lbl_sy04_role_name" posX="1" posY="1" text="Role Name">
+          <Initializer text="dbschema:sy04_role.role_name/@label"/>
+        </Label>
+        <Edit colName="role_name" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy04_role.role_name" posX="11" posY="1" scroll="true" sqlTabName="sy04_role" tabIndex="-1" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="6" name="lbl_sy04_role1_status" posX="42" posY="1" text="Status">
+          <Initializer text="dbschema:sy04_role.status/@label"/>
+        </Label>
+        <ComboBox colName="status" defaultValue="1" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" items="Inactive, Active" name="sy04_role.status" notNull="true" posX="49" posY="1" required="true" scroll="true" sqlTabName="sy04_role" tabIndex="-1" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          <Item lstrtext="false" name="inactive" text="Inactive"/>
+          <Item lstrtext="false" name="active" text="Active"/>
+        </ComboBox>
+        <Group gridHeight="15" gridWidth="105" name="group1" posX="1" posY="3" text="Permissions">
+          <CheckBox columnCount="4" fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="18" length="1" name="perm_name" posX="2" posY="1" repeat="true" rowCount="6" sqlType="CHAR" stepX="10" stepY="1" tabIndex="-1" text="" title="checkbox1" widget="CheckBox"/>
+        </Group>
+        <Phantom colName="id" fieldId="4" fieldType="TABLE_COLUMN" name="sy04_role.id" sqlTabName="sy04_role" widget="Phantom"/>
+        <Phantom colName="created_at" fieldId="5" fieldType="TABLE_COLUMN" name="sy04_role.created_at" sqlTabName="sy04_role" widget="Phantom"/>
+        <Phantom colName="updated_at" fieldId="6" fieldType="TABLE_COLUMN" name="sy04_role.updated_at" sqlTabName="sy04_role" widget="Phantom"/>
+        <Phantom colName="deleted_at" fieldId="7" fieldType="TABLE_COLUMN" name="sy04_role.deleted_at" sqlTabName="sy04_role" widget="Phantom"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewAwADYANABlADAAOQAwADgALQBlADUAMABiAC0ANAA4ADAAZAAtAGIAZgA5AGYALQBiADUAMABmADQAMgA5ADkANAA4ADAAYgB9QGMAABPAAAc/6ZmaczM0MD9gYk3S8an8AQAAAEwAewBjADIAMgA4ADcAOQBjAGIALQBmADQAMgA4AC0ANAAyADMAYgAtADgAZABiADcALQAxADgAZgBhAGEAMQBjAGYAMwAwADcANgB9AAAAAAAAAAAAAAAAAAAAAD9ok3S8an76AQ==]]>
+  </DiagramLayout>
+</ManagedForm>

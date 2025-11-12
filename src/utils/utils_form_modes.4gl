@@ -1,0 +1,59 @@
+---- ==============================================================
+---- Module    : utils_form_modes.4gl
+---- Purpose   : Reusable form mode management utilities
+---- Author    : Bongani Dlamini
+---- Version   : 1.0
+---- ==============================================================
+--
+--IMPORT ui
+--
+--FUNCTION set_view_mode()
+--    DEFINE dlg ui.Dialog
+--    LET dlg = ui.Dialog.getCurrent()
+--
+--    IF dlg IS NULL THEN
+--        RETURN
+--    END IF
+--    
+--    CALL dlg.setActionActive("save", FALSE)
+--    CALL dlg.setActionActive("edit", TRUE)
+--    CALL dlg.setActionActive("new", TRUE)
+--    CALL dlg.setActionActive("delete", TRUE)
+--    CALL dlg.setActionActive("find", TRUE)
+--    CALL dlg.setActionActive("previous", TRUE)
+--    CALL dlg.setActionActive("next", TRUE)
+--
+--END FUNCTION
+--
+--FUNCTION set_edit_mode()
+--    DEFINE dlg ui.Dialog
+--    LET dlg = ui.Dialog.getCurrent()
+--
+--    IF dlg IS NULL THEN
+--        RETURN
+--    END IF
+--    
+--    CALL dlg.setActionActive("save", TRUE)
+--    CALL dlg.setActionActive("edit", FALSE)
+--    CALL dlg.setActionActive("new", FALSE)
+--    CALL dlg.setActionActive("delete", FALSE)
+--    CALL dlg.setActionActive("find", FALSE)
+--
+--END FUNCTION
+--
+--FUNCTION set_new_mode()
+--    DEFINE dlg ui.Dialog
+--    LET dlg = ui.Dialog.getCurrent()
+--
+--    IF dlg IS NULL THEN
+--        RETURN
+--    END IF
+--    CALL dlg.setActionActive("save", TRUE)
+--    CALL dlg.setActionHidden("new", TRUE)
+--    CALL dlg.setActionHidden("edit", TRUE)
+--    CALL dlg.setActionHidden("delete", TRUE)
+--    CALL dlg.setActionHidden("find", TRUE)
+--    CALL dlg.setActionHidden("previous", TRUE)
+--    CALL dlg.setActionHidden("next", TRUE)
+--
+--END FUNCTION

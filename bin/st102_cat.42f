@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="st102_cat.tmp" build="3.20.14" sqlDbName="demoappdb" text="Stock Category" windowStyle="child" width="75" height="10">
+  <LStr text="Stock Category"/>
+  <VBox name="vbox1">
+    <Grid name="st02_cat_grd" width="70" height="5">
+      <Label name="lbl_form_title" width="68" text="STOCK CATEGORY" justify="center" style="title" posY="0" posX="1" gridWidth="68">
+        <LStr text="STOCK CATEGORY"/>
+      </Label>
+      <Label name="st02_mast_cat_code" width="8" text="Category Code" posY="2" posX="1" gridWidth="8">
+        <LStr text="Category Code"/>
+      </Label>
+      <FormField name="st02_cat.cat_code" colName="cat_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="st02_cat" tabIndex="1">
+        <ButtonEdit width="18" action="find" image="zoom" scroll="1" posY="2" posX="10" gridWidth="20"/>
+      </FormField>
+      <Label name="st02_mast_cat_name" width="8" text="Category Name" posY="2" posX="36" gridWidth="8">
+        <LStr text="Category Name"/>
+      </Label>
+      <FormField name="st02_cat.cat_name" colName="cat_name" sqlType="VARCHAR(120)" required="1" notNull="1" fieldId="1" sqlTabName="st02_cat" tabIndex="2">
+        <Edit width="23" scroll="1" posY="2" posX="45" gridWidth="23"/>
+      </FormField>
+      <Label name="st02_mast_description" width="8" text="Description" posY="3" posX="1" gridWidth="8">
+        <LStr text="Description"/>
+      </Label>
+      <FormField name="st02_cat.description" colName="description" sqlType="VARCHAR(200)" fieldId="2" sqlTabName="st02_cat" tabIndex="3">
+        <Edit width="20" scroll="1" posY="3" posX="10" gridWidth="20"/>
+      </FormField>
+      <Label name="st02_mast_status" width="8" text="Status" posY="3" posX="36" gridWidth="8">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="st02_cat.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="3" sqlTabName="st02_cat" tabIndex="4" defaultValue="1">
+        <ComboBox width="8" scroll="1" posY="3" posX="45" gridWidth="10">
+          <Item name="1" text="Inactive">
+            <LStr text="Inactive"/>
+          </Item>
+          <Item name="0" text="Active">
+            <LStr text="Active"/>
+          </Item>
+          <Item name="-1" text="Archived">
+            <LStr text="Archived"/>
+          </Item>
+        </ComboBox>
+      </FormField>
+      <PhantomFormField name="st02_cat.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="4" sqlTabName="st02_cat">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="st02_cat.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="5" sqlTabName="st02_cat">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="st02_cat.created_by" colName="created_by" sqlType="BIGINT" fieldId="6" sqlTabName="st02_cat">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="st02_cat.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="7" sqlTabName="st02_cat">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+      <PhantomFormField name="st02_cat.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="8" sqlTabName="st02_cat">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
+    </Grid>
+    <Folder name="fld_st_cat_grp" hidden="1">
+      <Page name="st_cat_trans" text="Stock" image="fa-sitemap">
+        <LStr text="Stock"/>
+        <Table pageSize="5" name="demoappdb1" tabName="arr_stock">
+          <TableColumn name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(30)" fieldId="9" sqlTabName="st01_mast" text="Stock Code" tabIndex="5">
+            <ButtonEdit width="9" scroll="1"/>
+            <LStr text="Stock Code"/>
+          </TableColumn>
+          <TableColumn name="st01_mast.description" colName="description" sqlType="VARCHAR(200)" required="1" notNull="1" fieldId="10" sqlTabName="st01_mast" text="Ddescription" tabIndex="6">
+            <Edit width="24" scroll="1"/>
+            <LStr text="Ddescription"/>
+          </TableColumn>
+          <TableColumn name="st01_mast.unit_cost" colName="unit_cost" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="11" sqlTabName="st01_mast" text="Product Cost" tabIndex="7" numAlign="1">
+            <Edit width="9" scroll="1"/>
+            <LStr text="Product Cost"/>
+          </TableColumn>
+          <TableColumn name="st01_mast.sell_price" colName="sell_price" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="12" sqlTabName="st01_mast" text="Selling Price" tabIndex="8" numAlign="1">
+            <Edit width="9" scroll="1"/>
+            <LStr text="Selling Price"/>
+          </TableColumn>
+          <TableColumn name="st01_mast.stock_on_hand" colName="stock_on_hand" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="13" sqlTabName="st01_mast" text="Stock On Hand" tabIndex="9" numAlign="1">
+            <Edit width="9" scroll="1"/>
+            <LStr text="Stock On Hand"/>
+          </TableColumn>
+          <TableColumn name="st01_mast.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="14" sqlTabName="st01_mast" text="Status" tabIndex="10">
+            <Edit width="6" scroll="1"/>
+            <LStr text="Status"/>
+          </TableColumn>
+        </Table>
+      </Page>
+    </Folder>
+  </VBox>
+  <RecordView tabName="st02_cat">
+    <Link colName="cat_code" fieldIdRef="0"/>
+    <Link colName="cat_name" fieldIdRef="1"/>
+    <Link colName="description" fieldIdRef="2"/>
+    <Link colName="status" fieldIdRef="3"/>
+    <Link colName="id" fieldIdRef="4"/>
+    <Link colName="created_at" fieldIdRef="5"/>
+    <Link colName="created_by" fieldIdRef="6"/>
+    <Link colName="deleted_at" fieldIdRef="7"/>
+    <Link colName="updated_at" fieldIdRef="8"/>
+  </RecordView>
+  <RecordView tabName="st01_mast">
+    <Link colName="stock_code" fieldIdRef="9"/>
+    <Link colName="description" fieldIdRef="10"/>
+    <Link colName="unit_cost" fieldIdRef="11"/>
+    <Link colName="sell_price" fieldIdRef="12"/>
+    <Link colName="stock_on_hand" fieldIdRef="13"/>
+    <Link colName="status" fieldIdRef="14"/>
+  </RecordView>
+  <RecordView tabName="rec_st_cat">
+    <Link colName="cat_code" fieldIdRef="0"/>
+    <Link colName="cat_name" fieldIdRef="1"/>
+    <Link colName="description" fieldIdRef="2"/>
+    <Link colName="status" fieldIdRef="3"/>
+    <Link colName="id" fieldIdRef="4"/>
+    <Link colName="created_at" fieldIdRef="5"/>
+    <Link colName="created_by" fieldIdRef="6"/>
+    <Link colName="deleted_at" fieldIdRef="7"/>
+    <Link colName="updated_at" fieldIdRef="8"/>
+  </RecordView>
+</Form>

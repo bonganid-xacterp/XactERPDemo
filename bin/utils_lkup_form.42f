@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="utils_lkup_form.tmp" build="3.20.14" sqlDbName="demoappdb" text="Global Lookup" width="56" height="13">
+  <LStr text="Global Lookup"/>
+  <VBox name="vbox1">
+    <Grid name="grid1" width="56" height="10">
+      <Label name="lbl_lookup_title" width="54" text="" justify="center" posY="0" posX="1" gridWidth="54">
+        <LStr text=""/>
+      </Label>
+      <Table pageSize="5" name="tbl_lookup_list" width="54" posY="2" posX="1" gridWidth="54" gridHeight="8" tabName="record1">
+        <TableColumn name="formonly.key_val" colName="key_val" fieldId="0" sqlTabName="formonly" text="" tabIndex="1">
+          <Edit width="8"/>
+          <LStr text=""/>
+        </TableColumn>
+        <TableColumn name="formonly.desc_val" colName="desc_val" fieldId="1" sqlTabName="formonly" text="" tabIndex="2">
+          <Edit width="8"/>
+          <LStr text=""/>
+        </TableColumn>
+      </Table>
+    </Grid>
+    <HBox name="hbox1">
+      <Grid name="grid2" width="35" height="3">
+        <Label name="lbl_filter" width="6" text="Search : " posY="0" posX="1" gridWidth="6">
+          <LStr text="Search : "/>
+        </Label>
+        <FormField name="formonly.edit1" colName="edit1" fieldId="2" sqlTabName="formonly" tabIndex="3">
+          <Edit width="26" posY="0" posX="8" gridWidth="26"/>
+        </FormField>
+      </Grid>
+    </HBox>
+  </VBox>
+  <RecordView tabName="formonly">
+    <Link colName="key_val" fieldIdRef="0"/>
+    <Link colName="desc_val" fieldIdRef="1"/>
+    <Link colName="edit1" fieldIdRef="2"/>
+  </RecordView>
+  <RecordView tabName="record2">
+    <Link colName="edit1" fieldIdRef="2"/>
+  </RecordView>
+</Form>

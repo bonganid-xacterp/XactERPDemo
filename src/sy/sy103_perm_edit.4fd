@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{a1b2c3d4-e5f6-7890-abcd-ef1234567890}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sy05_perm" name="rec_perm_edit" uid="{b2c3d4e5-f6a7-8901-bcde-f12345678901}">
+    <RecordField colName="perm_name" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy05_perm.perm_name" sqlTabName="sy05_perm" uid="{c3d4e5f6-a7b8-9012-cdef-123456789012}"/>
+    <RecordField colName="description" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy05_perm.description" sqlTabName="sy05_perm" uid="{d4e5f6a7-b8c9-0123-def1-234567890123}"/>
+    <RecordField colName="perm_code" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy05_perm.perm_code" sqlTabName="sy05_perm" uid="{e5f6a7b8-c9d0-1234-ef12-345678901234}"/>
+    <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy05_perm.status" sqlTabName="sy05_perm" uid="{f6a7b8c9-d0e1-2345-f123-456789012345}"/>
+  </Record>
+  <Form gridHeight="12" gridWidth="80" name="frm_perm_edit" text="Permission Details">
+    <VBox gridHeight="12" gridWidth="80" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="10" gridWidth="80" name="grid1" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="15" name="lbl_perm_name" posX="2" posY="1" text="Permission Name"/>
+        <Edit colName="perm_name" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="55" name="sy05_perm.perm_name" posX="18" posY="1" required="true" sqlTabName="sy05_perm" tabIndex="1" widget="Edit"/>
+
+        <Label gridHeight="1" gridWidth="15" name="lbl_description" posX="2" posY="3" text="Description"/>
+        <Edit colName="description" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="2" gridWidth="55" name="sy05_perm.description" posX="18" posY="3" sqlTabName="sy05_perm" tabIndex="2" widget="Edit"/>
+
+        <Label gridHeight="1" gridWidth="15" name="lbl_perm_code" posX="2" posY="6" text="Permission Code"/>
+        <Edit colName="perm_code" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy05_perm.perm_code" posX="18" posY="6" required="true" sqlTabName="sy05_perm" tabIndex="3" widget="Edit"/>
+
+        <Label gridHeight="1" gridWidth="15" name="lbl_status" posX="2" posY="8" text="Status"/>
+        <ComboBox colName="status" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy05_perm.status" posX="18" posY="8" required="true" sqlTabName="sy05_perm" tabIndex="4" widget="ComboBox">
+          <Item name="active" text="Active"/>
+          <Item name="inactive" text="Inactive"/>
+        </ComboBox>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewBiADIAYwAzAGQANABlADUALQBmADYAYQA3AC0AOAA5ADAAMQAtAGIAYwBkAGUALQBmADEAMgAzADQANQA2ADcAOAA5ADAAMQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

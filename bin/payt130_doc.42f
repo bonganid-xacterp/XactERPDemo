@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="payt130_doc.tmp" build="3.20.14" sqlDbName="demoappdb" text="Payment " width="90" height="9">
+  <LStr text="Payment "/>
+  <VBox name="vbox1">
+    <Grid name="frm_py130_doc" width="90" height="9">
+      <Label name="lbl_form_title" width="88" text="PAYMENTS" justify="center" style="header" posY="0" posX="1" gridWidth="88">
+        <LStr text="PAYMENTS"/>
+      </Label>
+      <Label name="payt30_hdr_doc_no_label1" width="10" text="Doc No" posY="1" posX="1" gridWidth="10">
+        <LStr text="Doc No"/>
+      </Label>
+      <FormField name="formonly.doc_no" colName="doc_no" sqlType="CHAR" fieldId="0" sqlTabName="formonly" tabIndex="1">
+        <Edit width="11" scroll="1" posY="1" posX="12" gridWidth="11"/>
+      </FormField>
+      <Label name="payt30_hdr_pay_type_label1" width="12" text="Pay Type" posY="1" posX="33" gridWidth="12">
+        <LStr text="Pay Type"/>
+      </Label>
+      <FormField name="formonly.pay_type" colName="pay_type" sqlType="CHAR" fieldId="1" sqlTabName="formonly" tabIndex="2">
+        <Edit width="21" scroll="1" posY="1" posX="46" gridWidth="21"/>
+      </FormField>
+      <Label name="payt30_hdr_acc_code_label1" width="10" text="Account Code" posY="2" posX="1" gridWidth="10">
+        <LStr text="Account Code"/>
+      </Label>
+      <FormField name="formonly.acc_code" colName="acc_code" sqlType="CHAR" fieldId="2" sqlTabName="formonly" tabIndex="3">
+        <ButtonEdit width="18" scroll="1" posY="2" posX="12" gridWidth="20"/>
+      </FormField>
+      <Label name="payt30_hdr_date_label1" width="12" text="Date" posY="2" posX="33" gridWidth="12">
+        <LStr text="Date"/>
+      </Label>
+      <FormField name="formonly.date" colName="date" sqlType="CHAR" fieldId="3" sqlTabName="formonly" tabIndex="4">
+        <DateEdit width="12" posY="2" posX="46" gridWidth="14"/>
+      </FormField>
+      <Label name="payt30_hdr_method_label1" width="10" text="Pay Method" posY="3" posX="1" gridWidth="10">
+        <LStr text="Pay Method"/>
+      </Label>
+      <FormField name="formonly.method" colName="method" sqlType="CHAR" fieldId="4" sqlTabName="formonly" tabIndex="5">
+        <ComboBox width="18" scroll="1" posY="3" posX="12" gridWidth="20"/>
+      </FormField>
+      <Label name="payt30_hdr_bank_account_label1" width="12" text="Bank Account" posY="3" posX="33" gridWidth="12">
+        <LStr text="Bank Account"/>
+      </Label>
+      <FormField name="formonly.bank_account" colName="bank_account" sqlType="CHAR" fieldId="5" sqlTabName="formonly" tabIndex="6">
+        <Edit width="30" scroll="1" posY="3" posX="46" gridWidth="30"/>
+      </FormField>
+      <Label name="payt30_hdr_amount_label1" width="10" text="Amount" posY="4" posX="1" gridWidth="10">
+        <LStr text="Amount"/>
+      </Label>
+      <FormField name="formonly.amount" colName="amount" sqlType="CHAR" fieldId="6" sqlTabName="formonly" tabIndex="7">
+        <Edit width="14" scroll="1" posY="4" posX="12" gridWidth="14"/>
+      </FormField>
+      <Label name="payt30_hdr_status_label1" width="10" text="Status" posY="5" posX="1" gridWidth="10">
+        <LStr text="Status"/>
+      </Label>
+      <FormField name="formonly.status" colName="status" sqlType="CHAR" fieldId="7" sqlTabName="formonly" tabIndex="8">
+        <Edit width="6" scroll="1" posY="5" posX="12" gridWidth="6"/>
+      </FormField>
+      <Label name="payt30_hdr_created_at_label1" width="12" text="Created At" posY="5" posX="33" gridWidth="12">
+        <LStr text="Created At"/>
+      </Label>
+      <FormField name="formonly.created_at" colName="created_at" sqlType="CHAR" fieldId="8" sqlTabName="formonly" noEntry="1" tabIndex="9">
+        <Edit width="25" scroll="1" posY="5" posX="46" gridWidth="25"/>
+      </FormField>
+      <Label name="payt30_hdr_created_by_label1" width="10" text="Created By" posY="6" posX="1" gridWidth="10">
+        <LStr text="Created By"/>
+      </Label>
+      <FormField name="formonly.created_by" colName="created_by" sqlType="CHAR" fieldId="9" sqlTabName="formonly" noEntry="1" tabIndex="10">
+        <Edit width="20" scroll="1" posY="6" posX="12" gridWidth="20"/>
+      </FormField>
+      <Label name="payt30_hdr_notes_label1" width="12" text="Notes" posY="6" posX="33" gridWidth="12">
+        <LStr text="Notes"/>
+      </Label>
+      <FormField name="formonly.notes" colName="notes" sqlType="CHAR" fieldId="10" sqlTabName="formonly" tabIndex="11">
+        <Edit width="30" scroll="1" posY="6" posX="46" gridWidth="30"/>
+      </FormField>
+    </Grid>
+  </VBox>
+  <RecordView tabName="formonly">
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="pay_type" fieldIdRef="1"/>
+    <Link colName="acc_code" fieldIdRef="2"/>
+    <Link colName="date" fieldIdRef="3"/>
+    <Link colName="method" fieldIdRef="4"/>
+    <Link colName="bank_account" fieldIdRef="5"/>
+    <Link colName="amount" fieldIdRef="6"/>
+    <Link colName="status" fieldIdRef="7"/>
+    <Link colName="created_at" fieldIdRef="8"/>
+    <Link colName="created_by" fieldIdRef="9"/>
+    <Link colName="notes" fieldIdRef="10"/>
+  </RecordView>
+  <RecordView tabName="rec_py130_doc">
+    <Link colName="doc_no" fieldIdRef="0"/>
+    <Link colName="pay_type" fieldIdRef="1"/>
+    <Link colName="acc_code" fieldIdRef="2"/>
+    <Link colName="date" fieldIdRef="3"/>
+    <Link colName="method" fieldIdRef="4"/>
+    <Link colName="bank_account" fieldIdRef="5"/>
+    <Link colName="amount" fieldIdRef="6"/>
+    <Link colName="notes" fieldIdRef="10"/>
+    <Link colName="status" fieldIdRef="7"/>
+    <Link colName="created_at" fieldIdRef="8"/>
+    <Link colName="created_by" fieldIdRef="9"/>
+  </RecordView>
+</Form>

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="st122_wh_lkup.tmp" build="3.20.14" sqlDbName="demoappdb" text="Warehouse Lookup" width="69" height="16">
+  <LStr text="Warehouse Lookup"/>
+  <VBox name="vbox_main">
+    <Grid name="grd_whse" width="69" height="16">
+      <Label name="lbl_title" width="66" text="WAREHOUSE LOOKUP" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="66">
+        <LStr text="WAREHOUSE LOOKUP"/>
+      </Label>
+      <Table pageSize="10" name="f_debtors_list" width="68" posY="1" posX="1" gridWidth="68" gridHeight="12" tabName="arr_wh_list">
+        <TableColumn name="wh01_mast.wh_code" colName="wh_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="wh01_mast" text="Code" tabIndex="1">
+          <Edit width="10" scroll="1"/>
+          <LStr text="Code"/>
+        </TableColumn>
+        <TableColumn name="wh01_mast.wh_name" colName="wh_name" sqlType="VARCHAR(120)" required="1" notNull="1" fieldId="1" sqlTabName="wh01_mast" text="Name" tabIndex="2">
+          <Edit width="30" scroll="1"/>
+          <LStr text="Name"/>
+        </TableColumn>
+        <TableColumn name="wh01_mast.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="2" sqlTabName="wh01_mast" text="Status" hidden="1" tabIndex="3">
+          <Edit width="6" scroll="1"/>
+          <LStr text="Status"/>
+        </TableColumn>
+        <TableColumn name="formonly.lbl_status" colName="lbl_status" fieldId="3" sqlTabName="formonly" text="Status" tabIndex="4">
+          <Edit width="8"/>
+          <LStr text="Status"/>
+        </TableColumn>
+        <TableColumn name="wh01_mast.location" colName="location" sqlType="VARCHAR(120)" fieldId="4" sqlTabName="wh01_mast" text="Location" tabIndex="5">
+          <Edit width="8"/>
+          <LStr text="Location"/>
+        </TableColumn>
+      </Table>
+      <Label name="lbl_filter" width="9" text="Filter" posY="13" posX="1" gridWidth="9">
+        <LStr text="Filter"/>
+      </Label>
+      <FormField name="formonly.f_search" colName="f_search" fieldId="5" sqlTabName="formonly" tabIndex="6">
+        <Edit width="29" posY="13" posX="11" gridWidth="29"/>
+      </FormField>
+    </Grid>
+  </VBox>
+  <RecordView tabName="wh01_mast">
+    <Link colName="wh_code" fieldIdRef="0"/>
+    <Link colName="wh_name" fieldIdRef="1"/>
+    <Link colName="status" fieldIdRef="2"/>
+    <Link colName="location" fieldIdRef="4"/>
+  </RecordView>
+  <RecordView tabName="formonly">
+    <Link colName="lbl_status" fieldIdRef="3"/>
+    <Link colName="f_search" fieldIdRef="5"/>
+  </RecordView>
+  <RecordView tabName="f_wh_search">
+    <Link colName="f_search" fieldIdRef="5"/>
+  </RecordView>
+</Form>

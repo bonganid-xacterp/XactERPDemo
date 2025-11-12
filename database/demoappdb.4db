@@ -1,0 +1,1003 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Schema gstVersion="3140a" id="{d594b98f-58a1-449b-8338-89ba3ea08fc2}" version="4.0">
+  <AGSettings version="1.1">
+    <DynamicProperties version="2">
+      <DynamicProperty description="Associated label when generating form" initialValue="" isDefaultInherited="false" isHidden="false" label="Label" name="label" readOnly="false" type="TEXT"/>
+      <DynamicProperty description="Associated widget" editorInfo="contains:ButtonEdit|CheckBox|ComboBox|DateEdit|DateTimeEdit|Edit|FFImage|FFLabel|Field|Phantom|ProgressBar|RadioGroup|Slider|SpinEdit|TextEdit|TimeEdit" initialValue="Edit" isDefaultInherited="false" isHidden="false" label="Widget" name="widget" readOnly="false" type="ENUM"/>
+      <DynamicPropertyGroup collapsed="false" description="Formfied properties" label="Formfield" name="formfieldGroup" properties="label;widget"/>
+    </DynamicProperties>
+    <NodeInfos version="1">
+      <NodeInfo mimeType="db/column" properties="widget;label"/>
+    </NodeInfos>
+  </AGSettings>
+  <ExtractionSettings last="PostgreSQL">
+    <ExtractionOptions casens="LowerCase" cvmeth="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" ignerr="true" systab="false" type="PostgreSQL"/>
+  </ExtractionSettings>
+  <Table active="true" name="cl01_mast" status="U" uuid="db/table1">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column1"/>
+    <Column fglLength="120" fglType="201" name="supp_name" notNull="true" order="2" status="U" uuid="db/column2"/>
+    <Column fglLength="30" fglType="201" name="phone" notNull="false" order="3" status="U" uuid="db/column3"/>
+    <Column fglLength="120" fglType="201" name="email" notNull="false" order="4" status="U" uuid="db/column4"/>
+    <Column fglLength="100" fglType="201" name="address1" notNull="false" order="5" status="U" uuid="db/column5"/>
+    <Column fglLength="100" fglType="201" name="address2" notNull="false" order="6" status="U" uuid="db/column6"/>
+    <Column fglLength="100" fglType="201" name="address3" notNull="false" order="7" status="U" uuid="db/column7"/>
+    <Column fglLength="10" fglType="201" name="postal_code" notNull="false" order="8" status="U" uuid="db/column8"/>
+    <Column fglLength="20" fglType="201" name="vat_no" notNull="false" order="9" status="U" uuid="db/column9"/>
+    <Column fglLength="50" fglType="201" name="payment_terms" notNull="false" order="10" status="U" uuid="db/column10"/>
+    <Column fglLength="3842" fglType="5" name="balance" notNull="true" order="11" status="U" uuid="db/column11"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="12" status="U" uuid="db/column12"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="13" status="U" uuid="db/column13"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="14" status="U" uuid="db/column14"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="15" status="U" uuid="db/column15"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="16" status="U" uuid="db/column16"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="cl01_mast_pkey" status="U" uuid="db/index1"/>
+  </Table>
+  <Table active="true" name="cl30_trans" status="U" uuid="db/table2">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column17"/>
+    <Column fglLength="8" fglType="52" name="supp_id" notNull="false" order="2" status="U" uuid="db/column18"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="3" status="U" uuid="db/column19"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="4" status="U" uuid="db/column20"/>
+    <Column fglLength="20" fglType="201" name="doc_type" notNull="false" order="5" status="U" uuid="db/column21"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="6" status="U" uuid="db/column22"/>
+    <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="7" status="U" uuid="db/column650"/>
+    <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="8" status="U" uuid="db/column651"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="9" status="U" uuid="db/column25"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="10" status="U" uuid="db/column26"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="cl30_trans_pkey" status="U" uuid="db/index2"/>
+    <Index indexColumns="supp_id" indexConstraint="index" name="idx_cl30_supp" status="U" uuid="db/index3"/>
+  </Table>
+  <Table active="true" name="dl01_mast" status="U" uuid="db/table3">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column27"/>
+    <Column fglLength="120" fglType="201" name="cust_name" notNull="true" order="2" status="U" uuid="db/column28"/>
+    <Column fglLength="30" fglType="201" name="phone" notNull="false" order="3" status="U" uuid="db/column29"/>
+    <Column fglLength="120" fglType="201" name="email" notNull="false" order="4" status="U" uuid="db/column30"/>
+    <Column fglLength="100" fglType="201" name="address1" notNull="false" order="5" status="U" uuid="db/column31"/>
+    <Column fglLength="100" fglType="201" name="address2" notNull="false" order="6" status="U" uuid="db/column32"/>
+    <Column fglLength="100" fglType="201" name="address3" notNull="false" order="7" status="U" uuid="db/column33"/>
+    <Column fglLength="10" fglType="201" name="postal_code" notNull="false" order="8" status="U" uuid="db/column34"/>
+    <Column fglLength="20" fglType="201" name="vat_no" notNull="false" order="9" status="U" uuid="db/column35"/>
+    <Column fglLength="50" fglType="201" name="payment_terms" notNull="false" order="10" status="U" uuid="db/column36"/>
+    <Column fglLength="3842" fglType="5" name="balance" notNull="true" order="11" status="U" uuid="db/column37"/>
+    <Column fglLength="3842" fglType="5" name="cr_limit" notNull="true" order="12" status="U" uuid="db/column38"/>
+    <Column fglLength="3842" fglType="5" name="sales_ytd" notNull="false" order="13" status="U" uuid="db/column39"/>
+    <Column fglLength="3842" fglType="5" name="cost_ytd" notNull="false" order="14" status="U" uuid="db/column40"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="15" status="U" uuid="db/column41"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="16" status="U" uuid="db/column42"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="17" status="U" uuid="db/column43"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="18" status="U" uuid="db/column44"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="19" status="U" uuid="db/column45"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="dl01_mast_pkey" status="U" uuid="db/index4"/>
+  </Table>
+  <Table active="true" name="dl30_trans" status="U" uuid="db/table4">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column46"/>
+    <Column fglLength="8" fglType="52" name="cust_id" notNull="false" order="2" status="U" uuid="db/column47"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="3" status="U" uuid="db/column48"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="4" status="U" uuid="db/column49"/>
+    <Column fglLength="20" fglType="201" name="doc_type" notNull="false" order="5" status="U" uuid="db/column50"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="6" status="U" uuid="db/column51"/>
+    <Column fglLength="3842" fglType="5" name="vat" notNull="true" order="7" status="U" uuid="db/column52"/>
+    <Column fglLength="3842" fglType="5" name="disc" notNull="true" order="8" status="U" uuid="db/column53"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="9" status="U" uuid="db/column54"/>
+    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="10" status="U" uuid="db/column55"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="dl30_trans_pkey" status="U" uuid="db/index5"/>
+    <Index indexColumns="cust_id" indexConstraint="index" name="idx_dl30_cust" status="U" uuid="db/index6"/>
+  </Table>
+  <Table active="true" name="gl01_acc" status="U" uuid="db/table5">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column56"/>
+    <Column fglLength="30" fglType="201" name="acc_code" notNull="false" order="2" status="U" uuid="db/column57"/>
+    <Column fglLength="120" fglType="201" name="acc_name" notNull="true" order="3" status="U" uuid="db/column58"/>
+    <Column fglLength="20" fglType="201" name="acc_type" notNull="true" order="4" status="U" uuid="db/column59"/>
+    <Column fglLength="1" fglType="45" name="is_parent" notNull="true" order="5" status="U" uuid="db/column60"/>
+    <Column fglLength="8" fglType="52" name="parent_id" notNull="false" order="6" status="U" uuid="db/column61"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="7" status="U" uuid="db/column62"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="8" status="U" uuid="db/column63"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="9" status="U" uuid="db/column64"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="10" status="U" uuid="db/column65"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="11" status="U" uuid="db/column66"/>
+    <Index indexColumns="acc_code" indexConstraint="unique" name="gl01_acc_acc_code_key" status="U" uuid="db/index7"/>
+    <Index indexColumns="id, id" indexConstraint="uniqueIndex" name="gl01_acc_pkey" status="U" uuid="db/index8"/>
+  </Table>
+  <Table active="true" name="gl30_jnls" status="U" uuid="db/table6">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column67"/>
+    <Column fglLength="30" fglType="201" name="jrn_no" notNull="false" order="2" status="U" uuid="db/column68"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="3" status="U" uuid="db/column69"/>
+    <Column fglLength="30" fglType="201" name="ref_no" notNull="false" order="4" status="U" uuid="db/column70"/>
+    <Column fglLength="20" fglType="201" name="doc_type" notNull="false" order="5" status="U" uuid="db/column71"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="6" status="U" uuid="db/column72"/>
+    <Column fglLength="200" fglType="201" name="description" notNull="false" order="7" status="U" uuid="db/column73"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="8" status="U" uuid="db/column74"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="9" status="U" uuid="db/column75"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="10" status="U" uuid="db/column76"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="11" status="U" uuid="db/column77"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="12" status="U" uuid="db/column78"/>
+    <Index indexColumns="jrn_no" indexConstraint="unique" name="gl30_jnls_jrn_no_key" status="U" uuid="db/index9"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="gl30_jnls_pkey" status="U" uuid="db/index10"/>
+  </Table>
+  <Table active="true" name="gl31_lines" status="U" uuid="db/table7">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column79"/>
+    <Column fglLength="8" fglType="52" name="jrn_id" notNull="true" order="2" status="U" uuid="db/column80"/>
+    <Column fglLength="4" fglType="2" name="line_no" notNull="true" order="3" status="U" uuid="db/column81"/>
+    <Column fglLength="8" fglType="52" name="acc_id" notNull="true" order="4" status="U" uuid="db/column82"/>
+    <Column fglLength="3842" fglType="5" name="debit" notNull="true" order="5" status="U" uuid="db/column83"/>
+    <Column fglLength="3842" fglType="5" name="credit" notNull="true" order="6" status="U" uuid="db/column84"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="7" status="U" uuid="db/column85"/>
+    <Index indexColumns="jrn_id, line_no" indexConstraint="unique" name="gl31_lines_jrn_id_line_no_key" status="U" uuid="db/index11"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="gl31_lines_pkey" status="U" uuid="db/index12"/>
+  </Table>
+  <Table active="true" name="payt30_hdr" status="U" uuid="db/table8">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column86"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="2" status="U" uuid="db/column87"/>
+    <Column fglLength="10" fglType="201" name="party_type" notNull="false" order="3" status="U" uuid="db/column88"/>
+    <Column fglLength="8" fglType="52" name="party_id" notNull="false" order="4" status="U" uuid="db/column89"/>
+    <Column fglLength="20" fglType="201" name="pay_type" notNull="false" order="5" status="U" uuid="db/column90"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="6" status="U" uuid="db/column91"/>
+    <Column fglLength="30" fglType="201" name="method" notNull="false" order="7" status="U" uuid="db/column92"/>
+    <Column fglLength="40" fglType="201" name="bank_account" notNull="false" order="8" status="U" uuid="db/column93"/>
+    <Column fglLength="3842" fglType="5" name="amount" notNull="true" order="9" status="U" uuid="db/column94"/>
+    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="10" status="U" uuid="db/column95"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="11" status="U" uuid="db/column96"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="12" status="U" uuid="db/column97"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="13" status="U" uuid="db/column98"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="14" status="U" uuid="db/column99"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="15" status="U" uuid="db/column100"/>
+    <Index indexColumns="doc_no" indexConstraint="unique" name="payt30_hdr_doc_no_key" status="U" uuid="db/index13"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="payt30_hdr_pkey" status="U" uuid="db/index14"/>
+  </Table>
+  <Table active="true" name="payt31_trans_det" status="U" uuid="db/table9">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column101"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column102"/>
+    <Column fglLength="20" fglType="201" name="doc_type" notNull="false" order="3" status="U" uuid="db/column103"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="4" status="U" uuid="db/column104"/>
+    <Column fglLength="3842" fglType="5" name="alloc_amt" notNull="true" order="5" status="U" uuid="db/column105"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="6" status="U" uuid="db/column106"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="payt31_trans_det_pkey" status="U" uuid="db/index15"/>
+  </Table>
+  <Table active="true" name="pu30_ord_det" status="U" uuid="db/table10">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column107"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column108"/>
+    <Column fglLength="4" fglType="2" name="line_no" notNull="true" order="3" status="U" uuid="db/column109"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column110"/>
+    <Column fglLength="200" fglType="201" name="item_name" notNull="false" order="5" status="U" uuid="db/column111"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="6" status="U" uuid="db/column112"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="7" status="U" uuid="db/column113"/>
+    <Column fglLength="3844" fglType="5" name="unit_cost" notNull="true" order="8" status="U" uuid="db/column114"/>
+    <Column fglLength="1795" fglType="5" name="disc_pct" notNull="true" order="9" status="U" uuid="db/column115"/>
+    <Column fglLength="3842" fglType="5" name="disc_amt" notNull="true" order="10" status="U" uuid="db/column116"/>
+    <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column117"/>
+    <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column118"/>
+    <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column119"/>
+    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column120"/>
+    <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column121"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="16" status="U" uuid="db/column122"/>
+    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column123"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="18" status="U" uuid="db/column124"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="19" status="U" uuid="db/column125"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="20" status="U" uuid="db/column126"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="21" status="U" uuid="db/column127"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="22" status="U" uuid="db/column128"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="23" status="U" uuid="db/column129"/>
+    <Index indexColumns="hdr_id" indexConstraint="index" name="idx_pu30_det_hdr" status="U" uuid="db/index16"/>
+    <Index indexColumns="hdr_id, line_no" indexConstraint="unique" name="pu30_ord_det_hdr_id_line_no_key" status="U" uuid="db/index17"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="pu30_ord_det_pkey" status="U" uuid="db/index18"/>
+  </Table>
+  <Table active="true" name="pu30_ord_hdr" status="U" uuid="db/table11">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column130"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="2" status="U" uuid="db/column131"/>
+    <Column fglLength="30" fglType="201" name="ref_no" notNull="false" order="3" status="U" uuid="db/column132"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="4" status="U" uuid="db/column133"/>
+    <Column fglLength="8" fglType="52" name="supp_id" notNull="false" order="5" status="U" uuid="db/column134"/>
+    <Column fglLength="100" fglType="201" name="supp_name" notNull="false" order="6" status="U" uuid="db/column135"/>
+    <Column fglLength="20" fglType="201" name="supp_phone" notNull="false" order="7" status="U" uuid="db/column136"/>
+    <Column fglLength="100" fglType="201" name="supp_email" notNull="false" order="8" status="U" uuid="db/column137"/>
+    <Column fglLength="100" fglType="201" name="supp_address1" notNull="false" order="9" status="U" uuid="db/column138"/>
+    <Column fglLength="100" fglType="201" name="supp_address2" notNull="false" order="10" status="U" uuid="db/column139"/>
+    <Column fglLength="100" fglType="201" name="supp_address3" notNull="false" order="11" status="U" uuid="db/column140"/>
+    <Column fglLength="10" fglType="201" name="supp_postal_code" notNull="false" order="12" status="U" uuid="db/column141"/>
+    <Column fglLength="20" fglType="201" name="supp_vat_no" notNull="false" order="13" status="U" uuid="db/column142"/>
+    <Column fglLength="50" fglType="201" name="supp_payment_terms" notNull="false" order="14" status="U" uuid="db/column143"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="15" status="U" uuid="db/column144"/>
+    <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="16" status="U" uuid="db/column145"/>
+    <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="17" status="U" uuid="db/column146"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="18" status="U" uuid="db/column147"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="19" status="U" uuid="db/column148"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="20" status="U" uuid="db/column149"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="21" status="U" uuid="db/column150"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="22" status="U" uuid="db/column151"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="23" status="U" uuid="db/column152"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="24" status="U" uuid="db/column153"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="25" status="U" uuid="db/column154"/>
+    <Index indexColumns="supp_id" indexConstraint="index" name="idx_pu30_hdr_supp" status="U" uuid="db/index19"/>
+    <Index indexColumns="doc_no" indexConstraint="unique" name="pu30_ord_hdr_doc_no_key" status="U" uuid="db/index20"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="pu30_ord_hdr_pkey" status="U" uuid="db/index21"/>
+  </Table>
+  <Table active="true" name="pu31_grn_det" status="U" uuid="db/table12">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column155"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column156"/>
+    <Column fglLength="4" fglType="2" name="line_no" notNull="true" order="3" status="U" uuid="db/column157"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column158"/>
+    <Column fglLength="200" fglType="201" name="item_name" notNull="false" order="5" status="U" uuid="db/column159"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="6" status="U" uuid="db/column160"/>
+    <Column fglLength="40" fglType="201" name="batch_id" notNull="false" order="7" status="U" uuid="db/column161"/>
+    <Column fglLength="4" fglType="7" name="expiry_date" notNull="false" order="8" status="U" uuid="db/column162"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="9" status="U" uuid="db/column163"/>
+    <Column fglLength="3844" fglType="5" name="unit_cost" notNull="true" order="10" status="U" uuid="db/column164"/>
+    <Column fglLength="1795" fglType="5" name="disc_pct" notNull="true" order="11" status="U" uuid="db/column165"/>
+    <Column fglLength="3842" fglType="5" name="disc_amt" notNull="true" order="12" status="U" uuid="db/column166"/>
+    <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="13" status="U" uuid="db/column167"/>
+    <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="14" status="U" uuid="db/column168"/>
+    <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="15" status="U" uuid="db/column169"/>
+    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="16" status="U" uuid="db/column170"/>
+    <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="17" status="U" uuid="db/column171"/>
+    <Column fglLength="8" fglType="52" name="po_line_id" notNull="false" order="18" status="U" uuid="db/column172"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="19" status="U" uuid="db/column173"/>
+    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="20" status="U" uuid="db/column174"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="21" status="U" uuid="db/column175"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="22" status="U" uuid="db/column176"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="23" status="U" uuid="db/column177"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="24" status="U" uuid="db/column178"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="25" status="U" uuid="db/column179"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="26" status="U" uuid="db/column180"/>
+    <Index indexColumns="hdr_id" indexConstraint="index" name="idx_pu31_det_hdr" status="U" uuid="db/index22"/>
+    <Index indexColumns="hdr_id, line_no" indexConstraint="unique" name="pu31_grn_det_hdr_id_line_no_key" status="U" uuid="db/index23"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="pu31_grn_det_pkey" status="U" uuid="db/index24"/>
+  </Table>
+  <Table active="true" name="pu31_grn_hdr" status="U" uuid="db/table13">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column181"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="2" status="U" uuid="db/column182"/>
+    <Column fglLength="20" fglType="201" name="ref_doc_type" notNull="false" order="3" status="U" uuid="db/column183"/>
+    <Column fglLength="30" fglType="201" name="ref_doc_no" notNull="false" order="4" status="U" uuid="db/column184"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="5" status="U" uuid="db/column185"/>
+    <Column fglLength="8" fglType="52" name="supp_id" notNull="false" order="6" status="U" uuid="db/column186"/>
+    <Column fglLength="100" fglType="201" name="supp_name" notNull="false" order="7" status="U" uuid="db/column187"/>
+    <Column fglLength="20" fglType="201" name="supp_phone" notNull="false" order="8" status="U" uuid="db/column188"/>
+    <Column fglLength="100" fglType="201" name="supp_email" notNull="false" order="9" status="U" uuid="db/column189"/>
+    <Column fglLength="100" fglType="201" name="supp_address1" notNull="false" order="10" status="U" uuid="db/column190"/>
+    <Column fglLength="100" fglType="201" name="supp_address2" notNull="false" order="11" status="U" uuid="db/column191"/>
+    <Column fglLength="100" fglType="201" name="supp_address3" notNull="false" order="12" status="U" uuid="db/column192"/>
+    <Column fglLength="10" fglType="201" name="supp_postal_code" notNull="false" order="13" status="U" uuid="db/column193"/>
+    <Column fglLength="20" fglType="201" name="supp_vat_no" notNull="false" order="14" status="U" uuid="db/column194"/>
+    <Column fglLength="50" fglType="201" name="supp_payment_terms" notNull="false" order="15" status="U" uuid="db/column195"/>
+    <Column fglLength="50" fglType="201" name="delivery_note_no" notNull="false" order="16" status="U" uuid="db/column196"/>
+    <Column fglLength="50" fglType="201" name="carrier_name" notNull="false" order="17" status="U" uuid="db/column197"/>
+    <Column fglLength="8" fglType="52" name="received_by" notNull="false" order="18" status="U" uuid="db/column198"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="19" status="U" uuid="db/column199"/>
+    <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="20" status="U" uuid="db/column200"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="21" status="U" uuid="db/column201"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="22" status="U" uuid="db/column202"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="23" status="U" uuid="db/column203"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="24" status="U" uuid="db/column204"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="25" status="U" uuid="db/column205"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="26" status="U" uuid="db/column206"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="27" status="U" uuid="db/column207"/>
+    <Index indexColumns="supp_id" indexConstraint="index" name="idx_pu31_hdr_supp" status="U" uuid="db/index25"/>
+    <Index indexColumns="doc_no" indexConstraint="unique" name="pu31_grn_hdr_doc_no_key" status="U" uuid="db/index26"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="pu31_grn_hdr_pkey" status="U" uuid="db/index27"/>
+  </Table>
+  <Table active="true" name="pu32_inv_det" status="U" uuid="db/table14">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column208"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column209"/>
+    <Column fglLength="4" fglType="2" name="line_no" notNull="true" order="3" status="U" uuid="db/column210"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column211"/>
+    <Column fglLength="200" fglType="201" name="item_name" notNull="false" order="5" status="U" uuid="db/column212"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="6" status="U" uuid="db/column213"/>
+    <Column fglLength="40" fglType="201" name="batch_id" notNull="false" order="7" status="U" uuid="db/column214"/>
+    <Column fglLength="4" fglType="7" name="expiry_date" notNull="false" order="8" status="U" uuid="db/column215"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="9" status="U" uuid="db/column216"/>
+    <Column fglLength="3844" fglType="5" name="unit_cost" notNull="true" order="10" status="U" uuid="db/column217"/>
+    <Column fglLength="1795" fglType="5" name="disc_pct" notNull="true" order="11" status="U" uuid="db/column218"/>
+    <Column fglLength="3842" fglType="5" name="disc_amt" notNull="true" order="12" status="U" uuid="db/column219"/>
+    <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="13" status="U" uuid="db/column220"/>
+    <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="14" status="U" uuid="db/column221"/>
+    <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="15" status="U" uuid="db/column222"/>
+    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="16" status="U" uuid="db/column223"/>
+    <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="17" status="U" uuid="db/column224"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="18" status="U" uuid="db/column225"/>
+    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="19" status="U" uuid="db/column226"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="20" status="U" uuid="db/column227"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="21" status="U" uuid="db/column228"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="22" status="U" uuid="db/column229"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="23" status="U" uuid="db/column230"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="24" status="U" uuid="db/column231"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="25" status="U" uuid="db/column232"/>
+    <Index indexColumns="hdr_id" indexConstraint="index" name="idx_pu32_det_hdr" status="U" uuid="db/index28"/>
+    <Index indexColumns="hdr_id, line_no" indexConstraint="unique" name="pu32_inv_det_hdr_id_line_no_key" status="U" uuid="db/index29"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="pu32_inv_det_pkey" status="U" uuid="db/index30"/>
+  </Table>
+  <Table active="true" name="pu32_inv_hdr" status="U" uuid="db/table15">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column233"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="2" status="U" uuid="db/column234"/>
+    <Column fglLength="20" fglType="201" name="ref_doc_type" notNull="false" order="3" status="U" uuid="db/column235"/>
+    <Column fglLength="30" fglType="201" name="ref_doc_no" notNull="false" order="4" status="U" uuid="db/column236"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="5" status="U" uuid="db/column237"/>
+    <Column fglLength="4" fglType="7" name="invoice_date" notNull="false" order="6" status="U" uuid="db/column238"/>
+    <Column fglLength="4" fglType="7" name="due_date" notNull="false" order="7" status="U" uuid="db/column239"/>
+    <Column fglLength="30" fglType="201" name="payment_method" notNull="false" order="8" status="U" uuid="db/column240"/>
+    <Column fglLength="8" fglType="52" name="supp_id" notNull="false" order="9" status="U" uuid="db/column241"/>
+    <Column fglLength="100" fglType="201" name="supp_name" notNull="false" order="10" status="U" uuid="db/column242"/>
+    <Column fglLength="20" fglType="201" name="supp_phone" notNull="false" order="11" status="U" uuid="db/column243"/>
+    <Column fglLength="100" fglType="201" name="supp_email" notNull="false" order="12" status="U" uuid="db/column244"/>
+    <Column fglLength="100" fglType="201" name="supp_address1" notNull="false" order="13" status="U" uuid="db/column245"/>
+    <Column fglLength="100" fglType="201" name="supp_address2" notNull="false" order="14" status="U" uuid="db/column246"/>
+    <Column fglLength="100" fglType="201" name="supp_address3" notNull="false" order="15" status="U" uuid="db/column247"/>
+    <Column fglLength="10" fglType="201" name="supp_postal_code" notNull="false" order="16" status="U" uuid="db/column248"/>
+    <Column fglLength="20" fglType="201" name="supp_vat_no" notNull="false" order="17" status="U" uuid="db/column249"/>
+    <Column fglLength="50" fglType="201" name="supp_payment_terms" notNull="false" order="18" status="U" uuid="db/column250"/>
+    <Column fglLength="60" fglType="201" name="supp_bank_name" notNull="false" order="19" status="U" uuid="db/column251"/>
+    <Column fglLength="40" fglType="201" name="supp_bank_account" notNull="false" order="20" status="U" uuid="db/column252"/>
+    <Column fglLength="40" fglType="201" name="supp_bank_branch" notNull="false" order="21" status="U" uuid="db/column253"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="22" status="U" uuid="db/column254"/>
+    <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="23" status="U" uuid="db/column255"/>
+    <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="24" status="U" uuid="db/column256"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="25" status="U" uuid="db/column257"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="26" status="U" uuid="db/column258"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="27" status="U" uuid="db/column259"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="28" status="U" uuid="db/column260"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="29" status="U" uuid="db/column261"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="30" status="U" uuid="db/column262"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="31" status="U" uuid="db/column263"/>
+    <Index indexColumns="supp_id" indexConstraint="index" name="idx_pu32_hdr_supp" status="U" uuid="db/index31"/>
+    <Index indexColumns="doc_no" indexConstraint="unique" name="pu32_inv_hdr_doc_no_key" status="U" uuid="db/index32"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="pu32_inv_hdr_pkey" status="U" uuid="db/index33"/>
+  </Table>
+  <Table active="true" name="sa30_quo_det" status="U" uuid="db/table16">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column264"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column265"/>
+    <Column fglLength="4" fglType="2" name="line_no" notNull="true" order="3" status="U" uuid="db/column266"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column267"/>
+    <Column fglLength="200" fglType="201" name="item_name" notNull="false" order="5" status="U" uuid="db/column268"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="6" status="U" uuid="db/column269"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="7" status="U" uuid="db/column270"/>
+    <Column fglLength="3844" fglType="5" name="unit_price" notNull="true" order="8" status="U" uuid="db/column271"/>
+    <Column fglLength="1795" fglType="5" name="disc_pct" notNull="true" order="9" status="U" uuid="db/column272"/>
+    <Column fglLength="3842" fglType="5" name="disc_amt" notNull="true" order="10" status="U" uuid="db/column273"/>
+    <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column274"/>
+    <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column275"/>
+    <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column276"/>
+    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column277"/>
+    <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column278"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="16" status="U" uuid="db/column279"/>
+    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column280"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="18" status="U" uuid="db/column281"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="19" status="U" uuid="db/column282"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="20" status="U" uuid="db/column283"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="21" status="U" uuid="db/column284"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="22" status="U" uuid="db/column285"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="23" status="U" uuid="db/column286"/>
+    <Index indexColumns="hdr_id" indexConstraint="index" name="idx_sa30_det_hdr" status="U" uuid="db/index34"/>
+    <Index indexColumns="hdr_id, line_no" indexConstraint="unique" name="sa30_quo_det_hdr_id_line_no_key" status="U" uuid="db/index35"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sa30_quo_det_pkey" status="U" uuid="db/index36"/>
+  </Table>
+  <Table active="true" name="sa30_quo_hdr" status="U" uuid="db/table17">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column287"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="2" status="U" uuid="db/column288"/>
+    <Column fglLength="30" fglType="201" name="ref_no" notNull="false" order="3" status="U" uuid="db/column289"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="4" status="U" uuid="db/column290"/>
+    <Column fglLength="8" fglType="52" name="cust_id" notNull="false" order="5" status="U" uuid="db/column291"/>
+    <Column fglLength="100" fglType="201" name="cust_name" notNull="false" order="6" status="U" uuid="db/column292"/>
+    <Column fglLength="20" fglType="201" name="cust_phone" notNull="false" order="7" status="U" uuid="db/column293"/>
+    <Column fglLength="100" fglType="201" name="cust_email" notNull="false" order="8" status="U" uuid="db/column294"/>
+    <Column fglLength="100" fglType="201" name="cust_address1" notNull="false" order="9" status="U" uuid="db/column295"/>
+    <Column fglLength="100" fglType="201" name="cust_address2" notNull="false" order="10" status="U" uuid="db/column296"/>
+    <Column fglLength="100" fglType="201" name="cust_address3" notNull="false" order="11" status="U" uuid="db/column297"/>
+    <Column fglLength="10" fglType="201" name="cust_postal_code" notNull="false" order="12" status="U" uuid="db/column298"/>
+    <Column fglLength="20" fglType="201" name="cust_vat_no" notNull="false" order="13" status="U" uuid="db/column299"/>
+    <Column fglLength="50" fglType="201" name="cust_payment_terms" notNull="false" order="14" status="U" uuid="db/column300"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="15" status="U" uuid="db/column301"/>
+    <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="16" status="U" uuid="db/column302"/>
+    <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="17" status="U" uuid="db/column303"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="18" status="U" uuid="db/column304"/>
+    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="19" status="U" uuid="db/column305"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="20" status="U" uuid="db/column306"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="21" status="U" uuid="db/column307"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="22" status="U" uuid="db/column308"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="23" status="U" uuid="db/column309"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="24" status="U" uuid="db/column310"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="25" status="U" uuid="db/column311"/>
+    <Index indexColumns="cust_id" indexConstraint="index" name="idx_sa30_hdr_cust" status="U" uuid="db/index37"/>
+    <Index indexColumns="doc_no" indexConstraint="unique" name="sa30_quo_hdr_doc_no_key" status="U" uuid="db/index38"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sa30_quo_hdr_pkey" status="U" uuid="db/index39"/>
+  </Table>
+  <Table active="true" name="sa31_ord_det" status="U" uuid="db/table18">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column312"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column313"/>
+    <Column fglLength="4" fglType="2" name="line_no" notNull="true" order="3" status="U" uuid="db/column314"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column315"/>
+    <Column fglLength="200" fglType="201" name="item_name" notNull="false" order="5" status="U" uuid="db/column316"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="6" status="U" uuid="db/column317"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="7" status="U" uuid="db/column318"/>
+    <Column fglLength="3844" fglType="5" name="unit_price" notNull="true" order="8" status="U" uuid="db/column319"/>
+    <Column fglLength="1795" fglType="5" name="disc_pct" notNull="true" order="9" status="U" uuid="db/column320"/>
+    <Column fglLength="3842" fglType="5" name="disc_amt" notNull="true" order="10" status="U" uuid="db/column321"/>
+    <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column322"/>
+    <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column323"/>
+    <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column324"/>
+    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column325"/>
+    <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column326"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="16" status="U" uuid="db/column327"/>
+    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column328"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="18" status="U" uuid="db/column329"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="19" status="U" uuid="db/column330"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="20" status="U" uuid="db/column331"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="21" status="U" uuid="db/column332"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="22" status="U" uuid="db/column333"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="23" status="U" uuid="db/column334"/>
+    <Index indexColumns="hdr_id" indexConstraint="index" name="idx_sa31_det_hdr" status="U" uuid="db/index40"/>
+    <Index indexColumns="hdr_id, line_no" indexConstraint="unique" name="sa31_ord_det_hdr_id_line_no_key" status="U" uuid="db/index41"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sa31_ord_det_pkey" status="U" uuid="db/index42"/>
+  </Table>
+  <Table active="true" name="sa31_ord_hdr" status="U" uuid="db/table19">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column335"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="2" status="U" uuid="db/column336"/>
+    <Column fglLength="20" fglType="201" name="ref_doc_type" notNull="false" order="3" status="U" uuid="db/column337"/>
+    <Column fglLength="30" fglType="201" name="ref_doc_no" notNull="false" order="4" status="U" uuid="db/column338"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="5" status="U" uuid="db/column339"/>
+    <Column fglLength="8" fglType="52" name="cust_id" notNull="false" order="6" status="U" uuid="db/column340"/>
+    <Column fglLength="100" fglType="201" name="cust_name" notNull="false" order="7" status="U" uuid="db/column341"/>
+    <Column fglLength="20" fglType="201" name="cust_phone" notNull="false" order="8" status="U" uuid="db/column342"/>
+    <Column fglLength="100" fglType="201" name="cust_email" notNull="false" order="9" status="U" uuid="db/column343"/>
+    <Column fglLength="100" fglType="201" name="cust_address1" notNull="false" order="10" status="U" uuid="db/column344"/>
+    <Column fglLength="100" fglType="201" name="cust_address2" notNull="false" order="11" status="U" uuid="db/column345"/>
+    <Column fglLength="100" fglType="201" name="cust_address3" notNull="false" order="12" status="U" uuid="db/column346"/>
+    <Column fglLength="10" fglType="201" name="cust_postal_code" notNull="false" order="13" status="U" uuid="db/column347"/>
+    <Column fglLength="20" fglType="201" name="cust_vat_no" notNull="false" order="14" status="U" uuid="db/column348"/>
+    <Column fglLength="50" fglType="201" name="cust_payment_terms" notNull="false" order="15" status="U" uuid="db/column349"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="16" status="U" uuid="db/column350"/>
+    <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="17" status="U" uuid="db/column351"/>
+    <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="18" status="U" uuid="db/column352"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="19" status="U" uuid="db/column353"/>
+    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="20" status="U" uuid="db/column354"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="21" status="U" uuid="db/column355"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="22" status="U" uuid="db/column356"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="23" status="U" uuid="db/column357"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="24" status="U" uuid="db/column358"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="25" status="U" uuid="db/column359"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="26" status="U" uuid="db/column360"/>
+    <Index indexColumns="cust_id" indexConstraint="index" name="idx_sa31_hdr_cust" status="U" uuid="db/index43"/>
+    <Index indexColumns="doc_no" indexConstraint="unique" name="sa31_ord_hdr_doc_no_key" status="U" uuid="db/index44"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sa31_ord_hdr_pkey" status="U" uuid="db/index45"/>
+  </Table>
+  <Table active="true" name="sa32_inv_det" status="U" uuid="db/table20">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column361"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column362"/>
+    <Column fglLength="4" fglType="2" name="line_no" notNull="true" order="3" status="U" uuid="db/column363"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column364"/>
+    <Column fglLength="200" fglType="201" name="item_name" notNull="false" order="5" status="U" uuid="db/column365"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="6" status="U" uuid="db/column366"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="7" status="U" uuid="db/column367"/>
+    <Column fglLength="3844" fglType="5" name="unit_price" notNull="true" order="8" status="U" uuid="db/column368"/>
+    <Column fglLength="1795" fglType="5" name="disc_pct" notNull="true" order="9" status="U" uuid="db/column369"/>
+    <Column fglLength="3842" fglType="5" name="disc_amt" notNull="true" order="10" status="U" uuid="db/column370"/>
+    <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column371"/>
+    <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column372"/>
+    <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column373"/>
+    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column374"/>
+    <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column375"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="16" status="U" uuid="db/column376"/>
+    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column377"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="18" status="U" uuid="db/column378"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="19" status="U" uuid="db/column379"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="20" status="U" uuid="db/column380"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="21" status="U" uuid="db/column381"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="22" status="U" uuid="db/column382"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="23" status="U" uuid="db/column383"/>
+    <Index indexColumns="hdr_id" indexConstraint="index" name="idx_sa32_det_hdr" status="U" uuid="db/index46"/>
+    <Index indexColumns="hdr_id, line_no" indexConstraint="unique" name="sa32_inv_det_hdr_id_line_no_key" status="U" uuid="db/index47"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sa32_inv_det_pkey" status="U" uuid="db/index48"/>
+  </Table>
+  <Table active="true" name="sa32_inv_hdr" status="U" uuid="db/table21">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column384"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="2" status="U" uuid="db/column385"/>
+    <Column fglLength="20" fglType="201" name="ref_doc_type" notNull="false" order="3" status="U" uuid="db/column386"/>
+    <Column fglLength="30" fglType="201" name="ref_doc_no" notNull="false" order="4" status="U" uuid="db/column387"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="5" status="U" uuid="db/column388"/>
+    <Column fglLength="4" fglType="7" name="due_date" notNull="false" order="6" status="U" uuid="db/column389"/>
+    <Column fglLength="8" fglType="52" name="cust_id" notNull="false" order="7" status="U" uuid="db/column390"/>
+    <Column fglLength="100" fglType="201" name="cust_name" notNull="false" order="8" status="U" uuid="db/column391"/>
+    <Column fglLength="20" fglType="201" name="cust_phone" notNull="false" order="9" status="U" uuid="db/column392"/>
+    <Column fglLength="100" fglType="201" name="cust_email" notNull="false" order="10" status="U" uuid="db/column393"/>
+    <Column fglLength="100" fglType="201" name="cust_address1" notNull="false" order="11" status="U" uuid="db/column394"/>
+    <Column fglLength="100" fglType="201" name="cust_address2" notNull="false" order="12" status="U" uuid="db/column395"/>
+    <Column fglLength="100" fglType="201" name="cust_address3" notNull="false" order="13" status="U" uuid="db/column396"/>
+    <Column fglLength="10" fglType="201" name="cust_postal_code" notNull="false" order="14" status="U" uuid="db/column397"/>
+    <Column fglLength="20" fglType="201" name="cust_vat_no" notNull="false" order="15" status="U" uuid="db/column398"/>
+    <Column fglLength="50" fglType="201" name="cust_payment_terms" notNull="false" order="16" status="U" uuid="db/column399"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="17" status="U" uuid="db/column400"/>
+    <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="18" status="U" uuid="db/column401"/>
+    <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="19" status="U" uuid="db/column402"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="20" status="U" uuid="db/column403"/>
+    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="21" status="U" uuid="db/column404"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="22" status="U" uuid="db/column405"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="23" status="U" uuid="db/column406"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="24" status="U" uuid="db/column407"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="25" status="U" uuid="db/column408"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="26" status="U" uuid="db/column409"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="27" status="U" uuid="db/column410"/>
+    <Index indexColumns="cust_id" indexConstraint="index" name="idx_sa32_hdr_cust" status="U" uuid="db/index49"/>
+    <Index indexColumns="doc_no" indexConstraint="unique" name="sa32_inv_hdr_doc_no_key" status="U" uuid="db/index50"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sa32_inv_hdr_pkey" status="U" uuid="db/index51"/>
+  </Table>
+  <Table active="true" name="sa33_crn_det" status="U" uuid="db/table22">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column411"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column412"/>
+    <Column fglLength="4" fglType="2" name="line_no" notNull="true" order="3" status="U" uuid="db/column413"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column414"/>
+    <Column fglLength="200" fglType="201" name="item_name" notNull="false" order="5" status="U" uuid="db/column415"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="6" status="U" uuid="db/column416"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="7" status="U" uuid="db/column417"/>
+    <Column fglLength="3844" fglType="5" name="unit_price" notNull="true" order="8" status="U" uuid="db/column418"/>
+    <Column fglLength="1795" fglType="5" name="disc_pct" notNull="true" order="9" status="U" uuid="db/column419"/>
+    <Column fglLength="3842" fglType="5" name="disc_amt" notNull="true" order="10" status="U" uuid="db/column420"/>
+    <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column421"/>
+    <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column422"/>
+    <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column423"/>
+    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column424"/>
+    <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column425"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="16" status="U" uuid="db/column426"/>
+    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column427"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="18" status="U" uuid="db/column428"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="19" status="U" uuid="db/column429"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="20" status="U" uuid="db/column430"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="21" status="U" uuid="db/column431"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="22" status="U" uuid="db/column432"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="23" status="U" uuid="db/column433"/>
+    <Index indexColumns="hdr_id" indexConstraint="index" name="idx_sa33_det_hdr" status="U" uuid="db/index52"/>
+    <Index indexColumns="hdr_id, line_no" indexConstraint="unique" name="sa33_crn_det_hdr_id_line_no_key" status="U" uuid="db/index53"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sa33_crn_det_pkey" status="U" uuid="db/index54"/>
+  </Table>
+  <Table active="true" name="sa33_crn_hdr" status="U" uuid="db/table23">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column434"/>
+    <Column fglLength="30" fglType="201" name="doc_no" notNull="false" order="2" status="U" uuid="db/column435"/>
+    <Column fglLength="20" fglType="201" name="ref_doc_type" notNull="false" order="3" status="U" uuid="db/column436"/>
+    <Column fglLength="30" fglType="201" name="ref_doc_no" notNull="false" order="4" status="U" uuid="db/column437"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="5" status="U" uuid="db/column438"/>
+    <Column fglLength="4" fglType="7" name="credit_date" notNull="false" order="6" status="U" uuid="db/column439"/>
+    <Column fglLength="8" fglType="52" name="cust_id" notNull="false" order="7" status="U" uuid="db/column440"/>
+    <Column fglLength="100" fglType="201" name="cust_name" notNull="false" order="8" status="U" uuid="db/column441"/>
+    <Column fglLength="20" fglType="201" name="cust_phone" notNull="false" order="9" status="U" uuid="db/column442"/>
+    <Column fglLength="100" fglType="201" name="cust_email" notNull="false" order="10" status="U" uuid="db/column443"/>
+    <Column fglLength="100" fglType="201" name="cust_address1" notNull="false" order="11" status="U" uuid="db/column444"/>
+    <Column fglLength="100" fglType="201" name="cust_address2" notNull="false" order="12" status="U" uuid="db/column445"/>
+    <Column fglLength="100" fglType="201" name="cust_address3" notNull="false" order="13" status="U" uuid="db/column446"/>
+    <Column fglLength="10" fglType="201" name="cust_postal_code" notNull="false" order="14" status="U" uuid="db/column447"/>
+    <Column fglLength="20" fglType="201" name="cust_vat_no" notNull="false" order="15" status="U" uuid="db/column448"/>
+    <Column fglLength="50" fglType="201" name="cust_payment_terms" notNull="false" order="16" status="U" uuid="db/column449"/>
+    <Column fglLength="3842" fglType="5" name="gross_tot" notNull="true" order="17" status="U" uuid="db/column450"/>
+    <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="18" status="U" uuid="db/column451"/>
+    <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="19" status="U" uuid="db/column452"/>
+    <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="20" status="U" uuid="db/column453"/>
+    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="21" status="U" uuid="db/column454"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="22" status="U" uuid="db/column455"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="23" status="U" uuid="db/column456"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="24" status="U" uuid="db/column457"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="25" status="U" uuid="db/column458"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="26" status="U" uuid="db/column459"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="27" status="U" uuid="db/column460"/>
+    <Index indexColumns="cust_id" indexConstraint="index" name="idx_sa33_hdr_cust" status="U" uuid="db/index55"/>
+    <Index indexColumns="doc_no" indexConstraint="unique" name="sa33_crn_hdr_doc_no_key" status="U" uuid="db/index56"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sa33_crn_hdr_pkey" status="U" uuid="db/index57"/>
+  </Table>
+  <Table active="true" name="st01_mast" status="U" uuid="db/table24">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column461"/>
+    <Column fglLength="30" fglType="201" name="stock_code" notNull="false" order="2" status="U" uuid="db/column462"/>
+    <Column fglLength="200" fglType="201" name="description" notNull="true" order="3" status="U" uuid="db/column463"/>
+    <Column fglLength="60" fglType="201" name="barcode" notNull="false" order="4" status="U" uuid="db/column464"/>
+    <Column fglLength="1" fglType="45" name="batch_control" notNull="false" order="5" status="U" uuid="db/column465"/>
+    <Column fglLength="1" fglType="45" name="has_expiry_date" notNull="false" order="6" status="U" uuid="db/column466"/>
+    <Column fglLength="8" fglType="52" name="category_id" notNull="true" order="7" status="U" uuid="db/column467"/>
+    <Column fglLength="3844" fglType="5" name="unit_cost" notNull="true" order="8" status="U" uuid="db/column468"/>
+    <Column fglLength="3844" fglType="5" name="sell_price" notNull="true" order="9" status="U" uuid="db/column469"/>
+    <Column fglLength="3843" fglType="5" name="stock_on_hand" notNull="true" order="10" status="U" uuid="db/column470"/>
+    <Column fglLength="3843" fglType="5" name="total_purch" notNull="true" order="11" status="U" uuid="db/column471"/>
+    <Column fglLength="3843" fglType="5" name="total_sales" notNull="true" order="12" status="U" uuid="db/column472"/>
+    <Column fglLength="3843" fglType="5" name="reserved_qnty" notNull="true" order="13" status="U" uuid="db/column473"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="14" status="U" uuid="db/column474"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="15" status="U" uuid="db/column475"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="16" status="U" uuid="db/column476"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="17" status="U" uuid="db/column477"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="true" order="18" status="U" uuid="db/column478"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="19" status="U" uuid="db/column653"/>
+    <Column fglLength="1283" fglType="5" name="stock_balance" notNull="false" order="20" status="U" uuid="db/column654"/>
+    <Column fglLength="8" fglType="52" name="base_uom_id" notNull="false" order="21" status="U" uuid="db/column655"/>
+    <Column fglLength="1" fglType="45" name="is_multiple_uom" notNull="false" order="22" status="U" uuid="db/column656"/>
+    <Index indexColumns="category_id" indexConstraint="index" name="idx_st01_cat" status="U" uuid="db/index58"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="st01_mast_pkey" status="U" uuid="db/index59"/>
+    <Index indexColumns="stock_code" indexConstraint="unique" name="st01_mast_stock_code_key" status="U" uuid="db/index60"/>
+  </Table>
+  <Table active="true" name="st02_cat" status="U" uuid="db/table25">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column479"/>
+    <Column fglLength="30" fglType="201" name="cat_code" notNull="false" order="2" status="U" uuid="db/column480"/>
+    <Column fglLength="120" fglType="201" name="cat_name" notNull="true" order="3" status="U" uuid="db/column481"/>
+    <Column fglLength="200" fglType="201" name="description" notNull="false" order="4" status="U" uuid="db/column482"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="5" status="U" uuid="db/column483"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="6" status="U" uuid="db/column484"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="7" status="U" uuid="db/column485"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="8" status="U" uuid="db/column486"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="9" status="U" uuid="db/column487"/>
+    <Index indexColumns="cat_code" indexConstraint="unique" name="st02_cat_cat_code_key" status="U" uuid="db/index61"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="st02_cat_pkey" status="U" uuid="db/index62"/>
+  </Table>
+  <Table active="true" name="st03_uom_master" status="U" uuid="db/table43">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column657"/>
+    <Column fglLength="20" fglType="201" name="uom_code" notNull="true" order="2" status="U" uuid="db/column658"/>
+    <Column fglLength="50" fglType="201" name="uom_name" notNull="true" order="3" status="U" uuid="db/column659"/>
+    <Column fglLength="20" fglType="201" name="uom_type" notNull="false" order="4" status="U" uuid="db/column660"/>
+    <Column fglLength="1" fglType="45" name="is_active" notNull="false" order="5" status="U" uuid="db/column661"/>
+    <Column fglLength="4" fglType="2" name="decimal_places" notNull="false" order="6" status="U" uuid="db/column662"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="false" order="7" status="U" uuid="db/column663"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="st03_uom_master_pkey" status="U" uuid="db/index106"/>
+    <Index indexColumns="uom_code" indexConstraint="unique" name="st03_uom_master_uom_code_key" status="U" uuid="db/index107"/>
+  </Table>
+  <Table active="true" name="st04_stock_uom" status="U" uuid="db/table44">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column664"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="true" order="2" status="U" uuid="db/column665"/>
+    <Column fglLength="8" fglType="52" name="uom_id" notNull="true" order="3" status="U" uuid="db/column666"/>
+    <Column fglLength="1" fglType="45" name="is_base_uom" notNull="false" order="4" status="U" uuid="db/column667"/>
+    <Column fglLength="3846" fglType="5" name="conversion_factor" notNull="false" order="5" status="U" uuid="db/column668"/>
+    <Column fglLength="60" fglType="201" name="barcode" notNull="false" order="6" status="U" uuid="db/column669"/>
+    <Column fglLength="3844" fglType="5" name="unit_cost" notNull="false" order="7" status="U" uuid="db/column670"/>
+    <Column fglLength="3844" fglType="5" name="sell_price" notNull="false" order="8" status="U" uuid="db/column671"/>
+    <Column fglLength="1" fglType="45" name="is_active" notNull="false" order="9" status="U" uuid="db/column672"/>
+    <Column fglLength="4" fglType="2" name="display_order" notNull="false" order="10" status="U" uuid="db/column673"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="false" order="11" status="U" uuid="db/column674"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="12" status="U" uuid="db/column675"/>
+    <Index indexColumns="stock_id" indexConstraint="index" name="idx_stock_uom_stock" status="U" uuid="db/index108"/>
+    <Index indexColumns="uom_id" indexConstraint="index" name="idx_stock_uom_uom" status="U" uuid="db/index109"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="st04_stock_uom_pkey" status="U" uuid="db/index110"/>
+    <Index indexColumns="stock_id, uom_id" indexConstraint="unique" name="st04_stock_uom_stock_id_uom_id_key" status="U" uuid="db/index111"/>
+  </Table>
+  <Table active="true" name="st30_trans" status="U" uuid="db/table26">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column488"/>
+    <Column fglLength="20" fglType="201" name="stock_id" notNull="true" order="2" status="U" uuid="db/column652"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="3" status="U" uuid="db/column490"/>
+    <Column fglLength="10" fglType="201" name="doc_type" notNull="true" order="4" status="U" uuid="db/column491"/>
+    <Column fglLength="3" fglType="201" name="direction" notNull="true" order="5" status="U" uuid="db/column492"/>
+    <Column fglLength="3074" fglType="5" name="qnty" notNull="true" order="6" status="U" uuid="db/column493"/>
+    <Column fglLength="3074" fglType="5" name="unit_cost" notNull="false" order="7" status="U" uuid="db/column494"/>
+    <Column fglLength="3074" fglType="5" name="sell_price" notNull="false" order="8" status="U" uuid="db/column495"/>
+    <Column fglLength="30" fglType="201" name="batch_id" notNull="false" order="9" status="U" uuid="db/column496"/>
+    <Column fglLength="4" fglType="7" name="expiry_date" notNull="false" order="10" status="U" uuid="db/column497"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="11" status="U" uuid="db/column498"/>
+    <Index indexColumns="trans_date" indexConstraint="index" name="st30_idx_code_trans_date" status="M" uuid="db/index63"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="st30_trans_pkey" status="U" uuid="db/index64"/>
+  </Table>
+  <Table active="true" name="sy00_user" status="U" uuid="db/table27">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column499"/>
+    <Column fglLength="60" fglType="201" name="username" notNull="true" order="2" status="U" uuid="db/column500"/>
+    <Column fglLength="120" fglType="201" name="full_name" notNull="false" order="3" status="U" uuid="db/column501"/>
+    <Column fglLength="30" fglType="201" name="phone" notNull="false" order="4" status="U" uuid="db/column502"/>
+    <Column fglLength="120" fglType="201" name="email" notNull="false" order="5" status="U" uuid="db/column503"/>
+    <Column fglLength="200" fglType="201" name="password" notNull="false" order="6" status="U" uuid="db/column504"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="7" status="U" uuid="db/column505"/>
+    <Column fglLength="8" fglType="52" name="role_id" notNull="false" order="8" status="U" uuid="db/column506"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="9" status="U" uuid="db/column507"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="10" status="U" uuid="db/column508"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="11" status="U" uuid="db/column509"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy00_user_pkey" status="U" uuid="db/index65"/>
+    <Index indexColumns="username" indexConstraint="unique" name="sy00_user_username_key" status="U" uuid="db/index66"/>
+  </Table>
+  <Table active="true" name="sy01_sess" status="U" uuid="db/table28">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column510"/>
+    <Column fglLength="8" fglType="52" name="user_id" notNull="true" order="2" status="U" uuid="db/column511"/>
+    <Column fglLength="64" fglType="201" name="uuid" notNull="true" order="3" status="U" uuid="db/column512"/>
+    <Column fglLength="4622" fglType="10" name="login_time" notNull="true" order="4" status="U" uuid="db/column513"/>
+    <Column fglLength="4622" fglType="10" name="logout_time" notNull="false" order="5" status="U" uuid="db/column514"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy01_sess_pkey" status="U" uuid="db/index67"/>
+  </Table>
+  <Table active="true" name="sy02_logs" status="U" uuid="db/table29">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column515"/>
+    <Column fglLength="8" fglType="52" name="user_id" notNull="false" order="2" status="U" uuid="db/column516"/>
+    <Column fglLength="20" fglType="201" name="level" notNull="false" order="3" status="U" uuid="db/column517"/>
+    <Column fglLength="120" fglType="201" name="action" notNull="false" order="4" status="U" uuid="db/column518"/>
+    <Column fglLength="56" fglType="12" name="details" notNull="false" order="5" status="U" uuid="db/column519"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="6" status="U" uuid="db/column520"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy02_logs_pkey" status="U" uuid="db/index68"/>
+  </Table>
+  <Table active="true" name="sy03_sett" status="U" uuid="db/table30">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column521"/>
+    <Column fglLength="120" fglType="201" name="sett_key" notNull="true" order="2" status="U" uuid="db/column522"/>
+    <Column fglLength="56" fglType="12" name="sett_value" notNull="false" order="3" status="U" uuid="db/column523"/>
+    <Column fglLength="56" fglType="12" name="description" notNull="false" order="4" status="U" uuid="db/column524"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="true" order="5" status="U" uuid="db/column525"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy03_sett_pkey" status="U" uuid="db/index69"/>
+    <Index indexColumns="sett_key" indexConstraint="unique" name="sy03_sett_sett_key_key" status="U" uuid="db/index70"/>
+  </Table>
+  <Table active="true" name="sy04_role" status="U" uuid="db/table31">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column526"/>
+    <Column fglLength="60" fglType="201" name="role_name" notNull="true" order="2" status="U" uuid="db/column527"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="3" status="U" uuid="db/column528"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="4" status="U" uuid="db/column529"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="5" status="U" uuid="db/column530"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="6" status="U" uuid="db/column531"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy04_role_pkey" status="U" uuid="db/index71"/>
+    <Index indexColumns="role_name" indexConstraint="unique" name="sy04_role_role_name_key" status="U" uuid="db/index72"/>
+  </Table>
+  <Table active="true" name="sy05_perm" status="U" uuid="db/table32">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column532"/>
+    <Column fglLength="120" fglType="201" name="perm_name" notNull="true" order="2" status="U" uuid="db/column533"/>
+    <Column fglLength="200" fglType="201" name="description" notNull="false" order="3" status="U" uuid="db/column534"/>
+    <Column fglLength="60" fglType="201" name="perm_code" notNull="false" order="4" status="U" uuid="db/column535"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="5" status="U" uuid="db/column536"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="6" status="U" uuid="db/column537"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="7" status="U" uuid="db/column538"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="8" status="U" uuid="db/column539"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="9" status="U" uuid="db/column540"/>
+    <Index indexColumns="perm_name" indexConstraint="unique" name="sy05_perm_perm_name_key" status="U" uuid="db/index73"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy05_perm_pkey" status="U" uuid="db/index74"/>
+  </Table>
+  <Table active="true" name="sy06_role_perm" status="U" uuid="db/table33">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column541"/>
+    <Column fglLength="8" fglType="52" name="role_id" notNull="true" order="2" status="U" uuid="db/column542"/>
+    <Column fglLength="8" fglType="52" name="perm_id" notNull="true" order="3" status="U" uuid="db/column543"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy06_role_perm_pkey" status="U" uuid="db/index75"/>
+    <Index indexColumns="role_id, perm_id" indexConstraint="unique" name="sy06_role_perm_role_id_perm_id_key" status="U" uuid="db/index76"/>
+  </Table>
+  <Table active="true" name="sy07_doc_num" status="U" uuid="db/table34">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column544"/>
+    <Column fglLength="60" fglType="201" name="doc_name" notNull="true" order="2" status="U" uuid="db/column545"/>
+    <Column fglLength="20" fglType="201" name="prefix" notNull="false" order="3" status="U" uuid="db/column546"/>
+    <Column fglLength="8" fglType="52" name="next_no" notNull="true" order="4" status="U" uuid="db/column547"/>
+    <Column fglLength="4" fglType="2" name="step" notNull="true" order="5" status="U" uuid="db/column548"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="6" status="U" uuid="db/column549"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="7" status="U" uuid="db/column550"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="8" status="U" uuid="db/column551"/>
+    <Index indexColumns="doc_name" indexConstraint="unique" name="sy07_doc_num_doc_name_key" status="U" uuid="db/index77"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy07_doc_num_pkey" status="U" uuid="db/index78"/>
+  </Table>
+  <Table active="true" name="sy08_lkup_config" status="U" uuid="db/table35">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column552"/>
+    <Column fglLength="60" fglType="201" name="lookup_code" notNull="true" order="2" status="U" uuid="db/column553"/>
+    <Column fglLength="120" fglType="201" name="table_name" notNull="true" order="3" status="U" uuid="db/column554"/>
+    <Column fglLength="120" fglType="201" name="key_field" notNull="true" order="4" status="U" uuid="db/column555"/>
+    <Column fglLength="120" fglType="201" name="desc_field" notNull="true" order="5" status="U" uuid="db/column556"/>
+    <Column fglLength="120" fglType="201" name="display_title" notNull="false" order="6" status="U" uuid="db/column557"/>
+    <Column fglLength="400" fglType="201" name="filter_condition" notNull="false" order="7" status="U" uuid="db/column558"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="8" status="U" uuid="db/column559"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="9" status="U" uuid="db/column560"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="10" status="U" uuid="db/column561"/>
+    <Index indexColumns="lookup_code" indexConstraint="unique" name="sy08_lkup_config_lookup_code_key" status="U" uuid="db/index79"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="sy08_lkup_config_pkey" status="U" uuid="db/index80"/>
+  </Table>
+  <Table active="true" name="wb01_mast" status="U" uuid="db/table36">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column562"/>
+    <Column fglLength="30" fglType="201" name="wb_code" notNull="false" order="2" status="U" uuid="db/column563"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="true" order="3" status="U" uuid="db/column564"/>
+    <Column fglLength="120" fglType="201" name="description" notNull="false" order="4" status="U" uuid="db/column565"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="5" status="U" uuid="db/column566"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="6" status="U" uuid="db/column567"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="7" status="U" uuid="db/column568"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="8" status="U" uuid="db/column569"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="9" status="U" uuid="db/column570"/>
+    <Index indexColumns="wh_id" indexConstraint="index" name="idx_wb_wh" status="U" uuid="db/index81"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="wb01_mast_pkey" status="U" uuid="db/index82"/>
+    <Index indexColumns="wh_id, wb_code" indexConstraint="unique" name="wb01_mast_wh_id_wb_code_key" status="U" uuid="db/index83"/>
+  </Table>
+  <Table active="true" name="wb30_trf_hdr" status="U" uuid="db/table37">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column571"/>
+    <Column fglLength="30" fglType="201" name="trans_no" notNull="false" order="2" status="U" uuid="db/column572"/>
+    <Column fglLength="8" fglType="52" name="wb_from" notNull="false" order="3" status="U" uuid="db/column573"/>
+    <Column fglLength="8" fglType="52" name="wb_to" notNull="false" order="4" status="U" uuid="db/column574"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="5" status="U" uuid="db/column575"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="6" status="U" uuid="db/column576"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="7" status="U" uuid="db/column577"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="8" status="U" uuid="db/column578"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="9" status="U" uuid="db/column579"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="wb30_trf_hdr_pkey" status="U" uuid="db/index84"/>
+    <Index indexColumns="trans_no" indexConstraint="unique" name="wb30_trf_hdr_trans_no_key" status="U" uuid="db/index85"/>
+  </Table>
+  <Table active="true" name="wb31_trf_det" status="U" uuid="db/table38">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column580"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column581"/>
+    <Column fglLength="4" fglType="2" name="item_no" notNull="true" order="3" status="U" uuid="db/column582"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column583"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="5" status="U" uuid="db/column584"/>
+    <Column fglLength="40" fglType="201" name="batch_id" notNull="false" order="6" status="U" uuid="db/column585"/>
+    <Column fglLength="4" fglType="7" name="expiry_date" notNull="false" order="7" status="U" uuid="db/column586"/>
+    <Index indexColumns="hdr_id, item_no" indexConstraint="unique" name="wb31_trf_det_hdr_id_item_no_key" status="U" uuid="db/index86"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="wb31_trf_det_pkey" status="U" uuid="db/index87"/>
+  </Table>
+  <Table active="true" name="wh01_mast" status="U" uuid="db/table39">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column587"/>
+    <Column fglLength="30" fglType="201" name="wh_code" notNull="false" order="2" status="U" uuid="db/column588"/>
+    <Column fglLength="120" fglType="201" name="wh_name" notNull="true" order="3" status="U" uuid="db/column589"/>
+    <Column fglLength="120" fglType="201" name="location" notNull="false" order="4" status="U" uuid="db/column590"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="5" status="U" uuid="db/column591"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="6" status="U" uuid="db/column592"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="7" status="U" uuid="db/column593"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="8" status="U" uuid="db/column594"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="9" status="U" uuid="db/column595"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="wh01_mast_pkey" status="U" uuid="db/index88"/>
+    <Index indexColumns="wh_code" indexConstraint="unique" name="wh01_mast_wh_code_key" status="U" uuid="db/index89"/>
+  </Table>
+  <Table active="true" name="wh30_trans" status="U" uuid="db/table40">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column596"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="2" status="U" uuid="db/column597"/>
+    <Column fglLength="20" fglType="201" name="trans_type" notNull="false" order="3" status="U" uuid="db/column598"/>
+    <Column fglLength="40" fglType="201" name="ref_no" notNull="false" order="4" status="U" uuid="db/column599"/>
+    <Column fglLength="20" fglType="201" name="source_module" notNull="false" order="5" status="U" uuid="db/column600"/>
+    <Column fglLength="8" fglType="52" name="source_doc_id" notNull="false" order="6" status="U" uuid="db/column601"/>
+    <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="7" status="U" uuid="db/column602"/>
+    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="8" status="U" uuid="db/column603"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="9" status="U" uuid="db/column604"/>
+    <Column fglLength="3843" fglType="5" name="qnty_in" notNull="true" order="10" status="U" uuid="db/column605"/>
+    <Column fglLength="3843" fglType="5" name="qnty_out" notNull="true" order="11" status="U" uuid="db/column606"/>
+    <Column fglLength="3843" fglType="5" name="run_qty" notNull="false" order="12" status="U" uuid="db/column607"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="13" status="U" uuid="db/column608"/>
+    <Column fglLength="3844" fglType="5" name="unit_cost" notNull="true" order="14" status="U" uuid="db/column609"/>
+    <Column fglLength="3842" fglType="5" name="ext_cost" notNull="true" order="15" status="U" uuid="db/column610"/>
+    <Column fglLength="200" fglType="201" name="remarks" notNull="false" order="16" status="U" uuid="db/column611"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="17" status="U" uuid="db/column612"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="18" status="U" uuid="db/column613"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="19" status="U" uuid="db/column614"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="20" status="U" uuid="db/column615"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="21" status="U" uuid="db/column616"/>
+    <Index indexColumns="trans_date" indexConstraint="index" name="idx_wh30_trans_dt" status="U" uuid="db/index90"/>
+    <Index indexColumns="stock_id" indexConstraint="index" name="idx_wh30_trans_stock" status="U" uuid="db/index91"/>
+    <Index indexColumns="trans_type" indexConstraint="index" name="idx_wh30_trans_type" status="U" uuid="db/index92"/>
+    <Index indexColumns="wb_id" indexConstraint="index" name="idx_wh30_trans_wb" status="U" uuid="db/index93"/>
+    <Index indexColumns="wh_id" indexConstraint="index" name="idx_wh30_trans_wh" status="U" uuid="db/index94"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="wh30_trans_pkey" status="U" uuid="db/index95"/>
+  </Table>
+  <Table active="true" name="wh30_trf_hdr" status="U" uuid="db/table41">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column617"/>
+    <Column fglLength="30" fglType="201" name="trans_no" notNull="false" order="2" status="U" uuid="db/column618"/>
+    <Column fglLength="8" fglType="52" name="from_wh_id" notNull="true" order="3" status="U" uuid="db/column619"/>
+    <Column fglLength="8" fglType="52" name="to_wh_id" notNull="true" order="4" status="U" uuid="db/column620"/>
+    <Column fglLength="8" fglType="52" name="from_wb_id" notNull="false" order="5" status="U" uuid="db/column621"/>
+    <Column fglLength="8" fglType="52" name="to_wb_id" notNull="false" order="6" status="U" uuid="db/column622"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="7" status="U" uuid="db/column623"/>
+    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="8" status="U" uuid="db/column624"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="9" status="U" uuid="db/column625"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="10" status="U" uuid="db/column626"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="11" status="U" uuid="db/column627"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="12" status="U" uuid="db/column628"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="13" status="U" uuid="db/column629"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="14" status="U" uuid="db/column630"/>
+    <Index indexColumns="trans_date" indexConstraint="index" name="idx_wh30_trf_hdr_dt" status="U" uuid="db/index96"/>
+    <Index indexColumns="from_wh_id" indexConstraint="index" name="idx_wh30_trf_hdr_from" status="U" uuid="db/index97"/>
+    <Index indexColumns="status" indexConstraint="index" name="idx_wh30_trf_hdr_stat" status="U" uuid="db/index98"/>
+    <Index indexColumns="to_wh_id" indexConstraint="index" name="idx_wh30_trf_hdr_to" status="U" uuid="db/index99"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="wh30_trf_hdr_pkey" status="U" uuid="db/index100"/>
+    <Index indexColumns="trans_no" indexConstraint="unique" name="wh30_trf_hdr_trans_no_key" status="U" uuid="db/index101"/>
+  </Table>
+  <Table active="true" name="wh31_trf_det" status="U" uuid="db/table42">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column631"/>
+    <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column632"/>
+    <Column fglLength="4" fglType="2" name="item_no" notNull="true" order="3" status="U" uuid="db/column633"/>
+    <Column fglLength="8" fglType="52" name="stock_id" notNull="false" order="4" status="U" uuid="db/column634"/>
+    <Column fglLength="200" fglType="201" name="item_name" notNull="false" order="5" status="U" uuid="db/column635"/>
+    <Column fglLength="20" fglType="201" name="uom" notNull="false" order="6" status="U" uuid="db/column636"/>
+    <Column fglLength="8" fglType="52" name="from_wb_id" notNull="false" order="7" status="U" uuid="db/column637"/>
+    <Column fglLength="8" fglType="52" name="to_wb_id" notNull="false" order="8" status="U" uuid="db/column638"/>
+    <Column fglLength="40" fglType="201" name="batch_id" notNull="false" order="9" status="U" uuid="db/column639"/>
+    <Column fglLength="4" fglType="7" name="expiry_date" notNull="false" order="10" status="U" uuid="db/column640"/>
+    <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="11" status="U" uuid="db/column641"/>
+    <Column fglLength="3844" fglType="5" name="unit_cost" notNull="true" order="12" status="U" uuid="db/column642"/>
+    <Column fglLength="3842" fglType="5" name="ext_cost" notNull="true" order="13" status="U" uuid="db/column643"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="14" status="U" uuid="db/column644"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="15" status="U" uuid="db/column645"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="16" status="U" uuid="db/column646"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="17" status="U" uuid="db/column647"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="18" status="U" uuid="db/column648"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="19" status="U" uuid="db/column649"/>
+    <Index indexColumns="hdr_id" indexConstraint="index" name="idx_wh31_trf_det_hdr" status="U" uuid="db/index102"/>
+    <Index indexColumns="stock_id" indexConstraint="index" name="idx_wh31_trf_det_stock" status="U" uuid="db/index103"/>
+    <Index indexColumns="hdr_id, item_no" indexConstraint="unique" name="wh31_trf_det_hdr_id_item_no_key" status="U" uuid="db/index104"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="wh31_trf_det_pkey" status="U" uuid="db/index105"/>
+  </Table>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="cl01_mast_created_by_fkey" refTable="sy00_user" status="U" table="cl01_mast" uuid="db/foreignkey1"/>
+  <ForeignKey cascadeDelete="false" fkColumns="supp_id" fkRefColumns="id" name="cl30_trans_supp_id_fkey" refTable="cl01_mast" status="U" table="cl30_trans" uuid="db/foreignkey2"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="dl01_mast_created_by_fkey" refTable="sy00_user" status="U" table="dl01_mast" uuid="db/foreignkey3"/>
+  <ForeignKey cascadeDelete="false" fkColumns="cust_id" fkRefColumns="id" name="dl30_trans_cust_id_fkey" refTable="dl01_mast" status="U" table="dl30_trans" uuid="db/foreignkey4"/>
+  <ForeignKey cascadeDelete="false" fkColumns="base_uom_id" fkRefColumns="id" name="fk_st01_mast_base_uom" refTable="st03_uom_master" status="U" table="st01_mast" uuid="db/foreignkey112"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="gl01_acc_created_by_fkey" refTable="sy00_user" status="U" table="gl01_acc" uuid="db/foreignkey5"/>
+  <ForeignKey cascadeDelete="false" fkColumns="parent_id" fkRefColumns="id" name="gl01_acc_parent_id_fkey" refTable="gl01_acc" status="U" table="gl01_acc" uuid="db/foreignkey6"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="gl30_jnls_created_by_fkey" refTable="sy00_user" status="U" table="gl30_jnls" uuid="db/foreignkey7"/>
+  <ForeignKey cascadeDelete="false" fkColumns="acc_id" fkRefColumns="id" name="gl31_lines_acc_id_fkey" refTable="gl01_acc" status="U" table="gl31_lines" uuid="db/foreignkey8"/>
+  <ForeignKey cascadeDelete="true" fkColumns="jrn_id" fkRefColumns="id" name="gl31_lines_jrn_id_fkey" refTable="gl30_jnls" status="U" table="gl31_lines" uuid="db/foreignkey9"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="payt30_hdr_created_by_fkey" refTable="sy00_user" status="U" table="payt30_hdr" uuid="db/foreignkey10"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="payt31_trans_det_hdr_id_fkey" refTable="payt30_hdr" status="U" table="payt31_trans_det" uuid="db/foreignkey11"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="pu30_ord_det_created_by_fkey" refTable="sy00_user" status="U" table="pu30_ord_det" uuid="db/foreignkey12"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="pu30_ord_det_hdr_id_fkey" refTable="pu30_ord_hdr" status="U" table="pu30_ord_det" uuid="db/foreignkey13"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="pu30_ord_det_stock_id_fkey" refTable="st01_mast" status="U" table="pu30_ord_det" uuid="db/foreignkey14"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="pu30_ord_det_updated_by_fkey" refTable="sy00_user" status="U" table="pu30_ord_det" uuid="db/foreignkey15"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="pu30_ord_det_wb_id_fkey" refTable="wb01_mast" status="U" table="pu30_ord_det" uuid="db/foreignkey16"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wh_id" fkRefColumns="id" name="pu30_ord_det_wh_id_fkey" refTable="wh01_mast" status="U" table="pu30_ord_det" uuid="db/foreignkey17"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="pu30_ord_hdr_created_by_fkey" refTable="sy00_user" status="U" table="pu30_ord_hdr" uuid="db/foreignkey18"/>
+  <ForeignKey cascadeDelete="false" fkColumns="supp_id" fkRefColumns="id" name="pu30_ord_hdr_supp_id_fkey" refTable="cl01_mast" status="U" table="pu30_ord_hdr" uuid="db/foreignkey19"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="pu30_ord_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="pu30_ord_hdr" uuid="db/foreignkey20"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="pu31_grn_det_created_by_fkey" refTable="sy00_user" status="U" table="pu31_grn_det" uuid="db/foreignkey21"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="pu31_grn_det_hdr_id_fkey" refTable="pu31_grn_hdr" status="U" table="pu31_grn_det" uuid="db/foreignkey22"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="pu31_grn_det_stock_id_fkey" refTable="st01_mast" status="U" table="pu31_grn_det" uuid="db/foreignkey23"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="pu31_grn_det_updated_by_fkey" refTable="sy00_user" status="U" table="pu31_grn_det" uuid="db/foreignkey24"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="pu31_grn_det_wb_id_fkey" refTable="wb01_mast" status="U" table="pu31_grn_det" uuid="db/foreignkey25"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wh_id" fkRefColumns="id" name="pu31_grn_det_wh_id_fkey" refTable="wh01_mast" status="U" table="pu31_grn_det" uuid="db/foreignkey26"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="pu31_grn_hdr_created_by_fkey" refTable="sy00_user" status="U" table="pu31_grn_hdr" uuid="db/foreignkey27"/>
+  <ForeignKey cascadeDelete="false" fkColumns="received_by" fkRefColumns="id" name="pu31_grn_hdr_received_by_fkey" refTable="sy00_user" status="U" table="pu31_grn_hdr" uuid="db/foreignkey28"/>
+  <ForeignKey cascadeDelete="false" fkColumns="supp_id" fkRefColumns="id" name="pu31_grn_hdr_supp_id_fkey" refTable="cl01_mast" status="U" table="pu31_grn_hdr" uuid="db/foreignkey29"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="pu31_grn_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="pu31_grn_hdr" uuid="db/foreignkey30"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="pu32_inv_det_created_by_fkey" refTable="sy00_user" status="U" table="pu32_inv_det" uuid="db/foreignkey31"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="pu32_inv_det_hdr_id_fkey" refTable="pu32_inv_hdr" status="U" table="pu32_inv_det" uuid="db/foreignkey32"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="pu32_inv_det_stock_id_fkey" refTable="st01_mast" status="U" table="pu32_inv_det" uuid="db/foreignkey33"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="pu32_inv_det_updated_by_fkey" refTable="sy00_user" status="U" table="pu32_inv_det" uuid="db/foreignkey34"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="pu32_inv_det_wb_id_fkey" refTable="wb01_mast" status="U" table="pu32_inv_det" uuid="db/foreignkey35"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wh_id" fkRefColumns="id" name="pu32_inv_det_wh_id_fkey" refTable="wh01_mast" status="U" table="pu32_inv_det" uuid="db/foreignkey36"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="pu32_inv_hdr_created_by_fkey" refTable="sy00_user" status="U" table="pu32_inv_hdr" uuid="db/foreignkey37"/>
+  <ForeignKey cascadeDelete="false" fkColumns="supp_id" fkRefColumns="id" name="pu32_inv_hdr_supp_id_fkey" refTable="cl01_mast" status="U" table="pu32_inv_hdr" uuid="db/foreignkey38"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="pu32_inv_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="pu32_inv_hdr" uuid="db/foreignkey39"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sa30_quo_det_created_by_fkey" refTable="sy00_user" status="U" table="sa30_quo_det" uuid="db/foreignkey40"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="sa30_quo_det_hdr_id_fkey" refTable="sa30_quo_hdr" status="U" table="sa30_quo_det" uuid="db/foreignkey41"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="sa30_quo_det_stock_id_fkey" refTable="st01_mast" status="U" table="sa30_quo_det" uuid="db/foreignkey42"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="sa30_quo_det_updated_by_fkey" refTable="sy00_user" status="U" table="sa30_quo_det" uuid="db/foreignkey43"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="sa30_quo_det_wb_id_fkey" refTable="wb01_mast" status="U" table="sa30_quo_det" uuid="db/foreignkey44"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wh_id" fkRefColumns="id" name="sa30_quo_det_wh_id_fkey" refTable="wh01_mast" status="U" table="sa30_quo_det" uuid="db/foreignkey45"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sa30_quo_hdr_created_by_fkey" refTable="sy00_user" status="U" table="sa30_quo_hdr" uuid="db/foreignkey46"/>
+  <ForeignKey cascadeDelete="false" fkColumns="cust_id" fkRefColumns="id" name="sa30_quo_hdr_cust_id_fkey" refTable="dl01_mast" status="U" table="sa30_quo_hdr" uuid="db/foreignkey47"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="sa30_quo_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="sa30_quo_hdr" uuid="db/foreignkey48"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sa31_ord_det_created_by_fkey" refTable="sy00_user" status="U" table="sa31_ord_det" uuid="db/foreignkey49"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="sa31_ord_det_hdr_id_fkey" refTable="sa31_ord_hdr" status="U" table="sa31_ord_det" uuid="db/foreignkey50"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="sa31_ord_det_stock_id_fkey" refTable="st01_mast" status="U" table="sa31_ord_det" uuid="db/foreignkey51"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="sa31_ord_det_updated_by_fkey" refTable="sy00_user" status="U" table="sa31_ord_det" uuid="db/foreignkey52"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="sa31_ord_det_wb_id_fkey" refTable="wb01_mast" status="U" table="sa31_ord_det" uuid="db/foreignkey53"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wh_id" fkRefColumns="id" name="sa31_ord_det_wh_id_fkey" refTable="wh01_mast" status="U" table="sa31_ord_det" uuid="db/foreignkey54"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sa31_ord_hdr_created_by_fkey" refTable="sy00_user" status="U" table="sa31_ord_hdr" uuid="db/foreignkey55"/>
+  <ForeignKey cascadeDelete="false" fkColumns="cust_id" fkRefColumns="id" name="sa31_ord_hdr_cust_id_fkey" refTable="dl01_mast" status="U" table="sa31_ord_hdr" uuid="db/foreignkey56"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="sa31_ord_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="sa31_ord_hdr" uuid="db/foreignkey57"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sa32_inv_det_created_by_fkey" refTable="sy00_user" status="U" table="sa32_inv_det" uuid="db/foreignkey58"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="sa32_inv_det_hdr_id_fkey" refTable="sa32_inv_hdr" status="U" table="sa32_inv_det" uuid="db/foreignkey59"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="sa32_inv_det_stock_id_fkey" refTable="st01_mast" status="U" table="sa32_inv_det" uuid="db/foreignkey60"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="sa32_inv_det_updated_by_fkey" refTable="sy00_user" status="U" table="sa32_inv_det" uuid="db/foreignkey61"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="sa32_inv_det_wb_id_fkey" refTable="wb01_mast" status="U" table="sa32_inv_det" uuid="db/foreignkey62"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wh_id" fkRefColumns="id" name="sa32_inv_det_wh_id_fkey" refTable="wh01_mast" status="U" table="sa32_inv_det" uuid="db/foreignkey63"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sa32_inv_hdr_created_by_fkey" refTable="sy00_user" status="U" table="sa32_inv_hdr" uuid="db/foreignkey64"/>
+  <ForeignKey cascadeDelete="false" fkColumns="cust_id" fkRefColumns="id" name="sa32_inv_hdr_cust_id_fkey" refTable="dl01_mast" status="U" table="sa32_inv_hdr" uuid="db/foreignkey65"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="sa32_inv_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="sa32_inv_hdr" uuid="db/foreignkey66"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sa33_crn_det_created_by_fkey" refTable="sy00_user" status="U" table="sa33_crn_det" uuid="db/foreignkey67"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="sa33_crn_det_hdr_id_fkey" refTable="sa33_crn_hdr" status="U" table="sa33_crn_det" uuid="db/foreignkey68"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="sa33_crn_det_stock_id_fkey" refTable="st01_mast" status="U" table="sa33_crn_det" uuid="db/foreignkey69"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="sa33_crn_det_updated_by_fkey" refTable="sy00_user" status="U" table="sa33_crn_det" uuid="db/foreignkey70"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="sa33_crn_det_wb_id_fkey" refTable="wb01_mast" status="U" table="sa33_crn_det" uuid="db/foreignkey71"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wh_id" fkRefColumns="id" name="sa33_crn_det_wh_id_fkey" refTable="wh01_mast" status="U" table="sa33_crn_det" uuid="db/foreignkey72"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sa33_crn_hdr_created_by_fkey" refTable="sy00_user" status="U" table="sa33_crn_hdr" uuid="db/foreignkey73"/>
+  <ForeignKey cascadeDelete="false" fkColumns="cust_id" fkRefColumns="id" name="sa33_crn_hdr_cust_id_fkey" refTable="dl01_mast" status="U" table="sa33_crn_hdr" uuid="db/foreignkey74"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="sa33_crn_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="sa33_crn_hdr" uuid="db/foreignkey75"/>
+  <ForeignKey cascadeDelete="false" fkColumns="category_id" fkRefColumns="id" name="st01_mast_category_id_fkey" refTable="st02_cat" status="U" table="st01_mast" uuid="db/foreignkey76"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="st01_mast_created_by_fkey" refTable="sy00_user" status="U" table="st01_mast" uuid="db/foreignkey77"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="st02_cat_created_by_fkey" refTable="sy00_user" status="U" table="st02_cat" uuid="db/foreignkey78"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="st04_stock_uom_stock_id_fkey" refTable="st01_mast" status="U" table="st04_stock_uom" uuid="db/foreignkey113"/>
+  <ForeignKey cascadeDelete="false" fkColumns="uom_id" fkRefColumns="id" name="st04_stock_uom_uom_id_fkey" refTable="st03_uom_master" status="U" table="st04_stock_uom" uuid="db/foreignkey114"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="stock_code" name="st30_trans_stock_id_fkey" refTable="st01_mast" status="U" table="st30_trans" uuid="db/foreignkey111"/>
+  <ForeignKey cascadeDelete="false" fkColumns="role_id" fkRefColumns="id" name="sy00_user_role_id_fkey" refTable="sy04_role" status="U" table="sy00_user" uuid="db/foreignkey80"/>
+  <ForeignKey cascadeDelete="true" fkColumns="user_id" fkRefColumns="id" name="sy01_sess_user_id_fkey" refTable="sy00_user" status="U" table="sy01_sess" uuid="db/foreignkey81"/>
+  <ForeignKey cascadeDelete="false" fkColumns="user_id" fkRefColumns="id" name="sy02_logs_user_id_fkey" refTable="sy00_user" status="U" table="sy02_logs" uuid="db/foreignkey82"/>
+  <ForeignKey cascadeDelete="true" fkColumns="perm_id" fkRefColumns="id" name="sy06_role_perm_perm_id_fkey" refTable="sy05_perm" status="U" table="sy06_role_perm" uuid="db/foreignkey83"/>
+  <ForeignKey cascadeDelete="true" fkColumns="role_id" fkRefColumns="id" name="sy06_role_perm_role_id_fkey" refTable="sy04_role" status="U" table="sy06_role_perm" uuid="db/foreignkey84"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="sy07_doc_num_created_by_fkey" refTable="sy00_user" status="U" table="sy07_doc_num" uuid="db/foreignkey85"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wb01_mast_created_by_fkey" refTable="sy00_user" status="U" table="wb01_mast" uuid="db/foreignkey86"/>
+  <ForeignKey cascadeDelete="true" fkColumns="wh_id" fkRefColumns="id" name="wb01_mast_wh_id_fkey" refTable="wh01_mast" status="U" table="wb01_mast" uuid="db/foreignkey87"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wb30_trf_hdr_created_by_fkey" refTable="sy00_user" status="U" table="wb30_trf_hdr" uuid="db/foreignkey88"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_from" fkRefColumns="id" name="wb30_trf_hdr_wb_from_fkey" refTable="wb01_mast" status="U" table="wb30_trf_hdr" uuid="db/foreignkey89"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_to" fkRefColumns="id" name="wb30_trf_hdr_wb_to_fkey" refTable="wb01_mast" status="U" table="wb30_trf_hdr" uuid="db/foreignkey90"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="wb31_trf_det_hdr_id_fkey" refTable="wb30_trf_hdr" status="U" table="wb31_trf_det" uuid="db/foreignkey91"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="wb31_trf_det_stock_id_fkey" refTable="st01_mast" status="U" table="wb31_trf_det" uuid="db/foreignkey92"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wh01_mast_created_by_fkey" refTable="sy00_user" status="U" table="wh01_mast" uuid="db/foreignkey93"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wh30_trans_created_by_fkey" refTable="sy00_user" status="U" table="wh30_trans" uuid="db/foreignkey94"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="wh30_trans_stock_id_fkey" refTable="st01_mast" status="U" table="wh30_trans" uuid="db/foreignkey95"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="wh30_trans_updated_by_fkey" refTable="sy00_user" status="U" table="wh30_trans" uuid="db/foreignkey96"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="wh30_trans_wb_id_fkey" refTable="wb01_mast" status="U" table="wh30_trans" uuid="db/foreignkey97"/>
+  <ForeignKey cascadeDelete="false" fkColumns="wh_id" fkRefColumns="id" name="wh30_trans_wh_id_fkey" refTable="wh01_mast" status="U" table="wh30_trans" uuid="db/foreignkey98"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wh30_trf_hdr_created_by_fkey" refTable="sy00_user" status="U" table="wh30_trf_hdr" uuid="db/foreignkey99"/>
+  <ForeignKey cascadeDelete="false" fkColumns="from_wb_id" fkRefColumns="id" name="wh30_trf_hdr_from_wb_id_fkey" refTable="wb01_mast" status="U" table="wh30_trf_hdr" uuid="db/foreignkey100"/>
+  <ForeignKey cascadeDelete="false" fkColumns="from_wh_id" fkRefColumns="id" name="wh30_trf_hdr_from_wh_id_fkey" refTable="wh01_mast" status="U" table="wh30_trf_hdr" uuid="db/foreignkey101"/>
+  <ForeignKey cascadeDelete="false" fkColumns="to_wb_id" fkRefColumns="id" name="wh30_trf_hdr_to_wb_id_fkey" refTable="wb01_mast" status="U" table="wh30_trf_hdr" uuid="db/foreignkey102"/>
+  <ForeignKey cascadeDelete="false" fkColumns="to_wh_id" fkRefColumns="id" name="wh30_trf_hdr_to_wh_id_fkey" refTable="wh01_mast" status="U" table="wh30_trf_hdr" uuid="db/foreignkey103"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="wh30_trf_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="wh30_trf_hdr" uuid="db/foreignkey104"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wh31_trf_det_created_by_fkey" refTable="sy00_user" status="U" table="wh31_trf_det" uuid="db/foreignkey105"/>
+  <ForeignKey cascadeDelete="false" fkColumns="from_wb_id" fkRefColumns="id" name="wh31_trf_det_from_wb_id_fkey" refTable="wb01_mast" status="U" table="wh31_trf_det" uuid="db/foreignkey106"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="wh31_trf_det_hdr_id_fkey" refTable="wh30_trf_hdr" status="U" table="wh31_trf_det" uuid="db/foreignkey107"/>
+  <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="wh31_trf_det_stock_id_fkey" refTable="st01_mast" status="U" table="wh31_trf_det" uuid="db/foreignkey108"/>
+  <ForeignKey cascadeDelete="false" fkColumns="to_wb_id" fkRefColumns="id" name="wh31_trf_det_to_wb_id_fkey" refTable="wb01_mast" status="U" table="wh31_trf_det" uuid="db/foreignkey109"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="wh31_trf_det_updated_by_fkey" refTable="sy00_user" status="U" table="wh31_trf_det" uuid="db/foreignkey110"/>
+  <DBData>
+    <Data path="db/index63@indexColumns" type="11" value="stock_code, trans_date"/>
+  </DBData>
+</Schema>

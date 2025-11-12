@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{45c34e74-b60b-4ef6-a808-51bfb7e2614e}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Form gridHeight="25" gridWidth="80" name="form" text="Form">
+    <VBox gridHeight="18" gridWidth="78" name="vbox1" posX="1" posY="0">
+      <ScrollGrid gridHeight="16" gridWidth="78" name="scrollgrid1" posX="0" posY="1"/>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAg==]]>
+  </DiagramLayout>
+</ManagedForm>

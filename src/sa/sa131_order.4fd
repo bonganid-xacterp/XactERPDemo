@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{28ffbd93-0d46-4fb6-a8a9-e8118435e2ef}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="sa30_quo_hdr" name="rec_sa_ord_hdr" uid="{a6f0fb98-93b4-4106-adb8-95a943408f5d}">
+    <RecordField colName="cust_name" fieldIdRef="11" fieldType="NON_DATABASE" length="100" name="cust_name" sqlTabName="dl01_mast" sqlType="VARCHAR" table_alias_name="m_cust_rec" uid="{b4f829fb-5f91-41a8-bc90-18ae436b8ea6}"/>
+    <RecordField fieldIdRef="17" fieldType="NON_DATABASE" length="11" name="phone" sqlType="VARCHAR" uid="{f4fc4e74-abe6-4bd8-a530-4cfb9cd0c863}"/>
+    <RecordField fieldIdRef="18" fieldType="NON_DATABASE" length="100" name="address1" sqlType="VARCHAR" uid="{e2c2a651-e6ab-49a8-9e1c-36d50dd87b59}"/>
+    <RecordField fieldIdRef="19" fieldType="NON_DATABASE" length="100" name="email" sqlType="VARCHAR" uid="{d89a5b4a-d275-4c2c-9faf-36fccadea21b}"/>
+    <RecordField fieldIdRef="20" fieldType="NON_DATABASE" length="100" name="address2" sqlType="VARCHAR" uid="{f5c2fa65-e71d-4011-9b22-c86bb227560f}"/>
+    <RecordField fieldIdRef="21" fieldType="NON_DATABASE" length="100" name="address3" sqlType="VARCHAR" uid="{e919a1d3-4f2b-4585-967a-72e4a764417d}"/>
+    <RecordField fieldIdRef="22" fieldType="NON_DATABASE" length="10" name="postal_code" sqlType="VARCHAR" uid="{534b2736-e0c9-4281-b524-c1f6bbd57cfb}"/>
+    <RecordField colName="id" fieldIdRef="34" fieldType="TABLE_COLUMN" name="cl01_mast.id" sqlTabName="cl01_mast" uid="{b3967193-7398-420a-9520-5c337e8bad63}"/>
+    <RecordField fieldIdRef="26" name="username" uid="{ce97c699-48f6-4212-8b3b-756bebbdc712}"/>
+  </Record>
+  <Record name="m_rec_ord" uid="{7722f17e-4d04-44f8-bcf2-7349428b1480}">
+    <RecordField colName="id" fieldIdRef="35" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.id" sqlTabName="sa31_ord_hdr" uid="{fb02d692-2f41-4976-a210-92f4d5aedc0f}"/>
+    <RecordField colName="ref_doc_type" fieldIdRef="27" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.ref_doc_type" sqlTabName="sa31_ord_hdr" uid="{0fdc9d44-78bc-46ca-b561-ca461b4aae99}"/>
+    <RecordField colName="ref_doc_no" fieldIdRef="28" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.ref_doc_no" sqlTabName="sa31_ord_hdr" uid="{2eb1a12b-4518-48e2-bc91-4e0300226b80}"/>
+    <RecordField colName="cust_id" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.cust_id" sqlTabName="sa31_ord_hdr" uid="{861ade85-2fff-4be9-b8a0-0fd1aba56daa}"/>
+    <RecordField colName="trans_date" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.trans_date" sqlTabName="sa31_ord_hdr" uid="{742b8325-57c5-422f-b7b6-b578e00d74a1}"/>
+    <RecordField colName="gross_tot" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.gross_tot" sqlTabName="sa31_ord_hdr" uid="{eca3b52f-7b87-4374-a055-7d09ec510f28}"/>
+    <RecordField colName="disc_tot" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.disc_tot" sqlTabName="sa31_ord_hdr" uid="{11d23390-54e4-456e-98c4-c6c82c7c8cef}"/>
+    <RecordField colName="vat_tot" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.vat_tot" sqlTabName="sa31_ord_hdr" uid="{c17428b4-2457-44f9-9de4-1b979586cb18}"/>
+    <RecordField colName="net_tot" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.net_tot" sqlTabName="sa31_ord_hdr" uid="{11988de2-33bc-4306-bded-79b0edc3fef3}"/>
+    <RecordField colName="status" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.status" sqlTabName="sa31_ord_hdr" uid="{5d98aa52-d5bf-4d2e-a953-905fda8f8043}"/>
+    <RecordField colName="created_at" fieldIdRef="29" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.created_at" sqlTabName="sa31_ord_hdr" uid="{004b5be2-8826-42b1-8de2-0d9fa07d449e}"/>
+    <RecordField colName="updated_at" fieldIdRef="32" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.updated_at" sqlTabName="sa31_ord_hdr" uid="{f060ab26-662d-4ffd-b9ee-96362064be95}"/>
+    <RecordField colName="deleted_at" fieldIdRef="31" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.deleted_at" sqlTabName="sa31_ord_hdr" uid="{22756036-5dc4-4fad-ab59-5a9e5803bfa9}"/>
+    <RecordField colName="created_by" fieldIdRef="30" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.created_by" sqlTabName="sa31_ord_hdr" uid="{1f848288-2c39-42d7-8210-ca687f6bd3c9}"/>
+  </Record>
+  <Record masterTable="sa31_ord_det" name="arr_sa_ord_lines" uid="{1f1c6980-9d70-40c7-9c9d-70dc0d7d14a5}">
+    <RecordField colName="hdr_id" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sa31_ord_det.hdr_id" sqlTabName="sa31_ord_det" uid="{8f6e1bd7-6e95-4bb3-b79c-51fd0a961086}"/>
+    <RecordField colName="line_no" fieldIdRef="10" fieldType="TABLE_COLUMN" name="sa31_ord_det.line_no" sqlTabName="sa31_ord_det" uid="{d834da1b-2df5-42b2-a19c-6b6a66ea0900}"/>
+    <RecordField colName="stock_id" fieldIdRef="12" fieldType="TABLE_COLUMN" name="sa31_ord_det.stock_id" sqlTabName="sa31_ord_det" uid="{6744d2b8-8dc6-4e49-8b54-20d9af84d60f}"/>
+    <RecordField colName="item_name" fieldIdRef="13" fieldType="TABLE_COLUMN" name="sa31_ord_det.item_name" sqlTabName="sa31_ord_det" uid="{40226bd1-a9c4-4999-af16-d721840fa158}"/>
+    <RecordField colName="uom" fieldIdRef="14" fieldType="TABLE_COLUMN" name="sa31_ord_det.uom" sqlTabName="sa31_ord_det" uid="{a3c90692-2c87-4a2b-b798-08691aaa7ac4}"/>
+    <RecordField colName="qnty" fieldIdRef="15" fieldType="TABLE_COLUMN" name="sa31_ord_det.qnty" sqlTabName="sa31_ord_det" uid="{7e4cd002-7612-463e-bb4d-f2007180b538}"/>
+    <RecordField colName="unit_price" fieldIdRef="16" fieldType="TABLE_COLUMN" name="sa31_ord_det.unit_price" sqlTabName="sa31_ord_det" uid="{aceb6c7f-0030-48fc-91a7-348e95c9cd94}"/>
+    <RecordField colName="disc_pct" fieldIdRef="23" fieldType="TABLE_COLUMN" name="sa31_ord_det.disc_pct" sqlTabName="sa31_ord_det" uid="{276d9905-9497-4f4f-bbfb-83f7124bbd22}"/>
+    <RecordField colName="disc_amt" fieldIdRef="24" fieldType="TABLE_COLUMN" name="sa31_ord_det.disc_amt" sqlTabName="sa31_ord_det" uid="{298322e0-61a6-4419-96fb-cba3ec8c0e03}"/>
+    <RecordField colName="gross_amt" fieldIdRef="25" fieldType="TABLE_COLUMN" name="sa31_ord_det.gross_amt" sqlTabName="sa31_ord_det" uid="{9ad79870-71c7-40b3-9362-5517b40b642b}"/>
+    <RecordField colName="vat_rate" fieldIdRef="33" fieldType="TABLE_COLUMN" name="sa31_ord_det.vat_rate" sqlTabName="sa31_ord_det" uid="{7363d067-92fe-4428-ae91-4b07c07a515a}"/>
+    <RecordField colName="vat_amt" fieldIdRef="36" fieldType="TABLE_COLUMN" name="sa31_ord_det.vat_amt" sqlTabName="sa31_ord_det" uid="{cbf5d0b4-cb0d-41b8-af82-b431f033446a}"/>
+    <RecordField colName="net_amt" fieldIdRef="37" fieldType="TABLE_COLUMN" name="sa31_ord_det.net_amt" sqlTabName="sa31_ord_det" uid="{ae179d12-e369-4070-adce-9c794f4952f5}"/>
+    <RecordField colName="line_total" fieldIdRef="38" fieldType="TABLE_COLUMN" name="sa31_ord_det.line_total" sqlTabName="sa31_ord_det" uid="{bff5c490-db6b-43ef-a409-4e9970353255}"/>
+    <RecordField colName="wh_id" fieldIdRef="39" fieldType="TABLE_COLUMN" name="sa31_ord_det.wh_id" sqlTabName="sa31_ord_det" uid="{fdb4be42-8214-4575-939b-8f5b8e6b3083}"/>
+    <RecordField colName="wb_id" fieldIdRef="40" fieldType="TABLE_COLUMN" name="sa31_ord_det.wb_id" sqlTabName="sa31_ord_det" uid="{481c773f-7abb-49cb-a367-64d4c2683ba9}"/>
+    <RecordField colName="notes" fieldIdRef="41" fieldType="TABLE_COLUMN" name="sa31_ord_det.notes" sqlTabName="sa31_ord_det" uid="{e9a0aed6-45e1-4485-8958-d0c084badb75}"/>
+    <RecordField colName="status" fieldIdRef="42" fieldType="TABLE_COLUMN" name="sa31_ord_det.status" sqlTabName="sa31_ord_det" uid="{e89bb74a-f5f2-468f-a3cd-d47965bcc729}"/>
+    <RecordField colName="created_at" fieldIdRef="43" fieldType="TABLE_COLUMN" name="sa31_ord_det.created_at" sqlTabName="sa31_ord_det" uid="{b851e08c-78c7-475b-90aa-69a93b0dc292}"/>
+    <RecordField colName="created_by" fieldIdRef="44" fieldType="TABLE_COLUMN" name="sa31_ord_det.created_by" sqlTabName="sa31_ord_det" uid="{82aae438-df38-4ec0-b8f9-cace16c86afb}"/>
+    <RecordField colName="updated_at" fieldIdRef="45" fieldType="TABLE_COLUMN" name="sa31_ord_det.updated_at" sqlTabName="sa31_ord_det" uid="{120ea492-cf5e-4749-b820-7451a7b68651}"/>
+    <RecordField colName="updated_by" fieldIdRef="46" fieldType="TABLE_COLUMN" name="sa31_ord_det.updated_by" sqlTabName="sa31_ord_det" uid="{debed015-c8fc-400a-b4e4-1b420f1ae09c}"/>
+  </Record>
+  <Form gridHeight="20" gridWidth="193" name="frm_sa_ord" text="SALES ORDER">
+    <VBox gridHeight="20" gridWidth="193" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="18" gridWidth="193" name="sa130_ord_hdr" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="113" justify="center" name="lbl_form_title" posX="1" posY="0" style="bold header" text="SALES ORDER"/>
+        <Group gridHeight="9" gridWidth="53" name="cust_info" posX="1" posY="1" text="">
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
+            <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
+          </Label>
+          <Label gridHeight="1" gridWidth="8" name="sa30_quo_hdr_date_label1" posX="27" posY="1" text="Trans Date">
+            <Initializer text="dbschema:sa30_quo_hdr.date/@label"/>
+          </Label>
+          <DateEdit colName="trans_date" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sa31_ord_hdr.trans_date" posX="37" posY="1" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Date" widget="DateEdit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </DateEdit>
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_acc_code_label1" posX="1" posY="2" text="Customer Code">
+            <Initializer text="dbschema:sa30_quo_hdr.acc_code/@label"/>
+          </Label>
+          <ButtonEdit colName="cust_id" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" image="zoom" name="sa31_ord_hdr.cust_id" posX="11" posY="2" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Account Code" widget="ButtonEdit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </ButtonEdit>
+          <Label gridHeight="1" gridWidth="8" name="sa30_quo_hdr_status_label1" posX="27" posY="2" text="Status">
+            <Initializer text="dbschema:sa30_quo_hdr.status/@label"/>
+          </Label>
+          <ComboBox colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" items="" name="sa31_ord_hdr.status" posX="37" posY="2" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Status" widget="ComboBox">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </ComboBox>
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_cust_name_lbl" posX="1" posY="4" text="Customer ">
+            <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
+          </Label>
+          <Edit colName="cust_name" fieldId="11" fieldType="NON_DATABASE" gridHeight="1" gridWidth="41" length="100" name="cust_name" posX="11" posY="4" scroll="true" sqlTabName="dl01_mast" sqlType="VARCHAR" tabIndex="-1" table_alias_name="m_cust_rec" title="Doc No" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_cust_phone_lbl" posX="1" posY="5" text="Phone">
+            <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
+          </Label>
+          <Edit fieldId="17" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="11" name="phone" posX="11" posY="5" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label5" posX="27" posY="5" text="Email">
+            <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
+          </Label>
+          <Edit fieldId="19" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="100" name="email" posX="37" posY="5" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label4" posX="1" posY="6" text=" Address 1">
+            <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
+          </Label>
+          <Edit fieldId="18" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="100" name="address1" posX="11" posY="6" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label6" posX="27" posY="6" text="Address 2">
+            <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
+          </Label>
+          <Edit fieldId="20" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="100" name="address2" posX="37" posY="6" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label7" posX="1" posY="7" text="Address 3">
+            <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
+          </Label>
+          <Edit fieldId="21" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="100" name="address3" posX="11" posY="7" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label8" posX="27" posY="7" text="Postal Code">
+            <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
+          </Label>
+          <Edit fieldId="22" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="10" name="postal_code" posX="37" posY="7" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Phantom colName="id" fieldId="34" fieldType="TABLE_COLUMN" name="cl01_mast.id" sqlTabName="cl01_mast" widget="Phantom"/>
+        </Group>
+        <Group gridHeight="8" gridWidth="28" name="doc_info" posX="55" posY="2" text="Doc Info">
+          <Label gridHeight="1" gridWidth="7" name="sa30_quo_hdr_total_excl_label3" posX="1" posY="2" text="Prev Doc">
+            <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
+          </Label>
+          <Edit colName="ref_doc_type" fieldId="27" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="18" name="sa31_ord_hdr.ref_doc_type" posX="9" posY="2" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="7" name="sa30_quo_hdr_total_excl_label4" posX="1" posY="3" text="Prev Doc No">
+            <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
+          </Label>
+          <Edit colName="ref_doc_no" fieldId="28" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="18" name="sa31_ord_hdr.ref_doc_no" posX="9" posY="3" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="7" name="sa30_quo_hdr_total_excl_label5" posX="1" posY="5" text="Created At">
+            <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
+          </Label>
+          <DateEdit colName="created_at" fieldId="29" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="18" name="sa31_ord_hdr.created_at" posX="9" posY="5" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Total Excl" widget="DateEdit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </DateEdit>
+          <Label gridHeight="1" gridWidth="7" name="sa30_quo_hdr_total_excl_label6" posX="1" posY="6" text="Created By">
+            <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
+          </Label>
+          <ButtonEdit colName="created_by" fieldId="30" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" image="zoom" name="sa31_ord_hdr.created_by" posX="9" posY="6" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Total Excl" widget="ButtonEdit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </ButtonEdit>
+          <Edit fieldId="26" gridHeight="1" gridWidth="10" name="username" posX="17" posY="6" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Phantom colName="deleted_at" fieldId="31" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.deleted_at" sqlTabName="sa31_ord_hdr" widget="Phantom"/>
+          <Phantom colName="updated_at" fieldId="32" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.updated_at" sqlTabName="sa31_ord_hdr" widget="Phantom"/>
+          <Phantom colName="id" fieldId="35" fieldType="TABLE_COLUMN" name="sa31_ord_hdr.id" sqlTabName="sa31_ord_hdr" widget="Phantom"/>
+        </Group>
+        <Group gridHeight="8" gridWidth="30" name="doc_totals" posX="84" posY="2" text="Doc Totals">
+          <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_total_excl_label1" posX="1" posY="2" text="Gross Total">
+            <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
+          </Label>
+          <Edit colName="gross_tot" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_ord_hdr.gross_tot" posX="12" posY="2" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_total_excl_label2" posX="1" posY="3" text="Doc Disc">
+            <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
+          </Label>
+          <Edit colName="disc_tot" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_ord_hdr.disc_tot" posX="12" posY="3" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_vat_label1" posX="1" posY="5" text="VAT">
+            <Initializer text="dbschema:sa30_quo_hdr.vat/@label"/>
+          </Label>
+          <Edit colName="vat_tot" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_ord_hdr.vat_tot" posX="12" posY="5" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="VAT" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_total_cost_label1" posX="1" posY="6" text="Net Total">
+            <Initializer text="dbschema:sa30_quo_hdr.total_cost/@label"/>
+          </Label>
+          <Edit colName="net_tot" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sa31_ord_hdr.net_tot" posX="12" posY="6" scroll="true" sqlTabName="sa31_ord_hdr" tabIndex="-1" title="Total Cost" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+        </Group>
+        <Table gridHeight="6" gridWidth="191" name="demoappdb1" posX="1" posY="11" totalRows="5">
+          <Phantom colName="hdr_id" fieldId="8" fieldType="TABLE_COLUMN" name="sa31_ord_det.hdr_id" sqlTabName="sa31_ord_det" widget="Phantom"/>
+          <Phantom colName="line_no" fieldId="10" fieldType="TABLE_COLUMN" name="sa31_ord_det.line_no" sqlTabName="sa31_ord_det" widget="Phantom"/>
+          <Edit colName="stock_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_ord_det.stock_id" posX="0" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Stock ID" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="item_name" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sa31_ord_det.item_name" posX="10" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Item Name" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="uom" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="sa31_ord_det.uom" posX="40" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="UOM" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="qnty" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_ord_det.qnty" posX="49" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Quantity" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="unit_price" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_ord_det.unit_price" posX="59" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Price" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="disc_pct" fieldId="23" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="sa31_ord_det.disc_pct" posX="69" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Disc Perc" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="disc_amt" fieldId="24" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_ord_det.disc_amt" posX="78" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Disc Amount" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="gross_amt" fieldId="25" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="sa31_ord_det.gross_amt" posX="88" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Gross Amount" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="vat_rate" fieldId="33" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="sa31_ord_det.vat_rate" posX="97" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="VAT Rate" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="vat_amt" fieldId="36" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_ord_det.vat_amt" posX="106" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="VAT Amount" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="net_amt" fieldId="37" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa31_ord_det.net_amt" posX="116" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Net Total" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="line_total" fieldId="38" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_ord_det.line_total" posX="127" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Line Total" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="wh_id" fieldId="39" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="sa31_ord_det.wh_id" posX="137" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="WH ID" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="wb_id" fieldId="40" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="sa31_ord_det.wb_id" posX="145" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="BIN ID" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="notes" fieldId="41" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="21" name="sa31_ord_det.notes" posX="153" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="NOtes" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Phantom colName="status" fieldId="42" fieldType="TABLE_COLUMN" name="sa31_ord_det.status" sqlTabName="sa31_ord_det" widget="Phantom"/>
+          <Phantom colName="created_at" fieldId="43" fieldType="TABLE_COLUMN" name="sa31_ord_det.created_at" sqlTabName="sa31_ord_det" widget="Phantom"/>
+          <Phantom colName="created_by" fieldId="44" fieldType="TABLE_COLUMN" name="sa31_ord_det.created_by" sqlTabName="sa31_ord_det" widget="Phantom"/>
+          <Phantom colName="updated_at" fieldId="45" fieldType="TABLE_COLUMN" name="sa31_ord_det.updated_at" sqlTabName="sa31_ord_det" widget="Phantom"/>
+          <Phantom colName="updated_by" fieldId="46" fieldType="TABLE_COLUMN" name="sa31_ord_det.updated_by" sqlTabName="sa31_ord_det" widget="Phantom"/>
+        </Table>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA3ADcAMgAyAGYAMQA3AGUALQA0AGQAMAA0AC0ANAA0AGYAOAAtAGIAYwBmADIALQA3ADMANAA5ADQAMgA4AGIAMQA0ADgAMAB9QEQAAAUAAABARAAABQAAAAAAAAAAAAAAAQAAAEwAewAxAGYAMQBjADYAOQA4ADAALQA5AGQANwAwAC0ANAAwAGMANwAtADkAYwA5AGQALQA3ADAAZABjADAAZAA3AGQAMQA0AGEANQB9wGgzMzlAAABARMzM0gAAAD+sKPXCj1wvAQAAAEwAewBhADYAZgAwAGYAYgA5ADgALQA5ADMAYgA0AC0ANAAxADAANgAtAGEAZABiADgALQA5ADUAYQA5ADQAMwA0ADAAOABmADUAZAB9wHfMzQhMzRFARGZmmWZmoD+njU/fO2RfAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

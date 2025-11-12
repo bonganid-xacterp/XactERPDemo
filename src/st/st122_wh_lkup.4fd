@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{9c9cef87-978b-496c-a05a-b910a48123d7}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record active="false" masterTable="wh01_mast" name="arr_wh_list" uid="{ff796024-8ae8-4478-a567-aea89b5fbecc}">
+    <RecordField colName="wh_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wh01_mast.wh_code" sqlTabName="wh01_mast" uid="{8606ef6d-6b56-4acc-a030-52a00a1a81aa}"/>
+    <RecordField colName="wh_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wh01_mast.wh_name" sqlTabName="wh01_mast" uid="{eafb37f3-1715-4a4d-882b-4e2a019b22c2}"/>
+    <RecordField colName="status" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wh01_mast.status" sqlTabName="wh01_mast" uid="{22a7296c-841a-47d3-bda9-44ccb5b2c5ce}"/>
+    <RecordField fieldIdRef="6" name="lbl_status" uid="{7848c42e-ffc1-4a67-ada7-90d21a53d6d7}"/>
+    <RecordField colName="location" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wh01_mast.location" sqlTabName="wh01_mast" uid="{8579d346-262c-4284-b5ae-63b794b172ce}"/>
+  </Record>
+  <Record active="false" masterTable="" name="f_wh_search" uid="{837f9db1-aa85-4ef0-a680-7c0f1e07ec3e}">
+    <RecordField fieldIdRef="5" length="100" name="f_search" uid="{0f7eb6c5-5032-480f-9afa-95684d22ff8d}"/>
+  </Record>
+  <Form gridHeight="25" gridWidth="73" name="frm_wh_lkup" text="Warehouse Lookup">
+    <VBox gridHeight="18" gridWidth="72" name="vbox_main" posX="0" posY="0">
+      <Grid gridHeight="16" gridWidth="72" name="grd_whse" posX="0" posY="1">
+        <Label color="green" gridHeight="1" gridWidth="66" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text="WAREHOUSE LOOKUP"/>
+        <Table gridHeight="12" gridWidth="68" name="f_debtors_list" posX="1" posY="1" totalRows="10">
+          <Edit colName="wh_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh01_mast.wh_code" posX="0" posY="0" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Code" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="wh_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="wh01_mast.wh_name" posX="10" posY="0" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Name" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="status" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" hidden="true" name="wh01_mast.status" posX="40" posY="0" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Status" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit fieldId="6" gridHeight="1" gridWidth="8" name="lbl_status" posX="46" posY="0" tabIndex="-1" title="Status" widget="Edit"/>
+          <Edit colName="location" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh01_mast.location" posX="54" posY="0" sqlTabName="wh01_mast" tabIndex="-1" title="Location" widget="Edit"/>
+        </Table>
+        <Label gridHeight="1" gridWidth="9" name="lbl_filter" posX="1" posY="13" text="Filter"/>
+        <Edit fieldId="5" gridHeight="1" gridWidth="29" length="100" name="f_search" posX="11" posY="13" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewBmAGYANwA5ADYAMAAyADQALQA4AGEAZQA4AC0ANAA0ADcAOAAtAGEANQA2ADcALQBhAGUAYQA4ADkAYgA1AGYAYgBlAGMAYwB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewA4ADMANwBmADkAZABiADEALQBhAGEAOAA1AC0ANABlAGYAMAAtAGEANgA4ADAALQA3AGMAMABmADEAZQAwADcAZQBjADMAZQB9QGeZmaWmZmjACZmZlmZmYD9QYk3S8an8AQ==]]>
+  </DiagramLayout>
+</ManagedForm>

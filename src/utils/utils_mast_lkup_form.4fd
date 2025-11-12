@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{626ababe-42ed-4efe-b1c0-4da84944a72b}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record active="false" masterTable="dl01_mast" name="r_debtors_list" uid="{d83f5f46-cf02-4885-9f35-516b1b5971be}">
+    <RecordField fieldIdRef="1" fieldType="NON_DATABASE" name="clm_acc_code" precisionDecimal="20" scaleDecimal="0" sqlType="DECIMAL" uid="{6b86304a-fa5c-4b61-81fc-ce87489d4ef0}"/>
+    <RecordField fieldIdRef="2" fieldType="NON_DATABASE" length="100" name="clm_desc" sqlType="VARCHAR" uid="{b7b67c18-56c9-4208-9f1d-2ec48718265f}"/>
+    <RecordField fieldIdRef="3" fieldType="NON_DATABASE" length="9" name="clm_status" sqlType="VARCHAR" uid="{1d3821bf-c05f-4ac2-be87-f2724b3a660f}"/>
+  </Record>
+  <Record active="false" masterTable="" name="search" uid="{2b8d4b0f-5d88-42d4-a0aa-42dee709580c}">
+    <RecordField fieldIdRef="4" length="100" name="f_search" uid="{b8baec1e-9b83-477e-a959-007e85ac501f}"/>
+  </Record>
+  <Form gridHeight="17" gridWidth="52" name="form" text="Form">
+    <VBox gridHeight="17" gridWidth="51" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="15" gridWidth="51" name="grid1" posX="0" posY="1">
+        <Label color="green" gridHeight="1" gridWidth="50" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic"/>
+        <Table gridHeight="12" gridWidth="50" name="f_debtors_list" posX="1" posY="1" totalRows="5">
+          <Edit fieldId="1" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="clm_acc_code" posX="0" posY="0" precisionDecimal="20" scaleDecimal="0" scroll="true" sqlType="DECIMAL" tabIndex="-1" title="Acc Code" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit fieldId="2" fieldType="NON_DATABASE" gridHeight="1" gridWidth="30" length="100" name="clm_desc" posX="10" posY="0" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Name" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="6" hidden="false" invisible="false" length="9" name="clm_status" posX="40" posY="0" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Status" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+        </Table>
+        <Label gridHeight="1" gridWidth="9" name="lbl_filter" posX="1" posY="13" text="Filter"/>
+        <Edit fieldId="4" gridHeight="1" gridWidth="29" length="100" name="f_search" posX="11" posY="13" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewAyAGIAOABkADQAYgAwAGYALQA1AGQAOAA4AC0ANAAyAGQANAAtAGEAMABhAGEALQA0ADIAZABlAGUANwAwADkANQA4ADAAYwB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewBkADgAMwBmADUAZgA0ADYALQBjAGYAMAAyAC0ANAA4ADgANQAtADkAZgAzADUALQA1ADEANgBiADEAYgA1ADkANwAxAGIAZQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>
