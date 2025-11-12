@@ -86,6 +86,7 @@
       </Application>
       <Library binaryName="database" id="31764552" label="database">
         <File filePath="database/demoappdb.4db"/>
+        <File filePath="database/demoappdb_creation.4gl"/>
         <File filePath="database/seeder.sql"/>
       </Library>
       <Application binaryName="dl" dependencies="497700,56784492,104908716,31764552,782461791,221924664,95666062,33552074,276307902" id="409572948" label="dl">

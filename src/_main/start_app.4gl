@@ -10,6 +10,7 @@ IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL sy100_login
 IMPORT FGL sy104_user_pwd
+IMPORT FGL main_shell
 
 -- Module imports for direct execution
 IMPORT FGL st101_mast
@@ -85,14 +86,13 @@ END FUNCTION
 -- ==============================================================
 FUNCTION open_mdi_container()
     -- Open MDI parent window with tabbed container
-    OPEN WINDOW w_mdi WITH FORM "main_shell"
-        ATTRIBUTES(TEXT = APP_NAME || " - " || g_current_username,
-                   STYLE = "Window.w_main")
+    OPEN WINDOW w_main WITH FORM "main_shell"
+        ATTRIBUTES(TEXT = APP_NAME || " - " || g_current_username)
 
     -- Show main menu (top menu bar)
     CALL show_main_menu()
 
-    CLOSE WINDOW w_mdi
+    CLOSE WINDOW w_main
 END FUNCTION
 
 -- ==============================================================
@@ -141,48 +141,35 @@ FUNCTION show_main_menu()
 END FUNCTION
 
 -- ==============================================================
--- LAUNCH CHILD MODULE (as tabbed window in MDI container)
+-- LAUNCH CHILD MODULE (using main_shell MDI functions)
 -- ==============================================================
 FUNCTION launch_child_module(module_name STRING, title STRING)
-    DEFINE win_name STRING
+    -- Use main_shell's MDI management
+    IF main_shell.launch_child_window(module_name, title) THEN
+        -- Window opened successfully, now run the module
+        CASE module_name
+            WHEN "st101_mast"
+                CALL st101_mast.init_st_module()
 
-    -- Generate unique window name
-    LET win_name = "w_" || module_name
+            WHEN "st102_cat"
+                CALL st102_cat.init_category_module()
 
-    -- Open child window as tab (without immediate CLOSE)
-    CASE module_name
-        WHEN "st101_mast"
-            OPEN WINDOW w_st101 WITH FORM "st101_mast"
-                ATTRIBUTES(TEXT = title)
-            -- Module runs in its own window/tab
+            WHEN "wh101_mast"
+                CALL wh101_mast.init_wh_module()
 
-        WHEN "st102_cat"
-            OPEN WINDOW w_st102 WITH FORM "st102_cat"
-                ATTRIBUTES(TEXT = title)
+            WHEN "wb101_mast"
+                CALL wb101_mast.init_wb_module()
 
-        WHEN "wh101_mast"
-            OPEN WINDOW w_wh101 WITH FORM "wh101_mast"
-                ATTRIBUTES(TEXT = title)
+            WHEN "dl101_mast"
+                CALL dl101_mast.init_dl_module()
 
-        WHEN "wb101_mast"
-            OPEN WINDOW w_wb101 WITH FORM "wb101_mast"
-                ATTRIBUTES(TEXT = title)
+            WHEN "cl101_mast"
+                CALL cl101_mast.init_cl_module()
 
-        WHEN "dl101_mast"
-            OPEN WINDOW w_dl101 WITH FORM "dl101_mast"
-                ATTRIBUTES(TEXT = title)
-
-        WHEN "cl101_mast"
-            OPEN WINDOW w_cl101 WITH FORM "cl101_mast"
-                ATTRIBUTES(TEXT = title)
-
-        WHEN "sy101_user"
-            OPEN WINDOW w_sy101 WITH FORM "sy101_user"
-                ATTRIBUTES(TEXT = title)
-
-        OTHERWISE
-            CALL utils_globals.show_error("Module not implemented: " || module_name)
-    END CASE
+            WHEN "sy101_user"
+                CALL sy101_user.init_user_module()
+        END CASE
+    END IF
 END FUNCTION
 
 -- ==============================================================

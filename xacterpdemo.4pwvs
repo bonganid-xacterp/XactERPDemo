@@ -32,6 +32,13 @@
     <Document container="true" filePath="src/pu/pu_lkup_form.4gl" locator="1:1" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
+    <Document container="true" filePath="src/dl/dl101_mast.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/dl/dl101_mast.4gl" locator="140:43" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
+    <Document container="true" filePath="database/demoappdb_creation.4gl" locator="1:1" module="mod-ce3">
+      <Data name="8" value="CP1252"/>
+    </Document>
   </OpenDocuments>
-  <CurrentDocument filePath="src/pu/pu_lkup_form.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="database/demoappdb_creation.4gl" module="mod-ce3"/>
 </WorkspaceViewState>
