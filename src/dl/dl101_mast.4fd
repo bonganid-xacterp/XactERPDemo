@@ -3,20 +3,19 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="cl01_mast" name="rec_debt_mast" uid="{ef944a90-4dae-4785-af86-8632996e4242}"/>
   <Record masterTable="" name="arr_debt_trans" uid="{91b8d0f3-0e83-4ea0-853f-a9128c6816d5}">
     <RecordField colName="id" fieldIdRef="30" fieldType="TABLE_COLUMN" name="dl30_trans.id" sqlTabName="dl30_trans" uid="{703c5526-7adc-4e58-8d11-bb37908d64d7}"/>
     <RecordField colName="cust_id" fieldIdRef="27" fieldType="TABLE_COLUMN" name="dl30_trans.cust_id" sqlTabName="dl30_trans" uid="{9cd712c7-3afa-458d-9a93-682445a09887}"/>
-    <RecordField colName="doc_no" fieldIdRef="18" fieldType="TABLE_COLUMN" name="cl30_trans.doc_no" sqlTabName="cl30_trans" uid="{7dda8aa0-ab5c-46aa-8558-088bfcac37b0}"/>
+    <RecordField colName="doc_no" fieldIdRef="18" fieldType="TABLE_COLUMN" name="dl30_trans.doc_no" sqlTabName="dl30_trans" uid="{7dda8aa0-ab5c-46aa-8558-088bfcac37b0}"/>
     <RecordField colName="trans_date" fieldIdRef="17" fieldType="TABLE_COLUMN" name="dl30_trans.trans_date" sqlTabName="dl30_trans" uid="{b8d6d540-500a-4ff0-a037-c0f9c7717cf9}"/>
-    <RecordField colName="doc_type" fieldIdRef="19" fieldType="TABLE_COLUMN" name="cl30_trans.doc_type" sqlTabName="cl30_trans" uid="{170f4e2d-f909-44b0-9f71-e2aef0e1c349}"/>
-    <RecordField colName="gross_tot" fieldIdRef="20" fieldType="TABLE_COLUMN" name="cl30_trans.gross_tot" sqlTabName="cl30_trans" uid="{38e2b109-9790-4648-94ce-6944afed9e90}"/>
-    <RecordField colName="vat" fieldIdRef="22" fieldType="TABLE_COLUMN" name="cl30_trans.vat" sqlTabName="cl30_trans" uid="{3cff28c5-c156-4779-b2d0-69489d063b86}"/>
-    <RecordField colName="disc" fieldIdRef="21" fieldType="TABLE_COLUMN" name="cl30_trans.disc" sqlTabName="cl30_trans" uid="{d3261e3b-53c4-4041-8812-4ca658510c6c}"/>
-    <RecordField colName="net_tot" fieldIdRef="23" fieldType="TABLE_COLUMN" name="cl30_trans.net_tot" sqlTabName="cl30_trans" uid="{d844529a-0947-4eb2-8838-7bc1345cc65d}"/>
+    <RecordField colName="doc_type" fieldIdRef="19" fieldType="TABLE_COLUMN" name="dl30_trans.doc_type" sqlTabName="dl30_trans" uid="{170f4e2d-f909-44b0-9f71-e2aef0e1c349}"/>
+    <RecordField colName="gross_tot" fieldIdRef="20" fieldType="TABLE_COLUMN" name="dl30_trans.gross_tot" sqlTabName="dl30_trans" uid="{38e2b109-9790-4648-94ce-6944afed9e90}"/>
+    <RecordField colName="vat" fieldIdRef="22" fieldType="TABLE_COLUMN" name="dl30_trans.vat" sqlTabName="dl30_trans" uid="{3cff28c5-c156-4779-b2d0-69489d063b86}"/>
+    <RecordField colName="disc" fieldIdRef="21" fieldType="TABLE_COLUMN" name="dl30_trans.disc" sqlTabName="dl30_trans" uid="{d3261e3b-53c4-4041-8812-4ca658510c6c}"/>
+    <RecordField colName="net_tot" fieldIdRef="23" fieldType="TABLE_COLUMN" name="dl30_trans.net_tot" sqlTabName="dl30_trans" uid="{d844529a-0947-4eb2-8838-7bc1345cc65d}"/>
     <RecordField colName="notes" fieldIdRef="32" fieldType="TABLE_COLUMN" name="dl30_trans.notes" sqlTabName="dl30_trans" uid="{baf492e8-15ec-4d27-b498-d12755af2de6}"/>
   </Record>
-  <Record masterTable="dl01_mast" name="record1" uid="{2857545f-8a9c-4491-b8df-467538b0c75b}">
+  <Record masterTable="dl01_mast" name="rec_debt_mast" uid="{2857545f-8a9c-4491-b8df-467538b0c75b}">
     <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="dl01_mast.id" sqlTabName="dl01_mast" uid="{6f71a002-ea11-41e7-8df8-58f2ee6382e8}"/>
     <RecordField colName="cust_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="dl01_mast.cust_name" sqlTabName="dl01_mast" uid="{c24ed349-7ca3-4810-90a1-9ff0e3bbee56}"/>
     <RecordField colName="phone" fieldIdRef="3" fieldType="TABLE_COLUMN" name="dl01_mast.phone" sqlTabName="dl01_mast" uid="{9ce1c5c3-e3d2-4fa8-8428-f433bc8c4f39}"/>
@@ -154,20 +153,20 @@
             <Edit colName="trans_date" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.trans_date" posX="0" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </Edit>
-            <Edit colName="doc_no" fieldId="18" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="cl30_trans.doc_no" posX="10" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
+            <Edit colName="doc_no" fieldId="18" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" name="dl30_trans.doc_no" posX="10" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </Edit>
-            <Edit colName="doc_type" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.doc_type" posX="22" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
+            <Edit colName="doc_type" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="dl30_trans.doc_type" posX="22" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </Edit>
-            <Edit colName="gross_tot" fieldId="20" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="16" justify="right" name="cl30_trans.gross_tot" posX="32" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" tag="currency" title="Total Excl" widget="Edit">
+            <Edit colName="gross_tot" fieldId="20" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="16" justify="right" name="dl30_trans.gross_tot" posX="32" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" tag="currency" title="Total Excl" widget="Edit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </Edit>
-            <Edit colName="vat" fieldId="22" fieldType="TABLE_COLUMN" format="---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="18" justify="right" name="cl30_trans.vat" posX="48" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" tag="currency" title="VAT" widget="Edit">
+            <Edit colName="vat" fieldId="22" fieldType="TABLE_COLUMN" format="---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="18" justify="right" name="dl30_trans.vat" posX="48" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" tag="currency" title="VAT" widget="Edit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </Edit>
-            <Edit colName="disc" fieldId="21" fieldType="TABLE_COLUMN" format="---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="16" justify="right" name="cl30_trans.disc" posX="66" posY="0" sqlTabName="cl30_trans" tabIndex="-1" tag="currency" title="Discount" widget="Edit"/>
-            <Edit colName="net_tot" fieldId="23" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="17" justify="right" name="cl30_trans.net_tot" posX="82" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" tag="currency" title="Net Total" widget="Edit">
+            <Edit colName="disc" fieldId="21" fieldType="TABLE_COLUMN" format="---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="16" justify="right" name="dl30_trans.disc" posX="66" posY="0" sqlTabName="dl30_trans" tabIndex="-1" tag="currency" title="Discount" widget="Edit"/>
+            <Edit colName="net_tot" fieldId="23" fieldType="TABLE_COLUMN" format="---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="17" justify="right" name="dl30_trans.net_tot" posX="82" posY="0" scroll="true" sqlTabName="dl30_trans" tabIndex="-1" tag="currency" title="Net Total" widget="Edit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </Edit>
             <Edit colName="notes" fieldId="32" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="dl30_trans.notes" posX="99" posY="0" sqlTabName="dl30_trans" tabIndex="-1" title="Doc Notes" widget="Edit"/>
@@ -177,6 +176,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyADgANQA3ADUANAA1AGYALQA4AGEAOQBjAC0ANAA0ADkAMQAtAGIAOABkAGYALQA0ADYANwA1ADMAOABiADAAYwA3ADUAYgB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewBlAGYAOQA0ADQAYQA5ADAALQA0AGQAYQBlAC0ANAA3ADgANQAtAGEAZgA4ADYALQA4ADYAMwAyADkAOQA2AGUANAAyADQAMgB9QGzRERWczMVAMIiIDGZmAwAAAAAAAAAAAQAAAEwAewA5ADEAYgA4AGQAMABmADMALQAwAGUAOAAzAC0ANABlAGEAMAAtADgANQAzAGYALQBhADkAMQAyADgAYwA2ADgAMQA2AGQANQB9QC4iIn0AADlAXiIiFpmZhT+GhysCDEm8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyADgANQA3ADUANAA1AGYALQA4AGEAOQBjAC0ANAA0ADkAMQAtAGIAOABkAGYALQA0ADYANwA1ADMAOABiADAAYwA3ADUAYgB9QDAAAAgAAAFAMAAACAAAAT+MrAgxJul8AQAAAEwAewA5ADEAYgA4AGQAMABmADMALQAwAGUAOAAzAC0ANABlAGEAMAAtADgANQAzAGYALQBhADkAMQAyADgAYwA2ADgAMQA2AGQANQB9QGx7u8iIiI1AWYiIg2IiCj+Ik3S8an78AQ==]]>
   </DiagramLayout>
 </ManagedForm>

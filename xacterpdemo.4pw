@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Project defaultApplication="396525034" gstVersion="3140a" version="3.3">
+<Project defaultApplication="221858380" gstVersion="3140a" version="3.3">
   <Settings>
     <DynamicProperties version="2">
       <DynamicProperty description="Accent color (Android 5.0 and later)" initialValue="#9575CD" isDefaultInherited="false" isHidden="false" label="Accent color" name="gma-accent-color" readOnly="false" type="COLOR"/>
@@ -66,7 +66,7 @@
   <PlatformList version="1.0"/>
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
     <Group environment="dir:FGLRESOURCEPATH=$(ProjectDir)/src/res,filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile,dir:FGLDATABASE=$(ProjectDir)/database,file:Logo=$(ProjectDir)/src/res/logo.png" id="39840687" label="src">
-      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,409572948,45766396,396525034,782461791,960354642,221924664,31393700,206295008,757682379,39599040,276307902,33552074,95666062" id="221858380" label="_main">
+      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,409572948,396525034,782461791,960354642,221924664,31393700" id="221858380" label="_main">
         <File filePath="src/_main/__main_shell.4fd"/>
         <File filePath="src/_main/actions.4ad"/>
         <File filePath="src/_main/main_app.4gl"/>

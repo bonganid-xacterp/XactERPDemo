@@ -133,7 +133,7 @@ FUNCTION init_dl_module()
 
         ON ACTION add_quote ATTRIBUTES(TEXT = "Add S/Quote", IMAGE = "new")
             DISPLAY "Add Quote"
-            CALL sa130_quote.()
+            CALL sa130_quote.new_ord_from_master(rec_debt.id)
 
          ON ACTION add_order ATTRIBUTES(TEXT = "Add S/Order", IMAGE = "fa-reorder")
             DISPLAY "Add Quote"
