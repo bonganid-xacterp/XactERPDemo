@@ -235,6 +235,31 @@
       </Table>
     </Grid>
   </VBox>
+  <RecordView tabName="sa32_inv_det">
+    <Link colName="id" fieldIdRef="24"/>
+    <Link colName="hdr_id" fieldIdRef="25"/>
+    <Link colName="line_no" fieldIdRef="26"/>
+    <Link colName="stock_id" fieldIdRef="27"/>
+    <Link colName="item_name" fieldIdRef="28"/>
+    <Link colName="uom" fieldIdRef="29"/>
+    <Link colName="qnty" fieldIdRef="30"/>
+    <Link colName="unit_price" fieldIdRef="31"/>
+    <Link colName="disc_pct" fieldIdRef="32"/>
+    <Link colName="disc_amt" fieldIdRef="33"/>
+    <Link colName="gross_amt" fieldIdRef="34"/>
+    <Link colName="vat_rate" fieldIdRef="35"/>
+    <Link colName="vat_amt" fieldIdRef="36"/>
+    <Link colName="net_amt" fieldIdRef="37"/>
+    <Link colName="line_total" fieldIdRef="38"/>
+    <Link colName="wh_id" fieldIdRef="39"/>
+    <Link colName="wb_id" fieldIdRef="40"/>
+    <Link colName="notes" fieldIdRef="41"/>
+    <Link colName="status" fieldIdRef="42"/>
+    <Link colName="created_at" fieldIdRef="43"/>
+    <Link colName="created_by" fieldIdRef="44"/>
+    <Link colName="updated_at" fieldIdRef="45"/>
+    <Link colName="updated_by" fieldIdRef="46"/>
+  </RecordView>
   <RecordView tabName="sa32_inv_hdr">
     <Link colName="deleted_at" fieldIdRef="0"/>
     <Link colName="doc_no" fieldIdRef="1"/>
@@ -261,31 +286,6 @@
     <Link colName="created_at" fieldIdRef="22"/>
     <Link colName="created_by" fieldIdRef="23"/>
     <Link colName="id" fieldIdRef="47"/>
-  </RecordView>
-  <RecordView tabName="sa32_inv_det">
-    <Link colName="id" fieldIdRef="24"/>
-    <Link colName="hdr_id" fieldIdRef="25"/>
-    <Link colName="line_no" fieldIdRef="26"/>
-    <Link colName="stock_id" fieldIdRef="27"/>
-    <Link colName="item_name" fieldIdRef="28"/>
-    <Link colName="uom" fieldIdRef="29"/>
-    <Link colName="qnty" fieldIdRef="30"/>
-    <Link colName="unit_price" fieldIdRef="31"/>
-    <Link colName="disc_pct" fieldIdRef="32"/>
-    <Link colName="disc_amt" fieldIdRef="33"/>
-    <Link colName="gross_amt" fieldIdRef="34"/>
-    <Link colName="vat_rate" fieldIdRef="35"/>
-    <Link colName="vat_amt" fieldIdRef="36"/>
-    <Link colName="net_amt" fieldIdRef="37"/>
-    <Link colName="line_total" fieldIdRef="38"/>
-    <Link colName="wh_id" fieldIdRef="39"/>
-    <Link colName="wb_id" fieldIdRef="40"/>
-    <Link colName="notes" fieldIdRef="41"/>
-    <Link colName="status" fieldIdRef="42"/>
-    <Link colName="created_at" fieldIdRef="43"/>
-    <Link colName="created_by" fieldIdRef="44"/>
-    <Link colName="updated_at" fieldIdRef="45"/>
-    <Link colName="updated_by" fieldIdRef="46"/>
   </RecordView>
   <RecordView tabName="rec_sa_inv_hdr">
     <Link colName="id" fieldIdRef="47"/>

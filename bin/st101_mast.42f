@@ -6,140 +6,159 @@
       <Label name="lbl_form_title" width="84" text="STOCK MASTER" justify="center" style="bold header" posY="0" posX="1" gridWidth="84">
         <LStr text="STOCK MASTER"/>
       </Label>
-      <Group name="stock_details" text="" gridChildrenInParent="1" posY="1" posX="2" gridWidth="76" gridHeight="8">
+      <Group name="stock_details" text="" gridChildrenInParent="1" posY="1" posX="2" gridWidth="34" gridHeight="8">
+        <PhantomFormField name="st01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="8" sqlTabName="st01_mast">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
         <LStr text=""/>
-        <Label name="lbl_st01_mast_stock_code" width="10" text="Stock Code" posY="2" posX="1" gridWidth="10">
+        <Label name="lbl_st01_mast_stock_code" width="7" text="Stock Code" posY="2" posX="1" gridWidth="7">
           <LStr text="Stock Code"/>
         </Label>
-        <FormField name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="st01_mast" noEntry="1" tabIndex="10">
-          <ButtonEdit width="9" action="lookup_stock" image="zoom" scroll="1" posY="2" posX="12" gridWidth="11"/>
+        <FormField name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="st01_mast" noEntry="1" tabIndex="6">
+          <ButtonEdit width="5" action="lookup_stock" image="zoom" scroll="1" posY="2" posX="9" gridWidth="7"/>
         </FormField>
-        <Label name="lbl_st01_mast_description" width="9" text="Description" posY="2" posX="35" gridWidth="9">
-          <LStr text="Description"/>
-        </Label>
         <FormField name="st01_mast.description" colName="description" sqlType="VARCHAR(200)" required="1" notNull="1" fieldId="1" sqlTabName="st01_mast" tabIndex="1">
-          <Edit width="29" scroll="1" posY="2" posX="45" gridWidth="29"/>
+          <Edit width="16" scroll="1" posY="2" posX="17" gridWidth="16"/>
         </FormField>
-        <Label name="lbl_st01_mast_barcode" width="10" text="Barcode" posY="3" posX="1" gridWidth="10">
+        <Label name="lbl_st01_mast_barcode" width="7" text="Barcode" posY="3" posX="1" gridWidth="7">
           <LStr text="Barcode"/>
         </Label>
         <FormField name="st01_mast.barcode" colName="barcode" sqlType="VARCHAR(60)" fieldId="2" sqlTabName="st01_mast" tabIndex="2">
-          <Edit width="20" scroll="1" posY="3" posX="12" gridWidth="20"/>
+          <Edit width="7" scroll="1" posY="3" posX="9" gridWidth="7"/>
         </FormField>
-        <Label name="st01_mast_total_sales_label2" width="9" text="Created By" posY="3" posX="35" gridWidth="9">
-          <LStr text="Created By"/>
+        <Label name="st01_mast_uom_lbl" width="7" text="UOM" posY="3" posX="17" gridWidth="7">
+          <LStr text="UOM"/>
         </Label>
-        <FormField name="st01_mast.created_by" colName="created_by" sqlType="BIGINT" required="1" notNull="1" fieldId="3" sqlTabName="st01_mast" tabIndex="9">
-          <ButtonEdit width="7" action="lookup_user" image="zoom" scroll="1" posY="3" posX="45" gridWidth="9"/>
-        </FormField>
-        <FormField name="formonly.m_username" colName="m_username" fieldId="4" sqlTabName="formonly" tabIndex="11">
-          <Edit width="19" posY="3" posX="55" gridWidth="19"/>
-        </FormField>
-        <Label name="st01_mast_category_id_label1" width="10" text="Stock Category" posY="4" posX="1" gridWidth="10">
-          <LStr text="Stock Category"/>
-        </Label>
-        <FormField name="st01_mast.category_id" colName="category_id" sqlType="BIGINT" required="1" notNull="1" fieldId="5" sqlTabName="st01_mast" tabIndex="3">
-          <ButtonEdit width="4" action="lookup_category" image="zoom" program="lookup_category" picture="" posY="4" posX="12" gridWidth="6"/>
-        </FormField>
-        <FormField name="formonly.m_cat_name" colName="m_cat_name" fieldId="6" sqlTabName="formonly" noEntry="1" tabIndex="12">
-          <Edit width="12" posY="4" posX="20" gridWidth="12"/>
-        </FormField>
-        <Label name="st01_mast_cost_label1" width="9" text="Cost Price" posY="4" posX="35" gridWidth="9">
-          <LStr text="Cost Price"/>
-        </Label>
-        <FormField name="st01_mast.unit_cost" colName="unit_cost" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="7" sqlTabName="st01_mast" tabIndex="6">
-          <Edit width="9" scroll="1" posY="4" posX="45" gridWidth="9"/>
-        </FormField>
-        <Label name="st01_mast_selling_price_label1" width="9" text="Selling Price" posY="4" posX="55" gridWidth="9">
-          <LStr text="Selling Price"/>
-        </Label>
-        <FormField name="st01_mast.sell_price" colName="sell_price" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="8" sqlTabName="st01_mast" tabIndex="8">
-          <Edit width="8" scroll="1" posY="4" posX="66" gridWidth="8"/>
-        </FormField>
-        <Label name="st01_mast_status_label1" width="10" text="Status" posY="5" posX="1" gridWidth="10">
-          <LStr text="Status"/>
-        </Label>
-        <FormField name="st01_mast.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="9" sqlTabName="st01_mast" tabIndex="4">
-          <ComboBox width="9" scroll="1" posY="5" posX="12" gridWidth="11">
+        <FormField name="st01_mast.uom" colName="uom" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="st01_mast" tabIndex="7">
+          <ComboBox width="5" scroll="1" posY="3" posX="26" gridWidth="7">
             <Item name="inactive" text="Inactive"/>
             <Item name="out_of_stock" text="Out Of Stock"/>
             <Item name="active" text="Active"/>
           </ComboBox>
         </FormField>
-        <PhantomFormField name="st01_mast.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="24" sqlTabName="st01_mast">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
-        <PhantomFormField name="st01_mast.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="26" sqlTabName="st01_mast">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
-        <PhantomFormField name="st01_mast.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="25" sqlTabName="st01_mast">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
-        <Label name="st01_mast_stock_on_hand_label1" width="9" text="Stock On Hand" posY="5" posX="35" gridWidth="9">
-          <LStr text="Stock On Hand"/>
+        <Label name="st01_mast_category_id_label1" width="7" text="Category" posY="4" posX="1" gridWidth="7">
+          <LStr text="Category"/>
         </Label>
-        <FormField name="st01_mast.stock_on_hand" colName="stock_on_hand" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="10" sqlTabName="st01_mast" tabIndex="7" noEntry="1">
-          <Edit width="9" scroll="1" posY="5" posX="45" gridWidth="9"/>
+        <FormField name="st01_mast.category_id" colName="category_id" sqlType="BIGINT" required="1" notNull="1" fieldId="4" sqlTabName="st01_mast" tabIndex="3">
+          <ButtonEdit width="5" action="lookup_category" image="zoom" program="lookup_category" picture="" posY="4" posX="9" gridWidth="7"/>
         </FormField>
-        <Label name="st01_mast_reserved_qnty" width="9" text="Reserved Qnty" posY="5" posX="55" gridWidth="9">
-          <LStr text="Reserved Qnty"/>
-        </Label>
-        <FormField name="st01_mast.reserved_qnty" colName="reserved_qnty" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="11" sqlTabName="st01_mast" noEntry="1" tabIndex="13">
-          <Edit width="8" scroll="1" posY="5" posX="66" gridWidth="8"/>
+        <FormField name="formonly.m_cat_name" colName="m_cat_name" fieldId="5" sqlTabName="formonly" noEntry="1" tabIndex="8">
+          <Edit width="16" posY="4" posX="17" gridWidth="16"/>
         </FormField>
-        <Label name="lbl_st01_mast_batch_control" width="10" text="Batch Control" posY="6" posX="1" gridWidth="10">
-          <LStr text="Batch Control"/>
+        <Label name="st01_mast_status_label1" width="7" text="Status" posY="5" posX="1" gridWidth="7">
+          <LStr text="Status"/>
         </Label>
-        <FormField name="st01_mast.batch_control" colName="batch_control" sqlType="BOOLEAN" fieldId="12" sqlTabName="st01_mast" tabIndex="5" defaultValue="0">
-          <CheckBox width="8" text="" posY="6" posX="12" gridWidth="8">
-            <LStr text=""/>
+        <FormField name="st01_mast.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="6" sqlTabName="st01_mast" tabIndex="4">
+          <ComboBox width="5" scroll="1" posY="5" posX="9" gridWidth="7">
+            <Item name="inactive" text="Inactive"/>
+            <Item name="out_of_stock" text="Out Of Stock"/>
+            <Item name="active" text="Active"/>
+          </ComboBox>
+        </FormField>
+        <PhantomFormField name="st01_mast.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="27" sqlTabName="st01_mast">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <PhantomFormField name="st01_mast.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="29" sqlTabName="st01_mast">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <PhantomFormField name="st01_mast.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="28" sqlTabName="st01_mast">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <FormField name="st01_mast.batch_control" colName="batch_control" sqlType="BOOLEAN" fieldId="7" sqlTabName="st01_mast" tabIndex="5" defaultValue="0">
+          <CheckBox width="11" text="Is Batch Controled" posY="5" posX="22" gridWidth="11">
+            <LStr text="Is Batch Controled"/>
           </CheckBox>
         </FormField>
-        <PhantomFormField name="st01_mast.has_expiry_date" colName="has_expiry_date" sqlType="BOOLEAN" fieldId="23" sqlTabName="st01_mast">
+        <PhantomFormField name="st01_mast.has_expiry_date" colName="has_expiry_date" sqlType="BOOLEAN" fieldId="26" sqlTabName="st01_mast">
           <PhantomEdit width="1"/>
         </PhantomFormField>
-        <Label name="st01_mast_total_sales_label1" width="9" text="Total Sales" posY="6" posX="35" gridWidth="9">
-          <LStr text="Total Sales"/>
+      </Group>
+      <Group name="group1" text="" posY="1" posX="37" gridWidth="21" gridHeight="8">
+        <LStr text=""/>
+        <Label name="st01_mast_total_sales_label2" width="9" text="Created By" posY="2" posX="1" gridWidth="9">
+          <LStr text="Created By"/>
         </Label>
-        <FormField name="st01_mast.total_sales" colName="total_sales" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="13" sqlTabName="st01_mast" noEntry="1" tabIndex="14">
-          <Edit width="9" scroll="1" posY="6" posX="45" gridWidth="9"/>
+        <FormField name="st01_mast.created_by" colName="created_by" sqlType="BIGINT" required="1" notNull="1" fieldId="9" sqlTabName="st01_mast" tabIndex="9">
+          <ButtonEdit width="7" action="lookup_user" image="zoom" scroll="1" posY="2" posX="11" gridWidth="9"/>
         </FormField>
-        <Label name="st01_mast_total_purch_label1" width="9" text="Total Purchases" posY="6" posX="55" gridWidth="9">
+        <Label name="st01_mast_cost_label1" width="9" text="Cost Price" posY="3" posX="1" gridWidth="9">
+          <LStr text="Cost Price"/>
+        </Label>
+        <FormField name="st01_mast.unit_cost" colName="unit_cost" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="10" sqlTabName="st01_mast" tabIndex="10">
+          <Edit width="9" scroll="1" posY="3" posX="11" gridWidth="9"/>
+        </FormField>
+        <Label name="st01_mast_stock_on_hand_label1" width="9" text="Stock On Hand" posY="4" posX="1" gridWidth="9">
+          <LStr text="Stock On Hand"/>
+        </Label>
+        <FormField name="st01_mast.stock_on_hand" colName="stock_on_hand" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="11" sqlTabName="st01_mast" noEntry="1" tabIndex="11">
+          <Edit width="9" scroll="1" posY="4" posX="11" gridWidth="9"/>
+        </FormField>
+        <Label name="st01_mast_stock_balance_lbl" width="9" text="Stock Balance" posY="5" posX="1" gridWidth="9">
+          <LStr text="Stock Balance"/>
+        </Label>
+        <FormField name="st01_mast.stock_balance" colName="stock_balance" sqlType="DECIMAL(5,3)" fieldId="12" sqlTabName="st01_mast" noEntry="1" tabIndex="12">
+          <Edit width="9" scroll="1" posY="5" posX="11" gridWidth="9"/>
+        </FormField>
+      </Group>
+      <Group name="group2" text="" posY="1" posX="59" gridWidth="21" gridHeight="8">
+        <LStr text=""/>
+        <FormField name="formonly.m_username" colName="m_username" fieldId="13" sqlTabName="formonly" tabIndex="13">
+          <Edit width="19" posY="2" posX="1" gridWidth="19"/>
+        </FormField>
+        <Label name="st01_mast_selling_price_label1" width="9" text="Selling Price" posY="3" posX="1" gridWidth="9">
+          <LStr text="Selling Price"/>
+        </Label>
+        <FormField name="st01_mast.sell_price" colName="sell_price" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="14" sqlTabName="st01_mast" tabIndex="14">
+          <Edit width="9" scroll="1" posY="3" posX="11" gridWidth="9"/>
+        </FormField>
+        <Label name="st01_mast_reserved_qnty" width="9" text="Reserved Qnty" posY="4" posX="1" gridWidth="9">
+          <LStr text="Reserved Qnty"/>
+        </Label>
+        <FormField name="st01_mast.reserved_qnty" colName="reserved_qnty" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="15" sqlTabName="st01_mast" noEntry="1" tabIndex="15">
+          <Edit width="9" scroll="1" posY="4" posX="11" gridWidth="9"/>
+        </FormField>
+        <Label name="st01_mast_total_purch_label1" width="9" text="Total Purchases" posY="5" posX="1" gridWidth="9">
           <LStr text="Total Purchases"/>
         </Label>
-        <FormField name="st01_mast.total_purch" colName="total_purch" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="14" sqlTabName="st01_mast" noEntry="1" tabIndex="15">
-          <Edit width="8" scroll="1" posY="6" posX="66" gridWidth="8"/>
+        <FormField name="st01_mast.total_purch" colName="total_purch" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="16" sqlTabName="st01_mast" noEntry="1" tabIndex="16">
+          <Edit width="9" scroll="1" posY="5" posX="11" gridWidth="9"/>
+        </FormField>
+        <Label name="st01_mast_total_sales_label1" width="9" text="Total Sales" posY="6" posX="1" gridWidth="9">
+          <LStr text="Total Sales"/>
+        </Label>
+        <FormField name="st01_mast.total_sales" colName="total_sales" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="17" sqlTabName="st01_mast" noEntry="1" tabIndex="17">
+          <Edit width="9" scroll="1" posY="6" posX="11" gridWidth="9"/>
         </FormField>
       </Group>
       <Table pageSize="5" name="st30_trans" width="77" posY="10" posX="1" gridWidth="77" gridHeight="6" tabName="tbl_st_trans">
-        <PhantomColumn name="st30_trans.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="19" sqlTabName="st30_trans">
+        <PhantomColumn name="st30_trans.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="22" sqlTabName="st30_trans">
           <PhantomEdit width="1"/>
         </PhantomColumn>
-        <TableColumn name="st30_trans.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="15" sqlTabName="st30_trans" text="Date" tabIndex="16">
+        <TableColumn name="st30_trans.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="18" sqlTabName="st30_trans" text="Date" tabIndex="18">
           <Edit width="10" scroll="1"/>
           <LStr text="Date"/>
         </TableColumn>
-        <TableColumn name="st30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="16" sqlTabName="st30_trans" text="Doc Type" tabIndex="17">
+        <TableColumn name="st30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="19" sqlTabName="st30_trans" text="Doc Type" tabIndex="19">
           <Edit width="10" scroll="1"/>
           <LStr text="Doc Type"/>
         </TableColumn>
-        <TableColumn name="st30_trans.direction" colName="direction" sqlType="VARCHAR(3)" required="1" notNull="1" fieldId="17" sqlTabName="st30_trans" text="Direction" tabIndex="18">
+        <TableColumn name="st30_trans.direction" colName="direction" sqlType="VARCHAR(3)" required="1" notNull="1" fieldId="20" sqlTabName="st30_trans" text="Direction" tabIndex="20">
           <Edit width="7" scroll="1"/>
           <LStr text="Direction"/>
         </TableColumn>
-        <TableColumn name="st30_trans.qnty" colName="qnty" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="18" sqlTabName="st30_trans" text="Quantity" tabIndex="19" numAlign="1">
+        <TableColumn name="st30_trans.qnty" colName="qnty" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="21" sqlTabName="st30_trans" text="Quantity" tabIndex="21" numAlign="1">
           <Edit width="10" scroll="1"/>
           <LStr text="Quantity"/>
         </TableColumn>
-        <TableColumn name="st30_trans.unit_cost" colName="unit_cost" sqlType="DECIMAL(12,2)" fieldId="20" sqlTabName="st30_trans" text="Unit Cost" tabIndex="20" numAlign="1">
+        <TableColumn name="st30_trans.unit_cost" colName="unit_cost" sqlType="DECIMAL(12,2)" fieldId="23" sqlTabName="st30_trans" text="Unit Cost" tabIndex="22" numAlign="1">
           <Edit width="10" scroll="1"/>
           <LStr text="Unit Cost"/>
         </TableColumn>
-        <TableColumn name="st30_trans.sell_price" colName="sell_price" sqlType="DECIMAL(12,2)" fieldId="21" sqlTabName="st30_trans" text="Sell Price" tabIndex="21" numAlign="1">
+        <TableColumn name="st30_trans.sell_price" colName="sell_price" sqlType="DECIMAL(12,2)" fieldId="24" sqlTabName="st30_trans" text="Sell Price" tabIndex="23" numAlign="1">
           <Edit width="8"/>
           <LStr text="Sell Price"/>
         </TableColumn>
-        <TableColumn name="st30_trans.expiry_date" colName="expiry_date" sqlType="DATE" fieldId="22" sqlTabName="st30_trans" text="Expiry Date" tabIndex="22">
+        <TableColumn name="st30_trans.expiry_date" colName="expiry_date" sqlType="DATE" fieldId="25" sqlTabName="st30_trans" text="Expiry Date" tabIndex="24">
           <DateEdit width="8"/>
           <LStr text="Expiry Date"/>
         </TableColumn>
@@ -150,54 +169,60 @@
     <Link colName="stock_code" fieldIdRef="0"/>
     <Link colName="description" fieldIdRef="1"/>
     <Link colName="barcode" fieldIdRef="2"/>
-    <Link colName="created_by" fieldIdRef="3"/>
-    <Link colName="category_id" fieldIdRef="5"/>
-    <Link colName="unit_cost" fieldIdRef="7"/>
-    <Link colName="sell_price" fieldIdRef="8"/>
-    <Link colName="status" fieldIdRef="9"/>
-    <Link colName="stock_on_hand" fieldIdRef="10"/>
-    <Link colName="reserved_qnty" fieldIdRef="11"/>
-    <Link colName="batch_control" fieldIdRef="12"/>
-    <Link colName="total_sales" fieldIdRef="13"/>
-    <Link colName="total_purch" fieldIdRef="14"/>
-    <Link colName="has_expiry_date" fieldIdRef="23"/>
-    <Link colName="created_at" fieldIdRef="24"/>
-    <Link colName="deleted_at" fieldIdRef="25"/>
-    <Link colName="updated_at" fieldIdRef="26"/>
+    <Link colName="uom" fieldIdRef="3"/>
+    <Link colName="category_id" fieldIdRef="4"/>
+    <Link colName="status" fieldIdRef="6"/>
+    <Link colName="batch_control" fieldIdRef="7"/>
+    <Link colName="id" fieldIdRef="8"/>
+    <Link colName="created_by" fieldIdRef="9"/>
+    <Link colName="unit_cost" fieldIdRef="10"/>
+    <Link colName="stock_on_hand" fieldIdRef="11"/>
+    <Link colName="stock_balance" fieldIdRef="12"/>
+    <Link colName="sell_price" fieldIdRef="14"/>
+    <Link colName="reserved_qnty" fieldIdRef="15"/>
+    <Link colName="total_purch" fieldIdRef="16"/>
+    <Link colName="total_sales" fieldIdRef="17"/>
+    <Link colName="has_expiry_date" fieldIdRef="26"/>
+    <Link colName="created_at" fieldIdRef="27"/>
+    <Link colName="deleted_at" fieldIdRef="28"/>
+    <Link colName="updated_at" fieldIdRef="29"/>
   </RecordView>
   <RecordView tabName="st30_trans">
-    <Link colName="trans_date" fieldIdRef="15"/>
-    <Link colName="doc_type" fieldIdRef="16"/>
-    <Link colName="direction" fieldIdRef="17"/>
-    <Link colName="qnty" fieldIdRef="18"/>
-    <Link colName="id" fieldIdRef="19"/>
-    <Link colName="unit_cost" fieldIdRef="20"/>
-    <Link colName="sell_price" fieldIdRef="21"/>
-    <Link colName="expiry_date" fieldIdRef="22"/>
+    <Link colName="trans_date" fieldIdRef="18"/>
+    <Link colName="doc_type" fieldIdRef="19"/>
+    <Link colName="direction" fieldIdRef="20"/>
+    <Link colName="qnty" fieldIdRef="21"/>
+    <Link colName="id" fieldIdRef="22"/>
+    <Link colName="unit_cost" fieldIdRef="23"/>
+    <Link colName="sell_price" fieldIdRef="24"/>
+    <Link colName="expiry_date" fieldIdRef="25"/>
   </RecordView>
   <RecordView tabName="formonly">
-    <Link colName="m_username" fieldIdRef="4"/>
-    <Link colName="m_cat_name" fieldIdRef="6"/>
+    <Link colName="m_cat_name" fieldIdRef="5"/>
+    <Link colName="m_username" fieldIdRef="13"/>
   </RecordView>
   <RecordView tabName="rec_st_mast">
+    <Link colName="id" fieldIdRef="8"/>
     <Link colName="stock_code" fieldIdRef="0"/>
     <Link colName="description" fieldIdRef="1"/>
     <Link colName="barcode" fieldIdRef="2"/>
-    <Link colName="batch_control" fieldIdRef="12"/>
-    <Link colName="has_expiry_date" fieldIdRef="23"/>
-    <Link colName="category_id" fieldIdRef="5"/>
-    <Link colName="unit_cost" fieldIdRef="7"/>
-    <Link colName="sell_price" fieldIdRef="8"/>
-    <Link colName="stock_on_hand" fieldIdRef="10"/>
-    <Link colName="total_purch" fieldIdRef="14"/>
-    <Link colName="total_sales" fieldIdRef="13"/>
-    <Link colName="reserved_qnty" fieldIdRef="11"/>
-    <Link colName="status" fieldIdRef="9"/>
-    <Link colName="created_at" fieldIdRef="24"/>
-    <Link colName="updated_at" fieldIdRef="26"/>
-    <Link colName="deleted_at" fieldIdRef="25"/>
-    <Link colName="created_by" fieldIdRef="3"/>
-    <Link colName="m_cat_name" fieldIdRef="6"/>
-    <Link colName="m_username" fieldIdRef="4"/>
+    <Link colName="batch_control" fieldIdRef="7"/>
+    <Link colName="has_expiry_date" fieldIdRef="26"/>
+    <Link colName="category_id" fieldIdRef="4"/>
+    <Link colName="unit_cost" fieldIdRef="10"/>
+    <Link colName="sell_price" fieldIdRef="14"/>
+    <Link colName="stock_on_hand" fieldIdRef="11"/>
+    <Link colName="total_purch" fieldIdRef="16"/>
+    <Link colName="total_sales" fieldIdRef="17"/>
+    <Link colName="reserved_qnty" fieldIdRef="15"/>
+    <Link colName="status" fieldIdRef="6"/>
+    <Link colName="created_at" fieldIdRef="27"/>
+    <Link colName="updated_at" fieldIdRef="29"/>
+    <Link colName="deleted_at" fieldIdRef="28"/>
+    <Link colName="created_by" fieldIdRef="9"/>
+    <Link colName="uom" fieldIdRef="3"/>
+    <Link colName="stock_balance" fieldIdRef="12"/>
+    <Link colName="m_username" fieldIdRef="13"/>
+    <Link colName="m_cat_name" fieldIdRef="5"/>
   </RecordView>
 </Form>

@@ -48,7 +48,7 @@
           <Label gridHeight="1" gridWidth="6" name="sy00_user_status_lbl" posX="1" posY="3" text="Status">
             <Initializer text="dbschema:sy00_user.status/@label"/>
           </Label>
-          <ComboBox colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" items="Active, Inactive" name="sy00_user.status" posX="8" posY="3" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Status" widget="ComboBox">
+          <ComboBox colName="status" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" items="Active, Inactive" name="sy00_user.status" posX="8" posY="3" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Status" widget="ComboBox">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             <Item lstrtext="false" name="active" text="Active"/>
             <Item lstrtext="false" name="inactive" text="Inactive"/>
@@ -56,7 +56,7 @@
           <Label gridHeight="1" gridWidth="6" name="sy00_user_role_id_lbl" posX="25" posY="3" text="Role ID">
             <Initializer text="dbschema:sy00_user.role_id/@label"/>
           </Label>
-          <ComboBox colName="role_id" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" items="" name="sy00_user.role_id" posX="32" posY="3" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Role ID" widget="ComboBox">
+          <ComboBox colName="role_id" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="12" items="" name="sy00_user.role_id" posX="32" posY="3" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Role ID" widget="ComboBox">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </ComboBox>
         </Group>
@@ -67,7 +67,6 @@
           <Edit colName="password" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" invisible="true" name="sy00_user.password" posX="8" posY="1" scroll="true" sqlTabName="sy00_user" tabIndex="-1" title="Password" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Button gridHeight="1" gridWidth="11" image="fa-shield" name="btn_change_password" posX="8" posY="3" tabIndex="-1" text="Change Password"/>
         </Group>
         <Phantom colName="id" fieldId="1" fieldType="TABLE_COLUMN" name="sy00_user.id" sqlTabName="sy00_user" widget="Phantom"/>
         <Phantom colName="created_at" fieldId="9" fieldType="TABLE_COLUMN" name="sy00_user.created_at" sqlTabName="sy00_user" widget="Phantom"/>
@@ -77,6 +76,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAzADMAYQA2ADAAOQA0AGMALQA2AGMAMwBmAC0ANABkADEAMgAtAGEAOQA2ADYALQAwAGIAOABhADcAZQA1ADQANgBiAGQANwB9QEpmZoDMzNfAKAAAGAAACT+CbpeNT988AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAzADMAYQA2ADAAOQA0AGMALQA2AGMAMwBmAC0ANABkADEAMgAtAGEAOQA2ADYALQAwAGIAOABhADcAZQA1ADQANgBiAGQANwB9QEpmZodmZnfAKAAAHgAADz+CbpeNT988AQ==]]>
   </DiagramLayout>
 </ManagedForm>

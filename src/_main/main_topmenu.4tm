@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TopMenu>
+  <!-- File Menu -->
+  <TopMenuGroup text="File">
+    <TopMenuCommand name="help" text="Help" image="quest"/>
+    <TopMenuCommand name="about" text="About" image="info"/>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="logout" text="Logout" image="logout"/>
+    <TopMenuCommand name="quit" text="Exit" acceleratorName="Alt-F4" image="stop"/>
+  </TopMenuGroup>
+
+  <!-- Inventory Management -->
+  <TopMenuGroup text="Inventory">
+    <TopMenuGroup text="Masters">
+      <TopMenuCommand name="st_mast" text="Stock Items" image="list"/>
+      <TopMenuCommand name="st_uom" text="Units of Measure" image="tag"/>
+      <TopMenuCommand name="st_cat" text="Stock Categories" image="folder"/>
+    </TopMenuGroup>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="st_enq" text="Stock Enquiry" image="find"/>
+    <TopMenuCommand name="st_trans" text="Stock Transactions" image="form"/>
+    <TopMenuCommand name="st_hist" text="Stock History" image="clock"/>
+  </TopMenuGroup>
+
+  <!-- Warehouse Management -->
+  <TopMenuGroup text="Warehouse">
+    <TopMenuCommand name="wh_mast" text="Warehouses" image="warehouse"/>
+    <TopMenuCommand name="wb_mast" text="Warehouse Bins" image="grid"/>
+  </TopMenuGroup>
+
+  <!-- Purchasing -->
+  <TopMenuGroup text="Purchasing">
+    <TopMenuCommand name="cl_mast" text="Suppliers" image="contact"/>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="pu_order" text="Purchase Orders" image="form"/>
+    <TopMenuCommand name="pu_grn" text="Goods Received Notes" image="inbox"/>
+    <TopMenuCommand name="pu_inv" text="Purchase Invoices" image="invoice"/>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="pu_hist" text="Purchase History" image="clock"/>
+  </TopMenuGroup>
+
+  <!-- Sales -->
+  <TopMenuGroup text="Sales">
+    <TopMenuCommand name="dl_mast" text="Customers" image="contact"/>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="sa_quote" text="Sales Quotations" image="document"/>
+    <TopMenuCommand name="sa_order" text="Sales Orders" image="form"/>
+    <TopMenuCommand name="sa_invoice" text="Sales Invoices" image="invoice"/>
+    <TopMenuCommand name="sa_crn" text="Credit Notes" image="credit"/>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="sa_hist" text="Sales History" image="clock"/>
+  </TopMenuGroup>
+
+  <!-- System Administration -->
+  <TopMenuGroup text="System">
+    <TopMenuGroup text="User Management">
+      <TopMenuCommand name="sy_user" text="Users" image="user"/>
+      <TopMenuCommand name="sy_role" text="User Roles" image="users"/>
+      <TopMenuCommand name="sy_perm" text="Permissions" image="lock"/>
+    </TopMenuGroup>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="sy_pwd" text="Change Password" image="key"/>
+    <TopMenuCommand name="sy_logs" text="System Logs" image="log"/>
+  </TopMenuGroup>
+
+  <!-- Window Management -->
+  <TopMenuGroup text="Window">
+    <TopMenuCommand name="win_close" text="Close Current" image="close"/>
+    <TopMenuCommand name="win_close_all" text="Close All" image="closeall"/>
+    <TopMenuSeparator/>
+    <TopMenuCommand name="win_list" text="Window List" image="list"/>
+  </TopMenuGroup>
+</TopMenu>

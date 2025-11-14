@@ -35,7 +35,7 @@ DEFINE curr_idx SMALLINT
 -- ==============================================================
 -- Controller: minimal dialog with CRUD + navigate
 -- ==============================================================
-FUNCTION po_controller()
+FUNCTION init_po_module()
     LET is_edit = FALSE
     INITIALIZE m_hdr.* TO NULL
 

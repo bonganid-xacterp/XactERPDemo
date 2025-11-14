@@ -31,7 +31,7 @@
           <Edit width="14" scroll="1"/>
           <LStr text="VAT"/>
         </TableColumn>
-        <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="6" sqlTabName="dl30_trans" text="Notes" tabIndex="7">
+        <TableColumn name="dl30_trans.notes" colName="notes" sqlType="VARCHAR(200)" fieldId="6" sqlTabName="dl30_trans" text="Notes" tabIndex="7">
           <Edit width="30" scroll="1"/>
           <LStr text="Notes"/>
         </TableColumn>

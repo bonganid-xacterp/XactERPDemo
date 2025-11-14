@@ -14,6 +14,7 @@ IMPORT FGL st122_cat_lkup
 IMPORT FGL utils_status_const
 IMPORT FGL st121_st_lkup
 
+
 SCHEMA demoappdb
 
 -- ==============================================================
@@ -68,6 +69,9 @@ FUNCTION init_st_module()
     DEFINE ok SMALLINT
     LET is_edit_mode = FALSE
     LET ok = select_stock_items("1=1")
+
+    -- Load UOMS
+    -- CALL load_uoms()
 
     MENU "Stock Master Menu"
 
@@ -236,11 +240,12 @@ FUNCTION edit_stock()
     CALL frm.setFieldHidden("id", TRUE) -- id is read-only during edit
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_stock.*
-            ON ACTION save
+        INPUT BY NAME rec_stock.* ATTRIBUTES(WITHOUT DEFAULTS)
+        
+            ON ACTION save ATTRIBUTES(TEXT="Update")
                 CALL save_stock()
                 EXIT DIALOG
-            ON ACTION cancel
+            ON ACTION cancel ATTRIBUTES(TEXT="Exit")
                 CALL load_stock_item(rec_stock.id)
                 EXIT DIALOG
             ON ACTION lookup_category

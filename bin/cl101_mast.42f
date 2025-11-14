@@ -153,18 +153,6 @@
       </Page>
     </Folder>
   </VBox>
-  <RecordView tabName="cl30_trans">
-    <Link colName="id" fieldIdRef="16"/>
-    <Link colName="supp_id" fieldIdRef="17"/>
-    <Link colName="trans_date" fieldIdRef="18"/>
-    <Link colName="doc_no" fieldIdRef="19"/>
-    <Link colName="doc_type" fieldIdRef="20"/>
-    <Link colName="gross_tot" fieldIdRef="21"/>
-    <Link colName="disc_tot" fieldIdRef="22"/>
-    <Link colName="vat_tot" fieldIdRef="23"/>
-    <Link colName="net_tot" fieldIdRef="24"/>
-    <Link colName="notes" fieldIdRef="25"/>
-  </RecordView>
   <RecordView tabName="cl01_mast">
     <Link colName="supp_name" fieldIdRef="0"/>
     <Link colName="status" fieldIdRef="1"/>
@@ -182,6 +170,18 @@
     <Link colName="created_by" fieldIdRef="13"/>
     <Link colName="deleted_at" fieldIdRef="14"/>
     <Link colName="updated_at" fieldIdRef="15"/>
+  </RecordView>
+  <RecordView tabName="cl30_trans">
+    <Link colName="id" fieldIdRef="16"/>
+    <Link colName="supp_id" fieldIdRef="17"/>
+    <Link colName="trans_date" fieldIdRef="18"/>
+    <Link colName="doc_no" fieldIdRef="19"/>
+    <Link colName="doc_type" fieldIdRef="20"/>
+    <Link colName="gross_tot" fieldIdRef="21"/>
+    <Link colName="disc_tot" fieldIdRef="22"/>
+    <Link colName="vat_tot" fieldIdRef="23"/>
+    <Link colName="net_tot" fieldIdRef="24"/>
+    <Link colName="notes" fieldIdRef="25"/>
   </RecordView>
   <RecordView tabName="rec_cred_mast">
     <Link colName="id" fieldIdRef="11"/>

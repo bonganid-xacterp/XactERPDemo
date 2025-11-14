@@ -226,6 +226,9 @@
       </Table>
     </Grid>
   </VBox>
+  <RecordView tabName="cl01_mast">
+    <Link colName="id" fieldIdRef="10"/>
+  </RecordView>
   <RecordView tabName="sa31_ord_hdr">
     <Link colName="trans_date" fieldIdRef="0"/>
     <Link colName="cust_id" fieldIdRef="1"/>
@@ -265,9 +268,6 @@
     <Link colName="created_by" fieldIdRef="42"/>
     <Link colName="updated_at" fieldIdRef="43"/>
     <Link colName="updated_by" fieldIdRef="44"/>
-  </RecordView>
-  <RecordView tabName="cl01_mast">
-    <Link colName="id" fieldIdRef="10"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="cust_name" fieldIdRef="3"/>

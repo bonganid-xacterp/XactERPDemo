@@ -151,6 +151,10 @@ PUBLIC FUNCTION initialize_application() RETURNS BOOLEAN
         -- Load the visual style for the application
         CALL ui.Interface.loadStyles(STYLE_FILE)
 
+        -- Load the top menu
+        CALL ui.Interface.loadTopmenu("main_topmenu")
+
+
         -- Initialize database connection
         LET db_result = utils_db.initialize_database()
 

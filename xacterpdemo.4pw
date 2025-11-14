@@ -74,6 +74,7 @@
         <File filePath="src/_main/main_shell.4fd"/>
         <File filePath="src/_main/main_shell.4gl"/>
         <File filePath="src/_main/main_styles.4st"/>
+        <File filePath="src/_main/main_topmenu.4tm"/>
         <File filePath="src/_main/start_app.4gl"/>
       </Application>
       <Application binaryName="cl" dependencies="497700,56784492,104908716,31764552,782461791,39599040" id="396525034" label="cl">
@@ -154,6 +155,8 @@
         <File filePath="src/st/st101_mast.4gl"/>
         <File filePath="src/st/st102_cat.4fd"/>
         <File filePath="src/st/st102_cat.4gl"/>
+        <File filePath="src/st/st103_uom_mast.4fd"/>
+        <File filePath="src/st/st103_uom_mast.4gl"/>
         <File filePath="src/st/st120_enq.4fd"/>
         <File filePath="src/st/st120_enq.4gl"/>
         <File filePath="src/st/st121_st_lkup.4fd"/>

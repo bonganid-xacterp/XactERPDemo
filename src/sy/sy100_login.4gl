@@ -66,7 +66,7 @@ FUNCTION login_user() RETURNS SMALLINT
             -- ------------------------------------------------------------
             -- Start dialog for login input
             -- ------------------------------------------------------------
-            CALL run_login_dialog(f) RETURNING ok, f_username, f_password
+            CALL run_login_dialog() RETURNING ok, f_username, f_password
 
         CATCH
             CALL log_error("login_user", 
@@ -101,7 +101,7 @@ END FUNCTION
 -- --------------------------------------------------------------
 -- Separate dialog logic for better error handling
 -- --------------------------------------------------------------
-FUNCTION run_login_dialog(f ui.Form) 
+FUNCTION run_login_dialog() 
     RETURNS (SMALLINT, STRING, STRING)
     
     DEFINE f_username, f_password STRING
@@ -116,7 +116,7 @@ FUNCTION run_login_dialog(f ui.Form)
 
                 BEFORE INPUT
                     TRY
-                        CLEAR FORM
+                        --CLEAR FORM
                         NEXT FIELD f_username
                     CATCH
                         CALL log_error("run_login_dialog", 

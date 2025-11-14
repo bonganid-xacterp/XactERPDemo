@@ -88,6 +88,14 @@
       </Page>
     </Folder>
   </VBox>
+  <RecordView tabName="st01_mast">
+    <Link colName="stock_code" fieldIdRef="9"/>
+    <Link colName="description" fieldIdRef="10"/>
+    <Link colName="unit_cost" fieldIdRef="11"/>
+    <Link colName="sell_price" fieldIdRef="12"/>
+    <Link colName="stock_on_hand" fieldIdRef="13"/>
+    <Link colName="status" fieldIdRef="14"/>
+  </RecordView>
   <RecordView tabName="st02_cat">
     <Link colName="cat_code" fieldIdRef="0"/>
     <Link colName="cat_name" fieldIdRef="1"/>
@@ -98,14 +106,6 @@
     <Link colName="created_by" fieldIdRef="6"/>
     <Link colName="deleted_at" fieldIdRef="7"/>
     <Link colName="updated_at" fieldIdRef="8"/>
-  </RecordView>
-  <RecordView tabName="st01_mast">
-    <Link colName="stock_code" fieldIdRef="9"/>
-    <Link colName="description" fieldIdRef="10"/>
-    <Link colName="unit_cost" fieldIdRef="11"/>
-    <Link colName="sell_price" fieldIdRef="12"/>
-    <Link colName="stock_on_hand" fieldIdRef="13"/>
-    <Link colName="status" fieldIdRef="14"/>
   </RecordView>
   <RecordView tabName="rec_st_cat">
     <Link colName="cat_code" fieldIdRef="0"/>

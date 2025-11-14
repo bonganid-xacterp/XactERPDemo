@@ -52,7 +52,7 @@ dl30_trans^gross_tot^261^3842^6^
 dl30_trans^vat^261^3842^7^
 dl30_trans^disc^261^3842^8^
 dl30_trans^net_tot^261^3842^9^
-dl30_trans^notes^12^56^10^
+dl30_trans^notes^201^200^10^
 gl01_acc^id^309^8^1^
 gl01_acc^acc_code^201^30^2^
 gl01_acc^acc_name^457^120^3^
@@ -302,7 +302,7 @@ sa30_quo_hdr^gross_tot^261^3842^15^
 sa30_quo_hdr^disc_tot^261^3842^16^
 sa30_quo_hdr^vat_tot^261^3842^17^
 sa30_quo_hdr^net_tot^261^3842^18^
-sa30_quo_hdr^notes^12^56^19^
+sa30_quo_hdr^notes^201^200^19^
 sa30_quo_hdr^status^457^20^20^
 sa30_quo_hdr^created_at^266^4622^21^
 sa30_quo_hdr^updated_at^10^4622^22^
@@ -451,7 +451,7 @@ sa33_crn_hdr^gross_tot^261^3842^17^
 sa33_crn_hdr^disc_tot^261^3842^18^
 sa33_crn_hdr^vat_tot^261^3842^19^
 sa33_crn_hdr^net_tot^261^3842^20^
-sa33_crn_hdr^notes^12^56^21^
+sa33_crn_hdr^notes^201^200^21^
 sa33_crn_hdr^status^457^20^22^
 sa33_crn_hdr^created_at^266^4622^23^
 sa33_crn_hdr^updated_at^10^4622^24^
@@ -478,8 +478,6 @@ st01_mast^deleted_at^10^4622^17^
 st01_mast^created_by^308^8^18^
 st01_mast^uom^201^20^19^
 st01_mast^stock_balance^5^1283^20^
-st01_mast^base_uom_id^52^8^21^
-st01_mast^is_multiple_uom^45^1^22^
 st02_cat^id^309^8^1^
 st02_cat^cat_code^201^30^2^
 st02_cat^cat_name^457^120^3^
@@ -509,7 +507,7 @@ st04_stock_uom^display_order^2^4^10^
 st04_stock_uom^created_at^10^4622^11^
 st04_stock_uom^updated_at^10^4622^12^
 st30_trans^id^309^8^1^
-st30_trans^stock_id^457^20^2^
+st30_trans^stock_id^308^8^2^
 st30_trans^trans_date^263^4^3^
 st30_trans^doc_type^457^10^4^
 st30_trans^direction^457^3^5^
@@ -518,7 +516,7 @@ st30_trans^unit_cost^5^3074^7^
 st30_trans^sell_price^5^3074^8^
 st30_trans^batch_id^201^30^9^
 st30_trans^expiry_date^7^4^10^
-st30_trans^notes^201^200^11^
+st30_trans^notes^12^56^11^
 sy00_user^id^309^8^1^
 sy00_user^username^457^60^2^
 sy00_user^full_name^201^120^3^

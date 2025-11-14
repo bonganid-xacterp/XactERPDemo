@@ -1,13 +1,11 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="demoappdb" tag="" spacing="normal" text="Debtors" width="116" height="21">
+<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="demoappdb" tag="" spacing="normal" text="Debtors" width="116" height="20">
   <LStr text="Debtors"/>
   <VBox name="vbox1">
-    <Grid name="dl101_mast_hdr" width="111" height="2">
+    <Grid name="dl101_mast_hdr" width="111" height="12">
       <Label name="lbl_form_title" width="109" text="DEBTORS MASTER" justify="center" style="header" posY="0" posX="1" gridWidth="109">
         <LStr text="DEBTORS MASTER"/>
       </Label>
-    </Grid>
-    <Grid name="demoappdb1" width="96" height="11">
       <Group name="group2" text="" gridChildrenInParent="1" posY="1" posX="1" gridWidth="67" gridHeight="9">
         <PhantomFormField name="dl01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="15" sqlTabName="dl01_mast">
           <PhantomEdit width="1"/>
@@ -161,7 +159,7 @@
             <Edit width="17" tag="currency" justify="right" scroll="1" format="---,---,--&amp;.&amp;&amp;"/>
             <LStr text="Net Total"/>
           </TableColumn>
-          <TableColumn name="dl30_trans.notes" colName="notes" sqlType="TEXT" fieldId="28" sqlTabName="dl30_trans" text="Doc Notes" tabIndex="23">
+          <TableColumn name="dl30_trans.notes" colName="notes" sqlType="VARCHAR(200)" fieldId="28" sqlTabName="dl30_trans" text="Doc Notes" tabIndex="23">
             <Edit width="8"/>
             <LStr text="Doc Notes"/>
           </TableColumn>
@@ -169,6 +167,18 @@
       </Page>
     </Folder>
   </VBox>
+  <RecordView tabName="dl30_trans">
+    <Link colName="id" fieldIdRef="19"/>
+    <Link colName="cust_id" fieldIdRef="20"/>
+    <Link colName="trans_date" fieldIdRef="21"/>
+    <Link colName="doc_no" fieldIdRef="22"/>
+    <Link colName="doc_type" fieldIdRef="23"/>
+    <Link colName="gross_tot" fieldIdRef="24"/>
+    <Link colName="vat" fieldIdRef="25"/>
+    <Link colName="disc" fieldIdRef="26"/>
+    <Link colName="net_tot" fieldIdRef="27"/>
+    <Link colName="notes" fieldIdRef="28"/>
+  </RecordView>
   <RecordView tabName="dl01_mast">
     <Link colName="cust_name" fieldIdRef="0"/>
     <Link colName="status" fieldIdRef="1"/>
@@ -189,18 +199,6 @@
     <Link colName="created_at" fieldIdRef="16"/>
     <Link colName="updated_at" fieldIdRef="17"/>
     <Link colName="deleted_at" fieldIdRef="18"/>
-  </RecordView>
-  <RecordView tabName="dl30_trans">
-    <Link colName="id" fieldIdRef="19"/>
-    <Link colName="cust_id" fieldIdRef="20"/>
-    <Link colName="trans_date" fieldIdRef="21"/>
-    <Link colName="doc_no" fieldIdRef="22"/>
-    <Link colName="doc_type" fieldIdRef="23"/>
-    <Link colName="gross_tot" fieldIdRef="24"/>
-    <Link colName="vat" fieldIdRef="25"/>
-    <Link colName="disc" fieldIdRef="26"/>
-    <Link colName="net_tot" fieldIdRef="27"/>
-    <Link colName="notes" fieldIdRef="28"/>
   </RecordView>
   <RecordView tabName="arr_debt_trans">
     <Link colName="id" fieldIdRef="19"/>
