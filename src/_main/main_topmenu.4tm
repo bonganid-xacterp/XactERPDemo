@@ -11,21 +11,22 @@
 
   <!-- Inventory Management -->
   <TopMenuGroup text="Inventory">
-    <TopMenuGroup text="Masters">
       <TopMenuCommand name="st_mast" text="Stock Items" image="list"/>
       <TopMenuCommand name="st_uom" text="Units of Measure" image="tag"/>
       <TopMenuCommand name="st_cat" text="Stock Categories" image="folder"/>
-    </TopMenuGroup>
     <TopMenuSeparator/>
-    <TopMenuCommand name="st_enq" text="Stock Enquiry" image="find"/>
-    <TopMenuCommand name="st_trans" text="Stock Transactions" image="form"/>
-    <TopMenuCommand name="st_hist" text="Stock History" image="clock"/>
+    <TopMenuCommand name="st_mast" text="Stock Movement" image="form"/>
+    <TopMenuCommand name="st_mast" text="Stock History" image="clock"/>
   </TopMenuGroup>
 
   <!-- Warehouse Management -->
   <TopMenuGroup text="Warehouse">
     <TopMenuCommand name="wh_mast" text="Warehouses" image="warehouse"/>
+     <TopMenuCommand name="wh_mast" text="Warehouse Transfer" image="grid"/>
+     <TopMenuSeparator/>
     <TopMenuCommand name="wb_mast" text="Warehouse Bins" image="grid"/>
+     <TopMenuCommand name="wb_mast" text="Bin Transfer" image="grid"/>
+     <TopMenuSeparator/>
   </TopMenuGroup>
 
   <!-- Purchasing -->
@@ -36,7 +37,6 @@
     <TopMenuCommand name="pu_grn" text="Goods Received Notes" image="inbox"/>
     <TopMenuCommand name="pu_inv" text="Purchase Invoices" image="invoice"/>
     <TopMenuSeparator/>
-    <TopMenuCommand name="pu_hist" text="Purchase History" image="clock"/>
   </TopMenuGroup>
 
   <!-- Sales -->
@@ -48,7 +48,6 @@
     <TopMenuCommand name="sa_invoice" text="Sales Invoices" image="invoice"/>
     <TopMenuCommand name="sa_crn" text="Credit Notes" image="credit"/>
     <TopMenuSeparator/>
-    <TopMenuCommand name="sa_hist" text="Sales History" image="clock"/>
   </TopMenuGroup>
 
   <!-- System Administration -->

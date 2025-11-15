@@ -24,7 +24,7 @@ SCHEMA demoappdb
 -- CONFIGURATION CONSTANTS
 -- ==============================================================
 
-CONSTANT MDI_CONTAINER = "w_main"
+CONSTANT MDI_CONTAINER = "main_shell"  -- Must match setContainer() in start_app
 CONSTANT WINDOW_PREFIX = "w_"
 
 -- ==============================================================
@@ -77,12 +77,12 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS BOOLEAN
         -- Configure as MDI child window
         CALL ui.Interface.setType("child")
         CALL ui.Interface.setName(formname)
-        CALL ui.Interface.setContainer("Main_container")
+        CALL ui.Interface.setContainer(MDI_CONTAINER)
 
         -- Open the child window
         OPTIONS INPUT WRAP
         OPEN WINDOW winname WITH FORM formname
-            --ATTRIBUTES(STYLE = "Window.program", TEXT = wintitle)
+            ATTRIBUTES(STYLE = "normal", TEXT = wintitle)
 
         -- Register window
         LET i = m_open_modules.getLength() + 1

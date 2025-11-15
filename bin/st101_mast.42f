@@ -14,7 +14,7 @@
         <Label name="lbl_st01_mast_stock_code" width="7" text="Stock Code" posY="2" posX="1" gridWidth="7">
           <LStr text="Stock Code"/>
         </Label>
-        <FormField name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="st01_mast" noEntry="1" tabIndex="6">
+        <FormField name="st01_mast.stock_code" colName="stock_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="st01_mast" noEntry="1" tabIndex="7">
           <ButtonEdit width="5" action="lookup_stock" image="zoom" scroll="1" posY="2" posX="9" gridWidth="7"/>
         </FormField>
         <FormField name="st01_mast.description" colName="description" sqlType="VARCHAR(200)" required="1" notNull="1" fieldId="1" sqlTabName="st01_mast" tabIndex="1">
@@ -29,12 +29,8 @@
         <Label name="st01_mast_uom_lbl" width="7" text="UOM" posY="3" posX="17" gridWidth="7">
           <LStr text="UOM"/>
         </Label>
-        <FormField name="st01_mast.uom" colName="uom" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="st01_mast" tabIndex="7">
-          <ComboBox width="5" scroll="1" posY="3" posX="26" gridWidth="7">
-            <Item name="inactive" text="Inactive"/>
-            <Item name="out_of_stock" text="Out Of Stock"/>
-            <Item name="active" text="Active"/>
-          </ComboBox>
+        <FormField name="st01_mast.uom" colName="uom" sqlType="VARCHAR(20)" fieldId="3" sqlTabName="st01_mast" tabIndex="6">
+          <ComboBox width="5" scroll="1" posY="3" posX="26" gridWidth="7"/>
         </FormField>
         <Label name="st01_mast_category_id_label1" width="7" text="Category" posY="4" posX="1" gridWidth="7">
           <LStr text="Category"/>
@@ -165,6 +161,16 @@
       </Table>
     </Grid>
   </VBox>
+  <RecordView tabName="st30_trans">
+    <Link colName="trans_date" fieldIdRef="18"/>
+    <Link colName="doc_type" fieldIdRef="19"/>
+    <Link colName="direction" fieldIdRef="20"/>
+    <Link colName="qnty" fieldIdRef="21"/>
+    <Link colName="id" fieldIdRef="22"/>
+    <Link colName="unit_cost" fieldIdRef="23"/>
+    <Link colName="sell_price" fieldIdRef="24"/>
+    <Link colName="expiry_date" fieldIdRef="25"/>
+  </RecordView>
   <RecordView tabName="st01_mast">
     <Link colName="stock_code" fieldIdRef="0"/>
     <Link colName="description" fieldIdRef="1"/>
@@ -186,16 +192,6 @@
     <Link colName="created_at" fieldIdRef="27"/>
     <Link colName="deleted_at" fieldIdRef="28"/>
     <Link colName="updated_at" fieldIdRef="29"/>
-  </RecordView>
-  <RecordView tabName="st30_trans">
-    <Link colName="trans_date" fieldIdRef="18"/>
-    <Link colName="doc_type" fieldIdRef="19"/>
-    <Link colName="direction" fieldIdRef="20"/>
-    <Link colName="qnty" fieldIdRef="21"/>
-    <Link colName="id" fieldIdRef="22"/>
-    <Link colName="unit_cost" fieldIdRef="23"/>
-    <Link colName="sell_price" fieldIdRef="24"/>
-    <Link colName="expiry_date" fieldIdRef="25"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="m_cat_name" fieldIdRef="5"/>

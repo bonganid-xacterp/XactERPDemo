@@ -8,18 +8,18 @@
     <RecordField colName="supp_name" fieldIdRef="23" fieldType="TABLE_COLUMN" name="cl01_mast.supp_name" sqlTabName="cl01_mast" uid="{e90cebec-adba-4d22-aefe-509efcf1f3b8}"/>
     <RecordField colName="phone" fieldIdRef="3" fieldType="TABLE_COLUMN" name="cl01_mast.phone" sqlTabName="cl01_mast" uid="{c1d3287a-3623-4e22-94e0-7655ce02b471}"/>
     <RecordField colName="email" fieldIdRef="4" fieldType="TABLE_COLUMN" name="cl01_mast.email" sqlTabName="cl01_mast" uid="{cd4fd651-a4b4-4956-9287-ec922489ae50}"/>
-    <RecordField colName="balance" fieldIdRef="10" fieldType="TABLE_COLUMN" name="cl01_mast.balance" sqlTabName="cl01_mast" uid="{92e63429-d254-4943-8b5a-0951da7854c8}"/>
-    <RecordField colName="status" defaultValue="0" fieldIdRef="5" fieldType="TABLE_COLUMN" name="cl01_mast.status" sqlTabName="cl01_mast" uid="{8064afcd-0629-4917-881f-caf6e43a494f}"/>
     <RecordField colName="address1" fieldIdRef="6" fieldType="TABLE_COLUMN" name="cl01_mast.address1" sqlTabName="cl01_mast" uid="{26af24fe-5ad6-46a5-8446-b863aa14cf65}"/>
     <RecordField colName="address2" fieldIdRef="7" fieldType="TABLE_COLUMN" name="cl01_mast.address2" sqlTabName="cl01_mast" uid="{de352054-5d3d-4787-89cd-7f73feaf0a8e}"/>
     <RecordField colName="address3" fieldIdRef="8" fieldType="TABLE_COLUMN" name="cl01_mast.address3" sqlTabName="cl01_mast" uid="{5462a65e-7033-493a-ad4e-4578dd3b1820}"/>
     <RecordField colName="postal_code" fieldIdRef="21" fieldType="TABLE_COLUMN" name="cl01_mast.postal_code" sqlTabName="cl01_mast" table_alias_name="cl01_mast.postal_code" uid="{a51c31d1-8bb9-4319-90c3-af7ff2e0b853}"/>
+    <RecordField colName="vat_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="cl01_mast.vat_no" sqlTabName="cl01_mast" uid="{73aeabee-dab5-4754-a32e-acee8048444d}"/>
+    <RecordField colName="payment_terms" fieldIdRef="25" fieldType="TABLE_COLUMN" name="cl01_mast.payment_terms" sqlTabName="cl01_mast" uid="{ed481372-bf21-4493-8b34-ce0402d8bc66}"/>
+    <RecordField colName="balance" fieldIdRef="10" fieldType="TABLE_COLUMN" name="cl01_mast.balance" sqlTabName="cl01_mast" uid="{92e63429-d254-4943-8b5a-0951da7854c8}"/>
+    <RecordField colName="status" defaultValue="0" fieldIdRef="5" fieldType="TABLE_COLUMN" name="cl01_mast.status" sqlTabName="cl01_mast" uid="{8064afcd-0629-4917-881f-caf6e43a494f}"/>
     <RecordField colName="created_at" fieldIdRef="11" fieldType="TABLE_COLUMN" name="cl01_mast.created_at" sqlTabName="cl01_mast" uid="{0ebf9941-7b01-4d98-9602-2be30871ca32}"/>
     <RecordField colName="updated_at" fieldIdRef="20" fieldType="TABLE_COLUMN" name="cl01_mast.updated_at" sqlTabName="cl01_mast" uid="{73f636d7-3c36-490b-b87a-11ce8ae785d7}"/>
     <RecordField colName="deleted_at" fieldIdRef="18" fieldType="TABLE_COLUMN" name="cl01_mast.deleted_at" sqlTabName="cl01_mast" uid="{d0f088f2-5dbb-427c-afcd-8f32007da8fa}"/>
     <RecordField colName="created_by" fieldIdRef="14" fieldType="TABLE_COLUMN" name="cl01_mast.created_by" sqlTabName="cl01_mast" uid="{8e1965ac-b057-4d38-8ae2-a7c1fde744fb}"/>
-    <RecordField colName="vat_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="cl01_mast.vat_no" sqlTabName="cl01_mast" uid="{73aeabee-dab5-4754-a32e-acee8048444d}"/>
-    <RecordField colName="payment_terms" fieldIdRef="25" fieldType="TABLE_COLUMN" name="cl01_mast.payment_terms" sqlTabName="cl01_mast" uid="{ed481372-bf21-4493-8b34-ce0402d8bc66}"/>
   </Record>
   <Record masterTable="cl30_trans" name="arr_cred_trans" uid="{715d43ea-dc32-4b11-acd1-749fb5bda3e3}">
     <RecordField colName="id" fieldIdRef="2" fieldType="TABLE_COLUMN" name="cl30_trans.id" sqlTabName="cl30_trans" uid="{80d56014-0bad-4962-9782-cdced9cd865a}"/>
@@ -35,7 +35,7 @@
   </Record>
   <Form gridHeight="22" gridWidth="101" name="cl1011_mast" perFooterComment="" spacing="compact" text="Creditors Master">
     <VBox gridHeight="22" gridWidth="99" name="vbox1" posX="2" posY="0">
-      <Grid gridHeight="10" gridWidth="189" name="dl101_mast_hdr" posX="0" posY="1">
+      <Grid gridHeight="10" gridWidth="99" name="dl101_mast_hdr" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="98" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="CREDITORS MASTER"/>
         <Group gridChildrenInParent="true" gridHeight="7" gridWidth="70" name="grp_1" posX="1" posY="1" text="Supplier Info">
           <Label gridHeight="1" gridWidth="9" name="lbl_dl_name" posX="1" posY="1" text="Supplier Name"/>
@@ -77,7 +77,7 @@
         <Phantom colName="deleted_at" fieldId="18" fieldType="TABLE_COLUMN" name="cl01_mast.deleted_at" sqlTabName="cl01_mast" widget="Phantom"/>
         <Phantom colName="updated_at" fieldId="20" fieldType="TABLE_COLUMN" name="cl01_mast.updated_at" sqlTabName="cl01_mast" widget="Phantom"/>
       </Grid>
-      <Folder gridHeight="10" gridWidth="189" name="fld_group" posX="0" posY="11">
+      <Folder gridHeight="10" gridWidth="99" name="fld_group" posX="0" posY="11">
         <Page image="fa-file-text-o" name="trans_group" text="Documents">
           <Grid gridHeight="9" gridWidth="98" name="trans_grid" posX="0" posY="0">
             <Table gridHeight="6" gridWidth="97" name="dl101_mast_det" posX="1" posY="0" totalRows="5">
@@ -116,6 +116,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QG6ZmbsMzPVALmZnJTM1WT+AYk3S8an8AQAAAEwAewA3ADEANQBkADQAMwBlAGEALQBkAGMAMwAyAC0ANABiADEAMQAtAGEAYwBkADEALQA3ADQAOQBmAGIANQBiAGQAYQAzAGUAMwB9QDAAAAwAAANAMAAADAAAAz+crAgxJul+AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA3ADEANQBkADQAMwBlAGEALQBkAGMAMwAyAC0ANABiADEAMQAtAGEAYwBkADEALQA3ADQAOQBmAGIANQBiAGQAYQAzAGUAMwB9QDAAABAAAAZAMAAAEAAABj+crAgxJul+AQAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QG6ZmcKzM2RALmZnLMzPIz+AYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

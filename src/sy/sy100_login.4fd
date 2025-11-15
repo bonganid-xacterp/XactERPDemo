@@ -7,7 +7,7 @@
     <RecordField fieldIdRef="1" length="1" name="f_username" sqlType="VARCHAR" uid="{90f1e3c1-6149-4168-bca1-aa4b88672d2b}"/>
     <RecordField fieldIdRef="2" length="1" name="f_password" sqlType="VARCHAR" uid="{31431303-7fed-4d00-bc45-13edc4387ce8}"/>
   </Record>
-  <Form fourSTFile="" gridHeight="18" gridWidth="34" name="sy100_login" text="xactDemo App - Login " windowStyle="">
+  <Form gridHeight="18" gridWidth="34" name="sy100_login" text="" windowStyle="naked">
     <VBox gridHeight="16" gridWidth="32" name="vbox1" posX="0" posY="0">
       <Grid gridHeight="14" gridWidth="32" name="login_grid" posX="0" posY="1">
         <Image autoScale="false" gridHeight="8" gridWidth="30" image="/company_logo.png" name="company_logo" posX="1" posY="1" sizePolicy="dynamic" stretch="both"/>

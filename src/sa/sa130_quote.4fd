@@ -4,16 +4,17 @@
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record masterTable="sa30_quo_hdr" name="rec_sa_qt_hdr" uid="{39ff8d67-4dc3-4542-9959-78a3a96ccdc9}">
+    <RecordField colName="id" fieldIdRef="43" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.id" sqlTabName="sa30_quo_hdr" uid="{34cd4973-557a-4c40-99d4-0413ce7e9c3d}"/>
     <RecordField colName="gross_tot" fieldIdRef="18" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.gross_tot" sqlTabName="sa30_quo_hdr" uid="{5271c310-10dc-4d09-86eb-786adf9661e7}"/>
     <RecordField colName="vat_tot" fieldIdRef="20" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.vat_tot" sqlTabName="sa30_quo_hdr" uid="{f4444be5-99ad-4f17-bf65-f0d00f233a75}"/>
     <RecordField colName="net_tot" fieldIdRef="21" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.net_tot" sqlTabName="sa30_quo_hdr" uid="{c4a55c5e-e561-43cc-a135-109a5ca3c361}"/>
     <RecordField colName="disc_tot" fieldIdRef="19" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.disc_tot" sqlTabName="sa30_quo_hdr" uid="{5e32a6c7-a01a-4af9-8bbf-50b63d45bd14}"/>
-    <RecordField fieldIdRef="5" fieldType="NON_DATABASE" length="100" name="cust_name" sqlType="VARCHAR" uid="{fa5df4e9-a889-4481-a989-e77b2a7c95f5}"/>
-    <RecordField fieldIdRef="8" fieldType="NON_DATABASE" length="100" name="address1" sqlType="VARCHAR" uid="{a7fe07d5-6b8c-4709-8b27-69f1a290aa0a}"/>
-    <RecordField fieldIdRef="7" fieldType="NON_DATABASE" length="100" name="email" sqlType="VARCHAR" uid="{e680418c-2789-488c-b0ce-373ba8eb16ca}"/>
-    <RecordField fieldIdRef="9" fieldType="NON_DATABASE" length="100" name="address2" sqlType="VARCHAR" uid="{3450e410-b755-4362-b361-856e89e2592a}"/>
-    <RecordField fieldIdRef="10" fieldType="NON_DATABASE" length="100" name="address3" sqlType="VARCHAR" uid="{496f92fb-6e6e-433f-a0d7-a143702b817d}"/>
-    <RecordField fieldIdRef="11" fieldType="NON_DATABASE" length="10" name="postal_code" sqlType="VARCHAR" uid="{86d0e951-6756-4cf1-b116-e3ca9dd731f3}"/>
+    <RecordField colName="cust_name" fieldIdRef="5" fieldType="TABLE_COLUMN" length="100" name="sa30_quo_hdr.cust_name" sqlTabName="sa30_quo_hdr" sqlType="VARCHAR" uid="{fa5df4e9-a889-4481-a989-e77b2a7c95f5}"/>
+    <RecordField colName="cust_address1" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.cust_address1" sqlTabName="sa30_quo_hdr" uid="{a7fe07d5-6b8c-4709-8b27-69f1a290aa0a}"/>
+    <RecordField colName="cust_email" fieldIdRef="7" fieldType="TABLE_COLUMN" length="100" name="sa30_quo_hdr.cust_email" sqlTabName="sa30_quo_hdr" sqlType="VARCHAR" uid="{e680418c-2789-488c-b0ce-373ba8eb16ca}"/>
+    <RecordField colName="cust_address2" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.cust_address2" sqlTabName="sa30_quo_hdr" uid="{3450e410-b755-4362-b361-856e89e2592a}"/>
+    <RecordField colName="cust_address3" fieldIdRef="10" fieldType="TABLE_COLUMN" length="100" name="sa30_quo_hdr.cust_address3" sqlTabName="sa30_quo_hdr" sqlType="VARCHAR" uid="{496f92fb-6e6e-433f-a0d7-a143702b817d}"/>
+    <RecordField colName="cust_postal_code" fieldIdRef="11" fieldType="TABLE_COLUMN" length="10" name="sa30_quo_hdr.cust_postal_code" sqlTabName="sa30_quo_hdr" sqlType="VARCHAR" uid="{86d0e951-6756-4cf1-b116-e3ca9dd731f3}"/>
     <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.doc_no" sqlTabName="sa30_quo_hdr" uid="{68b74d03-9aa0-43c9-a2ed-0c9e3258278f}"/>
     <RecordField colName="cust_id" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.cust_id" sqlTabName="sa30_quo_hdr" uid="{88dbe26a-10a0-456a-8c13-4137c6e04e7b}"/>
     <RecordField colName="trans_date" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.trans_date" sqlTabName="sa30_quo_hdr" uid="{41db66b0-6df5-4a7f-bb65-36c8ce233690}"/>
@@ -23,9 +24,9 @@
     <RecordField colName="created_by" fieldIdRef="15" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.created_by" sqlTabName="sa30_quo_hdr" uid="{c124e1b3-7ad6-434f-b34c-41d25297d634}"/>
     <RecordField colName="deleted_at" fieldIdRef="16" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.deleted_at" sqlTabName="sa30_quo_hdr" uid="{80a12296-1146-4da3-893a-88f6e0721db9}"/>
     <RecordField colName="updated_at" fieldIdRef="17" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.updated_at" sqlTabName="sa30_quo_hdr" uid="{c4bbc137-f91e-47f6-bf8a-aa68d99601f0}"/>
+    <RecordField colName="cust_phone" fieldIdRef="42" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.cust_phone" sqlTabName="sa30_quo_hdr" uid="{e6f29572-67e7-49aa-bba2-357110897bd8}"/>
   </Record>
-  <Record masterTable="sa30_quo_det" name="arr_sa_qt_lines" uid="{0662609d-bcff-4793-84df-a74173ca8c89}"/>
-  <Record masterTable="sa30_quo_det" name="record1" uid="{8ebebfe8-71c2-4692-aa33-321ac06706a8}">
+  <Record masterTable="sa30_quo_det" name="arr_sa_qt_lines" uid="{8ebebfe8-71c2-4692-aa33-321ac06706a8}">
     <RecordField colName="hdr_id" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sa30_quo_det.hdr_id" sqlTabName="sa30_quo_det" uid="{6b22e5a0-8b33-45ed-81fb-257fce15d33a}"/>
     <RecordField colName="line_no" fieldIdRef="12" fieldType="TABLE_COLUMN" name="sa30_quo_det.line_no" sqlTabName="sa30_quo_det" uid="{a8c1334c-69b9-4df6-86e1-53d63adeddc2}"/>
     <RecordField colName="stock_id" fieldIdRef="22" fieldType="TABLE_COLUMN" name="sa30_quo_det.stock_id" sqlTabName="sa30_quo_det" uid="{3a303077-9616-4b0d-8a59-931c0a77722d}"/>
@@ -51,7 +52,7 @@
   </Record>
   <Form gridHeight="20" gridWidth="183" name="frm_sa_ord" text="SALES QUOTE">
     <VBox gridHeight="20" gridWidth="183" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="11" gridWidth="282" name="sa130_ord_hdr" posX="0" posY="1">
+      <Grid gridHeight="11" gridWidth="183" name="sa130_ord_hdr" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="113" justify="center" name="lbl_form_title" posX="1" posY="0" style="bold header" text=""/>
         <Group gridHeight="9" gridWidth="53" name="cust_info" posX="1" posY="1" text="">
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
@@ -86,40 +87,43 @@
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_cust_name_lbl" posX="1" posY="4" text="Customer ">
             <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
           </Label>
-          <Edit fieldId="5" fieldType="NON_DATABASE" gridHeight="1" gridWidth="41" length="100" name="cust_name" posX="11" posY="4" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+          <Edit colName="cust_name" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="41" name="sa30_quo_hdr.cust_name" posX="11" posY="4" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Doc No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_cust_phone_lbl" posX="1" posY="5" text="Phone">
             <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
           </Label>
+          <Edit colName="cust_phone" fieldId="42" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sa30_quo_hdr.cust_phone" posX="11" posY="5" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Doc No" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label5" posX="27" posY="5" text="Email">
             <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
           </Label>
-          <Edit fieldId="7" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="100" name="email" posX="37" posY="5" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+          <Edit colName="cust_email" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sa30_quo_hdr.cust_email" posX="37" posY="5" scroll="true" sqlTabName="sa30_quo_hdr" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label4" posX="1" posY="6" text=" Address 1">
             <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
           </Label>
-          <Edit fieldId="8" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="100" name="address1" posX="11" posY="6" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+          <Edit colName="cust_address1" fieldId="8" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sa30_quo_hdr.cust_address1" posX="11" posY="6" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Doc No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label6" posX="27" posY="6" text="Address 2">
             <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
           </Label>
-          <Edit fieldId="9" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="100" name="address2" posX="37" posY="6" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+          <Edit colName="cust_address2" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sa30_quo_hdr.cust_address2" posX="37" posY="6" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Doc No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label7" posX="1" posY="7" text="Address 3">
             <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
           </Label>
-          <Edit fieldId="10" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="100" name="address3" posX="11" posY="7" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+          <Edit colName="cust_address3" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sa30_quo_hdr.cust_address3" posX="11" posY="7" scroll="true" sqlTabName="sa30_quo_hdr" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label8" posX="27" posY="7" text="Postal Code">
             <Initializer text="dbschema:sa30_quo_hdr.doc_no/@label"/>
           </Label>
-          <Edit fieldId="11" fieldType="NON_DATABASE" gridHeight="1" gridWidth="15" length="10" name="postal_code" posX="37" posY="7" scroll="true" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
+          <Edit colName="cust_postal_code" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="15" name="sa30_quo_hdr.cust_postal_code" posX="37" posY="7" scroll="true" sqlTabName="sa30_quo_hdr" sqlType="VARCHAR" tabIndex="-1" title="Doc No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
         </Group>
@@ -152,13 +156,13 @@
           <Edit colName="gross_tot" fieldId="18" fieldType="TABLE_COLUMN" format="R ---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.gross_tot" posX="12" posY="2" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_total_excl_label2" posX="1" posY="3" text="Doc Disc">
+          <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_total_excl_label2" posX="1" posY="3" text="Doc Discount">
             <Initializer text="dbschema:sa30_quo_hdr.total_excl/@label"/>
           </Label>
           <Edit colName="disc_tot" fieldId="19" fieldType="TABLE_COLUMN" format="R ---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.disc_tot" posX="12" posY="3" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="Total Excl" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_vat_label1" posX="1" posY="5" text="VAT">
+          <Label gridHeight="1" gridWidth="10" name="sa30_quo_hdr_vat_label1" posX="1" posY="5" text="VAT Amount">
             <Initializer text="dbschema:sa30_quo_hdr.vat/@label"/>
           </Label>
           <Edit colName="vat_tot" fieldId="20" fieldType="TABLE_COLUMN" format="R ---,---,--&amp;.&amp;&amp;" gridHeight="1" gridWidth="14" name="sa30_quo_hdr.vat_tot" posX="12" posY="5" scroll="true" sqlTabName="sa30_quo_hdr" tabIndex="-1" title="VAT" widget="Edit">
@@ -171,8 +175,9 @@
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
         </Group>
+        <Phantom colName="id" fieldId="43" fieldType="TABLE_COLUMN" name="sa30_quo_hdr.id" sqlTabName="sa30_quo_hdr" widget="Phantom"/>
       </Grid>
-      <Folder gridHeight="7" gridWidth="282" name="folder1" posX="0" posY="12">
+      <Folder gridHeight="7" gridWidth="183" name="folder1" posX="0" posY="12">
         <Page name="Documents" text="Documents">
           <Grid gridHeight="6" gridWidth="183" name="grid1" posX="0" posY="0">
             <Table gridHeight="6" gridWidth="180" name="demoappdb1" posX="1" posY="0" totalRows="5">
@@ -235,6 +240,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA4AGUAYgBlAGIAZgBlADgALQA3ADEAYwAyAC0ANAA2ADkAMgAtAGEAYQAzADMALQAzADIAMQBhAGMAMAA2ADcAMAA2AGEAOAB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewAzADkAZgBmADgAZAA2ADcALQA0AGQAYwAzAC0ANAA1ADQAMgAtADkAOQA1ADkALQA3ADgAYQAzAGEAOQA2AGMAYwBkAGMAOQB9QDAAABQAAApAMAAAFAAACj9gYk3S8an8AQAAAEwAewAwADYANgAyADYAMAA5AGQALQBiAGMAZgBmAC0ANAA3ADkAMwAtADgANABkAGYALQBhADcANAAxADcAMwBjAGEAOABjADgAOQB9QGszM1UzM0RAPAAAIwAAET9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAzADkAZgBmADgAZAA2ADcALQA0AGQAYwAzAC0ANAA1ADQAMgAtADkAOQA1ADkALQA3ADgAYQAzAGEAOQA2AGMAYwBkAGMAOQB9QGazMztgAAJAQTMzQYAACT+EeuFHrhR8AQAAAEwAewA4AGUAYgBlAGIAZgBlADgALQA3ADEAYwAyAC0ANAA2ADkAMgAtAGEAYQAzADMALQAzADIAMQBhAGMAMAA2ADcAMAA2AGEAOAB9QDMzMzwAAAFAQAAABgAAAD+CbpeNT988AQ==]]>
   </DiagramLayout>
 </ManagedForm>

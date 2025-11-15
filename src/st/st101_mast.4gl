@@ -30,6 +30,10 @@ DEFINE
     m_cat_name STRING,
     m_username STRING
 
+-- UOM ComboBox arrays
+DEFINE arr_uom_codes DYNAMIC ARRAY OF STRING
+DEFINE arr_uom_names DYNAMIC ARRAY OF STRING
+
 -- Transactions array for display
 DEFINE arr_st_trans DYNAMIC ARRAY OF RECORD
     trans_date LIKE st30_trans.trans_date,
@@ -68,10 +72,11 @@ END MAIN
 FUNCTION init_st_module()
     DEFINE ok SMALLINT
     LET is_edit_mode = FALSE
-    LET ok = select_stock_items("1=1")
 
-    -- Load UOMS
-    -- CALL load_uoms()
+    -- Load UOMs into ComboBox
+    CALL load_uoms()
+
+    LET ok = select_stock_items("1=1")
 
     MENU "Stock Master Menu"
 
@@ -387,4 +392,57 @@ FUNCTION delete_stock()
         CALL utils_globals.msg_deleted()
         LET ok = select_stock_items("1=1")
     END IF
+END FUNCTION
+
+-- ==============================================================
+-- Load UOMs into ComboBox
+-- ==============================================================
+FUNCTION load_uoms()
+    DEFINE idx INTEGER
+    DEFINE cb ui.ComboBox
+    DEFINE frm ui.Form
+    DEFINE win ui.Window
+
+    -- Clear arrays
+    CALL arr_uom_codes.clear()
+    CALL arr_uom_names.clear()
+
+    LET idx = 1
+
+    TRY
+        -- Load active UOMs from database
+        DECLARE uom_curs CURSOR FOR
+            SELECT uom_code, uom_name
+              FROM st03_uom_master
+             WHERE is_active = TRUE
+             ORDER BY uom_code
+
+        FOREACH uom_curs INTO arr_uom_codes[idx], arr_uom_names[idx]
+            LET idx = idx + 1
+        END FOREACH
+
+        CLOSE uom_curs
+        FREE uom_curs
+
+        -- Get current form and populate ComboBox
+        LET win = ui.Window.getCurrent()
+        IF win IS NOT NULL THEN
+            LET frm = win.getForm()
+            IF frm IS NOT NULL THEN
+                LET cb = ui.ComboBox.forName("st01_mast.uom")
+                IF cb IS NOT NULL THEN
+                    -- Clear existing items
+                    CALL cb.clear()
+
+                    -- Add UOMs to ComboBox
+                    FOR idx = 1 TO arr_uom_codes.getLength()
+                        CALL cb.addItem(arr_uom_codes[idx], arr_uom_names[idx])
+                    END FOR
+                END IF
+            END IF
+        END IF
+
+    CATCH
+        DISPLAY "Error loading UOMs: ", SQLCA.SQLERRM
+    END TRY
 END FUNCTION

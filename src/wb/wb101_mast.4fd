@@ -4,16 +4,15 @@
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record masterTable="wb01_mast" name="record2" uid="{133099dd-4f1b-4638-865a-429706126a3c}">
+    <RecordField colName="id" fieldIdRef="5" fieldType="TABLE_COLUMN" name="wb01_mast.id" sqlTabName="wb01_mast" uid="{740f97d8-01c0-461a-a43a-e2eaf1f5a387}"/>
     <RecordField colName="wb_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wb01_mast.wb_code" sqlTabName="wb01_mast" uid="{12be9cef-a21b-493c-b9a0-5ba0a96d0ea4}"/>
-    <RecordField colName="wh_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wh01_mast.wh_code" sqlTabName="wh01_mast" uid="{2725ebdb-b71d-4b98-9ffc-856a5723df78}"/>
     <RecordField colName="description" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wb01_mast.description" sqlTabName="wb01_mast" uid="{b10aa371-7c7e-4949-8dcf-ec2b0ecdccbb}"/>
     <RecordField colName="status" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wb01_mast.status" sqlTabName="wb01_mast" uid="{a0936c0e-5c4f-4c72-aa10-7a24ae1f23ac}"/>
-    <RecordField colName="id" fieldIdRef="5" fieldType="TABLE_COLUMN" name="wb01_mast.id" sqlTabName="wb01_mast" uid="{740f97d8-01c0-461a-a43a-e2eaf1f5a387}"/>
     <RecordField colName="created_at" fieldIdRef="6" fieldType="TABLE_COLUMN" name="wb01_mast.created_at" sqlTabName="wb01_mast" uid="{56ae5c85-95d8-4371-b7a1-f5b4610cd2ed}"/>
     <RecordField colName="updated_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="wb01_mast.updated_at" sqlTabName="wb01_mast" uid="{881015bb-d338-4ffd-af05-5fcdbe90bcf7}"/>
     <RecordField colName="deleted_at" fieldIdRef="8" fieldType="TABLE_COLUMN" name="wb01_mast.deleted_at" sqlTabName="wb01_mast" uid="{ee28e826-6eff-43ca-a3c7-41d8c159d6c1}"/>
     <RecordField colName="created_by" fieldIdRef="9" fieldType="TABLE_COLUMN" name="wb01_mast.created_by" sqlTabName="wb01_mast" uid="{a90da6ef-cb90-4b31-aa4b-bfcd997ab5f4}"/>
-    <RecordField colName="wh_id" fieldIdRef="10" fieldType="TABLE_COLUMN" name="wb01_mast.wh_id" sqlTabName="wb01_mast" uid="{b3129c79-dc4f-40bd-9212-14b74817e66e}"/>
+    <RecordField colName="wh_id" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wb01_mast.wh_id" sqlTabName="wb01_mast" uid="{2725ebdb-b71d-4b98-9ffc-856a5723df78}"/>
   </Record>
   <Form gridHeight="14" gridWidth="53" name="form" text="Form">
     <VBox gridHeight="14" gridWidth="53" name="vbox1" posX="0" posY="0">
@@ -28,7 +27,7 @@
         <Label gridHeight="1" gridWidth="8" name="wb01_mast_wh_wh_code_lbl" posX="24" posY="1" text="Warehouse Code">
           <Initializer text="dbschema:wb01_mast.wh_id/@label"/>
         </Label>
-        <ButtonEdit action="find_wh" colName="wh_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="19" image="zoom" name="wh01_mast.wh_code" posX="33" posY="1" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Warehouse Code" widget="ButtonEdit">
+        <ButtonEdit action="find_wh" colName="wh_id" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="19" image="zoom" name="wb01_mast.wh_id" posX="33" posY="1" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="Warehouse Code" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ButtonEdit>
         <Label gridHeight="1" gridWidth="11" name="wb01_mast_description_label1" posX="1" posY="2" text="Description">
@@ -50,11 +49,10 @@
         <Phantom colName="updated_at" fieldId="7" fieldType="TABLE_COLUMN" name="wb01_mast.updated_at" sqlTabName="wb01_mast" widget="Phantom"/>
         <Phantom colName="deleted_at" fieldId="8" fieldType="TABLE_COLUMN" name="wb01_mast.deleted_at" sqlTabName="wb01_mast" widget="Phantom"/>
         <Phantom colName="created_by" fieldId="9" fieldType="TABLE_COLUMN" name="wb01_mast.created_by" sqlTabName="wb01_mast" widget="Phantom"/>
-        <Phantom colName="wh_id" fieldId="10" fieldType="TABLE_COLUMN" name="wb01_mast.wh_id" sqlTabName="wb01_mast" widget="Phantom"/>
       </Grid>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAxADMAMwAwADkAOQBkAGQALQA0AGYAMQBiAC0ANAA2ADMAOAAtADgANgA1AGEALQA0ADIAOQA3ADAANgAxADIANgBhADMAYwB9QGrMzNPAAADARGZmaoAAAD9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAxADMAMwAwADkAOQBkAGQALQA0AGYAMQBiAC0ANAA2ADMAOAAtADgANgA1AGEALQA0ADIAOQA3ADAANgAxADIANgBhADMAYwB9QGrMzNpzMzXARGZmb5mZmz9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

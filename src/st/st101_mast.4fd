@@ -58,13 +58,10 @@
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="7" name="st01_mast_uom_lbl" posX="17" posY="3" text="UOM">
-            <Initializer text="dbschema:st01_mast.status/@label"/>
+            <Initializer text="dbschema:st01_mast.uom/@label"/>
           </Label>
-          <ComboBox colName="uom" fieldId="29" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" items="Inactive, Out Of Stock, Active" name="st01_mast.uom" posX="26" posY="3" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="status" widget="ComboBox">
+          <ComboBox colName="uom" fieldId="29" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="st01_mast.uom" posX="26" posY="3" scroll="true" sqlTabName="st01_mast" tabIndex="6" title="UOM" widget="ComboBox">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-            <Item lstrtext="false" name="inactive" text="Inactive"/>
-            <Item lstrtext="false" name="out_of_stock" text="Out Of Stock"/>
-            <Item lstrtext="false" name="active" text="Active"/>
           </ComboBox>
           <Label gridHeight="1" gridWidth="7" name="st01_mast_category_id_label1" posX="1" posY="4" text="Category">
             <Initializer text="dbschema:st01_mast.category_id/@label"/>

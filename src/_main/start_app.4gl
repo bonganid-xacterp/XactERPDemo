@@ -71,6 +71,8 @@ MAIN
         EXIT PROGRAM
     END IF
 
+    
+
     -- Open MDI container with top menu
     CALL open_mdi_container()
 
@@ -116,6 +118,10 @@ FUNCTION open_mdi_container()
     DEFINE w ui.Window
     DEFINE f ui.Form
 
+    CALL ui.Interface.setContainer('main_shell')
+    CALL ui.Interface.setName('main_shell')
+    CALL ui.Interface.setType('container')
+
     -- Open MDI parent window with tabbed container
     OPEN WINDOW w_main
         WITH FORM "main_shell"
@@ -123,10 +129,7 @@ FUNCTION open_mdi_container()
 
     LET w = ui.Window.getCurrent()
     LET f = w.getForm()
-
-    -- Load the top menu
-    CALL f.loadTopMenu("main_topmenu")
-
+    
     -- Show main menu (handles top menu actions)
     CALL show_main_menu()
 
@@ -166,15 +169,6 @@ FUNCTION show_main_menu()
         ON ACTION st_cat
             CALL launch_child_module("st102_cat", "Stock Categories")
 
-        ON ACTION st_enq
-            CALL launch_child_module("st120_enq", "Stock Enquiry")
-
-        ON ACTION st_trans
-            CALL launch_child_module("st130_trans", "Stock Transactions")
-
-        ON ACTION st_hist
-            CALL launch_child_module("st140_hist", "Stock History")
-
         -- Warehouse
         ON ACTION wh_mast
             CALL launch_child_module("wh101_mast", "Warehouses")
@@ -192,12 +186,6 @@ FUNCTION show_main_menu()
         ON ACTION pu_grn
             CALL launch_child_module("pu131_grn", "Goods Received Notes")
 
-        ON ACTION pu_inv
-            CALL launch_child_module("pu132_inv", "Purchase Invoices")
-
-        ON ACTION pu_hist
-            CALL launch_child_module("pu140_hist", "Purchase History")
-
         -- Sales
         ON ACTION dl_mast
             CALL launch_child_module("dl101_mast", "Customers")
@@ -213,9 +201,6 @@ FUNCTION show_main_menu()
 
         ON ACTION sa_crn
             CALL launch_child_module("sa133_crn", "Credit Notes")
-
-        ON ACTION sa_hist
-            CALL launch_child_module("sa140_hist", "Sales History")
 
         -- System
         ON ACTION sy_user
@@ -317,8 +302,8 @@ FUNCTION launch_child_module(module_name STRING, title STRING)
             WHEN "sy103_perm"
                 CALL sy103_perm.init_perm_module()
 
-            --WHEN "sy130_logs"
-            --    CALL sy130_logs.init_logs_module()
+            WHEN "sy130_logs"
+                CALL sy130_logs.init_logs_module()
 
             OTHERWISE
                 CALL utils_globals.show_error("Module not implemented: " || module_name)

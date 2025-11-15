@@ -8,6 +8,7 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
+IMPORT FGL utils_logger
 
 -- --------------------------------------------------------------
 -- GLOBAL VARIABLES
@@ -405,54 +406,19 @@ END FUNCTION
 -- CONFIRM EXIT PROMPT
 -- --------------------------------------------------------------
 FUNCTION confirm_exit_login() RETURNS SMALLINT
-    DEFINE ans STRING
-    
+    DEFINE ans SMALLINT
+
     TRY
         LET ans = utils_globals.show_confirm(
-            "Exit Login", 
-            "Do you want to cancel login?")
-        RETURN ans = "yes"
+            "Are you sure you want to exit login?",
+            "Exit Login")
+        RETURN ans
     CATCH
-        CALL log_error("confirm_exit_login", 
+        CALL log_error("confirm_exit_login",
             "Error showing confirmation: " || STATUS)
-        -- Default to not exiting on error
-        RETURN FALSE
+        -- Default to exiting on error (safer to allow exit)
+        RETURN TRUE
     END TRY
-END FUNCTION
-
--- --------------------------------------------------------------
--- LOGGING FUNCTIONS
--- --------------------------------------------------------------
-FUNCTION log_error(p_function STRING, p_message STRING)
-    DEFINE l_timestamp DATETIME YEAR TO FRACTION(3)
-    
-    LET l_timestamp = CURRENT YEAR TO FRACTION(3)
-    LET g_last_error = p_message
-    
-    -- Write to application log
-    DISPLAY SFMT("[ERROR] %1 | %2 | %3", 
-        l_timestamp, p_function, p_message)
-    
-    -- TODO: Write to database log table
-    -- INSERT INTO sys_error_log VALUES (l_timestamp, p_function, p_message, ...)
-END FUNCTION
-
-FUNCTION log_warning(p_function STRING, p_message STRING)
-    DEFINE l_timestamp DATETIME YEAR TO FRACTION(3)
-    
-    LET l_timestamp = CURRENT YEAR TO FRACTION(3)
-    
-    DISPLAY SFMT("[WARNING] %1 | %2 | %3", 
-        l_timestamp, p_function, p_message)
-END FUNCTION
-
-FUNCTION log_info(p_function STRING, p_message STRING)
-    DEFINE l_timestamp DATETIME YEAR TO FRACTION(3)
-    
-    LET l_timestamp = CURRENT YEAR TO FRACTION(3)
-    
-    DISPLAY SFMT("[INFO] %1 | %2 | %3", 
-        l_timestamp, p_function, p_message)
 END FUNCTION
 
 -- --------------------------------------------------------------
