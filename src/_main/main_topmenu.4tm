@@ -52,6 +52,13 @@
     <TopMenuSeparator/>
   </TopMenuGroup>
 
+  
+    <!-- Customers -->
+  <TopMenuGroup text="Customers">
+    <TopMenuCommand name="dl_mast" text="Customers" image="database"/>
+    <TopMenuSeparator/>
+  </TopMenuGroup>
+
   <!-- Sales -->
   <TopMenuGroup text="Sales">
     <TopMenuCommand name="sa_quote" text="Sales Quotations" image="document"/>

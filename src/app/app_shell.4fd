@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm fileVersion="31400" gstVersion="3140a" name="managedform" uid="{8aa5c5b9-f1de-4f41-ad39-d88c5aebc0ec}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Form gridHeight="28" gridWidth="100" name="app_shell" text="Form">
+    <Group gridChildrenInParent="true" gridHeight="28" gridWidth="100" hidden="true" name="app_shell_grp" posX="0" posY="0" text="">
+      <Grid gridHeight="26" gridWidth="98" name="app_shell" posX="1" posY="1">
+        <Label gridHeight="1" gridWidth="96" name="lbl_page_title" posX="1" posY="24" style="Label.status_bar" text="Ready"/>
+      </Grid>
+    </Group>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAg==]]>
+  </DiagramLayout>
+</ManagedForm>

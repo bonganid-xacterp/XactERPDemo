@@ -4,8 +4,8 @@
     <DynamicProperties version="2"/>
   </AGSettings>
   <Form gridHeight="30" gridWidth="100" name="main_shell" spacing="normal" text="XACT ERP System">
-    <Group gridChildrenInParent="true" gridHeight="28" gridWidth="100" hidden="true" name="main_shell" posX="0" posY="0" text="">
-      <Grid gridHeight="26" gridWidth="98" name="main_content" posX="1" posY="1">
+    <Group gridChildrenInParent="true" gridHeight="28" gridWidth="100" hidden="true" name="main_shell_grp" posX="0" posY="0" text="">
+      <Grid gridHeight="26" gridWidth="98" name="main_shell" posX="1" posY="1">
         <Label gridHeight="1" gridWidth="96" name="lbl_status" posX="1" posY="24" style="Label.status_bar" text="Ready"/>
       </Grid>
     </Group>

@@ -8,8 +8,7 @@
     <RecordField colName="uom_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="st03_uom_master.uom_code" sqlTabName="st03_uom_master" uid="{672f3788-510e-49cc-af88-18d60cc3b6d5}"/>
     <RecordField colName="uom_name" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st03_uom_master.uom_name" sqlTabName="st03_uom_master" uid="{6906ef41-0a78-4651-96ac-4772025d9e9e}"/>
     <RecordField colName="uom_type" fieldIdRef="4" fieldType="TABLE_COLUMN" name="st03_uom_master.uom_type" sqlTabName="st03_uom_master" uid="{5deccf23-5e8d-4ab8-8891-6ceb579ee221}"/>
-    <RecordField colName="is_active" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st03_uom_master.is_active" sqlTabName="st03_uom_master" uid="{50048eae-9d5d-4a75-8611-fd52f4319e68}"/>
-    <RecordField colName="decimal_places" fieldIdRef="6" fieldType="TABLE_COLUMN" name="st03_uom_master.decimal_places" sqlTabName="st03_uom_master" uid="{12d1f9b8-af6c-418f-a4cf-bd8bbb0a1b7d}"/>
+    <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st03_uom_master.status" sqlTabName="st03_uom_master" uid="{50048eae-9d5d-4a75-8611-fd52f4319e68}"/>
     <RecordField colName="created_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="st03_uom_master.created_at" sqlTabName="st03_uom_master" uid="{db1d4877-aafc-4ee3-a415-5030b09d8640}"/>
   </Record>
   <Form gridHeight="10" gridWidth="24" name="frm_title" text="STOCK UOM">
@@ -34,19 +33,13 @@
         <Edit colName="uom_type" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="st03_uom_master.uom_type" posX="10" posY="3" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Type" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="8" name="st03_uom_master_decimal_places_label1" posX="1" posY="4" text="Decimal  Place">
-          <Initializer text="dbschema:st03_uom_master.decimal_places/@label"/>
-        </Label>
-        <Edit colName="decimal_places" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="st03_uom_master.decimal_places" posX="10" posY="4" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Decimal  Place" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
         <Label gridHeight="1" gridWidth="8" name="st03_uom_master_is_active_label1" posX="1" posY="5" text="Status">
           <Initializer text="dbschema:st03_uom_master.is_active/@label"/>
         </Label>
-        <ComboBox colName="is_active" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" items="Inactive, Active" name="st03_uom_master.is_active" posX="10" posY="5" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Status" widget="ComboBox">
+        <ComboBox colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" items="Inactive, Active" name="st03_uom_master.status" posX="10" posY="5" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Status" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          <Item lstrtext="false" name="0" text="Inactive"/>
-          <Item lstrtext="false" name="a" text="Active"/>
+          <Item lstrtext="false" name="inactive" text="Inactive"/>
+          <Item lstrtext="false" name="active" text="Active"/>
         </ComboBox>
         <Phantom colName="id" fieldId="1" fieldType="TABLE_COLUMN" name="st03_uom_master.id" sqlTabName="st03_uom_master" widget="Phantom"/>
         <Phantom colName="created_at" fieldId="7" fieldType="TABLE_COLUMN" name="st03_uom_master.created_at" sqlTabName="st03_uom_master" widget="Phantom"/>

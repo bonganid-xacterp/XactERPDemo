@@ -29,7 +29,7 @@
 
     <!-- Main Application Window (MDI Container) -->
     <Style name="Window.main">
-        <StyleAttribute name="windowType" value="container"/>
+        <StyleAttribute name="windowType" value="normal"/>
         <StyleAttribute name="position" value="center"/>
         <StyleAttribute name="tabbedContainer" value="yes"/>
         <StyleAttribute name="border" value="title"/>

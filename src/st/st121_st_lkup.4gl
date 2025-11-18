@@ -22,8 +22,8 @@ FUNCTION display_stocklist() RETURNS STRING
             stock_on_hand LIKE st01_mast.stock_on_hand
         END RECORD,
         f_search STRING,
-        ret_code STRING,
-        curr SMALLINT
+        ret_code INTEGER,
+        curr_idx INTEGER
 
     -- Open popup lookup form
     OPEN WINDOW w_lkup
@@ -48,9 +48,9 @@ FUNCTION display_stocklist() RETURNS STRING
                 CALL load_stock_data(stock_arr, f_search)
 
             ON ACTION accept ATTRIBUTES(TEXT = "Select", IMAGE = "check")
-                LET curr = arr_curr()
-                IF curr > 0 THEN
-                    LET ret_code = stock_arr[curr].id
+                LET curr_idx = arr_curr()
+                IF curr_idx > 0 THEN
+                    LET ret_code = stock_arr[curr_idx].id
                     EXIT DIALOG
                 END IF
 

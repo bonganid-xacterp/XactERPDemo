@@ -21,19 +21,19 @@
     <RecordField fieldIdRef="15" name="available" uid="{d2fe7625-66d9-4f78-bfd6-d686696a90b0}"/>
   </Record>
   <Record active="false" masterTable="" name="f_search" uid="{34e0b976-d297-4e22-bdf5-dd47617e130d}"/>
-  <Form gridHeight="23" gridWidth="48" name="main_form" text="">
-    <VBox gridHeight="23" gridWidth="48" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="21" gridWidth="48" name="main_grd" posX="0" posY="1">
+  <Form gridHeight="19" gridWidth="48" name="main_form" text="">
+    <VBox gridHeight="19" gridWidth="48" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="17" gridWidth="48" name="main_grd" posX="0" posY="1">
         <Label color="green" gridHeight="1" gridWidth="46" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text=""/>
         <Group gridChildrenInParent="true" gridHeight="11" gridWidth="47" name="item_details" posX="1" posY="1" text="Item Details">
           <Label gridHeight="1" gridWidth="10" name="lbl_product" posX="1" posY="1" text="Product Code"/>
-          <ButtonEdit action="lookup_stock" autoNext="true" fieldId="1" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" image="zoom" name="stock_id" posX="12" posY="1" sqlType="BIGINT" tabIndex="-1" title="edit1" widget="ButtonEdit"/>
+          <ButtonEdit action="lookup_stock" autoNext="true" fieldId="1" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" image="zoom" length="1" name="stock_id" posX="12" posY="1" sqlType="BIGINT" tabIndex="-1" title="edit1" widget="ButtonEdit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_item_desc" posX="1" posY="2" text="Product Name"/>
           <Edit fieldId="2" fieldType="NON_DATABASE" gridHeight="1" gridWidth="30" length="100" name="item_name" posX="12" posY="2" sqlType="VARCHAR" tabIndex="-1" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_qnty" posX="1" posY="4" text="Quantity"/>
-          <Edit fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="qnty" posX="12" posY="4" precisionDecimal="15" scaleDecimal="3" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Edit fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" length="1" name="qnty" posX="12" posY="4" precisionDecimal="15" scaleDecimal="3" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_disc" posX="23" posY="4" text="Discount Perc"/>
-          <Edit fieldId="6" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="disc_pct" noEntry="false" posX="34" posY="4" precisionDecimal="7" scaleDecimal="3" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Edit fieldId="6" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" length="1" name="disc_pct" noEntry="false" posX="34" posY="4" precisionDecimal="7" scaleDecimal="3" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_uom" posX="1" posY="5" text="Unit Of Measure"/>
           <ComboBox fieldId="4" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" items="Each, 6 Pack, Box" length="20" name="uom" noEntry="true" posX="12" posY="5" sqlType="VARCHAR" tabIndex="-1" title="edit1" widget="ComboBox">
             <Item lstrtext="false" name="EA" text="Each"/>
@@ -41,22 +41,22 @@
             <Item lstrtext="false" name="BOX" text="Box"/>
           </ComboBox>
           <Label gridHeight="1" gridWidth="10" name="lbl_disc_amt" posX="23" posY="5" text="Discount Amount"/>
-          <Edit fieldId="7" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="disc_amt" noEntry="true" posX="34" posY="5" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Edit fieldId="7" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" length="1" name="disc_amt" noEntry="true" posX="34" posY="5" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_price" posX="1" posY="7" text="Unit Price"/>
-          <Edit fieldId="5" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="unit_cost" noEntry="true" posX="12" posY="7" precisionDecimal="15" scaleDecimal="4" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Edit fieldId="5" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" length="1" name="unit_cost" noEntry="true" posX="12" posY="7" precisionDecimal="15" scaleDecimal="4" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_gross_amt" posX="23" posY="7" text="Gross Amount"/>
-          <Edit fieldId="8" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="gross_amt" noEntry="true" posX="34" posY="7" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Edit fieldId="8" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" length="1" name="gross_amt" noEntry="true" posX="34" posY="7" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_vat_amt" posX="1" posY="8" text="VAT Amount"/>
-          <Edit fieldId="9" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="vat_amt" noEntry="true" posX="12" posY="8" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Edit fieldId="9" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" length="1" name="vat_amt" noEntry="true" posX="12" posY="8" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_net_amt" posX="23" posY="8" text="Net Amount"/>
-          <Edit fieldId="10" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="net_amt" noEntry="true" posX="34" posY="8" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Edit fieldId="10" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" length="1" name="net_amt" noEntry="true" posX="34" posY="8" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_vat_amt1" posX="1" posY="9" text="VAT Rate"/>
-          <ComboBox defaultValue="0" fieldId="12" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" items="No VAT, 15 %" name="vat_rate" noEntry="true" posX="12" posY="9" precisionDecimal="7" scaleDecimal="3" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="ComboBox">
+          <ComboBox defaultValue="0" fieldId="12" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" items="No VAT, 15 %" length="1" name="vat_rate" noEntry="true" posX="12" posY="9" precisionDecimal="7" scaleDecimal="3" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="ComboBox">
             <Item lstrtext="false" name="0" text="No VAT"/>
             <Item lstrtext="false" name="15" text="15 %"/>
           </ComboBox>
           <Label gridHeight="1" gridWidth="10" name="lbl_line_total" posX="23" posY="9" text="Line Total"/>
-          <Edit fieldId="11" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" name="line_total" noEntry="true" posX="34" posY="9" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
+          <Edit fieldId="11" fieldType="NON_DATABASE" gridHeight="1" gridWidth="10" length="1" name="line_total" noEntry="true" posX="34" posY="9" precisionDecimal="15" scaleDecimal="2" sqlType="DECIMAL" tabIndex="-1" title="edit1" widget="Edit"/>
         </Group>
         <Group gridChildrenInParent="true" gridHeight="4" gridWidth="46" name="produt_info" posX="1" posY="13" text="Product Info">
           <Label gridHeight="1" gridWidth="13" justify="center" name="label1" posX="1" posY="1" text="Store Balance"/>
@@ -70,6 +70,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmADUAMwBjAGUAMwBjADQALQAzADgAYwAxAC0ANAAxAGQAMAAtADkAOAAzAGMALQA3ADMAYgBlADUAZQBmADEAMQBiADUAZQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewAzADQAZQAwAGIAOQA3ADYALQBkADIAOQA3AC0ANABlADIAMgAtAGIAZABmADUALQBkAGQANAA3ADYAMQA3AGUAMQAzADAAZAB9QGhMzNkzMzU+gAAACAAAAT9QYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAzADQAZQAwAGIAOQA3ADYALQBkADIAOQA3AC0ANABlADIAMgAtAGIAZABmADUALQBkAGQANAA3ADYAMQA3AGUAMQAzADAAZAB9QGhMzN9GZms+gAAADAAAAz9QYk3S8an8AQAAAEwAewBmADUAMwBjAGUAMwBjADQALQAzADgAYwAxAC0ANAAxAGQAMAAtADkAOAAzAGMALQA3ADMAYgBlADUAZQBmADEAMQBiADUAZQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

@@ -4,6 +4,7 @@
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record masterTable="pu31_grn_hdr" name="rec_pu131_grn" uid="{cefb595d-ab0e-41de-9a1b-500800bfdc47}">
+    <RecordField colName="id" fieldIdRef="53" fieldType="TABLE_COLUMN" name="pu31_grn_hdr.id" sqlTabName="pu31_grn_hdr" uid="{4c296ae3-ebb8-495f-939e-35da2f0ca84c}"/>
     <RecordField colName="doc_no" fieldIdRef="2" fieldType="TABLE_COLUMN" name="pu31_grn_hdr.doc_no" sqlTabName="pu31_grn_hdr" uid="{78ac24e9-dc43-452b-95d2-4475a04e1303}"/>
     <RecordField colName="ref_doc_type" fieldIdRef="3" fieldType="TABLE_COLUMN" name="pu31_grn_hdr.ref_doc_type" sqlTabName="pu31_grn_hdr" uid="{319ef606-b5b7-4415-9d6f-da7848dca997}"/>
     <RecordField colName="ref_doc_no" fieldIdRef="4" fieldType="TABLE_COLUMN" name="pu31_grn_hdr.ref_doc_no" sqlTabName="pu31_grn_hdr" uid="{cc4e4f22-02aa-4c50-ab2a-b6ac4e180bdf}"/>
@@ -30,7 +31,6 @@
     <RecordField colName="deleted_at" fieldIdRef="25" fieldType="TABLE_COLUMN" name="pu31_grn_hdr.deleted_at" sqlTabName="pu31_grn_hdr" uid="{80a3a2f8-dcc8-4ffc-80d8-e9017db86d28}"/>
     <RecordField colName="created_by" fieldIdRef="26" fieldType="TABLE_COLUMN" name="pu31_grn_hdr.created_by" sqlTabName="pu31_grn_hdr" uid="{5b27a587-e52f-4196-aa19-386a063b7e7c}"/>
     <RecordField colName="updated_by" fieldIdRef="27" fieldType="TABLE_COLUMN" name="pu31_grn_hdr.updated_by" sqlTabName="pu31_grn_hdr" uid="{dd220f2b-2cbc-472a-acc8-657f0794cb35}"/>
-    <RecordField colName="id" fieldIdRef="53" fieldType="TABLE_COLUMN" name="pu31_grn_hdr.id" sqlTabName="pu31_grn_hdr" uid="{4c296ae3-ebb8-495f-939e-35da2f0ca84c}"/>
   </Record>
   <Record masterTable="pu31_grn_det" name="arr_pu131_grn" uid="{15c3deeb-4fc0-465b-bfc5-4cf32344d755}">
     <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="pu31_grn_det.id" sqlTabName="pu31_grn_det" uid="{85d00c93-c8d8-4794-9f4a-a38cf5f8578b}"/>
@@ -282,6 +282,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBjAGUAZgBiADUAOQA1AGQALQBhAGIAMABlAC0ANAAxAGQAZQAtADkAYQAxAGIALQA1ADAAMAA4ADAAMABiAGYAZABjADQANwB9QGmAABpAAApATTMzU2Zmdj+Ik3S8an78AQAAAEwAewAxADUAYwAzAGQAZQBlAGIALQA0AGYAYwAwAC0ANAA2ADUAYgAtAGIAZgBjADUALQA0AGMAZgAzADIAMwA0ADQAZAA3ADUANQB9QHxzM1AmZnFAHMzNCZmZxD+SbpeNT98+AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBjAGUAZgBiADUAOQA1AGQALQBhAGIAMABlAC0ANAAxAGQAZQAtADkAYQAxAGIALQA1ADAAMAA4ADAAMABiAGYAZABjADQANwB9QGmAACCgABBATTMzWrMzSz+Ik3S8an78AQAAAEwAewAxADUAYwAzAGQAZQBlAGIALQA0AGYAYwAwAC0ANAA2ADUAYgAtAGIAZgBjADUALQA0AGMAZgAzADIAMwA0ADQAZAA3ADUANQB9QHxzM1dDM0ZAHMzNEMzNBj+SbpeNT98+AQ==]]>
   </DiagramLayout>
 </ManagedForm>

@@ -19,7 +19,6 @@ IMPORT FGL sy100_login
 
 -- Module imports for execution
 IMPORT FGL st101_mast
-IMPORT FGL st101_mast
 IMPORT FGL st102_cat
 IMPORT FGL wh101_mast
 IMPORT FGL cl101_mast
@@ -125,8 +124,8 @@ FUNCTION main_application_menu()
         ON ACTION sa_inv
              CALL launch_module("sa132_invoice", "Sales Invoices")
              
-        ON ACTION sa_crn
-             CALL launch_module("sa132_invoice", "Sales Invoices")
+           ON ACTION sa_crn
+               CALL launch_module("sa133_crn", "Credit Notes")
 
             -- ------------------------------------------------------
             -- PURCHASES MODULE
@@ -228,7 +227,7 @@ PRIVATE FUNCTION execute_module(formname STRING)
             CALL cl101_mast.init_cl_module()
         WHEN "st101_mast"
             CALL st101_mast.init_st_module()
-        WHEN "wh0101_mast"
+        WHEN "wh101_mast"
              CALL wh101_mast.init_wh_module()
             DISPLAY "Stock Enq"
         WHEN "st102_cat"

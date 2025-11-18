@@ -48,7 +48,7 @@ FUNCTION new_ord_from_master(p_cust_id INTEGER)
     DEFINE l_cust_id INTEGER
     LET l_cust_id = p_cust_id
 
-    SELECT * INTO m_qt_hdr_rec.* FROM dl01_mast WHERE id = l_cust_id
+    SELECT * INTO m_qt_hdr_rec.* FROM dl01_mast WHERE id = p_cust_id
 
     OPTIONS INPUT WRAP
     OPEN WINDOW w_sa130 WITH FORM "sa130_quote" -- ATTRIBUTES(STYLE = "normal")

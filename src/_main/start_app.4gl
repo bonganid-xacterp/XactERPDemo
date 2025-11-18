@@ -118,7 +118,7 @@ FUNCTION open_mdi_container()
     DEFINE f ui.Form
 
     -- MDI container setup
-    CALL ui.Interface.setContainer('Window.main')
+    CALL ui.Interface.setContainer('main_shell')
     CALL ui.Interface.setName('main_shell')
     CALL ui.Interface.setType('container')
 
@@ -199,10 +199,11 @@ END FUNCTION
 -- ==============================================================
 FUNCTION launch_child_module(module_name STRING, title STRING)
 
-DEFINE win_name STRING
+DEFINE win_name STRING   
 
     LET g_window_count = g_window_count + 1
     LET win_name = module_name || "_" || g_window_count
+    
     -- Ask main_shell to create and register the window inside MDI
     IF main_shell.launch_child_window(module_name, title) THEN
         
@@ -213,7 +214,7 @@ DEFINE win_name STRING
             WHEN "st102_cat"        CALL st102_cat.init_category_module()
             WHEN "st103_uom_mast"   CALL st103_uom_mast.init_uom_module()
 
-            -- Warehouse
+            -- Warehouse & Bin
             WHEN "wh101_mast"       CALL wh101_mast.init_wh_module()
             WHEN "wb101_mast"       CALL wb101_mast.init_wb_module()
 
@@ -253,16 +254,28 @@ FUNCTION close_current_window()
     DEFINE winname STRING
 
     LET w = ui.Window.getCurrent()
-    IF w IS NOT NULL THEN
-        --LET winname = w.getForm().getNode()
-        IF winname != "w_main" THEN
-            CLOSE WINDOW winname
-            CALL utils_globals.show_info("Window closed.")
-        ELSE
-            CALL utils_globals.show_info("Cannot close main window.")
-        END IF
+
+    IF w IS NULL THEN
+        CALL utils_globals.show_info("No active window.")
+        RETURN
     END IF
+
+    LET winname = ui.Interface.getContainer()
+
+
+    IF winname = "w_main" THEN
+        CALL utils_globals.show_info("Cannot close main window.")
+        RETURN
+    END IF
+
+    TRY
+        CLOSE WINDOW winname
+        CALL main_shell.cleanup_stale_windows()
+    CATCH
+        CALL utils_globals.show_error("Unable to close window: " || winname)
+    END TRY
 END FUNCTION
+
 
 -- ==============================================================
 -- CLOSE ALL WINDOW 
@@ -300,6 +313,12 @@ END FUNCTION
 
 FUNCTION show_about_dialog()
     DEFINE about_text STRING
+    DEFINE formatted_login STRING
+    LET formatted_login = ""
+    IF g_login_time IS NOT NULL THEN
+        LET formatted_login = g_login_time USING "DD/MM/YYYY HH:MM:SS"
+    END IF
+
     LET about_text =
         APP_NAME
                 || "\n"
@@ -308,8 +327,7 @@ FUNCTION show_about_dialog()
                 || g_current_username
                 || "\n"
                 || "Login Time: "
-                || g_login_time
-            USING "DD/MM/YYYY HH:MM:SS"
+                || formatted_login
                 || "\n\n"
                 || "(c) 2025 XactERP Solutions"
 

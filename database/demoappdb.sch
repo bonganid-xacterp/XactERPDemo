@@ -1,6 +1,6 @@
 cl01_mast^id^309^8^1^
 cl01_mast^supp_name^457^120^2^
-cl01_mast^phone^201^30^3^
+cl01_mast^phone^201^11^3^
 cl01_mast^email^201^120^4^
 cl01_mast^address1^201^100^5^
 cl01_mast^address2^201^100^6^
@@ -17,7 +17,7 @@ cl01_mast^created_by^52^8^16^
 cl30_trans^id^309^8^1^
 cl30_trans^supp_id^52^8^2^
 cl30_trans^trans_date^263^4^3^
-cl30_trans^doc_no^201^30^4^
+cl30_trans^doc_no^5^2560^4^
 cl30_trans^doc_type^201^20^5^
 cl30_trans^gross_tot^261^3842^6^
 cl30_trans^disc_tot^261^3842^7^
@@ -26,7 +26,7 @@ cl30_trans^net_tot^261^3842^9^
 cl30_trans^notes^201^200^10^
 dl01_mast^id^309^8^1^
 dl01_mast^cust_name^457^120^2^
-dl01_mast^phone^201^30^3^
+dl01_mast^phone^201^11^3^
 dl01_mast^email^201^120^4^
 dl01_mast^address1^201^100^5^
 dl01_mast^address2^201^100^6^
@@ -45,7 +45,7 @@ dl01_mast^deleted_at^10^4622^18^
 dl01_mast^created_by^52^8^19^
 dl30_trans^id^309^8^1^
 dl30_trans^cust_id^52^8^2^
-dl30_trans^doc_no^201^30^3^
+dl30_trans^doc_no^5^2560^3^
 dl30_trans^trans_date^263^4^4^
 dl30_trans^doc_type^201^20^5^
 dl30_trans^gross_tot^261^3842^6^
@@ -119,7 +119,7 @@ pu30_ord_det^vat_rate^261^1795^12^
 pu30_ord_det^vat_amt^261^3842^13^
 pu30_ord_det^net_amt^261^3842^14^
 pu30_ord_det^line_total^261^3842^15^
-pu30_ord_det^wh_id^52^8^16^
+pu30_ord_det^wh_code^52^8^16^
 pu30_ord_det^wb_id^52^8^17^
 pu30_ord_det^notes^201^200^18^
 pu30_ord_det^status^457^20^19^
@@ -179,13 +179,13 @@ pu31_grn_det^created_by^52^8^24^
 pu31_grn_det^updated_at^10^4622^25^
 pu31_grn_det^updated_by^52^8^26^
 pu31_grn_hdr^id^309^8^1^
-pu31_grn_hdr^doc_no^201^30^2^
+pu31_grn_hdr^doc_no^5^2560^2^
 pu31_grn_hdr^ref_doc_type^201^20^3^
-pu31_grn_hdr^ref_doc_no^201^30^4^
+pu31_grn_hdr^ref_doc_no^52^8^4^
 pu31_grn_hdr^trans_date^263^4^5^
 pu31_grn_hdr^supp_id^52^8^6^
 pu31_grn_hdr^supp_name^201^100^7^
-pu31_grn_hdr^supp_phone^201^20^8^
+pu31_grn_hdr^supp_phone^201^11^8^
 pu31_grn_hdr^supp_email^201^100^9^
 pu31_grn_hdr^supp_address1^201^100^10^
 pu31_grn_hdr^supp_address2^201^100^11^
@@ -491,9 +491,8 @@ st03_uom_master^id^309^8^1^
 st03_uom_master^uom_code^457^20^2^
 st03_uom_master^uom_name^457^50^3^
 st03_uom_master^uom_type^201^20^4^
-st03_uom_master^is_active^45^1^5^
-st03_uom_master^decimal_places^2^4^6^
-st03_uom_master^created_at^10^4622^7^
+st03_uom_master^status^201^10^5^
+st03_uom_master^created_at^10^4622^6^
 st04_stock_uom^id^309^8^1^
 st04_stock_uom^stock_id^308^8^2^
 st04_stock_uom^uom_id^308^8^3^

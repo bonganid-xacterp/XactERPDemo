@@ -1237,3 +1237,11 @@ FUNCTION load_uoms()
         DISPLAY "Warning: Could not load UOMs - ", SQLCA.SQLERRM
     END TRY
 END FUNCTION
+
+-- ==============================================================
+-- Update the customer balances
+-- ==============================================================
+FUNCTION update_debtor_balances(p_cust_id INTEGER)
+    --DEFINE l_cust RECORD LIKE dl01_mast.*
+   
+END FUNCTION

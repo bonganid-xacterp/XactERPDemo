@@ -39,10 +39,8 @@ FUNCTION login_user() RETURNS SMALLINT
         -- Open login window (dialog style)
         -- ------------------------------------------------------------
         OPTIONS INPUT WRAP
-        OPEN WINDOW w_login
-            WITH
-            FORM "sy100_login"
-            ATTRIBUTES(STYLE = "dialog", TYPE = POPUP)
+        OPEN WINDOW w_login WITH FORM "sy100_login"
+            ATTRIBUTES(STYLE = "Window.dialog", TYPE = POPUP)
 
         -- Attach current form reference
         LET w = ui.Window.getCurrent()
@@ -60,6 +58,7 @@ FUNCTION login_user() RETURNS SMALLINT
             -- Optional: Set company logo dynamically
             TRY
                 CALL f.setElementImage("company_logo", "company_logo.png")
+                CALL utils_globals.set_page_title(' LOGIN ')
             CATCH
                 -- Log but don't fail - logo is optional
                 CALL log_warning(
@@ -125,8 +124,8 @@ FUNCTION run_login_dialog() RETURNS(SMALLINT, STRING, STRING)
 
     TRY
         DIALOG ATTRIBUTES(UNBUFFERED)
-
-            INPUT BY NAME f_username, f_password
+           
+            INPUT BY NAME  f_username, f_password  ATTRIBUTES(WITHOUT DEFAULTS)
 
                 BEFORE INPUT
                     TRY

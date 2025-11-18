@@ -38,7 +38,7 @@ DEFINE m_open_modules DYNAMIC ARRAY OF RECORD
     opened DATETIME YEAR TO SECOND
 END RECORD
 
-DEFINE m_debug_mode BOOLEAN
+DEFINE m_debug_mode SMALLINT
 
 -- ==============================================================
 -- FUNCTION: launch_child_window
@@ -46,65 +46,48 @@ DEFINE m_debug_mode BOOLEAN
 -- Returns : TRUE if window opened, FALSE if already open or error
 -- ==============================================================
 
-FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS BOOLEAN
+FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS STRING
     DEFINE i INTEGER
     DEFINE winname STRING
+    DEFINE child STRING 
 
-    -- Validate input
     IF formname IS NULL OR formname.getLength() = 0 THEN
-        CALL utils_globals.show_error("Invalid form name provided.")
-        RETURN FALSE
+        RETURN NULL
     END IF
 
-    IF wintitle IS NULL THEN
-        LET wintitle = formname
-    END IF
-
-    -- Check if window is already open
+    -- Already open?
     FOR i = 1 TO m_open_modules.getLength()
         IF m_open_modules[i].prog = formname THEN
-            CALL utils_globals.show_info(wintitle || " is already open.")
             CALL bring_window_to_front(m_open_modules[i].winname)
-            RETURN FALSE
+            RETURN m_open_modules[i].winname
         END IF
     END FOR
 
-    -- Generate unique window name
-    LET winname =
-        WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
+    -- Create window name
+    LET winname = WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
 
     TRY
-        -- Configure as MDI child window
         CALL ui.Interface.setType("child")
-        CALL ui.Interface.setName(formname)
         CALL ui.Interface.setContainer(MDI_CONTAINER)
 
-        -- Open the child window
-        OPTIONS INPUT WRAP
         OPEN WINDOW winname WITH FORM formname
-            ATTRIBUTES(STYLE = "Window.child", TEXT = wintitle)
+            ATTRIBUTES(TEXT = wintitle, STYLE="Window.child")
 
-        -- Register window
+        -- register window
         LET i = m_open_modules.getLength() + 1
         LET m_open_modules[i].prog = formname
         LET m_open_modules[i].winname = winname
         LET m_open_modules[i].title = wintitle
         LET m_open_modules[i].opened = CURRENT
 
-        IF m_debug_mode THEN
-            DISPLAY SFMT("Opened: %1 (%2) - Total windows: %3",
-                winname, wintitle, m_open_modules.getLength())
-        END IF
-
     CATCH
-        CALL utils_globals.show_error('Error opening program ' 
-                                    || ' ' || formname || ' '
-                                    || winname )
+        CALL utils_globals.show_error("Unable to open: " || formname)
+        RETURN NULL
     END TRY
-    
-    RETURN TRUE
 
+    RETURN winname
 END FUNCTION
+
 
 -- ==============================================================
 -- FUNCTION: close_child_window
@@ -128,6 +111,11 @@ FUNCTION close_child_window(formname STRING) RETURNS BOOLEAN
             LET w = ui.Window.forName(winname)
 
             IF w IS NOT NULL THEN
+            MENU
+                ON ACTION close
+                    EXIT MENU
+            END MENU
+            
                 CLOSE WINDOW winname
                 IF m_debug_mode THEN
                     DISPLAY "Closed window: ", winname

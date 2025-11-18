@@ -39,8 +39,9 @@ FUNCTION load_lookup() RETURNS STRING
     CALL arr_st_cat.clear()
 
     FOREACH st_cat_curs INTO rec_list.*
-        LET idx = idx + 1
         LET arr_st_cat[idx].* = rec_list.*
+                LET idx = idx + 1
+
     END FOREACH
 
     IF idx > 0 THEN

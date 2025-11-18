@@ -17,12 +17,11 @@ SCHEMA demoappdb
 -- Record Definitions
 -- ==============================================================
 TYPE uom_t RECORD LIKE st03_uom_master.*
+DEFINE uom_rec uom_t
 
-DEFINE rec_uom uom_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
-DEFINE m_username STRING
 
 -- ==============================================================
 -- MAIN
@@ -63,7 +62,7 @@ FUNCTION init_uom_module()
             CALL new_uom()
 
         COMMAND "Edit"
-            IF rec_uom.id IS NULL OR rec_uom.id = 0 THEN
+            IF uom_rec.id IS NULL OR uom_rec.id = 0 THEN
                 CALL utils_globals.show_info("No record selected.")
             ELSE
                 CALL edit_uom()
@@ -107,12 +106,11 @@ END FUNCTION
 -- Load UOM Record
 -- ==============================================================
 FUNCTION load_uom_item(p_id INTEGER)
-    SELECT * INTO rec_uom.* FROM st03_uom_master WHERE id = p_id
+    SELECT * INTO uom_rec. FROM st03_uom_master WHERE id = p_id
 
     IF SQLCA.SQLCODE = 0 THEN
         --CALL refresh_display_fields()
-        DISPLAY BY NAME rec_uom.*, m_username
-    END IF
+        DISPLAY BY NAME uom_rec.*
 END FUNCTION
 
 -- ==============================================================
@@ -123,38 +121,38 @@ FUNCTION query_uom() RETURNS STRING
             id     LIKE st03_uom_master.id,
             uom_code  LIKE st03_uom_master.uom_code,
             uom_name  LIKE st03_uom_master.uom_name,
-            is_active LIKE st03_uom_master.is_active
+            status LIKE st03_uom_master.status
         END RECORD,
         rec_list RECORD
             id     LIKE st03_uom_master.id,
             uom_code  LIKE st03_uom_master.uom_code,
             uom_name  LIKE st03_uom_master.uom_name,
-            is_active LIKE st03_uom_master.is_active
+            status LIKE st03_uom_master.status
         END RECORD,
         ret_code STRING,
-        curr_row, idx SMALLINT
+        curr_row, curr_idx SMALLINT
 
-    LET idx = 0
+    LET curr_idx = 0
     LET ret_code = NULL
 
     OPEN WINDOW w_lkup WITH FORM "st103_uom_lkup"
         ATTRIBUTES(TYPE = POPUP, STYLE = "lookup")
 
     DECLARE uom_curs CURSOR FOR
-        SELECT id, uom_code, uom_name, is_active
+        SELECT id, uom_code, uom_name, status
           FROM st03_uom_master
-         ORDER BY uom_code
+         ORDER BY id DESC
 
     CALL arr_uom.clear()
 
     FOREACH uom_curs INTO rec_list.*
-        LET idx = idx + 1
-        LET arr_uom[idx].* = rec_list.*
+        LET arr_uom[curr_idx].* = rec_list.*
+        LET curr_idx = curr_idx + 1
     END FOREACH
 
-    IF idx > 0 THEN
+    IF curr_idx > 0 THEN
         DISPLAY ARRAY arr_uom TO rec_list.*
-            ATTRIBUTES(COUNT = idx, UNBUFFERED)
+            ATTRIBUTES(COUNT = curr_idx, UNBUFFERED)
         LET curr_row = arr_curr()
         LET ret_code = arr_uom[curr_row].id
     ELSE
@@ -166,27 +164,17 @@ FUNCTION query_uom() RETURNS STRING
 END FUNCTION
 
 -- ==============================================================
--- Refresh Linked Fields
--- ==============================================================
---FUNCTION refresh_display_fields()
---    LET m_username = utils_globals.get_username(rec_uom.created_by)
---    DISPLAY BY NAME m_username
---END FUNCTION
-
--- ==============================================================
 -- New UOM
 -- ==============================================================
 FUNCTION new_uom()
-    DEFINE random_id INTEGER
     DEFINE frm ui.Form
 
-    INITIALIZE rec_uom.* TO NULL
+    INITIALIZE uom_rec.* TO NULL
 
-    LET rec_uom.is_active = "1"
-    LET rec_uom.decimal_places = 2
-    LET random_id = utils_globals.get_random_user()
-    --LET rec_uom.created_by = random_id
-    LET rec_uom.created_at = TODAY
+    LET uom_rec.status = "1"
+    LET uom_rec.decimal_places = 2
+    --LET uom_rec.created_by = random_id
+    LET uom_rec.created_at = TODAY
 
     -- refresh to get the username after updating the user id
     --CALL refresh_display_fields()
@@ -194,11 +182,11 @@ FUNCTION new_uom()
     LET frm = ui.Window.getCurrent().getForm()
     CALL frm.setFieldHidden("id", TRUE) -- make id read-only for new
 
-    INPUT BY NAME rec_uom.* ATTRIBUTES(WITHOUT DEFAULTS)
+    INPUT BY NAME uom_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
 
         ON ACTION save
-            IF check_uom_unique(rec_uom.uom_code) = 0 THEN
-                INSERT INTO st03_uom_master VALUES rec_uom.*
+            IF check_uom_unique(uom_rec.uom_code) = 0 THEN
+                INSERT INTO st03_uom_master VALUES uom_rec.*
                 CALL utils_globals.msg_saved()
                 EXIT INPUT
             END IF
@@ -207,8 +195,8 @@ FUNCTION new_uom()
             EXIT INPUT
     END INPUT
 
-    IF rec_uom.id IS NOT NULL THEN
-        CALL load_uom_item(rec_uom.id)
+    IF uom_rec.id IS NOT NULL THEN
+        CALL load_uom_item(uom_rec.id)
     END IF
 END FUNCTION
 
@@ -221,13 +209,13 @@ FUNCTION edit_uom()
     CALL frm.setFieldHidden("id", TRUE) -- id is read-only during edit
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_uom.* ATTRIBUTES(WITHOUT DEFAULTS)
+        INPUT BY NAME uom_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
 
             ON ACTION save ATTRIBUTES(TEXT="Update")
                 CALL save_uom()
                 EXIT DIALOG
             ON ACTION cancel ATTRIBUTES(TEXT="Exit")
-                CALL load_uom_item(rec_uom.id)
+                CALL load_uom_item(uom_rec.id)
                 EXIT DIALOG
         END INPUT
     END DIALOG
@@ -239,16 +227,16 @@ END FUNCTION
 FUNCTION save_uom()
     DEFINE r_exists INTEGER
 
-    SELECT COUNT(*) INTO r_exists FROM st03_uom_master WHERE id = rec_uom.id
+    SELECT COUNT(*) INTO r_exists FROM st03_uom_master WHERE id = uom_rec.id
     IF r_exists = 0 THEN
-        INSERT INTO st03_uom_master VALUES rec_uom.*
+        INSERT INTO st03_uom_master VALUES uom_rec.*
         CALL utils_globals.msg_saved()
     ELSE
-        UPDATE st03_uom_master SET st03_uom_master.* = rec_uom.* WHERE id = rec_uom.id
+        UPDATE st03_uom_master SET st03_uom_master.* = uom_rec.* WHERE id = uom_rec.id
         CALL utils_globals.msg_updated()
     END IF
 
-    CALL load_uom_item(rec_uom.id)
+    CALL load_uom_item(uom_rec.id)
 END FUNCTION
 
 -- ==============================================================
@@ -328,7 +316,7 @@ FUNCTION delete_uom()
         usage_count INTEGER,
         ok SMALLINT
 
-    IF rec_uom.id IS NULL OR rec_uom.id = 0 THEN
+    IF uom_rec.id IS NULL OR uom_rec.id = 0 THEN
         CALL utils_globals.show_info("No UOM selected.")
         RETURN
     END IF
@@ -337,7 +325,7 @@ FUNCTION delete_uom()
     SELECT COUNT(*)
         INTO usage_count
         FROM st04_stock_uom
-        WHERE uom_id = rec_uom.id
+        WHERE uom_id = uom_rec.id
     IF usage_count > 0 THEN
         CALL utils_globals.show_error("Cannot delete UOM that is in use.")
         RETURN
@@ -345,7 +333,7 @@ FUNCTION delete_uom()
 
     LET ok = utils_globals.show_confirm("Delete this UOM?", "Confirm")
     IF ok THEN
-        DELETE FROM st03_uom_master WHERE id = rec_uom.id
+        DELETE FROM st03_uom_master WHERE id = uom_rec.id
         CALL utils_globals.msg_deleted()
         LET ok = select_uom_items("1=1")
     END IF

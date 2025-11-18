@@ -21,27 +21,30 @@ FUNCTION fetch_list() RETURNS STRING
         cred_arr DYNAMIC ARRAY OF RECORD
             id LIKE cl01_mast.id,
             supp_name LIKE cl01_mast.supp_name,
-            status LIKE cl01_mast.status
+            status LIKE cl01_mast.status,
+            balance LIKE cl01_mast.balance
         END RECORD,
 
         cred_rec RECORD
             id LIKE cl01_mast.id,
             supp_name LIKE cl01_mast.supp_name,
-            status LIKE cl01_mast.status
+            status LIKE cl01_mast.status,
+            balance LIKE cl01_mast.balance
         END RECORD
 
     LET idx = 0
     LET selected_code = NULL
-    OPTIONS INPUT WRAP
+    
     OPEN WINDOW w_cred WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
     -- Load data of all active creditors
     DECLARE creditors_curs CURSOR FOR
         SELECT id,
             supp_name,
-            status
+            status,
+            balance
             FROM cl01_mast
-            ORDER BY id
+            ORDER BY id ASC
 
     CALL cred_arr.clear()
 

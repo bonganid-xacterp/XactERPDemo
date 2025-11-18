@@ -267,7 +267,7 @@ FUNCTION new_creditor()
             ON ACTION cancel ATTRIBUTES(TEXT = "Cancel", IMAGE = "cancel")
                 LET new_acc_code = NULL
                 CALL utils_globals.show_info("Creation cancelled.")
-                EXIT DIALOG
+                EXIT PROGRAM 
         END INPUT
     END DIALOG
 

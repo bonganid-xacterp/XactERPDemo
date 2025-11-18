@@ -11,19 +11,18 @@ IMPORT FGL st121_st_lkup
 SCHEMA demoappdb
 
 TYPE line_data_t RECORD
-        id INTEGER,  
-        stock_id INTEGER,
-        item_name STRING,
-        uom STRING,
-        qnty DECIMAL(12, 2),
-        unit_cost DECIMAL(12, 2),
-        disc_pct DECIMAL(5, 2),
-        disc_amt DECIMAL(12, 2),
-        gross_amt DECIMAL(12, 2),
-        vat_rate DECIMAL(5, 2),
-        vat_amt DECIMAL(12, 2),
-        net_amt DECIMAL(12, 2),
-        line_total DECIMAL(12, 2)
+    stock_id INTEGER,
+    item_name STRING,
+    uom STRING,
+    qnty DECIMAL(12, 2),
+    unit_cost DECIMAL(12, 2),
+    disc_pct DECIMAL(5, 2),
+    disc_amt DECIMAL(12, 2),
+    gross_amt DECIMAL(12, 2),
+    vat_rate DECIMAL(5, 2),
+    vat_amt DECIMAL(12, 2),
+    net_amt DECIMAL(12, 2),
+    line_total DECIMAL(12, 2)
 END RECORD
 
 DEFINE m_line line_data_t
@@ -31,34 +30,36 @@ DEFINE m_line line_data_t
 -- Open doc line details lookup form
 FUNCTION open_line_details_lookup(p_doc_type STRING) RETURNS line_data_t
     DEFINE l_result line_data_t
-    DEFINE l_stock_id STRING
+    DEFINE l_stock_id INTEGER
     DEFINE l_stock RECORD LIKE st01_mast.*
-        --description VARCHAR(200),
-        --unit_cost DECIMAL(12,4)
+    --description VARCHAR(200),
+    --unit_cost DECIMAL(12,4)
     --END RECORD
 
     INITIALIZE l_result.* TO NULL
     INITIALIZE m_line.* TO NULL
 
-    CALL utils_globals.set_page_title("Line Details - " || p_doc_type)
-
     OPTIONS INPUT WRAP
-    OPEN WINDOW pu_lkup_form WITH FORM 'pu_lkup_form'
-        ATTRIBUTES(STYLE="normal", TEXT="Line Details - " || p_doc_type)
+    OPEN WINDOW pu_lkup_form
+        WITH
+        FORM 'pu_lkup_form'
+        ATTRIBUTES(STYLE = "dialog", TEXT = "Line Details - " || p_doc_type)
+
+    CALL utils_globals.set_page_title("Line Details - " || p_doc_type)
 
     -- Set default values
     LET m_line.qnty = 0
     LET m_line.disc_pct = 0
 
-    INPUT BY NAME m_line.*
-        ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
+    INPUT BY NAME m_line.* ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
 
         BEFORE INPUT
             -- Display defaults
             DISPLAY BY NAME m_line.*
-        -- stock lookup in details form
+            -- stock lookup in details form
         ON ACTION lookup_stock
             LET l_stock_id = st121_st_lkup.display_stocklist()
+
             IF l_stock_id IS NOT NULL AND l_stock_id != "" THEN
                 -- Convert STRING to INTEGER
                 LET m_line.stock_id = l_stock_id CLIPPED
@@ -89,7 +90,7 @@ FUNCTION open_line_details_lookup(p_doc_type STRING) RETURNS line_data_t
         AFTER FIELD qnty, unit_cost, disc_pct, vat_rate
             CALL calculate_line_amounts()
 
-        ON ACTION accept ATTRIBUTES(TEXT="OK", IMAGE="check")
+        ON ACTION accept ATTRIBUTES(TEXT = "OK", IMAGE = "check")
             IF m_line.stock_id IS NULL OR m_line.stock_id = 0 THEN
                 CALL utils_globals.show_error("Please select a stock item.")
                 NEXT FIELD CURRENT
@@ -101,7 +102,7 @@ FUNCTION open_line_details_lookup(p_doc_type STRING) RETURNS line_data_t
             LET l_result.* = m_line.*
             EXIT INPUT
 
-        ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="cancel")
+        ON ACTION cancel ATTRIBUTES(TEXT = "Cancel", IMAGE = "cancel")
             INITIALIZE l_result.* TO NULL
             EXIT INPUT
     END INPUT
@@ -112,10 +113,10 @@ END FUNCTION
 
 -- Calculate line amounts
 FUNCTION calculate_line_amounts()
-    DEFINE l_gross DECIMAL(12,2)
-    DEFINE l_disc DECIMAL(12,2)
-    DEFINE l_vat DECIMAL(12,2)
-    DEFINE l_net DECIMAL(12,2)
+    DEFINE l_gross DECIMAL(12, 2)
+    DEFINE l_disc DECIMAL(12, 2)
+    DEFINE l_vat DECIMAL(12, 2)
+    DEFINE l_net DECIMAL(12, 2)
 
     -- Initialize defaults
     IF m_line.qnty IS NULL THEN

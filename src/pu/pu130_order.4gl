@@ -31,6 +31,7 @@ DEFINE m_crd_rec cred_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING -- doc id list for navigation
 DEFINE curr_idx SMALLINT
 DEFINE is_edit SMALLINT
+DEFINE m_timestamp DATETIME YEAR TO SECOND
 
 -- =======================
 -- MAIN
@@ -219,7 +220,6 @@ FUNCTION run_po_dialog()
                 ATTRIBUTES(TEXT = "Save Lines", IMAGE = "filesave")
                 IF m_po_lines_arr.getLength() > 0 THEN
                     CALL save_po_lines()
-                    CALL utils_globals.show_info("Lines saved successfully.")
                 ELSE
                     CALL utils_globals.show_info("No lines to save.")
                 END IF
@@ -277,8 +277,6 @@ FUNCTION new_po_from_master(p_supp_id INTEGER)
     LET m_po_hdr_rec.created_at = TODAY -- FIXED: Changed from CURRENT
     LET m_po_hdr_rec.created_by = utils_globals.get_random_user()
 
-    -- link supplier
-    LET m_po_hdr_rec.supp_id = l_supp_id
     -- link supplier
     LET m_po_hdr_rec.supp_id = m_crd_rec.id
     LET m_po_hdr_rec.supp_name = m_crd_rec.supp_name
@@ -430,7 +428,7 @@ FUNCTION new_po()
     LET m_po_hdr_rec.doc_no = next_doc -- Added missing assignment
     LET m_po_hdr_rec.trans_date = TODAY
     LET m_po_hdr_rec.status = "draft"
-    LET m_po_hdr_rec.created_at = TODAY -- FIXED: Changed from CURRENT
+    LET m_po_hdr_rec.created_at = m_timestamp
     LET m_po_hdr_rec.created_by = utils_globals.get_random_user()
 
     DISPLAY BY NAME m_po_hdr_rec.*
@@ -533,14 +531,10 @@ FUNCTION load_po(p_id INTEGER)
 
     -- Load lines
     DECLARE supp_curs CURSOR FOR
-        SELECT * FROM pu30_ord_det WHERE hdr_id = p_id ORDER BY id;
+        SELECT * FROM pu30_ord_det WHERE hdr_id = p_id ORDER BY id
 
-    OPEN supp_curs
-    FETCH supp_curs INTO m_po_lines_arr[m_po_lines_arr.getLength() + 1].*
-    WHILE SQLCA.SQLCODE = 0
-        FETCH supp_curs INTO m_po_lines_arr[m_po_lines_arr.getLength() + 1].*
-    END WHILE
-    CLOSE supp_curs
+    FOREACH supp_curs INTO m_po_lines_arr[m_po_lines_arr.getLength() + 1].*
+    END FOREACH
 
     -- Show header fields
     DISPLAY BY NAME m_po_hdr_rec.*
@@ -596,7 +590,6 @@ END FUNCTION
 -- ==============================================================
 FUNCTION populate_line_from_lookup(p_idx INTEGER)
     DEFINE l_line_data RECORD
-        id INTEGER,
         stock_id INTEGER,
         item_name STRING,
         uom STRING,
@@ -659,10 +652,7 @@ END FUNCTION
 -- Load stock details when stock_id is entered
 -- ==============================================================
 FUNCTION load_stock_details(p_idx INTEGER)
-    DEFINE l_stock RECORD
-        description VARCHAR(200),
-        unit_cost DECIMAL(12, 4)
-    END RECORD
+    DEFINE l_stock RECORD LIKE st01_mast.*
 
     IF m_po_lines_arr[p_idx].stock_id IS NULL
         OR m_po_lines_arr[p_idx].stock_id = 0 THEN
@@ -676,7 +666,7 @@ FUNCTION load_stock_details(p_idx INTEGER)
 
     IF SQLCA.SQLCODE = 0 THEN
         LET m_po_lines_arr[p_idx].item_name = l_stock.description
-        LET m_po_lines_arr[p_idx].uom = "EA" -- Default unit of measure
+        LET m_po_lines_arr[p_idx].uom = l_stock.uom -- Default unit of measure
         LET m_po_lines_arr[p_idx].unit_cost = l_stock.unit_cost
         LET m_po_lines_arr[p_idx].vat_rate = 15 -- Default VAT rate
 
@@ -793,12 +783,13 @@ END FUNCTION
 FUNCTION save_po_lines()
     DEFINE i INTEGER
     DEFINE l_line RECORD LIKE pu30_ord_det.*
-    DEFINE l_timestamp DATETIME YEAR TO FRACTION(5)
 
     DISPLAY l_line.*
 
     -- Renumber lines before saving
     CALL renumber_lines()
+
+    MESSAGE m_timestamp 
 
     BEGIN WORK
     TRY
@@ -827,11 +818,11 @@ FUNCTION save_po_lines()
             LET l_line.vat_amt          = m_po_lines_arr[i].vat_amt
             LET l_line.net_amt          = m_po_lines_arr[i].net_amt
             LET l_line.line_total       = m_po_lines_arr[i].line_total
-            LET l_line.wh_id            = m_po_lines_arr[i].wh_id
+            LET l_line.wh_code          = m_po_lines_arr[i].wh_code
             LET l_line.wb_id            = m_po_lines_arr[i].wb_id
             LET l_line.notes            = m_po_lines_arr[i].notes
             LET l_line.status           = m_po_lines_arr[i].status
-            LET l_line.created_at       = CURRENT
+            LET l_line.created_at       = m_timestamp
             LET l_line.created_by       = utils_globals.get_random_user()
 
             INSERT INTO pu30_ord_det VALUES l_line.*
@@ -846,7 +837,7 @@ FUNCTION save_po_lines()
             vat_tot = m_po_hdr_rec.vat_tot,
             net_tot = m_po_hdr_rec.net_tot,
             status = 'posted',
-            updated_at = l_timestamp
+            updated_at = m_timestamp
         WHERE id = m_po_hdr_rec.id
 
     COMMIT WORK
@@ -906,7 +897,7 @@ FUNCTION add_po_to_creditor_trans(p_hdr_id INTEGER)
                 m_po_hdr_rec.vat_tot,
                 m_po_hdr_rec.net_tot,
                 'Purchase Order',
-                TODAY,
+                m_timestamp,
                 m_po_hdr_rec.created_by,
                 'posted');
     ELSE
@@ -917,7 +908,7 @@ FUNCTION add_po_to_creditor_trans(p_hdr_id INTEGER)
                 vat_tot = m_po_hdr_rec.vat_tot,
                 net_tot = m_po_hdr_rec.net_tot,
                 trans_date = m_po_hdr_rec.trans_date,
-                updated_at = TODAY,
+                updated_at = m_timestamp,
                 status = 'posted'
             WHERE doc_type = 'PO' AND doc_no = p_hdr_id;
     END IF

@@ -7,24 +7,26 @@
     <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="cl01_mast.id" sqlTabName="cl01_mast" uid="{eb0b945b-fd7f-45cd-a195-667420135fc5}"/>
     <RecordField colName="supp_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="cl01_mast.supp_name" sqlTabName="cl01_mast" uid="{e9ea3f0d-b0ef-4413-b7ef-17d921e8f4c1}"/>
     <RecordField colName="status" fieldIdRef="3" fieldType="TABLE_COLUMN" name="cl01_mast.status" sqlTabName="cl01_mast" uid="{dd2a178d-68b4-4025-9da5-6b9fd7d880b0}"/>
+    <RecordField fieldIdRef="5" name="balance" uid="{5b69f5a9-1890-4ace-b4b2-23e2e8dd6065}"/>
   </Record>
   <Record active="false" masterTable="" name="f_search" uid="{c84bbaaf-b0a0-45d2-975d-bbd97053a0da}">
     <RecordField fieldIdRef="4" length="100" name="f_search" uid="{3d0adfb2-6e9d-4ecd-b5f9-edfa0b472cb0}"/>
   </Record>
-  <Form fourSTFile="" gridHeight="25" gridWidth="52" name="frm_crd_lkup" text="CREDITORS LOOKUP" windowStyle="modal">
-    <VBox gridHeight="22" gridWidth="51" name="vbox_main" posX="0" posY="0">
-      <Grid gridHeight="20" gridWidth="51" name="grid_grp" posX="0" posY="1">
-        <Label color="black" gridHeight="1" gridWidth="50" justify="center" name="lbl_form_title" posX="1" posY="0" sizePolicy="dynamic" text="CREDITORS LOOKUP"/>
-        <Table gridHeight="16" gridWidth="50" name="tbl_crd_list" posX="1" posY="1" totalRows="15">
-          <Edit colName="id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl01_mast.id" posX="0" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Code" widget="Edit">
+  <Form fourSTFile="" gridHeight="20" gridWidth="61" name="frm_crd_lkup" text="CREDITORS LOOKUP" windowStyle="modal">
+    <VBox gridHeight="20" gridWidth="61" name="vbox_main" posX="0" posY="0">
+      <Grid gridHeight="18" gridWidth="61" name="grid_grp" posX="0" posY="1">
+        <Label color="black" gridHeight="1" gridWidth="60" justify="center" name="lbl_form_title" posX="1" posY="0" sizePolicy="dynamic" text="CREDITORS LOOKUP"/>
+        <Table gridHeight="16" gridWidth="60" name="tbl_crd_list" posX="1" posY="1" totalRows="15">
+          <Edit colName="id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="cl01_mast.id" posX="0" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Code" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="supp_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="cl01_mast.supp_name" posX="10" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Supplier Name" widget="Edit">
+          <Edit colName="supp_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="cl01_mast.supp_name" posX="6" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Supplier Name" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="status" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="cl01_mast.status" posX="40" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Status" widget="Edit">
+          <Edit colName="status" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" name="cl01_mast.status" posX="36" posY="0" scroll="true" sqlTabName="cl01_mast" tabIndex="-1" title="Status" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
+          <Edit fieldId="5" gridHeight="1" gridWidth="11" name="balance" posX="42" posY="0" tabIndex="-1" title="Balance" widget="Edit"/>
         </Table>
         <Label gridHeight="1" gridWidth="9" name="lbl_filter" posX="1" posY="17" text="Filter"/>
         <Edit fieldId="4" gridHeight="1" gridWidth="29" length="100" name="f_search" posX="11" posY="17" tabIndex="-1" title="edit1" widget="Edit"/>
@@ -32,6 +34,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBjADgANABiAGIAYQBhAGYALQBiADAAYQAwAC0ANAA1AGQAMgAtADkANwA1AGQALQBiAGIAZAA5ADcAMAA1ADMAYQAwAGQAYQB9QGeZmdqAAFFAIZmZygAAPT9QYk3S8an8AQAAAEwAewBjADcANQA2AGQAMgA1ADcALQA4ADEAMwA0AC0ANABkADMANgAtAGIAMABhADgALQAyADUAZgA3AGQAMwAyADUAZAAzADMANQB9AAAAAAAAAAAAAAAAAAAAAD9gYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBjADcANQA2AGQAMgA1ADcALQA4ADEAMwA0AC0ANABkADMANgAtAGIAMABhADgALQAyADUAZgA3AGQAMwAyADUAZAAzADMANQB9AAAAAAAAAAAAAAAAAAAAAD9gYk3S8an8AQAAAEwAewBjADgANABiAGIAYQBhAGYALQBiADAAYQAwAC0ANAA1AGQAMgAtADkANwA1AGQALQBiAGIAZAA5ADcAMAA1ADMAYQAwAGQAYQB9QGeZmeBmZsdAIZmZzmZmrz9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

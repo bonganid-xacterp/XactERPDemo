@@ -44,7 +44,7 @@ DEFINE ret SMALLINT
     
     IF utils_globals.is_standalone() THEN
     OPTIONS INPUT WRAP
-        OPEN WINDOW w_dl101 WITH FORM "dl101_mast" ATTRIBUTES(STYLE = "child")
+        OPEN WINDOW w_dl101 WITH FORM "dl101_mast" --ATTRIBUTES(STYLE = "dialog")
         
         -- Call formatting HERE after form is ready
         --CALL utils_globals.apply_field_formatting() RETURNING *
