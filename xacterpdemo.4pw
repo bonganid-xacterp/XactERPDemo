@@ -77,7 +77,7 @@
         <File filePath="src/_main/main_topmenu.4tm"/>
         <File filePath="src/_main/start_app.4gl"/>
       </Application>
-      <Application binaryName="cl" dependencies="497700,56784492,104908716,31764552,782461791,39599040" id="396525034" label="cl">
+      <Application binaryName="cl" dependencies="497700,56784492,104908716,31764552,782461791" id="396525034" label="cl">
         <File filePath="src/cl/cl101_mast.4fd"/>
         <File filePath="src/cl/cl101_mast.4gl"/>
         <File filePath="src/cl/cl121_lkup.4fd"/>
@@ -121,7 +121,7 @@
         <File filePath="src/payt/payt220_cashbook.4fd"/>
         <File filePath="src/payt/payt220_cashbook.4gl"/>
       </Application>
-      <Application binaryName="pu" dependencies="497700,56784492,104908716,31764552,782461791,757682379,33552074,276307902,206295008,45766396" id="39599040" label="pu">
+      <Application binaryName="pu" dependencies="497700,56784492,104908716,31764552,782461791,757682379,33552074,276307902,206295008,45766396,396525034" id="39599040" label="pu">
         <File filePath="src/pu/pu130_order.4fd"/>
         <File filePath="src/pu/pu130_order.4gl"/>
         <File filePath="src/pu/pu131_grn.4fd"/>
@@ -159,6 +159,8 @@
         <File filePath="src/st/st103_uom_mast.4gl"/>
         <File filePath="src/st/st120_enq.4fd"/>
         <File filePath="src/st/st120_enq.4gl"/>
+        <File filePath="src/st/st121_lkup_form.4fd"/>
+        <File filePath="src/st/st121_lkup_form.4gl"/>
         <File filePath="src/st/st121_st_lkup.4fd"/>
         <File filePath="src/st/st121_st_lkup.4gl"/>
         <File filePath="src/st/st122_cat_lkup.4fd"/>
@@ -195,6 +197,7 @@
         <File filePath="src/utils/utils_globals.4gl"/>
         <File filePath="src/utils/utils_lkup.4gl"/>
         <File filePath="src/utils/utils_lkup_form.4fd"/>
+        <File filePath="src/utils/utils_lkup_form.4gl"/>
         <File filePath="src/utils/utils_logger.4gl"/>
         <File filePath="src/utils/utils_mast_lkup_form.4fd"/>
         <File filePath="src/utils/utils_sa_doc_lkup_form.4fd"/>
