@@ -106,11 +106,12 @@ END FUNCTION
 -- Load UOM Record
 -- ==============================================================
 FUNCTION load_uom_item(p_id INTEGER)
-    SELECT * INTO uom_rec. FROM st03_uom_master WHERE id = p_id
+    SELECT * INTO uom_rec.* FROM st03_uom_master WHERE id = p_id
 
     IF SQLCA.SQLCODE = 0 THEN
         --CALL refresh_display_fields()
         DISPLAY BY NAME uom_rec.*
+        END IF 
 END FUNCTION
 
 -- ==============================================================
@@ -171,13 +172,8 @@ FUNCTION new_uom()
 
     INITIALIZE uom_rec.* TO NULL
 
-    LET uom_rec.status = "1"
-    LET uom_rec.decimal_places = 2
-    --LET uom_rec.created_by = random_id
+    LET uom_rec.status = "active"
     LET uom_rec.created_at = TODAY
-
-    -- refresh to get the username after updating the user id
-    --CALL refresh_display_fields()
 
     LET frm = ui.Window.getCurrent().getForm()
     CALL frm.setFieldHidden("id", TRUE) -- make id read-only for new
