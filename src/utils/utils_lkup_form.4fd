@@ -3,31 +3,32 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record name="record1" uid="{96801c63-d374-45c5-9f4f-b6560d83c5a8}">
-    <RecordField fieldIdRef="1" name="key_val" uid="{3530b807-3acb-4e6d-a4ed-ab4191010d76}"/>
-    <RecordField fieldIdRef="2" name="desc_val" uid="{6003c212-a7b5-4378-8625-f1015eae1d70}"/>
+  <Record name="lkup_rec" uid="{96801c63-d374-45c5-9f4f-b6560d83c5a8}">
+    <RecordField fieldIdRef="1" length="100" name="key_val" sqlType="INTEGER" uid="{3530b807-3acb-4e6d-a4ed-ab4191010d76}"/>
+    <RecordField fieldIdRef="2" length="100" name="desc_val" uid="{6003c212-a7b5-4378-8625-f1015eae1d70}"/>
+    <RecordField fieldIdRef="4" length="100" name="name_val" uid="{85bcdfd6-bbf5-40e0-b59e-1adbcd85aa87}"/>
+    <RecordField fieldIdRef="5" length="100" name="extra_val" uid="{f5db1009-8837-4f32-bcee-3e1be017143b}"/>
   </Record>
-  <Record name="record2" uid="{a399ee17-c0e4-4630-bce6-dbca8cc88c24}">
-    <RecordField fieldIdRef="3" name="edit1" uid="{24cfe78a-bf9e-4257-9c00-a8aa84b8a6a2}"/>
+  <Record name="lk_search" uid="{a399ee17-c0e4-4630-bce6-dbca8cc88c24}">
+    <RecordField fieldIdRef="3" name="f_search" uid="{24cfe78a-bf9e-4257-9c00-a8aa84b8a6a2}"/>
   </Record>
-  <Form gridHeight="15" gridWidth="55" name="frm_lookup" text="Global Lookup">
-    <VBox gridHeight="15" gridWidth="55" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="10" gridWidth="76" name="grid1" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="54" justify="center" name="lbl_lookup_title" posX="1" posY="0" text=""/>
-        <Table gridHeight="8" gridWidth="54" name="tbl_lookup_list" posX="1" posY="2" totalRows="5">
-          <Edit fieldId="1" gridHeight="1" gridWidth="8" name="key_val" posX="0" posY="0" tabIndex="-1" title="" widget="Edit"/>
-          <Edit fieldId="2" gridHeight="1" gridWidth="8" name="desc_val" posX="8" posY="0" tabIndex="-1" title="" widget="Edit"/>
+  <Form gridHeight="13" gridWidth="38" name="pg_title" text="">
+    <VBox gridHeight="13" gridWidth="38" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="11" gridWidth="38" name="lk_grid" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="36" justify="center" name="lbl_title" posX="1" posY="0" text=""/>
+        <Table gridHeight="8" gridWidth="37" name="tbl_lookup_list" posX="1" posY="1" totalRows="5">
+          <Edit fieldId="1" gridHeight="1" gridWidth="8" length="100" name="key_val" posX="0" posY="0" sqlType="INTEGER" tabIndex="-1" title="" widget="Edit"/>
+          <Edit fieldId="2" gridHeight="1" gridWidth="8" length="100" name="desc_val" posX="8" posY="0" tabIndex="-1" title="" widget="Edit"/>
+          <Edit fieldId="4" gridHeight="1" gridWidth="8" length="100" name="name_val" posX="16" posY="0" tabIndex="-1" title="" widget="Edit"/>
+          <Edit fieldId="5" gridHeight="1" gridWidth="8" length="100" name="extra_val" posX="24" posY="0" tabIndex="-1" title="" widget="Edit"/>
         </Table>
+        <Label gridHeight="1" gridWidth="6" name="lbl_filter" posX="1" posY="9" text="Search : "/>
+        <Edit fieldId="3" gridHeight="1" gridWidth="17" name="f_search" posX="8" posY="9" tabIndex="-1" title="edit1" widget="Edit"/>
+        <Button gridHeight="1" gridWidth="10" name="btn_lbl" posX="26" posY="9" tabIndex="-1" text=""/>
       </Grid>
-      <HBox gridHeight="3" gridWidth="76" name="hbox1" posX="0" posY="11">
-        <Grid gridHeight="3" gridWidth="72" name="grid2" posX="2" posY="0">
-          <Label gridHeight="1" gridWidth="6" name="lbl_filter" posX="1" posY="0" text="Search : "/>
-          <Edit fieldId="3" gridHeight="1" gridWidth="26" name="edit1" posX="8" posY="0" tabIndex="-1" title="edit1" widget="Edit"/>
-        </Grid>
-      </HBox>
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBhADMAOQA5AGUAZQAxADcALQBjADAAZQA0AC0ANAA2ADMAMAAtAGIAYwBlADYALQBkAGIAYwBhADgAYwBjADgAOABjADIANAB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewA5ADYAOAAwADEAYwA2ADMALQBkADMANwA0AC0ANAA1AGMANQAtADkAZgA0AGYALQBiADYANQA2ADAAZAA4ADMAYwA1AGEAOAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA5ADYAOAAwADEAYwA2ADMALQBkADMANwA0AC0ANAA1AGMANQAtADkAZgA0AGYALQBiADYANQA2ADAAZAA4ADMAYwA1AGEAOAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewBhADMAOQA5AGUAZQAxADcALQBjADAAZQA0AC0ANAA2ADMAMAAtAGIAYwBlADYALQBkAGIAYwBhADgAYwBjADgAOABjADIANAB9QGOzMzhgAAA/+ZmZwAAACD9gYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

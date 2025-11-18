@@ -37,16 +37,16 @@
     <RecordField colName="updated_by" fieldIdRef="29" fieldType="TABLE_COLUMN" name="wh30_trans.updated_by" sqlTabName="wh30_trans" uid="{39b2557c-8d90-4364-adce-9432614e122c}"/>
     <RecordField colName="updated_at" fieldIdRef="30" fieldType="TABLE_COLUMN" name="wh30_trans.updated_at" sqlTabName="wh30_trans" uid="{b49d0123-f2be-4562-a54e-fe0179449dcb}"/>
   </Record>
-  <Form gridHeight="15" gridWidth="279" name="frm_whs" text="Warehouse">
-    <VBox gridHeight="14" gridWidth="279" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="12" gridWidth="448" name="wh" posX="0" posY="1">
-        <Label color="black" gridHeight="1" gridWidth="72" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" style="bold title" text="WAREHOUSE MASTER"/>
+  <Form gridHeight="15" gridWidth="143" name="frm_whs" text="Warehouse">
+    <VBox gridHeight="14" gridWidth="143" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="12" gridWidth="143" name="wh" posX="0" posY="1">
+        <Label color="black" gridHeight="1" gridWidth="141" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" style="bold title" text="WAREHOUSE MASTER"/>
         <Label gridHeight="1" gridWidth="8" name="wh01_mast_wh_code_label1" posX="1" posY="1" text="WH Code">
           <Initializer text="dbschema:wh01_mast.wh_code/@label"/>
         </Label>
-        <ButtonEdit colName="wh_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="zoom" name="wh01_mast.wh_code" posX="10" posY="1" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="WH Code" widget="ButtonEdit">
+        <Edit colName="wh_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh01_mast.wh_code" posX="10" posY="1" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="WH Code" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </ButtonEdit>
+        </Edit>
         <Label gridHeight="1" gridWidth="10" name="wh01_mast_wh_name_label1" posX="32" posY="1" text="Name">
           <Initializer text="dbschema:wh01_mast.wh_name/@label"/>
         </Label>
@@ -68,48 +68,48 @@
           <Item lstrtext="false" name="1" text="Active"/>
           <Item lstrtext="false" name="-1" text="Archived"/>
         </ComboBox>
-        <Table gridHeight="6" gridWidth="278" name="arr_wh_trans" posX="1" posY="4" totalRows="5">
+        <Table gridHeight="6" gridWidth="142" name="arr_wh_trans" posX="1" posY="4" totalRows="5">
           <Phantom colName="id" fieldId="10" fieldType="TABLE_COLUMN" name="wh30_trans.id" sqlTabName="wh30_trans" widget="Phantom"/>
           <Edit colName="trans_date" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.trans_date" posX="0" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="trans_type" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.trans_type" posX="10" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Trans  Type" widget="Edit">
+          <Edit colName="trans_type" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.trans_type" posX="10" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Trans  Type" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="ref_no" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="wh30_trans.ref_no" posX="30" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Ref No" widget="Edit">
+          <Edit colName="ref_no" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="16" name="wh30_trans.ref_no" posX="18" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Ref No" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Phantom colName="source_module" fieldId="14" fieldType="TABLE_COLUMN" name="wh30_trans.source_module" sqlTabName="wh30_trans" widget="Phantom"/>
           <Phantom colName="source_doc_id" fieldId="15" fieldType="TABLE_COLUMN" name="wh30_trans.source_doc_id" sqlTabName="wh30_trans" widget="Phantom"/>
-          <Edit colName="wh_id" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.wh_id" posX="60" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="WH ID" widget="Edit">
+          <Edit colName="wh_id" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.wh_id" posX="34" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="WH ID" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="wb_id" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.wb_id" posX="80" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="BIN ID" widget="Edit">
+          <Edit colName="wb_id" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.wb_id" posX="42" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="BIN ID" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="stock_id" fieldId="18" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.stock_id" posX="100" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Stock ID" widget="Edit">
+          <Edit colName="stock_id" fieldId="18" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.stock_id" posX="50" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Stock ID" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="qnty_in" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="wh30_trans.qnty_in" posX="120" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Qnty In" widget="Edit">
+          <Edit colName="qnty_in" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.qnty_in" posX="60" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Qnty In" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="qnty_out" fieldId="20" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="wh30_trans.qnty_out" posX="137" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Qnty Out" widget="Edit">
+          <Edit colName="qnty_out" fieldId="20" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="wh30_trans.qnty_out" posX="68" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Qnty Out" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="run_qty" fieldId="21" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="wh30_trans.run_qty" posX="154" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Balance" widget="Edit">
+          <Edit colName="run_qty" fieldId="21" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.run_qty" posX="75" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Balance" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="uom" fieldId="22" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.uom" posX="171" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="UOM" widget="Edit">
+          <Edit colName="uom" fieldId="22" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.uom" posX="84" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="UOM" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="unit_cost" fieldId="23" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="wh30_trans.unit_cost" posX="191" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Unit Cost" widget="Edit">
+          <Edit colName="unit_cost" fieldId="23" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.unit_cost" posX="94" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Unit Cost" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Phantom colName="ext_cost" fieldId="24" fieldType="TABLE_COLUMN" name="wh30_trans.ext_cost" sqlTabName="wh30_trans" widget="Phantom"/>
-          <Edit colName="remarks" fieldId="25" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="wh30_trans.remarks" posX="208" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Remarks" widget="Edit">
+          <Edit colName="remarks" fieldId="25" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="16" name="wh30_trans.remarks" posX="103" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Remarks" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="status" fieldId="26" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh30_trans.status" posX="238" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Status" widget="Edit">
+          <Edit colName="status" fieldId="26" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.status" posX="119" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Status" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Phantom colName="created_by" fieldId="27" fieldType="TABLE_COLUMN" name="wh30_trans.created_by" sqlTabName="wh30_trans" widget="Phantom"/>
@@ -126,6 +126,6 @@
     <Phantom colName="updated_at" fieldId="9" fieldType="TABLE_COLUMN" name="wh01_mast.updated_at" sqlTabName="wh01_mast" widget="Phantom"/>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBhADYANwBmAGQAZAAzAGMALQAwADcAYQBlAC0ANABhADkAMQAtADkAMABmAGQALQA3AGYAZQBlAGIAMwAwADIAZAA5AGUAZAB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQAAAEwAewBkADkANQA4ADcAYgAwADUALQAyADIANwBjAC0ANAAwAGEANQAtADgAOQA2AGMALQBjAGEAZAA2ADEANAAwAGYAYwA0AGEAYQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBhADYANwBmAGQAZAAzAGMALQAwADcAYQBlAC0ANABhADkAMQAtADkAMABmAGQALQA3AGYAZQBlAGIAMwAwADIAZAA5AGUAZAB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQAAAEwAewBkADkANQA4ADcAYgAwADUALQAyADIANwBjAC0ANAAwAGEANQAtADgAOQA2AGMALQBjAGEAZAA2ADEANAAwAGYAYwA0AGEAYQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

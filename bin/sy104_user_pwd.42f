@@ -4,7 +4,7 @@
   <HBox name="hbox1">
     <VBox name="vbox1">
       <Grid name="grid1" width="39" height="8">
-        <Group name="grp_pwd" text="Change Password" posY="1" posX="1" gridWidth="38" gridHeight="7">
+        <Group name="grp_pwd" text="Change Password" posY="0" posX="1" gridWidth="38" gridHeight="7">
           <LStr text="Change Password"/>
           <Label name="sy00_user_password_lbl" width="9" text="Current Password" comment="Leave Blank if there are no changes" posY="1" posX="1" gridWidth="9">
             <LStr text="Current Password" comment="Leave Blank if there are no changes"/>
@@ -30,12 +30,6 @@
               <LStr comment="Leave blank if not changing it"/>
             </Edit>
           </FormField>
-          <Button name="btn_change_pwd" width="10" text="Submit" posY="5" posX="7" gridWidth="10" tabIndex="4">
-            <LStr text="Submit"/>
-          </Button>
-          <Button name="btn_cancel" width="10" text="Cancel" posY="5" posX="19" gridWidth="10" tabIndex="5">
-            <LStr text="Cancel"/>
-          </Button>
         </Group>
       </Grid>
     </VBox>

@@ -22,9 +22,9 @@ SCHEMA demoappdb
 -- Record Definitions
 -- ==============================================================
 TYPE creditor_t RECORD LIKE cl01_mast.*
-DEFINE m_rec_cred creditor_t
+DEFINE m_cred_rec creditor_t
 
-DEFINE arr_cred_trans DYNAMIC ARRAY OF RECORD LIKE cl30_trans.*
+DEFINE m_cred_trans_arr DYNAMIC ARRAY OF RECORD LIKE cl30_trans.*
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 
 DEFINE curr_idx INTEGER
@@ -39,11 +39,13 @@ MAIN
         DISPLAY "Initialization failed."
         EXIT PROGRAM 1
     END IF
-    
+
     OPTIONS INPUT WRAP
 
     IF utils_globals.is_standalone() THEN
-        OPEN WINDOW w_cl101 WITH FORM "cl101_mast" ATTRIBUTES(STYLE = "normal")
+        OPEN WINDOW w_cl101
+            WITH
+            FORM "cl101_mast" -- ATTRIBUTES(STYLE = "normal")
     ELSE
         OPEN WINDOW w_cl101 WITH FORM "cl101_mast" ATTRIBUTES(STYLE = "child")
     END IF
@@ -65,12 +67,12 @@ FUNCTION init_cl_module()
     LET is_edit_mode = FALSE
 
     -- initialize the list of records
-    CALL load_all_creditors()
+    --CALL load_all_creditors()
 
     CALL utils_globals.set_form_label('lbl_form_title', 'CREDITORS ENQUIRY')
 
-    DISPLAY ARRAY arr_cred_trans
-        TO arr_cred_trans.*
+    DISPLAY ARRAY m_cred_trans_arr
+        TO m_cred_trans_arr.*
         ATTRIBUTES(UNBUFFERED, DOUBLECLICK = row_select)
         BEFORE DISPLAY
 
@@ -87,11 +89,11 @@ FUNCTION init_cl_module()
             LET is_edit_mode = FALSE
 
         ON ACTION row_select
-            LET chosen_row = DIALOG.getCurrentRow("arr_cred_trans")
+            LET chosen_row = DIALOG.getCurrentRow("m_cred_trans_arr")
             IF chosen_row > 0 THEN
                 CALL open_transaction_window(
-                    arr_cred_trans[chosen_row].doc_no,
-                    arr_cred_trans[arr_curr()].doc_type)
+                    m_cred_trans_arr[chosen_row].doc_no,
+                    m_cred_trans_arr[chosen_row].doc_type)
             END IF
 
         ON ACTION List ATTRIBUTES(TEXT = "Reload List", IMAGE = "fa-list")
@@ -101,7 +103,7 @@ FUNCTION init_cl_module()
 
         ON ACTION Edit ATTRIBUTES(TEXT = "Edit", IMAGE = "pen")
             DISPLAY "Edit Record"
-            IF m_rec_cred.id IS NULL OR m_rec_cred.id = 0 THEN
+            IF m_cred_rec.id IS NULL OR m_cred_rec.id = 0 THEN
                 CALL utils_globals.show_info("No record selected to edit.")
             ELSE
                 LET is_edit_mode = TRUE
@@ -116,14 +118,14 @@ FUNCTION init_cl_module()
 
         ON ACTION PREVIOUS
             CALL move_record(-1)
-            DISPLAY ARRAY arr_cred_trans TO arr_cred_trans.*
+            DISPLAY ARRAY m_cred_trans_arr TO m_cred_trans_arr.*
                 BEFORE DISPLAY
                     EXIT DISPLAY
             END DISPLAY
 
         ON ACTION Next
             CALL move_record(1)
-            DISPLAY ARRAY arr_cred_trans TO arr_cred_trans.*
+            DISPLAY ARRAY m_cred_trans_arr TO m_cred_trans_arr.*
                 BEFORE DISPLAY
                     EXIT DISPLAY
             END DISPLAY
@@ -131,8 +133,12 @@ FUNCTION init_cl_module()
         ON ACTION add_order
             ATTRIBUTES(TEXT = "Add P/Order", IMAGE = "fa-reorder")
             DISPLAY "Add Quote"
-            CALL pu130_order.new_po_from_master(m_rec_cred.id)
-
+            IF m_cred_rec.id THEN
+                CALL pu130_order.new_po_from_master(m_cred_rec.id)
+            ELSE
+                CALL utils_globals.show_warning(
+                    'Choose a creditor record first.')
+            END IF
         ON ACTION EXIT ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close")
             EXIT DISPLAY
     END DISPLAY
@@ -153,9 +159,9 @@ FUNCTION load_all_creditors()
         END IF
     ELSE
         CALL utils_globals.show_info("No creditors found.")
-        INITIALIZE m_rec_cred.* TO NULL
-        DISPLAY BY NAME m_rec_cred.*
-        CALL arr_cred_trans.clear()
+        INITIALIZE m_cred_rec.* TO NULL
+        DISPLAY BY NAME m_cred_rec.*
+        CALL m_cred_trans_arr.clear()
     END IF
 END FUNCTION
 
@@ -203,14 +209,14 @@ FUNCTION new_creditor()
     DEFINE next_full STRING
     DEFINE username STRING
 
-    INITIALIZE m_rec_cred.* TO NULL
+    INITIALIZE m_cred_rec.* TO NULL
     CLEAR FORM
-    LET m_rec_cred.status = 'active'
-    LET m_rec_cred.balance = 0.00
-    LET m_rec_cred.created_at = CURRENT
-    LET m_rec_cred.created_by = utils_globals.get_random_user()
+    LET m_cred_rec.status = 'active'
+    LET m_cred_rec.balance = 0.00
+    LET m_cred_rec.created_at = CURRENT
+    LET m_cred_rec.created_by = utils_globals.get_random_user()
 
-    LET username = utils_globals.get_username(m_rec_cred.created_by)
+    LET username = utils_globals.get_username(m_cred_rec.created_by)
 
     DISPLAY username
 
@@ -219,22 +225,22 @@ FUNCTION new_creditor()
     CALL utils_globals.get_next_number("cl01_mast", "DL")
         RETURNING next_num, next_full
 
-    LET m_rec_cred.id = next_num
+    LET m_cred_rec.id = next_num
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME m_rec_cred.*
+        INPUT BY NAME m_cred_rec.*
             ATTRIBUTES(WITHOUT DEFAULTS, NAME = "new_creditor")
 
             AFTER FIELD supp_name
-                IF m_rec_cred.supp_name IS NULL
-                    OR m_rec_cred.supp_name = "" THEN
+                IF m_cred_rec.supp_name IS NULL
+                    OR m_cred_rec.supp_name = "" THEN
                     CALL utils_globals.show_error("Customer Name is required.")
                     NEXT FIELD supp_name
                 END IF
 
             AFTER FIELD email
-                IF m_rec_cred.email IS NOT NULL AND m_rec_cred.email != "" THEN
-                    IF NOT utils_globals.is_valid_email(m_rec_cred.email) THEN
+                IF m_cred_rec.email IS NOT NULL AND m_cred_rec.email != "" THEN
+                    IF NOT utils_globals.is_valid_email(m_cred_rec.email) THEN
                         CALL utils_globals.show_error("Invalid email format.")
                         NEXT FIELD email
                     END IF
@@ -244,15 +250,15 @@ FUNCTION new_creditor()
 
                 LET dup_found =
                     check_creditor_unique(
-                        m_rec_cred.id,
-                        m_rec_cred.supp_name,
-                        m_rec_cred.phone,
-                        m_rec_cred.email)
+                        m_cred_rec.id,
+                        m_cred_rec.supp_name,
+                        m_cred_rec.phone,
+                        m_cred_rec.email)
 
                 IF dup_found = 0 THEN
 
                     CALL save_creditor()
-                    LET new_acc_code = m_rec_cred.id
+                    LET new_acc_code = m_cred_rec.id
                     EXIT DIALOG
                 ELSE
                     CALL utils_globals.show_error("Duplicate creditor found.")
@@ -261,7 +267,7 @@ FUNCTION new_creditor()
             ON ACTION cancel ATTRIBUTES(TEXT = "Cancel", IMAGE = "cancel")
                 LET new_acc_code = NULL
                 CALL utils_globals.show_info("Creation cancelled.")
-                EXIT DIALOG
+                EXIT PROGRAM 
         END INPUT
     END DIALOG
 
@@ -283,8 +289,8 @@ FUNCTION new_creditor()
             CALL load_creditor(arr_codes[curr_idx])
         ELSE
             LET curr_idx = 0
-            INITIALIZE m_rec_cred.* TO NULL
-            DISPLAY BY NAME m_rec_cred.*
+            INITIALIZE m_cred_rec.* TO NULL
+            DISPLAY BY NAME m_cred_rec.*
         END IF
     END IF
 END FUNCTION
@@ -295,14 +301,14 @@ END FUNCTION
 FUNCTION delete_creditor()
     DEFINE ok, deleted_code, array_size INTEGER
 
-    IF m_rec_cred.id IS NULL OR m_rec_cred.id = 0 THEN
+    IF m_cred_rec.id IS NULL OR m_cred_rec.id = 0 THEN
         CALL utils_globals.show_info("No creditor selected for deletion.")
         RETURN
     END IF
 
     LET ok =
         utils_globals.show_confirm(
-            "Delete this creditor: " || m_rec_cred.supp_name || "?",
+            "Delete this creditor: " || m_cred_rec.supp_name || "?",
             "Confirm Delete")
 
     IF NOT ok THEN
@@ -310,7 +316,7 @@ FUNCTION delete_creditor()
         RETURN
     END IF
 
-    LET deleted_code = m_rec_cred.id
+    LET deleted_code = m_cred_rec.id
     DELETE FROM cl01_mast WHERE id = deleted_code
     CALL utils_globals.msg_deleted()
 
@@ -327,8 +333,8 @@ FUNCTION delete_creditor()
         CALL load_creditor(arr_codes[curr_idx])
     ELSE
         LET curr_idx = 0
-        INITIALIZE m_rec_cred.* TO NULL
-        DISPLAY BY NAME m_rec_cred.*
+        INITIALIZE m_cred_rec.* TO NULL
+        DISPLAY BY NAME m_cred_rec.*
     END IF
 END FUNCTION
 
@@ -340,22 +346,22 @@ FUNCTION select_creditors(where_clause STRING) RETURNS SMALLINT
     DEFINE sql_stmt STRING
 
     CALL arr_codes.clear()
-    LET idx = 0
+    LET idx = 1
 
     LET sql_stmt = "SELECT id FROM cl01_mast"
-    
+
     IF where_clause IS NOT NULL AND where_clause != "" THEN
         LET sql_stmt = sql_stmt || " WHERE " || where_clause
     END IF
-    
+
     LET sql_stmt = sql_stmt || " ORDER BY id"
 
     PREPARE stmt_select FROM sql_stmt
     DECLARE c_curs CURSOR FOR stmt_select
 
     FOREACH c_curs INTO code
-        LET idx = idx + 1
         LET arr_codes[idx] = code
+        LET idx = idx + 1
     END FOREACH
 
     CLOSE c_curs
@@ -380,16 +386,16 @@ FUNCTION load_creditor(p_code INTEGER)
 
     CALL utils_globals.set_form_label('lbl_form_title', 'CREDITORS MAINTENANCE')
 
-    SELECT * INTO m_rec_cred.* FROM cl01_mast WHERE id = p_code
+    SELECT * INTO m_cred_rec.* FROM cl01_mast WHERE id = p_code
 
     IF SQLCA.SQLCODE = 0 THEN
-        DISPLAY BY NAME m_rec_cred.*
+        DISPLAY BY NAME m_cred_rec.*
 
         LET l_found = TRUE
         CALL load_creditor_transactions(p_code)
     ELSE
-        INITIALIZE m_rec_cred.* TO NULL
-        DISPLAY BY NAME m_rec_cred.*
+        INITIALIZE m_cred_rec.* TO NULL
+        DISPLAY BY NAME m_cred_rec.*
         LET l_found = FALSE
     END IF
 END FUNCTION
@@ -416,38 +422,34 @@ END FUNCTION
 FUNCTION save_creditor()
     DEFINE exists INTEGER
 
-    LET m_rec_cred.updated_at = current
+    LET m_cred_rec.updated_at = CURRENT
 
-    SELECT COUNT(*)
-        INTO exists
-        FROM cl01_mast
-        WHERE id = m_rec_cred.id
+    SELECT COUNT(*) INTO exists FROM cl01_mast WHERE id = m_cred_rec.id
 
     IF exists = 0 THEN
-        INSERT INTO cl01_mast  VALUES m_rec_cred.*
+        INSERT INTO cl01_mast VALUES m_cred_rec.*
 
         CALL utils_globals.msg_saved()
     ELSE
         UPDATE cl01_mast
-           SET id = m_rec_cred.id,
-               supp_name = m_rec_cred.supp_name,
-               phone = m_rec_cred.phone,
-               email = m_rec_cred.email,
-               balance = m_rec_cred.balance,
-               status = m_rec_cred.status,
-               address1 = m_rec_cred.address1,
-               address2 = m_rec_cred.address2,
-               address3 = m_rec_cred.address3,
-               postal_code = m_rec_cred.postal_code,
-               vat_no = m_rec_cred.vat_no,
-               payment_terms = m_rec_cred.payment_terms,
-               created_by = m_rec_cred.created_by
-         WHERE id = m_rec_cred.id
+            SET id = m_cred_rec.id,
+                supp_name = m_cred_rec.supp_name,
+                phone = m_cred_rec.phone,
+                email = m_cred_rec.email,
+                balance = m_cred_rec.balance,
+                status = m_cred_rec.status,
+                address1 = m_cred_rec.address1,
+                address2 = m_cred_rec.address2,
+                address3 = m_cred_rec.address3,
+                postal_code = m_cred_rec.postal_code,
+                vat_no = m_cred_rec.vat_no,
+                payment_terms = m_cred_rec.payment_terms
+            WHERE id = m_cred_rec.id
 
         CALL utils_globals.msg_updated()
     END IF
 
-    CALL load_creditor(m_rec_cred.id)
+    CALL load_creditor(m_cred_rec.id)
 END FUNCTION
 
 -- ==============================================================
@@ -458,7 +460,7 @@ FUNCTION edit_creditor()
     CALL utils_globals.set_form_label('lbl_form_title', 'EDIT CREDITOR')
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME m_rec_cred.*
+        INPUT BY NAME m_cred_rec.*
             ATTRIBUTES(WITHOUT DEFAULTS, NAME = "creditors")
 
             ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
@@ -466,12 +468,12 @@ FUNCTION edit_creditor()
                 EXIT DIALOG
 
             ON ACTION cancel
-                CALL load_creditor(m_rec_cred.id)
+                CALL load_creditor(m_cred_rec.id)
                 EXIT DIALOG
 
             AFTER FIELD supp_name
-                IF m_rec_cred.supp_name IS NULL
-                    OR m_rec_cred.supp_name = "" THEN
+                IF m_cred_rec.supp_name IS NULL
+                    OR m_cred_rec.supp_name = "" THEN
                     CALL utils_globals.show_error("creditor Name is required.")
                     NEXT FIELD supp_name
                 END IF
@@ -529,25 +531,17 @@ END FUNCTION
 FUNCTION load_creditor_transactions(p_supp_id INTEGER)
     DEFINE idx INTEGER
 
-    CALL arr_cred_trans.clear()
+    CALL m_cred_trans_arr.clear()
 
     DECLARE c_trans CURSOR FOR
         SELECT *
             FROM cl30_trans
-            WHERE id = p_supp_id
+            WHERE supp_id = p_supp_id
             ORDER BY trans_date DESC, doc_no DESC
 
     LET idx = 1
     FOREACH c_trans
-        INTO arr_cred_trans[idx].id,
-            arr_cred_trans[idx].trans_date,
-            arr_cred_trans[idx].doc_no,
-            arr_cred_trans[idx].doc_type,
-            arr_cred_trans[idx].gross_tot,
-            arr_cred_trans[idx].disc_tot,
-            arr_cred_trans[idx].vat_tot,
-            arr_cred_trans[idx].net_tot,
-            arr_cred_trans[idx].notes
+        INTO m_cred_trans_arr[idx].*
         LET idx = idx + 1
     END FOREACH
 
@@ -563,7 +557,7 @@ FUNCTION open_transaction_window(p_doc_id INTEGER, l_type STRING)
     DISPLAY "Loaded the doc no for doc : " || p_doc_id
 
     CASE l_type
-        WHEN "ORD"
+        WHEN "PO"
             CALL pu130_order.load_po(p_doc_id)
         WHEN "INV"
             CALL pu132_inv.load_pu_inv(p_doc_id)

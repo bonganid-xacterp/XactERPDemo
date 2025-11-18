@@ -15,18 +15,21 @@ SCHEMA demoappdb
 -- Main Lookup Function
 -- ==========================================
 FUNCTION display_stocklist() RETURNS STRING
-    DEFINE stock_arr DYNAMIC ARRAY OF RECORD
-                id LIKE st01_mast.id,
-                description LIKE st01_mast.description,
-                stock_on_hand LIKE st01_mast.stock_on_hand
-            END RECORD,
-           f_search STRING,
-           ret_code STRING,
-           curr SMALLINT
+    DEFINE
+        stock_arr DYNAMIC ARRAY OF RECORD
+            id LIKE st01_mast.id,
+            description LIKE st01_mast.description,
+            stock_on_hand LIKE st01_mast.stock_on_hand
+        END RECORD,
+        f_search STRING,
+        ret_code INTEGER,
+        curr_idx INTEGER
 
     -- Open popup lookup form
-    OPEN WINDOW w_lkup WITH FORM "st121_st_lkup"
-        ATTRIBUTES(STYLE="dialog", TYPE=POPUP)
+    OPEN WINDOW w_lkup
+        WITH
+        FORM "st121_st_lkup"
+        ATTRIBUTES(STYLE = "dialog", TYPE = POPUP)
 
     LET f_search = ""
     LET ret_code = NULL
@@ -37,20 +40,21 @@ FUNCTION display_stocklist() RETURNS STRING
         -- ===========================================
         -- Table of Stock Results
         -- ===========================================
-        DISPLAY ARRAY stock_arr TO tbl_st_list.*
-            ATTRIBUTES(DOUBLECLICK=accept)
+        DISPLAY ARRAY stock_arr
+            TO tbl_st_list.*
+            ATTRIBUTES(DOUBLECLICK = accept)
 
             BEFORE DISPLAY
                 CALL load_stock_data(stock_arr, f_search)
 
-            ON ACTION accept ATTRIBUTES(TEXT="Select", IMAGE="check")
-                LET curr = arr_curr()
-                IF curr > 0 THEN
-                    LET ret_code = stock_arr[curr].id
+            ON ACTION accept ATTRIBUTES(TEXT = "Select", IMAGE = "check")
+                LET curr_idx = arr_curr()
+                IF curr_idx > 0 THEN
+                    LET ret_code = stock_arr[curr_idx].id
                     EXIT DIALOG
                 END IF
 
-            ON ACTION cancel ATTRIBUTES(TEXT="Close", IMAGE="exit")
+            ON ACTION cancel ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
                 LET ret_code = NULL
                 EXIT DIALOG
         END DISPLAY
@@ -69,7 +73,7 @@ FUNCTION display_stocklist() RETURNS STRING
                 -- Fires on Enter or Tab leaving the field
                 CALL load_stock_data(stock_arr, f_search)
 
-            ON ACTION search ATTRIBUTES(TEXT="Search", IMAGE="zoom")
+            ON ACTION search ATTRIBUTES(TEXT = "Search", IMAGE = "zoom")
                 CALL load_stock_data(stock_arr, f_search)
 
         END INPUT
@@ -79,7 +83,6 @@ FUNCTION display_stocklist() RETURNS STRING
     CLOSE WINDOW w_lkup
     RETURN ret_code
 END FUNCTION
-
 
 -- ==========================================
 -- Helper Function : Load Stock Data
@@ -92,13 +95,14 @@ FUNCTION load_stock_data(
     END RECORD,
     p_filter STRING)
 
-    DEFINE stock_rec RECORD
-                id LIKE st01_mast.id,
-                description LIKE st01_mast.description,
-                stock_on_hand LIKE st01_mast.stock_on_hand
-            END RECORD,
-           like_pat STRING,
-           i INTEGER
+    DEFINE
+        stock_rec RECORD
+            id LIKE st01_mast.id,
+            description LIKE st01_mast.description,
+            stock_on_hand LIKE st01_mast.stock_on_hand
+        END RECORD,
+        like_pat STRING,
+        i INTEGER
 
     DEFINE buf base.StringBuffer
     LET buf = base.StringBuffer.create()
@@ -122,8 +126,8 @@ FUNCTION load_stock_data(
     -- ===========================================
     -- Parameterized SQL Query
     -- ===========================================
-    PREPARE stmt FROM
-        "SELECT id, description, stock_on_hand
+    PREPARE stmt
+        FROM "SELECT id, description, stock_on_hand
            FROM st01_mast
           WHERE status = 'active'
             AND (CAST(id AS VARCHAR(20)) ILIKE ?

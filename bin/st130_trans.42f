@@ -1,51 +1,51 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="st130_trans.tmp" build="3.20.14" sqlDbName="demoappdb" text="Stock Transaction History" width="166" height="5">
+<Form name="st130_trans.tmp" build="3.20.14" sqlDbName="demoappdb" text="Stock Transaction History" width="138" height="5">
   <LStr text="Stock Transaction History"/>
   <VBox name="vbox_main">
     <Group name="grp_trans" text="Transaction History">
       <LStr text="Transaction History"/>
-      <Table pageSize="5" name="demoappdb1" tabName="record1">
+      <Table pageSize="5" name="demoappdb1" tabName="arr_st30_trans">
         <PhantomColumn name="st30_trans.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="0" sqlTabName="st30_trans">
           <PhantomEdit width="1"/>
         </PhantomColumn>
-        <TableColumn name="st30_trans.stock_code" colName="stock_code" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="1" sqlTabName="st30_trans" text="Srtock Code" tabIndex="1">
-          <Edit width="20" scroll="1"/>
-          <LStr text="Srtock Code"/>
+        <TableColumn name="st30_trans.stock_id" colName="stock_id" sqlType="BIGINT" required="1" notNull="1" fieldId="1" sqlTabName="st30_trans" text="Stock Code" tabIndex="1" numAlign="1">
+          <Edit width="11" scroll="1"/>
+          <LStr text="Stock Code"/>
         </TableColumn>
-        <TableColumn name="st30_trans.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="2" sqlTabName="st30_trans" text="trans_date" tabIndex="2">
+        <TableColumn name="st30_trans.trans_date" colName="trans_date" sqlType="DATE" required="1" notNull="1" fieldId="2" sqlTabName="st30_trans" text="Trans Date" tabIndex="2">
           <Edit width="10" scroll="1"/>
-          <LStr text="trans_date"/>
+          <LStr text="Trans Date"/>
         </TableColumn>
-        <TableColumn name="st30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="3" sqlTabName="st30_trans" text="doc_type" tabIndex="3">
+        <TableColumn name="st30_trans.doc_type" colName="doc_type" sqlType="VARCHAR(10)" required="1" notNull="1" fieldId="3" sqlTabName="st30_trans" text="Doc Type" tabIndex="3">
           <Edit width="10" scroll="1"/>
-          <LStr text="doc_type"/>
+          <LStr text="Doc Type"/>
         </TableColumn>
-        <TableColumn name="st30_trans.direction" colName="direction" sqlType="VARCHAR(3)" required="1" notNull="1" fieldId="4" sqlTabName="st30_trans" text="direction" tabIndex="4">
-          <Edit width="3" scroll="1"/>
-          <LStr text="direction"/>
+        <TableColumn name="st30_trans.direction" colName="direction" sqlType="VARCHAR(3)" required="1" notNull="1" fieldId="4" sqlTabName="st30_trans" text="Direction" tabIndex="4">
+          <Edit width="8" scroll="1"/>
+          <LStr text="Direction"/>
         </TableColumn>
-        <TableColumn name="st30_trans.qnty" colName="qnty" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="5" sqlTabName="st30_trans" text="qnty" tabIndex="5" numAlign="1">
+        <TableColumn name="st30_trans.qnty" colName="qnty" sqlType="DECIMAL(12,2)" required="1" notNull="1" fieldId="5" sqlTabName="st30_trans" text="Qnty" tabIndex="5" numAlign="1">
           <Edit width="14" scroll="1"/>
-          <LStr text="qnty"/>
+          <LStr text="Qnty"/>
         </TableColumn>
-        <TableColumn name="st30_trans.unit_cost" colName="unit_cost" sqlType="DECIMAL(12,2)" fieldId="6" sqlTabName="st30_trans" text="unit_cost" tabIndex="6" numAlign="1">
+        <TableColumn name="st30_trans.unit_cost" colName="unit_cost" sqlType="DECIMAL(12,2)" fieldId="6" sqlTabName="st30_trans" text="Unit Cost" tabIndex="6" numAlign="1">
           <Edit width="14" scroll="1"/>
-          <LStr text="unit_cost"/>
+          <LStr text="Unit Cost"/>
         </TableColumn>
-        <TableColumn name="st30_trans.sell_price" colName="sell_price" sqlType="DECIMAL(12,2)" fieldId="7" sqlTabName="st30_trans" text="sell_price" tabIndex="7" numAlign="1">
+        <TableColumn name="st30_trans.sell_price" colName="sell_price" sqlType="DECIMAL(12,2)" fieldId="7" sqlTabName="st30_trans" text="Sell Price" tabIndex="7" numAlign="1">
           <Edit width="14" scroll="1"/>
-          <LStr text="sell_price"/>
+          <LStr text="Sell Price"/>
         </TableColumn>
-        <TableColumn name="st30_trans.batch_id" colName="batch_id" sqlType="VARCHAR(30)" fieldId="8" sqlTabName="st30_trans" text="batch_id" tabIndex="8">
-          <Edit width="30" scroll="1"/>
-          <LStr text="batch_id"/>
+        <TableColumn name="st30_trans.batch_id" colName="batch_id" sqlType="VARCHAR(30)" fieldId="8" sqlTabName="st30_trans" text="Batch ID" tabIndex="8">
+          <Edit width="18" scroll="1"/>
+          <LStr text="Batch ID"/>
         </TableColumn>
-        <TableColumn name="st30_trans.expiry_date" colName="expiry_date" sqlType="DATE" fieldId="9" sqlTabName="st30_trans" text="expiry_date" tabIndex="9">
+        <TableColumn name="st30_trans.expiry_date" colName="expiry_date" sqlType="DATE" fieldId="9" sqlTabName="st30_trans" text="Expiry Date" tabIndex="9">
           <Edit width="10" scroll="1"/>
-          <LStr text="expiry_date"/>
+          <LStr text="Expiry Date"/>
         </TableColumn>
         <TableColumn name="st30_trans.notes" colName="notes" sqlType="TEXT" fieldId="10" sqlTabName="st30_trans" text="notes" tabIndex="10">
-          <Edit width="30" scroll="1"/>
+          <Edit width="18" scroll="1"/>
           <LStr text="notes"/>
         </TableColumn>
       </Table>
@@ -53,7 +53,7 @@
   </VBox>
   <RecordView tabName="st30_trans">
     <Link colName="id" fieldIdRef="0"/>
-    <Link colName="stock_code" fieldIdRef="1"/>
+    <Link colName="stock_id" fieldIdRef="1"/>
     <Link colName="trans_date" fieldIdRef="2"/>
     <Link colName="doc_type" fieldIdRef="3"/>
     <Link colName="direction" fieldIdRef="4"/>

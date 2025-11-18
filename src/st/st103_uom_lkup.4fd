@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<form>
+  <grid gridHeight="15" gridWidth="50">
+    <label text="UOM Lookup" gridWidth="48" gridHeight="1" posY="0" posX="1" style="header"/>
+
+    <table name="rec_list" gridWidth="48" gridHeight="12" posY="2" posX="1" tabIndex="1">
+      <tableColumn text="ID" name="id" fieldId="1" hidden="true">
+        <edit fieldId="1" width="8"/>
+      </tableColumn>
+
+      <tableColumn text="UOM Code" name="uom_code" fieldId="2">
+        <edit fieldId="2" width="15"/>
+      </tableColumn>
+
+      <tableColumn text="UOM Name" name="uom_name" fieldId="3">
+        <edit fieldId="3" width="30"/>
+      </tableColumn>
+
+      <tableColumn text="Active" name="is_active" fieldId="4">
+        <edit fieldId="4" width="8"/>
+      </tableColumn>
+    </table>
+
+  </grid>
+</form>

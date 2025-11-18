@@ -44,7 +44,7 @@ DEFINE ret SMALLINT
     
     IF utils_globals.is_standalone() THEN
     OPTIONS INPUT WRAP
-        OPEN WINDOW w_dl101 WITH FORM "dl101_mast" ATTRIBUTES(STYLE = "child")
+        OPEN WINDOW w_dl101 WITH FORM "dl101_mast" --ATTRIBUTES(STYLE = "dialog")
         
         -- Call formatting HERE after form is ready
         --CALL utils_globals.apply_field_formatting() RETURNING *
@@ -133,7 +133,7 @@ FUNCTION init_dl_module()
 
         ON ACTION add_quote ATTRIBUTES(TEXT = "Add S/Quote", IMAGE = "new")
             DISPLAY "Add Quote"
-            CALL sa130_quote.()
+            CALL sa130_quote.new_ord_from_master(rec_debt.id)
 
          ON ACTION add_order ATTRIBUTES(TEXT = "Add S/Order", IMAGE = "fa-reorder")
             DISPLAY "Add Quote"
@@ -172,7 +172,7 @@ FUNCTION query_debtors()
     DEFINE selected_code STRING
     DEFINE found_idx, i INTEGER
 
-    LET selected_code = dl121_lkup.fetch_debt_list()
+    LET selected_code = dl121_lkup.get_debtors_list()
 
     IF selected_code IS NULL OR selected_code = "" THEN
         RETURN
@@ -515,21 +515,21 @@ END FUNCTION
 -- ==============================================================
 -- Load Debtor Transactions
 -- ==============================================================
-FUNCTION load_debtor_transactions(p_acc_code INTEGER)
+FUNCTION load_debtor_transactions(p_cust_id INTEGER)
     DEFINE idx INTEGER
 
     CALL arr_debt_trans.clear()
 
-    DECLARE c_trans CURSOR FOR
+    DECLARE debt_trans_curs CURSOR FOR
         SELECT *
             FROM dl30_trans
-            WHERE id = p_acc_code
+            WHERE cust_id = p_cust_id
             ORDER BY trans_date DESC, doc_no DESC
 
     LET idx = 1
-    FOREACH c_trans
+    FOREACH debt_trans_curs
         INTO arr_debt_trans[idx].id,
-            arr_debt_trans[idx].id,
+            arr_debt_trans[idx].cust_id,
             arr_debt_trans[idx].doc_no,
             arr_debt_trans[idx].trans_date,
             arr_debt_trans[idx].doc_type,
@@ -537,13 +537,11 @@ FUNCTION load_debtor_transactions(p_acc_code INTEGER)
             arr_debt_trans[idx].vat,
             arr_debt_trans[idx].disc,
             arr_debt_trans[idx].net_tot
-
-            
         LET idx = idx + 1
     END FOREACH
 
-    CLOSE c_trans
-    FREE c_trans
+    CLOSE debt_trans_curs
+    FREE debt_trans_curs
 END FUNCTION
 
 -- ==============================================================

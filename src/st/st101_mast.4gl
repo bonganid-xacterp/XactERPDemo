@@ -13,6 +13,7 @@ IMPORT FGL utils_db
 IMPORT FGL st122_cat_lkup
 IMPORT FGL utils_status_const
 IMPORT FGL st121_st_lkup
+IMPORT FGL pu131_grn
 
 SCHEMA demoappdb
 
@@ -28,6 +29,10 @@ DEFINE is_edit_mode SMALLINT
 DEFINE
     m_cat_name STRING,
     m_username STRING
+
+-- UOM ComboBox arrays
+DEFINE arr_uom_codes DYNAMIC ARRAY OF STRING
+DEFINE arr_uom_names DYNAMIC ARRAY OF STRING
 
 -- Transactions array for display
 DEFINE arr_st_trans DYNAMIC ARRAY OF RECORD
@@ -51,7 +56,7 @@ MAIN
 
     IF utils_globals.is_standalone() THEN
         OPTIONS INPUT WRAP
-        OPEN WINDOW w_st101 WITH FORM "st101_mast" ATTRIBUTES(STYLE = "normal")
+        OPEN WINDOW w_st101 WITH FORM "st101_mast" -- ATTRIBUTES(STYLE = "normal")
     END IF
 
     CALL init_st_module()
@@ -67,7 +72,11 @@ END MAIN
 FUNCTION init_st_module()
     DEFINE ok SMALLINT
     LET is_edit_mode = FALSE
+
     LET ok = select_stock_items("1=1")
+
+    -- Load UOMs into ComboBox after form is opened
+    CALL load_uoms()
 
     MENU "Stock Master Menu"
 
@@ -93,6 +102,9 @@ FUNCTION init_st_module()
 
         COMMAND "Next"
             CALL move_record(1)
+
+        COMMAND "Capture GRN"
+            CALL capture_grn()
 
         COMMAND "Exit"
             EXIT MENU
@@ -151,6 +163,9 @@ FUNCTION refresh_display_fields()
     DISPLAY BY NAME m_cat_name, m_username
 END FUNCTION
 
+-- ==============================================================
+-- Load Transactions
+-- ==============================================================
 FUNCTION get_linked_category(p_id INTEGER)
     DEFINE l_cat_name STRING
     SELECT cat_name INTO l_cat_name FROM st02_cat WHERE id = p_id
@@ -236,11 +251,12 @@ FUNCTION edit_stock()
     CALL frm.setFieldHidden("id", TRUE) -- id is read-only during edit
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_stock.*
-            ON ACTION save
+        INPUT BY NAME rec_stock.* ATTRIBUTES(WITHOUT DEFAULTS)
+        
+            ON ACTION save ATTRIBUTES(TEXT="Update")
                 CALL save_stock()
                 EXIT DIALOG
-            ON ACTION cancel
+            ON ACTION cancel ATTRIBUTES(TEXT="Exit")
                 CALL load_stock_item(rec_stock.id)
                 EXIT DIALOG
             ON ACTION lookup_category
@@ -284,7 +300,6 @@ END FUNCTION
 -- ==============================================================
 -- Navigation and Utilities
 -- ==============================================================
-
 FUNCTION select_stock_items(p_where STRING) RETURNS SMALLINT
     DEFINE
         l_sql STRING,
@@ -322,7 +337,6 @@ FUNCTION select_stock_items(p_where STRING) RETURNS SMALLINT
     RETURN TRUE
 END FUNCTION
 
-
 -- ==============================================================
 -- Navigation
 -- ==============================================================
@@ -342,7 +356,6 @@ END FUNCTION
 -- ==============================================================
 -- Check stock uniqueness
 -- ==============================================================
-
 FUNCTION check_stock_unique(p_id INTEGER) RETURNS SMALLINT
     DEFINE dup_count INTEGER
     SELECT COUNT(*) INTO dup_count FROM st01_mast WHERE id = p_id
@@ -356,7 +369,6 @@ END FUNCTION
 -- ==============================================================
 -- Delete stock
 -- ==============================================================
-
 FUNCTION delete_stock()
     DEFINE
         trans_count INTEGER,
@@ -382,4 +394,70 @@ FUNCTION delete_stock()
         CALL utils_globals.msg_deleted()
         LET ok = select_stock_items("1=1")
     END IF
+END FUNCTION
+
+-- ==============================================================
+-- Load UOMs into ComboBox
+-- ==============================================================
+FUNCTION load_uoms()
+    DEFINE idx INTEGER
+    DEFINE cb ui.ComboBox
+    DEFINE frm ui.Form
+    DEFINE win ui.Window
+
+    -- Clear arrays
+    CALL arr_uom_codes.clear()
+    CALL arr_uom_names.clear()
+
+    LET idx = 1
+
+    TRY
+        -- Load active UOMs from database
+        DECLARE uom_curs CURSOR FOR
+            SELECT uom_code, uom_name
+              FROM st03_uom_master
+             ORDER BY uom_code
+
+        FOREACH uom_curs INTO arr_uom_codes[idx], arr_uom_names[idx]
+            LET idx = idx + 1
+        END FOREACH
+
+        CLOSE uom_curs
+        FREE uom_curs
+
+        -- Only populate ComboBox if we have a valid form loaded
+        LET win = ui.Window.getCurrent()
+        IF win IS NOT NULL THEN
+            LET frm = win.getForm()
+            IF frm IS NOT NULL THEN
+                LET cb = ui.ComboBox.forName("st01_mast.uom")
+                IF cb IS NOT NULL THEN
+                    -- Clear existing items
+                    CALL cb.clear()
+
+                    -- Add UOMs to ComboBox
+                    FOR idx = 1 TO arr_uom_codes.getLength()
+                        CALL cb.addItem(arr_uom_codes[idx], arr_uom_names[idx])
+                    END FOR
+                ELSE
+                    -- ComboBox not found - form may not be loaded yet
+                    -- This is OK, arrays are populated for later use
+                    DISPLAY "Note: UOM ComboBox will be populated when form is available"
+                END IF
+            END IF
+        END IF
+
+    CATCH
+        -- Silent fail for database errors during UOM loading
+        -- Don't break the module if UOMs can't be loaded
+        DISPLAY "Warning: Could not load UOMs - ", SQLCA.SQLERRM
+    END TRY
+END FUNCTION
+
+-- ==============================================================
+-- Load UOMs into ComboBox
+-- ==============================================================
+FUNCTION capture_grn()
+    -- capture new grn
+    CALL pu131_grn.new_pu_grn()
 END FUNCTION

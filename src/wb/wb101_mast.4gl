@@ -37,7 +37,7 @@ MAIN
     END IF
 
     IF utils_globals.is_standalone() THEN
-        OPEN WINDOW w_wb101 WITH FORM "wb101_mast" ATTRIBUTES(STYLE = "normal")
+        OPEN WINDOW w_wb101 WITH FORM "wb101_mast" -- ATTRIBUTES(STYLE = "normal")
     ELSE
         OPEN WINDOW w_wb101 WITH FORM "wb101_mast" ATTRIBUTES(STYLE = "child")
     END IF

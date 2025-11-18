@@ -29,9 +29,9 @@
         <Label gridHeight="1" gridWidth="8" name="st02_mast_cat_code" posX="1" posY="2" text="Category Code">
           <Initializer text="dbschema:st02_mast.cat_code/@label"/>
         </Label>
-        <ButtonEdit action="find" colName="cat_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="zoom" name="st02_cat.cat_code" posX="10" posY="2" scroll="true" sqlTabName="st02_cat" tabIndex="1" widget="ButtonEdit">
+        <Edit colName="cat_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="st02_cat.cat_code" posX="10" posY="2" scroll="true" sqlTabName="st02_cat" tabIndex="1" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </ButtonEdit>
+        </Edit>
         <Label gridHeight="1" gridWidth="8" name="st02_mast_cat_name" posX="36" posY="2" text="Category Name">
           <Initializer text="dbschema:st02_mast.cat_name/@label"/>
         </Label>
@@ -86,6 +86,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9v/mZlBmZljjAbszM6YzM2D94k3S8an76AQAAAEwAewA4ADUANABmADYAMgA1ADUALQA5ADgAYgAzAC0ANAA4ADMAOQAtADgAYwA4ADAALQAyADAAOAAxAGIANwBkADMAOAA1ADAAMQB9wGXMzOfMzNnAb7MzWpMzRj9wYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9v/mZlCZmYEbAbszM+PMzTj94k3S8an76AQAAAEwAewA4ADUANABmADYAMgA1ADUALQA5ADgAYgAzAC0ANAA4ADMAOQAtADgAYwA4ADAALQAyADAAOAAxAGIANwBkADMAOAA1ADAAMQB9wGXMzPKzM0/Ab7MzamzM9T9wYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

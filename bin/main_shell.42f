@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Form name="main_shell.tmp" build="3.20.14" spacing="normal" text="XACT ERP System" width="98" height="26">
+  <LStr text="XACT ERP System"/>
+  <Group name="main_shell" text="" hidden="1">
+    <LStr text=""/>
+    <Grid name="main_content" width="98" height="26">
+      <Label name="lbl_status" width="96" text="Ready" style="Label.status_bar" posY="24" posX="1" gridWidth="96">
+        <LStr text="Ready"/>
+      </Label>
+    </Grid>
+  </Group>
+</Form>

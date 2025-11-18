@@ -27,6 +27,18 @@
             <Item name="archived" text="Archived"/>
           </ComboBox>
         </FormField>
+        <PhantomFormField name="cl01_mast.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="12" sqlTabName="cl01_mast">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <PhantomFormField name="cl01_mast.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="15" sqlTabName="cl01_mast">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <PhantomFormField name="cl01_mast.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="14" sqlTabName="cl01_mast">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <PhantomFormField name="cl01_mast.created_by" colName="created_by" sqlType="BIGINT" fieldId="13" sqlTabName="cl01_mast">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
         <Label name="lbl_dl_phone" width="9" text="Phone" posY="2" posX="1" gridWidth="9">
           <LStr text="Phone"/>
         </Label>
@@ -63,18 +75,6 @@
         <FormField name="cl01_mast.postal_code" colName="postal_code" sqlType="VARCHAR(10)" fieldId="7" sqlTabName="cl01_mast" tabIndex="7">
           <Edit width="9" posY="4" posX="45" gridWidth="9"/>
         </FormField>
-        <PhantomFormField name="cl01_mast.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="12" sqlTabName="cl01_mast">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
-        <PhantomFormField name="cl01_mast.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="15" sqlTabName="cl01_mast">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
-        <PhantomFormField name="cl01_mast.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="14" sqlTabName="cl01_mast">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
-        <PhantomFormField name="cl01_mast.created_by" colName="created_by" sqlType="BIGINT" fieldId="13" sqlTabName="cl01_mast">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
       </Group>
       <Group name="grp_2" text="" gridChildrenInParent="1" posY="1" posX="72" gridWidth="27" gridHeight="7">
         <LStr text=""/>
@@ -153,18 +153,6 @@
       </Page>
     </Folder>
   </VBox>
-  <RecordView tabName="cl30_trans">
-    <Link colName="id" fieldIdRef="16"/>
-    <Link colName="supp_id" fieldIdRef="17"/>
-    <Link colName="trans_date" fieldIdRef="18"/>
-    <Link colName="doc_no" fieldIdRef="19"/>
-    <Link colName="doc_type" fieldIdRef="20"/>
-    <Link colName="gross_tot" fieldIdRef="21"/>
-    <Link colName="disc_tot" fieldIdRef="22"/>
-    <Link colName="vat_tot" fieldIdRef="23"/>
-    <Link colName="net_tot" fieldIdRef="24"/>
-    <Link colName="notes" fieldIdRef="25"/>
-  </RecordView>
   <RecordView tabName="cl01_mast">
     <Link colName="supp_name" fieldIdRef="0"/>
     <Link colName="status" fieldIdRef="1"/>
@@ -183,22 +171,34 @@
     <Link colName="deleted_at" fieldIdRef="14"/>
     <Link colName="updated_at" fieldIdRef="15"/>
   </RecordView>
+  <RecordView tabName="cl30_trans">
+    <Link colName="id" fieldIdRef="16"/>
+    <Link colName="supp_id" fieldIdRef="17"/>
+    <Link colName="trans_date" fieldIdRef="18"/>
+    <Link colName="doc_no" fieldIdRef="19"/>
+    <Link colName="doc_type" fieldIdRef="20"/>
+    <Link colName="gross_tot" fieldIdRef="21"/>
+    <Link colName="disc_tot" fieldIdRef="22"/>
+    <Link colName="vat_tot" fieldIdRef="23"/>
+    <Link colName="net_tot" fieldIdRef="24"/>
+    <Link colName="notes" fieldIdRef="25"/>
+  </RecordView>
   <RecordView tabName="rec_cred_mast">
     <Link colName="id" fieldIdRef="11"/>
     <Link colName="supp_name" fieldIdRef="0"/>
     <Link colName="phone" fieldIdRef="2"/>
     <Link colName="email" fieldIdRef="3"/>
-    <Link colName="balance" fieldIdRef="10"/>
-    <Link colName="status" fieldIdRef="1"/>
     <Link colName="address1" fieldIdRef="4"/>
     <Link colName="address2" fieldIdRef="5"/>
     <Link colName="address3" fieldIdRef="6"/>
     <Link colName="postal_code" fieldIdRef="7"/>
+    <Link colName="vat_no" fieldIdRef="9"/>
+    <Link colName="payment_terms" fieldIdRef="8"/>
+    <Link colName="balance" fieldIdRef="10"/>
+    <Link colName="status" fieldIdRef="1"/>
     <Link colName="created_at" fieldIdRef="12"/>
     <Link colName="updated_at" fieldIdRef="15"/>
     <Link colName="deleted_at" fieldIdRef="14"/>
     <Link colName="created_by" fieldIdRef="13"/>
-    <Link colName="vat_no" fieldIdRef="9"/>
-    <Link colName="payment_terms" fieldIdRef="8"/>
   </RecordView>
 </Form>

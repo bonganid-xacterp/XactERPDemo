@@ -26,15 +26,14 @@ END GLOBALS
 
 -- header and master
 TYPE qt_hdr_t RECORD LIKE sa30_quo_hdr.*
-TYPE m_debt_t RECORD LIKE dl01_mast.*
+TYPE qt_line_arr DYNAMIC ARRAY OF RECORD LIKE sa30_quo_det.*
+TYPE cust_t RECORD LIKE dl01_mast.*
 
 DEFINE m_qt_hdr_rec qt_hdr_t
-DEFINE m_debt_rec m_debt_t
+DEFINE m_qt_lines_arr qt_line_arr
+DEFINE m_cust_rec cust_t
 
 -- doc lines
-TYPE ord_det_t DYNAMIC ARRAY OF RECORD LIKE pu30_ord_det.*
-DEFINE m_arr_qt_lines DYNAMIC ARRAY OF RECORD LIKE sa30_quo_det.*
-
 DEFINE is_edit SMALLINT
 
 -- indexes
@@ -43,18 +42,19 @@ DEFINE m_curr_idx INTEGER
 DEFINE m_user SMALLINT
 
 -- ==============================================================
--- Function : new_quote from master file (Header first, then lines)
+-- Function : new_ord from master file (Header first, then lines)
 -- ==============================================================
 FUNCTION new_ord_from_master(p_cust_id INTEGER)
     DEFINE l_cust_id INTEGER
     LET l_cust_id = p_cust_id
 
-    SELECT * INTO m_qt_hdr_rec.* FROM dl01_mast WHERE id = l_cust_id
+    SELECT * INTO m_qt_hdr_rec.* FROM dl01_mast WHERE id = p_cust_id
 
     OPTIONS INPUT WRAP
-    OPEN WINDOW w_sa130 WITH FORM "sa130_quote" ATTRIBUTES(STYLE = "normal")
+    OPEN WINDOW w_sa130 WITH FORM "sa130_quote" -- ATTRIBUTES(STYLE = "normal")
 
     INITIALIZE m_qt_hdr_rec.* TO NULL
+    
     LET m_qt_hdr_rec.doc_no = utils_globals.get_next_code('sa30_quo_hdr', 'id')
     LET m_qt_hdr_rec.trans_date = TODAY
     LET m_qt_hdr_rec.status = "draft"
@@ -62,16 +62,6 @@ FUNCTION new_ord_from_master(p_cust_id INTEGER)
     LET m_qt_hdr_rec.created_by = utils_globals.get_random_user()
 
     -- link customer
-    LET m_qt_hdr_rec.cust_id          = m_debt_rec.id
-    LET m_qt_hdr_rec.cust_name        = m_debt_rec.cust_name
-    LET m_qt_hdr_rec.cust_phone       = m_debt_rec.phone
-    LET m_qt_hdr_rec.cust_email       = m_debt_rec.email
-    LET m_qt_hdr_rec.cust_address1    = m_debt_rec.address1
-    LET m_qt_hdr_rec.cust_address2    = m_debt_rec.address2
-    LET m_qt_hdr_rec.cust_address3    = m_debt_rec.address3
-    LET m_qt_hdr_rec.cust_postal_code = m_debt_rec.postal_code
-    LET m_qt_hdr_rec.cust_vat_no      = m_debt_rec.vat_no
-    LET m_qt_hdr_rec.cust_payment_terms = m_debt_rec.payment_terms
     LET m_qt_hdr_rec.gross_tot = 0; 
     LET m_qt_hdr_rec.disc_tot = 0
     LET m_qt_hdr_rec.vat_tot   = 0; 
@@ -131,7 +121,7 @@ END FUNCTION
 -- Function : new_quote (Header first, then lines)
 -- ==============================================================
 FUNCTION new_quote()
-    DEFINE l_hdr RECORD LIKE sa30_quo_hdr.*
+    DEFINE l_hdr_rec RECORD LIKE sa30_quo_hdr.*
     DEFINE l_next_doc_no INTEGER
     DEFINE l_new_hdr_id INTEGER
 
@@ -143,81 +133,81 @@ FUNCTION new_quote()
     -- ==========================================================
     -- 2. Initialize header
     -- ==========================================================
-    INITIALIZE l_hdr.* TO NULL
-    LET l_hdr.id = l_next_doc_no
-    LET l_hdr.trans_date = TODAY
-    LET l_hdr.status = "DRAFT"
-    LET l_hdr.created_at = CURRENT
-    LET l_hdr.created_by = utils_globals.get_current_user_id()
-    LET l_hdr.gross_tot = 0
-    LET l_hdr.vat_tot = 0
-    LET l_hdr.disc_tot = 0
-    LET l_hdr.net_tot = 0
+    INITIALIZE l_hdr_rec.* TO NULL
+    LET l_hdr_rec.doc_no = l_next_doc_no
+    LET l_hdr_rec.trans_date = TODAY
+    LET l_hdr_rec.status = "draft"
+    LET l_hdr_rec.created_at = CURRENT
+    LET l_hdr_rec.created_by = utils_globals.get_current_user_id()
+    LET l_hdr_rec.gross_tot = 0
+    LET l_hdr_rec.vat_tot = 0
+    LET l_hdr_rec.disc_tot = 0
+    LET l_hdr_rec.net_tot = 0
 
     -- ==========================================================
     -- 3. Input Header Details
     -- ==========================================================
-    OPEN WINDOW w_quote_hdr WITH FORM "sa130_quote" ATTRIBUTES(STYLE="dialog")
+    --OPEN WINDOW w_quote_hdr WITH FORM "sa130_quote" --ATTRIBUTES(STYLE="dialog")
 
     CALL utils_globals.set_form_label("lbl_form_title", "New Sales Quote - Header")
 
-    INPUT BY NAME l_hdr.id, l_hdr.trans_date, l_hdr.ref_no
+    INPUT BY NAME l_hdr_rec.*
         ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
 
         BEFORE INPUT
-            DISPLAY BY NAME l_hdr.doc_no, l_hdr.status, l_hdr.trans_date
+            DISPLAY BY NAME l_hdr_rec.doc_no, l_hdr_rec.status, l_hdr_rec.trans_date
             MESSAGE SFMT("Enter quote header details for Quote #%1", l_next_doc_no)
 
-        AFTER FIELD id
-            IF l_hdr.id IS NOT NULL THEN
-                CALL load_customer_details(l_hdr.id)
-                    RETURNING l_hdr.cust_id, l_hdr.cust_name, l_hdr.cust_id,
-                              l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
-                              l_hdr.cust_address2, l_hdr.cust_address3,
-                              l_hdr.cust_postal_code, l_hdr.cust_vat_no,
-                              l_hdr.cust_payment_terms
+        AFTER FIELD doc_no
+            IF l_hdr_rec.id IS NOT NULL THEN
+                CALL load_customer_details(l_hdr_rec.id)
+                    RETURNING l_hdr_rec.cust_id, l_hdr_rec.cust_name, l_hdr_rec.cust_id,
+                              l_hdr_rec.cust_phone, l_hdr_rec.cust_email, l_hdr_rec.cust_address1,
+                              l_hdr_rec.cust_address2, l_hdr_rec.cust_address3,
+                              l_hdr_rec.cust_postal_code, l_hdr_rec.cust_vat_no,
+                              l_hdr_rec.cust_payment_terms
 
-                IF l_hdr.cust_id IS NULL THEN
+                IF l_hdr_rec.cust_id IS NULL THEN
                     CALL utils_globals.show_error("Customer not found")
                     NEXT FIELD id
                 END IF
             END IF
 
         ON ACTION lookup_customer ATTRIBUTES(TEXT="Customer Lookup", IMAGE="zoom")
-            CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr.id
-            IF l_hdr.id IS NOT NULL THEN
-                CALL load_customer_details(l_hdr.id)
-                    RETURNING l_hdr.cust_id, l_hdr.cust_name, l_hdr.cust_id,
-                              l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
-                              l_hdr.cust_address2, l_hdr.cust_address3,
-                              l_hdr.cust_postal_code, l_hdr.cust_vat_no,
-                              l_hdr.cust_payment_terms
-                DISPLAY BY NAME l_hdr.id
+            CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr_rec.id
+            IF l_hdr_rec.id IS NOT NULL THEN
+                CALL load_customer_details(l_hdr_rec.id)
+                    RETURNING l_hdr_rec.cust_id, l_hdr_rec.cust_name, l_hdr_rec.cust_id,
+                              l_hdr_rec.cust_phone, l_hdr_rec.cust_email, l_hdr_rec.cust_address1,
+                              l_hdr_rec.cust_address2, l_hdr_rec.cust_address3,
+                              l_hdr_rec.cust_postal_code, l_hdr_rec.cust_vat_no,
+                              l_hdr_rec.cust_payment_terms
+                DISPLAY BY NAME l_hdr_rec.id
             END IF
 
         ON ACTION accept ATTRIBUTES(TEXT="Save Header", IMAGE="save")
             -- Validate header
-            IF l_hdr.id IS NULL THEN
+            IF l_hdr_rec.id IS NULL THEN
                 CALL utils_globals.show_error("Customer is required")
                 NEXT FIELD id
             END IF
 
-            IF l_hdr.trans_date IS NULL THEN
-                LET l_hdr.trans_date = TODAY
+            IF l_hdr_rec.trans_date IS NULL THEN
+                LET l_hdr_rec.trans_date = TODAY
             END IF
 
             ACCEPT INPUT
 
         ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="exit")
             CALL utils_globals.show_info("Quote creation cancelled.")
-            CLOSE WINDOW w_quote_hdr
+            --CLOSE WINDOW w_quote_hdr
             RETURN
     END INPUT
 
     -- Check if cancelled
     IF INT_FLAG THEN
         LET INT_FLAG = FALSE
-        CLOSE WINDOW w_quote_hdr
+        --CLOSE WINDOW w_quote_hdr
         RETURN
     END IF
 
@@ -226,11 +216,11 @@ FUNCTION new_quote()
     -- ==========================================================
     BEGIN WORK
     TRY
-        INSERT INTO sa30_quo_hdr VALUES(l_hdr.*)
+        INSERT INTO sa30_quo_hdr VALUES(l_hdr_rec.*)
 
         -- Get the generated header ID
         LET l_new_hdr_id = SQLCA.SQLERRD[2]
-        LET l_hdr.id = l_new_hdr_id
+        LET l_hdr_rec.id = l_new_hdr_id
 
         COMMIT WORK
 
@@ -242,17 +232,17 @@ FUNCTION new_quote()
         ROLLBACK WORK
         CALL utils_globals.show_error(
             SFMT("Failed to save quote header: %1", SQLCA.SQLCODE))
-        CLOSE WINDOW w_quote_hdr
+        --CLOSE WINDOW w_quote_hdr
         RETURN
     END TRY
 
-    CLOSE WINDOW w_quote_hdr
+    --CLOSE WINDOW w_quote_hdr
 
     -- ==========================================================
     -- 5. Now add lines (header ID exists)
     -- ==========================================================
-    LET m_qt_hdr_rec.* = l_hdr.*
-    CALL m_arr_qt_lines.clear()
+    LET m_qt_hdr_rec.* = l_hdr_rec.*
+    CALL m_qt_lines_arr.clear()
 
     CALL input_quote_lines(l_new_hdr_id)
 
@@ -280,7 +270,7 @@ FUNCTION input_quote_lines(p_hdr_id INTEGER)
 
     DIALOG ATTRIBUTES(UNBUFFERED)
 
-        DISPLAY ARRAY m_arr_qt_lines TO arr_sa_qt_lines.*
+        DISPLAY ARRAY m_qt_lines_arr TO arr_sa_qt_lines.*
             BEFORE DISPLAY
                 CALL DIALOG.setActionHidden("accept", TRUE)
 
@@ -307,7 +297,7 @@ FUNCTION input_quote_lines(p_hdr_id INTEGER)
                 EXIT DIALOG
 
             ON ACTION close ATTRIBUTES(TEXT="Close", IMAGE="exit")
-                IF m_arr_qt_lines.getLength() > 0 THEN
+                IF m_qt_lines_arr.getLength() > 0 THEN
                     IF utils_globals.show_confirm(
                         "Save lines before closing?", "Confirm") THEN
                         CALL save_qt_lines(p_hdr_id)
@@ -335,7 +325,7 @@ FUNCTION edit_or_add_qt_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
     IF p_is_new THEN
         INITIALIZE l_line.* TO NULL
         LET l_line.hdr_id = p_doc_id
-        LET l_line.line_no = m_arr_qt_lines.getLength() + 1
+        LET l_line.line_no = m_qt_lines_arr.getLength() + 1
         LET l_line.vat_rate = 15.00
         LET l_line.disc_pct = 0
         LET l_line.status = 1
@@ -343,7 +333,7 @@ FUNCTION edit_or_add_qt_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
         LET l_line.created_by = utils_globals.get_current_user_id()
     ELSE
         -- Load from existing array line
-        --LET l_line.* = m_arr_qt_lines[p_row].*
+        --LET l_line.* = m_qt_lines_arr[p_row].*
     END IF
 
     -- ==============================
@@ -415,9 +405,9 @@ FUNCTION edit_or_add_qt_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
             -- Save to array
             IF p_is_new THEN
             -- TODO:: Fix this so taht the lines are 
-                --LET m_arr_qt_lines[m_arr_qt_lines.getLength() + 1].* = l_line.*
+                --LET m_qt_lines_arr[m_qt_lines_arr.getLength() + 1].* = l_line.*
             ELSE
-                --LET m_arr_qt_lines[p_row].* = l_line.*
+                --LET m_qt_lines_arr[p_row].* = l_line.*
             END IF
 
             CALL utils_globals.show_success("Line saved")
@@ -463,7 +453,7 @@ FUNCTION delete_qt_line(p_doc_id INTEGER, p_row INTEGER)
     IF p_row > 0 THEN
         IF utils_globals.show_confirm(
             SFMT("Delete line %1?", p_row), "Confirm Delete") THEN
-            CALL m_arr_qt_lines.deleteElement(p_row)
+            CALL m_qt_lines_arr.deleteElement(p_row)
             CALL utils_globals.show_success("Line deleted")
         END IF
     END IF
@@ -479,10 +469,10 @@ FUNCTION save_qt_lines(p_doc_id INTEGER)
     TRY
         DELETE FROM sa30_quo_det WHERE hdr_id = p_doc_id
 
-        FOR i = 1 TO m_arr_qt_lines.getLength()
+        FOR i = 1 TO m_qt_lines_arr.getLength()
             -- Ensure hdr_id is set
-            LET m_arr_qt_lines[i].hdr_id = p_doc_id
-            INSERT INTO sa30_quo_det VALUES m_arr_qt_lines[i].*
+            LET m_qt_lines_arr[i].hdr_id = p_doc_id
+            INSERT INTO sa30_quo_det VALUES m_qt_lines_arr[i].*
         END FOR
 
         COMMIT WORK
@@ -506,10 +496,10 @@ FUNCTION calculate_quote_totals()
     LET l_disc_tot = 0
     LET l_vat_tot = 0
 
-    FOR i = 1 TO m_arr_qt_lines.getLength()
-        LET l_gross = l_gross + NVL(m_arr_qt_lines[i].gross_amt, 0)
-        LET l_disc_tot = l_disc_tot + NVL(m_arr_qt_lines[i].disc_amt, 0)
-        LET l_vat_tot = l_vat_tot + NVL(m_arr_qt_lines[i].vat_amt, 0)
+    FOR i = 1 TO m_qt_lines_arr.getLength()
+        LET l_gross = l_gross + NVL(m_qt_lines_arr[i].gross_amt, 0)
+        LET l_disc_tot = l_disc_tot + NVL(m_qt_lines_arr[i].disc_amt, 0)
+        LET l_vat_tot = l_vat_tot + NVL(m_qt_lines_arr[i].vat_amt, 0)
     END FOR
 
     LET l_net = l_gross - l_disc_tot + l_vat_tot
@@ -608,7 +598,7 @@ FUNCTION load_quote(p_doc_id INTEGER)
 
     -- Initialize variables
     INITIALIZE m_qt_hdr_rec.* TO NULL
-    CALL m_arr_qt_lines.clear()
+    CALL m_qt_lines_arr.clear()
 
     -- ===========================================
     -- Load header record
@@ -634,7 +624,7 @@ FUNCTION load_quote(p_doc_id INTEGER)
              WHERE hdr_id = p_doc_id
              ORDER BY line_no
 
-        FOREACH qt_lines_cur INTO m_arr_qt_lines[idx + 1].*
+        FOREACH qt_lines_cur INTO m_qt_lines_arr[idx + 1].*
             LET idx = idx + 1
         END FOREACH
 
@@ -652,7 +642,7 @@ FUNCTION load_quote(p_doc_id INTEGER)
                         m_qt_hdr_rec.trans_date, m_qt_hdr_rec.status, m_qt_hdr_rec.gross_tot,
                         m_qt_hdr_rec.disc_tot, m_qt_hdr_rec.vat_tot, m_qt_hdr_rec.net_tot
 
-        DISPLAY ARRAY m_arr_qt_lines TO arr_sa_qt_lines.*
+        DISPLAY ARRAY m_qt_lines_arr TO arr_sa_qt_lines.*
 
             BEFORE DISPLAY
                 CALL DIALOG.setActionHidden("cancel", TRUE)
@@ -984,7 +974,7 @@ END FUNCTION
 -- ==============================================================
 FUNCTION edit_qt_lines(p_doc_id INTEGER)
     DIALOG
-        DISPLAY ARRAY m_arr_qt_lines TO arr_sa_qt_lines.*
+        DISPLAY ARRAY m_qt_lines_arr TO arr_sa_qt_lines.*
             BEFORE DISPLAY
                 CALL DIALOG.setActionHidden("accept", TRUE)
 

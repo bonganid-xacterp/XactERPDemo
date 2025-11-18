@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TopMenu>
+  <Menu text="Stock">
+    <MenuItem name="stocks" text="Stock Master" />
+    <MenuItem name="stock_categories" text="Stock Categories" />
+  </Menu>
+  <Menu text="Warehouse">
+    <MenuItem name="warehouses" text="Warehouse Master" />
+    <MenuItem name="warehouse_bins" text="Warehouse Bins" />
+  </Menu>
+  <Menu text="Customers">
+    <MenuItem name="customers" text="Customer Master" />
+  </Menu>
+  <Menu text="Suppliers">
+    <MenuItem name="suppliers" text="Supplier Master" />
+  </Menu>
+  <Menu text="System">
+    <MenuItem name="users" text="User Management" />
+    <MenuItem name="change_password" text="Change Password" />
+    <MenuSeparator />
+    <MenuItem name="about" text="About" />
+    <MenuItem name="exit" text="Exit" />
+  </Menu>
+</TopMenu>

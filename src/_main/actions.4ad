@@ -1,33 +1,144 @@
 <?xml version="1.0" encoding="ANSI_X3.4-1968"?>
 <ActionDefaultList>
-  <ActionDefault name="accept" text="OK" acceleratorName="Return" acceleratorName2="Enter" contextMenu="no"/>
-  <ActionDefault name="cancel" validate="no" text="Cancel" acceleratorName="Escape" contextMenu="no"/>
-  <ActionDefault name="insert" text="Insert" acceleratorName="F3" contextMenu="no"/>
-  <ActionDefault name="append" text="Append" acceleratorName="Control-F3" contextMenu="no"/>
-  <ActionDefault name="update" text="Update" contextMenu="no"/>
-  <ActionDefault name="delete" validate="no" text="Delete" acceleratorName="F4" contextMenu="no"/>
-  <ActionDefault name="help" validate="no" text="Help" acceleratorName="F1" contextMenu="no"/>
-  <ActionDefault name="close" validate="no" text="Close" acceleratorName="Alt-F4" defaultView="no" contextMenu="no"/>
-  <ActionDefault name="interrupt" text="Interrupt" contextMenu="no"/>
-  <ActionDefault name="next" text="Next" image="goforw" comment="Next record" contextMenu="no"/>
-  <ActionDefault name="previous" text="Previous" image="gorev" comment="Previous record" contextMenu="no"/>
-  <ActionDefault name="first" text="First" image="gobegin" comment="First record" contextMenu="no"/>
-  <ActionDefault name="last" text="Last" image="goend" comment="Last record" contextMenu="no"/>
-  <ActionDefault name="print" text="Print" image="printer" comment="Print" contextMenu="no"/>
-  <ActionDefault name="find"     acceleratorName="Control-F" text="Find" image="find" comment="Search"/>
-  <ActionDefault name="findnext" acceleratorName="Control-G" text="Find Next" image="findnext" comment="Search"/>
-  <ActionDefault name="editcopy" text="Copy" image="copy" comment="Copy" acceleratorName="Control-C" contextMenu="no"/>
-  <ActionDefault name="editcut" text="Cut" image="cut" comment="Cut" acceleratorName="Control-X" contextMenu="no"/>
-  <ActionDefault name="editpaste" text="Paste" image="paste" comment="Paste" acceleratorName="Control-V" contextMenu="no"/>
-  <ActionDefault name="nextfield" text="Next Field" acceleratorName="Tab" contextMenu="no"/>
-  <ActionDefault name="prevfield" text="Previous Field" acceleratorName="Shift-Tab" contextMenu="no"/>
-  <ActionDefault name="nextrow" text="Next" image="goforw" acceleratorName="Down" contextMenu="no"/>
-  <ActionDefault name="prevrow" text="Previous" image="gorev" acceleratorName="Up" contextMenu="no"/>
-  <ActionDefault name="firstrow" text="First" image="gobegin" acceleratorName="Home" contextMenu="no"/>
-  <ActionDefault name="lastrow" text="Last" image="goend" acceleratorName="End" contextMenu="no"/>
-  <ActionDefault name="nextpage" text="Next Page" acceleratorName="Next" contextMenu="no"/>
-  <ActionDefault name="prevpage" text="Previous Page" acceleratorName="Prior" contextMenu="no"/>
-  <ActionDefault name="nexttab" text="Next Folder Tab" acceleratorName="Control-Tab" contextMenu="no"/>
-  <ActionDefault name="prevtab" text="Previous Folder Tab" acceleratorName="Control-Shift-Tab" contextMenu="no"/>
-  <ActionDefault name="dialogtouched" validate="no" defaultView="no"  contextMenu="no"/>
+  <!-- ============================================== -->
+  <!-- STANDARD ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="accept" text="OK" image="ok" acceleratorName="Return" acceleratorName2="Enter" comment="Accept and continue" contextMenu="no"/>
+  <ActionDefault name="cancel" validate="no" text="Cancel" image="cancel" acceleratorName="Escape" comment="Cancel operation" contextMenu="no"/>
+  <ActionDefault name="close" validate="no" text="Close" image="close" acceleratorName="Alt-F4" comment="Close window" defaultView="no" contextMenu="no"/>
+  <ActionDefault name="quit" validate="no" text="Quit" image="quit" acceleratorName="Control-Q" comment="Exit application" contextMenu="no"/>
+  <ActionDefault name="help" validate="no" text="Help" image="help" acceleratorName="F1" comment="Show help" contextMenu="no"/>
+  <ActionDefault name="interrupt" text="Interrupt" image="stop" comment="Interrupt operation" contextMenu="no"/>
+
+  <!-- ============================================== -->
+  <!-- CRUD ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="new" text="New" image="new" acceleratorName="Control-N" comment="Create new record" contextMenu="yes"/>
+  <ActionDefault name="insert" text="Insert" image="new" acceleratorName="F3" comment="Insert record" contextMenu="no"/>
+  <ActionDefault name="append" text="Append" image="add" acceleratorName="Control-F3" comment="Append record" contextMenu="no"/>
+  <ActionDefault name="edit" text="Edit" image="edit" acceleratorName="F2" comment="Edit record" contextMenu="yes"/>
+  <ActionDefault name="update" text="Update" image="update" comment="Update record" contextMenu="no"/>
+  <ActionDefault name="delete" validate="no" text="Delete" image="delete" acceleratorName="F4" comment="Delete record" contextMenu="yes"/>
+  <ActionDefault name="save" text="Save" image="save" acceleratorName="Control-S" comment="Save changes" contextMenu="yes"/>
+  <ActionDefault name="refresh" text="Refresh" image="refresh" acceleratorName="F5" comment="Refresh data" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- NAVIGATION ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="next" text="Next" image="goforw" acceleratorName="Control-Right" comment="Next record" contextMenu="no"/>
+  <ActionDefault name="previous" text="Previous" image="gorev" acceleratorName="Control-Left" comment="Previous record" contextMenu="no"/>
+  <ActionDefault name="first" text="First" image="gobegin" acceleratorName="Control-Home" comment="First record" contextMenu="no"/>
+  <ActionDefault name="last" text="Last" image="goend" acceleratorName="Control-End" comment="Last record" contextMenu="no"/>
+
+  <!-- ============================================== -->
+  <!-- SEARCH & FILTER ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="find" text="Find" image="zoom" acceleratorName="Control-F" comment="Search records" contextMenu="yes"/>
+  <ActionDefault name="findnext" text="Find Next" image="findnext" acceleratorName="Control-G" comment="Find next match" contextMenu="no"/>
+  <ActionDefault name="filter" text="Filter" image="filter" acceleratorName="Control-L" comment="Filter records" contextMenu="yes"/>
+  <ActionDefault name="clear_filter" text="Clear Filter" image="delete" comment="Clear all filters" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- PRINT & EXPORT ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="print" text="Print" image="printer" acceleratorName="Control-P" comment="Print document" contextMenu="yes"/>
+  <ActionDefault name="print_preview" text="Print Preview" image="preview" comment="Preview before printing" contextMenu="yes"/>
+  <ActionDefault name="export" text="Export" image="export" acceleratorName="Control-E" comment="Export data" contextMenu="yes"/>
+  <ActionDefault name="export_excel" text="Export to Excel" image="excel" comment="Export to Excel" contextMenu="yes"/>
+  <ActionDefault name="export_pdf" text="Export to PDF" image="pdf" comment="Export to PDF" contextMenu="yes"/>
+  <ActionDefault name="export_csv" text="Export to CSV" image="export" comment="Export to CSV" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- CLIPBOARD ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="editcopy" text="Copy" image="copy" acceleratorName="Control-C" comment="Copy to clipboard" contextMenu="yes"/>
+  <ActionDefault name="editcut" text="Cut" image="cut" acceleratorName="Control-X" comment="Cut to clipboard" contextMenu="yes"/>
+  <ActionDefault name="editpaste" text="Paste" image="paste" acceleratorName="Control-V" comment="Paste from clipboard" contextMenu="yes"/>
+  <ActionDefault name="selectall" text="Select All" acceleratorName="Control-A" comment="Select all items" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- TRANSACTION ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="post" text="Post" image="accept" comment="Post transaction" contextMenu="yes"/>
+  <ActionDefault name="unpost" text="Unpost" image="undo" comment="Unpost transaction" contextMenu="yes"/>
+  <ActionDefault name="approve" text="Approve" image="ok" comment="Approve transaction" contextMenu="yes"/>
+  <ActionDefault name="reject" text="Reject" image="cancel" comment="Reject transaction" contextMenu="yes"/>
+  <ActionDefault name="submit" text="Submit" image="accept" comment="Submit for approval" contextMenu="yes"/>
+  <ActionDefault name="void" text="Void" image="delete" comment="Void transaction" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- LINE ITEM ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="add_line" text="Add Line" image="add" comment="Add new line" contextMenu="yes"/>
+  <ActionDefault name="delete_line" text="Delete Line" image="delete" comment="Delete selected line" contextMenu="yes"/>
+  <ActionDefault name="insert_line" text="Insert Line" image="new" comment="Insert line above" contextMenu="yes"/>
+  <ActionDefault name="copy_line" text="Copy Line" image="copy" comment="Copy selected line" contextMenu="yes"/>
+  <ActionDefault name="move_up" text="Move Up" image="up" comment="Move line up" contextMenu="yes"/>
+  <ActionDefault name="move_down" text="Move Down" image="down" comment="Move line down" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- LOOKUP ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="lookup" text="Lookup" image="zoom" comment="Open lookup window" contextMenu="yes"/>
+  <ActionDefault name="stock_lookup" text="Stock Lookup" image="zoom" comment="Lookup stock items" contextMenu="yes"/>
+  <ActionDefault name="customer_lookup" text="Customer Lookup" image="zoom" comment="Lookup customers" contextMenu="yes"/>
+  <ActionDefault name="supplier_lookup" text="Supplier Lookup" image="zoom" comment="Lookup suppliers" contextMenu="yes"/>
+  <ActionDefault name="account_lookup" text="Account Lookup" image="zoom" comment="Lookup accounts" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- DOCUMENT ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="attach" text="Attach" image="attach" comment="Attach document" contextMenu="yes"/>
+  <ActionDefault name="view_attachments" text="View Attachments" image="folder" comment="View attachments" contextMenu="yes"/>
+  <ActionDefault name="email" text="Email" image="mail" comment="Send email" contextMenu="yes"/>
+  <ActionDefault name="view_history" text="View History" image="info" comment="View audit trail" contextMenu="yes"/>
+  <ActionDefault name="view_notes" text="View Notes" image="note" comment="View notes" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- CALCULATION ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="calculate" text="Calculate" image="calculator" comment="Calculate totals" contextMenu="yes"/>
+  <ActionDefault name="recalculate" text="Recalculate" image="refresh" comment="Recalculate amounts" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- VIEW ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="view_detail" text="View Detail" image="info" comment="View details" contextMenu="yes"/>
+  <ActionDefault name="expand_all" text="Expand All" image="plus" comment="Expand all nodes" contextMenu="yes"/>
+  <ActionDefault name="collapse_all" text="Collapse All" image="minus" comment="Collapse all nodes" contextMenu="yes"/>
+  <ActionDefault name="zoom_in" text="Zoom In" image="zoomin" comment="Zoom in" contextMenu="yes"/>
+  <ActionDefault name="zoom_out" text="Zoom Out" image="zoomout" comment="Zoom out" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- ARRAY/TABLE NAVIGATION -->
+  <!-- ============================================== -->
+  <ActionDefault name="nextfield" text="Next Field" acceleratorName="Tab" comment="Move to next field" contextMenu="no"/>
+  <ActionDefault name="prevfield" text="Previous Field" acceleratorName="Shift-Tab" comment="Move to previous field" contextMenu="no"/>
+  <ActionDefault name="nextrow" text="Next Row" image="goforw" acceleratorName="Down" comment="Move to next row" contextMenu="no"/>
+  <ActionDefault name="prevrow" text="Previous Row" image="gorev" acceleratorName="Up" comment="Move to previous row" contextMenu="no"/>
+  <ActionDefault name="firstrow" text="First Row" image="gobegin" acceleratorName="Home" comment="Move to first row" contextMenu="no"/>
+  <ActionDefault name="lastrow" text="Last Row" image="goend" acceleratorName="End" comment="Move to last row" contextMenu="no"/>
+  <ActionDefault name="nextpage" text="Next Page" image="goforw" acceleratorName="Next" comment="Next page" contextMenu="no"/>
+  <ActionDefault name="prevpage" text="Previous Page" image="gorev" acceleratorName="Prior" comment="Previous page" contextMenu="no"/>
+
+  <!-- ============================================== -->
+  <!-- TAB NAVIGATION -->
+  <!-- ============================================== -->
+  <ActionDefault name="nexttab" text="Next Folder Tab" acceleratorName="Control-Tab" comment="Next tab" contextMenu="no"/>
+  <ActionDefault name="prevtab" text="Previous Folder Tab" acceleratorName="Control-Shift-Tab" comment="Previous tab" contextMenu="no"/>
+
+  <!-- ============================================== -->
+  <!-- SETTINGS & PREFERENCES -->
+  <!-- ============================================== -->
+  <ActionDefault name="settings" text="Settings" image="properties" comment="Open settings" contextMenu="yes"/>
+  <ActionDefault name="preferences" text="Preferences" image="properties" comment="User preferences" contextMenu="yes"/>
+  <ActionDefault name="options" text="Options" image="properties" comment="View options" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- SPECIAL SYSTEM ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="dialogtouched" validate="no" defaultView="no" contextMenu="no"/>
+  <ActionDefault name="row_select" text="Select" image="ok" comment="Select row" contextMenu="yes"/>
+  <ActionDefault name="save_header" text="Save Header" image="save" comment="Save header information" contextMenu="yes"/>
+  <ActionDefault name="save_lines" text="Save Lines" image="save" comment="Save line items" contextMenu="yes"/>
 </ActionDefaultList>

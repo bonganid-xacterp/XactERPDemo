@@ -8,6 +8,8 @@
 
 IMPORT ui
 IMPORT FGL fgldialog
+IMPORT FGL utils_globals
+IMPORT FGL main_shell
 
 -- ==============================================================
 -- FUNCTION: handle_window_close
@@ -73,20 +75,30 @@ END FUNCTION
 -- FUNCTION: close_current_window
 -- Purpose : Close the current window safely
 -- ==============================================================
-FUNCTION close_current_window()
+FUNCTION close_current_window(p_child STRING)
     DEFINE w ui.Window
-    DEFINE win_name STRING
+    DEFINE winname STRING
+
+    LET w = ui.Window.getCurrent()
+
+    IF w IS NULL THEN
+        CALL utils_globals.show_info("No active window.")
+        RETURN
+    END IF
+
+    LET winname = ui.Interface.getChildInstances(p_child)
+
+
+    IF winname = "w_main" THEN
+        CALL utils_globals.show_info("Cannot close main window.")
+        RETURN
+    END IF
 
     TRY
-        LET w = ui.Window.getCurrent()
-        IF w IS NOT NULL THEN
-            LET win_name = w.getText()
-            -- Note: This function is informational only
-            -- You must close windows explicitly by name in your code
-            DISPLAY "Current window: ", win_name
-        END IF
+        CLOSE WINDOW winname
+        CALL main_shell.cleanup_stale_windows()
     CATCH
-        DISPLAY "Warning: Could not get current window"
+        CALL utils_globals.show_error("Unable to close window: " || winname)
     END TRY
 END FUNCTION
 

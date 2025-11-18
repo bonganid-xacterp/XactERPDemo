@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="mdi_shell">
+  <Form gridHeight="20" gridWidth="80" name="mdi_shell" text="XACT ERP - MDI">
+    <Folder gridHeight="18" gridWidth="78" name="main_folder" posX="1" posY="1">
+      <Page gridHeight="16" gridWidth="76" name="page_home" text="Home">
+        <VBox gridHeight="16" gridWidth="76" name="vbox1" posX="0" posY="0">
+          <Label gridHeight="1" gridWidth="30" name="lbl_welcome" posX="1" posY="1" text="Welcome to XACT ERP"/>
+        </VBox>
+      </Page>
+    </Folder>
+  </Form>
+</ManagedForm>

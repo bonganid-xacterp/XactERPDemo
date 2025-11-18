@@ -8,8 +8,8 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
--- IMPORT FGL cl121_lkup
--- IMPORT FGL st121_st_lkup
+IMPORT FGL cl121_lkup
+IMPORT FGL st121_st_lkup
 
 SCHEMA demoappdb
 
@@ -29,26 +29,27 @@ DEFINE is_edit SMALLINT
 -- =======================
 -- MAIN
 -- =======================
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        DISPLAY "Initialization failed."
-        EXIT PROGRAM 1
-    END IF
-
-    OPTIONS INPUT WRAP
-    OPEN WINDOW w_pu_grn WITH FORM "pu131_grn" ATTRIBUTES(STYLE = "normal")
-
-    CALL init_grn_module()
-    
-    CLOSE WINDOW w_pu_grn
-END MAIN
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        DISPLAY "Initialization failed."
+--        EXIT PROGRAM 1
+--    END IF
+--
+--    OPTIONS INPUT WRAP
+--    OPEN WINDOW w_pu_grn WITH FORM "pu131_grn" -- ATTRIBUTES(STYLE = "normal")
+--
+--    CALL init_grn_module()
+--    
+--    CLOSE WINDOW w_pu_grn
+--END MAIN
 
 -- =======================
 -- init Module
 -- =======================
 FUNCTION init_grn_module()
     DEFINE row_idx INTEGER
-
+    DEFINE chosen_rec INTEGER 
+    
     LET is_edit = FALSE
     INITIALIZE grn_hdr_rec.* TO NULL
 
@@ -98,7 +99,8 @@ FUNCTION init_grn_module()
                 --CALL do_post()
 
             ON ACTION find ATTRIBUTES(TEXT = "Find", IMAGE = "zoom")
-                --CALL do_find()
+                LET chosen_rec = cl121_lkup.fetch_list()
+                
 
             ON ACTION quit ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
                 END INPUT
@@ -122,6 +124,9 @@ FUNCTION init_grn_module()
     END DIALOG
 END FUNCTION
 
+
+-- find the 
+
 -- =======================
 -- New Purchase Order
 -- =======================
@@ -130,8 +135,9 @@ FUNCTION new_pu_grn()
     DEFINE ok SMALLINT
 
     -- Initialize header
-    SELECT COALESCE(MAX(doc_no), 0) + 1 INTO next_doc FROM pu31_grn_hdr
+    SELECT COALESCE(MAX(id), 0) + 1 INTO next_doc FROM pu31_grn_hdr
     INITIALIZE grn_hdr_rec.* TO NULL
+
     CALL grn_lines_arr.clear()
 
     LET grn_hdr_rec.doc_no = next_doc

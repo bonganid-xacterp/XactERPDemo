@@ -43,7 +43,7 @@ DEFINE is_edit_mode SMALLINT
 --    END IF
 --
 --    IF utils_globals.is_standalone() THEN
---        OPEN WINDOW w_sy102 WITH FORM "sy102_role" ATTRIBUTES(STYLE = "normal")
+--        OPEN WINDOW w_sy102 WITH FORM "sy102_role" -- ATTRIBUTES(STYLE = "normal")
 --    ELSE
 --        OPEN WINDOW w_sy102 WITH FORM "sy102_role" ATTRIBUTES(STYLE = "child")
 --    END IF

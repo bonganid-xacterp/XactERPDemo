@@ -129,6 +129,17 @@
       </Table>
     </Grid>
   </VBox>
+  <RecordView tabName="wh01_mast">
+    <Link colName="wh_code" fieldIdRef="0"/>
+    <Link colName="wh_name" fieldIdRef="1"/>
+    <Link colName="location" fieldIdRef="2"/>
+    <Link colName="status" fieldIdRef="3"/>
+    <Link colName="id" fieldIdRef="25"/>
+    <Link colName="created_at" fieldIdRef="26"/>
+    <Link colName="created_by" fieldIdRef="27"/>
+    <Link colName="deleted_at" fieldIdRef="28"/>
+    <Link colName="updated_at" fieldIdRef="29"/>
+  </RecordView>
   <RecordView tabName="wh30_trans">
     <Link colName="id" fieldIdRef="4"/>
     <Link colName="trans_date" fieldIdRef="5"/>
@@ -151,17 +162,6 @@
     <Link colName="created_at" fieldIdRef="22"/>
     <Link colName="updated_by" fieldIdRef="23"/>
     <Link colName="updated_at" fieldIdRef="24"/>
-  </RecordView>
-  <RecordView tabName="wh01_mast">
-    <Link colName="wh_code" fieldIdRef="0"/>
-    <Link colName="wh_name" fieldIdRef="1"/>
-    <Link colName="location" fieldIdRef="2"/>
-    <Link colName="status" fieldIdRef="3"/>
-    <Link colName="id" fieldIdRef="25"/>
-    <Link colName="created_at" fieldIdRef="26"/>
-    <Link colName="created_by" fieldIdRef="27"/>
-    <Link colName="deleted_at" fieldIdRef="28"/>
-    <Link colName="updated_at" fieldIdRef="29"/>
   </RecordView>
   <RecordView tabName="rec_wh">
     <Link colName="wh_code" fieldIdRef="0"/>

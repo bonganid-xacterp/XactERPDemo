@@ -38,7 +38,7 @@ MAIN
     END IF
 
     IF utils_globals.is_standalone() THEN
-        OPEN WINDOW w_sy101 WITH FORM "sy101_user" ATTRIBUTES(STYLE = "normal")
+        OPEN WINDOW w_sy101 WITH FORM "sy101_user" -- -- ATTRIBUTES(STYLE = "normal")
     ELSE
         OPEN WINDOW w_sy101 WITH FORM "sy101_user" ATTRIBUTES(STYLE = "child")
     END IF
@@ -234,7 +234,7 @@ FUNCTION new_user()
     LET rec_password_input = NULL
 
     LET rec_user.status = "active"
-    LET rec_user.role_id = 1  -- Default role
+    
     LET rec_user.created_at = CURRENT
 
     CALL utils_globals.set_form_label("lbl_form_title", "NEW USER")
@@ -371,7 +371,6 @@ FUNCTION edit_user()
 
             BEFORE FIELD username
                 -- Username should not be editable
-                CALL utils_globals.show_info("Username cannot be changed.")
                 NEXT FIELD full_name
 
             AFTER FIELD full_name

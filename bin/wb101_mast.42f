@@ -3,6 +3,9 @@
   <LStr text="Form"/>
   <VBox name="vbox1">
     <Grid name="xactapp_db1" width="54" height="12">
+      <PhantomFormField name="wb01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="4" sqlTabName="wb01_mast">
+        <PhantomEdit width="1"/>
+      </PhantomFormField>
       <Label name="lbl_title" width="52" text="WAREHOUSE BIN" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="52">
         <LStr text="WAREHOUSE BIN"/>
       </Label>
@@ -15,7 +18,7 @@
       <Label name="wb01_mast_wh_wh_code_lbl" width="8" text="Warehouse Code" posY="1" posX="24" gridWidth="8">
         <LStr text="Warehouse Code"/>
       </Label>
-      <FormField name="wh01_mast.wh_code" colName="wh_code" sqlType="VARCHAR(30)" fieldId="1" sqlTabName="wh01_mast" tabIndex="2">
+      <FormField name="wb01_mast.wh_id" colName="wh_id" sqlType="BIGINT" required="1" notNull="1" fieldId="1" sqlTabName="wb01_mast" tabIndex="2">
         <ButtonEdit width="17" action="find_wh" image="zoom" scroll="1" posY="1" posX="33" gridWidth="19"/>
       </FormField>
       <Label name="wb01_mast_description_label1" width="11" text="Description" posY="2" posX="1" gridWidth="11">
@@ -33,9 +36,6 @@
           <Item name="inactive" text="inactive"/>
         </ComboBox>
       </FormField>
-      <PhantomFormField name="wb01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="4" sqlTabName="wb01_mast">
-        <PhantomEdit width="1"/>
-      </PhantomFormField>
       <PhantomFormField name="wb01_mast.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="5" sqlTabName="wb01_mast">
         <PhantomEdit width="1"/>
       </PhantomFormField>
@@ -48,13 +48,11 @@
       <PhantomFormField name="wb01_mast.created_by" colName="created_by" sqlType="BIGINT" fieldId="8" sqlTabName="wb01_mast">
         <PhantomEdit width="1"/>
       </PhantomFormField>
-      <PhantomFormField name="wb01_mast.wh_id" colName="wh_id" sqlType="BIGINT" required="1" notNull="1" fieldId="9" sqlTabName="wb01_mast">
-        <PhantomEdit width="1"/>
-      </PhantomFormField>
     </Grid>
   </VBox>
   <RecordView tabName="wb01_mast">
     <Link colName="wb_code" fieldIdRef="0"/>
+    <Link colName="wh_id" fieldIdRef="1"/>
     <Link colName="description" fieldIdRef="2"/>
     <Link colName="status" fieldIdRef="3"/>
     <Link colName="id" fieldIdRef="4"/>
@@ -62,21 +60,16 @@
     <Link colName="updated_at" fieldIdRef="6"/>
     <Link colName="deleted_at" fieldIdRef="7"/>
     <Link colName="created_by" fieldIdRef="8"/>
-    <Link colName="wh_id" fieldIdRef="9"/>
-  </RecordView>
-  <RecordView tabName="wh01_mast">
-    <Link colName="wh_code" fieldIdRef="1"/>
   </RecordView>
   <RecordView tabName="record2">
+    <Link colName="id" fieldIdRef="4"/>
     <Link colName="wb_code" fieldIdRef="0"/>
-    <Link colName="wh_code" fieldIdRef="1"/>
     <Link colName="description" fieldIdRef="2"/>
     <Link colName="status" fieldIdRef="3"/>
-    <Link colName="id" fieldIdRef="4"/>
     <Link colName="created_at" fieldIdRef="5"/>
     <Link colName="updated_at" fieldIdRef="6"/>
     <Link colName="deleted_at" fieldIdRef="7"/>
     <Link colName="created_by" fieldIdRef="8"/>
-    <Link colName="wh_id" fieldIdRef="9"/>
+    <Link colName="wh_id" fieldIdRef="1"/>
   </RecordView>
 </Form>

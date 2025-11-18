@@ -32,7 +32,7 @@ DEFINE curr_row INTEGER
 --    END IF
 --
 --    IF utils_globals.is_standalone() THEN
---        OPEN WINDOW w_sy103 WITH FORM "sy103_perm" ATTRIBUTES(STYLE = "normal")
+--        OPEN WINDOW w_sy103 WITH FORM "sy103_perm" -- ATTRIBUTES(STYLE = "normal")
 --    ELSE
 --        OPEN WINDOW w_sy103 WITH FORM "sy103_perm" ATTRIBUTES(STYLE = "child")
 --    END IF

@@ -1,0 +1,300 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║              MDI VISUAL IMPLEMENTATION GUIDE                              ║
+║                     XactERP System                                        ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│                    VISUAL ARCHITECTURE                                    │
+└───────────────────────────────────────────────────────────────────────────┘
+
+     ┌─────────────────────────────────────────────────────────┐
+     │ start_app.4gl (MAIN PROGRAM)                           │
+     │                                                         │
+     │  MAIN                                                   │
+     │    ├─ Initialize                                        │
+     │    ├─ Login                                             │
+     │    └─ open_mdi_container() ──────┐                     │
+     └─────────────────────────────────│─────────────────────┘
+                                       │
+                                       ↓
+     ┌─────────────────────────────────────────────────────────┐
+     │ MDI CONTAINER WINDOW (w_main)                          │
+     │ Form: main_shell.4fd                                   │
+     │ ┌─────────────────────────────────────────────────────┐ │
+     │ │ Top Menu: File | Inventory | Sales | System | ... │ │
+     │ ├─────────────────────────────────────────────────────┤ │
+     │ │                                                     │ │
+     │ │  <Group name="Main_container"> ←── CRITICAL NAME  │ │
+     │ │  ┌───────────────────────────────────────────────┐ │ │
+     │ │  │ ┌──────────────────────────────────────────┐  │ │ │
+     │ │  │ │ CHILD WINDOW 1: Stock Master            │  │ │ │
+     │ │  │ │ (st101_mast.4fd)                        │  │ │ │
+     │ │  │ └──────────────────────────────────────────┘  │ │ │
+     │ │  │ ┌──────────────────────────────────────────┐  │ │ │
+     │ │  │ │ CHILD WINDOW 2: Purchase Orders         │  │ │ │
+     │ │  │ │ (pu130_order.4fd)                       │  │ │ │
+     │ │  │ └──────────────────────────────────────────┘  │ │ │
+     │ │  │ ┌──────────────────────────────────────────┐  │ │ │
+     │ │  │ │ CHILD WINDOW 3: Customers               │  │ │ │
+     │ │  │ │ (dl101_mast.4fd)                        │  │ │ │
+     │ │  │ └──────────────────────────────────────────┘  │ │ │
+     │ │  └───────────────────────────────────────────────┘ │ │
+     │ │  </Group>                                          │ │
+     │ │                                                     │ │
+     │ ├─────────────────────────────────────────────────────┤ │
+     │ │ Status: Ready                                       │ │
+     │ └─────────────────────────────────────────────────────┘ │
+     └─────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│              OPENING A CHILD WINDOW - STEP BY STEP                        │
+└───────────────────────────────────────────────────────────────────────────┘
+
+User clicks "Stock Master" in menu
+         │
+         ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│ start_app.4gl :: show_main_menu()                                  │
+│                                                                     │
+│   ON ACTION st_mast                                                 │
+│       CALL launch_child_module("st101_mast", "Stock Master")       │
+└─────────────────────────────────────────────────────────────────────┘
+         │
+         ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│ start_app.4gl :: launch_child_module()                             │
+│                                                                     │
+│   IF main_shell.launch_child_window("st101_mast", "Stock Master")  │
+│       CALL st101_mast.init_st_module()                              │
+└─────────────────────────────────────────────────────────────────────┘
+         │
+         ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│ main_shell.4gl :: launch_child_window()                            │
+│                                                                     │
+│   1. Check if already open → NO                                     │
+│   2. Generate unique window name: "w_st101_mast_1"                  │
+│   3. Configure interface:                                           │
+│      ┌──────────────────────────────────────────────────────────┐  │
+│      │ CALL ui.Interface.setType("child")                       │  │
+│      │ CALL ui.Interface.setName("st101_mast")                  │  │
+│      │ CALL ui.Interface.setContainer("main_shell") ← CRITICAL │  │
+│      └──────────────────────────────────────────────────────────┘  │
+│   4. Open window:                                                   │
+│      OPEN WINDOW w_st101_mast_1 WITH FORM "st101_mast"              │
+│          ATTRIBUTES(STYLE = "Window.child", TEXT = "Stock Master")  │
+│   5. Register in tracking array                                     │
+│   6. Return TRUE                                                    │
+└─────────────────────────────────────────────────────────────────────┘
+         │
+         ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│ st101_mast.4gl :: init_st_module()                                 │
+│                                                                     │
+│   MENU "Stock Master Menu"                                          │
+│       COMMAND "New"                                                  │
+│           CALL new_stock()                                           │
+│       COMMAND "Edit"                                                 │
+│           CALL edit_stock()                                          │
+│       COMMAND "Exit"                                                 │
+│           EXIT MENU  ← Returns to main menu, child stays open      │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│                    NAME MATCHING - CRITICAL!                              │
+└───────────────────────────────────────────────────────────────────────────┘
+
+These MUST all match:
+
+┌─────────────────────────────────┐
+│ start_app.4gl                   │
+│                                 │
+│ CALL ui.Interface.setContainer( │
+│     'main_shell'  ) ──────────┐ │
+└───────────────────────────────│─┘
+                                │
+                                │  ┌─────────────────────────────────┐
+                                └──│ main_shell.4gl                  │
+                                   │                                 │
+                                   │ CALL ui.Interface.setContainer( │
+                                   │     "main_shell"  ) ──────────┐ │
+                                   └───────────────────────────────│─┘
+                                                                   │
+                                   ┌───────────────────────────────│─┐
+                                   │ main_shell.4fd                │ │
+                                   │                               │ │
+                                   │ <Group name="Main_container"> │ │
+                                   │         ↑                     │ │
+                                   │         └─────────────────────┘ │
+                                   │   (Can be different but        │
+                                   │    is the actual container)    │
+                                   └────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│                WHAT HAPPENS BEHIND THE SCENES                             │
+└───────────────────────────────────────────────────────────────────────────┘
+
+1. Container Setup:
+   ┌──────────────────────────────────────────────────────────┐
+   │ ui.Interface.setContainer('main_shell')                  │
+   │ ui.Interface.setType('container')                        │
+   │ OPEN WINDOW w_main                                       │
+   └──────────────────────────────────────────────────────────┘
+   Genero says: "OK, w_main is a container named 'main_shell'"
+
+2. Child Opens:
+   ┌──────────────────────────────────────────────────────────┐
+   │ ui.Interface.setType('child')                            │
+   │ ui.Interface.setContainer("main_shell")                  │
+   │ OPEN WINDOW w_st101_mast_1                               │
+   └──────────────────────────────────────────────────────────┘
+   Genero says: "OK, w_st101_mast_1 is a child. Let me find
+                 container 'main_shell'... Found it! Putting
+                 this child inside the container's group."
+
+3. Result:
+   w_st101_mast_1 appears as a tab inside w_main!
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│                   FILE RESPONSIBILITY MATRIX                              │
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────┬──────────────────────────────────────────────────────┐
+│ File               │ Responsibility                                       │
+├────────────────────┼──────────────────────────────────────────────────────┤
+│ start_app.4gl      │ - Main entry point                                   │
+│                    │ - Login handling                                     │
+│                    │ - Open MDI container                                 │
+│                    │ - Load top menu                                      │
+│                    │ - Handle menu actions                                │
+│                    │ - Launch child modules                               │
+├────────────────────┼──────────────────────────────────────────────────────┤
+│ main_shell.4gl     │ - Window manager (open/close children)               │
+│                    │ - Track open windows                                 │
+│                    │ - Prevent duplicates                                 │
+│                    │ - Configure child windows                            │
+├────────────────────┼──────────────────────────────────────────────────────┤
+│ main_shell.4fd     │ - Visual container definition                        │
+│                    │ - Main_container group (where children appear)       │
+│                    │ - Status bar                                         │
+├────────────────────┼──────────────────────────────────────────────────────┤
+│ main_topmenu.4tm   │ - Top menu definition                                │
+│                    │ - Menu structure (File, Inventory, Sales, etc.)      │
+│                    │ - Menu action names                                  │
+├────────────────────┼──────────────────────────────────────────────────────┤
+│ main_styles.4st    │ - Window styles                                      │
+│                    │ - Container style (Window.main)                      │
+│                    │ - Child style (Window.child)                         │
+├────────────────────┼──────────────────────────────────────────────────────┤
+│ st101_mast.4gl     │ - Stock master business logic                        │
+│ (child modules)    │ - Export init_xxx_module() function                  │
+│                    │ - NO MAIN section                                    │
+│                    │ - NO OPEN WINDOW                                     │
+└────────────────────┴──────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│                         CODE TEMPLATES                                    │
+└───────────────────────────────────────────────────────────────────────────┘
+
+╔═══════════════════════════════════════════════════════════════════════╗
+║ TEMPLATE 1: Main Container (start_app.4gl)                           ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
+IMPORT FGL main_shell
+
+FUNCTION open_mdi_container()
+    DEFINE w ui.Window
+    DEFINE f ui.Form
+
+    -- Configure as container
+    CALL ui.Interface.setContainer('main_shell')
+    CALL ui.Interface.setName('main_shell')
+    CALL ui.Interface.setType('container')
+
+    -- Open window
+    OPEN WINDOW w_main WITH FORM "main_shell"
+        ATTRIBUTES(TEXT = "Your App Title")
+
+    -- Load menu
+    LET w = ui.Window.getCurrent()
+    LET f = w.getForm()
+    CALL f.loadTopMenu("main_topmenu")
+
+    -- Show menu
+    CALL show_main_menu()
+
+    -- Cleanup
+    CALL main_shell.close_all_child_windows()
+    CLOSE WINDOW w_main
+END FUNCTION
+
+╔═══════════════════════════════════════════════════════════════════════╗
+║ TEMPLATE 2: Child Launcher (main_shell.4gl)                          ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
+DEFINE m_open_modules DYNAMIC ARRAY OF RECORD
+    prog STRING,
+    winname STRING,
+    title STRING
+END RECORD
+
+FUNCTION launch_child_window(formname STRING, title STRING) RETURNS BOOLEAN
+    DEFINE winname STRING
+    DEFINE i INTEGER
+
+    -- Check duplicate
+    FOR i = 1 TO m_open_modules.getLength()
+        IF m_open_modules[i].prog = formname THEN
+            RETURN FALSE
+        END IF
+    END FOR
+
+    -- Generate name
+    LET winname = "w_" || formname || "_" || (m_open_modules.getLength() + 1)
+
+    -- Configure and open
+    CALL ui.Interface.setType("child")
+    CALL ui.Interface.setName(formname)
+    CALL ui.Interface.setContainer("main_shell")
+
+    OPEN WINDOW winname WITH FORM formname
+        ATTRIBUTES(STYLE = "Window.child", TEXT = title)
+
+    -- Register
+    LET i = m_open_modules.getLength() + 1
+    LET m_open_modules[i].prog = formname
+    LET m_open_modules[i].winname = winname
+    LET m_open_modules[i].title = title
+
+    RETURN TRUE
+END FUNCTION
+
+╔═══════════════════════════════════════════════════════════════════════╗
+║ TEMPLATE 3: Child Module (st101_mast.4gl)                            ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
+-- NO MAIN SECTION!
+
+FUNCTION init_st_module()
+    DEFINE ok SMALLINT
+
+    -- Window is already open, just run your logic
+    LET ok = select_stock_items("1=1")
+
+    MENU "Stock Master"
+        COMMAND "New"
+            CALL new_stock()
+
+        COMMAND "Edit"
+            CALL edit_stock()
+
+        COMMAND "Exit"
+            EXIT MENU
+    END MENU
+
+    -- Window will be closed by main_shell
+END FUNCTION
+
+═══════════════════════════════════════════════════════════════════════════
+                         END OF VISUAL GUIDE
+═══════════════════════════════════════════════════════════════════════════

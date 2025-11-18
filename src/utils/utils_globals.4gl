@@ -151,6 +151,9 @@ PUBLIC FUNCTION initialize_application() RETURNS BOOLEAN
         -- Load the visual style for the application
         CALL ui.Interface.loadStyles(STYLE_FILE)
 
+        -- Load the top menu
+
+
         -- Initialize database connection
         LET db_result = utils_db.initialize_database()
 
@@ -291,7 +294,7 @@ PUBLIC FUNCTION show_message(
             LET icon = "information"
     END CASE
 
-    CALL fgldialog.fgl_winmessage(window_title, p_message, icon)
+    CALL fgl_winmessage(window_title, p_message, icon)
 END FUNCTION
 
 -- Simplified message wrappers
@@ -395,15 +398,15 @@ PUBLIC FUNCTION format_quantity(qty DECIMAL) RETURNS STRING
 END FUNCTION
 
 -- Date formatting
-PUBLIC FUNCTION format_date(p_date DATE) RETURNS STRING
-    RETURN IIF(p_date IS NULL, "", p_date USING "dd/mm/yyyy")
-END FUNCTION
-
-PUBLIC FUNCTION format_date_time(
-    date_time DATETIME YEAR TO SECOND)
-    RETURNS STRING
-    RETURN IIF(date_time IS NULL, "", date_time USING "dd/mm/yyyy hh:mm:ss")
-END FUNCTION
+--PUBLIC FUNCTION format_date(p_date DATE) RETURNS STRING
+--    RETURN IIF(p_date IS NULL, "", p_date USING "dd/mm/yyyy")
+--END FUNCTION
+--
+--PUBLIC FUNCTION format_date_time(
+--    date_time DATETIME YEAR TO SECOND)
+--    RETURNS STRING
+--    RETURN IIF(date_time IS NULL, "", date_time USING "dd/mm/yyyy hh:mm:ss")
+--END FUNCTION
 
 {--------------------------------------------------------------------
   Apply formatting based on each FormField's "tag" attribute.
@@ -1171,5 +1174,74 @@ END FUNCTION
 -- =======================
 FUNCTION confirm_exit()
     
+   
+END FUNCTION
+
+
+-- ==============================================================
+-- Load UOMs into ComboBox
+-- ==============================================================
+FUNCTION load_uoms()
+    DEFINE idx INTEGER
+    DEFINE cb ui.ComboBox
+    DEFINE frm ui.Form
+    DEFINE win ui.Window
+    DEFINE arr_uom_codes DYNAMIC ARRAY OF STRING
+    DEFINE arr_uom_names dynamic ARRAY OF STRING 
+
+    -- Clear arrays
+    CALL arr_uom_codes.clear()
+    CALL arr_uom_names.clear()
+
+    LET idx = 1
+
+    TRY
+        -- Load active UOMs from database
+        DECLARE uom_curs CURSOR FOR
+            SELECT uom_code, uom_name
+              FROM st03_uom_master
+             ORDER BY uom_code
+
+        FOREACH uom_curs INTO arr_uom_codes[idx], arr_uom_names[idx]
+            LET idx = idx + 1
+        END FOREACH
+
+        CLOSE uom_curs
+        FREE uom_curs
+
+        -- Only populate ComboBox if we have a valid form loaded
+        LET win = ui.Window.getCurrent()
+        IF win IS NOT NULL THEN
+            LET frm = win.getForm()
+            IF frm IS NOT NULL THEN
+                LET cb = ui.ComboBox.forName("st01_mast.uom")
+                IF cb IS NOT NULL THEN
+                    -- Clear existing items
+                    CALL cb.clear()
+
+                    -- Add UOMs to ComboBox
+                    FOR idx = 1 TO arr_uom_codes.getLength()
+                        CALL cb.addItem(arr_uom_codes[idx], arr_uom_names[idx])
+                    END FOR
+                ELSE
+                    -- ComboBox not found - form may not be loaded yet
+                    -- This is OK, arrays are populated for later use
+                    DISPLAY "Note: UOM ComboBox will be populated when form is available"
+                END IF
+            END IF
+        END IF
+
+    CATCH
+        -- Silent fail for database errors during UOM loading
+        -- Don't break the module if UOMs can't be loaded
+        DISPLAY "Warning: Could not load UOMs - ", SQLCA.SQLERRM
+    END TRY
+END FUNCTION
+
+-- ==============================================================
+-- Update the customer balances
+-- ==============================================================
+FUNCTION update_debtor_balances(p_cust_id INTEGER)
+    --DEFINE l_cust RECORD LIKE dl01_mast.*
    
 END FUNCTION

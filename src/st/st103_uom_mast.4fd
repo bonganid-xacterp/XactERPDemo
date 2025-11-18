@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{1412ca20-d5a7-4a53-ad73-3ce528444195}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record masterTable="st03_uom_master" name="rec_st_uom" uid="{37782e65-bf1f-42a3-9897-0d27a9f893ad}">
+    <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="st03_uom_master.id" sqlTabName="st03_uom_master" uid="{42a3fe85-1ded-4a1f-93a6-54a804ddc96b}"/>
+    <RecordField colName="uom_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="st03_uom_master.uom_code" sqlTabName="st03_uom_master" uid="{672f3788-510e-49cc-af88-18d60cc3b6d5}"/>
+    <RecordField colName="uom_name" fieldIdRef="3" fieldType="TABLE_COLUMN" name="st03_uom_master.uom_name" sqlTabName="st03_uom_master" uid="{6906ef41-0a78-4651-96ac-4772025d9e9e}"/>
+    <RecordField colName="uom_type" fieldIdRef="4" fieldType="TABLE_COLUMN" name="st03_uom_master.uom_type" sqlTabName="st03_uom_master" uid="{5deccf23-5e8d-4ab8-8891-6ceb579ee221}"/>
+    <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st03_uom_master.status" sqlTabName="st03_uom_master" uid="{50048eae-9d5d-4a75-8611-fd52f4319e68}"/>
+    <RecordField colName="created_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="st03_uom_master.created_at" sqlTabName="st03_uom_master" uid="{db1d4877-aafc-4ee3-a415-5030b09d8640}"/>
+  </Record>
+  <Form gridHeight="21" gridWidth="72" name="frm_title" style="dialog2" text="STOCK UOM">
+    <HBox gridHeight="18" gridWidth="69" name="hbox1" posX="1" posY="1">
+      <Grid gridHeight="18" gridWidth="65" name="rec_stock_uom" posX="2" posY="0">
+        <Label gridHeight="1" gridWidth="62" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="STOCK UOM"/>
+        <Label gridHeight="1" gridWidth="18" name="st03_uom_master_uom_code_label1" posX="1" posY="1" text="UOM Code">
+          <Initializer text="dbschema:st03_uom_master.uom_code/@label"/>
+        </Label>
+        <Edit colName="uom_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st03_uom_master.uom_code" posX="20" posY="1" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="UOM Code" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="18" name="st03_uom_master_uom_name_lbl" posX="1" posY="2" text="Name">
+          <Initializer text="dbschema:st03_uom_master.uom_code/@label"/>
+        </Label>
+        <Edit colName="uom_name" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st03_uom_master.uom_name" posX="20" posY="2" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Name" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="18" name="st03_uom_master_uom_type_label1" posX="1" posY="3" text="Type">
+          <Initializer text="dbschema:st03_uom_master.uom_type/@label"/>
+        </Label>
+        <Edit colName="uom_type" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st03_uom_master.uom_type" posX="20" posY="3" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Type" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="18" name="st03_uom_master_is_active_label1" posX="1" posY="5" text="Status">
+          <Initializer text="dbschema:st03_uom_master.is_active/@label"/>
+        </Label>
+        <ComboBox colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" items="Inactive, Active" name="st03_uom_master.status" posX="20" posY="5" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Status" widget="ComboBox">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          <Item lstrtext="false" name="inactive" text="Inactive"/>
+          <Item lstrtext="false" name="active" text="Active"/>
+        </ComboBox>
+        <Phantom colName="id" fieldId="1" fieldType="TABLE_COLUMN" name="st03_uom_master.id" sqlTabName="st03_uom_master" widget="Phantom"/>
+        <Phantom colName="created_at" fieldId="7" fieldType="TABLE_COLUMN" name="st03_uom_master.created_at" sqlTabName="st03_uom_master" widget="Phantom"/>
+      </Grid>
+    </HBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewAzADcANwA4ADIAZQA2ADUALQBiAGYAMQBmAC0ANAAyAGEAMwAtADkAOAA5ADcALQAwAGQAMgA3AGEAOQBmADgAOQAzAGEAZAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>

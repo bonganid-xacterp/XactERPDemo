@@ -14,15 +14,15 @@ TYPE line_data_t RECORD
     stock_id INTEGER,
     item_name STRING,
     uom STRING,
-    qnty DECIMAL(12,2),
-    unit_cost DECIMAL(12,2),
-    disc_pct DECIMAL(5,2),
-    disc_amt DECIMAL(12,2),
-    gross_amt DECIMAL(12,2),
-    vat_rate DECIMAL(5,2),
-    vat_amt DECIMAL(12,2),
-    net_amt DECIMAL(12,2),
-    line_total DECIMAL(12,2)
+    qnty DECIMAL(12, 2),
+    unit_cost DECIMAL(12, 2),
+    disc_pct DECIMAL(5, 2),
+    disc_amt DECIMAL(12, 2),
+    gross_amt DECIMAL(12, 2),
+    vat_rate DECIMAL(5, 2),
+    vat_amt DECIMAL(12, 2),
+    net_amt DECIMAL(12, 2),
+    line_total DECIMAL(12, 2)
 END RECORD
 
 DEFINE m_line line_data_t
@@ -30,92 +30,82 @@ DEFINE m_line line_data_t
 -- Open doc line details lookup form
 FUNCTION open_line_details_lookup(p_doc_type STRING) RETURNS line_data_t
     DEFINE l_result line_data_t
-    DEFINE l_stock_id STRING
+    DEFINE l_stock_id INTEGER
     DEFINE l_stock RECORD LIKE st01_mast.*
-        --description VARCHAR(200),
-        --unit_cost DECIMAL(12,4)
+    --description VARCHAR(200),
+    --unit_cost DECIMAL(12,4)
     --END RECORD
 
     INITIALIZE l_result.* TO NULL
     INITIALIZE m_line.* TO NULL
 
-    CALL utils_globals.set_page_title("Line Details - " || p_doc_type)
-
     OPTIONS INPUT WRAP
-    OPEN WINDOW pu_lkup_form WITH FORM 'pu_lkup_form'
-        ATTRIBUTES(STYLE="normal", TEXT="Line Details - " || p_doc_type)
+    OPEN WINDOW pu_lkup_form
+        WITH
+        FORM 'pu_lkup_form'
+        ATTRIBUTES(STYLE = "dialog", TEXT = "Line Details - " || p_doc_type)
+
+    CALL utils_globals.set_page_title("Line Details - " || p_doc_type)
 
     -- Set default values
     LET m_line.qnty = 0
     LET m_line.disc_pct = 0
 
-    -- Display defaults
-    DISPLAY BY NAME m_line.stock_id, m_line.item_name, m_line.uom,
-                    m_line.qnty, m_line.unit_cost, m_line.disc_pct,
-                    m_line.disc_amt, m_line.gross_amt, m_line.vat_rate,
-                    m_line.vat_amt, m_line.net_amt, m_line.line_total
+    INPUT BY NAME m_line.* ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
 
-    DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME m_line.stock_id, m_line.item_name, m_line.uom,
-                      m_line.qnty, m_line.unit_cost, m_line.disc_pct,
-                      m_line.disc_amt, m_line.gross_amt, m_line.vat_rate,
-                      m_line.vat_amt, m_line.net_amt, m_line.line_total
-            ATTRIBUTES(WITHOUT DEFAULTS)
+        BEFORE INPUT
+            -- Display defaults
+            DISPLAY BY NAME m_line.*
+            -- stock lookup in details form
+        ON ACTION lookup_stock
+            LET l_stock_id = st121_st_lkup.display_stocklist()
 
-            -- stock look in details form
-            ON ACTION lookup_stock
-                LET l_stock_id = st121_st_lkup.display_stocklist()
-                IF l_stock_id IS NOT NULL AND l_stock_id != "" THEN
-                    -- Convert STRING to INTEGER
-                    LET m_line.stock_id = l_stock_id CLIPPED
+            IF l_stock_id IS NOT NULL AND l_stock_id != "" THEN
+                -- Convert STRING to INTEGER
+                LET m_line.stock_id = l_stock_id CLIPPED
 
-                    -- Load stock details
-                    SELECT *
-                        INTO l_stock.*
-                        FROM st01_mast
-                        WHERE id = m_line.stock_id
+                -- Load stock details
+                SELECT *
+                    INTO l_stock.*
+                    FROM st01_mast
+                    WHERE id = m_line.stock_id
 
-                    IF SQLCA.SQLCODE = 0 THEN
-                        -- Populate line fields from stock record
-                        LET m_line.item_name = l_stock.description
-                        LET m_line.uom = l_stock.uom
-                        LET m_line.unit_cost = l_stock.unit_cost
-                        
-                        -- Recalculate amounts based on new unit cost
-                        CALL calculate_line_amounts()
+                IF SQLCA.SQLCODE = 0 THEN
+                    -- Populate line fields from stock record
+                    LET m_line.item_name = l_stock.description
+                    LET m_line.uom = l_stock.uom
+                    LET m_line.unit_cost = l_stock.unit_cost
 
-                        -- Display the updated m_line fields (these match the form field names)
-                        DISPLAY BY NAME m_line.stock_id, m_line.item_name, m_line.uom,
-                                m_line.qnty, m_line.unit_cost, m_line.disc_pct,
-                                m_line.disc_amt, m_line.gross_amt, m_line.vat_rate,
-                                m_line.vat_amt, m_line.net_amt, m_line.line_total
+                    -- Recalculate amounts based on new unit cost
+                    CALL calculate_line_amounts()
 
-                    ELSE
-                        CALL utils_globals.show_error("Stock item not found.")
-                    END IF
+                    -- Display the updated fields
+                    DISPLAY BY NAME m_line.*
+
+                ELSE
+                    CALL utils_globals.show_error("Stock item not found.")
                 END IF
+            END IF
 
-            AFTER FIELD qnty, unit_cost, disc_pct, vat_rate
-                CALL calculate_line_amounts()
+        AFTER FIELD qnty, unit_cost, disc_pct, vat_rate
+            CALL calculate_line_amounts()
 
-        END INPUT
-
-        ON ACTION accept ATTRIBUTES(TEXT="OK", IMAGE="check")
+        ON ACTION accept ATTRIBUTES(TEXT = "OK", IMAGE = "check")
             IF m_line.stock_id IS NULL OR m_line.stock_id = 0 THEN
                 CALL utils_globals.show_error("Please select a stock item.")
-                CONTINUE DIALOG
+                NEXT FIELD CURRENT
             END IF
             IF m_line.qnty IS NULL OR m_line.qnty <= 0 THEN
                 CALL utils_globals.show_error("Please enter a valid quantity.")
-                CONTINUE DIALOG
+                NEXT FIELD CURRENT
             END IF
             LET l_result.* = m_line.*
-            EXIT DIALOG
+            EXIT INPUT
 
-        ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="cancel")
+        ON ACTION cancel ATTRIBUTES(TEXT = "Cancel", IMAGE = "cancel")
             INITIALIZE l_result.* TO NULL
-            EXIT DIALOG
-    END DIALOG
+            EXIT INPUT
+    END INPUT
 
     CLOSE WINDOW pu_lkup_form
     RETURN l_result.*
@@ -123,10 +113,10 @@ END FUNCTION
 
 -- Calculate line amounts
 FUNCTION calculate_line_amounts()
-    DEFINE l_gross DECIMAL(12,2)
-    DEFINE l_disc DECIMAL(12,2)
-    DEFINE l_vat DECIMAL(12,2)
-    DEFINE l_net DECIMAL(12,2)
+    DEFINE l_gross DECIMAL(12, 2)
+    DEFINE l_disc DECIMAL(12, 2)
+    DEFINE l_vat DECIMAL(12, 2)
+    DEFINE l_net DECIMAL(12, 2)
 
     -- Initialize defaults
     IF m_line.qnty IS NULL THEN
@@ -162,6 +152,5 @@ FUNCTION calculate_line_amounts()
     LET m_line.line_total = l_net + l_vat
 
     -- Display calculated fields
-    DISPLAY BY NAME m_line.disc_amt, m_line.gross_amt, m_line.vat_amt,
-                    m_line.net_amt, m_line.line_total
+    DISPLAY BY NAME m_line.*
 END FUNCTION

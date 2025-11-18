@@ -1,0 +1,201 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║                  MDI QUICK REFERENCE CARD                         ║
+║                      XactERP System                               ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 1. MAIN CONTAINER (start_app.4gl)                                │
+└───────────────────────────────────────────────────────────────────┘
+
+FUNCTION open_mdi_container()
+    -- STEP 1: Configure as container
+    CALL ui.Interface.setContainer('main_shell')
+    CALL ui.Interface.setName('main_shell')
+    CALL ui.Interface.setType('container')
+
+    -- STEP 2: Open main window
+    OPEN WINDOW w_main WITH FORM "main_shell"
+
+    -- STEP 3: Load menu
+    LET f = ui.Window.getCurrent().getForm()
+    CALL f.loadTopMenu("main_topmenu")
+
+    -- STEP 4: Show menu and wait
+    CALL show_main_menu()
+
+    -- STEP 5: Cleanup on exit
+    CALL main_shell.close_all_child_windows()
+    CLOSE WINDOW w_main
+END FUNCTION
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 2. CHILD WINDOW LAUNCHER (main_shell.4gl)                        │
+└───────────────────────────────────────────────────────────────────┘
+
+FUNCTION launch_child_window(formname STRING, title STRING) RETURNS BOOLEAN
+    -- Check if already open (prevent duplicates)
+    -- ...
+
+    -- CRITICAL: Configure as child
+    CALL ui.Interface.setType("child")
+    CALL ui.Interface.setName(formname)
+    CALL ui.Interface.setContainer("main_shell")  ← MUST MATCH CONTAINER NAME!
+
+    -- Open child window
+    OPEN WINDOW winname WITH FORM formname
+        ATTRIBUTES(STYLE = "Window.child", TEXT = title)
+
+    -- Register in tracking array
+    -- ...
+
+    RETURN TRUE
+END FUNCTION
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 3. MAIN FORM (main_shell.4fd)                                    │
+└───────────────────────────────────────────────────────────────────┘
+
+<Form name="main_shell" style="Window.main">
+  <Group name="Main_container">  ← Children appear here
+    <Grid>
+      <Label name="lbl_status" text="Ready"/>
+    </Grid>
+  </Group>
+</Form>
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 4. STYLES (main_styles.4st)                                      │
+└───────────────────────────────────────────────────────────────────┘
+
+<!-- Main Container -->
+<Style name="Window.main">
+    <StyleAttribute name="windowType" value="container"/>
+    <StyleAttribute name="tabbedContainer" value="yes"/>
+</Style>
+
+<!-- Child Windows -->
+<Style name="Window.child">
+    <StyleAttribute name="windowType" value="dialog"/>
+    <StyleAttribute name="border" value="title"/>
+</Style>
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 5. LAUNCHING MODULES (start_app.4gl)                             │
+└───────────────────────────────────────────────────────────────────┘
+
+FUNCTION launch_child_module(module_name STRING, title STRING)
+    IF main_shell.launch_child_window(module_name, title) THEN
+        CASE module_name
+            WHEN "st101_mast"
+                CALL st101_mast.init_st_module()
+            WHEN "cl101_mast"
+                CALL cl101_mast.init_cl_module()
+        END CASE
+    END IF
+END FUNCTION
+
+MENU "Main Menu"
+    ON ACTION st_mast
+        CALL launch_child_module("st101_mast", "Stock Master")
+    ON ACTION quit
+        EXIT MENU
+END MENU
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 6. CHILD MODULE STRUCTURE                                        │
+└───────────────────────────────────────────────────────────────────┘
+
+-- NO MAIN SECTION FOR MDI!
+-- NO OPEN WINDOW!
+-- Window is already open by main_shell
+
+FUNCTION init_st_module()
+    -- Just run your menu/dialog
+    MENU "Stock Master"
+        COMMAND "New"
+            CALL new_stock()
+        COMMAND "Edit"
+            CALL edit_stock()
+        COMMAND "Exit"
+            EXIT MENU
+    END MENU
+    -- Window closed by main_shell
+END FUNCTION
+
+╔═══════════════════════════════════════════════════════════════════╗
+║                    CRITICAL RULES                                 ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+1. CONTAINER NAME MUST MATCH EVERYWHERE
+   ✓ setContainer('main_shell')
+   ✓ In child: setContainer("main_shell")
+   ✓ Form Group: name="Main_container"
+
+2. SET INTERFACE BEFORE OPENING WINDOW
+   ✓ setType() → setContainer() → OPEN WINDOW
+
+3. CHILD MODULES SHOULD NOT HAVE:
+   ✗ MAIN section
+   ✗ OPEN WINDOW statements
+   ✓ Just export init_xxx_module() function
+
+4. ALWAYS CLEANUP
+   ✓ Call close_all_child_windows() before closing main
+
+╔═══════════════════════════════════════════════════════════════════╗
+║                      CHECKLIST                                    ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+□ main_shell.4fd has <Group name="Main_container">
+□ Window.main style has windowType="container"
+□ Window.main style has tabbedContainer="yes"
+□ start_app calls setContainer/setType before OPEN WINDOW
+□ main_shell.4gl calls setContainer("main_shell") for children
+□ Container names match everywhere
+□ Top menu loaded with loadTopMenu()
+□ Child modules have no MAIN section
+□ close_all_child_windows() called before exit
+
+╔═══════════════════════════════════════════════════════════════════╗
+║                    COMMON ERRORS                                  ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+ERROR: Child windows don't appear
+FIX:   Check container name matches everywhere
+
+ERROR: "Container not found"
+FIX:   setContainer() must be called BEFORE OPEN WINDOW
+
+ERROR: Duplicate windows
+FIX:   Add tracking array and check before opening
+
+ERROR: Module shows blank screen
+FIX:   Remove MAIN and OPEN WINDOW from module
+
+╔═══════════════════════════════════════════════════════════════════╗
+║                      EXECUTION FLOW                               ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+1. start_app.MAIN
+2. Login (modal)
+3. open_mdi_container()
+   └─ Configure as container
+   └─ OPEN WINDOW w_main
+   └─ Load top menu
+   └─ show_main_menu() ← WAIT HERE
+4. User clicks menu item
+5. launch_child_module()
+   └─ launch_child_window()
+      └─ Configure as child
+      └─ OPEN WINDOW (child)
+   └─ Run module init function
+      └─ MENU/DIALOG runs in child
+6. Back to step 4 (can open more children)
+7. User clicks Exit
+8. close_all_child_windows()
+9. CLOSE WINDOW w_main
+10. EXIT PROGRAM
+
+═══════════════════════════════════════════════════════════════════
+                  END OF QUICK REFERENCE
+═══════════════════════════════════════════════════════════════════
