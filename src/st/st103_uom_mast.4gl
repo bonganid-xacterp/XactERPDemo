@@ -35,7 +35,7 @@ DEFINE m_username STRING
 --
 --    IF utils_globals.is_standalone() THEN
 --        OPTIONS INPUT WRAP
---        OPEN WINDOW w_st103 WITH FORM "st103_uom_mast" ATTRIBUTES(STYLE = "normal")
+--        OPEN WINDOW w_st103 WITH FORM "st103_uom_mast" -- ATTRIBUTES(STYLE = "normal")
 --    END IF
 --
 --    CALL init_uom_module()
@@ -254,7 +254,6 @@ END FUNCTION
 -- ==============================================================
 -- Navigation and Utilities
 -- ==============================================================
-
 FUNCTION select_uom_items(p_where STRING) RETURNS SMALLINT
     DEFINE
         l_sql STRING,
@@ -311,7 +310,6 @@ END FUNCTION
 -- ==============================================================
 -- Check UOM uniqueness
 -- ==============================================================
-
 FUNCTION check_uom_unique(p_uom_code STRING) RETURNS SMALLINT
     DEFINE dup_count INTEGER
     SELECT COUNT(*) INTO dup_count FROM st03_uom_master WHERE uom_code = p_uom_code
@@ -325,7 +323,6 @@ END FUNCTION
 -- ==============================================================
 -- Delete UOM
 -- ==============================================================
-
 FUNCTION delete_uom()
     DEFINE
         usage_count INTEGER,

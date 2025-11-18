@@ -56,6 +56,7 @@ GLOBALS
     DEFINE g_user_authenticated SMALLINT
     DEFINE g_current_username STRING
     DEFINE g_login_time DATETIME YEAR TO SECOND
+    DEFINE g_window_count INTEGER
 END GLOBALS
 
 MAIN
@@ -70,8 +71,6 @@ MAIN
         CALL utils_globals.show_info("Login cancelled or failed.")
         EXIT PROGRAM
     END IF
-
-    
 
     -- Open MDI container with top menu
     CALL open_mdi_container()
@@ -118,22 +117,25 @@ FUNCTION open_mdi_container()
     DEFINE w ui.Window
     DEFINE f ui.Form
 
-    CALL ui.Interface.setContainer('main_shell')
+    -- MDI container setup
+    CALL ui.Interface.setContainer('Window.main')
     CALL ui.Interface.setName('main_shell')
     CALL ui.Interface.setType('container')
 
     -- Open MDI parent window with tabbed container
-    OPEN WINDOW w_main
-        WITH FORM "main_shell"
+    OPEN WINDOW w_main WITH FORM "main_shell"
         ATTRIBUTES(TEXT = APP_NAME || " - " || g_current_username)
 
     LET w = ui.Window.getCurrent()
     LET f = w.getForm()
-    
+
+    -- Load top menu
+    CALL ui.Interface.loadTopmenu("main_topmenu")
+
     -- Show main menu (handles top menu actions)
     CALL show_main_menu()
 
-    CLOSE WINDOW w_main
+    --CLOSE WINDOW w_main
 END FUNCTION
 
 -- ==============================================================
@@ -143,11 +145,8 @@ FUNCTION show_main_menu()
     MENU "Main Menu"
 
         -- File Menu Actions
-        ON ACTION help
-            CALL show_help()
-
-        ON ACTION about
-            CALL show_about_dialog()
+        ON ACTION help      CALL show_help()
+        ON ACTION about     CALL show_about_dialog()
 
         ON ACTION logout
             IF confirm_logout() THEN
@@ -159,75 +158,39 @@ FUNCTION show_main_menu()
                 EXIT MENU
             END IF
 
-        -- Inventory - Stock Items
-        ON ACTION st_mast
-            CALL launch_child_module("st101_mast", "Stock Master")
+            -- Inventory - Stock Items
+        ON ACTION st_mast       CALL launch_child_module("st101_mast", "Stock Master")
+        ON ACTION st_uom        CALL launch_child_module("st103_uom_mast", "Units of Measure")
+        ON ACTION st_cat        CALL launch_child_module("st102_cat", "Stock Categories")
 
-        ON ACTION st_uom
-            CALL launch_child_module("st103_uom_mast", "Units of Measure")
+            -- Warehouse
+        ON ACTION wh_mast       CALL launch_child_module("wh101_mast", "Warehouses")
+        ON ACTION wb_mast       CALL launch_child_module("wb101_mast", "Warehouse Bins")
 
-        ON ACTION st_cat
-            CALL launch_child_module("st102_cat", "Stock Categories")
+            -- Purchasing
+        ON ACTION cl_mast       CALL launch_child_module("cl101_mast", "Suppliers")
+        ON ACTION pu_order      CALL launch_child_module("pu130_order", "Purchase Orders")
+        ON ACTION pu_grn        CALL launch_child_module("pu131_grn", "Goods Received Notes")
 
-        -- Warehouse
-        ON ACTION wh_mast
-            CALL launch_child_module("wh101_mast", "Warehouses")
+            -- Sales
+        ON ACTION dl_mast       CALL launch_child_module("dl101_mast", "Customers")
+        ON ACTION sa_quote      CALL launch_child_module("sa130_quote", "Sales Quotations")
+        ON ACTION sa_order      CALL launch_child_module("sa131_order", "Sales Orders")
+        ON ACTION sa_invoice    CALL launch_child_module("sa132_invoice", "Sales Invoices")
+        ON ACTION sa_crn        CALL launch_child_module("sa133_crn", "Credit Notes")
 
-        ON ACTION wb_mast
-            CALL launch_child_module("wb101_mast", "Warehouse Bins")
+            -- System
+        ON ACTION sy_user       CALL launch_child_module("sy101_user", "User Management")
+        ON ACTION sy_role       CALL launch_child_module("sy102_role", "User Roles")
+        ON ACTION sy_perm       CALL launch_child_module("sy103_perm", "User Permissions")
+        ON ACTION sy_pwd        CALL change_password()
+        ON ACTION sy_logs       CALL launch_child_module("sy130_logs", "System Logs")
 
-        -- Purchasing
-        ON ACTION cl_mast
-            CALL launch_child_module("cl101_mast", "Suppliers")
-
-        ON ACTION pu_order
-            CALL launch_child_module("pu130_order", "Purchase Orders")
-
-        ON ACTION pu_grn
-            CALL launch_child_module("pu131_grn", "Goods Received Notes")
-
-        -- Sales
-        ON ACTION dl_mast
-            CALL launch_child_module("dl101_mast", "Customers")
-
-        ON ACTION sa_quote
-            CALL launch_child_module("sa130_quote", "Sales Quotations")
-
-        ON ACTION sa_order
-            CALL launch_child_module("sa131_order", "Sales Orders")
-
-        ON ACTION sa_invoice
-            CALL launch_child_module("sa132_invoice", "Sales Invoices")
-
-        ON ACTION sa_crn
-            CALL launch_child_module("sa133_crn", "Credit Notes")
-
-        -- System
-        ON ACTION sy_user
-            CALL launch_child_module("sy101_user", "User Management")
-
-        ON ACTION sy_role
-            CALL launch_child_module("sy102_role", "User Roles")
-
-        ON ACTION sy_perm
-            CALL launch_child_module("sy103_perm", "User Permissions")
-
-        ON ACTION sy_pwd
-            CALL change_password()
-
-        ON ACTION sy_logs
-            CALL launch_child_module("sy130_logs", "System Logs")
-
-        -- Window Management
-        ON ACTION win_close
-            CALL close_current_window()
-
-        ON ACTION win_close_all
-            CALL close_all_windows()
-
-        ON ACTION win_list
-            CALL main_shell.show_window_manager()
-
+            -- Window Management
+        ON ACTION win_close     CALL close_current_window()
+        ON ACTION win_close_all CALL close_all_windows()
+        ON ACTION win_list      CALL main_shell.show_window_manager()
+        
     END MENU
 END FUNCTION
 
@@ -235,80 +198,51 @@ END FUNCTION
 -- LAUNCH CHILD MODULE (using main_shell MDI functions)
 -- ==============================================================
 FUNCTION launch_child_module(module_name STRING, title STRING)
-    -- Use main_shell's MDI management
+
+DEFINE win_name STRING
+
+    LET g_window_count = g_window_count + 1
+    LET win_name = module_name || "_" || g_window_count
+    -- Ask main_shell to create and register the window inside MDI
     IF main_shell.launch_child_window(module_name, title) THEN
-        -- Window opened successfully, now run the module
+        
         CASE module_name
-            -- Stock Module
-            WHEN "st101_mast"
-                CALL st101_mast.init_st_module()
 
-            WHEN "st102_cat"
-                CALL st102_cat.init_category_module()
+            -- Stock
+            WHEN "st101_mast"       CALL st101_mast.init_st_module()
+            WHEN "st102_cat"        CALL st102_cat.init_category_module()
+            WHEN "st103_uom_mast"   CALL st103_uom_mast.init_uom_module()
 
-            WHEN "st103_uom_mast"
-                CALL st103_uom_mast.init_uom_module()
+            -- Warehouse
+            WHEN "wh101_mast"       CALL wh101_mast.init_wh_module()
+            WHEN "wb101_mast"       CALL wb101_mast.init_wb_module()
 
-            -- Warehouse Module
-            WHEN "wh101_mast"
-                CALL wh101_mast.init_wh_module()
+            -- Customers/Suppliers
+            WHEN "dl101_mast"       CALL dl101_mast.init_dl_module()
+            WHEN "cl101_mast"       CALL cl101_mast.init_cl_module()
 
-            WHEN "wb101_mast"
-                CALL wb101_mast.init_wb_module()
+            -- Purchases
+            WHEN "pu130_order"      CALL pu130_order.new_po()
+            WHEN "pu131_grn"        CALL pu131_grn.new_pu_grn()
 
-            -- Customer/Supplier
-            WHEN "dl101_mast"
-                CALL dl101_mast.init_dl_module()
+            -- Sales
+            WHEN "sa130_quote"      CALL sa130_quote.new_quote()
+            WHEN "sa131_order"      CALL sa131_order.new_order()
+            WHEN "sa132_invoice"    CALL sa132_invoice.new_invoice()
 
-            WHEN "cl101_mast"
-                CALL cl101_mast.init_cl_module()
-
-            -- Purchase Module
-            WHEN "pu130_order"
-                CALL pu130_order.new_po()
-
-            WHEN "pu131_grn"
-                CALL pu131_grn.new_pu_grn()
-
-            WHEN "pu132_inv"
-                CALL pu132_inv.new_pu_inv()
-
-            --WHEN "pu140_hist"
-            --    CALL pu140_hist.init_pu_hist()
-
-            -- Sales Module
-            WHEN "sa130_quote"
-                CALL sa130_quote.new_quote()
-
-            WHEN "sa131_order"
-                CALL sa131_order.new_order()
-
-            WHEN "sa132_invoice"
-                CALL sa132_invoice.new_invoice()
-
-            --WHEN "sa133_crn"
-            --    CALL sa133_crn.init_sa_crn()
-
-            --WHEN "sa140_hist"
-            --    CALL sa140_hist.init_sa_hist()
-
-            -- System Module
-            WHEN "sy101_user"
-                CALL sy101_user.init_user_module()
-
-            WHEN "sy102_role"
-                CALL sy102_role.init_role_module()
-
-            WHEN "sy103_perm"
-                CALL sy103_perm.init_perm_module()
-
-            WHEN "sy130_logs"
-                CALL sy130_logs.init_logs_module()
+            -- System
+            WHEN "sy101_user"       CALL sy101_user.init_user_module()
+            WHEN "sy102_role"       CALL sy102_role.init_role_module()
+            WHEN "sy103_perm"       CALL sy103_perm.init_perm_module()
+            WHEN "sy130_logs"       CALL sy130_logs.init_logs_module()
 
             OTHERWISE
                 CALL utils_globals.show_error("Module not implemented: " || module_name)
+
         END CASE
+        
     END IF
+    
 END FUNCTION
 
 -- ==============================================================
@@ -330,6 +264,9 @@ FUNCTION close_current_window()
     END IF
 END FUNCTION
 
+-- ==============================================================
+-- CLOSE ALL WINDOW 
+-- ==============================================================
 FUNCTION close_all_windows()
     IF utils_globals.show_confirm("Close all open windows?", "Confirm") THEN
         CALL main_shell.close_all_child_windows()
@@ -365,15 +302,16 @@ FUNCTION show_about_dialog()
     DEFINE about_text STRING
     LET about_text =
         APP_NAME
-            || "\n"
-            || "Version: 1.0\n"
-            || "User: "
-            || g_current_username
-            || "\n"
-            || "Login Time: "
-            || g_login_time USING "DD/MM/YYYY HH:MM:SS"
-            || "\n\n"
-            || "(c) 2025 XactERP Solutions"
+                || "\n"
+                || "Version: 1.0\n"
+                || "User: "
+                || g_current_username
+                || "\n"
+                || "Login Time: "
+                || g_login_time
+            USING "DD/MM/YYYY HH:MM:SS"
+                || "\n\n"
+                || "(c) 2025 XactERP Solutions"
 
     CALL utils_globals.show_info(about_text)
 END FUNCTION

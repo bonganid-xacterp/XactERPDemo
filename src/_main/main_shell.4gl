@@ -82,7 +82,7 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS BOOLEAN
         -- Open the child window
         OPTIONS INPUT WRAP
         OPEN WINDOW winname WITH FORM formname
-            ATTRIBUTES(STYLE = "normal", TEXT = wintitle)
+            ATTRIBUTES(STYLE = "Window.child", TEXT = wintitle)
 
         -- Register window
         LET i = m_open_modules.getLength() + 1

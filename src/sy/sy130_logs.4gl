@@ -44,7 +44,7 @@ CONSTANT LOG_LEVEL_SECURITY = "SECURITY"
 --    END IF
 --
 --    IF utils_globals.is_standalone() THEN
---        OPEN WINDOW w_sy130 WITH FORM "sy130_logs" ATTRIBUTES(STYLE = "normal")
+--        OPEN WINDOW w_sy130 WITH FORM "sy130_logs" -- ATTRIBUTES(STYLE = "normal")
 --    END IF
 --
 --    CALL init_logs_module()

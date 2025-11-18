@@ -13,7 +13,7 @@ IMPORT FGL utils_db
 IMPORT FGL st122_cat_lkup
 IMPORT FGL utils_status_const
 IMPORT FGL st121_st_lkup
-
+IMPORT FGL pu131_grn
 
 SCHEMA demoappdb
 
@@ -56,7 +56,7 @@ MAIN
 
     IF utils_globals.is_standalone() THEN
         OPTIONS INPUT WRAP
-        OPEN WINDOW w_st101 WITH FORM "st101_mast" ATTRIBUTES(STYLE = "normal")
+        OPEN WINDOW w_st101 WITH FORM "st101_mast" -- ATTRIBUTES(STYLE = "normal")
     END IF
 
     CALL init_st_module()
@@ -73,10 +73,10 @@ FUNCTION init_st_module()
     DEFINE ok SMALLINT
     LET is_edit_mode = FALSE
 
-    -- Load UOMs into ComboBox
-    CALL load_uoms()
-
     LET ok = select_stock_items("1=1")
+
+    -- Load UOMs into ComboBox after form is opened
+    CALL load_uoms()
 
     MENU "Stock Master Menu"
 
@@ -102,6 +102,9 @@ FUNCTION init_st_module()
 
         COMMAND "Next"
             CALL move_record(1)
+
+        COMMAND "Capture GRN"
+            CALL capture_grn()
 
         COMMAND "Exit"
             EXIT MENU
@@ -160,6 +163,9 @@ FUNCTION refresh_display_fields()
     DISPLAY BY NAME m_cat_name, m_username
 END FUNCTION
 
+-- ==============================================================
+-- Load Transactions
+-- ==============================================================
 FUNCTION get_linked_category(p_id INTEGER)
     DEFINE l_cat_name STRING
     SELECT cat_name INTO l_cat_name FROM st02_cat WHERE id = p_id
@@ -294,7 +300,6 @@ END FUNCTION
 -- ==============================================================
 -- Navigation and Utilities
 -- ==============================================================
-
 FUNCTION select_stock_items(p_where STRING) RETURNS SMALLINT
     DEFINE
         l_sql STRING,
@@ -332,7 +337,6 @@ FUNCTION select_stock_items(p_where STRING) RETURNS SMALLINT
     RETURN TRUE
 END FUNCTION
 
-
 -- ==============================================================
 -- Navigation
 -- ==============================================================
@@ -352,7 +356,6 @@ END FUNCTION
 -- ==============================================================
 -- Check stock uniqueness
 -- ==============================================================
-
 FUNCTION check_stock_unique(p_id INTEGER) RETURNS SMALLINT
     DEFINE dup_count INTEGER
     SELECT COUNT(*) INTO dup_count FROM st01_mast WHERE id = p_id
@@ -366,7 +369,6 @@ END FUNCTION
 -- ==============================================================
 -- Delete stock
 -- ==============================================================
-
 FUNCTION delete_stock()
     DEFINE
         trans_count INTEGER,
@@ -414,7 +416,6 @@ FUNCTION load_uoms()
         DECLARE uom_curs CURSOR FOR
             SELECT uom_code, uom_name
               FROM st03_uom_master
-             WHERE is_active = TRUE
              ORDER BY uom_code
 
         FOREACH uom_curs INTO arr_uom_codes[idx], arr_uom_names[idx]
@@ -424,7 +425,7 @@ FUNCTION load_uoms()
         CLOSE uom_curs
         FREE uom_curs
 
-        -- Get current form and populate ComboBox
+        -- Only populate ComboBox if we have a valid form loaded
         LET win = ui.Window.getCurrent()
         IF win IS NOT NULL THEN
             LET frm = win.getForm()
@@ -438,11 +439,25 @@ FUNCTION load_uoms()
                     FOR idx = 1 TO arr_uom_codes.getLength()
                         CALL cb.addItem(arr_uom_codes[idx], arr_uom_names[idx])
                     END FOR
+                ELSE
+                    -- ComboBox not found - form may not be loaded yet
+                    -- This is OK, arrays are populated for later use
+                    DISPLAY "Note: UOM ComboBox will be populated when form is available"
                 END IF
             END IF
         END IF
 
     CATCH
-        DISPLAY "Error loading UOMs: ", SQLCA.SQLERRM
+        -- Silent fail for database errors during UOM loading
+        -- Don't break the module if UOMs can't be loaded
+        DISPLAY "Warning: Could not load UOMs - ", SQLCA.SQLERRM
     END TRY
+END FUNCTION
+
+-- ==============================================================
+-- Load UOMs into ComboBox
+-- ==============================================================
+FUNCTION capture_grn()
+    -- capture new grn
+    CALL pu131_grn.new_pu_grn()
 END FUNCTION

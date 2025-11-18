@@ -39,12 +39,14 @@ FUNCTION login_user() RETURNS SMALLINT
         -- Open login window (dialog style)
         -- ------------------------------------------------------------
         OPTIONS INPUT WRAP
-        OPEN WINDOW w_login WITH FORM "sy100_login" 
-            ATTRIBUTES(STYLE = "modal")
+        OPEN WINDOW w_login
+            WITH
+            FORM "sy100_login"
+            ATTRIBUTES(STYLE = "dialog", TYPE = POPUP)
 
         -- Attach current form reference
         LET w = ui.Window.getCurrent()
-        
+
         IF w IS NULL THEN
             CALL log_error("login_user", "Failed to get window reference")
             CALL utils_globals.show_error(
@@ -60,8 +62,12 @@ FUNCTION login_user() RETURNS SMALLINT
                 CALL f.setElementImage("company_logo", "company_logo.png")
             CATCH
                 -- Log but don't fail - logo is optional
-                CALL log_warning("login_user", 
-                    "Could not load company logo: " || STATUS || " - " || SQLCA.SQLERRM)
+                CALL log_warning(
+                    "login_user",
+                    "Could not load company logo: "
+                        || STATUS
+                        || " - "
+                        || SQLCA.SQLERRM)
             END TRY
 
             -- ------------------------------------------------------------
@@ -70,8 +76,12 @@ FUNCTION login_user() RETURNS SMALLINT
             CALL run_login_dialog() RETURNING ok, f_username, f_password
 
         CATCH
-            CALL log_error("login_user", 
-                "Form initialization error: " || STATUS || " - " || SQLCA.SQLERRM)
+            CALL log_error(
+                "login_user",
+                "Form initialization error: "
+                    || STATUS
+                    || " - "
+                    || SQLCA.SQLERRM)
             CALL utils_globals.show_error(
                 "Unable to initialize login form. Please contact support.")
             LET ok = FALSE
@@ -83,13 +93,15 @@ FUNCTION login_user() RETURNS SMALLINT
         TRY
             CLOSE WINDOW w_login
         CATCH
-            CALL log_error("login_user", 
+            CALL log_error(
+                "login_user",
                 "Error closing window: " || STATUS || " - " || SQLCA.SQLERRM)
             -- Continue anyway - window closure error shouldn't block login
         END TRY
 
     CATCH
-        CALL log_error("login_user", 
+        CALL log_error(
+            "login_user",
             "Critical error: " || STATUS || " - " || SQLCA.SQLERRM)
         CALL utils_globals.show_error(
             "A critical error occurred. Please restart the application.")
@@ -102,13 +114,14 @@ END FUNCTION
 -- --------------------------------------------------------------
 -- Separate dialog logic for better error handling
 -- --------------------------------------------------------------
-FUNCTION run_login_dialog() 
-    RETURNS (SMALLINT, STRING, STRING)
-    
+FUNCTION run_login_dialog() RETURNS(SMALLINT, STRING, STRING)
+
     DEFINE f_username, f_password STRING
     DEFINE ok SMALLINT
 
     LET ok = FALSE
+    LET f_username = 'demo'
+    LET f_password = 'demo'
 
     TRY
         DIALOG ATTRIBUTES(UNBUFFERED)
@@ -120,26 +133,32 @@ FUNCTION run_login_dialog()
                         --CLEAR FORM
                         NEXT FIELD f_username
                     CATCH
-                        CALL log_error("run_login_dialog", 
+                        CALL log_error(
+                            "run_login_dialog",
                             "Error in BEFORE INPUT: " || STATUS)
                     END TRY
 
                 AFTER FIELD f_username
                     TRY
-                        IF f_username IS NULL OR f_username.trim().getLength() = 0 THEN
+                        IF f_username IS NULL
+                            OR f_username.trim().getLength() = 0 THEN
                             ERROR "Username is required"
                             NEXT FIELD f_username
                         END IF
                     CATCH
-                        CALL log_error("run_login_dialog", 
+                        CALL log_error(
+                            "run_login_dialog",
                             "Error validating username: " || STATUS)
                     END TRY
 
                 AFTER FIELD f_password
                     TRY
-                        IF f_password IS NOT NULL AND f_password.getLength() > 0 THEN
-                            CALL attempt_login(f_username, f_password) RETURNING ok
-                            
+                        IF f_password IS NOT NULL
+                            AND f_password.getLength() > 0 THEN
+                            CALL attempt_login(
+                                f_username, f_password)
+                                RETURNING ok
+
                             IF ok THEN
                                 EXIT DIALOG
                             ELSE
@@ -151,17 +170,20 @@ FUNCTION run_login_dialog()
                             END IF
                         END IF
                     CATCH
-                        CALL log_error("run_login_dialog", 
+                        CALL log_error(
+                            "run_login_dialog",
                             "Error in AFTER FIELD f_password: " || STATUS)
                         ERROR "An error occurred during login. Please try again."
                         LET f_password = NULL
                         NEXT FIELD f_username
                     END TRY
 
-                ON ACTION login ATTRIBUTES (TEXT="Login", ACCELERATOR="Return")
+                ON ACTION login
+                    ATTRIBUTES(TEXT = "Login", ACCELERATOR = "Return")
                     TRY
                         -- Validate inputs first
-                        IF f_username IS NULL OR f_username.trim().getLength() = 0 THEN
+                        IF f_username IS NULL
+                            OR f_username.trim().getLength() = 0 THEN
                             ERROR "Please enter a username"
                             NEXT FIELD f_username
                             CONTINUE DIALOG
@@ -174,7 +196,7 @@ FUNCTION run_login_dialog()
                         END IF
 
                         CALL attempt_login(f_username, f_password) RETURNING ok
-                        
+
                         IF ok THEN
                             EXIT DIALOG
                         ELSE
@@ -186,21 +208,27 @@ FUNCTION run_login_dialog()
                             END IF
                         END IF
                     CATCH
-                        CALL log_error("run_login_dialog", 
-                            "Error in ON ACTION login: " || STATUS || " - " || SQLCA.SQLERRM)
+                        CALL log_error(
+                            "run_login_dialog",
+                            "Error in ON ACTION login: "
+                                || STATUS
+                                || " - "
+                                || SQLCA.SQLERRM)
                         CALL utils_globals.show_error(
                             "Login failed due to system error. Please try again.")
                         LET f_password = NULL
                         NEXT FIELD f_username
                     END TRY
 
-                ON ACTION cancel ATTRIBUTES (TEXT="Exit", ACCELERATOR="Escape")
+                ON ACTION cancel
+                    ATTRIBUTES(TEXT = "Exit", ACCELERATOR = "Escape")
                     TRY
                         IF confirm_exit_login() THEN
                             EXIT DIALOG
                         END IF
                     CATCH
-                        CALL log_error("run_login_dialog", 
+                        CALL log_error(
+                            "run_login_dialog",
                             "Error in ON ACTION cancel: " || STATUS)
                         LET ok = FALSE
                         EXIT DIALOG
@@ -211,10 +239,10 @@ FUNCTION run_login_dialog()
         END DIALOG
 
     CATCH
-        CALL log_error("run_login_dialog", 
+        CALL log_error(
+            "run_login_dialog",
             "Dialog error: " || STATUS || " - " || SQLCA.SQLERRM)
-        CALL utils_globals.show_error(
-            "An error occurred in the login dialog.")
+        CALL utils_globals.show_error("An error occurred in the login dialog.")
         LET ok = FALSE
     END TRY
 
@@ -224,9 +252,8 @@ END FUNCTION
 -- --------------------------------------------------------------
 -- Consolidated login attempt with error handling
 -- --------------------------------------------------------------
-FUNCTION attempt_login(p_username STRING, p_password STRING) 
-    RETURNS SMALLINT
-    
+FUNCTION attempt_login(p_username STRING, p_password STRING) RETURNS SMALLINT
+
     DEFINE l_trimmed_user, l_trimmed_pass STRING
     DEFINE l_success SMALLINT
 
@@ -254,7 +281,8 @@ FUNCTION attempt_login(p_username STRING, p_password STRING)
         TRY
             LET l_success = validate_login(l_trimmed_user, l_trimmed_pass)
         CATCH
-            CALL log_error("attempt_login", 
+            CALL log_error(
+                "attempt_login",
                 "Validation error: " || STATUS || " - " || SQLCA.SQLERRM)
             CALL utils_globals.show_error(
                 "Unable to validate credentials. Please try again.")
@@ -268,24 +296,27 @@ FUNCTION attempt_login(p_username STRING, p_password STRING)
             RETURN TRUE
         ELSE
             LET g_login_tries = g_login_tries + 1
-            
+
             IF g_login_tries < MAX_LOGIN_ATTEMPTS THEN
                 ERROR SFMT("Invalid credentials (%1/%2)",
-                           g_login_tries, MAX_LOGIN_ATTEMPTS)
-                CALL log_warning("attempt_login", 
+                    g_login_tries, MAX_LOGIN_ATTEMPTS)
+                CALL log_warning(
+                    "attempt_login",
                     SFMT("Failed login attempt %1/%2 for user: %3",
-                         g_login_tries, MAX_LOGIN_ATTEMPTS, l_trimmed_user))
+                        g_login_tries, MAX_LOGIN_ATTEMPTS, l_trimmed_user))
             ELSE
                 CALL utils_globals.show_error(
                     "Maximum login attempts reached. Access denied.")
-                CALL log_error("attempt_login", 
+                CALL log_error(
+                    "attempt_login",
                     "Max login attempts reached for user: " || l_trimmed_user)
             END IF
             RETURN FALSE
         END IF
 
     CATCH
-        CALL log_error("attempt_login", 
+        CALL log_error(
+            "attempt_login",
             "Unexpected error: " || STATUS || " - " || SQLCA.SQLERRM)
         CALL utils_globals.show_error(
             "An unexpected error occurred. Please contact support.")
@@ -305,38 +336,42 @@ FUNCTION validate_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
     TRY
         -- TODO: Replace with actual password hashing
         -- LET l_hashed_input = hash_password(p_pass)
-        LET l_hashed_input = p_pass  -- TEMPORARY - USE HASHING IN PRODUCTION
+        LET l_hashed_input = p_pass -- TEMPORARY - USE HASHING IN PRODUCTION
 
         -- Query user from database
         TRY
             SELECT user_password, user_role, is_active
-              INTO l_db_password, l_db_role, l_is_active
-              FROM sys_users
-             WHERE LOWER(username) = LOWER(p_user)
+                INTO l_db_password, l_db_role, l_is_active
+                FROM sys_users
+                WHERE LOWER(username) = LOWER(p_user)
 
             -- Check if query returned results
             IF SQLCA.SQLCODE = NOTFOUND THEN
-                CALL log_warning("validate_login", 
-                    "User not found: " || p_user)
+                CALL log_warning("validate_login", "User not found: " || p_user)
                 RETURN FALSE
             END IF
 
             IF SQLCA.SQLCODE < 0 THEN
-                CALL log_error("validate_login", 
-                    "Database error: " || SQLCA.SQLCODE || " - " || SQLCA.SQLERRM)
+                CALL log_error(
+                    "validate_login",
+                    "Database error: "
+                        || SQLCA.SQLCODE
+                        || " - "
+                        || SQLCA.SQLERRM)
             END IF
 
         CATCH
             -- If table doesn't exist, fall back to demo credentials
-            CALL log_warning("validate_login", 
+            CALL log_warning(
+                "validate_login",
                 "Database query failed, using demo mode: " || STATUS)
             RETURN validate_login_demo(p_user, p_pass)
         END TRY
 
         -- Check if account is active
         IF l_is_active = 0 THEN
-            CALL log_warning("validate_login", 
-                "Inactive account login attempt: " || p_user)
+            CALL log_warning(
+                "validate_login", "Inactive account login attempt: " || p_user)
             ERROR "Account is disabled. Contact administrator."
             RETURN FALSE
         END IF
@@ -350,7 +385,8 @@ FUNCTION validate_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
         END IF
 
     CATCH
-        CALL log_error("validate_login", 
+        CALL log_error(
+            "validate_login",
             "Critical validation error: " || STATUS || " - " || SQLCA.SQLERRM)
         RETURN FALSE
     END TRY
@@ -360,7 +396,7 @@ END FUNCTION
 -- DEMO VALIDATION (fallback for development/testing)
 -- --------------------------------------------------------------
 FUNCTION validate_login_demo(p_user STRING, p_pass STRING) RETURNS SMALLINT
-    
+
     TRY
         CASE p_user.toLowerCase()
             WHEN "admin"
@@ -381,8 +417,8 @@ FUNCTION validate_login_demo(p_user STRING, p_pass STRING) RETURNS SMALLINT
         END CASE
         RETURN FALSE
     CATCH
-        CALL log_error("validate_login_demo", 
-            "Error in demo validation: " || STATUS)
+        CALL log_error(
+            "validate_login_demo", "Error in demo validation: " || STATUS)
         RETURN FALSE
     END TRY
 END FUNCTION
@@ -409,13 +445,13 @@ FUNCTION confirm_exit_login() RETURNS SMALLINT
     DEFINE ans SMALLINT
 
     TRY
-        LET ans = utils_globals.show_confirm(
-            "Are you sure you want to exit login?",
-            "Exit Login")
+        LET ans =
+            utils_globals.show_confirm(
+                "Are you sure you want to exit login?", "Exit Login")
         RETURN ans
     CATCH
-        CALL log_error("confirm_exit_login",
-            "Error showing confirmation: " || STATUS)
+        CALL log_error(
+            "confirm_exit_login", "Error showing confirmation: " || STATUS)
         -- Default to exiting on error (safer to allow exit)
         RETURN TRUE
     END TRY

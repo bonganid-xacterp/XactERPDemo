@@ -38,7 +38,7 @@ MAIN
     END IF
 
     IF utils_globals.is_standalone() THEN
-        OPEN WINDOW w_sy101 WITH FORM "sy101_user" ATTRIBUTES(STYLE = "normal")
+        OPEN WINDOW w_sy101 WITH FORM "sy101_user" -- -- ATTRIBUTES(STYLE = "normal")
     ELSE
         OPEN WINDOW w_sy101 WITH FORM "sy101_user" ATTRIBUTES(STYLE = "child")
     END IF
@@ -371,7 +371,6 @@ FUNCTION edit_user()
 
             BEFORE FIELD username
                 -- Username should not be editable
-                CALL utils_globals.show_info("Username cannot be changed.")
                 NEXT FIELD full_name
 
             AFTER FIELD full_name

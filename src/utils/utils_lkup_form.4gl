@@ -1,0 +1,175 @@
+--IMPORT ui
+--IMPORT FGL utils_globals
+--
+--SCHEMA demoappdb
+--
+--TYPE lkup_t RECORD
+--    key_id INTEGER,
+--    desc_val STRING,
+--    name_val STRING,
+--    extra_val STRING
+--END RECORD
+--
+--DEFINE m_ret lkup_t
+--DEFINE g_create_program STRING
+--
+--FUNCTION global_lookup(p_type STRING) RETURNS lkup_t
+--    DEFINE srch STRING
+--    DEFINE sql_base, sql_where, full_sql STRING
+--
+--    DEFINE a DYNAMIC ARRAY OF RECORD
+--        key_val INTEGER,
+--        desc_val STRING,
+--        name_val STRING,
+--        extra_val STRING
+--    END RECORD
+--
+--    -- Dynamic title fields (formonly)
+--    DEFINE page_title, col1_title, col2_title, col3_title, col4_title STRING
+--
+--    LET srch = ""
+--
+--    -------------------------------------------------------------------
+--    -- LOOKUP SOURCE MAP (3.20-safe)
+--    -------------------------------------------------------------------
+--    CASE p_type
+--
+--        WHEN "ST"
+--            LET sql_base = "SELECT id, st_code, description, uom FROM st01_mast"
+--            LET page_title = "Stock Lookup"
+--            LET col1_title = "ID"
+--            LET col2_title = "Code"
+--            LET col3_title = "Description"
+--            LET col4_title = "UOM"
+--            LET g_create_program = "st101_mast"
+--
+--        WHEN "WH"
+--            LET sql_base = "SELECT id, wh_code, wh_name, location FROM wh01_mast"
+--            LET page_title = "Warehouse Lookup"
+--            LET col1_title = "ID"
+--            LET col2_title = "Code"
+--            LET col3_title = "Name"
+--            LET col4_title = "Location"
+--            LET g_create_program = "wh101_mast"
+--
+--        WHEN "CAT"
+--            LET sql_base = "SELECT id, cat_code, cat_desc, '' FROM st02_cat"
+--            LET page_title = "Category Lookup"
+--            LET col1_title = "ID"
+--            LET col2_title = "Code"
+--            LET col3_title = "Description"
+--            LET col4_title = ""
+--            LET g_create_program = "st102_cat"
+--
+--        WHEN "UOM"
+--            LET sql_base = "SELECT id, uom_code, uom_desc, '' FROM st02_uom"
+--            LET page_title = "UOM Lookup"
+--            LET col1_title = "ID"
+--            LET col2_title = "Code"
+--            LET col3_title = "Description"
+--            LET col4_title = ""
+--            LET g_create_program = "st103_uom"
+--
+--        WHEN "DL"
+--            LET sql_base = "SELECT id, dl_code, dl_name, tel FROM dl01_mast"
+--            LET page_title = "Debtor Lookup"
+--            LET col1_title = "ID"
+--            LET col2_title = "Code"
+--            LET col3_title = "Name"
+--            LET col4_title = "Tel"
+--            LET g_create_program = "dl101_mast"
+--
+--        WHEN "CL"
+--            LET sql_base = "SELECT id, cl_code, cl_name, tel FROM cl01_mast"
+--            LET page_title = "Creditor Lookup"
+--            LET col1_title = "ID"
+--            LET col2_title = "Code"
+--            LET col3_title = "Name"
+--            LET col4_title = "Tel"
+--            LET g_create_program = "cl101_mast"
+--
+--        OTHERWISE
+--            CALL utils_globals.show_error("Unknown lookup '"||p_type||"'")
+--            RETURN m_ret.*
+--    END CASE
+--
+--
+--    -------------------------------------------------------------------
+--    -- OPEN WINDOW
+--    -------------------------------------------------------------------
+--    OPEN WINDOW wlu WITH FORM "utils_lkup_form"
+--
+--    -- load titles
+--    DISPLAY BY NAME page_title, col1_title, col2_title, col3_title, col4_title
+--
+--    -------------------------------------------------------------------
+--    -- Dialog
+--    -------------------------------------------------------------------
+--    DIALOG ATTRIBUTES(UNBUFFERED)
+--
+--        -- SEARCH INPUT
+--        INPUT BY NAME srch = f_search
+--
+--            ON ACTION search
+--                LET sql_where =
+--                    IF srch = "" THEN "" 
+--                    ELSE SFMT(" WHERE UPPER(st_code) LIKE UPPER('%%1%%') OR UPPER(description) LIKE UPPER('%%1%%')", srch)
+--                    END IF
+--
+--                LET full_sql = sql_base || sql_where || " ORDER BY 2"
+--                CALL load_arr(a, full_sql)
+--                DISPLAY ARRAY a TO tbl_lookup_list.*
+--
+--        END INPUT
+--
+--
+--        -- CREATE NEW BUTTON
+--        ON ACTION create
+--            RUN g_create_program
+--            -- Re-load after creating new record
+--            CALL load_arr(a, sql_base || " ORDER BY 2")
+--            DISPLAY ARRAY a TO tbl_lookup_list.*
+--
+--
+--        -- TABLE
+--        DISPLAY ARRAY a TO tbl_lookup_list.*
+--
+--            ON ROW DOUBLE CLICK
+--                LET m_ret.key_id      = a[arr_curr()].key_val
+--                LET m_ret.desc_val    = a[arr_curr()].desc_val
+--                LET m_ret.name_val    = a[arr_curr()].name_val
+--                LET m_ret.extra_val   = a[arr_curr()].extra_val
+--                EXIT DIALOG
+--
+--            ON ACTION accept
+--                LET m_ret.key_id      = a[arr_curr()].key_val
+--                LET m_ret.desc_val    = a[arr_curr()].desc_val
+--                LET m_ret.name_val    = a[arr_curr()].name_val
+--                LET m_ret.extra_val   = a[arr_curr()].extra_val
+--                EXIT DIALOG
+--
+--            ON ACTION cancel
+--                CALL m_ret.* = NULL
+--                EXIT DIALOG
+--
+--    END DIALOG
+--
+--    CLOSE WINDOW wlu
+--    RETURN m_ret.
+--END FUNCTION
+--
+--
+--FUNCTION load_arr(a DYNAMIC ARRAY, sql STRING)
+--    DEFINE id INTEGER, c1, c2, c3 STRING
+--    DECLARE c CURSOR FOR sql
+--
+--    LET a.clear()
+--
+--    FOREACH c INTO id, c1, c2, c3
+--        LET a.appendElement()
+--        LET a[a.getLength()].key_val   = id
+--        LET a[a.getLength()].desc_val  = c1
+--        LET a[a.getLength()].name_val  = c2
+--        LET a[a.getLength()].extra_val = c3
+--    END FOREACH
+--END FUNCTION

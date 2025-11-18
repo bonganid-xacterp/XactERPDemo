@@ -11,7 +11,7 @@ IMPORT FGL utils_globals
 SCHEMA demoappdb
 
 -- display debtor form
-FUNCTION fetch_debt_list() RETURNS STRING
+FUNCTION get_debtors_list() RETURNS STRING
     DEFINE selected_code STRING
     DEFINE idx INTEGER
     DEFINE dlg ui.Dialog
@@ -111,7 +111,7 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
     LET f_search = ""
 
     -- Load all records initially
-    CALL load_debtors_for_lookup(f_search) RETURNING debt_arr, row_count
+    CALL get_debtors_for_lookup(f_search) RETURNING debt_arr, row_count
 
     IF row_count = 0 THEN
         CALL utils_globals.show_info("No debtor records found.")
@@ -124,7 +124,7 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
 
         INPUT BY NAME f_search
             AFTER FIELD f_search
-                CALL load_debtors_for_lookup(f_search)
+                CALL get_debtors_for_lookup(f_search)
                     RETURNING debt_arr, row_count
                 CALL DIALOG.setArrayLength("r_debtors_list", debt_arr.getLength())
                 -- keep table on row 1 but return focus to filter
@@ -172,8 +172,26 @@ FUNCTION load_lookup_form_with_search() RETURNS STRING
 
 END FUNCTION
 
+-- ==============================================================
+-- Construct method to initialize search functionality
+-- ==============================================================
+FUNCTION construct_debtor_search()
+    DEFINE f_search STRING
+
+    -- Initialize search field
+    LET f_search = ""
+
+    INPUT BY NAME f_search
+    -- Set up field attributes for search
+    --CALL DIALOG.setFieldTouched("f_search", FALSE)
+
+    -- Set focus to search field
+    --NEXT FIELD f_search
+
+END FUNCTION
+
 -- Helper function to load debtors with optional search filter
-FUNCTION load_debtors_for_lookup(search_filter STRING)
+FUNCTION get_debtors_for_lookup(search_filter STRING)
     RETURNS(
         DYNAMIC ARRAY OF RECORD
             id LIKE dl01_mast.id,

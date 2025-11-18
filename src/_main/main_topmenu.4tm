@@ -9,6 +9,15 @@
     <TopMenuCommand name="quit" text="Exit" acceleratorName="Alt-F4" image="stop"/>
   </TopMenuGroup>
 
+  
+    <!-- Customers -->
+  <TopMenuGroup text="Finance">
+    <!-- -<TopMenuCommand name="" text="GL Accounts" image="contact"/> -->
+     <!-- <TopMenuCommand name="" text="Transactions" image="contact"/> -->
+    <TopMenuSeparator/>
+  </TopMenuGroup>
+
+
   <!-- Inventory Management -->
   <TopMenuGroup text="Inventory">
       <TopMenuCommand name="st_mast" text="Stock Items" image="list"/>
@@ -29,10 +38,14 @@
      <TopMenuSeparator/>
   </TopMenuGroup>
 
-  <!-- Purchasing -->
-  <TopMenuGroup text="Purchasing">
+    <!-- Creditors -->
+  <TopMenuGroup text="Creditors">
     <TopMenuCommand name="cl_mast" text="Suppliers" image="contact"/>
     <TopMenuSeparator/>
+  </TopMenuGroup>
+
+  <!-- Purchasing -->
+  <TopMenuGroup text="Purchasing">
     <TopMenuCommand name="pu_order" text="Purchase Orders" image="form"/>
     <TopMenuCommand name="pu_grn" text="Goods Received Notes" image="inbox"/>
     <TopMenuCommand name="pu_inv" text="Purchase Invoices" image="invoice"/>
@@ -41,8 +54,6 @@
 
   <!-- Sales -->
   <TopMenuGroup text="Sales">
-    <TopMenuCommand name="dl_mast" text="Customers" image="contact"/>
-    <TopMenuSeparator/>
     <TopMenuCommand name="sa_quote" text="Sales Quotations" image="document"/>
     <TopMenuCommand name="sa_order" text="Sales Orders" image="form"/>
     <TopMenuCommand name="sa_invoice" text="Sales Invoices" image="invoice"/>
@@ -50,15 +61,19 @@
     <TopMenuSeparator/>
   </TopMenuGroup>
 
+  
   <!-- System Administration -->
-  <TopMenuGroup text="System">
-    <TopMenuGroup text="User Management">
+  <TopMenuGroup text="Security">
       <TopMenuCommand name="sy_user" text="Users" image="user"/>
       <TopMenuCommand name="sy_role" text="User Roles" image="users"/>
       <TopMenuCommand name="sy_perm" text="Permissions" image="lock"/>
-    </TopMenuGroup>
     <TopMenuSeparator/>
     <TopMenuCommand name="sy_pwd" text="Change Password" image="key"/>
+  </TopMenuGroup>
+
+  <!-- System Administration -->
+  <TopMenuGroup text="System">
+    <TopMenuSeparator/>
     <TopMenuCommand name="sy_logs" text="System Logs" image="log"/>
   </TopMenuGroup>
 

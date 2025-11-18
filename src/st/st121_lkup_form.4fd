@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="managedform" uid="{e5d54b60-3cc1-4b51-a0f0-9cfb15a7c7a6}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record active="false" masterTable="st01_mast" name="tbl_st_list" uid="{628d5e0a-bc09-4166-b3e3-017c4403bfc5}">
+    <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="st01_mast.id" sqlTabName="st01_mast" uid="{92440e8b-2d52-4b04-9f66-433e5c607aa7}"/>
+    <RecordField colName="description" fieldIdRef="2" fieldType="TABLE_COLUMN" name="st01_mast.description" sqlTabName="st01_mast" uid="{2390605f-c283-4fa0-b495-1ea8c95eaa6c}"/>
+    <RecordField fieldIdRef="3" fieldType="NON_DATABASE" length="1" name="stock_on_hand" sqlType="CHAR" uid="{038e42c1-fb88-4d38-8e90-4a36088be0ed}"/>
+  </Record>
+  <Record active="false" masterTable="" name="f_st_search" uid="{681c1177-916f-45b1-94bd-c7016e30cef6}">
+    <RecordField fieldIdRef="4" length="100" name="f_search" uid="{3ccd8dfd-f603-4d12-a9f1-6718c92b8a49}"/>
+  </Record>
+  <Form gridHeight="16" gridWidth="51" name="form" text="Form">
+    <VBox gridHeight="16" gridWidth="51" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="14" gridWidth="51" name="grd_st" posX="0" posY="1">
+        <Label color="green" gridHeight="1" gridWidth="50" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" text=""/>
+        <Table gridHeight="12" gridWidth="50" name="f_st_list" posX="1" posY="1" totalRows="10">
+          <Edit colName="id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="st01_mast.id" posX="0" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit colName="description" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st01_mast.description" posX="7" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Edit fieldId="3" fieldType="NON_DATABASE" gridHeight="1" gridWidth="8" length="1" name="stock_on_hand" posX="37" posY="0" sqlType="CHAR" tabIndex="-1" title="" widget="Edit"/>
+        </Table>
+        <Label gridHeight="1" gridWidth="7" name="lbl_filter" posX="1" posY="13" text="Filter"/>
+        <Edit fieldId="4" gridHeight="1" gridWidth="27" length="100" name="f_search" posX="9" posY="13" tabIndex="-1" title="edit1" widget="Edit"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA2ADgAMQBjADEAMQA3ADcALQA5ADEANgBmAC0ANAA1AGIAMQAtADkANABiAGQALQBjADcAMAAxADYAZQAzADAAYwBlAGYANgB9QGSZmZ8AAABAEzMzQAAAAj9QYk3S8an8AQAAAEwAewA2ADIAOABkADUAZQAwAGEALQBiAGMAMAA5AC0ANAAxADYANgAtAGIAMwBlADMALQAwADEANwBjADQANAAwADMAYgBmAGMANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+  </DiagramLayout>
+</ManagedForm>
