@@ -35,17 +35,19 @@ DEFINE is_edit_mode SMALLINT
 -- MAIN
 -- ==============================================================
 MAIN
-DEFINE ret SMALLINT
+    DEFINE ret SMALLINT
 
     IF NOT utils_globals.initialize_application() THEN
         DISPLAY "Initialization failed."
         EXIT PROGRAM 1
     END IF
-    
+
     IF utils_globals.is_standalone() THEN
-    OPTIONS INPUT WRAP
-        OPEN WINDOW w_dl101 WITH FORM "dl101_mast" --ATTRIBUTES(STYLE = "dialog")
-        
+        OPTIONS INPUT WRAP
+        OPEN WINDOW w_dl101
+            WITH
+            FORM "dl101_mast" --ATTRIBUTES(STYLE = "dialog")
+
         -- Call formatting HERE after form is ready
         --CALL utils_globals.apply_field_formatting() RETURNING *
 
@@ -62,87 +64,64 @@ END MAIN
 -- Program init
 -- ==============================================================
 FUNCTION init_dl_module()
-
     DEFINE chosen_row SMALLINT
-
     LET is_edit_mode = FALSE
-
-    -- initialize the list of records
-    CALL load_all_debtors()
-
-    CALL utils_globals.set_form_label('lbl_form_title', 'DEBTORS ENQUIRY')
-
+    INITIALIZE rec_debt.* TO NULL
+    DISPLAY BY NAME rec_debt.*
     DISPLAY ARRAY arr_debt_trans
         TO arr_debt_trans.*
         ATTRIBUTES(UNBUFFERED, DOUBLECLICK = row_select)
         BEFORE DISPLAY
-            
             CALL DIALOG.setActionHidden("accept", TRUE)
             CALL DIALOG.setActionHidden("cancel", TRUE)
             CALL DIALOG.setActionHidden("row_select", TRUE)
-            
-
-
-        ON ACTION Find ATTRIBUTES(TEXT = "Find", IMAGE = "zoom")
-            CALL query_debtors()
+        ON ACTION Find
+            CALL query_debtors();
             LET is_edit_mode = FALSE
-
-        ON ACTION New ATTRIBUTES(TEXT = "New", IMAGE = "new")
-            CALL new_debtor()
+        ON ACTION New
+            CALL new_debtor();
             LET is_edit_mode = FALSE
-
         ON ACTION row_select
-            LET chosen_row = DIALOG.getCurrentRow("arr_debt_trans")
+            LET chosen_row = DIALOG.getCurrentRow("arr_debt_trans");
             IF chosen_row > 0 THEN
-                CALL open_transaction_window(arr_debt_trans[arr_curr()].doc_no, arr_debt_trans[arr_curr()].doc_type)
+                CALL open_transaction_window(
+                    arr_debt_trans[arr_curr()].doc_no,
+                    arr_debt_trans[arr_curr()].doc_type)
             END IF
-
-        ON ACTION List ATTRIBUTES(TEXT = "Reload List", IMAGE = "fa-list")
-            DISPLAY "List All"
-            CALL load_all_debtors()
+        ON ACTION List
+            CALL load_all_debtors();
             LET is_edit_mode = FALSE
-
-        ON ACTION Edit ATTRIBUTES(TEXT = "Edit", IMAGE = "pen")
-            DISPLAY "Edit Record"
+        ON ACTION Edit
             IF rec_debt.id IS NULL OR rec_debt.id = 0 THEN
                 CALL utils_globals.show_info("No record selected to edit.")
             ELSE
-                LET is_edit_mode = TRUE
+                LET is_edit_mode = TRUE;
                 CALL utils_globals.set_form_label(
-                    'lbl_form_title', 'DEBTORS MAINTENANCE')
+                    'lbl_form_title', 'DEBTORS MAINTENANCE');
                 CALL edit_debtor()
             END IF
-
-        ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "fa-trash")
-            CALL delete_debtor()
+        ON ACTION DELETE
+            CALL delete_debtor();
             LET is_edit_mode = FALSE
-
         ON ACTION PREVIOUS
-            CALL move_record(-1)
+            CALL move_record(-1);
             DISPLAY ARRAY arr_debt_trans TO arr_debt_trans.*
                 BEFORE DISPLAY
                     EXIT DISPLAY
             END DISPLAY
-
         ON ACTION Next
-            CALL move_record(1)
+            CALL move_record(1);
             DISPLAY ARRAY arr_debt_trans TO arr_debt_trans.*
                 BEFORE DISPLAY
                     EXIT DISPLAY
             END DISPLAY
-
-        ON ACTION add_quote ATTRIBUTES(TEXT = "Add S/Quote", IMAGE = "new")
-            DISPLAY "Add Quote"
+        ON ACTION add_quote
             CALL sa130_quote.new_ord_from_master(rec_debt.id)
-
-         ON ACTION add_order ATTRIBUTES(TEXT = "Add S/Order", IMAGE = "fa-reorder")
-            DISPLAY "Add Quote"
-            --CALL sa131_order.new_order()
-
-        ON ACTION EXIT ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close")
+        ON ACTION add_order
+            CONTINUE DISPLAY
+        ON ACTION EXIT
             EXIT DISPLAY
     END DISPLAY
-
 END FUNCTION
 
 -- ==============================================================
@@ -207,10 +186,10 @@ END FUNCTION
 FUNCTION new_debtor()
     DEFINE dup_found, new_acc_code, next_num, i, array_size INTEGER
     DEFINE next_full STRING
-    DEFINE username STRING 
+    DEFINE username STRING
 
     INITIALIZE rec_debt.* TO NULL
-    CLEAR FORM 
+    CLEAR FORM
     LET rec_debt.status = 'active'
     LET rec_debt.balance = 0.00
     LET rec_debt.cr_limit = 0.00
@@ -218,8 +197,8 @@ FUNCTION new_debtor()
     LET rec_debt.created_by = utils_globals.get_random_user()
 
     LET username = utils_globals.get_username(rec_debt.created_by)
-    
-    DISPLAY username 
+
+    DISPLAY username
 
     CALL utils_globals.set_form_label('lbl_form_title', 'DEBTORS MAINTENANCE')
 
@@ -248,19 +227,20 @@ FUNCTION new_debtor()
 
             ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "filesave")
 
-            LET dup_found = check_debtor_unique(
+                LET dup_found =
+                    check_debtor_unique(
                         rec_debt.id,
                         rec_debt.cust_name,
                         rec_debt.phone,
                         rec_debt.email)
-                        
-                   IF dup_found = 0 THEN
-                   
+
+                IF dup_found = 0 THEN
+
                     CALL save_debtor()
                     LET new_acc_code = rec_debt.id
-                    
+
                     CALL utils_globals.show_info("Debtor saved successfully.")
-                    
+
                     EXIT DIALOG
                 ELSE
                     CALL utils_globals.show_error("Duplicate debtor found.")
@@ -423,18 +403,13 @@ END FUNCTION
 FUNCTION save_debtor()
     DEFINE exists INTEGER
 
-    SELECT COUNT(*)
-        INTO exists
-        FROM dl01_mast
-        WHERE id = rec_debt.id
+    SELECT COUNT(*) INTO exists FROM dl01_mast WHERE id = rec_debt.id
 
     IF exists = 0 THEN
         INSERT INTO dl01_mast VALUES rec_debt.*
         CALL utils_globals.msg_saved()
     ELSE
-        UPDATE dl01_mast
-            SET dl01_mast.* = rec_debt.*
-            WHERE id = rec_debt.id
+        UPDATE dl01_mast SET dl01_mast.* = rec_debt.* WHERE id = rec_debt.id
         CALL utils_globals.msg_updated()
     END IF
 

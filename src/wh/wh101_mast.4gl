@@ -63,47 +63,25 @@ END MAIN
 FUNCTION init_wh_module()
     LET is_edit_mode = FALSE
     CALL utils_globals.set_form_label("lbl_title", "WAREHOUSE MAINTENANCE")
-
-    CALL load_all_warehouses()
-
+    INITIALIZE rec_wh.* TO NULL
+    DISPLAY BY NAME rec_wh.*
     MENU "Warehouse Menu"
-        COMMAND "Find"
-            CALL query_warehouses()
-            LET is_edit_mode = FALSE
-
-        COMMAND "New"
-            CALL new_warehouse()
-            LET is_edit_mode = FALSE
-
-        COMMAND "Edit"
-            IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN
-                CALL utils_globals.show_info("No warehouse selected to edit.")
-            ELSE
-                LET is_edit_mode = TRUE
-                CALL edit_warehouse()
-            END IF
-
-        COMMAND "Delete"
-            CALL delete_warehouse()
-            LET is_edit_mode = FALSE
-
-        COMMAND "Previous"
-            CALL move_record(-1)
-
-        COMMAND "Next"
-            CALL move_record(1)
-
-        COMMAND "Exit"
-            EXIT MENU
+        COMMAND "Find"       CALL query_warehouses(); LET is_edit_mode = FALSE
+        COMMAND "New"        CALL new_warehouse();    LET is_edit_mode = FALSE
+        COMMAND "Edit"       IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN CALL utils_globals.show_info("No warehouse selected to edit.") ELSE LET is_edit_mode = TRUE; CALL edit_warehouse() END IF
+        COMMAND "Delete"     CALL delete_warehouse(); LET is_edit_mode = FALSE
+        COMMAND "Previous"   CALL move_record(-1)
+        COMMAND "Next"       CALL move_record(1)
+        COMMAND "Exit"       EXIT MENU
     END MENU
 END FUNCTION
 
 -- ==============================================================
 -- Load all warehouses into navigation array; load first
 -- ==============================================================
-PRIVATE FUNCTION load_all_warehouses()
+PRIVATE FUNCTION load_all_records()
     DEFINE ok SMALLINT
-    LET ok = select_warehouses("1=1")
+    LET ok = load_first_record("1=1")
 
     IF ok THEN
         MESSAGE SFMT("Loaded %1 warehouse(s)", arr_codes.getLength())
@@ -119,7 +97,9 @@ END FUNCTION
 -- Query via Lookup (popup)
 -- ==============================================================
 FUNCTION query_warehouses()
+
     DEFINE selected_code STRING
+    DEFINE found_idx, i INTEGER
 
     LET selected_code = wh121_lkup.fetch_list()
 
@@ -127,17 +107,34 @@ FUNCTION query_warehouses()
         RETURN
     END IF
 
-    CALL load_warehouse(selected_code)
+    LET found_idx = 0
+    FOR i = 1 TO arr_codes.getLength()
+        IF arr_codes[i] = selected_code THEN
+            LET found_idx = i
+            EXIT FOR
+        END IF
+    END FOR
 
-    CALL arr_codes.clear()
-    LET arr_codes[1] = selected_code
-    LET curr_idx = 1
+    IF found_idx > 0 THEN
+        LET curr_idx = found_idx
+        CALL load_single_record(selected_code)
+    ELSE
+        CALL load_all_records()
+        FOR i = 1 TO arr_codes.getLength()
+            IF arr_codes[i] = selected_code THEN
+                LET curr_idx = i
+                EXIT FOR
+            END IF
+        END FOR
+        CALL load_single_record(selected_code)
+    END IF
+
 END FUNCTION
 
 -- ==============================================================
 -- Fill arr_codes according to where clause and load first
 -- ==============================================================
-FUNCTION select_warehouses(where_clause STRING) RETURNS SMALLINT
+FUNCTION load_first_record(where_clause STRING) RETURNS SMALLINT
     DEFINE code STRING
     DEFINE idx  INTEGER
     DEFINE sql_stmt STRING
@@ -170,14 +167,14 @@ FUNCTION select_warehouses(where_clause STRING) RETURNS SMALLINT
     END IF
 
     LET curr_idx = 1
-    CALL load_warehouse(arr_codes[curr_idx])
+    CALL load_single_record(arr_codes[curr_idx])
     RETURN TRUE
 END FUNCTION
 
 -- ==============================================================
 -- Load a single warehouse and its bins
 -- ==============================================================
-FUNCTION load_warehouse(p_code STRING)
+FUNCTION load_single_record(p_code STRING)
     DEFINE l_sqlcode INTEGER
 
     SELECT id, wh_code, wh_name, location, status, created_at, created_by, updated_at
@@ -245,7 +242,7 @@ PRIVATE FUNCTION move_record(dir SMALLINT)
 
     LET new_idx = utils_globals.navigate_records(arr_codes, curr_idx, dir)
     LET curr_idx = new_idx
-    CALL load_warehouse(arr_codes[curr_idx])
+    CALL load_single_record(arr_codes[curr_idx])
 END FUNCTION
 
 -- ==============================================================
@@ -297,7 +294,7 @@ FUNCTION new_warehouse()
 
     -- Reload list and reposition on newly created code, else restore selection
     IF new_id IS NOT NULL THEN
-        CALL load_all_warehouses()
+        CALL load_all_records()
         LET array_size = arr_codes.getLength()
         IF array_size > 0 THEN
             FOR i = 1 TO array_size
@@ -307,11 +304,11 @@ FUNCTION new_warehouse()
                 END IF
             END FOR
         END IF
-        CALL load_warehouse(rec_wh.wh_code)
+        CALL load_single_record(rec_wh.wh_code)
     ELSE
         LET array_size = arr_codes.getLength()
         IF array_size > 0 AND curr_idx >= 1 AND curr_idx <= array_size THEN
-            CALL load_warehouse(arr_codes[curr_idx])
+            CALL load_single_record(arr_codes[curr_idx])
         ELSE
             LET curr_idx = 0
             INITIALIZE rec_wh.* TO NULL
@@ -345,7 +342,7 @@ FUNCTION edit_warehouse()
                 EXIT DIALOG
 
             ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="cancel")
-                CALL load_warehouse(rec_wh.wh_code)
+                CALL load_single_record(rec_wh.wh_code)
                 EXIT DIALOG
 
         END INPUT
@@ -366,7 +363,7 @@ FUNCTION insert_warehouse()
 
         COMMIT WORK
         CALL utils_globals.msg_saved()
-        CALL load_warehouse(rec_wh.wh_code)
+        CALL load_single_record(rec_wh.wh_code)
     CATCH
         ROLLBACK WORK
         CALL utils_globals.show_error(SFMT("Insert failed: %1", SQLCA.SQLCODE))
@@ -390,7 +387,7 @@ FUNCTION update_warehouse()
 
         COMMIT WORK
         CALL utils_globals.msg_updated()
-        CALL load_warehouse(rec_wh.wh_code)
+        CALL load_single_record(rec_wh.wh_code)
     CATCH
         ROLLBACK WORK
         CALL utils_globals.show_error(SFMT("Update failed: %1", SQLCA.SQLCODE))
@@ -440,13 +437,13 @@ FUNCTION delete_warehouse()
         RETURN
     END TRY
 
-    CALL load_all_warehouses()
+    CALL load_all_records()
     LET array_size = arr_codes.getLength()
 
     IF array_size > 0 THEN
         IF curr_idx > array_size THEN LET curr_idx = array_size END IF
         IF curr_idx < 1 THEN LET curr_idx = 1 END IF
-        CALL load_warehouse(arr_codes[curr_idx])
+        CALL load_single_record(arr_codes[curr_idx])
     ELSE
         LET curr_idx = 0
         INITIALIZE rec_wh.* TO NULL

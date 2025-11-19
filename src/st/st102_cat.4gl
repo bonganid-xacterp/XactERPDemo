@@ -66,40 +66,16 @@ END FUNCTION
 FUNCTION init_category_module()
     LET is_edit_mode = FALSE
     CALL utils_globals.set_form_label("lbl_form_title", "STOCK CATEGORY MAINTENANCE")
-
-     -- initialize the list of records
-    CALL load_all_categories()
-
+    INITIALIZE m_rec_cat.* TO NULL
+    DISPLAY BY NAME m_rec_cat.*
     MENU "Category Menu"
-
-        COMMAND "Find"
-            CALL query_categories()
-            LET is_edit_mode = FALSE
-
-        COMMAND "New"
-            CALL new_category()
-            LET is_edit_mode = FALSE
-
-        COMMAND "Edit"
-            IF m_rec_cat.cat_code IS NULL OR m_rec_cat.cat_code = "" THEN
-                CALL utils_globals.show_info("No category selected to edit.")
-            ELSE
-                LET is_edit_mode = TRUE
-                CALL edit_category()
-            END IF
-
-        COMMAND "Delete"
-            CALL delete_category()
-            LET is_edit_mode = FALSE
-
-        COMMAND "Previous"
-            CALL move_record(-1)
-
-        COMMAND "Next"
-            CALL move_record(1)
-
-        COMMAND "Exit"
-            EXIT MENU
+        COMMAND "Find"       CALL query_categories(); LET is_edit_mode = FALSE
+        COMMAND "New"        CALL new_category();      LET is_edit_mode = FALSE
+        COMMAND "Edit"       IF m_rec_cat.cat_code IS NULL OR m_rec_cat.cat_code = "" THEN CALL utils_globals.show_info("No category selected to edit.") ELSE LET is_edit_mode = TRUE; CALL edit_category() END IF
+        COMMAND "Delete"     CALL delete_category();   LET is_edit_mode = FALSE
+        COMMAND "Previous"   CALL move_record(-1)
+        COMMAND "Next"       CALL move_record(1)
+        COMMAND "Exit"       EXIT MENU
     END MENU
 END FUNCTION
 

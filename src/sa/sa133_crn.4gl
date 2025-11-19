@@ -101,7 +101,7 @@ END FUNCTION
 -- ==============================================================
 PRIVATE FUNCTION lookup_stock_item() RETURNS STRING
     DEFINE l_stock_id STRING
-    LET l_stock_id = st121_st_lkup.display_stocklist() -- your lookup popup
+    LET l_stock_id = st121_st_lkup.fetch_list() -- your lookup popup
     RETURN l_stock_id
 END FUNCTION
 

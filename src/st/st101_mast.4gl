@@ -13,7 +13,7 @@ IMPORT FGL utils_db
 IMPORT FGL st122_cat_lkup
 IMPORT FGL utils_status_const
 IMPORT FGL st121_st_lkup
-IMPORT FGL pu131_grn
+IMPORT FGL pu130_order
 
 SCHEMA demoappdb
 
@@ -22,7 +22,7 @@ SCHEMA demoappdb
 -- ==============================================================
 TYPE stock_t RECORD LIKE st01_mast.*
 
-DEFINE rec_stock stock_t
+DEFINE m_stock_rec stock_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
@@ -35,7 +35,7 @@ DEFINE arr_uom_codes DYNAMIC ARRAY OF STRING
 DEFINE arr_uom_names DYNAMIC ARRAY OF STRING
 
 -- Transactions array for display
-DEFINE arr_st_trans DYNAMIC ARRAY OF RECORD
+DEFINE m_st_trans_arr DYNAMIC ARRAY OF RECORD
     trans_date LIKE st30_trans.trans_date,
     doc_type LIKE st30_trans.doc_type,
     direction LIKE st30_trans.direction,
@@ -56,13 +56,16 @@ MAIN
 
     IF utils_globals.is_standalone() THEN
         OPTIONS INPUT WRAP
-        OPEN WINDOW w_st101 WITH FORM "st101_mast" -- ATTRIBUTES(STYLE = "normal")
+        OPEN WINDOW w_st101
+            WITH
+            FORM "st101_mast" -- ATTRIBUTES(STYLE = "normal")
     END IF
 
     CALL init_st_module()
 
     IF utils_globals.is_standalone() THEN
         CLOSE WINDOW w_st101
+
     END IF
 END MAIN
 
@@ -70,45 +73,57 @@ END MAIN
 -- Menu Controller
 -- ==============================================================
 FUNCTION init_st_module()
-    DEFINE ok SMALLINT
     LET is_edit_mode = FALSE
-
-    --LET ok = select_stock_items("1=1")
-
-    -- Load UOMs into ComboBox after form is opened
+    INITIALIZE m_stock_rec.* TO NULL
+    DISPLAY BY NAME m_stock_rec.*
     CALL load_uoms()
-
     MENU "Stock Master Menu"
-
         COMMAND "Find"
-            CALL query_stock_lookup()
+            CALL query_stock_lookup();
             LET is_edit_mode = FALSE
-
         COMMAND "New"
             CALL new_stock()
-
         COMMAND "Edit"
-            IF rec_stock.id IS NULL OR rec_stock.id = 0 THEN
+            IF m_stock_rec.id IS NULL OR m_stock_rec.id = 0 THEN
                 CALL utils_globals.show_info("No record selected.")
             ELSE
                 CALL edit_stock()
             END IF
-
         COMMAND "Delete"
             CALL delete_stock()
-
         COMMAND "Previous"
             CALL move_record(-1)
-
         COMMAND "Next"
             CALL move_record(1)
-
-        COMMAND "Capture GRN"
-            CALL capture_grn()
-
+        COMMAND "Add P/Order"
+            IF m_stock_rec.id IS NULL OR m_stock_rec.id = 0 THEN
+                CALL utils_globals.show_info("Select a stock item first.")
+            ELSE
+                CALL capture_new_po(m_stock_rec.id)
+            END IF
         COMMAND "Exit"
             EXIT MENU
     END MENU
+END FUNCTION
+
+-- ==============================================================
+-- Load All Records
+-- ==============================================================
+FUNCTION load_all_stock()
+    DEFINE ok SMALLINT
+    LET ok = select_stock_items("1=1")
+
+    IF ok THEN
+        MESSAGE SFMT("Loaded %1 stock item(s)", arr_codes.getLength())
+        IF arr_codes.getLength() > 0 THEN
+            CALL load_stock_item(arr_codes[1])
+        END IF
+    ELSE
+        CALL utils_globals.show_info("No stock items found.")
+        INITIALIZE m_stock_rec.* TO NULL
+        DISPLAY BY NAME m_stock_rec.*
+        CALL m_st_trans_arr.clear()
+    END IF
 END FUNCTION
 
 -- ==============================================================
@@ -116,18 +131,34 @@ END FUNCTION
 -- ==============================================================
 FUNCTION query_stock_lookup()
     DEFINE selected_code STRING
+    DEFINE found_idx, i INTEGER
 
-    LET selected_code = query_stock()
+    LET selected_code = st121_st_lkup.fetch_list()
 
-    IF selected_code IS NOT NULL THEN
+    IF selected_code IS NULL OR selected_code = "" THEN
+        RETURN
+    END IF
+
+    LET found_idx = 0
+    FOR i = 1 TO arr_codes.getLength()
+        IF arr_codes[i] = selected_code THEN
+            LET found_idx = i
+            EXIT FOR
+        END IF
+    END FOR
+
+    IF found_idx > 0 THEN
+        LET curr_idx = found_idx
         CALL load_stock_item(selected_code)
-
-        -- Update the array to contain just this record for navigation
-        CALL arr_codes.clear()
-        LET arr_codes[1] = selected_code
-        LET curr_idx = 1
     ELSE
-        CALL utils_globals.show_error("No records found")
+        CALL load_all_stock()
+        FOR i = 1 TO arr_codes.getLength()
+            IF arr_codes[i] = selected_code THEN
+                LET curr_idx = i
+                EXIT FOR
+            END IF
+        END FOR
+        CALL load_stock_item(selected_code)
     END IF
 END FUNCTION
 
@@ -135,12 +166,12 @@ END FUNCTION
 -- Load Stock Record
 -- ==============================================================
 FUNCTION load_stock_item(p_id INTEGER)
-    SELECT * INTO rec_stock.* FROM st01_mast WHERE id = p_id
+    SELECT * INTO m_stock_rec.* FROM st01_mast WHERE id = p_id
 
     IF SQLCA.SQLCODE = 0 THEN
         CALL refresh_display_fields()
-        DISPLAY BY NAME rec_stock.*, m_cat_name, m_username
-        CALL load_stock_transactions(rec_stock.id)
+        DISPLAY BY NAME m_stock_rec.*, m_cat_name, m_username
+        CALL load_stock_transactions(m_stock_rec.id)
     END IF
 END FUNCTION
 
@@ -150,7 +181,7 @@ END FUNCTION
 FUNCTION query_stock() RETURNS STRING
     DEFINE selected_code STRING
 
-    LET selected_code = st121_st_lkup.display_stocklist()
+    LET selected_code = st121_st_lkup.fetch_list()
     RETURN selected_code
 END FUNCTION
 
@@ -158,8 +189,8 @@ END FUNCTION
 -- Refresh Linked Fields
 -- ==============================================================
 FUNCTION refresh_display_fields()
-    LET m_cat_name = get_linked_category(rec_stock.category_id)
-    LET m_username = utils_globals.get_username(rec_stock.created_by)
+    LET m_cat_name = get_linked_category(m_stock_rec.category_id)
+    LET m_username = utils_globals.get_username(m_stock_rec.created_by)
     DISPLAY BY NAME m_cat_name, m_username
 END FUNCTION
 
@@ -177,7 +208,7 @@ END FUNCTION
 -- ==============================================================
 FUNCTION load_stock_transactions(p_stock_id INTEGER)
     DEFINE idx INTEGER
-    CALL arr_st_trans.clear()
+    CALL m_st_trans_arr.clear()
     LET idx = 1
 
     DECLARE c_trans CURSOR FOR
@@ -186,13 +217,13 @@ FUNCTION load_stock_transactions(p_stock_id INTEGER)
             WHERE stock_id = p_stock_id
             ORDER BY trans_date DESC
 
-    FOREACH c_trans INTO arr_st_trans[idx].*
+    FOREACH c_trans INTO m_st_trans_arr[idx].*
         LET idx = idx + 1
     END FOREACH
 
     CLOSE c_trans
     FREE c_trans
---    DISPLAY ARRAY arr_st_trans TO tbl_st_trans.*
+    --    DISPLAY ARRAY m_st_trans_arr TO tbl_st_trans.*
 END FUNCTION
 
 -- ==============================================================
@@ -202,43 +233,49 @@ FUNCTION new_stock()
     DEFINE random_id INTEGER
     DEFINE frm ui.Form
 
-    INITIALIZE rec_stock.* TO NULL
+    INITIALIZE m_stock_rec.* TO NULL
 
-    LET rec_stock.status = "active"
-    LET rec_stock.unit_cost = 0
-    LET rec_stock.sell_price = 0
-    LET rec_stock.stock_on_hand = 0
-    LET rec_stock.total_sales = 0
-    LET rec_stock.total_purch = 0
-    LET rec_stock.reserved_qnty = 0
+    LET m_stock_rec.status = "active"
+    LET m_stock_rec.unit_cost = 0
+    LET m_stock_rec.sell_price = 0
+    LET m_stock_rec.stock_on_hand = 0
+    LET m_stock_rec.total_sales = 0
+    LET m_stock_rec.total_purch = 0
+    LET m_stock_rec.reserved_qnty = 0
     LET random_id = utils_globals.get_random_user()
-    LET rec_stock.stock_code = utils_globals.get_next_code("st01_mast", "id")
-    LET rec_stock.created_by = random_id
-    LET rec_stock.created_at = TODAY 
-    
+    IF m_stock_rec.id IS NULL THEN
+        LET m_stock_rec.id = utils_globals.get_next_code("st01_mast", "id")
+    END IF
+    LET m_stock_rec.created_by = random_id
+    LET m_stock_rec.created_at = CURRENT
+
     -- refresh to get the username after updating the user id
     CALL refresh_display_fields()
 
     LET frm = ui.Window.getCurrent().getForm()
     CALL frm.setFieldHidden("id", TRUE) -- make id read-only for new
 
-    INPUT BY NAME rec_stock.* ATTRIBUTES(WITHOUT DEFAULTS)
-        ON ACTION lookup_category
-            CALL open_category_lkup()
+    DIALOG ATTRIBUTES(UNBUFFERED)
 
-        ON ACTION save
-            IF check_stock_unique(rec_stock.id) = 0 THEN
-                INSERT INTO st01_mast VALUES rec_stock.*
-                CALL utils_globals.msg_saved()
-                EXIT INPUT
-            END IF
+        INPUT BY NAME m_stock_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
+            ON ACTION lookup_category
+                CALL open_category_lkup()
+
+            ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "filesave")
+                IF check_stock_unique(m_stock_rec.id) = 0 THEN
+                    INSERT INTO st01_mast VALUES m_stock_rec.*
+                    CALL utils_globals.msg_saved()
+                END IF
+        END INPUT
 
         ON ACTION cancel
-            EXIT INPUT
-    END INPUT
+            EXIT DIALOG
 
-    IF rec_stock.id IS NOT NULL THEN
-        CALL load_stock_item(rec_stock.id)
+    END DIALOG
+
+    IF m_stock_rec.id IS NOT NULL THEN
+        CALL load_stock_item(m_stock_rec.id)
+
     END IF
 END FUNCTION
 
@@ -251,13 +288,13 @@ FUNCTION edit_stock()
     CALL frm.setFieldHidden("id", TRUE) -- id is read-only during edit
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_stock.* ATTRIBUTES(WITHOUT DEFAULTS)
-        
-            ON ACTION save ATTRIBUTES(TEXT="Update")
+        INPUT BY NAME m_stock_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
+
+            ON ACTION save ATTRIBUTES(TEXT = "Update")
                 CALL save_stock()
                 EXIT DIALOG
-            ON ACTION cancel ATTRIBUTES(TEXT="Exit")
-                CALL load_stock_item(rec_stock.id)
+            ON ACTION cancel ATTRIBUTES(TEXT = "Exit")
+                CALL load_stock_item(m_stock_rec.id)
                 EXIT DIALOG
             ON ACTION lookup_category
                 CALL open_category_lkup()
@@ -271,16 +308,18 @@ END FUNCTION
 FUNCTION save_stock()
     DEFINE r_exists INTEGER
 
-    SELECT COUNT(*) INTO r_exists FROM st01_mast WHERE id = rec_stock.id
+    SELECT COUNT(*) INTO r_exists FROM st01_mast WHERE id = m_stock_rec.id
     IF r_exists = 0 THEN
-        INSERT INTO st01_mast VALUES rec_stock.*
+        INSERT INTO st01_mast VALUES m_stock_rec.*
         CALL utils_globals.msg_saved()
     ELSE
-        UPDATE st01_mast SET st01_mast.* = rec_stock.* WHERE id = rec_stock.id
+        UPDATE st01_mast
+            SET st01_mast.* = m_stock_rec.*
+            WHERE id = m_stock_rec.id
         CALL utils_globals.msg_updated()
     END IF
 
-    CALL load_stock_item(rec_stock.id)
+    CALL load_stock_item(m_stock_rec.id)
 END FUNCTION
 
 -- ==============================================================
@@ -291,8 +330,8 @@ FUNCTION open_category_lkup()
     LET selected_cat_id = st122_cat_lkup.load_lookup()
 
     IF selected_cat_id IS NOT NULL THEN
-        LET rec_stock.category_id = selected_cat_id
-        DISPLAY BY NAME rec_stock.category_id
+        LET m_stock_rec.category_id = selected_cat_id
+        DISPLAY BY NAME m_stock_rec.category_id
         CALL refresh_display_fields()
     END IF
 END FUNCTION
@@ -342,15 +381,13 @@ END FUNCTION
 -- ==============================================================
 FUNCTION move_record(dir SMALLINT)
     DEFINE new_idx INTEGER
-
     IF arr_codes.getLength() == 0 THEN
         CALL utils_globals.show_info("No records to navigate.")
         RETURN
     END IF
-
     LET new_idx = utils_globals.navigate_records(arr_codes, curr_idx, dir)
     LET curr_idx = new_idx
-CALL load_stock_item(arr_codes[curr_idx])
+    CALL load_stock_item(arr_codes[curr_idx])
 END FUNCTION
 
 -- ==============================================================
@@ -374,7 +411,7 @@ FUNCTION delete_stock()
         trans_count INTEGER,
         ok SMALLINT
 
-    IF rec_stock.id IS NULL OR rec_stock.id = 0 THEN
+    IF m_stock_rec.id IS NULL OR m_stock_rec.id = 0 THEN
         CALL utils_globals.show_info("No stock item selected.")
         RETURN
     END IF
@@ -382,7 +419,7 @@ FUNCTION delete_stock()
     SELECT COUNT(*)
         INTO trans_count
         FROM st30_trans
-        WHERE stock_id = rec_stock.id
+        WHERE stock_id = m_stock_rec.id
     IF trans_count > 0 THEN
         CALL utils_globals.show_error("Cannot delete item with transactions.")
         RETURN
@@ -390,7 +427,7 @@ FUNCTION delete_stock()
 
     LET ok = utils_globals.show_confirm("Delete this item?", "Confirm")
     IF ok THEN
-        DELETE FROM st01_mast WHERE id = rec_stock.id
+        DELETE FROM st01_mast WHERE id = m_stock_rec.id
         CALL utils_globals.msg_deleted()
         LET ok = select_stock_items("1=1")
     END IF
@@ -414,9 +451,7 @@ FUNCTION load_uoms()
     TRY
         -- Load active UOMs from database
         DECLARE uom_curs CURSOR FOR
-            SELECT uom_code, uom_name
-              FROM st03_uom_master
-             ORDER BY uom_code
+            SELECT uom_code, uom_name FROM st03_uom_master ORDER BY uom_code
 
         FOREACH uom_curs INTO arr_uom_codes[idx], arr_uom_names[idx]
             LET idx = idx + 1
@@ -443,6 +478,7 @@ FUNCTION load_uoms()
                     -- ComboBox not found - form may not be loaded yet
                     -- This is OK, arrays are populated for later use
                     DISPLAY "Note: UOM ComboBox will be populated when form is available"
+
                 END IF
             END IF
         END IF
@@ -457,7 +493,7 @@ END FUNCTION
 -- ==============================================================
 -- Load UOMs into ComboBox
 -- ==============================================================
-FUNCTION capture_grn()
-    -- capture new grn
-    CALL pu131_grn.new_pu_grn()
+FUNCTION capture_new_po(p_id INTEGER)
+    -- capture new po
+    CALL pu130_order.new_po_from_stock(p_id)
 END FUNCTION

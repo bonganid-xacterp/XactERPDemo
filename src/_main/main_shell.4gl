@@ -68,6 +68,7 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS STRING
 
     TRY
         CALL ui.Interface.setType("child")
+        CALL ui.Interface.setName(winname)
         CALL ui.Interface.setContainer(MDI_CONTAINER)
 
         OPEN WINDOW winname WITH FORM formname
@@ -111,11 +112,6 @@ FUNCTION close_child_window(formname STRING) RETURNS BOOLEAN
             LET w = ui.Window.forName(winname)
 
             IF w IS NOT NULL THEN
-            MENU
-                ON ACTION close
-                    EXIT MENU
-            END MENU
-            
                 CLOSE WINDOW winname
                 IF m_debug_mode THEN
                     DISPLAY "Closed window: ", winname

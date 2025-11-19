@@ -113,28 +113,28 @@
           </Edit>
         </Group>
         <Group gridChildrenInParent="true" gridHeight="8" gridWidth="28" name="group1" posX="68" posY="1" text="">
-          <Label gridHeight="1" gridWidth="9" name="dl01_mast_cost_ytd_label1" posX="2" posY="1" text="Cost YTD">
-            <Initializer text="dbschema:dl01_mast.cost_ytd/@label"/>
-          </Label>
-          <Edit colName="cost_ytd" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="dl01_mast.cost_ytd" noEntry="true" posX="13" posY="1" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Cost YTD" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
-          <Label gridHeight="1" gridWidth="9" name="dl01_mast_created_by_label1" posX="2" posY="2" text="Created By">
+          <Label gridHeight="1" gridWidth="9" name="dl01_mast_created_by_label1" posX="2" posY="1" text="Created By">
             <Initializer text="dbschema:dl01_mast.created_by/@label"/>
           </Label>
-          <ButtonEdit colName="created_by" fieldId="26" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" image="zoom" name="dl01_mast.created_by" posX="13" posY="2" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" widget="ButtonEdit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </ButtonEdit>
-          <Label gridHeight="1" gridWidth="9" name="dl01_mast_balance_label1" posX="2" posY="3" text="Balance">
-            <Initializer text="dbschema:dl01_mast.balance/@label"/>
-          </Label>
-          <Edit colName="balance" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="dl01_mast.balance" noEntry="true" posX="13" posY="3" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Balance" widget="Edit">
+          <Edit colName="created_by" fieldId="26" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="dl01_mast.created_by" posX="13" posY="1" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Label gridHeight="1" gridWidth="9" name="dl01_mast_sales_ytd_label1" posX="2" posY="4" text="Sales YTD">
+          <Label gridHeight="1" gridWidth="9" name="dl01_mast_balance_label1" posX="2" posY="2" text="Balance">
+            <Initializer text="dbschema:dl01_mast.balance/@label"/>
+          </Label>
+          <Edit colName="balance" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="dl01_mast.balance" noEntry="true" posX="13" posY="2" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Balance" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="9" name="dl01_mast_sales_ytd_label1" posX="2" posY="5" text="Sales YTD">
             <Initializer text="dbschema:dl01_mast.sales_ytd/@label"/>
           </Label>
-          <Edit colName="sales_ytd" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="dl01_mast.sales_ytd" noEntry="true" posX="13" posY="4" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Sales YTD" widget="Edit">
+          <Edit colName="sales_ytd" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="dl01_mast.sales_ytd" noEntry="true" posX="13" posY="5" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Sales YTD" widget="Edit">
+            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+          </Edit>
+          <Label gridHeight="1" gridWidth="9" name="dl01_mast_cost_ytd_label1" posX="2" posY="6" text="Cost YTD">
+            <Initializer text="dbschema:dl01_mast.cost_ytd/@label"/>
+          </Label>
+          <Edit colName="cost_ytd" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="dl01_mast.cost_ytd" noEntry="true" posX="13" posY="6" scroll="true" sqlTabName="dl01_mast" tabIndex="-1" title="Cost YTD" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
         </Group>
@@ -174,6 +174,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyADgANQA3ADUANAA1AGYALQA4AGEAOQBjAC0ANAA0ADkAMQAtAGIAOABkAGYALQA0ADYANwA1ADMAOABiADAAYwA3ADUAYgB9QDAAAAwAAANAMAAADAAAAz+MrAgxJul8AQAAAEwAewA5ADEAYgA4AGQAMABmADMALQAwAGUAOAAzAC0ANABlAGEAMAAtADgANQAzAGYALQBhADkAMQAyADgAYwA2ADgAMQA2AGQANQB9QGx7u8+nd39AWYiIicREKj+crAgxJul+AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyADgANQA3ADUANAA1AGYALQA4AGEAOQBjAC0ANAA0ADkAMQAtAGIAOABkAGYALQA0ADYANwA1ADMAOABiADAAYwA3ADUAYgB9QDAAABAAAAZAMAAAEAAABj+MrAgxJul8AQAAAEwAewA5ADEAYgA4AGQAMABmADMALQAwAGUAOAAzAC0ANABlAGEAMAAtADgANQAzAGYALQBhADkAMQAyADgAYwA2ADgAMQA2AGQANQB9QGx7u9bGZnJAWYiIkCZmTD+crAgxJul+AQ==]]>
   </DiagramLayout>
 </ManagedForm>

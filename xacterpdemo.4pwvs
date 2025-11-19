@@ -5,62 +5,33 @@
     <Node path="xacterpdemo.4pw/erpdemoapp" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src" type="pm/group"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/_main" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/app" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/cl" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/database" type="pm/library"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/dl" type="pm/application"/>
     <Node path="xacterpdemo.4pw/erpdemoapp/src/pu" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/sy" type="pm/application"/>
-    <Node path="xacterpdemo.4pw/erpdemoapp/src/utils" type="pm/library"/>
+    <Node path="xacterpdemo.4pw/erpdemoapp/src/st" type="pm/application"/>
   </ExpandedNodes>
   <OpenDocuments>
-    <Document container="true" filePath="src/pu/pu130_order.4gl" locator="550:10:550:16" module="mod-ce3">
+    <Document container="true" filePath="src/wh/wh101_mast.4gl" locator="137:27" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/_main/start_app.4gl" locator="49:1:49:28" module="mod-ce3">
+    <Document container="true" filePath="src/_main/start_app.4gl" locator="250:60" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/cl/cl101_mast.4gl" locator="45:22:45:34" module="mod-ce3">
+    <Document container="true" filePath="src/st/st122_cat_lkup.4gl" locator="42:20" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/utils/utils_windows.4gl" locator="87:11" module="mod-ce3">
+    <Document container="true" filePath="src/st/st101_mast.4gl" locator="18:1:18:16" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/_main/main_shell.4gl" locator="269:1" module="mod-ce3">
+    <Document container="true" filePath="src/pu/pu131_grn.4gl" locator="51:23" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/st/st103_uom_mast.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/st/st103_uom_mast.4gl" locator="35:24:35:36" module="mod-ce3">
+    <Document container="true" filePath="src/pu/pu130_order.4gl" locator="13:22" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/wb/wb101_mast.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/wb/wb101_mast.4gl" locator="39:22:39:34" module="mod-ce3">
+    <Document container="true" filePath="src/pu/pu130_order.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/st/st121_st_lkup.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/st/st121_st_lkup.4gl" locator="22:55" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/pu/pu131_grn.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/pu/pu131_grn.4gl" locator="171:1" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/pu/pu_lkup_form.4gl" locator="1:1" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/utils/utils_lkup.4gl" locator="136:1" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/sy/sy150_lkup_config.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/sy/sy150_lkup_config.4gl" locator="37:22:37:34" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/sy/sy100_login.4gl" locator="342:25" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/utils/utils_globals.4gl" locator="20:12:20:28" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="src/st/st101_mast.4gl" locator="57:22:57:34" module="mod-ce3">
-      <Data name="8" value="CP1252"/>
-    </Document>
-    <Document container="true" filePath="database/demoappdb.4db" locator="" module="mod-db3"/>
   </OpenDocuments>
-  <CurrentDocument filePath="src/_main/start_app.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="src/st/st121_st_lkup.4fd" module="mod-fd"/>
 </WorkspaceViewState>

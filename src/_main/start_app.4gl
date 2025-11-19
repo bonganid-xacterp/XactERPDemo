@@ -202,6 +202,7 @@ END FUNCTION
 FUNCTION launch_child_module(module_name STRING, title STRING)
 
 DEFINE win_name STRING   
+DEFINE ok SMALLINT 
 
     LET g_window_count = g_window_count + 1
     LET win_name = module_name || "_" || g_window_count
@@ -244,9 +245,12 @@ DEFINE win_name STRING
                 CALL utils_globals.show_error("Module not implemented: " || module_name)
 
         END CASE
-        
+
+        -- Close the child window when module returns
+        LET ok =  main_shell.close_child_window(module_name)
+
     END IF
-    
+
 END FUNCTION
 
 -- ==============================================================

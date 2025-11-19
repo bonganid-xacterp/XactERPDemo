@@ -125,7 +125,7 @@
         <File filePath="src/payt/payt220_cashbook.4fd"/>
         <File filePath="src/payt/payt220_cashbook.4gl"/>
       </Application>
-      <Application binaryName="pu" dependencies="497700,56784492,104908716,31764552,782461791,757682379,33552074,276307902,206295008,45766396,396525034" id="39599040" label="pu">
+      <Application binaryName="pu" dependencies="497700,56784492,104908716,31764552,782461791,33552074,276307902,206295008,45766396,396525034,757682379" id="39599040" label="pu">
         <File filePath="src/pu/pu130_order.4fd"/>
         <File filePath="src/pu/pu130_order.4gl"/>
         <File filePath="src/pu/pu131_grn.4fd"/>
@@ -155,7 +155,6 @@
         <File filePath="src/sa/sa140_hist.4gl"/>
       </Application>
       <Application binaryName="st" dependencies="497700,104908716,31764552,782461791" id="757682379" label="st">
-        <File filePath="src/_main/main_toolbar.4tb"/>
         <File filePath="src/st/st101_mast.4fd"/>
         <File filePath="src/st/st101_mast.4gl"/>
         <File filePath="src/st/st102_cat.4fd"/>

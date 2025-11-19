@@ -58,7 +58,7 @@ FUNCTION open_line_details_lookup(p_doc_type STRING) RETURNS line_data_t
             DISPLAY BY NAME m_line.*
             -- stock lookup in details form
         ON ACTION lookup_stock
-            LET l_stock_id = st121_st_lkup.display_stocklist()
+            LET l_stock_id = st121_st_lkup.fetch_list()
 
             IF l_stock_id IS NOT NULL AND l_stock_id != "" THEN
                 -- Convert STRING to INTEGER

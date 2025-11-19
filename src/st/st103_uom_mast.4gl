@@ -48,37 +48,17 @@ DEFINE is_edit_mode SMALLINT
 -- Menu Controller
 -- ==============================================================
 FUNCTION init_uom_module()
-    DEFINE ok SMALLINT
     LET is_edit_mode = FALSE
-    LET ok = select_uom_items("1=1")
-
+    INITIALIZE uom_rec.* TO NULL
+    DISPLAY BY NAME uom_rec.*
     MENU "UOM Master Menu"
-
-        COMMAND "Find"
-            CALL query_uom_lookup()
-            LET is_edit_mode = FALSE
-
-        COMMAND "New"
-            CALL new_uom()
-
-        COMMAND "Edit"
-            IF uom_rec.id IS NULL OR uom_rec.id = 0 THEN
-                CALL utils_globals.show_info("No record selected.")
-            ELSE
-                CALL edit_uom()
-            END IF
-
-        COMMAND "Delete"
-            CALL delete_uom()
-
-        COMMAND "Previous"
-            CALL move_record(-1)
-
-        COMMAND "Next"
-            CALL move_record(1)
-
-        COMMAND "Exit"
-            EXIT MENU
+        COMMAND "Find"       CALL query_uom_lookup(); LET is_edit_mode = FALSE
+        COMMAND "New"        CALL new_uom()
+        COMMAND "Edit"       IF uom_rec.id IS NULL OR uom_rec.id = 0 THEN CALL utils_globals.show_info("No record selected.") ELSE CALL edit_uom() END IF
+        COMMAND "Delete"     CALL delete_uom()
+        COMMAND "Previous"   CALL move_record(-1)
+        COMMAND "Next"       CALL move_record(1)
+        COMMAND "Exit"       EXIT MENU
     END MENU
 END FUNCTION
 
@@ -122,13 +102,13 @@ FUNCTION query_uom() RETURNS STRING
             id     LIKE st03_uom_master.id,
             uom_code  LIKE st03_uom_master.uom_code,
             uom_name  LIKE st03_uom_master.uom_name,
-            status LIKE st03_uom_master.status
+            is_active LIKE st03_uom_master.status
         END RECORD,
         rec_list RECORD
             id     LIKE st03_uom_master.id,
             uom_code  LIKE st03_uom_master.uom_code,
             uom_name  LIKE st03_uom_master.uom_name,
-            status LIKE st03_uom_master.status
+            is_active LIKE st03_uom_master.status
         END RECORD,
         ret_code STRING,
         curr_row, curr_idx SMALLINT

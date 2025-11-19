@@ -275,7 +275,7 @@ FUNCTION edit_or_add_order_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLI
 
         BEFORE FIELD stock_id
             -- Stock lookup popup
-            CALL st121_st_lkup.display_stocklist() RETURNING l_stock_id
+            CALL st121_st_lkup.fetch_list() RETURNING l_stock_id
 
             IF l_stock_id IS NOT NULL AND l_stock_id > 0 THEN
                 LET l_line.stock_id = l_stock_id
