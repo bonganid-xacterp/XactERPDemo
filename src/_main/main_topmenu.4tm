@@ -91,9 +91,9 @@
 
   <!-- Window Management -->
   <TopMenuGroup text="Window">
-    <TopMenuCommand name="win_close" text="Close Current" image="close"/>
-    <TopMenuCommand name="win_close_all" text="Close All" image="closeall"/>
+    <TopMenuCommand name="win_close" text="Close Current" image="fa-close"/>
+    <TopMenuCommand name="win_close_all" text="Close All" image="fa-window-close"/>
     <TopMenuSeparator/>
-    <TopMenuCommand name="win_list" text="Window List" image="list"/>
+    <TopMenuCommand name="win_list" text="Window List" image="fa-list-ui"/>
   </TopMenuGroup>
 </TopMenu>

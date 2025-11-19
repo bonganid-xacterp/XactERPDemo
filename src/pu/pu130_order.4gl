@@ -63,15 +63,30 @@ FUNCTION init_po_module()
     DIALOG ATTRIBUTES(UNBUFFERED)
         INPUT BY NAME m_po_hdr_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
 
+            BEFORE INPUT
+                -- Disable all fields initially until user clicks New or Edit
+                IF NOT is_edit THEN
+                    CALL DIALOG.setFieldActive("doc_no", FALSE)
+                    CALL DIALOG.setFieldActive("trans_date", FALSE)
+                    CALL DIALOG.setFieldActive("supp_id", FALSE)
+                    CALL DIALOG.setFieldActive("status", FALSE)
+                END IF
+
             BEFORE FIELD doc_no, trans_date, supp_id, status
                 IF NOT is_edit THEN
-                    NEXT FIELD CURRENT
+                    -- Skip to action toolbar instead of staying on field
+                    NEXT FIELD NEXT
                 END IF
         END INPUT
 
         ON ACTION new ATTRIBUTES(TEXT = "New", IMAGE = "new")
             CALL new_po()
             LET is_edit = TRUE
+            -- Enable fields for editing
+            CALL DIALOG.setFieldActive("doc_no", TRUE)
+            CALL DIALOG.setFieldActive("trans_date", TRUE)
+            CALL DIALOG.setFieldActive("supp_id", TRUE)
+            CALL DIALOG.setFieldActive("status", TRUE)
             NEXT FIELD supp_id
 
         ON ACTION edit ATTRIBUTES(TEXT = "Edit", IMAGE = "edit")
@@ -79,6 +94,11 @@ FUNCTION init_po_module()
                 CALL utils_globals.show_info("Load a record first.")
             ELSE
                 LET is_edit = TRUE
+                -- Enable fields for editing
+                CALL DIALOG.setFieldActive("doc_no", TRUE)
+                CALL DIALOG.setFieldActive("trans_date", TRUE)
+                CALL DIALOG.setFieldActive("supp_id", TRUE)
+                CALL DIALOG.setFieldActive("status", TRUE)
                 NEXT FIELD supp_id
             END IF
 
@@ -1297,6 +1317,9 @@ FUNCTION add_po_to_stock_trans(p_hdr_id INTEGER, p_notes STRING)
                 LET l_trans_rec.sell_price = 0  -- Not applicable for PO
                 LET l_trans_rec.batch_id = ''
                 LET l_trans_rec.expiry_date = NULL
+
+                -- Initialize TEXT field using LOCATE
+                LOCATE l_trans_rec.notes IN MEMORY
                 LET l_trans_rec.notes = p_notes || " - PO#" || p_hdr_id || " Line " || i
 
                 INSERT INTO st30_trans(
@@ -1323,11 +1346,11 @@ FUNCTION add_po_to_stock_trans(p_hdr_id INTEGER, p_notes STRING)
                         l_trans_rec.notes)
             ELSE
                 -- UPDATE EXISTING STOCK TRANSACTION
+                -- Note: TEXT fields cannot be updated with string concatenation
                 UPDATE st30_trans
                     SET qnty = m_po_lines_arr[i].qnty,
                         unit_cost = m_po_lines_arr[i].unit_cost,
-                        trans_date = m_po_hdr_rec.trans_date,
-                        notes = p_notes || " - PO#" || p_hdr_id || " Line " || i
+                        trans_date = m_po_hdr_rec.trans_date
                     WHERE doc_type = 'PO'
                         AND stock_id = m_po_lines_arr[i].stock_id
                         AND notes LIKE '%PO#' || p_hdr_id || '%'
