@@ -102,13 +102,13 @@ FUNCTION query_uom() RETURNS STRING
             id     LIKE st03_uom_master.id,
             uom_code  LIKE st03_uom_master.uom_code,
             uom_name  LIKE st03_uom_master.uom_name,
-            is_active LIKE st03_uom_master.status
+            status LIKE st03_uom_master.status
         END RECORD,
         rec_list RECORD
             id     LIKE st03_uom_master.id,
             uom_code  LIKE st03_uom_master.uom_code,
             uom_name  LIKE st03_uom_master.uom_name,
-            is_active LIKE st03_uom_master.status
+            status LIKE st03_uom_master.status
         END RECORD,
         ret_code STRING,
         curr_row, curr_idx SMALLINT

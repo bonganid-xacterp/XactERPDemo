@@ -671,6 +671,20 @@ FUNCTION new_po_from_stock(p_stock_id INTEGER)
             END IF
             CONTINUE DIALOG
 
+        ON ACTION cancel_order
+            ATTRIBUTES(TEXT = "Cancel Order", IMAGE = "cancel")
+            -- Only show if order is posted or draft
+            IF m_po_hdr_rec.status != "posted" AND m_po_hdr_rec.status != "draft" THEN
+                CALL utils_globals.show_info("Only posted or draft orders can be cancelled.")
+                CONTINUE DIALOG
+            END IF
+
+            IF utils_globals.show_confirm("Are you sure you want to cancel this PO?", "Confirm") THEN
+                CALL cancel_po_order(m_po_hdr_rec.id)
+                EXIT DIALOG
+            END IF
+            CONTINUE DIALOG
+
         ON ACTION CANCEL ATTRIBUTES(TEXT = "Exit")
             EXIT DIALOG
     END DIALOG
@@ -710,6 +724,30 @@ FUNCTION convert_po_to_grn(p_po_id INTEGER)
     CALL add_po_to_stock_trans(p_po_id, "Converted to GRN")
 
     CALL utils_globals.show_info("Convert to GRN feature will be implemented.")
+END FUNCTION
+
+-- ==============================================================
+-- Cancel PO Order
+-- ==============================================================
+FUNCTION cancel_po_order(p_po_id INTEGER)
+    BEGIN WORK
+    TRY
+        -- Update PO header status to cancelled
+        UPDATE pu30_ord_hdr
+            SET status = 'cancelled',
+                updated_at = CURRENT
+            WHERE id = p_po_id
+
+        -- Update stock transaction with cancellation note
+        CALL add_po_to_stock_trans(p_po_id, "PO Cancelled")
+
+        COMMIT WORK
+        CALL utils_globals.show_info("Purchase Order has been cancelled successfully.")
+
+    CATCH
+        ROLLBACK WORK
+        CALL utils_globals.show_error("Failed to cancel PO:\n" || SQLCA.SQLERRM)
+    END TRY
 END FUNCTION
 
 -- ==============================================================

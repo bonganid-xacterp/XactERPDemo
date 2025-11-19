@@ -597,6 +597,7 @@
     <Column fglLength="8" fglType="52" name="created_by" notNull="true" order="18" status="U" uuid="db/column478"/>
     <Column fglLength="20" fglType="201" name="uom" notNull="false" order="19" status="U" uuid="db/column653"/>
     <Column fglLength="1283" fglType="5" name="stock_balance" notNull="false" order="20" status="U" uuid="db/column654"/>
+    <Column fglLength="1283" fglType="5" name="stock_ordered" notNull="false" order="21" status="U" uuid="db/column678"/>
     <Index indexColumns="category_id" indexConstraint="index" name="idx_st01_cat" status="U" uuid="db/index58"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="st01_mast_pkey" status="U" uuid="db/index59"/>
     <Index indexColumns="stock_code" indexConstraint="unique" name="st01_mast_stock_code_key" status="U" uuid="db/index60"/>

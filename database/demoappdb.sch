@@ -478,6 +478,7 @@ st01_mast^deleted_at^10^4622^17^
 st01_mast^created_by^308^8^18^
 st01_mast^uom^201^20^19^
 st01_mast^stock_balance^5^1283^20^
+st01_mast^stock_ordered^5^1283^21^
 st02_cat^id^309^8^1^
 st02_cat^cat_code^201^30^2^
 st02_cat^cat_name^457^120^3^

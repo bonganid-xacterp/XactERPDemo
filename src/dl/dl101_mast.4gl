@@ -78,7 +78,7 @@ FUNCTION init_dl_module()
         ON ACTION Find
             CALL query_debtors();
             LET is_edit_mode = FALSE
-        ON ACTION New
+        ON ACTION New ATTRIBUTES(TEXT = "New", IMAGE = "new")
             CALL new_debtor();
             LET is_edit_mode = FALSE
         ON ACTION row_select
@@ -88,10 +88,10 @@ FUNCTION init_dl_module()
                     arr_debt_trans[arr_curr()].doc_no,
                     arr_debt_trans[arr_curr()].doc_type)
             END IF
-        ON ACTION List
+        ON ACTION List ATTRIBUTES(TEXT = "Refresh Records", IMAGE = "refresh")
             CALL load_all_debtors();
             LET is_edit_mode = FALSE
-        ON ACTION Edit
+        ON ACTION Edit ATTRIBUTES(TEXT = "Edit ", IMAGE = "pen")
             IF rec_debt.id IS NULL OR rec_debt.id = 0 THEN
                 CALL utils_globals.show_info("No record selected to edit.")
             ELSE
@@ -100,7 +100,7 @@ FUNCTION init_dl_module()
                     'lbl_form_title', 'DEBTORS MAINTENANCE');
                 CALL edit_debtor()
             END IF
-        ON ACTION DELETE
+        ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "fa-trash")
             CALL delete_debtor();
             LET is_edit_mode = FALSE
         ON ACTION PREVIOUS
@@ -115,11 +115,11 @@ FUNCTION init_dl_module()
                 BEFORE DISPLAY
                     EXIT DISPLAY
             END DISPLAY
-        ON ACTION add_quote
+        ON ACTION add_quote ATTRIBUTES(TEXT = "Add Quote", IMAGE = "new")
             CALL sa130_quote.new_ord_from_master(rec_debt.id)
-        ON ACTION add_order
+        ON ACTION add_order ATTRIBUTES(TEXT = "Add S/Order", IMAGE = "new")
             CONTINUE DISPLAY
-        ON ACTION EXIT
+        ON ACTION EXIT ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close")
             EXIT DISPLAY
     END DISPLAY
 END FUNCTION

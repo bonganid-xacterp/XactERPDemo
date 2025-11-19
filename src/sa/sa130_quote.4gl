@@ -787,7 +787,6 @@ FUNCTION copy_quote_to_order(p_quote_id INTEGER)
         LET l_order_hdr.id = l_new_order_doc_no
         LET l_order_hdr.ref_doc_type = "QUOTE"
         LET l_order_hdr.ref_doc_no = l_quote_hdr.doc_no
-        LET l_order_hdr.cust_id = l_quote_hdr.id
         LET l_order_hdr.trans_date = TODAY
         LET l_order_hdr.gross_tot = l_quote_hdr.gross_tot
         LET l_order_hdr.disc_tot = l_quote_hdr.disc_tot
