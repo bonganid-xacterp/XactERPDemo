@@ -3,7 +3,7 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="sy08_lkup_config" name="record1" uid="{a3b59492-5b0e-4f71-8678-f23a9c43ddc5}">
+  <Record masterTable="sy08_lkup_config" name="lkup_config_rec" uid="{a3b59492-5b0e-4f71-8678-f23a9c43ddc5}">
     <RecordField colName="id" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sy08_lkup_config.id" sqlTabName="sy08_lkup_config" uid="{7547cc75-977f-4bbb-ac6e-a330d07b393d}"/>
     <RecordField colName="lookup_code" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sy08_lkup_config.lookup_code" sqlTabName="sy08_lkup_config" uid="{c0c4db4c-6845-4fb6-b23f-46011962c59e}"/>
     <RecordField colName="table_name" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sy08_lkup_config.table_name" sqlTabName="sy08_lkup_config" uid="{e8676d50-3d1f-40b7-bbd5-98e44eb25f08}"/>
@@ -14,7 +14,7 @@
     <RecordField colName="created_at" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sy08_lkup_config.created_at" sqlTabName="sy08_lkup_config" uid="{8b54c887-8b93-4aa1-a1e9-983e54549710}"/>
     <RecordField colName="updated_at" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sy08_lkup_config.updated_at" sqlTabName="sy08_lkup_config" uid="{83fe7821-c49a-497b-bf57-7f5cd38d68d6}"/>
   </Record>
-  <Record masterTable="sy08_lkup_config1" name="record2" uid="{1ba161b7-53b3-4174-92da-f4b77e86c4eb}">
+  <Record masterTable="sy08_lkup_config1" name="lkup_config_tbl" uid="{1ba161b7-53b3-4174-92da-f4b77e86c4eb}">
     <RecordField colName="id" fieldIdRef="10" fieldType="TABLE_ALIAS" name="sy08_lkup_config1.id" sqlTabName="sy08_lkup_config" table_alias_name="sy08_lkup_config1" uid="{83ece854-6f92-4cfe-90d1-eb772ff01f65}"/>
     <RecordField colName="lookup_code" fieldIdRef="11" fieldType="TABLE_ALIAS" name="sy08_lkup_config1.lookup_code" sqlTabName="sy08_lkup_config" table_alias_name="sy08_lkup_config1" uid="{9543a825-01ce-4a37-81d4-f1467c8fe48f}"/>
     <RecordField colName="table_name" fieldIdRef="12" fieldType="TABLE_ALIAS" name="sy08_lkup_config1.table_name" sqlTabName="sy08_lkup_config" table_alias_name="sy08_lkup_config1" uid="{71e78762-b15b-483a-bb4f-5568d8dd2f43}"/>
@@ -25,50 +25,45 @@
     <RecordField colName="created_at" fieldIdRef="17" fieldType="TABLE_ALIAS" name="sy08_lkup_config1.created_at" sqlTabName="sy08_lkup_config" table_alias_name="sy08_lkup_config1" uid="{c3e4a1db-7aa6-4b16-a25e-a8cf0804cafc}"/>
     <RecordField colName="updated_at" fieldIdRef="18" fieldType="TABLE_ALIAS" name="sy08_lkup_config1.updated_at" sqlTabName="sy08_lkup_config" table_alias_name="sy08_lkup_config1" uid="{4ada963f-4992-408c-9fe1-b88f0bc83e4e}"/>
   </Record>
-  <Form gridHeight="14" gridWidth="134" name="form" text="Form">
+  <Form gridHeight="14" gridWidth="131" name="form" text="Form">
     <VBox gridHeight="14" gridWidth="130" name="vbox1" posX="1" posY="0">
       <Grid gridHeight="12" gridWidth="130" name="demoappdb1" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="96" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="SYSTEM LOOKUP CONFIG"/>
-        <Label gridHeight="1" gridWidth="18" name="sy08_lkup_config_id_label1" posX="1" posY="1">
-          <Initializer text="dbschema:sy08_lkup_config.id/@label"/>
-        </Label>
-        <Edit colName="id" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy08_lkup_config.id" posX="20" posY="1" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="13" name="sy08_lkup_config_lookup_code_label1" posX="51" posY="1" text="Lookup Code">
+        <Label gridHeight="1" gridWidth="129" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="SYSTEM LOOKUP CONFIG"/>
+        <Label gridHeight="1" gridWidth="10" name="sy08_lkup_config_lookup_code_label1" posX="1" posY="1" text="Lookup Code">
           <Initializer text="dbschema:sy08_lkup_config.lookup_code/@label"/>
         </Label>
-        <Edit colName="lookup_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy08_lkup_config.lookup_code" posX="65" posY="1" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Lookup Code" widget="Edit">
+        <Edit colName="lookup_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="21" name="sy08_lkup_config.lookup_code" posX="12" posY="1" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Lookup Code" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="18" name="sy08_lkup_config_table_name_label1" posX="1" posY="2" text="Table Name">
-          <Initializer text="dbschema:sy08_lkup_config.table_name/@label"/>
-        </Label>
-        <Edit colName="table_name" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy08_lkup_config.table_name" posX="20" posY="2" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Table Name" widget="Edit">
-          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-        </Edit>
-        <Label gridHeight="1" gridWidth="13" name="sy08_lkup_config_key_field_label1" posX="51" posY="2" text="Key Field">
+        <Label gridHeight="1" gridWidth="9" name="sy08_lkup_config_key_field_label1" posX="34" posY="1" text="Key Field">
           <Initializer text="dbschema:sy08_lkup_config.key_field/@label"/>
         </Label>
-        <Edit colName="key_field" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy08_lkup_config.key_field" posX="65" posY="2" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Key Field" widget="Edit">
+        <Edit colName="key_field" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="26" name="sy08_lkup_config.key_field" posX="44" posY="1" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Key Field" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="18" name="sy08_lkup_config_desc_field_label1" posX="1" posY="3" text="Record Description">
-          <Initializer text="dbschema:sy08_lkup_config.desc_field/@label"/>
+        <Phantom colName="id" fieldId="1" fieldType="TABLE_COLUMN" name="sy08_lkup_config.id" sqlTabName="sy08_lkup_config" widget="Phantom"/>
+        <Label gridHeight="1" gridWidth="10" name="sy08_lkup_config_table_name_label1" posX="1" posY="2" text="Table Name">
+          <Initializer text="dbschema:sy08_lkup_config.table_name/@label"/>
         </Label>
-        <Edit colName="desc_field" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy08_lkup_config.desc_field" posX="20" posY="3" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Record Description" widget="Edit">
+        <Edit colName="table_name" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="21" name="sy08_lkup_config.table_name" posX="12" posY="2" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Table Name" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="13" name="sy08_lkup_config_display_title_label1" posX="51" posY="3" text="Display Title">
+        <Label gridHeight="1" gridWidth="9" name="sy08_lkup_config_display_title_label1" posX="34" posY="2" text="Display Title">
           <Initializer text="dbschema:sy08_lkup_config.display_title/@label"/>
         </Label>
-        <Edit colName="display_title" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy08_lkup_config.display_title" posX="65" posY="3" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Display Title" widget="Edit">
+        <Edit colName="display_title" fieldId="6" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="26" name="sy08_lkup_config.display_title" posX="44" posY="2" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Display Title" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="18" name="sy08_lkup_config_filter_condition_label1" posX="1" posY="4" text="Fiter Condition">
+        <Label gridHeight="1" gridWidth="10" name="sy08_lkup_config_desc_field_label1" posX="1" posY="3" text="Record Description">
+          <Initializer text="dbschema:sy08_lkup_config.desc_field/@label"/>
+        </Label>
+        <Edit colName="desc_field" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="21" name="sy08_lkup_config.desc_field" posX="12" posY="3" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Record Description" widget="Edit">
+          <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
+        </Edit>
+        <Label gridHeight="1" gridWidth="10" name="sy08_lkup_config_filter_condition_label1" posX="1" posY="4" text="Fiter Condition">
           <Initializer text="dbschema:sy08_lkup_config.filter_condition/@label"/>
         </Label>
-        <Edit colName="filter_condition" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="sy08_lkup_config.filter_condition" posX="20" posY="4" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Fiter Condition" widget="Edit">
+        <Edit colName="filter_condition" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="21" name="sy08_lkup_config.filter_condition" posX="12" posY="4" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Fiter Condition" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
         <Table gridHeight="6" gridWidth="129" name="demoappdb2" posX="1" posY="6" totalRows="5">
@@ -100,6 +95,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBhADMAYgA1ADkANAA5ADIALQA1AGIAMABlAC0ANABmADcAMQAtADgANgA3ADgALQBmADIAMwBhADkAYwA0ADMAZABkAGMANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewAxAGIAYQAxADYAMQBiADcALQA1ADMAYgAzAC0ANAAxADcANAAtADkAMgBkAGEALQBmADQAYgA3ADcAZQA4ADYAYwA0AGUAYgB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBhADMAYgA1ADkANAA5ADIALQA1AGIAMABlAC0ANABmADcAMQAtADgANgA3ADgALQBmADIAMwBhADkAYwA0ADMAZABkAGMANQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewAxAGIAYQAxADYAMQBiADcALQA1ADMAYgAzAC0ANAAxADcANAAtADkAMgBkAGEALQBmADQAYgA3ADcAZQA4ADYAYwA0AGUAYgB9QGzmZm3gAABAEzMzQAAAAj9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>
