@@ -178,7 +178,6 @@
         <File filePath="src/st/st140_hist.4gl"/>
       </Application>
       <Application binaryName="sy" dependencies="497700,104908716,31764552,782461791,221924664" id="31393700" label="sy">
-        <File filePath="src/sy/sy08_lkup_config.4fd"/>
         <File filePath="src/sy/sy100_login.4fd"/>
         <File filePath="src/sy/sy100_login.4gl"/>
         <File filePath="src/sy/sy101_user.4fd"/>
@@ -194,6 +193,8 @@
         <File filePath="src/sy/sy130_logs.4gl"/>
         <File filePath="src/sy/sy140_hist.4fd"/>
         <File filePath="src/sy/sy140_hist.4gl"/>
+        <File filePath="src/sy/sy150_lkup_config.4fd"/>
+        <File filePath="src/sy/sy150_lkup_config.4gl"/>
       </Application>
       <Library binaryName="utils" dependencies="782461791,31764552" id="497700" label="utils">
         <File filePath="src/utils/utils_db.4gl"/>
