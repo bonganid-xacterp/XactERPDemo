@@ -35,10 +35,10 @@ sy05_perm,18387
 sy06_role_perm,18665
 sy07_doc_num,18759
 sy08_lkup_config,19009
-wb01_mast,19404
-wb30_trf_hdr,19674
-wb31_trf_det,19967
-wh01_mast,20182
-wh30_trans,20453
-wh30_trf_hdr,21113
-wh31_trf_det,21576
+wb01_mast,19368
+wb30_trf_hdr,19638
+wb31_trf_det,19931
+wh01_mast,20146
+wh30_trans,20417
+wh30_trf_hdr,21077
+wh31_trf_det,21540

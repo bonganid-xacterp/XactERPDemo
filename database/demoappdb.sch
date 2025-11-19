@@ -576,9 +576,8 @@ sy08_lkup_config^key_field^457^120^4^
 sy08_lkup_config^desc_field^457^120^5^
 sy08_lkup_config^display_title^201^120^6^
 sy08_lkup_config^filter_condition^201^400^7^
-sy08_lkup_config^status^457^20^8^
-sy08_lkup_config^created_at^266^4622^9^
-sy08_lkup_config^updated_at^10^4622^10^
+sy08_lkup_config^created_at^266^4622^8^
+sy08_lkup_config^updated_at^10^4622^9^
 wb01_mast^id^309^8^1^
 wb01_mast^wb_code^201^30^2^
 wb01_mast^wh_id^308^8^3^

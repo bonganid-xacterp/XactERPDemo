@@ -749,9 +749,8 @@
     <Column fglLength="120" fglType="201" name="desc_field" notNull="true" order="5" status="U" uuid="db/column556"/>
     <Column fglLength="120" fglType="201" name="display_title" notNull="false" order="6" status="U" uuid="db/column557"/>
     <Column fglLength="400" fglType="201" name="filter_condition" notNull="false" order="7" status="U" uuid="db/column558"/>
-    <Column fglLength="20" fglType="201" name="status" notNull="true" order="8" status="U" uuid="db/column559"/>
-    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="9" status="U" uuid="db/column560"/>
-    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="10" status="U" uuid="db/column561"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="8" status="U" uuid="db/column560"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="9" status="U" uuid="db/column561"/>
     <Index indexColumns="lookup_code" indexConstraint="unique" name="sy08_lkup_config_lookup_code_key" status="U" uuid="db/index79"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="sy08_lkup_config_pkey" status="U" uuid="db/index80"/>
   </Table>
