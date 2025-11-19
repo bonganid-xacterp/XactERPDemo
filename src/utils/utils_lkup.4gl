@@ -181,6 +181,10 @@ PUBLIC FUNCTION lookup_stock() RETURNS STRING
     RETURN display_lookup("stock")
 END FUNCTION
 
+PUBLIC FUNCTION lookup_stock_category() RETURNS STRING
+    RETURN display_lookup("category")
+END FUNCTION
+
 PUBLIC FUNCTION lookup_warehouse() RETURNS STRING
     RETURN display_lookup("warehouse")
 END FUNCTION
@@ -189,6 +193,3 @@ PUBLIC FUNCTION lookup_whbin() RETURNS STRING
     RETURN display_lookup("bin")
 END FUNCTION
 
-PUBLIC FUNCTION lookup_category() RETURNS STRING
-    RETURN display_lookup("category")
-END FUNCTION

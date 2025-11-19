@@ -78,10 +78,11 @@
     <TopMenuCommand name="sy_pwd" text="Change Password" image="key"/>
   </TopMenuGroup>
 
-  <!-- System Administration -->
+  <!-- System Administration sy08_lkup_config -->
   <TopMenuGroup text="System">
     <TopMenuSeparator/>
     <TopMenuCommand name="sy_logs" text="System Logs" image="log"/>
+     <TopMenuCommand name="sy_lkup_config" text="System Lookup Config" image="database"/>
   </TopMenuGroup>
 
   <!-- Window Management -->

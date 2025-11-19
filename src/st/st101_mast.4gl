@@ -73,7 +73,7 @@ FUNCTION init_st_module()
     DEFINE ok SMALLINT
     LET is_edit_mode = FALSE
 
-    LET ok = select_stock_items("1=1")
+    --LET ok = select_stock_items("1=1")
 
     -- Load UOMs into ComboBox after form is opened
     CALL load_uoms()

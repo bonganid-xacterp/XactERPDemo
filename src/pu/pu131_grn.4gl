@@ -98,9 +98,13 @@ FUNCTION init_grn_module()
             ON ACTION post ATTRIBUTES(TEXT = "Post", IMAGE = "ok")
                 --CALL do_post()
 
-            ON ACTION find ATTRIBUTES(TEXT = "Find", IMAGE = "zoom")
-                LET chosen_rec = cl121_lkup.fetch_list()
-                
+            ON ACTION find ATTRIBUTES(TEXT = "Find PO", IMAGE = "zoom")
+                LET chosen_rec = lookup_posted_po()
+                IF chosen_rec IS NOT NULL THEN
+                    -- Load existing GRN by doc_no if user wants to find existing GRN
+                    -- For now, this finds PO to create new GRN
+                END IF
+
 
             ON ACTION quit ATTRIBUTES(TEXT = "Quit", IMAGE = "quit")
                 END INPUT
@@ -125,7 +129,195 @@ FUNCTION init_grn_module()
 END FUNCTION
 
 
--- find the 
+-- =======================
+-- PO Lookup - Display posted POs
+-- =======================
+FUNCTION lookup_posted_po() RETURNS INTEGER
+    DEFINE selected_po_id INTEGER
+    DEFINE idx INTEGER
+    DEFINE dlg ui.Dialog
+    DEFINE sel INTEGER
+
+    DEFINE
+        po_arr DYNAMIC ARRAY OF RECORD
+            id LIKE pu30_ord_hdr.id,
+            doc_no LIKE pu30_ord_hdr.doc_no,
+            trans_date LIKE pu30_ord_hdr.trans_date,
+            supp_name LIKE pu30_ord_hdr.supp_name,
+            net_tot LIKE pu30_ord_hdr.net_tot,
+            status LIKE pu30_ord_hdr.status
+        END RECORD,
+
+        po_rec RECORD
+            id LIKE pu30_ord_hdr.id,
+            doc_no LIKE pu30_ord_hdr.doc_no,
+            trans_date LIKE pu30_ord_hdr.trans_date,
+            supp_name LIKE pu30_ord_hdr.supp_name,
+            net_tot LIKE pu30_ord_hdr.net_tot,
+            status LIKE pu30_ord_hdr.status
+        END RECORD
+
+    LET idx = 0
+    LET selected_po_id = NULL
+
+    OPEN WINDOW w_po_lkup WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
+
+    -- Load posted POs only
+    DECLARE po_curs CURSOR FOR
+        SELECT id, doc_no, trans_date, supp_name, net_tot, status
+            FROM pu30_ord_hdr
+            WHERE status = 'posted'
+            ORDER BY doc_no DESC
+
+    CALL po_arr.clear()
+
+    FOREACH po_curs INTO po_rec.*
+        LET idx = idx + 1
+        LET po_arr[idx].* = po_rec.*
+    END FOREACH
+
+    -- Show array only if records exist
+    IF idx > 0 THEN
+        DIALOG ATTRIBUTES(UNBUFFERED)
+            DISPLAY ARRAY po_arr TO r_creditors_list.* ATTRIBUTES(COUNT = idx)
+
+                BEFORE DISPLAY
+                    LET dlg = ui.Dialog.getCurrent()
+                    IF po_arr.getLength() > 0 THEN
+                        CALL dlg.setCurrentRow("r_creditors_list", 1)
+                    END IF
+
+                ON ACTION accept
+                    LET sel = dlg.getCurrentRow("r_creditors_list")
+                    IF sel > 0 AND sel <= po_arr.getLength() THEN
+                        LET selected_po_id = po_arr[sel].id
+                    END IF
+                    EXIT DIALOG
+
+                ON ACTION cancel
+                    LET selected_po_id = NULL
+                    EXIT DIALOG
+
+                ON KEY(RETURN)
+                    LET sel = dlg.getCurrentRow("r_creditors_list")
+                    IF sel > 0 AND sel <= po_arr.getLength() THEN
+                        LET selected_po_id = po_arr[sel].id
+                    END IF
+                    EXIT DIALOG
+
+                ON KEY(ESCAPE)
+                    LET selected_po_id = NULL
+                    EXIT DIALOG
+            END DISPLAY
+        END DIALOG
+    ELSE
+        CALL utils_globals.show_info("No posted purchase orders found.")
+    END IF
+
+    CLOSE WINDOW w_po_lkup
+    RETURN selected_po_id
+END FUNCTION
+
+-- =======================
+-- Load PO data into GRN
+-- =======================
+FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
+    DEFINE po_hdr_rec RECORD LIKE pu30_ord_hdr.*
+    DEFINE po_line_rec RECORD LIKE pu30_ord_det.*
+    DEFINE i INTEGER
+    DEFINE next_grn_doc INTEGER
+
+    -- Get next GRN document number
+    SELECT COALESCE(MAX(id), 0) + 1 INTO next_grn_doc FROM pu31_grn_hdr
+
+    -- Load PO header
+    SELECT * INTO po_hdr_rec.*
+        FROM pu30_ord_hdr
+        WHERE id = p_po_id
+
+    IF SQLCA.SQLCODE <> 0 THEN
+        CALL utils_globals.show_error("Purchase Order not found.")
+        RETURN FALSE
+    END IF
+
+    -- Check if PO is posted
+    IF po_hdr_rec.status <> "posted" THEN
+        CALL utils_globals.show_warning("Only posted POs can be receipted.")
+        RETURN FALSE
+    END IF
+
+    -- Initialize GRN header from PO
+    INITIALIZE grn_hdr_rec.* TO NULL
+
+    LET grn_hdr_rec.id = next_grn_doc
+    LET grn_hdr_rec.doc_no = next_grn_doc
+    LET grn_hdr_rec.ref_doc_type = "PO"
+    LET grn_hdr_rec.ref_doc_no = po_hdr_rec.doc_no
+    LET grn_hdr_rec.trans_date = TODAY
+    LET grn_hdr_rec.supp_id = po_hdr_rec.supp_id
+    LET grn_hdr_rec.supp_name = po_hdr_rec.supp_name
+    LET grn_hdr_rec.supp_phone = po_hdr_rec.supp_phone
+    LET grn_hdr_rec.supp_email = po_hdr_rec.supp_email
+    LET grn_hdr_rec.supp_address1 = po_hdr_rec.supp_address1
+    LET grn_hdr_rec.supp_address2 = po_hdr_rec.supp_address2
+    LET grn_hdr_rec.supp_address3 = po_hdr_rec.supp_address3
+    LET grn_hdr_rec.supp_postal_code = po_hdr_rec.supp_postal_code
+    LET grn_hdr_rec.supp_vat_no = po_hdr_rec.supp_vat_no
+    LET grn_hdr_rec.supp_payment_terms = po_hdr_rec.supp_payment_terms
+    LET grn_hdr_rec.gross_tot = 0
+    LET grn_hdr_rec.vat_tot = 0
+    LET grn_hdr_rec.net_tot = 0
+    LET grn_hdr_rec.status = "draft"
+    LET grn_hdr_rec.created_at = CURRENT
+    LET grn_hdr_rec.created_by = 1
+
+    -- Display header
+    DISPLAY BY NAME grn_hdr_rec.*
+
+    -- Load PO lines into GRN array
+    CALL grn_lines_arr.clear()
+    LET i = 0
+
+    DECLARE po_lines_curs CURSOR FOR
+        SELECT * FROM pu30_ord_det
+        WHERE hdr_id = p_po_id
+        ORDER BY line_no
+
+    FOREACH po_lines_curs INTO po_line_rec.*
+        LET i = i + 1
+
+        -- Initialize GRN line from PO line
+        INITIALIZE grn_lines_arr[i].* TO NULL
+
+        LET grn_lines_arr[i].line_no = i
+        LET grn_lines_arr[i].stock_id = po_line_rec.stock_id
+        LET grn_lines_arr[i].item_name = po_line_rec.item_name
+        LET grn_lines_arr[i].uom = po_line_rec.uom
+        LET grn_lines_arr[i].qnty = po_line_rec.qnty
+        LET grn_lines_arr[i].unit_cost = po_line_rec.unit_cost
+        LET grn_lines_arr[i].disc_pct = po_line_rec.disc_pct
+        LET grn_lines_arr[i].disc_amt = po_line_rec.disc_amt
+        LET grn_lines_arr[i].gross_amt = po_line_rec.gross_amt
+        LET grn_lines_arr[i].vat_rate = po_line_rec.vat_rate
+        LET grn_lines_arr[i].vat_amt = po_line_rec.vat_amt
+        LET grn_lines_arr[i].net_amt = po_line_rec.net_amt
+        LET grn_lines_arr[i].line_total = po_line_rec.line_total
+        LET grn_lines_arr[i].po_line_id = po_line_rec.id
+        LET grn_lines_arr[i].wh_id = po_line_rec.wh_code
+        LET grn_lines_arr[i].wb_id = po_line_rec.wb_id
+        LET grn_lines_arr[i].status = "active"
+        LET grn_lines_arr[i].created_at = CURRENT
+        LET grn_lines_arr[i].created_by = 1
+    END FOREACH
+
+    -- Recalculate totals
+    CALL recalc_pu_grn_totals()
+
+    MESSAGE SFMT("PO %1 loaded with %2 line(s). Reference: %3",
+        po_hdr_rec.doc_no, i, po_hdr_rec.doc_no)
+
+    RETURN TRUE
+END FUNCTION
 
 -- =======================
 -- New Purchase Order

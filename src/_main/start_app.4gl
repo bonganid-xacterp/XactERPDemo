@@ -46,6 +46,7 @@ IMPORT FGL sy101_user
 IMPORT FGL sy102_role
 IMPORT FGL sy103_perm
 IMPORT FGL sy130_logs
+IMPORT FGL sy150_lkup_config
 
 SCHEMA demoappdb
 
@@ -185,6 +186,7 @@ FUNCTION show_main_menu()
         ON ACTION sy_perm       CALL launch_child_module("sy103_perm", "User Permissions")
         ON ACTION sy_pwd        CALL change_password()
         ON ACTION sy_logs       CALL launch_child_module("sy130_logs", "System Logs")
+        ON ACTION sy_lkup_config       CALL launch_child_module("sy150_lkup_config", "System Lookup Config")
 
             -- Window Management
         ON ACTION win_close     CALL close_current_window()
@@ -236,6 +238,7 @@ DEFINE win_name STRING
             WHEN "sy102_role"       CALL sy102_role.init_role_module()
             WHEN "sy103_perm"       CALL sy103_perm.init_perm_module()
             WHEN "sy130_logs"       CALL sy130_logs.init_logs_module()
+            WHEN "sy150_lkup_config"       CALL sy150_lkup_config.init_lkup_config_module()
 
             OTHERWISE
                 CALL utils_globals.show_error("Module not implemented: " || module_name)

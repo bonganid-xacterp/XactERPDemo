@@ -17,8 +17,7 @@ GLOBALS
     DEFINE g_debug_mode SMALLINT
     DEFINE g_user_authenticated SMALLINT
     DEFINE g_current_user STRING
-    DEFINE g_standalone_mode
-        SMALLINT -- TRUE if module running standalone, FALSE if in MDI
+    DEFINE g_standalone_mode SMALLINT   -- TRUE if module running standalone, FALSE if in MDI
     DEFINE g_currency_symbol STRING -- currency prefix
 END GLOBALS
 
