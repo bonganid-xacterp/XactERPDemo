@@ -756,9 +756,13 @@ END FUNCTION
 FUNCTION new_po()
     DEFINE next_doc INTEGER
 
+    -- Initialize timestamp
+    LET m_timestamp = CURRENT
+
     LET next_doc = utils_globals.get_next_code('pu30_ord_hdr', 'id')
 
     INITIALIZE m_po_hdr_rec.* TO NULL
+    CALL m_po_lines_arr.clear()
 
     LET m_po_hdr_rec.doc_no = next_doc
     LET m_po_hdr_rec.trans_date = TODAY
@@ -766,8 +770,16 @@ FUNCTION new_po()
     LET m_po_hdr_rec.created_at = m_timestamp
     LET m_po_hdr_rec.created_by = utils_globals.get_random_user()
 
+    -- Initialize totals
+    LET m_po_hdr_rec.gross_tot = 0.00
+    LET m_po_hdr_rec.disc_tot = 0.00
+    LET m_po_hdr_rec.vat_tot = 0.00
+    LET m_po_hdr_rec.net_tot = 0.00
+
+    LET g_hdr_saved = FALSE
+
     DISPLAY BY NAME m_po_hdr_rec.*
-    MESSAGE SFMT("New PO #%1", next_doc)
+    MESSAGE SFMT("New PO #%1 - Enter supplier and header details, then save header", next_doc)
 
 END FUNCTION
 
