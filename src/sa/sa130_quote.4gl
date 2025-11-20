@@ -34,17 +34,88 @@ DEFINE m_qt_lines_arr qt_line_arr
 DEFINE m_cust_rec cust_t
 
 -- doc lines
-DEFINE is_edit SMALLINT
+DEFINE is_edit_mode SMALLINT
 
 -- indexes
 DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
 DEFINE m_curr_idx INTEGER
 DEFINE m_user SMALLINT
 
+
+-- ==============================================================
+-- Menu Controller
+-- ==============================================================
+FUNCTION init_st_module()
+    LET is_edit_mode = FALSE
+    INITIALIZE m_cust_rec.* TO NULL
+    DISPLAY BY NAME m_cust_rec.*
+    CALL load_uoms()
+    MENU "Quote Menu"
+        COMMAND "Find"
+           -- CALL ();
+            LET is_edit_mode = FALSE
+        COMMAND "New"
+            CALL new_quote()
+        COMMAND "Edit"
+            IF m_cust_rec.id IS NULL OR m_cust_rec.id = 0 THEN
+                CALL utils_globals.show_info("No record selected.")
+            ELSE
+                --CALL edit_quote()
+            END IF
+        COMMAND "Delete"
+            CALL delete_quote(m_cust_rec.id)
+        COMMAND "Previous"
+            CALL move_record(-1)
+        COMMAND "Next"
+            CALL move_record(1)
+
+        COMMAND "Exit"
+            EXIT MENU
+    END MENU
+END FUNCTION
+
+
+-- ==============================================================
+-- Query using Lookup Window
+-- ==============================================================
+--FUNCTION query_stock_lookup()
+--    DEFINE selected_code STRING
+--    DEFINE found_idx, i INTEGER
+--
+--    LET selected_code = st121_st_lkup.fetch_list()
+--
+--    IF selected_code IS NULL OR selected_code = "" THEN
+--        RETURN
+--    END IF
+--
+--    LET found_idx = 0
+--    FOR i = 1 TO arr_codes.getLength()
+--        IF arr_codes[i] = selected_code THEN
+--            LET found_idx = i
+--            EXIT FOR
+--        END IF
+--    END FOR
+--
+--    IF found_idx > 0 THEN
+--        LET curr_idx = found_idx
+--        CALL load_stock_item(selected_code)
+--    ELSE
+--        CALL load_all_records()
+--        FOR i = 1 TO arr_codes.getLength()
+--            IF arr_codes[i] = selected_code THEN
+--                LET curr_idx = i
+--                EXIT FOR
+--            END IF
+--        END FOR
+--        CALL load_stock_item(selected_code)
+--    END IF
+--END FUNCTION
+
+
 -- ==============================================================
 -- Function : new_ord from master file (Header first, then lines)
 -- ==============================================================
-FUNCTION new_ord_from_master(p_cust_id INTEGER)
+FUNCTION new_qt_from_master(p_cust_id INTEGER)
     DEFINE l_cust_id INTEGER
     LET l_cust_id = p_cust_id
 

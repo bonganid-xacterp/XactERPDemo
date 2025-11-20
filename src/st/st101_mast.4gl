@@ -44,30 +44,30 @@ DEFINE m_st_trans_arr DYNAMIC ARRAY OF RECORD
     sell_price LIKE st30_trans.sell_price,
     expiry_date LIKE st30_trans.expiry_date
 END RECORD
-
--- ==============================================================
--- MAIN
--- ==============================================================
-MAIN
-    IF NOT utils_globals.initialize_application() THEN
-        DISPLAY "Initialization failed."
-        EXIT PROGRAM 1
-    END IF
-
-    IF utils_globals.is_standalone() THEN
-        OPTIONS INPUT WRAP
-        OPEN WINDOW w_st101
-            WITH
-            FORM "st101_mast" -- ATTRIBUTES(STYLE = "normal")
-    END IF
-
-    CALL init_st_module()
-
-    IF utils_globals.is_standalone() THEN
-        CLOSE WINDOW w_st101
-
-    END IF
-END MAIN
+--
+---- ==============================================================
+---- MAIN
+---- ==============================================================
+--MAIN
+--    IF NOT utils_globals.initialize_application() THEN
+--        DISPLAY "Initialization failed."
+--        EXIT PROGRAM 1
+--    END IF
+--
+--    IF utils_globals.is_standalone() THEN
+--        OPTIONS INPUT WRAP
+--        OPEN WINDOW w_st101
+--            WITH
+--            FORM "st101_mast" -- ATTRIBUTES(STYLE = "normal")
+--    END IF
+--
+--    CALL init_st_module()
+--
+--    IF utils_globals.is_standalone() THEN
+--        CLOSE WINDOW w_st101
+--
+--    END IF
+--END MAIN
 
 -- ==============================================================
 -- Menu Controller

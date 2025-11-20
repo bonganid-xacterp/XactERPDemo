@@ -116,7 +116,7 @@ FUNCTION init_dl_module()
                     EXIT DISPLAY
             END DISPLAY
         ON ACTION add_quote ATTRIBUTES(TEXT = "Add Quote", IMAGE = "new")
-            CALL sa130_quote.new_ord_from_master(rec_debt.id)
+            CALL sa130_quote.new_qt_from_master(rec_debt.id)
         ON ACTION add_order ATTRIBUTES(TEXT = "Add S/Order", IMAGE = "new")
             CONTINUE DISPLAY
         ON ACTION EXIT ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close")

@@ -5,7 +5,7 @@
   <!-- ============================================== -->
   <ActionDefault name="accept" text="OK" image="ok" acceleratorName="Return" acceleratorName2="Enter" comment="Accept and continue" contextMenu="no"/>
   <ActionDefault name="cancel" validate="no" text="Cancel" image="cancel" acceleratorName="Escape" comment="Cancel operation" contextMenu="no"/>
-  <ActionDefault name="close" validate="no" text="Close" image="close" acceleratorName="Alt-F4" comment="Close window" defaultView="no" contextMenu="no"/>
+  <ActionDefault name="close" validate="no" text="Close" image="fa-close" acceleratorName="Alt-F4" comment="Close window" defaultView="no" contextMenu="no"/>
   <ActionDefault name="quit" validate="no" text="Quit" image="quit" acceleratorName="Control-Q" comment="Exit application" contextMenu="no"/>
   <ActionDefault name="help" validate="no" text="Help" image="help" acceleratorName="F1" comment="Show help" contextMenu="no"/>
   <ActionDefault name="interrupt" text="Interrupt" image="stop" comment="Interrupt operation" contextMenu="no"/>
@@ -14,11 +14,11 @@
   <!-- CRUD ACTIONS -->
   <!-- ============================================== -->
   <ActionDefault name="new" text="New" image="new" acceleratorName="Control-N" comment="Create new record" contextMenu="yes"/>
-  <ActionDefault name="insert" text="Insert" image="new" acceleratorName="F3" comment="Insert record" contextMenu="no"/>
-  <ActionDefault name="append" text="Append" image="add" acceleratorName="Control-F3" comment="Append record" contextMenu="no"/>
-  <ActionDefault name="edit" text="Edit" image="edit" acceleratorName="F2" comment="Edit record" contextMenu="yes"/>
-  <ActionDefault name="update" text="Update" image="update" comment="Update record" contextMenu="no"/>
-  <ActionDefault name="delete" validate="no" text="Delete" image="delete" acceleratorName="F4" comment="Delete record" contextMenu="yes"/>
+  <ActionDefault name="insert" text="Insert" image="fileNew" acceleratorName="F3" comment="Insert record" contextMenu="no"/>
+  <ActionDefault name="append" text="Append" image="fa-add" acceleratorName="Control-F3" comment="Append record" contextMenu="no"/>
+  <ActionDefault name="edit" text="Edit" image="fa-edit" acceleratorName="F2" comment="Edit record" contextMenu="yes"/>
+  <ActionDefault name="update" text="Update" image="filesave" comment="Update record" contextMenu="no"/>
+  <ActionDefault name="delete" validate="no" text="Delete" image="trash" acceleratorName="F4" comment="Delete record" contextMenu="yes"/>
   <ActionDefault name="save" text="Save" image="save" acceleratorName="Control-S" comment="Save changes" contextMenu="yes"/>
   <ActionDefault name="refresh" text="Refresh" image="refresh" acceleratorName="F5" comment="Refresh data" contextMenu="yes"/>
 
@@ -69,7 +69,7 @@
   <!-- ============================================== -->
   <!-- LINE ITEM ACTIONS -->
   <!-- ============================================== -->
-  <ActionDefault name="add_line" text="Add Line" image="add" comment="Add new line" contextMenu="yes"/>
+  <ActionDefault name="add_line" text="Add Line" image="listadd" comment="Add new line" contextMenu="yes"/>
   <ActionDefault name="delete_line" text="Delete Line" image="delete" comment="Delete selected line" contextMenu="yes"/>
   <ActionDefault name="insert_line" text="Insert Line" image="new" comment="Insert line above" contextMenu="yes"/>
   <ActionDefault name="copy_line" text="Copy Line" image="copy" comment="Copy selected line" contextMenu="yes"/>

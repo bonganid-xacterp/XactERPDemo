@@ -90,15 +90,19 @@ FUNCTION init_grn_module()
                 END IF
 
             ON ACTION find
-                LET chosen_rec = lookup_posted_po()
-                IF chosen_rec IS NOT NULL THEN
-                    LET ok = load_po_into_grn(chosen_rec)
+                TRY
+                    LET chosen_rec = lookup_posted_po()
+                    IF chosen_rec IS NOT NULL THEN
+                        LET ok = load_po_into_grn(chosen_rec)
                         IF ok THEN
-                        MESSAGE "PO loaded into GRN successfully."
-                    ELSE
-                        CALL utils_globals.show_warning("Failed to load GRN from PO.")
+                            MESSAGE "PO loaded into GRN successfully."
+                        ELSE
+                            CALL utils_globals.show_warning("Failed to load GRN from PO.")
+                        END IF
                     END IF
-                END IF
+                CATCH
+                    CALL utils_globals.show_error("Find PO failed: " || STATUS)
+                END TRY
 
             ON ACTION quit
                 EXIT DIALOG
@@ -161,18 +165,22 @@ FUNCTION lookup_posted_po() RETURNS INTEGER
     OPEN WINDOW w_po_lkup WITH FORM "cl121_lkup" ATTRIBUTES(STYLE = "dialog")
 
     -- Load posted POs only
-    DECLARE po_curs CURSOR FOR
-        SELECT id, doc_no, trans_date, supp_name, net_tot, status
-            FROM pu30_ord_hdr
-            WHERE status = 'posted'
-            ORDER BY doc_no DESC
+    TRY
+        DECLARE po_curs CURSOR FOR
+            SELECT id, doc_no, trans_date, supp_name, net_tot, status
+                FROM pu30_ord_hdr
+                WHERE status = 'posted'
+                ORDER BY doc_no DESC
 
-    CALL po_arr.clear()
+        CALL po_arr.clear()
 
-    FOREACH po_curs INTO po_rec.*
-        LET idx = idx + 1
-        LET po_arr[idx].* = po_rec.*
-    END FOREACH
+        FOREACH po_curs INTO po_rec.*
+            LET idx = idx + 1
+            LET po_arr[idx].* = po_rec.*
+        END FOREACH
+    CATCH
+        CALL utils_globals.show_error("PO lookup failed: " || STATUS)
+    END TRY
 
     -- Show array only if records exist
     IF idx > 0 THEN
@@ -225,8 +233,8 @@ FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
     DEFINE i INTEGER
     DEFINE next_grn_doc INTEGER
 
-    -- Get next GRN document number
-    SELECT COALESCE(MAX(id), 0) + 1 INTO next_grn_doc FROM pu31_grn_hdr
+    TRY
+        SELECT COALESCE(MAX(id), 0) + 1 INTO next_grn_doc FROM pu31_grn_hdr
 
     -- Load PO header
     SELECT * INTO po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_po_id
@@ -311,6 +319,10 @@ FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
         po_hdr_rec.doc_no, i, po_hdr_rec.doc_no)
 
     RETURN TRUE
+CATCH
+    CALL utils_globals.show_error("Load PO into GRN failed: " || STATUS)
+    RETURN FALSE
+END TRY
 END FUNCTION
 
 -- =======================
@@ -322,6 +334,7 @@ FUNCTION new_pu_grn()
 
     -- Initialize header
     LET next_doc = utils_globals.get_next_code('pu31_grn_hdr', 'id')
+
     INITIALIZE m_grn_hdr_rec.* TO NULL
 
     CALL m_grn_lines_arr.clear()
@@ -336,22 +349,19 @@ FUNCTION new_pu_grn()
     LET m_grn_hdr_rec.created_by = utils_globals.get_current_user_id()
 
     -- Input header fields
---    DIALOG ATTRIBUTES(UNBUFFERED)
---        INPUT BY NAME m_grn_hdr_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
---
---            ON ACTION accept
---                IF m_grn_hdr_rec.supp_id IS NULL OR m_grn_hdr_rec.supp_id = 0 THEN
---                    ERROR "Supplier is required"
---                    NEXT FIELD supp_id
---                ELSE
---                    ACCEPT INPUT
---                END IF
---
---            ON ACTION cancel
---                LET ok = FALSE
---                EXIT INPUT
---        END INPUT
---    END DIALOG
+    DIALOG ATTRIBUTES(UNBUFFERED)
+        INPUT BY NAME m_grn_hdr_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
+
+            ON ACTION accept
+                IF m_grn_hdr_rec.supp_id IS NULL OR m_grn_hdr_rec.supp_id = 0 THEN
+                    ERROR "Supplier is required"
+                    NEXT FIELD supp_id
+                END IF
+
+            ON ACTION cancel
+                LET ok = FALSE
+        END INPUT
+    END DIALOG
 
     IF INT_FLAG THEN
         LET INT_FLAG = FALSE
@@ -467,10 +477,15 @@ FUNCTION input_pu_grn_lines()
         AFTER FIELD stock_id
             IF m_grn_lines_arr[curr_idx].stock_id IS NOT NULL THEN
                 -- Validate item exists
-                SELECT description, unit_price
-                    INTO item_code, m_grn_lines_arr[curr_idx].unit_cost
-                    FROM st10_item
-                    WHERE stock_id = m_grn_lines_arr[curr_idx].stock_id
+                TRY
+                    SELECT description, unit_price
+                        INTO item_code, m_grn_lines_arr[curr_idx].unit_cost
+                        FROM st10_item
+                        WHERE stock_id = m_grn_lines_arr[curr_idx].stock_id
+                CATCH
+                    ERROR "Item lookup failed"
+                    NEXT FIELD stock_id
+                END TRY
 
                 IF SQLCA.SQLCODE = NOTFOUND THEN
                     ERROR "Item not found"

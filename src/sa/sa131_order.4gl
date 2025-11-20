@@ -98,17 +98,17 @@ FUNCTION new_order()
                 END IF
             END IF
 
-        ON ACTION lookup_customer ATTRIBUTES(TEXT="Customer Lookup", IMAGE="zoom")
-            CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr.cust_id
-            IF l_hdr.cust_id IS NOT NULL THEN
-                CALL load_customer_details(l_hdr.cust_id)
-                    RETURNING l_hdr.cust_id, l_hdr.cust_name, 
-                              l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
-                              l_hdr.cust_address2, l_hdr.cust_address3,
-                              l_hdr.cust_postal_code, l_hdr.cust_vat_no,
-                              l_hdr.cust_payment_terms
-                DISPLAY BY NAME l_hdr.cust_id
-            END IF
+        --ON ACTION lookup_customer ATTRIBUTES(TEXT="Customer Lookup", IMAGE="zoom")
+        --    CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr.cust_id
+        --    IF l_hdr.cust_id IS NOT NULL THEN
+        --        CALL load_customer_details(l_hdr.cust_id)
+        --            RETURNING l_hdr.cust_id, l_hdr.cust_name, 
+        --                      l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
+        --                      l_hdr.cust_address2, l_hdr.cust_address3,
+        --                      l_hdr.cust_postal_code, l_hdr.cust_vat_no,
+        --                      l_hdr.cust_payment_terms
+        --        DISPLAY BY NAME l_hdr.cust_id
+        --    END IF
 
         ON ACTION accept ATTRIBUTES(TEXT="Save Header", IMAGE="save")
             -- Validate header
@@ -174,6 +174,162 @@ FUNCTION new_order()
 
     -- ==========================================================
     -- 6. Load the complete order for viewing
+    -- ==========================================================
+    CALL load_order(l_new_hdr_id)
+
+END FUNCTION
+
+-- ==============================================================
+-- Function : new_ord_from_master (NEW - called from customer master)
+-- ==============================================================
+FUNCTION new_ord_from_master(p_cust_id INTEGER)
+    DEFINE l_hdr RECORD LIKE sa31_ord_hdr.*
+    DEFINE l_next_doc_no INTEGER
+    DEFINE l_new_hdr_id INTEGER
+
+    -- ==========================================================
+    -- 1. Generate next document number
+    -- ==========================================================
+    SELECT COALESCE(MAX(doc_no), 0) + 1 INTO l_next_doc_no FROM sa31_ord_hdr
+
+    -- ==========================================================
+    -- 2. Initialize header with customer details
+    -- ==========================================================
+    INITIALIZE l_hdr.* TO NULL
+    LET l_hdr.id = l_next_doc_no
+    LET l_hdr.trans_date = TODAY
+    LET l_hdr.status = "NEW"
+    LET l_hdr.created_at = CURRENT
+    LET l_hdr.created_by = utils_globals.get_current_user_id()
+    LET l_hdr.gross_tot = 0
+    LET l_hdr.vat_tot = 0
+    LET l_hdr.disc_tot = 0
+    LET l_hdr.net_tot = 0
+
+    -- ==========================================================
+    -- 3. Load customer details from dl01_mast
+    -- ==========================================================
+    CALL load_customer_details(p_cust_id)
+        RETURNING l_hdr.cust_id, l_hdr.cust_name,
+                  l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
+                  l_hdr.cust_address2, l_hdr.cust_address3,
+                  l_hdr.cust_postal_code, l_hdr.cust_vat_no,
+                  l_hdr.cust_payment_terms
+
+    IF l_hdr.cust_id IS NULL THEN
+        CALL utils_globals.show_error("Customer not found")
+        RETURN
+    END IF
+
+    -- ==========================================================
+    -- 4. Input Header Details
+    -- ==========================================================
+    OPEN WINDOW w_order_hdr WITH FORM "sa131_order" ATTRIBUTES(STYLE="dialog")
+
+    CALL utils_globals.set_form_label("lbl_form_title", "New Sales Order - Header")
+
+    INPUT BY NAME l_hdr.cust_id, l_hdr.trans_date, l_hdr.ref_doc_type,
+                  l_hdr.ref_doc_no
+        ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
+
+        BEFORE INPUT
+            DISPLAY BY NAME l_hdr.id, l_hdr.status, l_hdr.trans_date,
+                            l_hdr.cust_id, l_hdr.cust_name, l_hdr.cust_phone,
+                            l_hdr.cust_email
+            MESSAGE SFMT("Enter order header details for Order #%1 - Customer: %2",
+                         l_next_doc_no, l_hdr.cust_name)
+
+        AFTER FIELD acc_code
+            IF l_hdr.cust_id IS NOT NULL THEN
+                CALL load_customer_details(l_hdr.cust_id)
+                    RETURNING l_hdr.cust_id, l_hdr.cust_name,
+                              l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
+                              l_hdr.cust_address2, l_hdr.cust_address3,
+                              l_hdr.cust_postal_code, l_hdr.cust_vat_no,
+                              l_hdr.cust_payment_terms
+
+                IF l_hdr.cust_id IS NULL THEN
+                    CALL utils_globals.show_error("Customer not found")
+                    NEXT FIELD acc_code
+                END IF
+            END IF
+
+        ON ACTION lookup_customer ATTRIBUTES(TEXT="Customer Lookup", IMAGE="zoom")
+            CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr.cust_id
+            IF l_hdr.cust_id IS NOT NULL THEN
+                CALL load_customer_details(l_hdr.cust_id)
+                    RETURNING l_hdr.cust_id, l_hdr.cust_name,
+                              l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
+                              l_hdr.cust_address2, l_hdr.cust_address3,
+                              l_hdr.cust_postal_code, l_hdr.cust_vat_no,
+                              l_hdr.cust_payment_terms
+                DISPLAY BY NAME l_hdr.cust_id
+            END IF
+
+        ON ACTION accept ATTRIBUTES(TEXT="Save Header", IMAGE="save")
+            -- Validate header
+            IF l_hdr.cust_id IS NULL THEN
+                CALL utils_globals.show_error("Customer is required")
+                NEXT FIELD acc_code
+            END IF
+
+            IF l_hdr.trans_date IS NULL THEN
+                LET l_hdr.trans_date = TODAY
+            END IF
+
+            ACCEPT INPUT
+
+        ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="exit")
+            CALL utils_globals.show_info("Order creation cancelled.")
+            CLOSE WINDOW w_order_hdr
+            RETURN
+    END INPUT
+
+    -- Check if cancelled
+    IF INT_FLAG THEN
+        LET INT_FLAG = FALSE
+        CLOSE WINDOW w_order_hdr
+        RETURN
+    END IF
+
+    -- ==========================================================
+    -- 5. Save Header to Database (CRITICAL STEP)
+    -- ==========================================================
+    BEGIN WORK
+    TRY
+        INSERT INTO sa31_ord_hdr VALUES(l_hdr.*)
+
+        -- Get the generated header ID
+        LET l_new_hdr_id = SQLCA.SQLERRD[2]
+        LET l_hdr.id = l_new_hdr_id
+
+        COMMIT WORK
+
+        CALL utils_globals.show_success(
+            SFMT("Order header #%1 saved for %2. ID=%3. Now add order lines.",
+                 l_next_doc_no, l_hdr.cust_name, l_new_hdr_id))
+
+    CATCH
+        ROLLBACK WORK
+        CALL utils_globals.show_error(
+            SFMT("Failed to save order header: %1", SQLCA.SQLCODE))
+        CLOSE WINDOW w_order_hdr
+        RETURN
+    END TRY
+
+    CLOSE WINDOW w_order_hdr
+
+    -- ==========================================================
+    -- 6. Now add lines (header ID exists)
+    -- ==========================================================
+    LET m_rec_ord.* = l_hdr.*
+    CALL m_arr_ord_lines.clear()
+    CALL m_arr_ord_full_lines.clear()
+
+    CALL input_order_lines(l_new_hdr_id)
+
+    -- ==========================================================
+    -- 7. Load the complete order for viewing
     -- ==========================================================
     CALL load_order(l_new_hdr_id)
 

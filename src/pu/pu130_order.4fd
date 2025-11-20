@@ -87,7 +87,7 @@
           <Label gridHeight="1" gridWidth="9" name="pu30_ord_hdr_supp_name_label1" posX="1" posY="2" text="Supplier Name">
             <Initializer text="dbschema:pu30_ord_hdr.supp_name/@label"/>
           </Label>
-          <ButtonEdit colName="supp_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" image="zoom" name="pu30_ord_hdr.supp_id" posX="11" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="ButtonEdit">
+          <ButtonEdit action="lookup_creditors" colName="supp_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" image="zoom" name="pu30_ord_hdr.supp_id" posX="11" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="ButtonEdit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </ButtonEdit>
           <Edit colName="supp_name" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="pu30_ord_hdr.supp_name" posX="18" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="Edit">
@@ -180,9 +180,9 @@
           <Label gridHeight="1" gridWidth="10" name="pu30_ord_hdr_created_by_label1" posX="2" posY="4" text="Created By">
             <Initializer text="dbschema:pu30_ord_hdr.created_by/@label"/>
           </Label>
-          <ButtonEdit colName="created_by" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" image="zoom" name="pu30_ord_hdr.created_by" posX="14" posY="4" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Created By" widget="ButtonEdit">
+          <Edit colName="created_by" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu30_ord_hdr.created_by" posX="14" posY="4" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Created By" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </ButtonEdit>
+          </Edit>
           <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_net_tot_label1" posX="28" posY="4" text="Net Total">
             <Initializer text="dbschema:pu30_ord_hdr.net_tot/@label"/>
           </Label>
@@ -251,6 +251,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM1dMzPJAMMzM9szM/T+lgQYk3S8fAQAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZq5zM4JAMMzM+czNBD+keuFHrhR/AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZrYMzS1AMMzM/gAAQj+keuFHrhR/AQAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM1t5mcdAMMzM+wAAOz+lgQYk3S8fAQ==]]>
   </DiagramLayout>
 </ManagedForm>
