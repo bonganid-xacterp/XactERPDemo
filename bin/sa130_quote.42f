@@ -1,17 +1,20 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="sa130_quote.tmp" build="3.20.14" sqlDbName="demoappdb" text="SALES QUOTE" width="181" height="17">
+<Form name="sa130_quote.tmp" build="3.20.14" sqlDbName="demoappdb" text="SALES QUOTE" width="167" height="19">
   <LStr text="SALES QUOTE"/>
   <VBox name="vbox1">
-    <Grid name="sa130_ord_hdr" width="115" height="11">
+    <Grid name="sa130_ord_hdr" width="115" height="13">
       <Label name="lbl_form_title" width="113" text="" justify="center" style="bold header" posY="0" posX="1" gridWidth="113">
         <LStr text=""/>
       </Label>
-      <Group name="cust_info" text="" posY="1" posX="1" gridWidth="53" gridHeight="9">
-        <LStr text=""/>
+      <Group name="cust_info" text="Customer Info" posY="1" posX="1" gridWidth="53" gridHeight="8">
+        <PhantomFormField name="sa30_quo_hdr.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="24" sqlTabName="sa30_quo_hdr">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <LStr text="Customer Info"/>
         <Label name="sa30_quo_hdr_doc_no_label1" width="9" text="Doc No" posY="1" posX="1" gridWidth="9">
           <LStr text="Doc No"/>
         </Label>
-        <FormField name="sa30_quo_hdr.doc_no" colName="doc_no" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="sa30_quo_hdr" tabIndex="1">
+        <FormField name="sa30_quo_hdr.doc_no" colName="doc_no" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="sa30_quo_hdr" noEntry="1" tabIndex="12">
           <Edit width="14" scroll="1" posY="1" posX="11" gridWidth="14"/>
         </FormField>
         <Label name="sa30_quo_hdr_date_label1" width="8" text="Trans Date" posY="1" posX="27" gridWidth="8">
@@ -23,13 +26,13 @@
         <Label name="sa30_quo_hdr_acc_code_label1" width="9" text="Customer Code" posY="2" posX="1" gridWidth="9">
           <LStr text="Customer Code"/>
         </Label>
-        <FormField name="sa30_quo_hdr.cust_id" colName="cust_id" sqlType="BIGINT" fieldId="2" sqlTabName="sa30_quo_hdr" tabIndex="3">
-          <ButtonEdit width="12" image="zoom" scroll="1" posY="2" posX="11" gridWidth="14"/>
+        <FormField name="sa30_quo_hdr.cust_id" colName="cust_id" sqlType="BIGINT" fieldId="2" sqlTabName="sa30_quo_hdr" tabIndex="1">
+          <ButtonEdit width="12" action="find" image="zoom" scroll="1" posY="2" posX="11" gridWidth="14"/>
         </FormField>
         <Label name="sa30_quo_hdr_status_label1" width="8" text="Status" posY="2" posX="27" gridWidth="8">
           <LStr text="Status"/>
         </Label>
-        <FormField name="sa30_quo_hdr.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="3" sqlTabName="sa30_quo_hdr" tabIndex="4">
+        <FormField name="sa30_quo_hdr.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="3" sqlTabName="sa30_quo_hdr" tabIndex="3">
           <ComboBox width="12" scroll="1" posY="2" posX="36" gridWidth="14">
             <Item name="new" text="New"/>
             <Item name="converted" text="Converted"/>
@@ -38,185 +41,209 @@
             <Item name="approved" text="Approved"/>
           </ComboBox>
         </FormField>
-        <Label name="sa30_quo_hdr_cust_name_lbl" width="9" text="Customer " posY="4" posX="1" gridWidth="9">
+        <Label name="sa30_quo_hdr_cust_name_lbl" width="9" text="Customer " posY="3" posX="1" gridWidth="9">
           <LStr text="Customer "/>
         </Label>
-        <FormField name="formonly.cust_name" colName="cust_name" sqlType="VARCHAR" fieldId="4" sqlTabName="formonly" tabIndex="5">
-          <Edit width="41" scroll="1" posY="4" posX="11" gridWidth="41"/>
+        <FormField name="sa30_quo_hdr.cust_name" colName="cust_name" sqlType="VARCHAR(100)" fieldId="4" sqlTabName="sa30_quo_hdr" tabIndex="4">
+          <Edit width="39" scroll="1" posY="3" posX="11" gridWidth="39"/>
         </FormField>
-        <Label name="sa30_quo_hdr_cust_phone_lbl" width="9" text="Phone" posY="5" posX="1" gridWidth="9">
+        <Label name="sa30_quo_hdr_cust_phone_lbl" width="9" text="Phone" posY="4" posX="1" gridWidth="9">
           <LStr text="Phone"/>
         </Label>
-        <Label name="sa30_quo_hdr_doc_no_label5" width="9" text="Email" posY="5" posX="27" gridWidth="9">
+        <FormField name="sa30_quo_hdr.cust_phone" colName="cust_phone" sqlType="VARCHAR(20)" fieldId="5" sqlTabName="sa30_quo_hdr" tabIndex="5">
+          <Edit width="15" scroll="1" posY="4" posX="11" gridWidth="15"/>
+        </FormField>
+        <Label name="sa30_quo_hdr_doc_no_label5" width="9" text="Email" posY="4" posX="27" gridWidth="9">
           <LStr text="Email"/>
         </Label>
-        <FormField name="formonly.email" colName="email" sqlType="VARCHAR" fieldId="5" sqlTabName="formonly" tabIndex="6">
-          <Edit width="15" scroll="1" posY="5" posX="37" gridWidth="15"/>
+        <FormField name="sa30_quo_hdr.cust_email" colName="cust_email" sqlType="VARCHAR(100)" fieldId="6" sqlTabName="sa30_quo_hdr" tabIndex="6">
+          <Edit width="13" scroll="1" posY="4" posX="37" gridWidth="13"/>
         </FormField>
-        <Label name="sa30_quo_hdr_doc_no_label4" width="9" text=" Address 1" posY="6" posX="1" gridWidth="9">
+        <Label name="sa30_quo_hdr_doc_no_label4" width="9" text=" Address 1" posY="5" posX="1" gridWidth="9">
           <LStr text=" Address 1"/>
         </Label>
-        <FormField name="formonly.address1" colName="address1" sqlType="VARCHAR" fieldId="6" sqlTabName="formonly" tabIndex="7">
-          <Edit width="15" scroll="1" posY="6" posX="11" gridWidth="15"/>
+        <FormField name="sa30_quo_hdr.cust_address1" colName="cust_address1" sqlType="VARCHAR(100)" fieldId="7" sqlTabName="sa30_quo_hdr" tabIndex="7">
+          <Edit width="15" scroll="1" posY="5" posX="11" gridWidth="15"/>
         </FormField>
-        <Label name="sa30_quo_hdr_doc_no_label6" width="9" text="Address 2" posY="6" posX="27" gridWidth="9">
+        <Label name="sa30_quo_hdr_doc_no_label6" width="9" text="Address 2" posY="5" posX="27" gridWidth="9">
           <LStr text="Address 2"/>
         </Label>
-        <FormField name="formonly.address2" colName="address2" sqlType="VARCHAR" fieldId="7" sqlTabName="formonly" tabIndex="8">
-          <Edit width="15" scroll="1" posY="6" posX="37" gridWidth="15"/>
+        <FormField name="sa30_quo_hdr.cust_address2" colName="cust_address2" sqlType="VARCHAR(100)" fieldId="8" sqlTabName="sa30_quo_hdr" tabIndex="8">
+          <Edit width="13" scroll="1" posY="5" posX="37" gridWidth="13"/>
         </FormField>
-        <Label name="sa30_quo_hdr_doc_no_label7" width="9" text="Address 3" posY="7" posX="1" gridWidth="9">
+        <Label name="sa30_quo_hdr_doc_no_label7" width="9" text="Address 3" posY="6" posX="1" gridWidth="9">
           <LStr text="Address 3"/>
         </Label>
-        <FormField name="formonly.address3" colName="address3" sqlType="VARCHAR" fieldId="8" sqlTabName="formonly" tabIndex="9">
-          <Edit width="15" scroll="1" posY="7" posX="11" gridWidth="15"/>
+        <FormField name="sa30_quo_hdr.cust_address3" colName="cust_address3" sqlType="VARCHAR(100)" fieldId="9" sqlTabName="sa30_quo_hdr" tabIndex="9">
+          <Edit width="15" scroll="1" posY="6" posX="11" gridWidth="15"/>
         </FormField>
-        <Label name="sa30_quo_hdr_doc_no_label8" width="9" text="Postal Code" posY="7" posX="27" gridWidth="9">
+        <Label name="sa30_quo_hdr_doc_no_label8" width="9" text="Postal Code" posY="6" posX="27" gridWidth="9">
           <LStr text="Postal Code"/>
         </Label>
-        <FormField name="formonly.postal_code" colName="postal_code" sqlType="VARCHAR" fieldId="9" sqlTabName="formonly" tabIndex="10">
-          <Edit width="15" scroll="1" posY="7" posX="37" gridWidth="15"/>
+        <FormField name="sa30_quo_hdr.cust_postal_code" colName="cust_postal_code" sqlType="VARCHAR(10)" fieldId="10" sqlTabName="sa30_quo_hdr" tabIndex="10">
+          <Edit width="13" scroll="1" posY="6" posX="37" gridWidth="13"/>
         </FormField>
       </Group>
-      <Group name="doc_info" text="Doc Info" posY="2" posX="55" gridWidth="28" gridHeight="8">
+      <Group name="doc_info" text="Doc Info" posY="1" posX="55" gridWidth="28" gridHeight="12">
         <LStr text="Doc Info"/>
         <Label name="sa30_quo_hdr_ref_no" width="9" text="Doc Ref No" posY="2" posX="1" gridWidth="9">
           <LStr text="Doc Ref No"/>
         </Label>
-        <FormField name="sa30_quo_hdr.ref_no" colName="ref_no" sqlType="VARCHAR(30)" fieldId="10" sqlTabName="sa30_quo_hdr" tabIndex="11">
+        <FormField name="sa30_quo_hdr.ref_no" colName="ref_no" sqlType="VARCHAR(30)" fieldId="11" sqlTabName="sa30_quo_hdr" tabIndex="11">
           <Edit width="16" scroll="1" posY="2" posX="11" gridWidth="16"/>
         </FormField>
-        <Label name="sa30_quo_hdr_total_excl_label5" width="9" text="Created At" posY="4" posX="1" gridWidth="9">
-          <LStr text="Created At"/>
+        <Label name="sa30_quo_hdr_ref_no1" width="9" text="Cust Vat No" posY="3" posX="1" gridWidth="9">
+          <LStr text="Cust Vat No"/>
         </Label>
-        <FormField name="sa30_quo_hdr.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="11" sqlTabName="sa30_quo_hdr" tabIndex="12">
+        <FormField name="sa30_quo_hdr1.cust_vat_no" colName="cust_vat_no" sqlType="VARCHAR(20)" fieldId="12" sqlTabName="sa30_quo_hdr" tabIndex="13">
+          <Edit width="16" scroll="1" posY="3" posX="11" gridWidth="16"/>
+        </FormField>
+        <Label name="sa30_quo_hdr_ref_no2" width="9" text="Pay Terms" posY="4" posX="1" gridWidth="9">
+          <LStr text="Pay Terms"/>
+        </Label>
+        <FormField name="sa30_quo_hdr.cust_payment_terms" colName="cust_payment_terms" sqlType="VARCHAR(50)" fieldId="13" sqlTabName="sa30_quo_hdr" tabIndex="14">
           <Edit width="16" scroll="1" posY="4" posX="11" gridWidth="16"/>
         </FormField>
-        <Label name="sa30_quo_hdr_total_excl_label6" width="9" text="Created By" posY="5" posX="1" gridWidth="9">
+        <Label name="sa30_quo_hdr_total_excl_label5" width="9" text="Created At" posY="5" posX="1" gridWidth="9">
+          <LStr text="Created At"/>
+        </Label>
+        <FormField name="sa30_quo_hdr.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="14" sqlTabName="sa30_quo_hdr" tabIndex="15">
+          <Edit width="16" scroll="1" format="dd-mm-YYYY" posY="5" posX="11" gridWidth="16"/>
+        </FormField>
+        <PhantomFormField name="sa30_quo_hdr.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="18" sqlTabName="sa30_quo_hdr">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <PhantomFormField name="sa30_quo_hdr.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="19" sqlTabName="sa30_quo_hdr">
+          <PhantomEdit width="1"/>
+        </PhantomFormField>
+        <Label name="sa30_quo_hdr_total_excl_label6" width="9" text="Created By" posY="6" posX="1" gridWidth="9">
           <LStr text="Created By"/>
         </Label>
-        <FormField name="sa30_quo_hdr.created_by" colName="created_by" sqlType="BIGINT" fieldId="12" sqlTabName="sa30_quo_hdr" tabIndex="13">
-          <Edit width="16" scroll="1" posY="5" posX="11" gridWidth="16"/>
+        <FormField name="sa30_quo_hdr.created_by" colName="created_by" sqlType="BIGINT" fieldId="15" sqlTabName="sa30_quo_hdr" tabIndex="16">
+          <Edit width="16" scroll="1" posY="6" posX="11" gridWidth="16"/>
         </FormField>
-        <PhantomFormField name="sa30_quo_hdr.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="13" sqlTabName="sa30_quo_hdr">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
-        <PhantomFormField name="sa30_quo_hdr.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="14" sqlTabName="sa30_quo_hdr">
-          <PhantomEdit width="1"/>
-        </PhantomFormField>
+        <Label name="sa30_quo_hdr_total_excl_label3" width="9" text="Updated By" posY="7" posX="1" gridWidth="9">
+          <LStr text="Updated By"/>
+        </Label>
+        <FormField name="sa30_quo_hdr.updated_by" colName="updated_by" sqlType="BIGINT" fieldId="16" sqlTabName="sa30_quo_hdr" tabIndex="17">
+          <Edit width="16" scroll="1" posY="7" posX="11" gridWidth="16"/>
+        </FormField>
+        <FormField name="sa30_quo_hdr.notes" colName="notes" sqlType="VARCHAR(200)" fieldId="17" sqlTabName="sa30_quo_hdr" tabIndex="18">
+          <Edit width="26" posY="9" posX="1" gridWidth="26" gridHeight="2"/>
+        </FormField>
       </Group>
-      <Group name="doc_totals" text="Doc Totals" posY="2" posX="84" gridWidth="30" gridHeight="8">
+      <Group name="doc_totals" text="Doc Totals" posY="1" posX="84" gridWidth="30" gridHeight="8">
         <LStr text="Doc Totals"/>
         <Label name="sa30_quo_hdr_total_excl_label1" width="10" text="Gross Total" posY="2" posX="1" gridWidth="10">
           <LStr text="Gross Total"/>
         </Label>
-        <FormField name="sa30_quo_hdr.gross_tot" colName="gross_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="15" sqlTabName="sa30_quo_hdr" tabIndex="14">
-          <Edit width="14" scroll="1" format="R ---,---,--&amp;.&amp;&amp;" posY="2" posX="12" gridWidth="14"/>
+        <FormField name="sa30_quo_hdr.gross_tot" colName="gross_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="20" sqlTabName="sa30_quo_hdr" tabIndex="19">
+          <Edit width="14" scroll="1" format="" posY="2" posX="12" gridWidth="14"/>
         </FormField>
-        <Label name="sa30_quo_hdr_total_excl_label2" width="10" text="Doc Disc" posY="3" posX="1" gridWidth="10">
-          <LStr text="Doc Disc"/>
+        <Label name="sa30_quo_hdr_total_excl_label2" width="10" text="Doc Discount" posY="3" posX="1" gridWidth="10">
+          <LStr text="Doc Discount"/>
         </Label>
-        <FormField name="sa30_quo_hdr.disc_tot" colName="disc_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="16" sqlTabName="sa30_quo_hdr" tabIndex="15">
-          <Edit width="14" scroll="1" format="R ---,---,--&amp;.&amp;&amp;" posY="3" posX="12" gridWidth="14"/>
+        <FormField name="sa30_quo_hdr.disc_tot" colName="disc_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="21" sqlTabName="sa30_quo_hdr" tabIndex="20">
+          <Edit width="14" scroll="1" format="" posY="3" posX="12" gridWidth="14"/>
         </FormField>
-        <Label name="sa30_quo_hdr_vat_label1" width="10" text="VAT" posY="5" posX="1" gridWidth="10">
-          <LStr text="VAT"/>
+        <Label name="sa30_quo_hdr_vat_label1" width="10" text="VAT Amount" posY="5" posX="1" gridWidth="10">
+          <LStr text="VAT Amount"/>
         </Label>
-        <FormField name="sa30_quo_hdr.vat_tot" colName="vat_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="17" sqlTabName="sa30_quo_hdr" tabIndex="16">
-          <Edit width="14" scroll="1" format="R ---,---,--&amp;.&amp;&amp;" posY="5" posX="12" gridWidth="14"/>
+        <FormField name="sa30_quo_hdr.vat_tot" colName="vat_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="22" sqlTabName="sa30_quo_hdr" tabIndex="21">
+          <Edit width="14" scroll="1" format="" posY="5" posX="12" gridWidth="14"/>
         </FormField>
         <Label name="sa30_quo_hdr_total_cost_label1" width="10" text="Net Total" posY="6" posX="1" gridWidth="10">
           <LStr text="Net Total"/>
         </Label>
-        <FormField name="sa30_quo_hdr.net_tot" colName="net_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="18" sqlTabName="sa30_quo_hdr" tabIndex="17">
-          <Edit width="14" scroll="1" format="R ---,---,--&amp;.&amp;&amp;" posY="6" posX="12" gridWidth="14"/>
+        <FormField name="sa30_quo_hdr.net_tot" colName="net_tot" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="23" sqlTabName="sa30_quo_hdr" tabIndex="22">
+          <Edit width="14" scroll="1" format="" posY="6" posX="12" gridWidth="14"/>
         </FormField>
       </Group>
     </Grid>
     <Folder name="folder1">
       <Page name="documents" text="Documents">
         <LStr text="Documents"/>
-        <Grid name="grid1" width="181" height="6">
-          <Table pageSize="5" name="demoappdb1" width="180" posY="0" posX="1" gridWidth="180" gridHeight="6" tabName="record1">
-            <PhantomColumn name="sa30_quo_det.hdr_id" colName="hdr_id" sqlType="BIGINT" required="1" notNull="1" fieldId="19" sqlTabName="sa30_quo_det">
+        <Grid name="grid1" width="167" height="6">
+          <Table pageSize="5" name="demoappdb1" width="166" posY="0" posX="1" gridWidth="166" gridHeight="6" tabName="arr_sa_qt_lines">
+            <PhantomColumn name="sa30_quo_det.hdr_id" colName="hdr_id" sqlType="BIGINT" required="1" notNull="1" fieldId="25" sqlTabName="sa30_quo_det">
               <PhantomEdit width="1"/>
             </PhantomColumn>
-            <PhantomColumn name="sa30_quo_det.line_no" colName="line_no" sqlType="INTEGER" required="1" notNull="1" fieldId="20" sqlTabName="sa30_quo_det">
+            <PhantomColumn name="sa30_quo_det.line_no" colName="line_no" sqlType="INTEGER" required="1" notNull="1" fieldId="26" sqlTabName="sa30_quo_det">
               <PhantomEdit width="1"/>
             </PhantomColumn>
-            <TableColumn name="sa30_quo_det.stock_id" colName="stock_id" sqlType="BIGINT" fieldId="21" sqlTabName="sa30_quo_det" text="Stock ID" tabIndex="18" numAlign="1">
+            <TableColumn name="sa30_quo_det.stock_id" colName="stock_id" sqlType="BIGINT" fieldId="27" sqlTabName="sa30_quo_det" text="Stock ID" tabIndex="23" numAlign="1">
               <Edit width="8" scroll="1"/>
               <LStr text="Stock ID"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.item_name" colName="item_name" sqlType="VARCHAR(200)" fieldId="22" sqlTabName="sa30_quo_det" text="Item Name" tabIndex="19">
-              <Edit width="30" scroll="1"/>
+            <TableColumn name="sa30_quo_det.item_name" colName="item_name" sqlType="VARCHAR(200)" fieldId="28" sqlTabName="sa30_quo_det" text="Item Name" tabIndex="24">
+              <Edit width="21" scroll="1"/>
               <LStr text="Item Name"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.uom" colName="uom" sqlType="VARCHAR(20)" fieldId="23" sqlTabName="sa30_quo_det" text="UOM" tabIndex="20">
+            <TableColumn name="sa30_quo_det.uom" colName="uom" sqlType="VARCHAR(20)" fieldId="29" sqlTabName="sa30_quo_det" text="UOM" tabIndex="25">
               <Edit width="4" scroll="1"/>
               <LStr text="UOM"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.qnty" colName="qnty" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="24" sqlTabName="sa30_quo_det" text="Quantity" tabIndex="21" numAlign="1">
+            <TableColumn name="sa30_quo_det.qnty" colName="qnty" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="30" sqlTabName="sa30_quo_det" text="Quantity" tabIndex="26" numAlign="1">
               <Edit width="5" scroll="1"/>
               <LStr text="Quantity"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.unit_price" colName="unit_price" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="25" sqlTabName="sa30_quo_det" text="Price" tabIndex="22" numAlign="1">
+            <TableColumn name="sa30_quo_det.unit_price" colName="unit_price" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="31" sqlTabName="sa30_quo_det" text="Price" tabIndex="27" numAlign="1">
               <Edit width="6" scroll="1"/>
               <LStr text="Price"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.disc_pct" colName="disc_pct" sqlType="DECIMAL(7,3)" required="1" notNull="1" fieldId="26" sqlTabName="sa30_quo_det" text="Disc. Percentage" tabIndex="23" numAlign="1">
+            <TableColumn name="sa30_quo_det.disc_pct" colName="disc_pct" sqlType="DECIMAL(7,3)" required="1" notNull="1" fieldId="32" sqlTabName="sa30_quo_det" text="Disc. Percentage" tabIndex="28" numAlign="1">
               <Edit width="9" scroll="1"/>
               <LStr text="Disc. Percentage"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.disc_amt" colName="disc_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="27" sqlTabName="sa30_quo_det" text="Disc Amount" noEntry="1" tabIndex="24" numAlign="1">
+            <TableColumn name="sa30_quo_det.disc_amt" colName="disc_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="33" sqlTabName="sa30_quo_det" text="Disc Amount" noEntry="1" tabIndex="29" numAlign="1">
               <Edit width="9" scroll="1"/>
               <LStr text="Disc Amount"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.gross_amt" colName="gross_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="28" sqlTabName="sa30_quo_det" text="Gross Amount" noEntry="1" tabIndex="25" numAlign="1">
+            <TableColumn name="sa30_quo_det.gross_amt" colName="gross_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="34" sqlTabName="sa30_quo_det" text="Gross Amount" noEntry="1" tabIndex="30" numAlign="1">
               <Edit width="11" scroll="1"/>
               <LStr text="Gross Amount"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.vat_rate" colName="vat_rate" sqlType="DECIMAL(7,3)" required="1" notNull="1" fieldId="29" sqlTabName="sa30_quo_det" text="VAT rate" noEntry="1" tabIndex="26" numAlign="1">
+            <TableColumn name="sa30_quo_det.vat_rate" colName="vat_rate" sqlType="DECIMAL(7,3)" required="1" notNull="1" fieldId="35" sqlTabName="sa30_quo_det" text="VAT rate" noEntry="1" tabIndex="31" numAlign="1">
               <Edit width="9" scroll="1"/>
               <LStr text="VAT rate"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.vat_amt" colName="vat_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="30" sqlTabName="sa30_quo_det" text="VAT Amount" tabIndex="27" numAlign="1">
+            <TableColumn name="sa30_quo_det.vat_amt" colName="vat_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="36" sqlTabName="sa30_quo_det" text="VAT Amount" tabIndex="32" numAlign="1">
               <Edit width="8" scroll="1"/>
               <LStr text="VAT Amount"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.net_amt" colName="net_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="31" sqlTabName="sa30_quo_det" text="Net Amount" tabIndex="28" numAlign="1">
+            <TableColumn name="sa30_quo_det.net_amt" colName="net_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="37" sqlTabName="sa30_quo_det" text="Net Amount" tabIndex="33" numAlign="1">
               <Edit width="8" scroll="1"/>
               <LStr text="Net Amount"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.line_total" colName="line_total" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="32" sqlTabName="sa30_quo_det" text="Line Total" tabIndex="29" numAlign="1">
+            <TableColumn name="sa30_quo_det.line_total" colName="line_total" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="38" sqlTabName="sa30_quo_det" text="Line Total" tabIndex="34" numAlign="1">
               <Edit width="10" scroll="1"/>
               <LStr text="Line Total"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.wh_id" colName="wh_id" sqlType="BIGINT" fieldId="33" sqlTabName="sa30_quo_det" text="WH ID" tabIndex="30" numAlign="1">
+            <TableColumn name="sa30_quo_det.wh_id" colName="wh_id" sqlType="BIGINT" fieldId="39" sqlTabName="sa30_quo_det" text="WH ID" tabIndex="35" numAlign="1">
               <Edit width="8" scroll="1"/>
               <LStr text="WH ID"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.wb_id" colName="wb_id" sqlType="BIGINT" fieldId="34" sqlTabName="sa30_quo_det" text="BIN ID" tabIndex="31" numAlign="1">
+            <TableColumn name="sa30_quo_det.wb_id" colName="wb_id" sqlType="BIGINT" fieldId="40" sqlTabName="sa30_quo_det" text="BIN ID" tabIndex="36" numAlign="1">
               <Edit width="9" scroll="1"/>
               <LStr text="BIN ID"/>
             </TableColumn>
-            <TableColumn name="sa30_quo_det.notes" colName="notes" sqlType="VARCHAR(200)" fieldId="35" sqlTabName="sa30_quo_det" text="Notes" tabIndex="32">
-              <Edit width="30" scroll="1"/>
+            <TableColumn name="sa30_quo_det.notes" colName="notes" sqlType="VARCHAR(200)" fieldId="41" sqlTabName="sa30_quo_det" text="Notes" tabIndex="37">
+              <Edit width="21" scroll="1"/>
               <LStr text="Notes"/>
             </TableColumn>
-            <PhantomColumn name="sa30_quo_det.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="36" sqlTabName="sa30_quo_det">
+            <PhantomColumn name="sa30_quo_det.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="42" sqlTabName="sa30_quo_det">
               <PhantomEdit width="1"/>
             </PhantomColumn>
-            <PhantomColumn name="sa30_quo_det.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="37" sqlTabName="sa30_quo_det">
+            <PhantomColumn name="sa30_quo_det.created_at" colName="created_at" sqlType="DATETIME YEAR TO FRACTION(4)" required="1" notNull="1" fieldId="43" sqlTabName="sa30_quo_det">
               <PhantomEdit width="1"/>
             </PhantomColumn>
-            <PhantomColumn name="sa30_quo_det.created_by" colName="created_by" sqlType="BIGINT" fieldId="38" sqlTabName="sa30_quo_det">
+            <PhantomColumn name="sa30_quo_det.created_by" colName="created_by" sqlType="BIGINT" fieldId="44" sqlTabName="sa30_quo_det">
               <PhantomEdit width="1"/>
             </PhantomColumn>
-            <PhantomColumn name="sa30_quo_det.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="39" sqlTabName="sa30_quo_det">
+            <PhantomColumn name="sa30_quo_det.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="45" sqlTabName="sa30_quo_det">
               <PhantomEdit width="1"/>
             </PhantomColumn>
-            <PhantomColumn name="sa30_quo_det.updated_by" colName="updated_by" sqlType="BIGINT" fieldId="40" sqlTabName="sa30_quo_det">
+            <PhantomColumn name="sa30_quo_det.updated_by" colName="updated_by" sqlType="BIGINT" fieldId="46" sqlTabName="sa30_quo_det">
               <PhantomEdit width="1"/>
             </PhantomColumn>
           </Table>
@@ -224,72 +251,84 @@
       </Page>
     </Folder>
   </VBox>
+  <RecordView tabName="sa30_quo_det">
+    <Link colName="hdr_id" fieldIdRef="25"/>
+    <Link colName="line_no" fieldIdRef="26"/>
+    <Link colName="stock_id" fieldIdRef="27"/>
+    <Link colName="item_name" fieldIdRef="28"/>
+    <Link colName="uom" fieldIdRef="29"/>
+    <Link colName="qnty" fieldIdRef="30"/>
+    <Link colName="unit_price" fieldIdRef="31"/>
+    <Link colName="disc_pct" fieldIdRef="32"/>
+    <Link colName="disc_amt" fieldIdRef="33"/>
+    <Link colName="gross_amt" fieldIdRef="34"/>
+    <Link colName="vat_rate" fieldIdRef="35"/>
+    <Link colName="vat_amt" fieldIdRef="36"/>
+    <Link colName="net_amt" fieldIdRef="37"/>
+    <Link colName="line_total" fieldIdRef="38"/>
+    <Link colName="wh_id" fieldIdRef="39"/>
+    <Link colName="wb_id" fieldIdRef="40"/>
+    <Link colName="notes" fieldIdRef="41"/>
+    <Link colName="status" fieldIdRef="42"/>
+    <Link colName="created_at" fieldIdRef="43"/>
+    <Link colName="created_by" fieldIdRef="44"/>
+    <Link colName="updated_at" fieldIdRef="45"/>
+    <Link colName="updated_by" fieldIdRef="46"/>
+  </RecordView>
   <RecordView tabName="sa30_quo_hdr">
     <Link colName="doc_no" fieldIdRef="0"/>
     <Link colName="trans_date" fieldIdRef="1"/>
     <Link colName="cust_id" fieldIdRef="2"/>
     <Link colName="status" fieldIdRef="3"/>
-    <Link colName="ref_no" fieldIdRef="10"/>
-    <Link colName="created_at" fieldIdRef="11"/>
-    <Link colName="created_by" fieldIdRef="12"/>
-    <Link colName="deleted_at" fieldIdRef="13"/>
-    <Link colName="updated_at" fieldIdRef="14"/>
-    <Link colName="gross_tot" fieldIdRef="15"/>
-    <Link colName="disc_tot" fieldIdRef="16"/>
-    <Link colName="vat_tot" fieldIdRef="17"/>
-    <Link colName="net_tot" fieldIdRef="18"/>
-  </RecordView>
-  <RecordView tabName="sa30_quo_det">
-    <Link colName="hdr_id" fieldIdRef="19"/>
-    <Link colName="line_no" fieldIdRef="20"/>
-    <Link colName="stock_id" fieldIdRef="21"/>
-    <Link colName="item_name" fieldIdRef="22"/>
-    <Link colName="uom" fieldIdRef="23"/>
-    <Link colName="qnty" fieldIdRef="24"/>
-    <Link colName="unit_price" fieldIdRef="25"/>
-    <Link colName="disc_pct" fieldIdRef="26"/>
-    <Link colName="disc_amt" fieldIdRef="27"/>
-    <Link colName="gross_amt" fieldIdRef="28"/>
-    <Link colName="vat_rate" fieldIdRef="29"/>
-    <Link colName="vat_amt" fieldIdRef="30"/>
-    <Link colName="net_amt" fieldIdRef="31"/>
-    <Link colName="line_total" fieldIdRef="32"/>
-    <Link colName="wh_id" fieldIdRef="33"/>
-    <Link colName="wb_id" fieldIdRef="34"/>
-    <Link colName="notes" fieldIdRef="35"/>
-    <Link colName="status" fieldIdRef="36"/>
-    <Link colName="created_at" fieldIdRef="37"/>
-    <Link colName="created_by" fieldIdRef="38"/>
-    <Link colName="updated_at" fieldIdRef="39"/>
-    <Link colName="updated_by" fieldIdRef="40"/>
-  </RecordView>
-  <RecordView tabName="formonly">
     <Link colName="cust_name" fieldIdRef="4"/>
-    <Link colName="email" fieldIdRef="5"/>
-    <Link colName="address1" fieldIdRef="6"/>
-    <Link colName="address2" fieldIdRef="7"/>
-    <Link colName="address3" fieldIdRef="8"/>
-    <Link colName="postal_code" fieldIdRef="9"/>
+    <Link colName="cust_phone" fieldIdRef="5"/>
+    <Link colName="cust_email" fieldIdRef="6"/>
+    <Link colName="cust_address1" fieldIdRef="7"/>
+    <Link colName="cust_address2" fieldIdRef="8"/>
+    <Link colName="cust_address3" fieldIdRef="9"/>
+    <Link colName="cust_postal_code" fieldIdRef="10"/>
+    <Link colName="ref_no" fieldIdRef="11"/>
+    <Link colName="cust_payment_terms" fieldIdRef="13"/>
+    <Link colName="created_at" fieldIdRef="14"/>
+    <Link colName="created_by" fieldIdRef="15"/>
+    <Link colName="updated_by" fieldIdRef="16"/>
+    <Link colName="notes" fieldIdRef="17"/>
+    <Link colName="deleted_at" fieldIdRef="18"/>
+    <Link colName="updated_at" fieldIdRef="19"/>
+    <Link colName="gross_tot" fieldIdRef="20"/>
+    <Link colName="disc_tot" fieldIdRef="21"/>
+    <Link colName="vat_tot" fieldIdRef="22"/>
+    <Link colName="net_tot" fieldIdRef="23"/>
+    <Link colName="id" fieldIdRef="24"/>
+  </RecordView>
+  <RecordView tabName="sa30_quo_hdr1">
+    <Link colName="cust_vat_no" fieldIdRef="12"/>
   </RecordView>
   <RecordView tabName="rec_sa_qt_hdr">
-    <Link colName="gross_tot" fieldIdRef="15"/>
-    <Link colName="vat_tot" fieldIdRef="17"/>
-    <Link colName="net_tot" fieldIdRef="18"/>
-    <Link colName="disc_tot" fieldIdRef="16"/>
-    <Link colName="cust_name" fieldIdRef="4"/>
-    <Link colName="address1" fieldIdRef="6"/>
-    <Link colName="email" fieldIdRef="5"/>
-    <Link colName="address2" fieldIdRef="7"/>
-    <Link colName="address3" fieldIdRef="8"/>
-    <Link colName="postal_code" fieldIdRef="9"/>
+    <Link colName="id" fieldIdRef="24"/>
     <Link colName="doc_no" fieldIdRef="0"/>
-    <Link colName="cust_id" fieldIdRef="2"/>
+    <Link colName="ref_no" fieldIdRef="11"/>
     <Link colName="trans_date" fieldIdRef="1"/>
+    <Link colName="cust_id" fieldIdRef="2"/>
+    <Link colName="cust_name" fieldIdRef="4"/>
+    <Link colName="cust_phone" fieldIdRef="5"/>
+    <Link colName="cust_email" fieldIdRef="6"/>
+    <Link colName="cust_address1" fieldIdRef="7"/>
+    <Link colName="cust_address2" fieldIdRef="8"/>
+    <Link colName="cust_address3" fieldIdRef="9"/>
+    <Link colName="cust_postal_code" fieldIdRef="10"/>
+    <Link colName="cust_vat_no" fieldIdRef="12"/>
+    <Link colName="cust_payment_terms" fieldIdRef="13"/>
+    <Link colName="gross_tot" fieldIdRef="20"/>
+    <Link colName="disc_tot" fieldIdRef="21"/>
+    <Link colName="vat_tot" fieldIdRef="22"/>
+    <Link colName="net_tot" fieldIdRef="23"/>
     <Link colName="status" fieldIdRef="3"/>
-    <Link colName="ref_no" fieldIdRef="10"/>
-    <Link colName="created_at" fieldIdRef="11"/>
-    <Link colName="created_by" fieldIdRef="12"/>
-    <Link colName="deleted_at" fieldIdRef="13"/>
-    <Link colName="updated_at" fieldIdRef="14"/>
+    <Link colName="created_at" fieldIdRef="14"/>
+    <Link colName="deleted_at" fieldIdRef="18"/>
+    <Link colName="updated_at" fieldIdRef="19"/>
+    <Link colName="created_by" fieldIdRef="15"/>
+    <Link colName="notes" fieldIdRef="17"/>
+    <Link colName="updated_by" fieldIdRef="16"/>
   </RecordView>
 </Form>

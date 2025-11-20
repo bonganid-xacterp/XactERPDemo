@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="sy103_perm.tmp" build="3.20.14" sqlDbName="demoappdb" text="PERMISSIONS MASTER" width="96" height="14">
+<Form name="sy103_perm.tmp" build="3.20.14" sqlDbName="demoappdb" text="PERMISSIONS MASTER" width="75" height="7">
   <LStr text="PERMISSIONS MASTER"/>
   <VBox name="vbox1">
-    <Grid name="grid1" width="96" height="14">
-      <Label name="lbl_form_title" width="75" text="PERMISSIONS MASTER" justify="center" style="header" posY="0" posX="1" gridWidth="75">
+    <Grid name="grid1" width="75" height="7">
+      <Label name="lbl_form_title" width="73" text="PERMISSIONS MASTER" justify="center" style="header" posY="0" posX="1" gridWidth="73">
         <LStr text="PERMISSIONS MASTER"/>
       </Label>
-      <Table pageSize="5" name="frm_perm" width="95" posY="1" posX="1" gridWidth="95" gridHeight="6" tabName="arr_perm">
+      <Table pageSize="5" name="frm_perm" width="73" posY="1" posX="1" gridWidth="73" gridHeight="6" tabName="arr_perm">
         <PhantomColumn name="sy05_perm.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="0" sqlTabName="sy05_perm">
           <PhantomEdit width="1"/>
         </PhantomColumn>
@@ -35,10 +35,9 @@
         <PhantomColumn name="sy05_perm.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="7" sqlTabName="sy05_perm">
           <PhantomEdit width="1"/>
         </PhantomColumn>
-        <TableColumn name="sy05_perm.created_by" colName="created_by" sqlType="BIGINT" fieldId="8" sqlTabName="sy05_perm" text="created_by" tabIndex="5" numAlign="1">
-          <Edit width="20" scroll="1"/>
-          <LStr text="created_by"/>
-        </TableColumn>
+        <PhantomColumn name="sy05_perm.created_by" colName="created_by" sqlType="BIGINT" fieldId="8" sqlTabName="sy05_perm">
+          <PhantomEdit width="1"/>
+        </PhantomColumn>
       </Table>
     </Grid>
   </VBox>

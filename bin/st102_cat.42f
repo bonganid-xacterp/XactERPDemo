@@ -10,7 +10,7 @@
         <LStr text="Category Code"/>
       </Label>
       <FormField name="st02_cat.cat_code" colName="cat_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="st02_cat" tabIndex="1">
-        <ButtonEdit width="18" action="find" image="zoom" scroll="1" posY="2" posX="10" gridWidth="20"/>
+        <Edit width="20" scroll="1" posY="2" posX="10" gridWidth="20"/>
       </FormField>
       <Label name="st02_mast_cat_name" width="8" text="Category Name" posY="2" posX="36" gridWidth="8">
         <LStr text="Category Name"/>

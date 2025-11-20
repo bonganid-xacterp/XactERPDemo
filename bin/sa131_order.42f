@@ -226,25 +226,6 @@
       </Table>
     </Grid>
   </VBox>
-  <RecordView tabName="cl01_mast">
-    <Link colName="id" fieldIdRef="10"/>
-  </RecordView>
-  <RecordView tabName="sa31_ord_hdr">
-    <Link colName="trans_date" fieldIdRef="0"/>
-    <Link colName="cust_id" fieldIdRef="1"/>
-    <Link colName="status" fieldIdRef="2"/>
-    <Link colName="ref_doc_type" fieldIdRef="11"/>
-    <Link colName="ref_doc_no" fieldIdRef="12"/>
-    <Link colName="created_at" fieldIdRef="13"/>
-    <Link colName="created_by" fieldIdRef="14"/>
-    <Link colName="deleted_at" fieldIdRef="16"/>
-    <Link colName="updated_at" fieldIdRef="17"/>
-    <Link colName="id" fieldIdRef="18"/>
-    <Link colName="gross_tot" fieldIdRef="19"/>
-    <Link colName="disc_tot" fieldIdRef="20"/>
-    <Link colName="vat_tot" fieldIdRef="21"/>
-    <Link colName="net_tot" fieldIdRef="22"/>
-  </RecordView>
   <RecordView tabName="sa31_ord_det">
     <Link colName="hdr_id" fieldIdRef="23"/>
     <Link colName="line_no" fieldIdRef="24"/>
@@ -268,6 +249,25 @@
     <Link colName="created_by" fieldIdRef="42"/>
     <Link colName="updated_at" fieldIdRef="43"/>
     <Link colName="updated_by" fieldIdRef="44"/>
+  </RecordView>
+  <RecordView tabName="cl01_mast">
+    <Link colName="id" fieldIdRef="10"/>
+  </RecordView>
+  <RecordView tabName="sa31_ord_hdr">
+    <Link colName="trans_date" fieldIdRef="0"/>
+    <Link colName="cust_id" fieldIdRef="1"/>
+    <Link colName="status" fieldIdRef="2"/>
+    <Link colName="ref_doc_type" fieldIdRef="11"/>
+    <Link colName="ref_doc_no" fieldIdRef="12"/>
+    <Link colName="created_at" fieldIdRef="13"/>
+    <Link colName="created_by" fieldIdRef="14"/>
+    <Link colName="deleted_at" fieldIdRef="16"/>
+    <Link colName="updated_at" fieldIdRef="17"/>
+    <Link colName="id" fieldIdRef="18"/>
+    <Link colName="gross_tot" fieldIdRef="19"/>
+    <Link colName="disc_tot" fieldIdRef="20"/>
+    <Link colName="vat_tot" fieldIdRef="21"/>
+    <Link colName="net_tot" fieldIdRef="22"/>
   </RecordView>
   <RecordView tabName="formonly">
     <Link colName="cust_name" fieldIdRef="3"/>
