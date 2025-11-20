@@ -74,11 +74,15 @@ FUNCTION fetch_list() RETURNS STRING
             ON ACTION search ATTRIBUTES(TEXT = "Search", IMAGE = "zoom")
                 CALL load_stock_data(stock_arr, f_search)
 
-            ON ACTION clear ATTRIBUTES(TEXT = "Clear", IMAGE = "clear")
+            ON ACTION clear ATTRIBUTES(TEXT = "Clear", IMAGE = "refresh")
                 -- Clear search field and reload all records
                 LET f_search = ""
                 CALL load_stock_data_construct(stock_arr, "1=1")
                 DISPLAY BY NAME f_search
+
+             ON ACTION cancel ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
+                LET ret_code = NULL
+                EXIT DIALOG
 
         END INPUT
 

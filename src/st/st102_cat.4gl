@@ -9,7 +9,7 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
-IMPORT FGL utils_lkup   -- ? Global lookup utility (replaces st122_cat_lkup)
+IMPORT FGL utils_lkup_form   -- ? Global lookup utility (replaces st122_cat_lkup)
 IMPORT FGL st122_cat_lkup
 
 SCHEMA demoappdb

@@ -73,10 +73,14 @@ END RECORD
 -- Menu Controller
 -- ==============================================================
 FUNCTION init_st_module()
+
     LET is_edit_mode = FALSE
     INITIALIZE m_stock_rec.* TO NULL
+
     DISPLAY BY NAME m_stock_rec.*
+
     CALL load_uoms()
+
     MENU "Stock Master Menu"
         COMMAND "Find"
             CALL query_stock_lookup();
@@ -95,7 +99,7 @@ FUNCTION init_st_module()
             CALL move_record(-1)
         COMMAND "Next"
             CALL move_record(1)
-        COMMAND "Add P/Order"
+        COMMAND "add_po" 
             IF m_stock_rec.id IS NULL OR m_stock_rec.id = 0 THEN
                 CALL utils_globals.show_info("Select a stock item first.")
             ELSE
@@ -104,6 +108,7 @@ FUNCTION init_st_module()
         COMMAND "Exit"
             EXIT MENU
     END MENU
+    
 END FUNCTION
 
 -- ==============================================================
@@ -243,9 +248,11 @@ FUNCTION new_stock()
     LET m_stock_rec.total_purch = 0
     LET m_stock_rec.reserved_qnty = 0
     LET random_id = utils_globals.get_random_user()
-    IF m_stock_rec.id IS NULL THEN
-        LET m_stock_rec.id = utils_globals.get_next_code("st01_mast", "id")
+    
+    IF m_stock_rec.stock_code IS NULL THEN
+        LET m_stock_rec.stock_code = utils_globals.get_next_code("st01_mast", "id")
     END IF
+    
     LET m_stock_rec.created_by = random_id
     LET m_stock_rec.created_at = CURRENT
 

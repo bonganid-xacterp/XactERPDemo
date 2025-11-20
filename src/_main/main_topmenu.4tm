@@ -3,9 +3,9 @@
   <!-- File Menu -->
   <TopMenuGroup text="File">
     <TopMenuCommand name="help" text="Help" image="quest"/>
-    <TopMenuCommand name="about" text="About" image="info"/>
+    <TopMenuCommand name="about" text="About" image="fa-info"/>
     <TopMenuSeparator/>
-    <TopMenuCommand name="logout" text="Logout" image="logout"/>
+    <TopMenuCommand name="logout" text="Logout" image="quit"/>
     <TopMenuCommand name="quit" text="Exit" acceleratorName="Alt-F4" image="stop"/>
   </TopMenuGroup>
  
@@ -22,7 +22,7 @@
       <TopMenuCommand name="st_uom" text="Units of Measure" image="fa-tag"/>
       <TopMenuCommand name="st_cat" text="Stock Categories" image="folder"/>
     <TopMenuSeparator/>
-    <TopMenuCommand name="st_mast" text="Stock Movement" image="fa-wpform"/>
+    <TopMenuCommand name="st_mast" text="Stock Movement" image="fa-random"/>
     <TopMenuCommand name="st_mast" text="Stock History" image="fa-history"/>
   </TopMenuGroup>
 
@@ -31,7 +31,7 @@
     <TopMenuCommand name="wh_mast" text="Warehouses" image="fa-industry"/>
      <TopMenuCommand name="wh_mast" text="Warehouse Transfer" image="fa-stack-overflow"/>
      <TopMenuSeparator/>
-    <TopMenuCommand name="wb_mast" text="Warehouse Bins" image="fa-list-o"/>
+    <TopMenuCommand name="wb_mast" text="Warehouse Bins" image="listins"/>
      <TopMenuCommand name="wb_mast" text="Bin Transfer" image="fa-stack-overflow"/>
      <TopMenuSeparator/>
   </TopMenuGroup>
@@ -50,7 +50,6 @@
     <TopMenuSeparator/>
   </TopMenuGroup>
 
-  
     <!-- Customers -->
   <TopMenuGroup text="Customers">
     <TopMenuCommand name="dl_mast" text="Customers" image="fa-user"/>
@@ -94,6 +93,6 @@
     <TopMenuCommand name="win_close" text="Close Current" image="fa-close"/>
     <TopMenuCommand name="win_close_all" text="Close All" image="fa-window-close"/>
     <TopMenuSeparator/>
-    <TopMenuCommand name="win_list" text="Window List" image="fa-list-ui"/>
+    <TopMenuCommand name="win_list" text="Window List" image="fa-list"/>
   </TopMenuGroup>
 </TopMenu>
