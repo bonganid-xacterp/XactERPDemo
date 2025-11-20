@@ -66,7 +66,7 @@
   <PlatformList version="1.0"/>
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
     <Group environment="dir:FGLRESOURCEPATH=$(ProjectDir)/src/res,filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile,dir:FGLDATABASE=$(ProjectDir)/database,file:Logo=$(ProjectDir)/src/res/logo.png" id="39840687" label="src">
-      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,409572948,396525034,782461791,960354642,221924664,31393700" id="221858380" label="_main">
+      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,409572948,396525034,782461791,960354642,221924664,31393700,757682379,276307902,39599040,95666062,206295008,45766396" id="221858380" label="_main">
         <File filePath="src/_main/__main_shell.4fd"/>
         <File filePath="src/_main/actions.4ad"/>
         <File filePath="src/_main/main_app.4gl"/>
@@ -176,6 +176,7 @@
         <File filePath="src/st/st140_hist.4fd"/>
         <File filePath="src/st/st140_hist.4gl"/>
       </Application>
+      <Application binaryName="st101_mast" dependencies="31764552" id="128709180" label="st101_mast"/>
       <Application binaryName="sy" dependencies="497700,104908716,31764552,782461791,221924664" id="31393700" label="sy">
         <File filePath="src/sy/sy100_login.4fd"/>
         <File filePath="src/sy/sy100_login.4gl"/>
