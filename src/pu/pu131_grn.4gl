@@ -302,11 +302,11 @@ FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
         LET m_grn_lines_arr[i].gross_amt = po_line_rec.gross_amt
         LET m_grn_lines_arr[i].vat_rate = po_line_rec.vat_rate
         LET m_grn_lines_arr[i].vat_amt = po_line_rec.vat_amt
-        LET m_grn_lines_arr[i].net_amt = po_line_rec.net_amt
+        LET m_grn_lines_arr[i].net_excl_amt = po_line_rec.net_excl_amt
         LET m_grn_lines_arr[i].line_total = po_line_rec.line_total
         LET m_grn_lines_arr[i].po_line_id = po_line_rec.id
-        LET m_grn_lines_arr[i].wh_id = po_line_rec.wh_code
-        LET m_grn_lines_arr[i].wb_id = po_line_rec.wb_id
+        LET m_grn_lines_arr[i].wh_id = ""
+        LET m_grn_lines_arr[i].wb_id = ""
         LET m_grn_lines_arr[i].status = "active"
         LET m_grn_lines_arr[i].created_at = CURRENT
         LET m_grn_lines_arr[i].created_by = 1

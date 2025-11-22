@@ -20,7 +20,7 @@
   <ActionDefault name="edit" text="Edit" image="fa-edit" acceleratorName="F2" comment="Edit record" contextMenu="yes"/>
   <ActionDefault name="update" text="Update" image="filesave" comment="Update record" contextMenu="no"/>
   <ActionDefault name="delete" validate="no" text="Delete" image="fa-trash" acceleratorName="F4" comment="Delete record" contextMenu="yes"/>
-  <ActionDefault name="save" text="Save" image="save" acceleratorName="Control-S" comment="Save changes" contextMenu="yes"/>
+  <ActionDefault name="save" text="Save" image="filesave" acceleratorName="Control-S" comment="Save changes" contextMenu="yes"/>
   <ActionDefault name="refresh" text="Refresh" image="refresh" acceleratorName="F5" comment="Refresh data" contextMenu="yes"/>
 
   <!-- ============================================== -->

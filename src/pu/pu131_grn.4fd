@@ -48,7 +48,7 @@
     <RecordField colName="gross_amt" fieldIdRef="39" fieldType="TABLE_COLUMN" name="pu31_grn_det.gross_amt" sqlTabName="pu31_grn_det" uid="{76c878f4-5221-451c-a51f-87558b9bc881}"/>
     <RecordField colName="vat_rate" fieldIdRef="40" fieldType="TABLE_COLUMN" name="pu31_grn_det.vat_rate" sqlTabName="pu31_grn_det" uid="{e6bbb1be-5fda-4a58-9ab8-ce673d18fc7d}"/>
     <RecordField colName="vat_amt" fieldIdRef="41" fieldType="TABLE_COLUMN" name="pu31_grn_det.vat_amt" sqlTabName="pu31_grn_det" uid="{1c1348e1-387b-4e37-a494-32357e71bded}"/>
-    <RecordField colName="net_amt" fieldIdRef="42" fieldType="TABLE_COLUMN" name="pu31_grn_det.net_amt" sqlTabName="pu31_grn_det" uid="{3956b0c0-aa82-412c-b1a6-8040c8504f8e}"/>
+    <RecordField colName="net_excl_amt" fieldIdRef="42" fieldType="TABLE_COLUMN" name="pu31_grn_det.net_excl_amt" sqlTabName="pu31_grn_det" uid="{3956b0c0-aa82-412c-b1a6-8040c8504f8e}"/>
     <RecordField colName="line_total" fieldIdRef="43" fieldType="TABLE_COLUMN" name="pu31_grn_det.line_total" sqlTabName="pu31_grn_det" uid="{34146ff9-8e5e-4660-bdd8-9d6278fc0be0}"/>
     <RecordField colName="po_line_id" fieldIdRef="44" fieldType="TABLE_COLUMN" name="pu31_grn_det.po_line_id" sqlTabName="pu31_grn_det" uid="{2d6e1d0a-44c5-416f-b9f3-50b0f72b90fc}"/>
     <RecordField colName="wh_id" fieldIdRef="45" fieldType="TABLE_COLUMN" name="pu31_grn_det.wh_id" sqlTabName="pu31_grn_det" uid="{14cc33f4-269a-44b7-ade4-da0551523c79}"/>
@@ -254,7 +254,7 @@
           <Edit colName="vat_amt" fieldId="41" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu31_grn_det.vat_amt" posX="105" posY="0" scroll="true" sqlTabName="pu31_grn_det" tabIndex="-1" title="VAt Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="net_amt" fieldId="42" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="pu31_grn_det.net_amt" posX="114" posY="0" scroll="true" sqlTabName="pu31_grn_det" tabIndex="-1" title="Net Amount" widget="Edit">
+          <Edit colName="net_excl_amt" fieldId="42" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="pu31_grn_det.net_excl_amt" posX="114" posY="0" scroll="true" sqlTabName="pu31_grn_det" tabIndex="-1" title="Net Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Edit colName="line_total" fieldId="43" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="pu31_grn_det.line_total" posX="122" posY="0" scroll="true" sqlTabName="pu31_grn_det" tabIndex="-1" title="Line Total" widget="Edit">
@@ -282,6 +282,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBjAGUAZgBiADUAOQA1AGQALQBhAGIAMABlAC0ANAAxAGQAZQAtADkAYQAxAGIALQA1ADAAMAA4ADAAMABiAGYAZABjADQANwB9QGjMzPOgABhAKAAApAAAiD+TdLxqfvneAQAAAEwAewAxADUAYwAzAGQAZQBlAGIALQA0AGYAYwAwAC0ANAA2ADUAYgAtAGIAZgBjADUALQA0AGMAZgAzADIAMwA0ADQAZAA3ADUANQB9QHxzM15gABxAHMzNGAAASz+SbpeNT98+AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBjAGUAZgBiADUAOQA1AGQALQBhAGIAMABlAC0ANAAxAGQAZQAtADkAYQAxAGIALQA1ADAAMAA4ADAAMABiAGYAZABjADQANwB9QGjMzPnTM1VAKAAAqgAAsT+TdLxqfvneAQAAAEwAewAxADUAYwAzAGQAZQBlAGIALQA0AGYAYwAwAC0ANAA2ADUAYgAtAGIAZgBjADUALQA0AGMAZgAzADIAMwA0ADQAZAA3ADUANQB9QHxzM2V8zPRAHMzNHzMzkT+SbpeNT98+AQ==]]>
   </DiagramLayout>
 </ManagedForm>

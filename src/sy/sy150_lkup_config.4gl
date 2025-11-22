@@ -147,17 +147,23 @@ FUNCTION select_lkup_configs(where_clause STRING) RETURNS SMALLINT
 
     LET sql_stmt = sql_stmt || " ORDER BY lookup_code"
 
-    PREPARE stmt_select FROM sql_stmt
-    DECLARE c_curs CURSOR FOR stmt_select
+    TRY
+        PREPARE stmt_select FROM sql_stmt
+        DECLARE c_curs CURSOR FOR stmt_select
 
-    FOREACH c_curs INTO lkup_id
-        LET idx = idx + 1
-        LET arr_codes[idx] = lkup_id
-    END FOREACH
+        FOREACH c_curs INTO lkup_id
+            LET idx = idx + 1
+            LET arr_codes[idx] = lkup_id
+        END FOREACH
 
-    CLOSE c_curs
-    FREE c_curs
-    FREE stmt_select
+        CLOSE c_curs
+        FREE c_curs
+        FREE stmt_select
+
+    CATCH
+        CALL utils_globals.show_sql_error("select_lkup_configs: Error loading lookup configs")
+        RETURN FALSE
+    END TRY
 
     IF arr_codes.getLength() == 0 THEN
         CALL utils_globals.msg_no_record()
@@ -173,14 +179,21 @@ END FUNCTION
 -- Load Single Lookup Config
 -- ==============================================================
 FUNCTION load_lkup_config(p_id INTEGER)
-    SELECT * INTO rec_lkup_config.* FROM sy08_lkup_config WHERE id = p_id
+    TRY
+        SELECT * INTO rec_lkup_config.* FROM sy08_lkup_config WHERE id = p_id
 
-    IF SQLCA.SQLCODE = 0 THEN
-        DISPLAY BY NAME rec_lkup_config.*
-    ELSE
+        IF SQLCA.SQLCODE = 0 THEN
+            DISPLAY BY NAME rec_lkup_config.*
+        ELSE
+            INITIALIZE rec_lkup_config.* TO NULL
+            DISPLAY BY NAME rec_lkup_config.*
+        END IF
+
+    CATCH
+        CALL utils_globals.show_sql_error("load_lkup_config: Error loading lookup config")
         INITIALIZE rec_lkup_config.* TO NULL
         DISPLAY BY NAME rec_lkup_config.*
-    END IF
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -457,7 +470,7 @@ FUNCTION save_lkup_config()
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error(SFMT("Save failed: %1", SQLCA.SQLCODE))
+        CALL utils_globals.show_sql_error("save_lkup_config: Error saving lookup config")
     END TRY
 END FUNCTION
 
@@ -493,7 +506,7 @@ FUNCTION delete_lkup_config()
         CALL utils_globals.msg_deleted()
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error(SFMT("Delete failed: %1", SQLCA.SQLCODE))
+        CALL utils_globals.show_sql_error("delete_lkup_config: Error deleting lookup config")
         RETURN
     END TRY
 
@@ -522,12 +535,18 @@ END FUNCTION
 FUNCTION check_lookup_code_unique(p_lookup_code STRING) RETURNS SMALLINT
     DEFINE dup_count INTEGER
 
-    SELECT COUNT(*) INTO dup_count FROM sy08_lkup_config WHERE lookup_code = p_lookup_code
-    IF dup_count > 0 THEN
-        RETURN 1
-    END IF
+    TRY
+        SELECT COUNT(*) INTO dup_count FROM sy08_lkup_config WHERE lookup_code = p_lookup_code
+        IF dup_count > 0 THEN
+            RETURN 1
+        END IF
 
-    RETURN 0
+        RETURN 0
+
+    CATCH
+        CALL utils_globals.show_sql_error("check_lookup_code_unique: Error checking uniqueness")
+        RETURN 0
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -547,9 +566,16 @@ END FUNCTION
 FUNCTION get_lkup_config_by_code(p_lookup_code STRING) RETURNS lkup_config_t
     DEFINE lkup_rec lkup_config_t
 
-    SELECT * INTO lkup_rec.*
-        FROM sy08_lkup_config
-        WHERE lookup_code = p_lookup_code
+    TRY
+        SELECT * INTO lkup_rec.*
+            FROM sy08_lkup_config
+            WHERE lookup_code = p_lookup_code
 
-    RETURN lkup_rec.*
+        RETURN lkup_rec.*
+
+    CATCH
+        CALL utils_globals.show_sql_error("get_lkup_config_by_code: Error getting lookup config")
+        INITIALIZE lkup_rec.* TO NULL
+        RETURN lkup_rec.*
+    END TRY
 END FUNCTION

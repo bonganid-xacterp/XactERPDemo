@@ -61,7 +61,7 @@
       </Grid>
       <Folder gridHeight="8" gridWidth="77" hidden="true" name="fld_st_cat_grp" posX="0" posY="6">
         <Page image="fa-sitemap" name="st_cat_trans" text="Stock">
-          <Table gridHeight="6" gridWidth="75" name="demoappdb1" posX="1" posY="0" totalRows="5">
+          <Table doubleClick="load_stock_item" gridHeight="6" gridWidth="75" name="demoappdb1" posX="1" posY="0" totalRows="5">
             <ButtonEdit colName="stock_code" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="st01_mast.stock_code" posX="0" posY="0" scroll="true" sqlTabName="st01_mast" tabIndex="-1" title="Stock Code" widget="ButtonEdit">
               <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
             </ButtonEdit>
@@ -86,6 +86,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9v/mZlCZmYEbAbszM+PMzTj94k3S8an76AQAAAEwAewA4ADUANABmADYAMgA1ADUALQA5ADgAYgAzAC0ANAA4ADMAOQAtADgAYwA4ADAALQAyADAAOAAxAGIANwBkADMAOAA1ADAAMQB9wGXMzPKzM0/Ab7MzamzM9T9wYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBlAGMANgBmAGIANQAzAGQALQA1ADUAMgA5AC0ANAA1ADEAMgAtAGEAYQBmAGMALQBlADkAMABlADIANwBiADEAMgAwAGIAMgB9v/mZlCzMxVDAbszNAKZmjT94k3S8an76AQAAAEwAewA4ADUANABmADYAMgA1ADUALQA5ADgAYgAzAC0ANAA4ADMAOQAtADgAYwA4ADAALQAyADAAOAAxAGIANwBkADMAOAA1ADAAMQB9wGXMzPgmZozAb7MzclmZzz9wYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

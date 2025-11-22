@@ -11,7 +11,7 @@
     <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st03_uom_master.status" sqlTabName="st03_uom_master" uid="{50048eae-9d5d-4a75-8611-fd52f4319e68}"/>
     <RecordField colName="created_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="st03_uom_master.created_at" sqlTabName="st03_uom_master" uid="{db1d4877-aafc-4ee3-a415-5030b09d8640}"/>
   </Record>
-  <Form gridHeight="17" gridWidth="41" name="frm_title" style="dialog" text="STOCK UOM">
+  <Form gridHeight="17" gridWidth="41" name="frm_title" text="STOCK UOM">
     <HBox gridHeight="16" gridWidth="40" name="hbox1" posX="1" posY="1">
       <Grid gridHeight="16" gridWidth="36" name="rec_stock_uom" posX="2" posY="0">
         <Label gridHeight="1" gridWidth="35" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="STOCK UOM"/>

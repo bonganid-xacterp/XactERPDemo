@@ -161,17 +161,22 @@ FUNCTION select_users(where_clause STRING) RETURNS SMALLINT
 
     LET sql_stmt = sql_stmt || " ORDER BY username"
 
-    PREPARE stmt_select FROM sql_stmt
-    DECLARE c_curs CURSOR FOR stmt_select
+    TRY
+        PREPARE stmt_select FROM sql_stmt
+        DECLARE c_curs CURSOR FOR stmt_select
 
-    FOREACH c_curs INTO username
-        LET idx = idx + 1
-        LET arr_codes[idx] = username
-    END FOREACH
+        FOREACH c_curs INTO username
+            LET idx = idx + 1
+            LET arr_codes[idx] = username
+        END FOREACH
 
-    CLOSE c_curs
-    FREE c_curs
-    FREE stmt_select
+        CLOSE c_curs
+        FREE c_curs
+        FREE stmt_select
+    CATCH
+        CALL utils_globals.show_sql_error("select_users: Error selecting users")
+        RETURN FALSE
+    END TRY
 
     IF arr_codes.getLength() == 0 THEN
         CALL utils_globals.msg_no_record()
@@ -187,24 +192,31 @@ END FUNCTION
 -- Load Single User
 -- ==============================================================
 FUNCTION load_user(p_username STRING)
-    SELECT * INTO rec_user.* FROM sy00_user WHERE username = p_username
+    TRY
+        SELECT * INTO rec_user.* FROM sy00_user WHERE username = p_username
 
-    IF SQLCA.SQLCODE = 0 THEN
-        -- Don't display the password hash
-        LET rec_password_input = NULL
-        DISPLAY BY NAME rec_user.id,
-                        rec_user.username,
-                        rec_user.full_name,
-                        rec_user.phone,
-                        rec_user.email,
-                        rec_user.status,
-                        rec_user.role_id
-        DISPLAY "" TO sy00_user.password
-    ELSE
+        IF SQLCA.SQLCODE = 0 THEN
+            -- Don't display the password hash
+            LET rec_password_input = NULL
+            DISPLAY BY NAME rec_user.id,
+                            rec_user.username,
+                            rec_user.full_name,
+                            rec_user.phone,
+                            rec_user.email,
+                            rec_user.status,
+                            rec_user.role_id
+            DISPLAY "" TO sy00_user.password
+        ELSE
+            INITIALIZE rec_user.* TO NULL
+            LET rec_password_input = NULL
+            DISPLAY BY NAME rec_user.*
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("load_user: Error loading user")
         INITIALIZE rec_user.* TO NULL
         LET rec_password_input = NULL
         DISPLAY BY NAME rec_user.*
-    END IF
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -577,10 +589,15 @@ END FUNCTION
 FUNCTION check_username_unique(p_username STRING) RETURNS SMALLINT
     DEFINE dup_count INTEGER
 
-    SELECT COUNT(*) INTO dup_count FROM sy00_user WHERE username = p_username
-    IF dup_count > 0 THEN
+    TRY
+        SELECT COUNT(*) INTO dup_count FROM sy00_user WHERE username = p_username
+        IF dup_count > 0 THEN
+            RETURN 1
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("check_username_unique: Error checking username")
         RETURN 1
-    END IF
+    END TRY
 
     RETURN 0
 END FUNCTION
@@ -629,17 +646,21 @@ FUNCTION populate_role_combo()
     LET cb = ui.ComboBox.forName("sy00_user.role_id")
     CALL cb.clear()
 
-    DECLARE c_roles CURSOR FOR
-        SELECT id, role_name
-        FROM sy04_role
-        ORDER BY role_name
+    TRY
+        DECLARE c_roles CURSOR FOR
+            SELECT id, role_name
+            FROM sy04_role
+            ORDER BY role_name
 
-    FOREACH c_roles INTO role_id, role_name
-        CALL cb.addItem(role_id, role_name)
-    END FOREACH
+        FOREACH c_roles INTO role_id, role_name
+            CALL cb.addItem(role_id, role_name)
+        END FOREACH
 
-    CLOSE c_roles
-    FREE c_roles
+        CLOSE c_roles
+        FREE c_roles
+    CATCH
+        CALL utils_globals.show_sql_error("populate_role_combo: Error loading roles")
+    END TRY
 END FUNCTION
 
 -- ==============================================================

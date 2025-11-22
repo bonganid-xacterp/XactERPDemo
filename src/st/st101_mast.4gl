@@ -44,33 +44,9 @@ DEFINE m_st_trans_arr DYNAMIC ARRAY OF RECORD
     sell_price LIKE st30_trans.sell_price,
     expiry_date LIKE st30_trans.expiry_date
 END RECORD
---
----- ==============================================================
----- MAIN
----- ==============================================================
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        DISPLAY "Initialization failed."
---        EXIT PROGRAM 1
---    END IF
---
---    IF utils_globals.is_standalone() THEN
---        OPTIONS INPUT WRAP
---        OPEN WINDOW w_st101
---            WITH
---            FORM "st101_mast" -- ATTRIBUTES(STYLE = "normal")
---    END IF
---
---    CALL init_st_module()
---
---    IF utils_globals.is_standalone() THEN
---        CLOSE WINDOW w_st101
---
---    END IF
---END MAIN
 
 -- ==============================================================
--- Menu Controller
+-- Init Program
 -- ==============================================================
 FUNCTION init_st_module()
 
@@ -82,33 +58,33 @@ FUNCTION init_st_module()
     CALL load_uoms()
 
     MENU "Stock Master Menu"
-        COMMAND "Find"
+        ON ACTION Find
             CALL query_stock_lookup();
             LET is_edit_mode = FALSE
-        COMMAND "New"
+        ON ACTION New
             CALL new_stock()
-        COMMAND "Edit"
+        ON ACTION Edit
             IF m_stock_rec.id IS NULL OR m_stock_rec.id = 0 THEN
                 CALL utils_globals.show_info("No record selected.")
             ELSE
                 CALL edit_stock()
             END IF
-        COMMAND "Delete"
+        ON ACTION Delete
             CALL delete_stock()
-        COMMAND "Previous"
+        ON ACTION Previous
             CALL move_record(-1)
-        COMMAND "Next"
+        ON ACTION Next
             CALL move_record(1)
-        COMMAND "add_po" 
+        ON ACTION add_po
             IF m_stock_rec.id IS NULL OR m_stock_rec.id = 0 THEN
                 CALL utils_globals.show_info("Select a stock item first.")
             ELSE
                 CALL capture_new_po(m_stock_rec.id)
             END IF
-        COMMAND "Exit"
+        ON ACTION Exit
             EXIT MENU
     END MENU
-    
+
 END FUNCTION
 
 -- ==============================================================
@@ -171,13 +147,17 @@ END FUNCTION
 -- Load Stock Record
 -- ==============================================================
 FUNCTION load_stock_item(p_id INTEGER)
-    SELECT * INTO m_stock_rec.* FROM st01_mast WHERE id = p_id
+    TRY
+        SELECT * INTO m_stock_rec.* FROM st01_mast WHERE id = p_id
 
-    IF SQLCA.SQLCODE = 0 THEN
-        CALL refresh_display_fields()
-        DISPLAY BY NAME m_stock_rec.*, m_cat_name, m_username
-        CALL load_stock_transactions(m_stock_rec.id)
-    END IF
+        IF SQLCA.SQLCODE = 0 THEN
+            CALL refresh_display_fields()
+            DISPLAY BY NAME m_stock_rec.*, m_cat_name, m_username
+            CALL load_stock_transactions(m_stock_rec.id)
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("load_stock_item: Error loading stock item")
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -204,7 +184,12 @@ END FUNCTION
 -- ==============================================================
 FUNCTION get_linked_category(p_id INTEGER)
     DEFINE l_cat_name STRING
-    SELECT cat_name INTO l_cat_name FROM st02_cat WHERE id = p_id
+    TRY
+        SELECT cat_name INTO l_cat_name FROM st02_cat WHERE id = p_id
+    CATCH
+        CALL utils_globals.show_sql_error("get_linked_category: Error loading category")
+        LET l_cat_name = NULL
+    END TRY
     RETURN l_cat_name
 END FUNCTION
 
@@ -216,18 +201,22 @@ FUNCTION load_stock_transactions(p_stock_id INTEGER)
     CALL m_st_trans_arr.clear()
     LET idx = 1
 
-    DECLARE c_trans CURSOR FOR
-        SELECT *
-            FROM st30_trans
-            WHERE stock_id = p_stock_id
-            ORDER BY trans_date DESC
+    TRY
+        DECLARE c_trans CURSOR FOR
+            SELECT *
+                FROM st30_trans
+                WHERE stock_id = p_stock_id
+                ORDER BY trans_date DESC
 
-    FOREACH c_trans INTO m_st_trans_arr[idx].*
-        LET idx = idx + 1
-    END FOREACH
+        FOREACH c_trans INTO m_st_trans_arr[idx].*
+            LET idx = idx + 1
+        END FOREACH
 
-    CLOSE c_trans
-    FREE c_trans
+        CLOSE c_trans
+        FREE c_trans
+    CATCH
+        CALL utils_globals.show_sql_error("load_stock_transactions: Error loading transactions")
+    END TRY
     --    DISPLAY ARRAY m_st_trans_arr TO tbl_st_trans.*
 END FUNCTION
 
@@ -248,11 +237,12 @@ FUNCTION new_stock()
     LET m_stock_rec.total_purch = 0
     LET m_stock_rec.reserved_qnty = 0
     LET random_id = utils_globals.get_random_user()
-    
+
     IF m_stock_rec.stock_code IS NULL THEN
-        LET m_stock_rec.stock_code = utils_globals.get_next_code("st01_mast", "id")
+        LET m_stock_rec.stock_code =
+            utils_globals.get_next_code("st01_mast", "id")
     END IF
-    
+
     LET m_stock_rec.created_by = random_id
     LET m_stock_rec.created_at = CURRENT
 
@@ -268,11 +258,15 @@ FUNCTION new_stock()
             ON ACTION lookup_category
                 CALL open_category_lkup()
 
-            ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "filesave")
-                IF check_stock_unique(m_stock_rec.id) = 0 THEN
-                    INSERT INTO st01_mast VALUES m_stock_rec.*
-                    CALL utils_globals.msg_saved()
-                END IF
+            ON ACTION save
+                TRY
+                    IF check_stock_unique(m_stock_rec.id) = 0 THEN
+                        CALL save_stock()
+                    END IF
+                CATCH
+                    CALL utils_globals.msg_error_duplicates()
+                END TRY
+
         END INPUT
 
         ON ACTION cancel
@@ -315,16 +309,21 @@ END FUNCTION
 FUNCTION save_stock()
     DEFINE r_exists INTEGER
 
-    SELECT COUNT(*) INTO r_exists FROM st01_mast WHERE id = m_stock_rec.id
-    IF r_exists = 0 THEN
-        INSERT INTO st01_mast VALUES m_stock_rec.*
-        CALL utils_globals.msg_saved()
-    ELSE
-        UPDATE st01_mast
-            SET st01_mast.* = m_stock_rec.*
-            WHERE id = m_stock_rec.id
-        CALL utils_globals.msg_updated()
-    END IF
+    TRY
+        SELECT COUNT(*) INTO r_exists FROM st01_mast WHERE id = m_stock_rec.id
+
+        IF r_exists = 0 THEN
+            INSERT INTO st01_mast VALUES m_stock_rec.*
+            CALL utils_globals.msg_saved()
+        ELSE
+            UPDATE st01_mast
+                SET st01_mast.* = m_stock_rec.*
+                WHERE id = m_stock_rec.id
+            CALL utils_globals.msg_updated()
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("save_stock: Error saving stock item")
+    END TRY
 
     CALL load_stock_item(m_stock_rec.id)
 END FUNCTION
@@ -359,16 +358,21 @@ FUNCTION select_stock_items(p_where STRING) RETURNS SMALLINT
     -- Build SQL dynamically and safely
     LET l_sql = SFMT("SELECT id FROM st01_mast WHERE %1 ORDER BY id", p_where)
 
-    -- Open and fetch all matching records
-    DECLARE stock_curs CURSOR FROM l_sql
+    TRY
+        -- Open and fetch all matching records
+        DECLARE stock_curs CURSOR FROM l_sql
 
-    FOREACH stock_curs INTO l_code
-        LET l_idx = l_idx + 1
-        LET arr_codes[l_idx] = l_code
-    END FOREACH
+        FOREACH stock_curs INTO l_code
+            LET l_idx = l_idx + 1
+            LET arr_codes[l_idx] = l_code
+        END FOREACH
 
-    CLOSE stock_curs
-    FREE stock_curs
+        CLOSE stock_curs
+        FREE stock_curs
+    CATCH
+        CALL utils_globals.show_sql_error("select_stock_items: Error selecting stock items")
+        RETURN FALSE
+    END TRY
 
     -- Handle no records found
     IF arr_codes.getLength() = 0 THEN
@@ -402,11 +406,16 @@ END FUNCTION
 -- ==============================================================
 FUNCTION check_stock_unique(p_id INTEGER) RETURNS SMALLINT
     DEFINE dup_count INTEGER
-    SELECT COUNT(*) INTO dup_count FROM st01_mast WHERE id = p_id
-    IF dup_count > 0 THEN
-        CALL utils_globals.show_error("Duplicate stock code exists.")
+    TRY
+        SELECT COUNT(*) INTO dup_count FROM st01_mast WHERE id = p_id
+        IF dup_count > 0 THEN
+            CALL utils_globals.show_error("Duplicate stock code exists.")
+            RETURN 1
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("check_stock_unique: Error checking stock uniqueness")
         RETURN 1
-    END IF
+    END TRY
     RETURN 0
 END FUNCTION
 
@@ -423,21 +432,25 @@ FUNCTION delete_stock()
         RETURN
     END IF
 
-    SELECT COUNT(*)
-        INTO trans_count
-        FROM st30_trans
-        WHERE stock_id = m_stock_rec.id
-    IF trans_count > 0 THEN
-        CALL utils_globals.show_error("Cannot delete item with transactions.")
-        RETURN
-    END IF
+    TRY
+        SELECT COUNT(*)
+            INTO trans_count
+            FROM st30_trans
+            WHERE stock_id = m_stock_rec.id
+        IF trans_count > 0 THEN
+            CALL utils_globals.show_error("Cannot delete item with transactions.")
+            RETURN
+        END IF
 
-    LET ok = utils_globals.show_confirm("Delete this item?", "Confirm")
-    IF ok THEN
-        DELETE FROM st01_mast WHERE id = m_stock_rec.id
-        CALL utils_globals.msg_deleted()
-        LET ok = select_stock_items("1=1")
-    END IF
+        LET ok = utils_globals.show_confirm("Delete this item?", "Confirm")
+        IF ok THEN
+            DELETE FROM st01_mast WHERE id = m_stock_rec.id
+            CALL utils_globals.msg_deleted()
+            LET ok = select_stock_items("1=1")
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("delete_stock: Error deleting stock item")
+    END TRY
 END FUNCTION
 
 -- ==============================================================

@@ -57,6 +57,13 @@ FUNCTION fetch_list() RETURNS STRING
                     EXIT DIALOG
                 END IF
 
+            ON KEY (RETURN)
+                LET curr_idx = arr_curr()
+                IF curr_idx > 0 THEN
+                    LET ret_code = stock_arr[curr_idx].id
+                    EXIT DIALOG
+                END IF
+
             ON ACTION cancel ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
                 LET ret_code = NULL
                 EXIT DIALOG

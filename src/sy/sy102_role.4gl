@@ -108,18 +108,26 @@ FUNCTION load_all_roles()
     CALL arr_codes.clear()
     LET l_idx = 0
 
-    DECLARE role_curs CURSOR FOR
-        SELECT id FROM sy04_role
-        WHERE deleted_at IS NULL
-        ORDER BY role_name
+    TRY
+        DECLARE role_curs CURSOR FOR
+            SELECT id FROM sy04_role
+            WHERE deleted_at IS NULL
+            ORDER BY role_name
 
-    FOREACH role_curs INTO l_id
-        LET l_idx = l_idx + 1
-        LET arr_codes[l_idx] = l_id
-    END FOREACH
+        FOREACH role_curs INTO l_id
+            LET l_idx = l_idx + 1
+            LET arr_codes[l_idx] = l_id
+        END FOREACH
 
-    CLOSE role_curs
-    FREE role_curs
+        CLOSE role_curs
+        FREE role_curs
+
+    CATCH
+        CALL utils_globals.show_sql_error("load_all_roles: Error loading roles")
+        INITIALIZE rec_role.* TO NULL
+        DISPLAY BY NAME rec_role.*
+        RETURN
+    END TRY
 
     IF arr_codes.getLength() = 0 THEN
         CALL utils_globals.msg_no_record()
@@ -137,15 +145,20 @@ END FUNCTION
 -- Load Role Record
 -- ==============================================================
 FUNCTION load_role(p_id INTEGER)
-    SELECT * INTO rec_role.* FROM sy04_role WHERE id = p_id
+    TRY
+        SELECT * INTO rec_role.* FROM sy04_role WHERE id = p_id
 
-    IF SQLCA.SQLCODE = 0 THEN
-        DISPLAY BY NAME rec_role.*
-        -- Future: Load permissions for this role
-        -- CALL load_role_permissions(p_id)
-    ELSE
-        CALL utils_globals.show_error("Role not found.")
-    END IF
+        IF SQLCA.SQLCODE = 0 THEN
+            DISPLAY BY NAME rec_role.*
+            -- Future: Load permissions for this role
+            -- CALL load_role_permissions(p_id)
+        ELSE
+            CALL utils_globals.show_error("Role not found.")
+        END IF
+
+    CATCH
+        CALL utils_globals.show_sql_error("load_role: Error loading role record")
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -176,16 +189,22 @@ FUNCTION query_roles()
     CALL arr_codes.clear()
     LET l_idx = 0
 
-    DECLARE search_curs CURSOR FROM
-        "SELECT id FROM sy04_role WHERE " || l_where || " ORDER BY role_name"
+    TRY
+        DECLARE search_curs CURSOR FROM
+            "SELECT id FROM sy04_role WHERE " || l_where || " ORDER BY role_name"
 
-    FOREACH search_curs INTO l_id
-        LET l_idx = l_idx + 1
-        LET arr_codes[l_idx] = l_id
-    END FOREACH
+        FOREACH search_curs INTO l_id
+            LET l_idx = l_idx + 1
+            LET arr_codes[l_idx] = l_id
+        END FOREACH
 
-    CLOSE search_curs
-    FREE search_curs
+        CLOSE search_curs
+        FREE search_curs
+
+    CATCH
+        CALL utils_globals.show_sql_error("query_roles: Error searching roles")
+        RETURN
+    END TRY
 
     IF arr_codes.getLength() = 0 THEN
         CALL utils_globals.msg_no_record()
@@ -346,7 +365,7 @@ FUNCTION save_role() RETURNS SMALLINT
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error("Save failed:\n" || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("save_role: Error saving role")
         RETURN FALSE
     END TRY
 END FUNCTION
@@ -363,15 +382,21 @@ FUNCTION delete_role()
         RETURN
     END IF
 
-    -- Check if role is assigned to any users
-    SELECT COUNT(*) INTO l_user_count FROM sy00_user
-        WHERE role_id = rec_role.id
-        AND deleted_at IS NULL
+    TRY
+        -- Check if role is assigned to any users
+        SELECT COUNT(*) INTO l_user_count FROM sy00_user
+            WHERE role_id = rec_role.id
+            AND deleted_at IS NULL
 
-    IF l_user_count > 0 THEN
-        CALL utils_globals.show_error(SFMT("Cannot delete role. It is assigned to %1 user(s).", l_user_count))
+        IF l_user_count > 0 THEN
+            CALL utils_globals.show_error(SFMT("Cannot delete role. It is assigned to %1 user(s).", l_user_count))
+            RETURN
+        END IF
+
+    CATCH
+        CALL utils_globals.show_sql_error("delete_role: Error checking role usage")
         RETURN
-    END IF
+    END TRY
 
     LET l_confirm = utils_globals.show_confirm(
         SFMT("Delete role '%1'?", rec_role.role_name),
@@ -399,7 +424,7 @@ FUNCTION delete_role()
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error("Delete failed:\n" || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("delete_role: Error deleting role")
     END TRY
 END FUNCTION
 
@@ -424,18 +449,24 @@ END FUNCTION
 FUNCTION check_duplicate_role_name(p_role_name STRING, p_exclude_id INTEGER) RETURNS SMALLINT
     DEFINE l_count INTEGER
 
-    IF p_exclude_id IS NULL THEN
-        SELECT COUNT(*) INTO l_count FROM sy04_role
-            WHERE role_name = p_role_name
-            AND deleted_at IS NULL
-    ELSE
-        SELECT COUNT(*) INTO l_count FROM sy04_role
-            WHERE role_name = p_role_name
-            AND id != p_exclude_id
-            AND deleted_at IS NULL
-    END IF
+    TRY
+        IF p_exclude_id IS NULL THEN
+            SELECT COUNT(*) INTO l_count FROM sy04_role
+                WHERE role_name = p_role_name
+                AND deleted_at IS NULL
+        ELSE
+            SELECT COUNT(*) INTO l_count FROM sy04_role
+                WHERE role_name = p_role_name
+                AND id != p_exclude_id
+                AND deleted_at IS NULL
+        END IF
 
-    RETURN (l_count > 0)
+        RETURN (l_count > 0)
+
+    CATCH
+        CALL utils_globals.show_sql_error("check_duplicate_role_name: Error checking duplicate")
+        RETURN FALSE
+    END TRY
 END FUNCTION
 
 -- ==============================================================

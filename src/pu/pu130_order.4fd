@@ -44,10 +44,8 @@
     <RecordField colName="gross_amt" fieldIdRef="29" fieldType="TABLE_COLUMN" name="pu30_ord_det.gross_amt" sqlTabName="pu30_ord_det" uid="{a7b3b747-807b-4a93-848c-8350440b5101}"/>
     <RecordField colName="vat_rate" fieldIdRef="30" fieldType="TABLE_COLUMN" name="pu30_ord_det.vat_rate" sqlTabName="pu30_ord_det" uid="{93e76ee1-e32a-4175-891f-e7e24fbad1d2}"/>
     <RecordField colName="vat_amt" fieldIdRef="31" fieldType="TABLE_COLUMN" name="pu30_ord_det.vat_amt" sqlTabName="pu30_ord_det" uid="{c5f6a327-dcba-4427-9022-22e03c701e20}"/>
-    <RecordField colName="net_amt" fieldIdRef="32" fieldType="TABLE_COLUMN" name="pu30_ord_det.net_amt" sqlTabName="pu30_ord_det" uid="{6e44a147-f087-4587-8a6e-66f6a774e0b9}"/>
+    <RecordField colName="net_excl_amt" fieldIdRef="32" fieldType="TABLE_COLUMN" name="pu30_ord_det.net_excl_amt" sqlTabName="pu30_ord_det" uid="{6e44a147-f087-4587-8a6e-66f6a774e0b9}"/>
     <RecordField colName="line_total" fieldIdRef="33" fieldType="TABLE_COLUMN" name="pu30_ord_det.line_total" sqlTabName="pu30_ord_det" uid="{4ac81387-acf7-4ca0-8842-1a0f22b16603}"/>
-    <RecordField colName="wh_code" fieldIdRef="34" fieldType="TABLE_COLUMN" name="pu30_ord_det.wh_code" sqlTabName="pu30_ord_det" uid="{a27b1526-e5ca-43df-a01d-532fb418d077}"/>
-    <RecordField colName="wb_id" fieldIdRef="35" fieldType="TABLE_COLUMN" name="pu30_ord_det.wb_id" sqlTabName="pu30_ord_det" uid="{e230ae3a-39b0-462e-811c-30138f0b0b0c}"/>
     <RecordField colName="notes" fieldIdRef="36" fieldType="TABLE_COLUMN" name="pu30_ord_det.notes" sqlTabName="pu30_ord_det" uid="{b67d03e4-4193-439b-996c-42a5fc6fc26f}"/>
     <RecordField colName="status" fieldIdRef="37" fieldType="TABLE_COLUMN" name="pu30_ord_det.status" sqlTabName="pu30_ord_det" uid="{daea5a31-a613-47ee-b4ba-d4f8aca68092}"/>
     <RecordField colName="created_at" fieldIdRef="38" fieldType="TABLE_COLUMN" name="pu30_ord_det.created_at" sqlTabName="pu30_ord_det" uid="{9add28f9-be62-46f6-943b-3f261a753e24}"/>
@@ -214,31 +212,23 @@
           <Edit colName="disc_pct" fieldId="27" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.disc_pct" posX="51" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Disc Perc" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="disc_amt" fieldId="28" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_ord_det.disc_amt" noEntry="true" posX="60" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Disc Amount" widget="Edit">
+          <Edit colName="gross_amt" fieldId="29" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.gross_amt" noEntry="true" posX="60" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Gross Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="gross_amt" fieldId="29" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.gross_amt" noEntry="true" posX="70" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Gross Amount" widget="Edit">
+          <Edit colName="disc_amt" fieldId="28" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu30_ord_det.disc_amt" noEntry="true" posX="69" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Disc Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="vat_rate" fieldId="30" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.vat_rate" noEntry="true" posX="79" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="VAT Rate" widget="Edit">
+          <Edit colName="net_excl_amt" fieldId="32" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.net_excl_amt" noEntry="true" posX="79" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Net Excl VAT" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
+          <Phantom colName="vat_rate" fieldId="30" fieldType="TABLE_COLUMN" name="pu30_ord_det.vat_rate" sqlTabName="pu30_ord_det" widget="Phantom"/>
           <Edit colName="vat_amt" fieldId="31" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.vat_amt" noEntry="true" posX="88" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="VAT Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="net_amt" fieldId="32" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.net_amt" noEntry="true" posX="97" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Net Amount" widget="Edit">
+          <Edit colName="line_total" fieldId="33" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.line_total" noEntry="true" posX="97" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Line Total" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="line_total" fieldId="33" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.line_total" noEntry="true" posX="106" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Line Total" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
-          <Edit colName="wh_code" fieldId="34" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="pu30_ord_det.wh_code" noEntry="true" posX="115" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="WH ID" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
-          <Edit colName="wb_id" fieldId="35" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="pu30_ord_det.wb_id" noEntry="true" posX="122" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="BIN ID" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
-          <Edit colName="notes" fieldId="36" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="19" name="pu30_ord_det.notes" posX="129" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Notes" widget="Edit">
+          <Edit colName="notes" fieldId="36" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="19" name="pu30_ord_det.notes" posX="106" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Notes" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Phantom colName="status" fieldId="37" fieldType="TABLE_COLUMN" name="pu30_ord_det.status" sqlTabName="pu30_ord_det" widget="Phantom"/>
@@ -251,6 +241,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZrYMzS1AMMzM/gAAQj+keuFHrhR/AQAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM1t5mcdAMMzM+wAAOz+lgQYk3S8fAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM1+mZp5AMMzM/zMzej+lgQYk3S8fAQAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZr2mZtpAMMzNAjMzgT+keuFHrhR/AQ==]]>
   </DiagramLayout>
 </ManagedForm>

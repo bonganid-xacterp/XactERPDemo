@@ -67,18 +67,23 @@ FUNCTION load_all_permissions()
     CALL arr_perm.clear()
     LET l_idx = 0
 
-    DECLARE perm_curs CURSOR FOR
-        SELECT * FROM sy05_perm
-        WHERE deleted_at IS NULL
-        ORDER BY perm_code, perm_name
+    TRY
+        DECLARE perm_curs CURSOR FOR
+            SELECT * FROM sy05_perm
+            WHERE deleted_at IS NULL
+            ORDER BY perm_code, perm_name
 
-    FOREACH perm_curs INTO l_perm.*
-        LET l_idx = l_idx + 1
-        LET arr_perm[l_idx].* = l_perm.*
-    END FOREACH
+        FOREACH perm_curs INTO l_perm.*
+            LET l_idx = l_idx + 1
+            LET arr_perm[l_idx].* = l_perm.*
+        END FOREACH
 
-    CLOSE perm_curs
-    FREE perm_curs
+        CLOSE perm_curs
+        FREE perm_curs
+
+    CATCH
+        CALL utils_globals.show_sql_error("load_all_permissions: Error loading permissions")
+    END TRY
 
     IF arr_perm.getLength() = 0 THEN
         CALL utils_globals.show_info("No permissions found. Use 'Add' to create new permissions.")
@@ -212,13 +217,19 @@ FUNCTION edit_permission(p_id INTEGER)
         RETURN
     END IF
 
-    -- Load permission
-    SELECT * INTO l_perm.* FROM sy05_perm WHERE id = p_id
+    TRY
+        -- Load permission
+        SELECT * INTO l_perm.* FROM sy05_perm WHERE id = p_id
 
-    IF SQLCA.SQLCODE != 0 THEN
-        CALL utils_globals.show_error("Permission not found.")
+        IF SQLCA.SQLCODE != 0 THEN
+            CALL utils_globals.show_error("Permission not found.")
+            RETURN
+        END IF
+
+    CATCH
+        CALL utils_globals.show_sql_error("edit_permission: Error loading permission")
         RETURN
-    END IF
+    END TRY
 
     OPEN WINDOW w_perm_edit WITH FORM "sy103_perm_edit"
         ATTRIBUTES(STYLE="dialog", TEXT="Edit Permission")
@@ -301,7 +312,7 @@ FUNCTION save_permission(p_perm perm_t) RETURNS SMALLINT
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error("Save failed:\n" || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("save_permission: Error saving permission")
         RETURN FALSE
     END TRY
 END FUNCTION
@@ -319,22 +330,28 @@ FUNCTION delete_permission(p_id INTEGER)
         RETURN
     END IF
 
-    -- Load permission
-    SELECT * INTO l_perm.* FROM sy05_perm WHERE id = p_id
+    TRY
+        -- Load permission
+        SELECT * INTO l_perm.* FROM sy05_perm WHERE id = p_id
 
-    IF SQLCA.SQLCODE != 0 THEN
-        CALL utils_globals.show_error("Permission not found.")
+        IF SQLCA.SQLCODE != 0 THEN
+            CALL utils_globals.show_error("Permission not found.")
+            RETURN
+        END IF
+
+        -- Check if permission is assigned to any roles
+        SELECT COUNT(*) INTO l_role_count FROM sy06_role_perm
+            WHERE perm_id = p_id
+
+        IF l_role_count > 0 THEN
+            CALL utils_globals.show_error(SFMT("Cannot delete permission. It is assigned to %1 role(s).", l_role_count))
+            RETURN
+        END IF
+
+    CATCH
+        CALL utils_globals.show_sql_error("delete_permission: Error checking permission usage")
         RETURN
-    END IF
-
-    -- Check if permission is assigned to any roles
-    SELECT COUNT(*) INTO l_role_count FROM sy06_role_perm
-        WHERE perm_id = p_id
-
-    IF l_role_count > 0 THEN
-        CALL utils_globals.show_error(SFMT("Cannot delete permission. It is assigned to %1 role(s).", l_role_count))
-        RETURN
-    END IF
+    END TRY
 
     LET l_confirm = utils_globals.show_confirm(
         SFMT("Delete permission '%1'?", l_perm.perm_name),
@@ -356,7 +373,7 @@ FUNCTION delete_permission(p_id INTEGER)
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error("Delete failed:\n" || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("delete_permission: Error deleting permission")
     END TRY
 END FUNCTION
 
@@ -385,16 +402,22 @@ END FUNCTION
 FUNCTION check_duplicate_perm_code(p_perm_code STRING, p_exclude_id INTEGER) RETURNS SMALLINT
     DEFINE l_count INTEGER
 
-    IF p_exclude_id IS NULL THEN
-        SELECT COUNT(*) INTO l_count FROM sy05_perm
-            WHERE perm_code = p_perm_code
-            AND deleted_at IS NULL
-    ELSE
-        SELECT COUNT(*) INTO l_count FROM sy05_perm
-            WHERE perm_code = p_perm_code
-            AND id != p_exclude_id
-            AND deleted_at IS NULL
-    END IF
+    TRY
+        IF p_exclude_id IS NULL THEN
+            SELECT COUNT(*) INTO l_count FROM sy05_perm
+                WHERE perm_code = p_perm_code
+                AND deleted_at IS NULL
+        ELSE
+            SELECT COUNT(*) INTO l_count FROM sy05_perm
+                WHERE perm_code = p_perm_code
+                AND id != p_exclude_id
+                AND deleted_at IS NULL
+        END IF
 
-    RETURN (l_count > 0)
+        RETURN (l_count > 0)
+
+    CATCH
+        CALL utils_globals.show_sql_error("check_duplicate_perm_code: Error checking duplicate")
+        RETURN FALSE
+    END TRY
 END FUNCTION

@@ -414,6 +414,9 @@ FUNCTION new_po_from_master(p_supp_id INTEGER)
     CLOSE WINDOW w_pu130
 END FUNCTION
 
+--====================================================
+-- Load Creditor record 
+--====================================================
 FUNCTION lookup_creditors()
     DEFINE l_supp_id INTEGER
 
@@ -458,7 +461,7 @@ FUNCTION new_po_from_stock(p_stock_id INTEGER)
     TRY
         SELECT * INTO m_crd_rec.* FROM cl01_mast WHERE id = l_supp_id
     CATCH
-        CALL utils_globals.show_error("Supplier load failed: " || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("new_po_from_stock: Supplier load failed")
         RETURN
     END TRY
 
@@ -838,7 +841,12 @@ FUNCTION populate_doc_header(p_supp_id INTEGER)
     LET l_supp_id = p_supp_id
 
     -- load creditor data
-    SELECT * INTO m_crd_rec.* FROM cl01_mast WHERE id = l_supp_id
+    TRY
+        SELECT * INTO m_crd_rec.* FROM cl01_mast WHERE id = l_supp_id
+    CATCH
+        CALL utils_globals.show_sql_error("populate_doc_header: Error loading supplier")
+        RETURN
+    END TRY
 
     OPTIONS INPUT WRAP -- Prevent program from exiting when tabbing out of the last input field
     OPEN WINDOW w_pu130 WITH FORM "pu130_order" -- ATTRIBUTES(STYLE = "normal")
@@ -901,7 +909,7 @@ FUNCTION save_po_header() RETURNS SMALLINT
         RETURN ok
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error("Save failed:\n" || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("save_po_header: Save failed")
         RETURN FALSE
     END TRY
 
@@ -947,7 +955,7 @@ FUNCTION delete_po()
             m_po_hdr_rec.status
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error("Delete failed:\n" || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("delete_po: Delete failed")
     END TRY
 END FUNCTION
 
@@ -962,15 +970,15 @@ FUNCTION load_po(p_id INTEGER)
     -- Load header
     TRY
         SELECT * INTO m_po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_id
+
+        IF SQLCA.SQLCODE != 0 THEN
+            CALL utils_globals.show_error("PO header not found.")
+            RETURN
+        END IF
     CATCH
-        CALL utils_globals.show_error("PO header query failed: " || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("load_po: PO header query failed")
         RETURN
     END TRY
-
-    IF SQLCA.SQLCODE != 0 THEN
-        CALL utils_globals.show_error("PO header not found.")
-        RETURN
-    END IF
 
     -- Load lines
     TRY
@@ -979,8 +987,11 @@ FUNCTION load_po(p_id INTEGER)
 
         FOREACH supp_curs INTO m_po_lines_arr[m_po_lines_arr.getLength() + 1].*
         END FOREACH
+
+        CLOSE supp_curs
+        FREE supp_curs
     CATCH
-        CALL utils_globals.show_error("PO lines query failed: " || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("load_po: PO lines query failed")
         RETURN
     END TRY
 
@@ -1007,7 +1018,7 @@ FUNCTION find_po()
     TRY
         SELECT * INTO m_po_hdr_rec.* FROM pu30_ord_hdr WHERE doc_no = doc_num
     CATCH
-        CALL utils_globals.show_error("Find by doc_no failed: " || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("find_po: Find by doc_no failed")
         RETURN
     END TRY
 
@@ -1053,7 +1064,7 @@ FUNCTION populate_line_from_lookup(p_idx INTEGER)
         gross_amt DECIMAL(12, 2),
         vat_rate DECIMAL(5, 2),
         vat_amt DECIMAL(12, 2),
-        net_amt DECIMAL(12, 2),
+        net_excl_amt DECIMAL(12, 2),
         line_total DECIMAL(12, 2)
     END RECORD
 
@@ -1073,7 +1084,7 @@ FUNCTION populate_line_from_lookup(p_idx INTEGER)
         LET m_po_lines_arr[p_idx].gross_amt = l_line_data.gross_amt
         LET m_po_lines_arr[p_idx].vat_rate = l_line_data.vat_rate
         LET m_po_lines_arr[p_idx].vat_amt = l_line_data.vat_amt
-        LET m_po_lines_arr[p_idx].net_amt = l_line_data.net_amt
+        LET m_po_lines_arr[p_idx].net_excl_amt = l_line_data.net_excl_amt
         LET m_po_lines_arr[p_idx].line_total = l_line_data.line_total
 
         -- Display updated line
@@ -1179,7 +1190,7 @@ FUNCTION calculate_line_totals(p_idx INTEGER)
 
     -- Calculate net before VAT
     LET l_net = l_gross - l_disc
-    LET m_po_lines_arr[p_idx].net_amt = l_net
+    LET m_po_lines_arr[p_idx].net_excl_amt = l_net
 
     -- Calculate VAT
     LET l_vat = l_net * (m_po_lines_arr[p_idx].vat_rate / 100)
@@ -1283,10 +1294,8 @@ FUNCTION save_po_lines()
                 LET l_line.gross_amt = m_po_lines_arr[i].gross_amt
                 LET l_line.vat_rate = m_po_lines_arr[i].vat_rate
                 LET l_line.vat_amt = m_po_lines_arr[i].vat_amt
-                LET l_line.net_amt = m_po_lines_arr[i].net_amt
+                LET l_line.net_excl_amt = m_po_lines_arr[i].net_excl_amt
                 LET l_line.line_total = m_po_lines_arr[i].line_total
-                LET l_line.wh_code = m_po_lines_arr[i].wh_code
-                LET l_line.wb_id = m_po_lines_arr[i].wb_id
                 LET l_line.notes = m_po_lines_arr[i].notes
                 LET l_line.status = m_po_lines_arr[i].status
                 LET l_line.created_at = m_timestamp
@@ -1419,7 +1428,6 @@ FUNCTION add_po_to_stock_trans(p_hdr_id INTEGER, p_notes STRING)
                 LET l_trans_rec.expiry_date = NULL
 
                 -- Initialize TEXT field using LOCATE
-                LOCATE l_trans_rec.notes IN MEMORY
                 LET l_trans_rec.notes =
                     p_notes || " - PO#" || p_hdr_id || " Line " || i
 

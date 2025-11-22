@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StartMenu text="XactERP">
+  <!-- File Menu -->
+  <StartMenuGroup text="File">
+    <StartMenuCommand name="help" text="Help" image="quest"/>
+    <StartMenuCommand name="about" text="About" image="fa-info"/>
+    <StartMenuSeparator/>
+    <StartMenuCommand name="logout" text="Logout" image="quit"/>
+    <StartMenuCommand name="quit" text="Exit" image="stop"/>
+  </StartMenuGroup>
+
+    <!-- Finance -->
+  <StartMenuGroup text="Finance">
+    <!-- -<StartMenuCommand name="" text="GL Accounts" image="contact"/> -->
+     <!-- <StartMenuCommand name="" text="Transactions" image="contact"/> -->
+    <StartMenuSeparator/>
+  </StartMenuGroup>
+
+  <!-- Inventory Management -->
+  <StartMenuGroup text="Inventory">
+      <StartMenuCommand name="st_mast" text="Stock Items" image="fa-list"/>
+      <StartMenuCommand name="st_uom" text="Units of Measure" image="fa-tag"/>
+      <StartMenuCommand name="st_cat" text="Stock Categories" image="folder"/>
+    <StartMenuSeparator/>
+    <StartMenuCommand name="st_mast" text="Stock Movement" image="fa-random"/>
+    <StartMenuCommand name="st_mast" text="Stock History" image="fa-history"/>
+  </StartMenuGroup>
+
+  <!-- Warehouse Management -->
+  <StartMenuGroup text="Warehouse">
+    <StartMenuCommand name="wh_mast" text="Warehouses" image="fa-industry"/>
+     <StartMenuCommand name="wh_mast" text="Warehouse Transfer" image="fa-stack-overflow"/>
+     <StartMenuSeparator/>
+    <StartMenuCommand name="wb_mast" text="Warehouse Bins" image="listins"/>
+     <StartMenuCommand name="wb_mast" text="Bin Transfer" image="fa-stack-overflow"/>
+     <StartMenuSeparator/>
+  </StartMenuGroup>
+
+    <!-- Creditors -->
+  <StartMenuGroup text="Creditors">
+    <StartMenuCommand name="cl_mast" text="Suppliers" image="fa-sitemap"/>
+    <StartMenuSeparator/>
+  </StartMenuGroup>
+
+  <!-- Purchasing -->
+  <StartMenuGroup text="Purchasing">
+    <StartMenuCommand name="pu_order" text="Purchase Orders" image="fa-edit"/>
+    <StartMenuCommand name="pu_grn" text="Goods Received Notes" image="fa-truck"/>
+    <StartMenuCommand name="pu_inv" text="Purchase Invoices" image="fa-clipboard"/>
+    <StartMenuSeparator/>
+  </StartMenuGroup>
+
+    <!-- Customers -->
+  <StartMenuGroup text="Customers">
+    <StartMenuCommand name="dl_mast" text="Customers" image="fa-user"/>
+    <StartMenuSeparator/>
+  </StartMenuGroup>
+
+  <!-- Sales -->
+  <StartMenuGroup text="Sales">
+    <StartMenuCommand name="sa_quote" text="Sales Quotations" image="fa-edit"/>
+    <StartMenuCommand name="sa_order" text="Sales Orders" image="fa-edit"/>
+    <StartMenuCommand name="sa_invoice" text="Sales Invoices" image="fa-edit"/>
+    <StartMenuCommand name="sa_crn" text="Credit Notes" image="fa-edit"/>
+    <StartMenuSeparator/>
+  </StartMenuGroup>
+
+    <!-- Reports -->
+  <StartMenuGroup text="Reports">
+    <!-- -<StartMenuCommand name="" text="GL Accounts" image="contact"/> -->
+     <!-- <StartMenuCommand name="" text="Transactions" image="contact"/> -->
+    <StartMenuSeparator/>
+  </StartMenuGroup>
+
+  <!-- System Administration -->
+  <StartMenuGroup text="Security">
+      <StartMenuCommand name="sy_user" text="Users" image="user"/>
+      <StartMenuCommand name="sy_role" text="User Roles" image="fa-shield"/>
+      <StartMenuCommand name="sy_perm" text="Permissions" image="lock"/>
+    <StartMenuSeparator/>
+    <StartMenuCommand name="sy_pwd" text="Change Password" image="key"/>
+  </StartMenuGroup>
+
+  <!-- System Administration sy08_lkup_config -->
+  <StartMenuGroup text="System">
+    <StartMenuSeparator/>
+    <StartMenuCommand name="sy_logs" text="System Logs" image="fa-list-alt"/>
+     <StartMenuCommand name="sy_lkup_config" text="System Lookup Config" image="fa-cogs"/>
+  </StartMenuGroup>
+
+  <!-- Window Management -->
+  <StartMenuGroup text="Window">
+    <StartMenuCommand name="win_close" text="Close Current" image="fa-close"/>
+    <StartMenuCommand name="win_close_all" text="Close All" image="fa-window-close"/>
+    <StartMenuSeparator/>
+    <StartMenuCommand name="win_list" text="Window List" image="fa-list"/>
+  </StartMenuGroup>
+</StartMenu>

@@ -3,9 +3,8 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record masterTable="pu32_inv_hdr" name="rec_pu131_inv" uid="{6d4c495a-30b9-407b-bcc8-5e95cb9508ae}"/>
-  <Record masterTable="pu32_inv_det" name="arr_pu131_inv" uid="{8ec05282-5bf2-43b0-b0d9-9a392ba90a6d}"/>
-  <Record masterTable="pu32_inv_hdr" name="record1" uid="{181b982e-80a5-41bd-92b5-d6f83acd65f5}">
+  <Record masterTable="pu32_inv_hdr" name="rec_pu131_inv" uid="{181b982e-80a5-41bd-92b5-d6f83acd65f5}">
+    <RecordField colName="id" fieldIdRef="45" fieldType="TABLE_COLUMN" name="pu32_inv_hdr.id" sqlTabName="pu32_inv_hdr" uid="{fa4dcaa3-b601-4d9e-90ca-47a36de3823c}"/>
     <RecordField colName="supp_name" fieldIdRef="1" fieldType="TABLE_COLUMN" name="pu32_inv_hdr.supp_name" sqlTabName="pu32_inv_hdr" uid="{68a166a1-9129-4366-8b08-4fe9e073a9c1}"/>
     <RecordField colName="supp_phone" fieldIdRef="2" fieldType="TABLE_COLUMN" name="pu32_inv_hdr.supp_phone" sqlTabName="pu32_inv_hdr" uid="{64cf0769-89bc-4611-a0eb-6eac775894a2}"/>
     <RecordField colName="supp_email" fieldIdRef="3" fieldType="TABLE_COLUMN" name="pu32_inv_hdr.supp_email" sqlTabName="pu32_inv_hdr" uid="{7703369a-9097-48f3-9906-f1093684312c}"/>
@@ -29,7 +28,7 @@
     <RecordField colName="created_by" fieldIdRef="21" fieldType="TABLE_COLUMN" name="pu32_inv_hdr.created_by" sqlTabName="pu32_inv_hdr" uid="{a46e5420-6a1a-4fd0-bc1b-f43dfd1a4b1b}"/>
     <RecordField colName="updated_by" fieldIdRef="22" fieldType="TABLE_COLUMN" name="pu32_inv_hdr.updated_by" sqlTabName="pu32_inv_hdr" uid="{5dc5f9ab-80cc-46ab-b33e-15b98bf9255d}"/>
   </Record>
-  <Record masterTable="pu32_inv_det" name="record2" uid="{b89f5ed2-7f7c-4c35-8cf0-768565754896}">
+  <Record masterTable="pu32_inv_det" name="arr_pu131_inv" uid="{b89f5ed2-7f7c-4c35-8cf0-768565754896}">
     <RecordField colName="stock_id" fieldIdRef="23" fieldType="TABLE_COLUMN" name="pu32_inv_det.stock_id" sqlTabName="pu32_inv_det" uid="{df1b9dea-21fd-4c8e-ae11-48f3e7a5fcad}"/>
     <RecordField colName="item_name" fieldIdRef="24" fieldType="TABLE_COLUMN" name="pu32_inv_det.item_name" sqlTabName="pu32_inv_det" uid="{2f96e78d-eeae-4dee-9aa3-c2343b82ef75}"/>
     <RecordField colName="uom" fieldIdRef="25" fieldType="TABLE_COLUMN" name="pu32_inv_det.uom" sqlTabName="pu32_inv_det" uid="{583d9167-ca73-43a8-8a61-b84ffa623a44}"/>
@@ -42,7 +41,7 @@
     <RecordField colName="gross_amt" fieldIdRef="32" fieldType="TABLE_COLUMN" name="pu32_inv_det.gross_amt" sqlTabName="pu32_inv_det" uid="{4d9326f5-cfc9-4bc6-8972-2ddf3c07335b}"/>
     <RecordField colName="vat_rate" fieldIdRef="33" fieldType="TABLE_COLUMN" name="pu32_inv_det.vat_rate" sqlTabName="pu32_inv_det" uid="{83294a86-3d3a-48d7-82b4-53b3b2f448ee}"/>
     <RecordField colName="vat_amt" fieldIdRef="34" fieldType="TABLE_COLUMN" name="pu32_inv_det.vat_amt" sqlTabName="pu32_inv_det" uid="{9bcf543f-7253-41af-afa3-d6553b146f6a}"/>
-    <RecordField colName="net_amt" fieldIdRef="35" fieldType="TABLE_COLUMN" name="pu32_inv_det.net_amt" sqlTabName="pu32_inv_det" uid="{a01c2cc5-ac71-4fbb-81b5-1815191d141d}"/>
+    <RecordField colName="net_excl_amt" fieldIdRef="35" fieldType="TABLE_COLUMN" name="pu32_inv_det.net_excl_amt" sqlTabName="pu32_inv_det" uid="{a01c2cc5-ac71-4fbb-81b5-1815191d141d}"/>
     <RecordField colName="line_total" fieldIdRef="36" fieldType="TABLE_COLUMN" name="pu32_inv_det.line_total" sqlTabName="pu32_inv_det" uid="{1b10254c-ace0-46cd-8167-c15aef4f15b4}"/>
     <RecordField colName="wh_id" fieldIdRef="37" fieldType="TABLE_COLUMN" name="pu32_inv_det.wh_id" sqlTabName="pu32_inv_det" uid="{cd1356c9-b005-4c69-8900-f08328b76a0e}"/>
     <RecordField colName="wb_id" fieldIdRef="38" fieldType="TABLE_COLUMN" name="pu32_inv_det.wb_id" sqlTabName="pu32_inv_det" uid="{4a82df0b-5f8a-4010-bcea-8ce310209566}"/>
@@ -138,6 +137,7 @@
           <Edit colName="supp_bank_branch" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="pu32_inv_hdr.supp_bank_branch" posX="11" posY="8" scroll="true" sqlTabName="pu32_inv_hdr" tabIndex="-1" title="Bank Branch" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
+          <Phantom colName="id" fieldId="45" fieldType="TABLE_COLUMN" name="pu32_inv_hdr.id" sqlTabName="pu32_inv_hdr" widget="Phantom"/>
         </Group>
         <Group gridHeight="10" gridWidth="39" name="group2" posX="58" posY="1" text="">
           <Label gridHeight="1" gridWidth="11" name="pu32_inv_hdr_disc_tot_label1" posX="2" posY="1" text="Disc Total">
@@ -214,7 +214,7 @@
           <Edit colName="vat_amt" fieldId="34" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="pu32_inv_det.vat_amt" posX="140" posY="0" scroll="true" sqlTabName="pu32_inv_det" tabIndex="-1" title="VAT Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="net_amt" fieldId="35" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="pu32_inv_det.net_amt" posX="157" posY="0" scroll="true" sqlTabName="pu32_inv_det" tabIndex="-1" title="Net Amount" widget="Edit">
+          <Edit colName="net_excl_amt" fieldId="35" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="pu32_inv_det.net_excl_amt" posX="157" posY="0" scroll="true" sqlTabName="pu32_inv_det" tabIndex="-1" title="Net Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Edit colName="line_total" fieldId="36" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="pu32_inv_det.line_total" posX="174" posY="0" scroll="true" sqlTabName="pu32_inv_det" tabIndex="-1" title="Line Total" widget="Edit">
@@ -244,6 +244,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAxADgAMQBiADkAOAAyAGUALQA4ADAAYQA1AC0ANAAxAGIAZAAtADkAMgBiADUALQBkADYAZgA4ADMAYQBjAGQANgA1AGYANQB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewBiADgAOQBmADUAZQBkADIALQA3AGYANwBjAC0ANABjADMANQAtADgAYwBmADAALQA3ADYAOAA1ADYANQA3ADUANAA4ADkANgB9QDgAAAYAAABAOAAABgAAAAAAAAAAAAAAAQAAAEwAewA4AGUAYwAwADUAMgA4ADIALQA1AGIAZgAyAC0ANAAzAGIAMAAtAGIAMABkADkALQA5AGEAMwA5ADIAYgBhADkAMABhADYAZAB9QGUAABAAAAM+gAAADAAAAz9gYk3S8an8AQAAAEwAewA2AGQANABjADQAOQA1AGEALQAzADAAYgA5AC0ANAAwADcAYgAtAGIAYwBjADgALQA1AGUAOQA1AGMAYgA5ADUAMAA4AGEAZQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAxADgAMQBiADkAOAAyAGUALQA4ADAAYQA1AC0ANAAxAGIAZAAtADkAMgBiADUALQBkADYAZgA4ADMAYQBjAGQANgA1AGYANQB9wEczMzcAAABARAAABwAAAD+AYk3S8an8AQAAAEwAewBiADgAOQBmADUAZQBkADIALQA3AGYANwBjAC0ANABjADMANQAtADgAYwBmADAALQA3ADYAOAA1ADYANQA3ADUANAA4ADkANgB9QHimZmzwAABAKZmZrAAAAz+Ik3S8an78AQ==]]>
   </DiagramLayout>
 </ManagedForm>

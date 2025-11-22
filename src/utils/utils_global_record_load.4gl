@@ -1,0 +1,103 @@
+---- ==============================================================
+---- Program   : utils_lookup_loader.4gl
+---- Purpose   : Global Generic Lookup Loader for ANY module/table
+---- Author    : Bongani Dlamini
+---- Version   : Genero BDL 3.20.10
+---- ==============================================================
+--
+--IMPORT FGL utils_globals
+--
+--SCHEMA demoappdb
+--
+---- ==============================================================
+---- PUBLIC: lookup_and_load
+---- --------------------------------------------------------------
+---- Parameters:
+----   p_lookup_func     STRING   ? name of lookup function to call
+----   p_table_name      STRING   ? table to select from
+----   p_key_field       STRING   ? primary key field name
+----   p_rec             RECORD   ? record variable passed BY REFERENCE
+----   p_load_lines_func STRING   ? optional: function to load lines
+----
+---- Returns:
+----   SMALLINT (1=success, 0=cancel/no record, -1=error)
+---- ==============================================================
+--
+--PUBLIC FUNCTION lookup_and_load(
+--        p_lookup_func STRING,
+--        p_table_name  STRING,
+--        p_key_field   STRING,
+--        p_rec         RECORD LIKE RECORD,
+--        p_load_lines_func STRING OPTIONAL)
+--    RETURNS SMALLINT
+--
+--    DEFINE selected_key STRING
+--    DEFINE sql_cmd      STRING
+--    DEFINE exec_status  SMALLINT
+--
+--    LET exec_status = 0
+--
+--    -- ==========================================
+--    -- 1. Call lookup function dynamically
+--    -- ==========================================
+--    CALL base.Call(p_lookup_func) RETURNING selected_key
+--
+--    IF selected_key IS NULL OR selected_key = "" THEN
+--        RETURN 0   -- user cancelled
+--    END IF
+--
+--    -- ==========================================
+--    -- 2. Load header record dynamically
+--    -- ==========================================
+--    LET sql_cmd = SFMT("SELECT * FROM %1 WHERE %2 = $1",
+--                       p_table_name, p_key_field)
+--
+--    PREPARE stmt FROM sql_cmd
+--    EXECUTE stmt USING selected_key INTO p_rec.*
+--
+--    IF SQLCA.SQLCODE <> 0 THEN
+--        CALL utils_globals.show_error(
+--            SFMT("Record '%1' not found in %2.", selected_key, p_table_name)
+--        )
+--        RETURN -1
+--    END IF
+--
+--    LET exec_status = 1
+--
+--    -- ==========================================
+--    -- 3. Optionally load detail lines
+--    -- ==========================================
+--    IF p_load_lines_func IS NOT NULL THEN
+--        CALL base.Call(p_load_lines_func, selected_key)
+--    END IF
+--
+--    RETURN exec_status
+--END FUNCTION
+--
+--
+---- ==============================================================
+---- PUBLIC: load_record_by_id
+---- A simpler loader when you already have the ID.
+---- ==============================================================
+--
+--PUBLIC FUNCTION load_record_by_id(
+--        p_table_name  STRING,
+--        p_key_field   STRING,
+--        p_key_value   STRING,
+--        p_rec         RECORD LIKE ANY RECORD)
+--    RETURNS SMALLINT
+--
+--    DEFINE sql_cmd STRING
+--
+--    LET sql_cmd = SFMT("SELECT * FROM %1 WHERE %2 = $1",
+--                        p_table_name, p_key_field)
+--
+--    PREPARE stmt FROM sql_cmd
+--    EXECUTE stmt USING p_key_value INTO p_rec.*
+--
+--    IF SQLCA.SQLCODE <> 0 THEN
+--        RETURN 0
+--    END IF
+--
+--    RETURN 1
+--END FUNCTION

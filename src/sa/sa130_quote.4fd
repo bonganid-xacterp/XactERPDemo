@@ -43,10 +43,8 @@
     <RecordField colName="gross_amt" fieldIdRef="29" fieldType="TABLE_COLUMN" name="sa30_quo_det.gross_amt" sqlTabName="sa30_quo_det" uid="{c9cc9625-d98c-41e1-bbdc-b8ff7ba4dfaf}"/>
     <RecordField colName="vat_rate" fieldIdRef="30" fieldType="TABLE_COLUMN" name="sa30_quo_det.vat_rate" sqlTabName="sa30_quo_det" uid="{ef6265eb-d4d0-4b6f-ac26-d0e3b235fe53}"/>
     <RecordField colName="vat_amt" fieldIdRef="31" fieldType="TABLE_COLUMN" name="sa30_quo_det.vat_amt" sqlTabName="sa30_quo_det" uid="{7d36e37a-ecdd-4cc1-967b-176d41f6610d}"/>
-    <RecordField colName="net_amt" fieldIdRef="32" fieldType="TABLE_COLUMN" name="sa30_quo_det.net_amt" sqlTabName="sa30_quo_det" uid="{815d54a4-c3bd-4416-9ca0-7b96283c7d5b}"/>
+    <RecordField colName="net_excl_amt" fieldIdRef="32" fieldType="TABLE_COLUMN" name="sa30_quo_det.net_excl_amt" sqlTabName="sa30_quo_det" uid="{815d54a4-c3bd-4416-9ca0-7b96283c7d5b}"/>
     <RecordField colName="line_total" fieldIdRef="33" fieldType="TABLE_COLUMN" name="sa30_quo_det.line_total" sqlTabName="sa30_quo_det" uid="{304d3327-244d-4efc-8298-373d7aee6e88}"/>
-    <RecordField colName="wh_id" fieldIdRef="34" fieldType="TABLE_COLUMN" name="sa30_quo_det.wh_id" sqlTabName="sa30_quo_det" uid="{90c2eb6c-cb26-4e77-98b6-01597dfb981f}"/>
-    <RecordField colName="wb_id" fieldIdRef="35" fieldType="TABLE_COLUMN" name="sa30_quo_det.wb_id" sqlTabName="sa30_quo_det" uid="{f8043355-e178-476a-905b-3ae08dae7907}"/>
     <RecordField colName="notes" fieldIdRef="36" fieldType="TABLE_COLUMN" name="sa30_quo_det.notes" sqlTabName="sa30_quo_det" uid="{a04bf3cb-eb8e-4d65-b949-e8129fade3fc}"/>
     <RecordField colName="status" fieldIdRef="37" fieldType="TABLE_COLUMN" name="sa30_quo_det.status" sqlTabName="sa30_quo_det" uid="{b28382a9-d037-4e39-8e5b-f2120e0169d3}"/>
     <RecordField colName="created_at" fieldIdRef="38" fieldType="TABLE_COLUMN" name="sa30_quo_det.created_at" sqlTabName="sa30_quo_det" uid="{9e7d01df-a3ca-4372-ba37-13f5d453c357}"/>
@@ -230,25 +228,19 @@
               <Edit colName="gross_amt" fieldId="29" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa30_quo_det.gross_amt" noEntry="true" posX="62" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Gross Amount" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="vat_rate" fieldId="30" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="sa30_quo_det.vat_rate" noEntry="true" posX="73" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="VAT rate" widget="Edit">
+              <Edit colName="vat_rate" fieldId="30" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="sa30_quo_det.vat_rate" noEntry="true" posX="73" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="VAT Rate" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
               <Edit colName="vat_amt" fieldId="31" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="sa30_quo_det.vat_amt" posX="82" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="VAT Amount" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="net_amt" fieldId="32" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="sa30_quo_det.net_amt" posX="90" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Net Amount" widget="Edit">
+              <Edit colName="net_excl_amt" fieldId="32" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa30_quo_det.net_excl_amt" posX="90" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Net Excl Amount" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="line_total" fieldId="33" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa30_quo_det.line_total" posX="98" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Line Total" widget="Edit">
+              <Edit colName="line_total" fieldId="33" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa30_quo_det.line_total" posX="100" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Line Total" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="wh_id" fieldId="34" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="sa30_quo_det.wh_id" posX="108" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="WH ID" widget="Edit">
-                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-              </Edit>
-              <Edit colName="wb_id" fieldId="35" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="sa30_quo_det.wb_id" posX="116" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="BIN ID" widget="Edit">
-                <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-              </Edit>
-              <Edit colName="notes" fieldId="36" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="21" name="sa30_quo_det.notes" posX="125" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Notes" widget="Edit">
+              <Edit colName="notes" fieldId="36" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="21" name="sa30_quo_det.notes" posX="110" posY="0" scroll="true" sqlTabName="sa30_quo_det" tabIndex="-1" title="Notes" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
               <Phantom colName="status" fieldId="37" fieldType="TABLE_COLUMN" name="sa30_quo_det.status" sqlTabName="sa30_quo_det" widget="Phantom"/>
@@ -263,6 +255,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA4AGUAYgBlAGIAZgBlADgALQA3ADEAYwAyAC0ANAA2ADkAMgAtAGEAYQAzADMALQAzADIAMQBhAGMAMAA2ADcAMAA2AGEAOAB9QDMzM0DMzNBAQAAACgAAAj+CbpeNT988AQAAAEwAewAzADkAZgBmADgAZAA2ADcALQA0AGQAYwAzAC0ANAA1ADQAMgAtADkAOQA1ADkALQA3ADgAYQAzAGEAOQA2AGMAYwBkAGMAOQB9QHBMzNT2ZmhAQmZmeUzM2T+GhysCDEm8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA4AGUAYgBlAGIAZgBlADgALQA3ADEAYwAyAC0ANAA2ADkAMgAtAGEAYQAzADMALQAzADIAMQBhAGMAMAA2ADcAMAA2AGEAOAB9QDMzM0pmZnFAQAAAEgAACD+CbpeNT988AQAAAEwAewAzADkAZgBmADgAZAA2ADcALQA0AGQAYwAzAC0ANAA1ADQAMgAtADkAOQA1ADkALQA3ADgAYQAzAGEAOQA2AGMAYwBkAGMAOQB9QHBMzN0czNNAQmZmgoAAFz+GhysCDEm8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

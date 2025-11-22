@@ -45,7 +45,7 @@ DEFINE is_edit_mode SMALLINT
 --END MAIN
 
 -- ==============================================================
--- Menu Controller
+-- Init Program
 -- ==============================================================
 FUNCTION init_uom_module()
     LET is_edit_mode = FALSE
@@ -86,12 +86,16 @@ END FUNCTION
 -- Load UOM Record
 -- ==============================================================
 FUNCTION load_uom_item(p_id INTEGER)
-    SELECT * INTO uom_rec.* FROM st03_uom_master WHERE id = p_id
+    TRY
+        SELECT * INTO uom_rec.* FROM st03_uom_master WHERE id = p_id
 
-    IF SQLCA.SQLCODE = 0 THEN
-        --CALL refresh_display_fields()
-        DISPLAY BY NAME uom_rec.*
-        END IF 
+        IF SQLCA.SQLCODE = 0 THEN
+            --CALL refresh_display_fields()
+            DISPLAY BY NAME uom_rec.*
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("load_uom_item: Error loading UOM")
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -99,43 +103,50 @@ END FUNCTION
 -- ==============================================================
 FUNCTION query_uom() RETURNS STRING
     DEFINE arr_uom DYNAMIC ARRAY OF RECORD
-            id     LIKE st03_uom_master.id,
-            uom_code  LIKE st03_uom_master.uom_code,
-            uom_name  LIKE st03_uom_master.uom_name,
-            status LIKE st03_uom_master.status
+            c1     LIKE st03_uom_master.id,
+            c2  LIKE st03_uom_master.uom_code,
+            c3  LIKE st03_uom_master.uom_name,
+            c4 LIKE st03_uom_master.status
         END RECORD,
-        rec_list RECORD
-            id     LIKE st03_uom_master.id,
-            uom_code  LIKE st03_uom_master.uom_code,
-            uom_name  LIKE st03_uom_master.uom_name,
-            status LIKE st03_uom_master.status
+        lkup_rec RECORD
+            c1     LIKE st03_uom_master.id,
+            c2  LIKE st03_uom_master.uom_code,
+            c3  LIKE st03_uom_master.uom_name,
+            c4 LIKE st03_uom_master.status
         END RECORD,
         ret_code STRING,
         curr_row, curr_idx SMALLINT
 
-    LET curr_idx = 0
+    LET curr_idx = 1
     LET ret_code = NULL
 
-    OPEN WINDOW w_lkup WITH FORM "st103_uom_lkup"
+    OPEN WINDOW w_lkup WITH FORM "utils_global_lkup_form"
         ATTRIBUTES(TYPE = POPUP, STYLE = "lookup")
 
-    DECLARE uom_curs CURSOR FOR
-        SELECT id, uom_code, uom_name, status
-          FROM st03_uom_master
-         ORDER BY id DESC
+    TRY
+        DECLARE uom_curs CURSOR FOR
+            SELECT id, uom_code, uom_name, status
+              FROM st03_uom_master
+             ORDER BY id DESC
 
-    CALL arr_uom.clear()
+        CALL arr_uom.clear()
 
-    FOREACH uom_curs INTO rec_list.*
-        LET arr_uom[curr_idx].* = rec_list.*
-        LET curr_idx = curr_idx + 1
-    END FOREACH
+        FOREACH uom_curs INTO lkup_rec.*
+            LET arr_uom[curr_idx].* = lkup_rec.*
+            LET curr_idx = curr_idx + 1
+        END FOREACH
 
-    IF curr_idx > 0 THEN
-        DISPLAY ARRAY arr_uom TO rec_list.*
-            ATTRIBUTES(COUNT = curr_idx, UNBUFFERED)
+        CLOSE uom_curs
+        FREE uom_curs
+    CATCH
+        CALL utils_globals.show_sql_error("query_uom: Error loading UOM list")
+    END TRY
+
+    IF arr_uom.getLength() > 0 THEN
+        DISPLAY ARRAY arr_uom TO tbl_lookup_list.*
+            ATTRIBUTES(UNBUFFERED)
         LET curr_row = arr_curr()
-        LET ret_code = arr_uom[curr_row].id
+        LET ret_code = arr_uom[curr_row].c1
     ELSE
         CALL utils_globals.msg_no_record()
     END IF
@@ -162,9 +173,13 @@ FUNCTION new_uom()
 
         ON ACTION save
             IF check_uom_unique(uom_rec.uom_code) = 0 THEN
-                INSERT INTO st03_uom_master VALUES uom_rec.*
-                CALL utils_globals.msg_saved()
-                EXIT INPUT
+                TRY
+                    INSERT INTO st03_uom_master VALUES uom_rec.*
+                    CALL utils_globals.msg_saved()
+                    EXIT INPUT
+                CATCH
+                    CALL utils_globals.show_sql_error("new_uom: Error saving UOM")
+                END TRY
             END IF
 
         ON ACTION cancel
@@ -203,14 +218,18 @@ END FUNCTION
 FUNCTION save_uom()
     DEFINE r_exists INTEGER
 
-    SELECT COUNT(*) INTO r_exists FROM st03_uom_master WHERE id = uom_rec.id
-    IF r_exists = 0 THEN
-        INSERT INTO st03_uom_master VALUES uom_rec.*
-        CALL utils_globals.msg_saved()
-    ELSE
-        UPDATE st03_uom_master SET st03_uom_master.* = uom_rec.* WHERE id = uom_rec.id
-        CALL utils_globals.msg_updated()
-    END IF
+    TRY
+        SELECT COUNT(*) INTO r_exists FROM st03_uom_master WHERE id = uom_rec.id
+        IF r_exists = 0 THEN
+            INSERT INTO st03_uom_master VALUES uom_rec.*
+            CALL utils_globals.msg_saved()
+        ELSE
+            UPDATE st03_uom_master SET st03_uom_master.* = uom_rec.* WHERE id = uom_rec.id
+            CALL utils_globals.msg_updated()
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("save_uom: Error saving UOM")
+    END TRY
 
     CALL load_uom_item(uom_rec.id)
 END FUNCTION
@@ -231,16 +250,21 @@ FUNCTION select_uom_items(p_where STRING) RETURNS SMALLINT
     -- Build SQL dynamically and safely
     LET l_sql = SFMT("SELECT id FROM st03_uom_master WHERE %1 ORDER BY uom_code", p_where)
 
-    -- Open and fetch all matching records
-    DECLARE uom_select_curs CURSOR FROM l_sql
+    TRY
+        -- Open and fetch all matching records
+        DECLARE uom_select_curs CURSOR FROM l_sql
 
-    FOREACH uom_select_curs INTO l_code
-        LET l_idx = l_idx + 1
-        LET arr_codes[l_idx] = l_code
-    END FOREACH
+        FOREACH uom_select_curs INTO l_code
+            LET l_idx = l_idx + 1
+            LET arr_codes[l_idx] = l_code
+        END FOREACH
 
-    CLOSE uom_select_curs
-    FREE uom_select_curs
+        CLOSE uom_select_curs
+        FREE uom_select_curs
+    CATCH
+        CALL utils_globals.show_sql_error("select_uom_items: Error selecting UOM items")
+        RETURN FALSE
+    END TRY
 
     -- Handle no records found
     IF arr_codes.getLength() = 0 THEN
@@ -276,11 +300,16 @@ END FUNCTION
 -- ==============================================================
 FUNCTION check_uom_unique(p_uom_code STRING) RETURNS SMALLINT
     DEFINE dup_count INTEGER
-    SELECT COUNT(*) INTO dup_count FROM st03_uom_master WHERE uom_code = p_uom_code
-    IF dup_count > 0 THEN
-        CALL utils_globals.show_error("Duplicate UOM code exists.")
+    TRY
+        SELECT COUNT(*) INTO dup_count FROM st03_uom_master WHERE uom_code = p_uom_code
+        IF dup_count > 0 THEN
+            CALL utils_globals.show_error("Duplicate UOM code exists.")
+            RETURN 1
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("check_uom_unique: Error checking UOM uniqueness")
         RETURN 1
-    END IF
+    END TRY
     RETURN 0
 END FUNCTION
 
@@ -297,20 +326,24 @@ FUNCTION delete_uom()
         RETURN
     END IF
 
-    -- Check if UOM is being used in stock items
-    SELECT COUNT(*)
-        INTO usage_count
-        FROM st04_stock_uom
-        WHERE uom_id = uom_rec.id
-    IF usage_count > 0 THEN
-        CALL utils_globals.show_error("Cannot delete UOM that is in use.")
-        RETURN
-    END IF
+    TRY
+        -- Check if UOM is being used in stock items
+        SELECT COUNT(*)
+            INTO usage_count
+            FROM st04_stock_uom
+            WHERE uom_id = uom_rec.id
+        IF usage_count > 0 THEN
+            CALL utils_globals.show_error("Cannot delete UOM that is in use.")
+            RETURN
+        END IF
 
-    LET ok = utils_globals.show_confirm("Delete this UOM?", "Confirm")
-    IF ok THEN
-        DELETE FROM st03_uom_master WHERE id = uom_rec.id
-        CALL utils_globals.msg_deleted()
-        LET ok = select_uom_items("1=1")
-    END IF
+        LET ok = utils_globals.show_confirm("Delete this UOM?", "Confirm")
+        IF ok THEN
+            DELETE FROM st03_uom_master WHERE id = uom_rec.id
+            CALL utils_globals.msg_deleted()
+            LET ok = select_uom_items("1=1")
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error("delete_uom: Error deleting UOM")
+    END TRY
 END FUNCTION

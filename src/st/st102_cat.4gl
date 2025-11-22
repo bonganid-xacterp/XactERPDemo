@@ -9,8 +9,9 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
-IMPORT FGL utils_lkup_form   -- ? Global lookup utility (replaces st122_cat_lkup)
+IMPORT FGL utils_global_lkup_form   -- ? Global lookup utility (replaces st122_cat_lkup)
 IMPORT FGL st122_cat_lkup
+IMPORT FGL st101_mast
 
 SCHEMA demoappdb
 
@@ -59,6 +60,14 @@ FUNCTION query_category() RETURNS STRING
     RETURN selected_code
 END FUNCTION
 
+-- ==============================================================
+-- Main Controller Menu
+-- ==============================================================
+PRIVATE FUNCTION load_stock_item(p_item_code INTEGER)
+
+    CALL st101_mast.load_stock_item(p_item_code)
+
+END FUNCTION
 
 -- ==============================================================
 -- Main Controller Menu
@@ -132,17 +141,23 @@ FUNCTION select_categories(where_clause STRING) RETURNS SMALLINT
 
     LET sql_stmt = sql_stmt || " ORDER BY cat_code"
 
-    PREPARE stmt_select FROM sql_stmt
-    DECLARE c_curs CURSOR FOR stmt_select
+    TRY
+        PREPARE stmt_select FROM sql_stmt
+        DECLARE c_curs CURSOR FOR stmt_select
 
-    FOREACH c_curs INTO code
-        LET idx = idx + 1
-        LET arr_codes[idx] = code
-    END FOREACH
+        FOREACH c_curs INTO code
+            LET idx = idx + 1
+            LET arr_codes[idx] = code
+        END FOREACH
 
-    CLOSE c_curs
-    FREE c_curs
-    FREE stmt_select
+        CLOSE c_curs
+        FREE c_curs
+        FREE stmt_select
+
+    CATCH
+        CALL utils_globals.show_sql_error("select_categories: Error loading categories")
+        RETURN FALSE
+    END TRY
 
     IF arr_codes.getLength() == 0 THEN
         CALL utils_globals.msg_no_record()
@@ -159,15 +174,22 @@ END FUNCTION
 -- ==============================================================
 FUNCTION load_category(p_code STRING)
 
-    DISPLAY p_code
-    SELECT * INTO m_rec_cat.* FROM st02_cat WHERE cat_code = p_code
+    TRY
+        DISPLAY p_code
+        SELECT * INTO m_rec_cat.* FROM st02_cat WHERE cat_code = p_code
 
-    IF SQLCA.SQLCODE = 0 THEN
-        DISPLAY BY NAME m_rec_cat.*
-    ELSE
+        IF SQLCA.SQLCODE = 0 THEN
+            DISPLAY BY NAME m_rec_cat.*
+        ELSE
+            INITIALIZE m_rec_cat.* TO NULL
+            DISPLAY BY NAME m_rec_cat.*
+        END IF
+
+    CATCH
+        CALL utils_globals.show_sql_error("load_category: Error loading category")
         INITIALIZE m_rec_cat.* TO NULL
         DISPLAY BY NAME m_rec_cat.*
-    END IF
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -324,8 +346,7 @@ FUNCTION save_category()
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error(
-            SFMT("Save failed: %1", SQLCA.SQLCODE))
+        CALL utils_globals.show_sql_error("save_category: Error saving category")
     END TRY
 END FUNCTION
 
@@ -353,8 +374,15 @@ FUNCTION delete_category()
     END IF
 
     LET deleted_code = m_rec_cat.cat_code
-    DELETE FROM st02_cat WHERE cat_code = deleted_code
-    CALL utils_globals.msg_deleted()
+
+    TRY
+        DELETE FROM st02_cat WHERE cat_code = deleted_code
+        CALL utils_globals.msg_deleted()
+
+    CATCH
+        CALL utils_globals.show_sql_error("delete_category: Error deleting category")
+        RETURN
+    END TRY
 
     -- Reload list and navigate to valid record
     CALL load_all_categories()
@@ -382,17 +410,23 @@ END FUNCTION
 FUNCTION check_category_unique(p_cat_code STRING, p_cat_name STRING) RETURNS SMALLINT
     DEFINE dup_count INTEGER
 
-    SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE cat_code = p_cat_code
-    IF dup_count > 0 THEN
-        CALL utils_globals.show_error("Category code already exists.")
-        RETURN 1
-    END IF
+    TRY
+        SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE cat_code = p_cat_code
+        IF dup_count > 0 THEN
+            CALL utils_globals.show_error("Category code already exists.")
+            RETURN 1
+        END IF
 
-    SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE cat_name = p_cat_name
-    IF dup_count > 0 THEN
-        CALL utils_globals.show_error("Category name already exists.")
-        RETURN 1
-    END IF
+        SELECT COUNT(*) INTO dup_count FROM st02_cat WHERE cat_name = p_cat_name
+        IF dup_count > 0 THEN
+            CALL utils_globals.show_error("Category name already exists.")
+            RETURN 1
+        END IF
 
-    RETURN 0
+        RETURN 0
+
+    CATCH
+        CALL utils_globals.show_sql_error("check_category_unique: Error checking uniqueness")
+        RETURN 0
+    END TRY
 END FUNCTION

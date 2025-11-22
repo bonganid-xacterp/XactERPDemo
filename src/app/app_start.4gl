@@ -256,7 +256,7 @@ PUBLIC FUNCTION show_window_manager()
     END IF
 
     -- Display window list
-    OPEN WINDOW w_window_list WITH FORM "utils_lkup_form"
+    OPEN WINDOW w_window_list WITH FORM "utils_global_lkup_form"
         ATTRIBUTES(TEXT = "Active Windows")
 
     DISPLAY ARRAY arr_active TO sr_lookup.*

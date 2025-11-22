@@ -76,7 +76,7 @@
 --    LET base_sql = base_sql || SFMT(" ORDER BY %1", conf.desc_field)
 --
 --    -- Open window
---    OPEN WINDOW wlk WITH FORM "utils_lkup_form"
+--    OPEN WINDOW wlk WITH FORM "utils_global_lkup_form"
 --        ATTRIBUTES(TYPE=POPUP, STYLE="dialog")
 --
 --    CALL utils_globals.set_form_label("lbl_lookup_title", conf.display_title)

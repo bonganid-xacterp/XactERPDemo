@@ -1,5 +1,5 @@
 -- ==============================================================
--- Program : utils_lkup_form.4gl
+-- Program : utils_global_lkup_form.4gl
 -- Purpose : Global Dynamic Lookup Utility
 -- Author  : Bongani Dlamini
 -- Version : Genero BDL 3.20.10
@@ -7,8 +7,6 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
-
-SCHEMA demoappdb
 
 
 -- ==============================================================
@@ -38,6 +36,8 @@ END RECORD
 
 
 DEFINE tbl_lookup_list lookup_conf_t
+DEFINE f_search STRING
+DEFINE filter_by STRING
 
 -- ==============================================================
 -- PUBLIC FUNCTION: display_lookup
@@ -50,11 +50,12 @@ PUBLIC FUNCTION display_lookup(p_lookup_code STRING) RETURNS STRING
            f_search STRING,
            base_sql STRING,
            ret_val STRING,
+           filter_by STRING,
            i SMALLINT
 
     LET ret_val = NULL
     LET f_search = ""
-
+    LET filter_by = "ALL"   -- default selection
 
     -- Load configuration
     SELECT lookup_code, table_name, key_field, desc_field,
@@ -83,7 +84,6 @@ PUBLIC FUNCTION display_lookup(p_lookup_code STRING) RETURNS STRING
         conf.table_name
     )
 
-
     -- Add static filter
     IF conf.filter_condition IS NOT NULL AND conf.filter_condition <> "" THEN
         LET base_sql = base_sql || " WHERE " || conf.filter_condition
@@ -93,41 +93,22 @@ PUBLIC FUNCTION display_lookup(p_lookup_code STRING) RETURNS STRING
     -- Order by description field
     LET base_sql = base_sql || SFMT(" ORDER BY %1", conf.desc_field)
 
-
     -- Open form
-    OPEN WINDOW wlk WITH FORM "utils_lkup_form"
+    OPEN WINDOW wlk WITH FORM "utils_global_lkup_form"
         ATTRIBUTES(TYPE=POPUP, STYLE="dialog")
 
     CALL utils_globals.set_form_label("lbl_lookup_title", conf.display_title)
 
-
-    -- ==================================================
-    -- Apply column titles (dynamic)
-    -- ==================================================
-    LET tbl_lookup_list.col1_title =  conf.col1_title
-    LET tbl_lookup_list.col2_title =  conf.col2_title
-    LET tbl_lookup_list.col3_title =  conf.col3_title
-    LET tbl_lookup_list.col4_title =  conf.col4_title
-
-    -- ==================================================
-    -- Hide extra columns if required
-    -- ==================================================
-    IF conf.extra_fields IS NULL OR conf.extra_fields = "" THEN
-        CALL ui.Interface.setText("tbl_lookup_list.col3")
-        CALL ui.Interface.setText("tbl_lookup_list.col4")
-    ELSE
-        CALL ui.Interface.setText (tbl_lookup_list.col3_title)
-        -- Only show col4 if caption exists
-        IF conf.col4_title IS NULL OR conf.col4_title = "" THEN
-            CALL ui.Interface.setText("tbl_lookup_list.col4")
-        ELSE
-            CALL ui.Interface.setText("tbl_lookup_list.col4")
-        END IF
-    END IF
-
-
-    -- Load initial data
-    CALL load_lookup_data(base_sql, arr_results, NULL)
+--    CALL ui.ComboBox.clear("filter_by")
+--
+--    CALL ui.ComboBox.addItem("filter_by", "ALL",       "All Columns")
+--    CALL ui.ComboBox.addItem("filter_by", "C1",        conf.col1_title)
+--    CALL ui.ComboBox.addItem("filter_by", "C2",        conf.col2_title)
+--    CALL ui.ComboBox.addItem("filter_by", "C3",        conf.col3_title)
+--    CALL ui.ComboBox.addItem("filter_by", "C4",        conf.col4_title)
+--
+--    -- Load initial data
+--    CALL load_lookup_data(base_sql, arr_results, NULL, filter_by)
 
 
     -- ==================================================
@@ -135,12 +116,13 @@ PUBLIC FUNCTION display_lookup(p_lookup_code STRING) RETURNS STRING
     -- ==================================================
     DIALOG ATTRIBUTES(UNBUFFERED)
 
-        INPUT BY NAME f_search ATTRIBUTES( WITHOUT DEFAULTS)
-            AFTER FIELD f_search
+        INPUT BY NAME f_search, filter_by
+
+            AFTER FIELD f_search, filter_by
                 CALL load_lookup_data(base_sql, arr_results, f_search)
                 DISPLAY ARRAY arr_results TO tbl_lookup_list.*
-        END INPUT
 
+        END INPUT
 
         DISPLAY ARRAY arr_results TO tbl_lookup_list.*
             ATTRIBUTES(DOUBLECLICK=ACCEPT)
@@ -182,25 +164,52 @@ FUNCTION load_lookup_data(
 
     CALL p_arr.clear()
 
-
     IF p_filter IS NULL OR p_filter = "" THEN
         LET final_sql = p_base_sql
     ELSE
-        LET pattern = "%" || p_filter || "%"
+        LET pattern = "%" || f_search || "%"   -- use record global field
 
-        LET final_sql = SFMT(
-            "SELECT * FROM (%1) AS t
-             WHERE UPPER(t.c1) LIKE UPPER('%2')
-                OR UPPER(t.c2) LIKE UPPER('%2')
-                OR UPPER(t.c3) LIKE UPPER('%2')
-                OR UPPER(t.c4) LIKE UPPER('%2')
-             ORDER BY t.c2",
-             p_base_sql,
-             pattern
-        )
+        CASE filter_by
+
+            WHEN "C1"
+                LET final_sql = SFMT(
+                    "SELECT * FROM (%1) AS t
+                     WHERE UPPER(t.c1) LIKE UPPER('%2')
+                     ORDER BY t.c2", p_base_sql, pattern)
+
+            WHEN "C2"
+                LET final_sql = SFMT(
+                    "SELECT * FROM (%1) AS t
+                     WHERE UPPER(t.c2) LIKE UPPER('%2')
+                     ORDER BY t.c2", p_base_sql, pattern)
+
+            WHEN "C3"
+                LET final_sql = SFMT(
+                    "SELECT * FROM (%1) AS t
+                     WHERE UPPER(t.c3) LIKE UPPER('%2')
+                     ORDER BY t.c2", p_base_sql, pattern)
+
+            WHEN "C4"
+                LET final_sql = SFMT(
+                    "SELECT * FROM (%1) AS t
+                     WHERE UPPER(t.c4) LIKE UPPER('%2')
+                     ORDER BY t.c2", p_base_sql, pattern)
+
+            OTHERWISE   -- ALL columns
+                LET final_sql = SFMT(
+                    "SELECT * FROM (%1) AS t
+                     WHERE UPPER(t.c1) LIKE UPPER('%2')
+                        OR UPPER(t.c2) LIKE UPPER('%2')
+                        OR UPPER(t.c3) LIKE UPPER('%2')
+                        OR UPPER(t.c4) LIKE UPPER('%2')
+                     ORDER BY t.c2",
+                     p_base_sql,
+                     pattern)
+
+        END CASE
     END IF
 
-
+    -- run query
     PREPARE q FROM final_sql
     DECLARE c CURSOR FOR q
 
@@ -209,6 +218,7 @@ FUNCTION load_lookup_data(
     END FOREACH
 
 END FUNCTION
+
 
 
 -- ==============================================================

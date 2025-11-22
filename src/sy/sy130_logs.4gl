@@ -116,7 +116,7 @@ FUNCTION view_logs()
         FREE log_curs
 
     CATCH
-        CALL utils_globals.show_error("Error loading logs: " || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("view_logs: Error loading logs")
         RETURN
     END TRY
 
@@ -272,16 +272,22 @@ FUNCTION show_log_details(p_log_id INTEGER)
     DEFINE username STRING
     DEFINE details_text STRING
 
-    SELECT l.*, u.username
-      INTO rec_log.*, username
-      FROM sy02_logs l
-      LEFT JOIN sy00_user u ON l.user_id = u.id
-     WHERE l.id = p_log_id
+    TRY
+        SELECT l.*, u.username
+          INTO rec_log.*, username
+          FROM sy02_logs l
+          LEFT JOIN sy00_user u ON l.user_id = u.id
+         WHERE l.id = p_log_id
 
-    IF SQLCA.SQLCODE = NOTFOUND THEN
-        CALL utils_globals.show_error("Log entry not found")
+        IF SQLCA.SQLCODE = NOTFOUND THEN
+            CALL utils_globals.show_error("Log entry not found")
+            RETURN
+        END IF
+
+    CATCH
+        CALL utils_globals.show_sql_error("show_log_details: Error loading log details")
         RETURN
-    END IF
+    END TRY
 
     -- Format details for display
     LET details_text = "Log ID: " || rec_log.id || "\n" ||
@@ -322,8 +328,7 @@ FUNCTION clear_old_logs()
             SFMT("%1 log entries deleted", deleted_count))
 
     CATCH
-        CALL utils_globals.show_error(
-            "Error deleting logs: " || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("clear_old_logs: Error deleting logs")
     END TRY
 END FUNCTION
 
