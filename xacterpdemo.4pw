@@ -70,7 +70,6 @@
         <File filePath="src/_main/__main_shell.4fd"/>
         <File filePath="src/_main/actions.4ad"/>
         <File filePath="src/_main/main_app.4gl"/>
-        <File filePath="src/_main/main_menu.4gl"/>
         <File filePath="src/_main/main_shell.4fd"/>
         <File filePath="src/_main/main_shell.4gl"/>
         <File filePath="src/_main/main_styles.4st"/>
@@ -153,6 +152,8 @@
         <File filePath="src/sa/sa133_crn.4gl"/>
         <File filePath="src/sa/sa140_hist.4fd"/>
         <File filePath="src/sa/sa140_hist.4gl"/>
+        <File filePath="src/pu/sa_lkup_form.4fd"/>
+        <File filePath="src/pu/sa_lkup_form.4gl"/>
       </Application>
       <Application binaryName="st" dependencies="497700,104908716,31764552,782461791" id="757682379" label="st">
         <File filePath="src/st/st101_mast.4fd"/>
@@ -200,10 +201,11 @@
         <File filePath="src/utils/utils_db.4gl"/>
         <File filePath="src/utils/utils_doc_totals.4gl"/>
         <File filePath="src/utils/utils_enq.4gl"/>
+        <File filePath="src/utils/utils_global_lkup_form.4fd"/>
+        <File filePath="src/utils/utils_global_lkup_form.4gl"/>
+        <File filePath="src/utils/utils_global_record_load.4gl"/>
         <File filePath="src/utils/utils_globals.4gl"/>
         <File filePath="src/utils/utils_lkup.4gl"/>
-        <File filePath="src/utils/utils_lkup_form.4fd"/>
-        <File filePath="src/utils/utils_lkup_form.4gl"/>
         <File filePath="src/utils/utils_logger.4gl"/>
         <File filePath="src/utils/utils_mast_lkup_form.4fd"/>
         <File filePath="src/utils/utils_sa_doc_lkup_form.4fd"/>
