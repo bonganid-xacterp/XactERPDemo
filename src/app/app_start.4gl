@@ -137,7 +137,7 @@ PUBLIC FUNCTION launch_child_window(module_name STRING, title STRING) RETURNS SM
     TRY
         CALL ui.Interface.setType("child")
         CALL ui.Interface.setName(winname)
-        CALL ui.Interface.setContainer("mdi_container")  <!-- ? POINT TO THE ACTUAL CONTAINER -->
+        CALL ui.Interface.setContainer("main_shell")
 
         OPEN WINDOW winname WITH FORM formname
             ATTRIBUTES(TEXT = wintitle, STYLE="Window.child")

@@ -21,7 +21,9 @@ IMPORT FGL st140_hist
 
 -- Warehouse Module imports
 IMPORT FGL wh101_mast
+IMPORT FGL wh130_stock_trf
 IMPORT FGL wb101_mast
+IMPORT FGL wb130_stock_trf
 
 -- Customer/Supplier imports
 IMPORT FGL cl101_mast
@@ -176,8 +178,14 @@ FUNCTION show_main_menu()
         ON ACTION wh_mast
             CALL launch_child_module("wh101_mast", "Warehouses")
 
+        ON ACTION wh_stock_trf
+            CALL launch_child_module("wh130_stock_trf", "Warehouse Transfer")
+
         ON ACTION wb_mast
             CALL launch_child_module("wb101_mast", "Warehouse Bins")
+            
+        ON ACTION wb_stock_trf
+            CALL launch_child_module("wb130_stock_trf", "Warehouse Transfer")
 
         -- ----------- Purchasing ----------------------------------
         ON ACTION cl_mast
@@ -265,7 +273,9 @@ FUNCTION launch_child_module(module_name STRING, title STRING)
 
         -- Warehouse / Bin
         WHEN "wh101_mast"       CALL wh101_mast.init_wh_module()
+        WHEN "wh130_stock_trf"  CALL wh130_stock_trf.init_wh_tfr_module()
         WHEN "wb101_mast"       CALL wb101_mast.init_wb_module()
+        WHEN "wb130_stock_trf"  CALL wb130_stock_trf.init_wb_tfr_module()
 
         -- Debtors / Creditors
         WHEN "dl101_mast"       CALL dl101_mast.init_dl_module()

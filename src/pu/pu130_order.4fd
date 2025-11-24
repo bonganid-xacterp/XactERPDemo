@@ -56,7 +56,7 @@
   <Form gridHeight="19" gridWidth="167" name="pu130_ord" text="Purchase Order">
     <VBox gridHeight="19" gridWidth="166" name="vbox1" posX="0" posY="0">
       <Grid gridHeight="17" gridWidth="166" name="pu131_ord_hdr" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="110" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="PURCHASE ORDER"/>
+        <Label gridHeight="1" gridWidth="165" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="PURCHASE ORDER"/>
         <Group gridChildrenInParent="true" gridHeight="8" gridWidth="62" name="cred_info" posX="1" posY="1" text="">
           <Label gridHeight="1" gridWidth="9" name="pu30_ord_hdr_doc_no" posX="1" posY="1" text="Doc No">
             <Initializer text="dbschema:pu30_ord_hdr.supp_name/@label"/>
@@ -241,6 +241,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM1+mZp5AMMzM/zMzej+lgQYk3S8fAQAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZr2mZtpAMMzNAjMzgT+keuFHrhR/AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZsVAAIlAMMzNBmZmwT+keuFHrhR/AQAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM2PTM3ZAMMzNA2ZmuT+lgQYk3S8fAQ==]]>
   </DiagramLayout>
 </ManagedForm>

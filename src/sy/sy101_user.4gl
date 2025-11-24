@@ -91,7 +91,7 @@ FUNCTION init_user_module()
         COMMAND "Next"
             CALL move_record(1)
 
-        COMMAND "Change Password"
+        ON ACTION change_password 
             IF rec_user.username IS NULL OR rec_user.username = "" THEN
                 CALL utils_globals.show_info("No user selected.")
             ELSE

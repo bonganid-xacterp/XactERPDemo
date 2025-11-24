@@ -25,62 +25,54 @@ TYPE line_data_t RECORD
     line_total DECIMAL(12, 2)
 END RECORD
 
-DEFINE m_line line_data_t
+DEFINE m_line_data line_data_t
 
 -- Open doc line details lookup form
 FUNCTION open_line_details_lookup(p_doc_type STRING) RETURNS line_data_t
     DEFINE l_result line_data_t
-    DEFINE l_stock_id INTEGER
     DEFINE l_stock RECORD LIKE st01_mast.*
-    --description VARCHAR(200),
-    --unit_cost DECIMAL(12,4)
-    --END RECORD
 
     INITIALIZE l_result.* TO NULL
-    INITIALIZE m_line.* TO NULL
+    INITIALIZE m_line_data.* TO NULL
 
     OPTIONS INPUT WRAP
-    OPEN WINDOW pu_lkup_form
-        WITH
-        FORM 'pu_lkup_form'
+    OPEN WINDOW pu_lkup_form WITH FORM 'pu_lkup_form'
         ATTRIBUTES(STYLE = "dialog", TEXT = "Line Details - " || p_doc_type)
 
-    CALL utils_globals.set_page_title("Line Details - " || p_doc_type)
+    CALL utils_globals.set_form_label("lbl_title", "Line Details - " || p_doc_type)
 
     -- Set default values
-    LET m_line.qnty = 0
-    LET m_line.disc_pct = 0
+    LET m_line_data.qnty = 0
+    LET m_line_data.disc_pct = 0
 
-    INPUT BY NAME m_line.* ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
+    INPUT BY NAME m_line_data.* ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
 
         BEFORE INPUT
             -- Display defaults
-            DISPLAY BY NAME m_line.*
+            DISPLAY BY NAME m_line_data.*
             -- stock lookup in details form
         ON ACTION lookup_stock
-            LET l_stock_id = st121_st_lkup.fetch_list()
+            LET l_result.stock_id = st121_st_lkup.fetch_list()
 
-            IF l_stock_id IS NOT NULL AND l_stock_id != "" THEN
+            IF l_result.stock_id IS NOT NULL AND l_result.stock_id != "" THEN
                 -- Convert STRING to INTEGER
-                LET m_line.stock_id = l_stock_id CLIPPED
+                LET m_line_data.stock_id = l_result.stock_id CLIPPED
 
                 -- Load stock details
-                SELECT *
-                    INTO l_stock.*
-                    FROM st01_mast
-                    WHERE id = m_line.stock_id
+                SELECT * INTO m_line_data.* FROM st01_mast
+                    WHERE id =l_result.stock_id
 
                 IF SQLCA.SQLCODE = 0 THEN
                     -- Populate line fields from stock record
-                    LET m_line.item_name = l_stock.description
-                    LET m_line.uom = l_stock.uom
-                    LET m_line.unit_cost = l_stock.unit_cost
+                    LET m_line_data.item_name = l_stock.description
+                    LET m_line_data.uom = l_stock.uom
+                    LET m_line_data.unit_cost = l_stock.unit_cost
 
                     -- Recalculate amounts based on new unit cost
                     CALL calculate_line_amounts()
 
                     -- Display the updated fields
-                    DISPLAY BY NAME m_line.*
+                    DISPLAY BY NAME m_line_data.*
 
                 ELSE
                     CALL utils_globals.show_error("Stock item not found.")
@@ -91,15 +83,15 @@ FUNCTION open_line_details_lookup(p_doc_type STRING) RETURNS line_data_t
             CALL calculate_line_amounts()
 
         ON ACTION accept ATTRIBUTES(TEXT = "OK", IMAGE = "check")
-            IF m_line.stock_id IS NULL OR m_line.stock_id = 0 THEN
+            IF m_line_data.stock_id IS NULL OR m_line_data.stock_id = 0 THEN
                 CALL utils_globals.show_error("Please select a stock item.")
                 NEXT FIELD CURRENT
             END IF
-            IF m_line.qnty IS NULL OR m_line.qnty <= 0 THEN
+            IF m_line_data.qnty IS NULL OR m_line_data.qnty <= 0 THEN
                 CALL utils_globals.show_error("Please enter a valid quantity.")
                 NEXT FIELD CURRENT
             END IF
-            LET l_result.* = m_line.*
+            LET l_result.* = m_line_data.*
             EXIT INPUT
 
         ON ACTION cancel ATTRIBUTES(TEXT = "Cancel", IMAGE = "cancel")
@@ -119,38 +111,38 @@ FUNCTION calculate_line_amounts()
     DEFINE l_net DECIMAL(12, 2)
 
     -- Initialize defaults
-    IF m_line.qnty IS NULL THEN
-        LET m_line.qnty = 0
+    IF m_line_data.qnty IS NULL THEN
+        LET m_line_data.qnty = 0
     END IF
-    IF m_line.unit_cost IS NULL THEN
-        LET m_line.unit_cost = 0
+    IF m_line_data.unit_cost IS NULL THEN
+        LET m_line_data.unit_cost = 0
     END IF
-    IF m_line.disc_pct IS NULL THEN
-        LET m_line.disc_pct = 0
+    IF m_line_data.disc_pct IS NULL THEN
+        LET m_line_data.disc_pct = 0
     END IF
-    IF m_line.vat_rate IS NULL THEN
-        LET m_line.vat_rate = 0
+    IF m_line_data.vat_rate IS NULL THEN
+        LET m_line_data.vat_rate = 0
     END IF
 
     -- Calculate gross amount
-    LET l_gross = m_line.qnty * m_line.unit_cost
-    LET m_line.gross_amt = l_gross
+    LET l_gross = m_line_data.qnty * m_line_data.unit_cost
+    LET m_line_data.gross_amt = l_gross
 
     -- Calculate discount
-    LET l_disc = l_gross * (m_line.disc_pct / 100)
-    LET m_line.disc_amt = l_disc
+    LET l_disc = l_gross * (m_line_data.disc_pct / 100)
+    LET m_line_data.disc_amt = l_disc
 
     -- Calculate net before VAT
     LET l_net = l_gross - l_disc
-    LET m_line.net_amt = l_net
+    LET m_line_data.net_amt = l_net
 
     -- Calculate VAT
-    LET l_vat = l_net * (m_line.vat_rate / 100)
-    LET m_line.vat_amt = l_vat
+    LET l_vat = l_net * (m_line_data.vat_rate / 100)
+    LET m_line_data.vat_amt = l_vat
 
     -- Calculate line total (net + VAT)
-    LET m_line.line_total = l_net + l_vat
+    LET m_line_data.line_total = l_net + l_vat
 
     -- Display calculated fields
-    DISPLAY BY NAME m_line.*
+    DISPLAY BY NAME m_line_data.*
 END FUNCTION

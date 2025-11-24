@@ -28,13 +28,14 @@ FUNCTION fetch_list() RETURNS STRING
         curr_idx INTEGER
 
     -- Open popup lookup form
+    OPTIONS INPUT WRAP
     OPEN WINDOW w_lkup
         WITH
         FORM "st121_st_lkup"
         ATTRIBUTES(STYLE = "dialog", TYPE = POPUP)
 
     LET f_search = ""
-    LET where_clause = "1=1"  -- Default WHERE clause (all records)
+    LET where_clause = "1=1" -- Default WHERE clause (all records)
     LET ret_code = NULL
 
     -- Load initial data
@@ -48,16 +49,10 @@ FUNCTION fetch_list() RETURNS STRING
         -- ===========================================
         DISPLAY ARRAY stock_arr
             TO tbl_st_list.*
-            ATTRIBUTES(DOUBLECLICK = accept)
+            ATTRIBUTES(DOUBLECLICK = ACCEPT)
 
+            ON KEY(RETURN)
             ON ACTION accept ATTRIBUTES(TEXT = "Select", IMAGE = "check")
-                LET curr_idx = arr_curr()
-                IF curr_idx > 0 THEN
-                    LET ret_code = stock_arr[curr_idx].id
-                    EXIT DIALOG
-                END IF
-
-            ON KEY (RETURN)
                 LET curr_idx = arr_curr()
                 IF curr_idx > 0 THEN
                     LET ret_code = stock_arr[curr_idx].id
@@ -77,17 +72,21 @@ FUNCTION fetch_list() RETURNS STRING
             AFTER FIELD f_search
                 -- Fires on Enter or Tab leaving the field
                 CALL load_stock_data(stock_arr, f_search)
+                CALL ui.Interface.refresh()
 
+            ON KEY (RETURN)
             ON ACTION search ATTRIBUTES(TEXT = "Search", IMAGE = "zoom")
                 CALL load_stock_data(stock_arr, f_search)
+                CALL ui.Interface.refresh()
 
             ON ACTION clear ATTRIBUTES(TEXT = "Clear", IMAGE = "refresh")
                 -- Clear search field and reload all records
                 LET f_search = ""
                 CALL load_stock_data_construct(stock_arr, "1=1")
+                CALL ui.Interface.refresh()
                 DISPLAY BY NAME f_search
 
-             ON ACTION cancel ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
+            ON ACTION close ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
                 LET ret_code = NULL
                 EXIT DIALOG
 
@@ -97,6 +96,7 @@ FUNCTION fetch_list() RETURNS STRING
 
     CLOSE WINDOW w_lkup
     RETURN ret_code
+    
 END FUNCTION
 
 -- ==========================================
@@ -116,7 +116,7 @@ FUNCTION load_stock_data(
             id LIKE st01_mast.id,
             description LIKE st01_mast.description,
             stock_on_hand LIKE st01_mast.stock_on_hand,
-             uom LIKE st01_mast.uom
+            uom LIKE st01_mast.uom
         END RECORD,
         like_pat STRING,
         i INTEGER
@@ -146,8 +146,7 @@ FUNCTION load_stock_data(
     PREPARE stmt
         FROM "SELECT id, description, stock_on_hand, uom
            FROM st01_mast
-          WHERE status = 'active'
-            AND description ILIKE ?
+          WHERE description ILIKE ?
           ORDER BY id
           LIMIT 100"
 
@@ -190,12 +189,14 @@ FUNCTION load_stock_data_construct(
     CALL p_arr.clear()
 
     -- Build SQL query with constructed WHERE clause
-    LET sql_query = "SELECT id, description, stock_on_hand, uom ",
-                    "FROM st01_mast ",
-                    "WHERE status = 'active' ",
-                    "AND (", p_where_clause, ") ",
-                    "ORDER BY id ",
-                    "LIMIT 100"
+    LET sql_query =
+        "SELECT id, description, stock_on_hand, uom ",
+        "FROM st01_mast ",
+        "AND (",
+        p_where_clause,
+        ") ",
+        "ORDER BY id ",
+        "LIMIT 100"
 
     -- Prepare and execute query
     PREPARE stmt_construct FROM sql_query

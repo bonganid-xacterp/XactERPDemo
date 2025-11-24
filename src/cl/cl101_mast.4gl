@@ -62,8 +62,11 @@ END MAIN
 -- ==============================================================
 FUNCTION init_cl_module()
     DEFINE chosen_row SMALLINT
+    
     LET is_edit_mode = FALSE
+    
     INITIALIZE m_cred_rec.* TO NULL
+    
     DISPLAY BY NAME m_cred_rec.*
     DISPLAY ARRAY m_cred_trans_arr TO m_cred_trans_arr.*
         ATTRIBUTES(UNBUFFERED, DOUBLECLICK = row_select)
@@ -472,20 +475,19 @@ FUNCTION load_creditor_transactions(p_supp_id INTEGER)
 
     CALL m_cred_trans_arr.clear()
 
-    DECLARE c_trans CURSOR FOR
-        SELECT *
-            FROM cl30_trans
+    DECLARE cred_trans_curs CURSOR FOR
+        SELECT * FROM cl30_trans
             WHERE supp_id = p_supp_id
             ORDER BY trans_date DESC, doc_no DESC
 
     LET idx = 1
-    FOREACH c_trans
+    FOREACH cred_trans_curs
         INTO m_cred_trans_arr[idx].*
         LET idx = idx + 1
     END FOREACH
 
-    CLOSE c_trans
-    FREE c_trans
+    CLOSE cred_trans_curs
+    FREE cred_trans_curs
 END FUNCTION
 
 -- ==============================================================

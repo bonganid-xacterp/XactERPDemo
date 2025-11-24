@@ -277,6 +277,15 @@ PUBLIC FUNCTION show_message(
     p_message STRING, message_type STRING, title STRING)
     DEFINE icon STRING
     DEFINE window_title STRING
+    DEFINE w ui.Window
+
+    -- Check if there's a current window before showing message
+    LET w = ui.Window.getCurrent()
+    IF w IS NULL THEN
+        -- No window available, just display to console/log
+        DISPLAY p_message
+        RETURN
+    END IF
 
     LET window_title = IIF(title IS NULL, "Message", title)
 
@@ -316,6 +325,15 @@ END FUNCTION
 -- Confirmation dialog
 PUBLIC FUNCTION show_confirm(message STRING, title STRING) RETURNS BOOLEAN
     DEFINE answer SMALLINT
+    DEFINE w ui.Window
+
+    -- Check if there's a current window before showing dialog
+    LET w = ui.Window.getCurrent()
+    IF w IS NULL THEN
+        -- No window available, default to FALSE (don't confirm)
+        RETURN FALSE
+    END IF
+
     LET title = IIF(title IS NULL, "Confirm", title)
 
     MENU title ATTRIBUTES(STYLE = "dialog", COMMENT = message)
@@ -1150,6 +1168,11 @@ FUNCTION show_sql_error(p_context STRING)
     DEFINE sql_errm STRING = SQLCA.SQLERRM
     --DEFINE sql_state STRING = SQLCA.SQLSTATE
 
+    -- Only show error if there actually is one (SQLCODE != 0)
+    IF sql_code = 0 THEN
+        RETURN  -- No error, don't show anything
+    END IF
+
     -- Check if the error is "No Data Found" or "End of Cursor" (often handled gracefully)
     IF sql_code = NOTFOUND THEN
         LET full_message =
@@ -1158,10 +1181,9 @@ FUNCTION show_sql_error(p_context STRING)
     ELSE
         -- Format the detailed error message
         LET full_message =
-            SFMT("Database Error: %1\n(SQLCODE: %2 / SQLSTATE: %3)\nError: %4",
+            SFMT("Database Error: %1\n(SQLCODE: %2)\nError: %3",
                 p_context,
                 sql_code,
-                -- sql_state,
                 sql_errm)
     END IF
 

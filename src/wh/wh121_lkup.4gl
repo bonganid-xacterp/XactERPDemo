@@ -39,6 +39,7 @@ FUNCTION fetch_list() RETURNS STRING
 
     LET idx = 0
     LET selected_code = NULL
+    
     OPTIONS INPUT WRAP
     OPEN WINDOW w_wh_lkup WITH FORM "wh121_lkup" ATTRIBUTES(STYLE = "dialog")
 
