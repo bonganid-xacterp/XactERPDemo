@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ManagedForm databaseName="demoappdb" fileVersion="31400" gstVersion="3140a" name="utils_lkup_form" uid="{626ababe-42ed-4efe-b1c0-4da84944a72b}">
+  <AGSettings>
+    <DynamicProperties version="2"/>
+  </AGSettings>
+  <Record name="lkup_rec" uid="{96801c63-d374-45c5-9f4f-b6560d83c5a8}">
+    <RecordField fieldIdRef="1" length="100" name="c1" sqlType="INTEGER" uid="{3530b807-3acb-4e6d-a4ed-ab4191010d76}"/>
+    <RecordField fieldIdRef="2" length="100" name="c2" uid="{6003c212-a7b5-4378-8625-f1015eae1d70}"/>
+    <RecordField fieldIdRef="4" length="100" name="c3" uid="{85bcdfd6-bbf5-40e0-b59e-1adbcd85aa87}"/>
+  </Record>
+  <Record name="lk_search" uid="{a399ee17-c0e4-4630-bce6-dbca8cc88c24}">
+    <RecordField fieldIdRef="3" name="f_search" uid="{24cfe78a-bf9e-4257-9c00-a8aa84b8a6a2}"/>
+    <RecordField fieldIdRef="6" length="100" name="filter_by" uid="{f16ac0f5-ab85-4e6f-9727-b355db455d21}"/>
+  </Record>
+  <Form gridHeight="20" gridWidth="50" name="pg_title" text="">
+    <VBox gridHeight="20" gridWidth="50" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="18" gridWidth="50" name="lk_grid" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="47" justify="center" name="lbl_title" posX="1" posY="0" text=""/>
+        <Table gridHeight="14" gridWidth="48" name="tbl_lookup_list" posX="1" posY="1" totalRows="5">
+          <Edit fieldId="1" gridHeight="1" gridWidth="8" length="100" name="c1" posX="0" posY="0" sqlType="INTEGER" tabIndex="-1" title="" widget="Edit"/>
+          <Edit fieldId="2" gridHeight="1" gridWidth="8" length="100" name="c2" posX="8" posY="0" tabIndex="-1" title="" widget="Edit"/>
+          <Edit fieldId="4" gridHeight="1" gridWidth="8" length="100" name="c3" posX="16" posY="0" tabIndex="-1" title="" widget="Edit"/>
+        </Table>
+        <Label gridHeight="1" gridWidth="6" name="lbl_filter" posX="1" posY="16" text="Search : "/>
+        <Edit fieldId="3" gridHeight="1" gridWidth="17" name="f_search" posX="8" posY="16" tabIndex="-1" title="edit1" widget="Edit"/>
+        <ComboBox fieldId="6" gridHeight="1" gridWidth="22" items="" length="100" name="filter_by" posX="26" posY="16" tabIndex="-1" title="combobox1" widget="ComboBox"/>
+      </Grid>
+    </VBox>
+  </Form>
+  <DiagramLayout>
+    <![CDATA[AAAAAgAAAEwAewA5ADYAOAAwADEAYwA2ADMALQBkADMANwA0AC0ANAA1AGMANQAtADkAZgA0AGYALQBiADYANQA2ADAAZAA4ADMAYwA1AGEAOAB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewBhADMAOQA5AGUAZQAxADcALQBjADAAZQA0AC0ANAA2ADMAMAAtAGIAYwBlADYALQBkAGIAYwBhADgAYwBjADgAOABjADIANAB9QGOzM0I5mZ4/+ZmZzMzM6j9gYk3S8an8AQ==]]>
+  </DiagramLayout>
+</ManagedForm>

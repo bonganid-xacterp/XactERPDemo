@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="wh101_mast.tmp" build="3.20.14" sqlDbName="demoappdb" text="Warehouse" width="279" height="12">
+<Form name="wh101_mast.tmp" build="3.20.14" sqlDbName="demoappdb" text="Warehouse" width="143" height="12">
   <LStr text="Warehouse"/>
   <VBox name="vbox1">
-    <Grid name="wh" width="279" height="12">
-      <Label name="lbl_title" width="72" text="WAREHOUSE MASTER" justify="center" sizePolicy="dynamic" style="bold title" posY="0" posX="1" gridWidth="72">
+    <Grid name="wh" width="143" height="12">
+      <Label name="lbl_title" width="141" text="WAREHOUSE MASTER" justify="center" sizePolicy="dynamic" style="bold title" posY="0" posX="1" gridWidth="141">
         <LStr text="WAREHOUSE MASTER"/>
       </Label>
       <Label name="wh01_mast_wh_code_label1" width="8" text="WH Code" posY="1" posX="1" gridWidth="8">
         <LStr text="WH Code"/>
       </Label>
       <FormField name="wh01_mast.wh_code" colName="wh_code" sqlType="VARCHAR(30)" fieldId="0" sqlTabName="wh01_mast" tabIndex="1">
-        <ButtonEdit width="18" image="zoom" scroll="1" posY="1" posX="10" gridWidth="20"/>
+        <Edit width="20" scroll="1" posY="1" posX="10" gridWidth="20"/>
       </FormField>
       <Label name="wh01_mast_wh_name_label1" width="10" text="Name" posY="1" posX="32" gridWidth="10">
         <LStr text="Name"/>
@@ -29,9 +29,9 @@
       </Label>
       <FormField name="wh01_mast.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="3" sqlTabName="wh01_mast" defaultValue="1" tabIndex="4">
         <ComboBox width="8" scroll="1" posY="2" posX="43" gridWidth="10">
-          <Item name="0" text="Inactive"/>
-          <Item name="1" text="Active"/>
-          <Item name="-1" text="Archived"/>
+          <Item name="inactive" text="Inactive"/>
+          <Item name="active" text="Active"/>
+          <Item name="archived" text="Archived"/>
         </ComboBox>
       </FormField>
       <PhantomFormField name="wh01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="25" sqlTabName="wh01_mast">
@@ -49,7 +49,7 @@
       <PhantomFormField name="wh01_mast.updated_at" colName="updated_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="29" sqlTabName="wh01_mast">
         <PhantomEdit width="1"/>
       </PhantomFormField>
-      <Table pageSize="5" name="arr_wh_trans" width="278" posY="4" posX="1" gridWidth="278" gridHeight="6" tabName="arr_wh_trans">
+      <Table pageSize="5" name="arr_wh_trans" width="142" posY="4" posX="1" gridWidth="142" gridHeight="6" tabName="arr_wh_trans">
         <PhantomColumn name="wh30_trans.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="4" sqlTabName="wh30_trans">
           <PhantomEdit width="1"/>
         </PhantomColumn>
@@ -58,11 +58,11 @@
           <LStr text="Trans Date"/>
         </TableColumn>
         <TableColumn name="wh30_trans.trans_type" colName="trans_type" sqlType="VARCHAR(20)" fieldId="6" sqlTabName="wh30_trans" text="Trans  Type" tabIndex="6">
-          <Edit width="20" scroll="1"/>
+          <Edit width="8" scroll="1"/>
           <LStr text="Trans  Type"/>
         </TableColumn>
         <TableColumn name="wh30_trans.ref_no" colName="ref_no" sqlType="VARCHAR(40)" fieldId="7" sqlTabName="wh30_trans" text="Ref No" tabIndex="7">
-          <Edit width="30" scroll="1"/>
+          <Edit width="16" scroll="1"/>
           <LStr text="Ref No"/>
         </TableColumn>
         <PhantomColumn name="wh30_trans.source_module" colName="source_module" sqlType="VARCHAR(20)" fieldId="8" sqlTabName="wh30_trans">
@@ -72,46 +72,46 @@
           <PhantomEdit width="1"/>
         </PhantomColumn>
         <TableColumn name="wh30_trans.wh_id" colName="wh_id" sqlType="BIGINT" fieldId="10" sqlTabName="wh30_trans" text="WH ID" tabIndex="8" numAlign="1">
-          <Edit width="20" scroll="1"/>
+          <Edit width="8" scroll="1"/>
           <LStr text="WH ID"/>
         </TableColumn>
         <TableColumn name="wh30_trans.wb_id" colName="wb_id" sqlType="BIGINT" fieldId="11" sqlTabName="wh30_trans" text="BIN ID" tabIndex="9" numAlign="1">
-          <Edit width="20" scroll="1"/>
+          <Edit width="8" scroll="1"/>
           <LStr text="BIN ID"/>
         </TableColumn>
         <TableColumn name="wh30_trans.stock_id" colName="stock_id" sqlType="BIGINT" fieldId="12" sqlTabName="wh30_trans" text="Stock ID" tabIndex="10" numAlign="1">
-          <Edit width="20" scroll="1"/>
+          <Edit width="10" scroll="1"/>
           <LStr text="Stock ID"/>
         </TableColumn>
         <TableColumn name="wh30_trans.qnty_in" colName="qnty_in" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="13" sqlTabName="wh30_trans" text="Qnty In" tabIndex="11" numAlign="1">
-          <Edit width="17" scroll="1"/>
+          <Edit width="8" scroll="1"/>
           <LStr text="Qnty In"/>
         </TableColumn>
         <TableColumn name="wh30_trans.qnty_out" colName="qnty_out" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="14" sqlTabName="wh30_trans" text="Qnty Out" tabIndex="12" numAlign="1">
-          <Edit width="17" scroll="1"/>
+          <Edit width="7" scroll="1"/>
           <LStr text="Qnty Out"/>
         </TableColumn>
         <TableColumn name="wh30_trans.run_qty" colName="run_qty" sqlType="DECIMAL(15,3)" fieldId="15" sqlTabName="wh30_trans" text="Balance" tabIndex="13" numAlign="1">
-          <Edit width="17" scroll="1"/>
+          <Edit width="9" scroll="1"/>
           <LStr text="Balance"/>
         </TableColumn>
         <TableColumn name="wh30_trans.uom" colName="uom" sqlType="VARCHAR(20)" fieldId="16" sqlTabName="wh30_trans" text="UOM" tabIndex="14">
-          <Edit width="20" scroll="1"/>
+          <Edit width="10" scroll="1"/>
           <LStr text="UOM"/>
         </TableColumn>
         <TableColumn name="wh30_trans.unit_cost" colName="unit_cost" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="17" sqlTabName="wh30_trans" text="Unit Cost" tabIndex="15" numAlign="1">
-          <Edit width="17" scroll="1"/>
+          <Edit width="9" scroll="1"/>
           <LStr text="Unit Cost"/>
         </TableColumn>
         <PhantomColumn name="wh30_trans.ext_cost" colName="ext_cost" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="18" sqlTabName="wh30_trans">
           <PhantomEdit width="1"/>
         </PhantomColumn>
         <TableColumn name="wh30_trans.remarks" colName="remarks" sqlType="VARCHAR(200)" fieldId="19" sqlTabName="wh30_trans" text="Remarks" tabIndex="16">
-          <Edit width="30" scroll="1"/>
+          <Edit width="16" scroll="1"/>
           <LStr text="Remarks"/>
         </TableColumn>
         <TableColumn name="wh30_trans.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="20" sqlTabName="wh30_trans" text="Status" tabIndex="17">
-          <Edit width="20" scroll="1"/>
+          <Edit width="9" scroll="1"/>
           <LStr text="Status"/>
         </TableColumn>
         <PhantomColumn name="wh30_trans.created_by" colName="created_by" sqlType="BIGINT" fieldId="21" sqlTabName="wh30_trans">

@@ -5,8 +5,9 @@
   <!-- ============================================== -->
   <ActionDefault name="accept" text="OK" image="ok" acceleratorName="Return" acceleratorName2="Enter" comment="Accept and continue" contextMenu="no"/>
   <ActionDefault name="cancel" validate="no" text="Cancel" image="cancel" acceleratorName="Escape" comment="Cancel operation" contextMenu="no"/>
-  <ActionDefault name="close" validate="no" text="Close" image="close" acceleratorName="Alt-F4" comment="Close window" defaultView="no" contextMenu="no"/>
+  <ActionDefault name="close" validate="no" text="Close" image="fa-close" acceleratorName="Alt-F4" comment="Close window" defaultView="no" contextMenu="no"/>
   <ActionDefault name="quit" validate="no" text="Quit" image="quit" acceleratorName="Control-Q" comment="Exit application" contextMenu="no"/>
+  <ActionDefault name="exit" validate="no" text="Quit" image="quit" acceleratorName="Control-Q" comment="Exit Window" contextMenu="no"/>
   <ActionDefault name="help" validate="no" text="Help" image="help" acceleratorName="F1" comment="Show help" contextMenu="no"/>
   <ActionDefault name="interrupt" text="Interrupt" image="stop" comment="Interrupt operation" contextMenu="no"/>
 
@@ -14,12 +15,12 @@
   <!-- CRUD ACTIONS -->
   <!-- ============================================== -->
   <ActionDefault name="new" text="New" image="new" acceleratorName="Control-N" comment="Create new record" contextMenu="yes"/>
-  <ActionDefault name="insert" text="Insert" image="new" acceleratorName="F3" comment="Insert record" contextMenu="no"/>
-  <ActionDefault name="append" text="Append" image="add" acceleratorName="Control-F3" comment="Append record" contextMenu="no"/>
-  <ActionDefault name="edit" text="Edit" image="edit" acceleratorName="F2" comment="Edit record" contextMenu="yes"/>
-  <ActionDefault name="update" text="Update" image="update" comment="Update record" contextMenu="no"/>
-  <ActionDefault name="delete" validate="no" text="Delete" image="delete" acceleratorName="F4" comment="Delete record" contextMenu="yes"/>
-  <ActionDefault name="save" text="Save" image="save" acceleratorName="Control-S" comment="Save changes" contextMenu="yes"/>
+  <ActionDefault name="insert" text="Insert" image="fileNew" acceleratorName="F3" comment="Insert record" contextMenu="no"/>
+  <ActionDefault name="append" text="Append" image="fa-plus" acceleratorName="Control-F3" comment="Append record" contextMenu="no"/>
+  <ActionDefault name="edit" text="Edit" image="fa-edit" acceleratorName="F2" comment="Edit record" contextMenu="yes"/>
+  <ActionDefault name="update" text="Update" image="filesave" comment="Update record" contextMenu="no"/>
+  <ActionDefault name="delete" validate="no" text="Delete" image="fa-trash" acceleratorName="F4" comment="Delete record" contextMenu="yes"/>
+  <ActionDefault name="save" text="Save" image="filesave" acceleratorName="Control-S" comment="Save changes" contextMenu="yes"/>
   <ActionDefault name="refresh" text="Refresh" image="refresh" acceleratorName="F5" comment="Refresh data" contextMenu="yes"/>
 
   <!-- ============================================== -->
@@ -42,7 +43,7 @@
   <!-- PRINT & EXPORT ACTIONS -->
   <!-- ============================================== -->
   <ActionDefault name="print" text="Print" image="printer" acceleratorName="Control-P" comment="Print document" contextMenu="yes"/>
-  <ActionDefault name="print_preview" text="Print Preview" image="preview" comment="Preview before printing" contextMenu="yes"/>
+  <ActionDefault name="print_preview" text="Print Preview" image="file" comment="Preview before printing" contextMenu="yes"/>
   <ActionDefault name="export" text="Export" image="export" acceleratorName="Control-E" comment="Export data" contextMenu="yes"/>
   <ActionDefault name="export_excel" text="Export to Excel" image="excel" comment="Export to Excel" contextMenu="yes"/>
   <ActionDefault name="export_pdf" text="Export to PDF" image="pdf" comment="Export to PDF" contextMenu="yes"/>
@@ -54,7 +55,7 @@
   <ActionDefault name="editcopy" text="Copy" image="copy" acceleratorName="Control-C" comment="Copy to clipboard" contextMenu="yes"/>
   <ActionDefault name="editcut" text="Cut" image="cut" acceleratorName="Control-X" comment="Cut to clipboard" contextMenu="yes"/>
   <ActionDefault name="editpaste" text="Paste" image="paste" acceleratorName="Control-V" comment="Paste from clipboard" contextMenu="yes"/>
-  <ActionDefault name="selectall" text="Select All" acceleratorName="Control-A" comment="Select all items" contextMenu="yes"/>
+  <ActionDefault name="selectall" text="Select All"  image="textleft" acceleratorName="Control-A" comment="Select all items" contextMenu="yes"/>
 
   <!-- ============================================== -->
   <!-- TRANSACTION ACTIONS -->
@@ -69,7 +70,7 @@
   <!-- ============================================== -->
   <!-- LINE ITEM ACTIONS -->
   <!-- ============================================== -->
-  <ActionDefault name="add_line" text="Add Line" image="add" comment="Add new line" contextMenu="yes"/>
+  <ActionDefault name="add_line" text="Add Line" image="listadd" comment="Add new line" contextMenu="yes"/>
   <ActionDefault name="delete_line" text="Delete Line" image="delete" comment="Delete selected line" contextMenu="yes"/>
   <ActionDefault name="insert_line" text="Insert Line" image="new" comment="Insert line above" contextMenu="yes"/>
   <ActionDefault name="copy_line" text="Copy Line" image="copy" comment="Copy selected line" contextMenu="yes"/>
@@ -88,7 +89,7 @@
   <!-- ============================================== -->
   <!-- DOCUMENT ACTIONS -->
   <!-- ============================================== -->
-  <ActionDefault name="attach" text="Attach" image="attach" comment="Attach document" contextMenu="yes"/>
+  <ActionDefault name="attach" text="Attach" image="file" comment="Attach document" contextMenu="yes"/>
   <ActionDefault name="view_attachments" text="View Attachments" image="folder" comment="View attachments" contextMenu="yes"/>
   <ActionDefault name="email" text="Email" image="mail" comment="Send email" contextMenu="yes"/>
   <ActionDefault name="view_history" text="View History" image="info" comment="View audit trail" contextMenu="yes"/>
@@ -106,8 +107,8 @@
   <ActionDefault name="view_detail" text="View Detail" image="info" comment="View details" contextMenu="yes"/>
   <ActionDefault name="expand_all" text="Expand All" image="plus" comment="Expand all nodes" contextMenu="yes"/>
   <ActionDefault name="collapse_all" text="Collapse All" image="minus" comment="Collapse all nodes" contextMenu="yes"/>
-  <ActionDefault name="zoom_in" text="Zoom In" image="zoomin" comment="Zoom in" contextMenu="yes"/>
-  <ActionDefault name="zoom_out" text="Zoom Out" image="zoomout" comment="Zoom out" contextMenu="yes"/>
+  <ActionDefault name="zoom_in" text="Zoom In" image="fa-search-plus" comment="Zoom in" contextMenu="yes"/>
+  <ActionDefault name="zoom_out" text="Zoom Out" image="fa-zoom-minus" comment="Zoom out" contextMenu="yes"/>
 
   <!-- ============================================== -->
   <!-- ARRAY/TABLE NAVIGATION -->
@@ -124,8 +125,8 @@
   <!-- ============================================== -->
   <!-- TAB NAVIGATION -->
   <!-- ============================================== -->
-  <ActionDefault name="nexttab" text="Next Folder Tab" acceleratorName="Control-Tab" comment="Next tab" contextMenu="no"/>
-  <ActionDefault name="prevtab" text="Previous Folder Tab" acceleratorName="Control-Shift-Tab" comment="Previous tab" contextMenu="no"/>
+  <ActionDefault name="nexttab" text="Next Folder Tab" image="next" acceleratorName="Control-Tab" comment="Next tab" contextMenu="no"/>
+  <ActionDefault name="prevtab" text="Previous Folder Tab" image="previous" acceleratorName="Control-Shift-Tab" comment="Previous tab" contextMenu="no"/>
 
   <!-- ============================================== -->
   <!-- SETTINGS & PREFERENCES -->
@@ -141,4 +142,224 @@
   <ActionDefault name="row_select" text="Select" image="ok" comment="Select row" contextMenu="yes"/>
   <ActionDefault name="save_header" text="Save Header" image="save" comment="Save header information" contextMenu="yes"/>
   <ActionDefault name="save_lines" text="Save Lines" image="save" comment="Save line items" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- AUTHENTICATION ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="login" text="Login" image="ok" acceleratorName="Return" comment="Login to system" contextMenu="no"/>
+  <ActionDefault name="register" text="Register" image="user" comment="Register new user" contextMenu="yes"/>
+  <ActionDefault name="forgot_password" text="Forgot Password" image="help" comment="Reset password" contextMenu="yes"/>
+  <ActionDefault name="reset_password" text="Reset Password" image="key" comment="Reset user password" contextMenu="yes"/>
+  <ActionDefault name="unlock_user" text="Unlock User" image="unlock" comment="Unlock user account" contextMenu="yes"/>
+  <ActionDefault name="lock_user" text="Lock User" image="lock" comment="Lock user account" contextMenu="yes"/>
+  <ActionDefault name="force_password_change" text="Force Password Change" image="key" comment="Force user to change password" contextMenu="yes"/>
+  <ActionDefault name="view_login_history" text="Login History" image="info" comment="View login history" contextMenu="yes"/>
+  <ActionDefault name="active_sessions" text="Active Sessions" image="info" comment="View active user sessions" contextMenu="yes"/>
+  <ActionDefault name="terminate_session" text="Terminate Session" image="cancel" comment="Terminate user session" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- WINDOW MANAGEMENT -->
+  <!-- ============================================== -->
+  <ActionDefault name="win_close" text="Close Window" image="close" acceleratorName="Control-W" comment="Close current window" contextMenu="yes"/>
+  <ActionDefault name="win_close_all" text="Close All" image="delete" comment="Close all windows" contextMenu="yes"/>
+  <ActionDefault name="win_list" text="Window List" image="folder" acceleratorName="Control-Shift-W" comment="Show window list" contextMenu="yes"/>
+  <ActionDefault name="win_minimize" text="Minimize" image="minimize" comment="Minimize window" contextMenu="yes"/>
+  <ActionDefault name="win_maximize" text="Maximize" image="maximize" comment="Maximize window" contextMenu="yes"/>
+  <ActionDefault name="win_restore" text="Restore" image="restore" comment="Restore window" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- STOCK MODULE ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="st_mast" text="Stock Master" image="stock" comment="Manage stock items" contextMenu="yes"/>
+  <ActionDefault name="st_cat" text="Stock Categories" image="folder" comment="Manage stock categories" contextMenu="yes"/>
+  <ActionDefault name="st_uom" text="Units of Measure" image="ruler" comment="Manage units" contextMenu="yes"/>
+  <ActionDefault name="st_enq" text="Stock Enquiry" image="zoom" comment="Stock enquiry" contextMenu="yes"/>
+  <ActionDefault name="st_trans" text="Stock Transactions" image="document" comment="Stock transactions" contextMenu="yes"/>
+  <ActionDefault name="st_hist" text="Stock History" image="info" comment="Stock history" contextMenu="yes"/>
+  <ActionDefault name="st_adj" text="Stock Adjustment" image="edit" comment="Stock adjustment" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- WAREHOUSE MODULE ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="wh_mast" text="Warehouse Master" image="warehouse" comment="Manage warehouses" contextMenu="yes"/>
+  <ActionDefault name="wb_mast" text="Bin Master" image="warehouse" comment="Manage bins" contextMenu="yes"/>
+  <ActionDefault name="wh_trans" text="Warehouse Transfer" image="transfer" comment="Warehouse transfers" contextMenu="yes"/>
+  <ActionDefault name="wh_stock" text="Warehouse Stock" image="stock" comment="Warehouse stock enquiry" contextMenu="yes"/>
+  <ActionDefault name="wb_stock" text="Bin Stock" image="stock" comment="Bin stock enquiry" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- PURCHASE MODULE ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="cl_mast" text="Suppliers" image="supplier" comment="Manage suppliers" contextMenu="yes"/>
+  <ActionDefault name="pu_order" text="Purchase Orders" image="document" comment="Purchase orders" contextMenu="yes"/>
+  <ActionDefault name="pu_grn" text="Goods Received" image="receipt" comment="Goods received notes" contextMenu="yes"/>
+  <ActionDefault name="pu_inv" text="Purchase Invoices" image="invoice" comment="Purchase invoices" contextMenu="yes"/>
+  <ActionDefault name="pu_hist" text="Purchase History" image="info" comment="Purchase history" contextMenu="yes"/>
+  <ActionDefault name="cl_enq" text="Supplier Enquiry" image="zoom" comment="Supplier enquiry" contextMenu="yes"/>
+  <ActionDefault name="cl_tran" text="Supplier Transactions" image="document" comment="Supplier transactions" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- SALES MODULE ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="dl_mast" text="Customers" image="customer" comment="Manage customers" contextMenu="yes"/>
+  <ActionDefault name="sa_quote" text="Sales Quotations" image="document" comment="Sales quotations" contextMenu="yes"/>
+  <ActionDefault name="sa_order" text="Sales Orders" image="document" comment="Sales orders" contextMenu="yes"/>
+  <ActionDefault name="sa_invoice" text="Sales Invoices" image="invoice" comment="Sales invoices" contextMenu="yes"/>
+  <ActionDefault name="sa_crn" text="Credit Notes" image="document" comment="Credit notes" contextMenu="yes"/>
+  <ActionDefault name="sa_hist" text="Sales History" image="info" comment="Sales history" contextMenu="yes"/>
+  <ActionDefault name="dl_enq" text="Customer Enquiry" image="zoom" comment="Customer enquiry" contextMenu="yes"/>
+  <ActionDefault name="dl_tran" text="Customer Transactions" image="document" comment="Customer transactions" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- GENERAL LEDGER ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="gl_acct" text="Chart of Accounts" image="ledger" comment="Manage accounts" contextMenu="yes"/>
+  <ActionDefault name="gl_trans" text="Journal Entries" image="document" comment="Journal entries" contextMenu="yes"/>
+  <ActionDefault name="gl_period" text="Periods" image="calendar" comment="Financial periods" contextMenu="yes"/>
+  <ActionDefault name="gl_enq" text="Account Enquiry" image="zoom" comment="Account enquiry" contextMenu="yes"/>
+  <ActionDefault name="gl_bal" text="Trial Balance" image="report" comment="Trial balance report" contextMenu="yes"/>
+  <ActionDefault name="gl_bs" text="Balance Sheet" image="report" comment="Balance sheet" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- ACCOUNTS PAYABLE ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="ap_inv" text="AP Invoices" image="invoice" comment="Payables invoices" contextMenu="yes"/>
+  <ActionDefault name="ap_pay" text="Payments" image="payment" comment="Supplier payments" contextMenu="yes"/>
+  <ActionDefault name="ap_aging" text="AP Aging" image="report" comment="Payables aging" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- ACCOUNTS RECEIVABLE ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="ar_inv" text="AR Invoices" image="invoice" comment="Receivables invoices" contextMenu="yes"/>
+  <ActionDefault name="ar_rcpt" text="Receipts" image="receipt" comment="Customer receipts" contextMenu="yes"/>
+  <ActionDefault name="ar_aging" text="AR Aging" image="report" comment="Receivables aging" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- SYSTEM MODULE ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="sy_user" text="User Management" image="user" comment="Manage users" contextMenu="yes"/>
+  <ActionDefault name="sy_role" text="User Roles" image="shield" comment="Manage roles" contextMenu="yes"/>
+  <ActionDefault name="sy_perm" text="Permissions" image="lock" comment="Manage permissions" contextMenu="yes"/>
+  <ActionDefault name="sy_pwd" text="Change Password" image="key" comment="Change password" contextMenu="yes"/>
+  <ActionDefault name="sy_logs" text="System Logs" image="info" comment="View system logs" contextMenu="yes"/>
+  <ActionDefault name="sy_lkup_config" text="Lookup Config" image="properties" comment="Configure lookups" contextMenu="yes"/>
+  <ActionDefault name="sy_company" text="Company Settings" image="properties" comment="Company settings" contextMenu="yes"/>
+  <ActionDefault name="sy_backup" text="Backup" image="database" comment="Backup database" contextMenu="yes"/>
+  <ActionDefault name="sy_restore" text="Restore" image="refresh" comment="Restore database" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- REPORTING ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="rpt_stock_list" text="Stock List" image="report" comment="Stock list report" contextMenu="yes"/>
+  <ActionDefault name="rpt_stock_move" text="Stock Movement" image="report" comment="Stock movement report" contextMenu="yes"/>
+  <ActionDefault name="rpt_stock_card" text="Stock Card" image="report" comment="Stock card report" contextMenu="yes"/>
+  <ActionDefault name="rpt_sales" text="Sales Report" image="report" comment="Sales report" contextMenu="yes"/>
+  <ActionDefault name="rpt_purchase" text="Purchase Report" image="report" comment="Purchase report" contextMenu="yes"/>
+  <ActionDefault name="rpt_customer_list" text="Customer List" image="report" comment="Customer list" contextMenu="yes"/>
+  <ActionDefault name="rpt_supplier_list" text="Supplier List" image="report" comment="Supplier list" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- DOCUMENT CREATION ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="add_po" text="Add P/Order" image="new" comment="Create new purchase order" contextMenu="yes"/>
+  <ActionDefault name="add_grn" text="Add GRN" image="new" comment="Create new goods received note" contextMenu="yes"/>
+  <ActionDefault name="add_pi" text="Add P/Invoice" image="new" comment="Create new purchase invoice" contextMenu="yes"/>
+  <ActionDefault name="add_quote" text="Add Quote" image="new" comment="Create new sales quote" contextMenu="yes"/>
+  <ActionDefault name="add_so" text="Add S/Order" image="new" comment="Create new sales order" contextMenu="yes"/>
+  <ActionDefault name="add_si" text="Add S/Invoice" image="new" comment="Create new sales invoice" contextMenu="yes"/>
+  <ActionDefault name="add_crn" text="Add Credit Note" image="new" comment="Create new credit note" contextMenu="yes"/>
+  <ActionDefault name="add_payment" text="Add Payment" image="new" comment="Create new payment" contextMenu="yes"/>
+  <ActionDefault name="add_receipt" text="Add Receipt" image="new" comment="Create new receipt" contextMenu="yes"/>
+  <ActionDefault name="add_journal" text="Add Journal" image="new" comment="Create new journal entry" contextMenu="yes"/>
+  <ActionDefault name="add_adjustment" text="Add Adjustment" image="new" comment="Create new stock adjustment" contextMenu="yes"/>
+  <ActionDefault name="add_transfer" text="Add Transfer" image="new" comment="Create new warehouse transfer" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- DOCUMENT CONVERSION ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="convert_to_order" text="Gen Order" image="fa-random" comment="Convert quote to order" contextMenu="yes"/>
+  <ActionDefault name="convert_to_invoice" text="Gen Invoice" image="fa-random" comment="Convert order to invoice" contextMenu="yes"/>
+  <ActionDefault name="convert_to_grn" text="Gen GRN" image="fa-random" comment="Convert PO to GRN" contextMenu="yes"/>
+  <ActionDefault name="convert_to_crn" text="Gen C/Note" image="fa-random" comment="Convert invoice to credit note" contextMenu="yes"/>
+  <ActionDefault name="view_linked" text="View Linked" image="link" comment="View linked document" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- BATCH OPERATIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="batch_post" text="Batch Post" image="accept" comment="Post batch" contextMenu="yes"/>
+  <ActionDefault name="batch_delete" text="Batch Delete" image="delete" comment="Delete multiple records" contextMenu="yes"/>
+  <ActionDefault name="batch_update" text="Batch Update" image="edit" comment="Update multiple records" contextMenu="yes"/>
+  <ActionDefault name="batch_print" text="Batch Print" image="printer" comment="Print multiple documents" contextMenu="yes"/>
+  <ActionDefault name="select_all_rows" text="Select All" image="textleft" comment="Select all rows" contextMenu="yes"/>
+  <ActionDefault name="deselect_all" text="Deselect All" image="cancel" comment="Deselect all rows" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- AUDIT & COMPLIANCE -->
+  <!-- ============================================== -->
+  <ActionDefault name="audit_trail" text="Audit Trail" image="info" comment="View audit trail" contextMenu="yes"/>
+  <ActionDefault name="change_log" text="Change Log" image="info" comment="View change log" contextMenu="yes"/>
+  <ActionDefault name="who_modified" text="Who Modified" image="user" comment="Show modification history" contextMenu="yes"/>
+  <ActionDefault name="lock_record" text="Lock Record" image="lock" comment="Lock record" contextMenu="yes"/>
+  <ActionDefault name="unlock_record" text="Unlock Record" image="unlock" comment="Unlock record" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- IMPORT/EXPORT -->
+  <!-- ============================================== -->
+  <ActionDefault name="import_data" text="Import Data" image="import" comment="Import data" contextMenu="yes"/>
+  <ActionDefault name="import_csv" text="Import CSV" image="import" comment="Import from CSV" contextMenu="yes"/>
+  <ActionDefault name="import_excel" text="Import Excel" image="excel" comment="Import from Excel" contextMenu="yes"/>
+  <ActionDefault name="template_download" text="Download Template" image="download" comment="Download import template" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- DASHBOARD & ANALYTICS -->
+  <!-- ============================================== -->
+  <ActionDefault name="dashboard" text="Dashboard" image="chart" comment="Show dashboard" contextMenu="yes"/>
+  <ActionDefault name="analytics" text="Analytics" image="chart" comment="View analytics" contextMenu="yes"/>
+  <ActionDefault name="kpi" text="KPIs" image="chart" comment="Key performance indicators" contextMenu="yes"/>
+  <ActionDefault name="charts" text="Charts" image="chart" comment="View charts" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- WORKFLOW ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="send_for_approval" text="Send for Approval" image="mail" comment="Send for approval" contextMenu="yes"/>
+  <ActionDefault name="approve_all" text="Approve All" image="ok" comment="Approve all items" contextMenu="yes"/>
+  <ActionDefault name="reject_all" text="Reject All" image="cancel" comment="Reject all items" contextMenu="yes"/>
+  <ActionDefault name="delegate" text="Delegate" image="user" comment="Delegate to another user" contextMenu="yes"/>
+  <ActionDefault name="escalate" text="Escalate" image="warning" comment="Escalate issue" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- FILE MENU ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="logout" text="Logout" image="logout" comment="Logout user" contextMenu="yes"/>
+  <ActionDefault name="about" text="About" image="info" comment="About application" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- SPECIAL ERP ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="allocate_stock" text="Allocate Stock" image="stock" comment="Allocate stock to order" contextMenu="yes"/>
+  <ActionDefault name="reserve_stock" text="Reserve Stock" image="lock" comment="Reserve stock" contextMenu="yes"/>
+  <ActionDefault name="release_stock" text="Release Stock" image="unlock" comment="Release reserved stock" contextMenu="yes"/>
+  <ActionDefault name="check_availability" text="Check Availability" image="zoom" comment="Check stock availability" contextMenu="yes"/>
+  <ActionDefault name="price_check" text="Price Check" image="calculator" comment="Check price" contextMenu="yes"/>
+  <ActionDefault name="credit_check" text="Credit Check" image="warning" comment="Check customer credit" contextMenu="yes"/>
+
+  <!-- ============================================== -->
+  <!-- STOCK MOVEMENT ACTIONS -->
+  <!-- ============================================== -->
+  <ActionDefault name="stock_issue" text="Issue Stock" image="export" comment="Issue stock from warehouse" contextMenu="yes"/>
+  <ActionDefault name="stock_receipt" text="Receive Stock" image="import" comment="Receive stock into warehouse" contextMenu="yes"/>
+  <ActionDefault name="stock_transfer" text="Transfer Stock" image="transfer" comment="Transfer stock between warehouses" contextMenu="yes"/>
+  <ActionDefault name="stock_adjustment_in" text="Adjust In" image="plus" comment="Increase stock quantity" contextMenu="yes"/>
+  <ActionDefault name="stock_adjustment_out" text="Adjust Out" image="minus" comment="Decrease stock quantity" contextMenu="yes"/>
+  <ActionDefault name="stock_count" text="Stock Count" image="calculator" comment="Perform stock count" contextMenu="yes"/>
+  <ActionDefault name="stock_recount" text="Recount" image="refresh" comment="Recount stock" contextMenu="yes"/>
+  <ActionDefault name="post_stock_count" text="Post Count" image="accept" comment="Post stock count" contextMenu="yes"/>
+  <ActionDefault name="stock_write_off" text="Write Off" image="delete" comment="Write off damaged/obsolete stock" contextMenu="yes"/>
+  <ActionDefault name="stock_return" text="Return Stock" image="undo" comment="Return stock to supplier" contextMenu="yes"/>
+  <ActionDefault name="stock_scrap" text="Scrap Stock" image="trash" comment="Scrap damaged stock" contextMenu="yes"/>
+  <ActionDefault name="stock_reconcile" text="Reconcile" image="calculator" comment="Reconcile stock differences" contextMenu="yes"/>
+  <ActionDefault name="view_stock_movements" text="View Movements" image="info" comment="View stock movement history" contextMenu="yes"/>
+  <ActionDefault name="view_stock_levels" text="View Levels" image="chart" comment="View current stock levels" contextMenu="yes"/>
+  <ActionDefault name="reorder_stock" text="Create Reorder" image="new" comment="Create purchase order for low stock" contextMenu="yes"/>
+
 </ActionDefaultList>

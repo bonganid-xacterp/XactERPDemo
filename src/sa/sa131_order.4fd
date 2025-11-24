@@ -43,7 +43,7 @@
     <RecordField colName="gross_amt" fieldIdRef="25" fieldType="TABLE_COLUMN" name="sa31_ord_det.gross_amt" sqlTabName="sa31_ord_det" uid="{9ad79870-71c7-40b3-9362-5517b40b642b}"/>
     <RecordField colName="vat_rate" fieldIdRef="33" fieldType="TABLE_COLUMN" name="sa31_ord_det.vat_rate" sqlTabName="sa31_ord_det" uid="{7363d067-92fe-4428-ae91-4b07c07a515a}"/>
     <RecordField colName="vat_amt" fieldIdRef="36" fieldType="TABLE_COLUMN" name="sa31_ord_det.vat_amt" sqlTabName="sa31_ord_det" uid="{cbf5d0b4-cb0d-41b8-af82-b431f033446a}"/>
-    <RecordField colName="net_amt" fieldIdRef="37" fieldType="TABLE_COLUMN" name="sa31_ord_det.net_amt" sqlTabName="sa31_ord_det" uid="{ae179d12-e369-4070-adce-9c794f4952f5}"/>
+    <RecordField colName="net_excl_amt" fieldIdRef="37" fieldType="TABLE_COLUMN" name="sa31_ord_det.net_excl_amt" sqlTabName="sa31_ord_det" uid="{ae179d12-e369-4070-adce-9c794f4952f5}"/>
     <RecordField colName="line_total" fieldIdRef="38" fieldType="TABLE_COLUMN" name="sa31_ord_det.line_total" sqlTabName="sa31_ord_det" uid="{bff5c490-db6b-43ef-a409-4e9970353255}"/>
     <RecordField colName="wh_id" fieldIdRef="39" fieldType="TABLE_COLUMN" name="sa31_ord_det.wh_id" sqlTabName="sa31_ord_det" uid="{fdb4be42-8214-4575-939b-8f5b8e6b3083}"/>
     <RecordField colName="wb_id" fieldIdRef="40" fieldType="TABLE_COLUMN" name="sa31_ord_det.wb_id" sqlTabName="sa31_ord_det" uid="{481c773f-7abb-49cb-a367-64d4c2683ba9}"/>
@@ -213,7 +213,7 @@
           <Edit colName="vat_amt" fieldId="36" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_ord_det.vat_amt" posX="106" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="VAT Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="net_amt" fieldId="37" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa31_ord_det.net_amt" posX="116" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Net Total" widget="Edit">
+          <Edit colName="net_excl_amt" fieldId="37" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="sa31_ord_det.net_excl_amt" posX="116" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Net Total" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Edit colName="line_total" fieldId="38" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="sa31_ord_det.line_total" posX="127" posY="0" scroll="true" sqlTabName="sa31_ord_det" tabIndex="-1" title="Line Total" widget="Edit">
@@ -238,6 +238,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA3ADcAMgAyAGYAMQA3AGUALQA0AGQAMAA0AC0ANAA0AGYAOAAtAGIAYwBmADIALQA3ADMANAA5ADQAMgA4AGIAMQA0ADgAMAB9QEQAAAUAAABARAAABQAAAAAAAAAAAAAAAQAAAEwAewAxAGYAMQBjADYAOQA4ADAALQA5AGQANwAwAC0ANAAwAGMANwAtADkAYwA5AGQALQA3ADAAZABjADAAZAA3AGQAMQA0AGEANQB9wGgzMzlAAABARMzM0gAAAD+sKPXCj1wvAQAAAEwAewBhADYAZgAwAGYAYgA5ADgALQA5ADMAYgA0AC0ANAAxADAANgAtAGEAZABiADgALQA5ADUAYQA5ADQAMwA0ADAAOABmADUAZAB9wHfMzQhMzRFARGZmmWZmoD+njU/fO2RfAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA3ADcAMgAyAGYAMQA3AGUALQA0AGQAMAA0AC0ANAA0AGYAOAAtAGIAYwBmADIALQA3ADMANAA5ADQAMgA4AGIAMQA0ADgAMAB9QEQAAAoAAAFARAAACgAAAQAAAAAAAAAAAQAAAEwAewAxAGYAMQBjADYAOQA4ADAALQA5AGQANwAwAC0ANAAwAGMANwAtADkAYwA5AGQALQA3ADAAZABjADAAZAA3AGQAMQA0AGEANQB9wGgzMz9MzM5ARMzM1zMzND+sKPXCj1wvAQAAAEwAewBhADYAZgAwAGYAYgA5ADgALQA5ADMAYgA0AC0ANAAxADAANgAtAGEAZABiADgALQA5ADUAYQA5ADQAMwA0ADAAOABmADUAZAB9wHfMzQ5AAFNARGZmnoAARj+njU/fO2RfAQ==]]>
   </DiagramLayout>
 </ManagedForm>

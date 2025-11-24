@@ -16,10 +16,6 @@ IMPORT FGL dl121_lkup
 
 SCHEMA demoappdb
 
-GLOBALS
-    DEFINE g_hdr_saved SMALLINT
-END GLOBALS
-
 -- ==============================================================
 -- Record Definitions
 -- ==============================================================
@@ -34,17 +30,86 @@ DEFINE m_qt_lines_arr qt_line_arr
 DEFINE m_cust_rec cust_t
 
 -- doc lines
-DEFINE is_edit SMALLINT
+DEFINE is_edit_mode SMALLINT
 
 -- indexes
 DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
 DEFINE m_curr_idx INTEGER
 DEFINE m_user SMALLINT
+DEFINE g_hdr_saved SMALLINT
+
+-- ==============================================================
+-- Init Program
+-- ==============================================================
+FUNCTION init_qt_module()
+    LET is_edit_mode = FALSE
+    INITIALIZE m_cust_rec.* TO NULL
+    DISPLAY BY NAME m_cust_rec.*
+    CALL load_uoms()
+    MENU "Quote Menu"
+        COMMAND "Find"
+            -- CALL ();
+            LET is_edit_mode = FALSE
+        COMMAND "New"
+            CALL new_quote()
+        COMMAND "Edit"
+            IF m_cust_rec.id IS NULL OR m_cust_rec.id = 0 THEN
+                CALL utils_globals.show_info("No record selected.")
+            ELSE
+                --CALL edit_quote()
+            END IF
+        COMMAND "Delete"
+            CALL delete_quote(m_cust_rec.id)
+        COMMAND "Previous"
+            CALL move_record(-1)
+        COMMAND "Next"
+            CALL move_record(1)
+
+        COMMAND "Exit"
+            EXIT MENU
+    END MENU
+END FUNCTION
+
+-- ==============================================================
+-- Query using Lookup Window
+-- ==============================================================
+--FUNCTION query_stock_lookup()
+--    DEFINE selected_code STRING
+--    DEFINE found_idx, i INTEGER
+--
+--    LET selected_code = st121_st_lkup.fetch_list()
+--
+--    IF selected_code IS NULL OR selected_code = "" THEN
+--        RETURN
+--    END IF
+--
+--    LET found_idx = 0
+--    FOR i = 1 TO arr_codes.getLength()
+--        IF arr_codes[i] = selected_code THEN
+--            LET found_idx = i
+--            EXIT FOR
+--        END IF
+--    END FOR
+--
+--    IF found_idx > 0 THEN
+--        LET curr_idx = found_idx
+--        CALL load_stock_item(selected_code)
+--    ELSE
+--        CALL load_all_records()
+--        FOR i = 1 TO arr_codes.getLength()
+--            IF arr_codes[i] = selected_code THEN
+--                LET curr_idx = i
+--                EXIT FOR
+--            END IF
+--        END FOR
+--        CALL load_stock_item(selected_code)
+--    END IF
+--END FUNCTION
 
 -- ==============================================================
 -- Function : new_ord from master file (Header first, then lines)
 -- ==============================================================
-FUNCTION new_ord_from_master(p_cust_id INTEGER)
+FUNCTION new_qt_from_master(p_cust_id INTEGER)
     DEFINE l_cust_id INTEGER
     LET l_cust_id = p_cust_id
 
@@ -54,40 +119,39 @@ FUNCTION new_ord_from_master(p_cust_id INTEGER)
     OPEN WINDOW w_sa130 WITH FORM "sa130_quote" -- ATTRIBUTES(STYLE = "normal")
 
     INITIALIZE m_qt_hdr_rec.* TO NULL
-    
+
     LET m_qt_hdr_rec.doc_no = utils_globals.get_next_code('sa30_quo_hdr', 'id')
     LET m_qt_hdr_rec.trans_date = TODAY
     LET m_qt_hdr_rec.status = "draft"
-    LET m_qt_hdr_rec.created_at = TODAY  -- FIXED: Changed from CURRENT
+    LET m_qt_hdr_rec.created_at = TODAY -- FIXED: Changed from CURRENT
     LET m_qt_hdr_rec.created_by = utils_globals.get_random_user()
 
     -- link customer
-    LET m_qt_hdr_rec.gross_tot = 0; 
+    LET m_qt_hdr_rec.gross_tot = 0;
     LET m_qt_hdr_rec.disc_tot = 0
-    LET m_qt_hdr_rec.vat_tot   = 0; 
-    LET m_qt_hdr_rec.net_tot  = 0
+    LET m_qt_hdr_rec.vat_tot = 0;
+    LET m_qt_hdr_rec.net_tot = 0
 
     DIALOG ATTRIBUTES(UNBUFFERED)
         INPUT BY NAME m_qt_hdr_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
-   
-        ON ACTION save_header ATTRIBUTES(TEXT="Save Header")
-            IF NOT save_order_header() THEN
-                CALL utils_globals.show_error("Save failed.")
-                RETURN 
-            END IF
 
-            LET g_hdr_saved = TRUE
-            CONTINUE DIALOG
+            ON ACTION save_header ATTRIBUTES(TEXT = "Save Header")
+                IF NOT save_order_header() THEN
+                    CALL utils_globals.show_error("Save failed.")
+                    RETURN
+                END IF
 
-        ON ACTION CANCEL ATTRIBUTES(TEXT="Exit")
-            EXIT DIALOG
+                LET g_hdr_saved = TRUE
+                CONTINUE DIALOG
+
+            ON ACTION CANCEL ATTRIBUTES(TEXT = "Exit")
+                EXIT DIALOG
         END INPUT
 
     END DIALOG
 
     CLOSE WINDOW w_sa130
 END FUNCTION
-
 
 -- ==============================================================
 -- Save: insert or update
@@ -100,8 +164,10 @@ FUNCTION save_order_header() RETURNS SMALLINT
             INSERT INTO sa30_quo_hdr VALUES(m_qt_hdr_rec.*)
             CALL utils_globals.msg_saved()
         ELSE
-            LET m_qt_hdr_rec.updated_at = TODAY 
-            UPDATE sa30_quo_hdr SET m_qt_hdr_rec.* = m_qt_hdr_rec.* WHERE id = m_qt_hdr_rec.id
+            LET m_qt_hdr_rec.updated_at = TODAY
+            UPDATE sa30_quo_hdr
+                SET m_qt_hdr_rec.* = m_qt_hdr_rec.*
+                WHERE id = m_qt_hdr_rec.id
             IF SQLCA.SQLCODE = 0 THEN
                 CALL utils_globals.msg_updated()
             END IF
@@ -111,11 +177,10 @@ FUNCTION save_order_header() RETURNS SMALLINT
         RETURN ok
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error("Save failed:\n" || SQLCA.SQLERRM)
+        CALL utils_globals.show_sql_error("Save failed:\n" || SQLCA.SQLERRM)
         RETURN FALSE
     END TRY
 END FUNCTION
-
 
 -- ==============================================================
 -- Function : new_quote (Header first, then lines)
@@ -149,23 +214,33 @@ FUNCTION new_quote()
     -- ==========================================================
     --OPEN WINDOW w_quote_hdr WITH FORM "sa130_quote" --ATTRIBUTES(STYLE="dialog")
 
-    CALL utils_globals.set_form_label("lbl_form_title", "New Sales Quote - Header")
+    CALL utils_globals.set_form_label(
+        "lbl_form_title", "New Sales Quote - Header")
 
-    INPUT BY NAME l_hdr_rec.*
-        ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
+    INPUT BY NAME l_hdr_rec.* ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
 
         BEFORE INPUT
-            DISPLAY BY NAME l_hdr_rec.doc_no, l_hdr_rec.status, l_hdr_rec.trans_date
-            MESSAGE SFMT("Enter quote header details for Quote #%1", l_next_doc_no)
+            DISPLAY BY NAME l_hdr_rec.doc_no,
+                l_hdr_rec.status,
+                l_hdr_rec.trans_date
+            MESSAGE SFMT("Enter quote header details for Quote #%1",
+                l_next_doc_no)
 
         AFTER FIELD doc_no
             IF l_hdr_rec.id IS NOT NULL THEN
-                CALL load_customer_details(l_hdr_rec.id)
-                    RETURNING l_hdr_rec.cust_id, l_hdr_rec.cust_name, l_hdr_rec.cust_id,
-                              l_hdr_rec.cust_phone, l_hdr_rec.cust_email, l_hdr_rec.cust_address1,
-                              l_hdr_rec.cust_address2, l_hdr_rec.cust_address3,
-                              l_hdr_rec.cust_postal_code, l_hdr_rec.cust_vat_no,
-                              l_hdr_rec.cust_payment_terms
+                CALL load_customer_details(
+                    l_hdr_rec.id)
+                    RETURNING l_hdr_rec.cust_id,
+                        l_hdr_rec.cust_name,
+                        l_hdr_rec.cust_id,
+                        l_hdr_rec.cust_phone,
+                        l_hdr_rec.cust_email,
+                        l_hdr_rec.cust_address1,
+                        l_hdr_rec.cust_address2,
+                        l_hdr_rec.cust_address3,
+                        l_hdr_rec.cust_postal_code,
+                        l_hdr_rec.cust_vat_no,
+                        l_hdr_rec.cust_payment_terms
 
                 IF l_hdr_rec.cust_id IS NULL THEN
                     CALL utils_globals.show_error("Customer not found")
@@ -173,19 +248,28 @@ FUNCTION new_quote()
                 END IF
             END IF
 
-        ON ACTION lookup_customer ATTRIBUTES(TEXT="Customer Lookup", IMAGE="zoom")
-            CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr_rec.id
+        ON ACTION lookup_customer
+            ATTRIBUTES(TEXT = "Customer Lookup", IMAGE = "zoom")
+            CALL dl121_lkup.load_lookup_form_with_search()
+                RETURNING l_hdr_rec.id
             IF l_hdr_rec.id IS NOT NULL THEN
-                CALL load_customer_details(l_hdr_rec.id)
-                    RETURNING l_hdr_rec.cust_id, l_hdr_rec.cust_name, l_hdr_rec.cust_id,
-                              l_hdr_rec.cust_phone, l_hdr_rec.cust_email, l_hdr_rec.cust_address1,
-                              l_hdr_rec.cust_address2, l_hdr_rec.cust_address3,
-                              l_hdr_rec.cust_postal_code, l_hdr_rec.cust_vat_no,
-                              l_hdr_rec.cust_payment_terms
+                CALL load_customer_details(
+                    l_hdr_rec.id)
+                    RETURNING l_hdr_rec.cust_id,
+                        l_hdr_rec.cust_name,
+                        l_hdr_rec.cust_id,
+                        l_hdr_rec.cust_phone,
+                        l_hdr_rec.cust_email,
+                        l_hdr_rec.cust_address1,
+                        l_hdr_rec.cust_address2,
+                        l_hdr_rec.cust_address3,
+                        l_hdr_rec.cust_postal_code,
+                        l_hdr_rec.cust_vat_no,
+                        l_hdr_rec.cust_payment_terms
                 DISPLAY BY NAME l_hdr_rec.id
             END IF
 
-        ON ACTION accept ATTRIBUTES(TEXT="Save Header", IMAGE="save")
+        ON ACTION accept ATTRIBUTES(TEXT = "Save Header", IMAGE = "save")
             -- Validate header
             IF l_hdr_rec.id IS NULL THEN
                 CALL utils_globals.show_error("Customer is required")
@@ -198,7 +282,7 @@ FUNCTION new_quote()
 
             ACCEPT INPUT
 
-        ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="exit")
+        ON ACTION cancel ATTRIBUTES(TEXT = "Cancel", IMAGE = "exit")
             CALL utils_globals.show_info("Quote creation cancelled.")
             --CLOSE WINDOW w_quote_hdr
             RETURN
@@ -212,7 +296,7 @@ FUNCTION new_quote()
     END IF
 
     -- ==========================================================
-    -- 4. Save Header to Database (CRITICAL STEP)
+    -- 4. Save Header to Database
     -- ==========================================================
     BEGIN WORK
     TRY
@@ -226,17 +310,14 @@ FUNCTION new_quote()
 
         CALL utils_globals.show_success(
             SFMT("Quote header #%1 saved. ID=%2. Now add quote lines.",
-                 l_next_doc_no, l_new_hdr_id))
+                l_next_doc_no, l_new_hdr_id))
 
     CATCH
         ROLLBACK WORK
         CALL utils_globals.show_error(
             SFMT("Failed to save quote header: %1", SQLCA.SQLCODE))
-        --CLOSE WINDOW w_quote_hdr
         RETURN
     END TRY
-
-    --CLOSE WINDOW w_quote_hdr
 
     -- ==========================================================
     -- 5. Now add lines (header ID exists)
@@ -258,15 +339,24 @@ END FUNCTION
 -- ==============================================================
 FUNCTION input_quote_lines(p_hdr_id INTEGER)
 
-    OPEN WINDOW w_quote_lines WITH FORM "sa130_quote" ATTRIBUTES(STYLE="dialog")
+    OPEN WINDOW w_quote_lines
+        WITH
+        FORM "sa130_quote"
+        ATTRIBUTES(STYLE = "dialog")
 
-    CALL utils_globals.set_form_label("lbl_form_title",
-        SFMT("Quote #%1 - Add Lines", m_qt_hdr_rec.doc_no))
+    CALL utils_globals.set_form_label(
+        "lbl_form_title", SFMT("Quote #%1 - Add Lines", m_qt_hdr_rec.doc_no))
 
     -- Display only fields that exist in the form
-    DISPLAY BY NAME m_qt_hdr_rec.doc_no, m_qt_hdr_rec.ref_no, m_qt_hdr_rec.id,
-                    m_qt_hdr_rec.trans_date, m_qt_hdr_rec.status, m_qt_hdr_rec.gross_tot,
-                    m_qt_hdr_rec.disc_tot, m_qt_hdr_rec.vat_tot, m_qt_hdr_rec.net_tot
+    DISPLAY BY NAME m_qt_hdr_rec.doc_no,
+        m_qt_hdr_rec.ref_no,
+        m_qt_hdr_rec.id,
+        m_qt_hdr_rec.trans_date,
+        m_qt_hdr_rec.status,
+        m_qt_hdr_rec.gross_tot,
+        m_qt_hdr_rec.disc_tot,
+        m_qt_hdr_rec.vat_tot,
+        m_qt_hdr_rec.net_tot
 
     DIALOG ATTRIBUTES(UNBUFFERED)
 
@@ -274,29 +364,30 @@ FUNCTION input_quote_lines(p_hdr_id INTEGER)
             BEFORE DISPLAY
                 CALL DIALOG.setActionHidden("accept", TRUE)
 
-            ON ACTION add ATTRIBUTES(TEXT="Add Line", IMAGE="new")
+            ON ACTION add ATTRIBUTES(TEXT = "Add Line", IMAGE = "new")
                 CALL edit_or_add_qt_line(p_hdr_id, 0, TRUE)
                 CALL calculate_quote_totals()
 
-            ON ACTION edit ATTRIBUTES(TEXT="Edit Line", IMAGE="pen")
+            ON ACTION edit ATTRIBUTES(TEXT = "Edit Line", IMAGE = "pen")
                 IF arr_curr() > 0 THEN
                     CALL edit_or_add_qt_line(p_hdr_id, arr_curr(), FALSE)
                     CALL calculate_quote_totals()
                 END IF
 
-            ON ACTION delete ATTRIBUTES(TEXT="Delete Line", IMAGE="delete")
+            ON ACTION delete ATTRIBUTES(TEXT = "Delete Line", IMAGE = "delete")
                 IF arr_curr() > 0 THEN
                     CALL delete_qt_line(p_hdr_id, arr_curr())
                     CALL calculate_quote_totals()
                 END IF
 
-            ON ACTION save ATTRIBUTES(TEXT="Save Lines", IMAGE="save")
+            ON ACTION save ATTRIBUTES(TEXT = "Save Lines", IMAGE = "save")
                 CALL save_qt_lines(p_hdr_id)
                 CALL save_quote_header_totals()
-                CALL utils_globals.show_success("Quote lines saved successfully.")
+                CALL utils_globals.show_success(
+                    "Quote lines saved successfully.")
                 EXIT DIALOG
 
-            ON ACTION close ATTRIBUTES(TEXT="Close", IMAGE="exit")
+            ON ACTION close ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
                 IF m_qt_lines_arr.getLength() > 0 THEN
                     IF utils_globals.show_confirm(
                         "Save lines before closing?", "Confirm") THEN
@@ -333,16 +424,22 @@ FUNCTION edit_or_add_qt_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
         LET l_line.created_by = utils_globals.get_current_user_id()
     ELSE
         -- Load from existing array line
-        --LET l_line.* = m_qt_lines_arr[p_row].*
+        LET l_line.* = m_qt_lines_arr[p_row].*
     END IF
 
     -- ==============================
     -- Input Dialog for editing/adding
     -- ==============================
-    OPEN WINDOW w_line_edit WITH FORM "sa130_quote_line" ATTRIBUTES(STYLE="dialog")
+    OPEN WINDOW w_line_edit
+        WITH
+        FORM "sa130_quote_line"
+        ATTRIBUTES(STYLE = "dialog")
 
-    INPUT BY NAME l_line.stock_id, l_line.qnty, l_line.unit_price,
-                  l_line.disc_pct, l_line.vat_rate
+    INPUT BY NAME l_line.stock_id,
+        l_line.qnty,
+        l_line.unit_price,
+        l_line.disc_pct,
+        l_line.vat_rate
         ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
 
         BEFORE INPUT
@@ -350,47 +447,68 @@ FUNCTION edit_or_add_qt_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
 
         BEFORE FIELD stock_id
             -- Stock lookup popup
-            CALL st121_st_lkup.display_stocklist() RETURNING l_stock_id
+            CALL st121_st_lkup.fetch_list() RETURNING l_stock_id
 
             IF l_stock_id IS NOT NULL AND l_stock_id > 0 THEN
                 LET l_line.stock_id = l_stock_id
                 LET l_line.stock_id = l_stock_id
 
                 -- Load stock defaults (CORRECTED field names)
-                CALL load_stock_defaults(l_stock_id)
+                CALL load_stock_defaults(
+                    l_stock_id)
                     RETURNING l_line.unit_price, l_line.unit_price, l_item_desc
 
                 LET l_line.item_name = l_item_desc
 
-                DISPLAY BY NAME l_line.stock_id, l_line.unit_price,
-                                l_line.unit_price, l_line.item_name
+                DISPLAY BY NAME l_line.stock_id,
+                    l_line.unit_price,
+                    l_line.unit_price,
+                    l_line.item_name
 
                 NEXT FIELD qnty
             END IF
 
         AFTER FIELD qnty
             IF l_line.qnty IS NOT NULL AND l_line.qnty > 0 THEN
-                CALL utils_doc_totals.calculate_line_totals(l_line.qnty, l_line.unit_price,
-                                          l_line.disc_pct, l_line.vat_rate)
-                    RETURNING l_line.gross_amt, l_line.disc_amt,
-                              l_line.net_amt, l_line.vat_amt, l_line.line_total
+                CALL utils_doc_totals.calculate_line_totals(
+                        l_line.qnty,
+                        l_line.unit_price,
+                        l_line.disc_pct,
+                        l_line.vat_rate)
+                    RETURNING l_line.gross_amt,
+                        l_line.disc_amt,
+                        l_line.net_excl_amt,
+                        l_line.vat_amt,
+                        l_line.line_total
 
-                DISPLAY BY NAME l_line.gross_amt, l_line.disc_amt,
-                                l_line.net_amt, l_line.vat_amt, l_line.line_total
+                DISPLAY BY NAME l_line.gross_amt,
+                    l_line.disc_amt,
+                    l_line.net_excl_amt,
+                    l_line.vat_amt,
+                    l_line.line_total
             END IF
 
         AFTER FIELD unit_price, disc_pct, vat_rate
             IF l_line.qnty IS NOT NULL THEN
-                CALL utils_doc_totals.calculate_line_totals(l_line.qnty, l_line.unit_price,
-                                          l_line.disc_pct, l_line.vat_rate)
-                    RETURNING l_line.gross_amt, l_line.disc_amt,
-                              l_line.net_amt, l_line.vat_amt, l_line.line_total
+                CALL utils_doc_totals.calculate_line_totals(
+                        l_line.qnty,
+                        l_line.unit_price,
+                        l_line.disc_pct,
+                        l_line.vat_rate)
+                    RETURNING l_line.gross_amt,
+                        l_line.disc_amt,
+                        l_line.net_excl_amt,
+                        l_line.vat_amt,
+                        l_line.line_total
 
-                DISPLAY BY NAME l_line.gross_amt, l_line.disc_amt,
-                                l_line.net_amt, l_line.vat_amt, l_line.line_total
+                DISPLAY BY NAME l_line.gross_amt,
+                    l_line.disc_amt,
+                    l_line.net_excl_amt,
+                    l_line.vat_amt,
+                    l_line.line_total
             END IF
 
-        ON ACTION accept ATTRIBUTES(TEXT="Save Line", IMAGE="save")
+        ON ACTION accept ATTRIBUTES(TEXT = "Save Line", IMAGE = "save")
             -- Validate
             IF l_line.stock_id IS NULL OR l_line.stock_id = 0 THEN
                 CALL utils_globals.show_error("Stock item is required")
@@ -404,7 +522,7 @@ FUNCTION edit_or_add_qt_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT)
 
             -- Save to array
             IF p_is_new THEN
-            -- TODO:: Fix this so taht the lines are 
+                -- TODO:: Fix this so taht the lines are
                 --LET m_qt_lines_arr[m_qt_lines_arr.getLength() + 1].* = l_line.*
             ELSE
                 --LET m_qt_lines_arr[p_row].* = l_line.*
@@ -424,11 +542,12 @@ END FUNCTION
 -- ==============================================================
 -- Function : load_stock_defaults
 -- ==============================================================
-FUNCTION load_stock_defaults(p_stock_id INTEGER)
-    RETURNS (DECIMAL, DECIMAL, VARCHAR(150))
+FUNCTION load_stock_defaults(
+    p_stock_id INTEGER)
+    RETURNS(DECIMAL, DECIMAL, VARCHAR(150))
 
-    DEFINE l_cost DECIMAL(15,2)
-    DEFINE l_price DECIMAL(15,2)
+    DEFINE l_cost DECIMAL(15, 2)
+    DEFINE l_price DECIMAL(15, 2)
     DEFINE l_desc VARCHAR(150)
 
     SELECT unit_price, sell_price, description
@@ -490,7 +609,7 @@ END FUNCTION
 -- ==============================================================
 FUNCTION calculate_quote_totals()
     DEFINE i INTEGER
-    DEFINE l_gross, l_disc_tot, l_vat_tot, l_net DECIMAL(15,2)
+    DEFINE l_gross, l_disc_tot, l_vat_tot, l_net DECIMAL(15, 2)
 
     LET l_gross = 0
     LET l_disc_tot = 0
@@ -509,14 +628,16 @@ FUNCTION calculate_quote_totals()
     LET m_qt_hdr_rec.vat_tot = l_vat_tot
     LET m_qt_hdr_rec.net_tot = l_net
 
-    DISPLAY BY NAME m_qt_hdr_rec.gross_tot, m_qt_hdr_rec.disc_tot,
-                     m_qt_hdr_rec.vat_tot, m_qt_hdr_rec.net_tot
+    DISPLAY BY NAME m_qt_hdr_rec.gross_tot,
+        m_qt_hdr_rec.disc_tot,
+        m_qt_hdr_rec.vat_tot,
+        m_qt_hdr_rec.net_tot
 
     MESSAGE SFMT("Totals: Gross=%1, disc_tot=%2, vat_tot=%3, Net=%4",
-                 l_gross USING "<<<,<<<,<<&.&&",
-                 l_disc_tot USING "<<<,<<<,<<&.&&",
-                 l_vat_tot USING "<<<,<<<,<<&.&&",
-                 l_net USING "<<<,<<<,<<&.&&")
+        l_gross USING "<<<,<<<,<<&.&&",
+        l_disc_tot USING "<<<,<<<,<<&.&&",
+        l_vat_tot USING "<<<,<<<,<<&.&&",
+        l_net USING "<<<,<<<,<<&.&&")
 
 END FUNCTION
 
@@ -548,10 +669,19 @@ END FUNCTION
 -- ==============================================================
 -- Function : load_customer_details (NEW)
 -- ==============================================================
-FUNCTION load_customer_details(p_acc_code INTEGER)
-    RETURNS (INTEGER, VARCHAR(100), VARCHAR(30), VARCHAR(20), VARCHAR(100),
-             VARCHAR(100), VARCHAR(100), VARCHAR(100), VARCHAR(10),
-             VARCHAR(20), VARCHAR(50))
+FUNCTION load_customer_details(
+    p_acc_code INTEGER)
+    RETURNS(INTEGER,
+        VARCHAR(100),
+        VARCHAR(30),
+        VARCHAR(20),
+        VARCHAR(100),
+        VARCHAR(100),
+        VARCHAR(100),
+        VARCHAR(100),
+        VARCHAR(10),
+        VARCHAR(20),
+        VARCHAR(50))
 
     DEFINE l_cust_id INTEGER
     DEFINE l_cust_name VARCHAR(100)
@@ -565,18 +695,44 @@ FUNCTION load_customer_details(p_acc_code INTEGER)
     DEFINE l_vat VARCHAR(20)
     DEFINE l_terms VARCHAR(50)
 
-    SELECT id, cust_name, id, phone, email,
-           address1, address2, address3, postal_code,
-           vat_no, payment_terms
-        INTO l_cust_id, l_cust_name, l_cust_acc_code, l_phone, l_email,
-             l_addr1, l_addr2, l_addr3, l_postal, l_vat, l_terms
+    SELECT id,
+        cust_name,
+        id,
+        phone,
+        email,
+        address1,
+        address2,
+        address3,
+        postal_code,
+        vat_no,
+        payment_terms
+        INTO l_cust_id,
+            l_cust_name,
+            l_cust_acc_code,
+            l_phone,
+            l_email,
+            l_addr1,
+            l_addr2,
+            l_addr3,
+            l_postal,
+            l_vat,
+            l_terms
         FROM dl01_mast
         WHERE id = p_acc_code
 
     IF SQLCA.SQLCODE = 0 THEN
         MESSAGE SFMT("Customer: %1", l_cust_name)
-        RETURN l_cust_id, l_cust_name, l_cust_acc_code, l_phone, l_email,
-               l_addr1, l_addr2, l_addr3, l_postal, l_vat, l_terms
+        RETURN l_cust_id,
+            l_cust_name,
+            l_cust_acc_code,
+            l_phone,
+            l_email,
+            l_addr1,
+            l_addr2,
+            l_addr3,
+            l_postal,
+            l_vat,
+            l_terms
     ELSE
         RETURN NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
     END IF
@@ -603,9 +759,7 @@ FUNCTION load_quote(p_doc_id INTEGER)
     -- ===========================================
     -- Load header record
     -- ===========================================
-    SELECT * INTO m_qt_hdr_rec.*
-      FROM sa30_quo_hdr
-     WHERE id = p_doc_id
+    SELECT * INTO m_qt_hdr_rec.* FROM sa30_quo_hdr WHERE id = p_doc_id
 
     IF SQLCA.SQLCODE = 0 THEN
         -- ===========================================
@@ -618,11 +772,17 @@ FUNCTION load_quote(p_doc_id INTEGER)
         -- ===========================================
         LET idx = 0
         DECLARE qt_lines_cur CURSOR FOR
-            SELECT stock_id, batch_id, qnty, unit_price, sell_price,
-                   disc_amt, vat_amt, line_total
-              FROM sa30_quo_det
-             WHERE hdr_id = p_doc_id
-             ORDER BY line_no
+            SELECT stock_id,
+                batch_id,
+                qnty,
+                unit_price,
+                sell_price,
+                disc_amt,
+                vat_amt,
+                line_total
+                FROM sa30_quo_det
+                WHERE hdr_id = p_doc_id
+                ORDER BY line_no
 
         FOREACH qt_lines_cur INTO m_qt_lines_arr[idx + 1].*
             LET idx = idx + 1
@@ -634,13 +794,21 @@ FUNCTION load_quote(p_doc_id INTEGER)
         -- ===========================================
         -- Show form in view mode first
         -- ===========================================
-        CALL utils_globals.set_form_label("lbl_form_title",
-            SFMT("Sales Quote #%1 - Status: %2", m_qt_hdr_rec.doc_no, m_qt_hdr_rec.status))
+        CALL utils_globals.set_form_label(
+            "lbl_form_title",
+            SFMT("Sales Quote #%1 - Status: %2",
+                m_qt_hdr_rec.doc_no, m_qt_hdr_rec.status))
 
         -- Display only fields that exist in the form
-        DISPLAY BY NAME m_qt_hdr_rec.doc_no, m_qt_hdr_rec.ref_no, m_qt_hdr_rec.id,
-                        m_qt_hdr_rec.trans_date, m_qt_hdr_rec.status, m_qt_hdr_rec.gross_tot,
-                        m_qt_hdr_rec.disc_tot, m_qt_hdr_rec.vat_tot, m_qt_hdr_rec.net_tot
+        DISPLAY BY NAME m_qt_hdr_rec.doc_no,
+            m_qt_hdr_rec.ref_no,
+            m_qt_hdr_rec.id,
+            m_qt_hdr_rec.trans_date,
+            m_qt_hdr_rec.status,
+            m_qt_hdr_rec.gross_tot,
+            m_qt_hdr_rec.disc_tot,
+            m_qt_hdr_rec.vat_tot,
+            m_qt_hdr_rec.net_tot
 
         DISPLAY ARRAY m_qt_lines_arr TO arr_sa_qt_lines.*
 
@@ -654,10 +822,11 @@ FUNCTION load_quote(p_doc_id INTEGER)
                     MESSAGE "Quote converted to order - cannot edit"
                 END IF
 
-            ON ACTION edit ATTRIBUTES(TEXT="Edit Quote", IMAGE="pen")
+            ON ACTION edit ATTRIBUTES(TEXT = "Edit Quote", IMAGE = "pen")
                 IF NOT l_can_edit THEN
                     CALL utils_globals.show_error(
-                        "Cannot edit quote with status: " || m_qt_hdr_rec.status)
+                        "Cannot edit quote with status: "
+                            || m_qt_hdr_rec.status)
                     CONTINUE DISPLAY
                 END IF
 
@@ -667,28 +836,35 @@ FUNCTION load_quote(p_doc_id INTEGER)
                     WHEN 1
                         CALL edit_qt_header(p_doc_id)
                         -- Refresh header display - only fields that exist in form
-                        DISPLAY BY NAME m_qt_hdr_rec.doc_no, m_qt_hdr_rec.ref_no, m_qt_hdr_rec.id,
-                                        m_qt_hdr_rec.trans_date, m_qt_hdr_rec.status, m_qt_hdr_rec.gross_tot,
-                                        m_qt_hdr_rec.disc_tot, m_qt_hdr_rec.vat_tot, m_qt_hdr_rec.net_tot
+                        DISPLAY BY NAME m_qt_hdr_rec.doc_no,
+                            m_qt_hdr_rec.ref_no,
+                            m_qt_hdr_rec.id,
+                            m_qt_hdr_rec.trans_date,
+                            m_qt_hdr_rec.status,
+                            m_qt_hdr_rec.gross_tot,
+                            m_qt_hdr_rec.disc_tot,
+                            m_qt_hdr_rec.vat_tot,
+                            m_qt_hdr_rec.net_tot
                     WHEN 2
                         CALL edit_qt_lines(p_doc_id)
                     OTHERWISE
                         CALL utils_globals.show_info("Edit cancelled.")
                 END CASE
 
-            ON ACTION copy_to_order ATTRIBUTES(TEXT="Copy to Order", IMAGE="forward")
+            ON ACTION copy_to_order
+                ATTRIBUTES(TEXT = "Copy to Order", IMAGE = "forward")
                 CALL copy_quote_to_order(p_doc_id)
                 -- Reload to show updated status
                 EXIT DISPLAY
 
-            ON ACTION view_order ATTRIBUTES(TEXT="View Order", IMAGE="info")
+            ON ACTION view_order ATTRIBUTES(TEXT = "View Order", IMAGE = "info")
                 CALL view_linked_order(m_qt_hdr_rec.doc_no)
 
-            ON ACTION delete ATTRIBUTES(TEXT="Delete", IMAGE="delete")
+            ON ACTION delete ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
                 CALL delete_quote(p_doc_id)
                 EXIT DISPLAY
 
-            ON ACTION close ATTRIBUTES(TEXT="Close", IMAGE="exit")
+            ON ACTION close ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
                 EXIT DISPLAY
         END DISPLAY
     ELSE
@@ -701,7 +877,8 @@ END FUNCTION
 -- ==============================================================
 -- Function : can_edit_quote (NEW)
 -- ==============================================================
-FUNCTION can_edit_quote(p_quote_id INTEGER, p_status VARCHAR(10))
+FUNCTION can_edit_quote(
+    p_quote_id INTEGER, p_status VARCHAR(10))
     RETURNS SMALLINT
 
     DEFINE l_order_count INTEGER
@@ -712,10 +889,13 @@ FUNCTION can_edit_quote(p_quote_id INTEGER, p_status VARCHAR(10))
     END IF
 
     -- Check for linked orders
-    SELECT COUNT(*) INTO l_order_count
-      FROM sa31_ord_hdr
-     WHERE ref_doc_type = "QUOTE"
-       AND ref_doc_no = (SELECT doc_no FROM sa30_quo_hdr WHERE id = p_quote_id)
+    SELECT COUNT(*)
+        INTO l_order_count
+        FROM sa31_ord_hdr
+        WHERE ref_doc_type = "QUOTE"
+            AND ref_doc_no
+                =
+                (SELECT doc_no FROM sa30_quo_hdr WHERE id = p_quote_id)
 
     IF l_order_count > 0 THEN
         RETURN FALSE
@@ -740,20 +920,22 @@ FUNCTION copy_quote_to_order(p_quote_id INTEGER)
     -- ===========================================
 
     -- Check if already converted
-    SELECT COUNT(*) INTO l_order_count
-      FROM sa31_ord_hdr
-     WHERE ref_doc_type = "QUOTE"
-       AND ref_doc_no = (SELECT doc_no FROM sa30_quo_hdr WHERE id = p_quote_id)
+    SELECT COUNT(*)
+        INTO l_order_count
+        FROM sa31_ord_hdr
+        WHERE ref_doc_type = "QUOTE"
+            AND ref_doc_no
+                =
+                (SELECT doc_no FROM sa30_quo_hdr WHERE id = p_quote_id)
 
     IF l_order_count > 0 THEN
-        CALL utils_globals.show_error("Quote has already been converted to an order")
+        CALL utils_globals.show_error(
+            "Quote has already been converted to an order")
         RETURN
     END IF
 
     -- Load quote
-    SELECT * INTO l_quote_hdr.*
-      FROM sa30_quo_hdr
-     WHERE id = p_quote_id
+    SELECT * INTO l_quote_hdr.* FROM sa30_quo_hdr WHERE id = p_quote_id
 
     IF SQLCA.SQLCODE != 0 THEN
         CALL utils_globals.show_error("Quote not found")
@@ -779,15 +961,15 @@ FUNCTION copy_quote_to_order(p_quote_id INTEGER)
     BEGIN WORK
     TRY
         -- Get next order number
-        SELECT COALESCE(MAX(doc_no), 0) + 1 INTO l_new_order_doc_no
-          FROM sa31_ord_hdr
+        SELECT COALESCE(MAX(doc_no), 0) + 1
+            INTO l_new_order_doc_no
+            FROM sa31_ord_hdr
 
         -- Copy quote to order
         INITIALIZE l_order_hdr.* TO NULL
         LET l_order_hdr.id = l_new_order_doc_no
         LET l_order_hdr.ref_doc_type = "QUOTE"
         LET l_order_hdr.ref_doc_no = l_quote_hdr.doc_no
-        LET l_order_hdr.cust_id = l_quote_hdr.id
         LET l_order_hdr.trans_date = TODAY
         LET l_order_hdr.gross_tot = l_quote_hdr.gross_tot
         LET l_order_hdr.disc_tot = l_quote_hdr.disc_tot
@@ -817,37 +999,70 @@ FUNCTION copy_quote_to_order(p_quote_id INTEGER)
         -- ===========================================
         -- 3. Copy quote lines to order
         -- ===========================================
-        INSERT INTO sa31_ord_det (
-            hdr_id, line_no, stock_id, batch_id, qnty,
-            unit_price, sell_price, vat_tot, line_tot, disc_tot,
-            stock_id, item_name, uom, unit_price,
-            disc_pct, disc_amt, gross_amt, net_amt,
-            vat_rate, vat_amt, line_total, status,
-            created_at, created_by
-        )
-        SELECT
-            l_new_order_id, line_no, stock_id, batch_id, qnty,
-            unit_price, sell_price, vat_tot, line_tot, disc_tot,
-            stock_id, item_name, uom, unit_price,
-            disc_pct, disc_amt, gross_amt, net_amt,
-            vat_rate, vat_amt, line_total, status,
-            CURRENT, m_user
-        FROM sa30_quo_det
-        WHERE hdr_id = p_quote_id
+        INSERT INTO sa31_ord_det(
+            hdr_id,
+            line_no,
+            stock_id,
+            batch_id,
+            qnty,
+            unit_price,
+            sell_price,
+            vat_tot,
+            line_tot,
+            disc_tot,
+            stock_id,
+            item_name,
+            uom,
+            unit_price,
+            disc_pct,
+            disc_amt,
+            gross_amt,
+            net_amt,
+            vat_rate,
+            vat_amt,
+            line_total,
+            status,
+            created_at,
+            created_by)
+            SELECT l_new_order_id,
+                line_no,
+                stock_id,
+                batch_id,
+                qnty,
+                unit_price,
+                sell_price,
+                vat_tot,
+                line_tot,
+                disc_tot,
+                stock_id,
+                item_name,
+                uom,
+                unit_price,
+                disc_pct,
+                disc_amt,
+                gross_amt,
+                net_amt,
+                vat_rate,
+                vat_amt,
+                line_total,
+                status,
+                CURRENT,
+                m_user
+                FROM sa30_quo_det
+                WHERE hdr_id = p_quote_id
 
         -- ===========================================
         -- 4. Update quote status to CONVERTED
         -- ===========================================
         UPDATE sa30_quo_hdr
-            SET status = "CONVERTED",
-                updated_at = CURRENT
+            SET status = "CONVERTED", updated_at = CURRENT
             WHERE id = p_quote_id
 
         COMMIT WORK
 
         CALL utils_globals.show_success(
             SFMT("Quote #%1 converted to Order #%2",
-                 l_quote_hdr.doc_no, l_new_order_doc_no))
+                l_quote_hdr.doc_no, l_new_order_doc_no))
 
         -- Update module record
         LET m_qt_hdr_rec.status = "CONVERTED"
@@ -868,10 +1083,10 @@ FUNCTION view_linked_order(p_quote_doc_no INTEGER)
     DEFINE l_order_id INTEGER
     DEFINE l_order_doc_no INTEGER
 
-    SELECT id, doc_no INTO l_order_id, l_order_doc_no
-      FROM sa31_ord_hdr
-     WHERE ref_doc_type = "QUOTE"
-       AND ref_doc_no = p_quote_doc_no
+    SELECT id, doc_no
+        INTO l_order_id, l_order_doc_no
+        FROM sa31_ord_hdr
+        WHERE ref_doc_type = "QUOTE" AND ref_doc_no = p_quote_doc_no
 
     IF SQLCA.SQLCODE = 0 THEN
         CALL utils_globals.show_info(
@@ -912,23 +1127,27 @@ FUNCTION edit_qt_header(p_doc_id INTEGER)
     LET new_hdr.* = m_qt_hdr_rec.*
 
     DIALOG
-        INPUT BY NAME new_hdr.id, new_hdr.trans_date,
-                      new_hdr.ref_no
+        INPUT BY NAME new_hdr.id, new_hdr.trans_date, new_hdr.ref_no
             ATTRIBUTES(WITHOUT DEFAULTS)
 
             AFTER FIELD id
                 IF new_hdr.id IS NOT NULL THEN
-                    CALL load_customer_details(new_hdr.id)
-                        RETURNING new_hdr.cust_id, new_hdr.cust_name,
-                                  new_hdr.cust_id,
-                                  new_hdr.cust_phone, new_hdr.cust_email,
-                                  new_hdr.cust_address1,
-                                  new_hdr.cust_address2, new_hdr.cust_address3,
-                                  new_hdr.cust_postal_code, new_hdr.cust_vat_no,
-                                  new_hdr.cust_payment_terms
+                    CALL load_customer_details(
+                        new_hdr.id)
+                        RETURNING new_hdr.cust_id,
+                            new_hdr.cust_name,
+                            new_hdr.cust_id,
+                            new_hdr.cust_phone,
+                            new_hdr.cust_email,
+                            new_hdr.cust_address1,
+                            new_hdr.cust_address2,
+                            new_hdr.cust_address3,
+                            new_hdr.cust_postal_code,
+                            new_hdr.cust_vat_no,
+                            new_hdr.cust_payment_terms
                 END IF
 
-            ON ACTION save ATTRIBUTES(TEXT="Save", IMAGE="save")
+            ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "save")
 
                 BEGIN WORK
                 TRY
@@ -978,23 +1197,23 @@ FUNCTION edit_qt_lines(p_doc_id INTEGER)
             BEFORE DISPLAY
                 CALL DIALOG.setActionHidden("accept", TRUE)
 
-            ON ACTION add ATTRIBUTES(TEXT="Add Line", IMAGE="new")
+            ON ACTION add ATTRIBUTES(TEXT = "Add Line", IMAGE = "new")
                 CALL edit_or_add_qt_line(p_doc_id, 0, TRUE)
                 CALL calculate_quote_totals()
 
-            ON ACTION edit ATTRIBUTES(TEXT="Edit Line", IMAGE="pen")
+            ON ACTION edit ATTRIBUTES(TEXT = "Edit Line", IMAGE = "pen")
                 IF arr_curr() > 0 THEN
                     CALL edit_or_add_qt_line(p_doc_id, arr_curr(), FALSE)
                     CALL calculate_quote_totals()
                 END IF
 
-            ON ACTION delete ATTRIBUTES(TEXT="Delete", IMAGE="delete")
+            ON ACTION delete ATTRIBUTES(TEXT = "Delete", IMAGE = "delete")
                 IF arr_curr() > 0 THEN
                     CALL delete_qt_line(p_doc_id, arr_curr())
                     CALL calculate_quote_totals()
                 END IF
 
-            ON ACTION save ATTRIBUTES(TEXT="Save", IMAGE="save")
+            ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "save")
                 CALL save_qt_lines(p_doc_id)
                 CALL save_quote_header_totals()
                 CALL utils_globals.show_success("Changes saved")
@@ -1041,8 +1260,7 @@ FUNCTION save_quote()
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error(
-            SFMT("Save failed: %1", SQLCA.SQLCODE))
+        CALL utils_globals.show_error(SFMT("Save failed: %1", SQLCA.SQLCODE))
     END TRY
 
 END FUNCTION
@@ -1066,9 +1284,10 @@ FUNCTION delete_quote(p_doc_id INTEGER)
     -- ===========================================
 
     -- Get quote details
-    SELECT status, doc_no INTO l_status, l_doc_no
-      FROM sa30_quo_hdr
-     WHERE id = p_doc_id
+    SELECT status, doc_no
+        INTO l_status, l_doc_no
+        FROM sa30_quo_hdr
+        WHERE id = p_doc_id
 
     -- Check status
     IF l_status = "CONVERTED" THEN
@@ -1078,20 +1297,22 @@ FUNCTION delete_quote(p_doc_id INTEGER)
     END IF
 
     -- Check for linked orders
-    SELECT COUNT(*) INTO l_order_count
-      FROM sa31_ord_hdr
-     WHERE ref_doc_type = "QUOTE"
-       AND ref_doc_no = l_doc_no
+    SELECT COUNT(*)
+        INTO l_order_count
+        FROM sa31_ord_hdr
+        WHERE ref_doc_type = "QUOTE" AND ref_doc_no = l_doc_no
 
     IF l_order_count > 0 THEN
         CALL utils_globals.show_error(
-            SFMT("Cannot delete quote - it has %1 linked order(s)", l_order_count))
+            SFMT("Cannot delete quote - it has %1 linked order(s)",
+                l_order_count))
         RETURN
     END IF
 
     -- Confirm deletion
-    LET ok = utils_globals.show_confirm(
-        SFMT("Delete Quote #%1?", l_doc_no), "Confirm Delete")
+    LET ok =
+        utils_globals.show_confirm(
+            SFMT("Delete Quote #%1?", l_doc_no), "Confirm Delete")
 
     IF NOT ok THEN
         CALL utils_globals.show_info("Delete cancelled.")
@@ -1109,8 +1330,7 @@ FUNCTION delete_quote(p_doc_id INTEGER)
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error(
-            SFMT("Delete failed: %1", SQLCA.SQLCODE))
+        CALL utils_globals.show_error(SFMT("Delete failed: %1", SQLCA.SQLCODE))
     END TRY
 
 END FUNCTION

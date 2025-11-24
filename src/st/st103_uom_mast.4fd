@@ -11,32 +11,32 @@
     <RecordField colName="status" fieldIdRef="5" fieldType="TABLE_COLUMN" name="st03_uom_master.status" sqlTabName="st03_uom_master" uid="{50048eae-9d5d-4a75-8611-fd52f4319e68}"/>
     <RecordField colName="created_at" fieldIdRef="7" fieldType="TABLE_COLUMN" name="st03_uom_master.created_at" sqlTabName="st03_uom_master" uid="{db1d4877-aafc-4ee3-a415-5030b09d8640}"/>
   </Record>
-  <Form gridHeight="21" gridWidth="72" name="frm_title" style="dialog2" text="STOCK UOM">
-    <HBox gridHeight="18" gridWidth="69" name="hbox1" posX="1" posY="1">
-      <Grid gridHeight="18" gridWidth="65" name="rec_stock_uom" posX="2" posY="0">
-        <Label gridHeight="1" gridWidth="62" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="STOCK UOM"/>
-        <Label gridHeight="1" gridWidth="18" name="st03_uom_master_uom_code_label1" posX="1" posY="1" text="UOM Code">
+  <Form gridHeight="17" gridWidth="41" name="frm_title" text="STOCK UOM">
+    <HBox gridHeight="16" gridWidth="40" name="hbox1" posX="1" posY="1">
+      <Grid gridHeight="16" gridWidth="36" name="rec_stock_uom" posX="2" posY="0">
+        <Label gridHeight="1" gridWidth="35" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="STOCK UOM"/>
+        <Label gridHeight="1" gridWidth="12" name="st03_uom_master_uom_code_label1" posX="1" posY="1" text="UOM Code">
           <Initializer text="dbschema:st03_uom_master.uom_code/@label"/>
         </Label>
-        <Edit colName="uom_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st03_uom_master.uom_code" posX="20" posY="1" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="UOM Code" widget="Edit">
+        <Edit colName="uom_code" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="st03_uom_master.uom_code" posX="14" posY="1" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="UOM Code" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="18" name="st03_uom_master_uom_name_lbl" posX="1" posY="2" text="Name">
+        <Label gridHeight="1" gridWidth="12" name="st03_uom_master_uom_name_lbl" posX="1" posY="2" text="Name">
           <Initializer text="dbschema:st03_uom_master.uom_code/@label"/>
         </Label>
-        <Edit colName="uom_name" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st03_uom_master.uom_name" posX="20" posY="2" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Name" widget="Edit">
+        <Edit colName="uom_name" fieldId="3" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="st03_uom_master.uom_name" posX="14" posY="2" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Name" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="18" name="st03_uom_master_uom_type_label1" posX="1" posY="3" text="Type">
+        <Label gridHeight="1" gridWidth="12" name="st03_uom_master_uom_type_label1" posX="1" posY="3" text="Type">
           <Initializer text="dbschema:st03_uom_master.uom_type/@label"/>
         </Label>
-        <Edit colName="uom_type" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" name="st03_uom_master.uom_type" posX="20" posY="3" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Type" widget="Edit">
+        <Edit colName="uom_type" fieldId="4" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" name="st03_uom_master.uom_type" posX="14" posY="3" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Type" widget="Edit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </Edit>
-        <Label gridHeight="1" gridWidth="18" name="st03_uom_master_is_active_label1" posX="1" posY="5" text="Status">
+        <Label gridHeight="1" gridWidth="12" name="st03_uom_master_is_active_label1" posX="1" posY="5" text="Status">
           <Initializer text="dbschema:st03_uom_master.is_active/@label"/>
         </Label>
-        <ComboBox colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="30" items="Inactive, Active" name="st03_uom_master.status" posX="20" posY="5" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Status" widget="ComboBox">
+        <ComboBox colName="status" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="22" items="Inactive, Active" name="st03_uom_master.status" posX="14" posY="5" scroll="true" sqlTabName="st03_uom_master" tabIndex="-1" title="Status" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           <Item lstrtext="false" name="inactive" text="Inactive"/>
           <Item lstrtext="false" name="active" text="Active"/>

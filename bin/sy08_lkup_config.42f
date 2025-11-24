@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='windows-1252'?>
-<Form name="sy08_lkup_config.tmp" build="3.20.14" text="Form" width="0" height="16">
-  <LStr text="Form"/>
-  <VBox name="vbox1">
-    <ScrollGrid wantFixedPageSize="1" name="scrollgrid1" width="0" height="16"/>
-  </VBox>
-</Form>

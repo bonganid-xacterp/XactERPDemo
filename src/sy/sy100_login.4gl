@@ -178,7 +178,6 @@ FUNCTION run_login_dialog() RETURNS(SMALLINT, STRING, STRING)
                     END TRY
 
                 ON ACTION login
-                    ATTRIBUTES(TEXT = "Login", ACCELERATOR = "Return")
                     TRY
                         -- Validate inputs first
                         IF f_username IS NULL
@@ -219,8 +218,7 @@ FUNCTION run_login_dialog() RETURNS(SMALLINT, STRING, STRING)
                         NEXT FIELD f_username
                     END TRY
 
-                ON ACTION cancel
-                    ATTRIBUTES(TEXT = "Exit", ACCELERATOR = "Escape")
+                ON ACTION quit
                     TRY
                         IF confirm_exit_login() THEN
                             EXIT DIALOG

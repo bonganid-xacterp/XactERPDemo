@@ -91,20 +91,26 @@ FUNCTION change_password(p_username STRING) RETURNS SMALLINT
                 CONTINUE DIALOG
             END IF
 
-            UPDATE sy00_user
-               SET password   = encrypt_password(rec_pass_change.new_password),
-                   updated_at = CURRENT,
-                   updated_by = m_username
-             WHERE username   = m_username
+            TRY
+                UPDATE sy00_user
+                   SET password   = encrypt_password(rec_pass_change.new_password),
+                       updated_at = CURRENT,
+                       updated_by = m_username
+                 WHERE username   = m_username
 
-            IF SQLCA.SQLCODE = 0 AND SQLCA.SQLERRD[3] = 1 THEN
-                CALL utils_globals.show_info("Password changed successfully.")
-                LET keep_running = FALSE
-                EXIT DIALOG
-            ELSE
-                CALL utils_globals.show_error("Update failed.")
+                IF SQLCA.SQLCODE = 0 AND SQLCA.SQLERRD[3] = 1 THEN
+                    CALL utils_globals.show_info("Password changed successfully.")
+                    LET keep_running = FALSE
+                    EXIT DIALOG
+                ELSE
+                    CALL utils_globals.show_error("Update failed.")
+                    CONTINUE DIALOG
+                END IF
+
+            CATCH
+                CALL utils_globals.show_sql_error("change_password: Error updating password")
                 CONTINUE DIALOG
-            END IF
+            END TRY
 
         -- Cancel/Close
         ON ACTION bin_cancel
@@ -123,14 +129,21 @@ END FUNCTION
 -- ==============================================================
 FUNCTION get_user_password_hash(p_user STRING) RETURNS STRING
     DEFINE v_hash STRING
-    SELECT password INTO v_hash
-      FROM sy00_user
-     WHERE username = p_user
 
-    IF SQLCA.SQLCODE != 0 THEN
+    TRY
+        SELECT password INTO v_hash
+          FROM sy00_user
+         WHERE username = p_user
+
+        IF SQLCA.SQLCODE != 0 THEN
+            RETURN NULL
+        END IF
+        RETURN v_hash
+
+    CATCH
+        CALL utils_globals.show_sql_error("get_user_password_hash: Error fetching password hash")
         RETURN NULL
-    END IF
-    RETURN v_hash
+    END TRY
 END FUNCTION
 
 -- ==============================================================

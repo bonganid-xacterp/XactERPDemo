@@ -14,11 +14,11 @@
     <RecordField colName="deleted_at" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sy05_perm.deleted_at" sqlTabName="sy05_perm" uid="{bbdbf0fc-f41e-4d8c-92b5-2cb2508e251d}"/>
     <RecordField colName="created_by" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sy05_perm.created_by" sqlTabName="sy05_perm" uid="{d7d53da5-a42c-4264-a15e-036589be9407}"/>
   </Record>
-  <Form gridHeight="16" gridWidth="99" name="frm_perm" text="PERMISSIONS MASTER">
-    <VBox gridHeight="16" gridWidth="99" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="14" gridWidth="99" name="grid1" posX="0" posY="1">
-        <Label gridHeight="1" gridWidth="75" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="PERMISSIONS MASTER"/>
-        <Table gridHeight="6" gridWidth="95" name="frm_perm" posX="1" posY="1" totalRows="5">
+  <Form gridHeight="9" gridWidth="76" name="frm_perm" text="PERMISSIONS MASTER">
+    <VBox gridHeight="9" gridWidth="75" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="7" gridWidth="75" name="grid1" posX="0" posY="1">
+        <Label gridHeight="1" gridWidth="73" justify="center" name="lbl_form_title" posX="1" posY="0" style="header" text="PERMISSIONS MASTER"/>
+        <Table gridHeight="6" gridWidth="73" name="frm_perm" posX="1" posY="1" totalRows="5">
           <Phantom colName="id" fieldId="1" fieldType="TABLE_COLUMN" name="sy05_perm.id" sqlTabName="sy05_perm" widget="Phantom"/>
           <Edit colName="perm_name" fieldId="2" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sy05_perm.perm_name" posX="0" posY="0" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" title="Name" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
@@ -35,9 +35,7 @@
           <Phantom colName="created_at" fieldId="6" fieldType="TABLE_COLUMN" name="sy05_perm.created_at" sqlTabName="sy05_perm" widget="Phantom"/>
           <Phantom colName="updated_at" fieldId="7" fieldType="TABLE_COLUMN" name="sy05_perm.updated_at" sqlTabName="sy05_perm" widget="Phantom"/>
           <Phantom colName="deleted_at" fieldId="8" fieldType="TABLE_COLUMN" name="sy05_perm.deleted_at" sqlTabName="sy05_perm" widget="Phantom"/>
-          <Edit colName="created_by" fieldId="9" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="sy05_perm.created_by" posX="68" posY="0" scroll="true" sqlTabName="sy05_perm" tabIndex="-1" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
+          <Phantom colName="created_by" fieldId="9" fieldType="TABLE_COLUMN" name="sy05_perm.created_by" sqlTabName="sy05_perm" widget="Phantom"/>
         </Table>
       </Grid>
     </VBox>

@@ -11,7 +11,7 @@ IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL st121_st_lkup
 IMPORT FGL utils_doc_totals
-
+IMPORT FGL dl121_lkup
 
 SCHEMA demoappdb
 
@@ -19,14 +19,188 @@ SCHEMA demoappdb
 -- Record Definitions
 -- ==============================================================
 TYPE crn_hdr_t RECORD LIKE sa33_crn_hdr.*
- 
-DEFINE m_rec_crn crn_hdr_t
+DEFINE m_crn_lines_arr DYNAMIC ARRAY OF RECORD LIKE sa33_crn_det.*
 
-DEFINE m_arr_crn_lines DYNAMIC ARRAY OF RECORD LIKE sa33_crn_det.*
+DEFINE m_crn_hdr_rec crn_hdr_t
+DEFINE m_cust_rec RECORD LIKE dl01_mast.*
 
 DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
 DEFINE m_curr_idx INTEGER
---DEFINE is_edit_mode SMALLINT
+DEFINE is_edit_mode SMALLINT
+
+-- ==============================================================
+-- Init Program
+-- ==============================================================
+FUNCTION init_crn_module()
+    LET is_edit_mode = FALSE
+    INITIALIZE m_cust_rec.* TO NULL
+    
+    DISPLAY BY NAME m_cust_rec.*
+        
+    MENU "Credit Note Menu"
+        COMMAND "Find"
+           -- CALL ();
+            LET is_edit_mode = FALSE
+        COMMAND "New"
+            CALL new_crn()
+        COMMAND "Edit"
+            IF m_cust_rec.id IS NULL OR m_cust_rec.id = 0 THEN
+                CALL utils_globals.show_info("No record selected.")
+            ELSE
+                --CALL prompt_edit_choice( m_cust_rec.id)
+            END IF
+        COMMAND "Delete"
+            CALL delete_credit_note(m_cust_rec.id)
+        COMMAND "Previous"
+            CALL move_record(-1)
+        COMMAND "Next"
+            CALL move_record(1)
+
+        COMMAND "Exit"
+            EXIT MENU
+    END MENU
+END FUNCTION
+
+-- ==============================================================
+-- Add New Credit Note
+-- ==============================================================
+FUNCTION new_crn()
+    DEFINE l_hdr_rec RECORD LIKE sa33_crn_hdr.*
+    DEFINE l_next_doc_no INTEGER
+    DEFINE l_new_hdr_id INTEGER
+
+    -- ==========================================================
+    -- 1. Generate next document number
+    -- ==========================================================
+    SELECT COALESCE(MAX(id), 0) + 1 INTO l_next_doc_no FROM sa33_crn_hdr
+
+    -- ==========================================================
+    -- 2. Initialize header
+    -- ==========================================================
+    INITIALIZE l_hdr_rec.* TO NULL
+    LET l_hdr_rec.doc_no = l_next_doc_no
+    LET l_hdr_rec.trans_date = TODAY
+    LET l_hdr_rec.status = "draft"
+    LET l_hdr_rec.created_at = CURRENT
+    LET l_hdr_rec.created_by = utils_globals.get_current_user_id()
+    LET l_hdr_rec.gross_tot = 0
+    LET l_hdr_rec.vat_tot = 0
+    LET l_hdr_rec.disc_tot = 0
+    LET l_hdr_rec.net_tot = 0
+
+    -- ==========================================================
+    -- 3. Input Header Details
+    -- ==========================================================
+    CALL utils_globals.set_form_label("lbl_form_title", "New Sales Quote - Header")
+
+    INPUT BY NAME l_hdr_rec.*
+        ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
+
+        BEFORE INPUT
+            DISPLAY BY NAME l_hdr_rec.doc_no, l_hdr_rec.status, l_hdr_rec.trans_date
+            MESSAGE SFMT("Enter quote header details for Quote #%1", l_next_doc_no)
+
+        AFTER FIELD doc_no
+            IF l_hdr_rec.id IS NOT NULL THEN
+                CALL load_customer_details(l_hdr_rec.id)
+                    RETURNING l_hdr_rec.cust_id, l_hdr_rec.cust_name, l_hdr_rec.cust_id,
+                              l_hdr_rec.cust_phone, l_hdr_rec.cust_email, l_hdr_rec.cust_address1,
+                              l_hdr_rec.cust_address2, l_hdr_rec.cust_address3,
+                              l_hdr_rec.cust_postal_code, l_hdr_rec.cust_vat_no,
+                              l_hdr_rec.cust_payment_terms
+
+                IF l_hdr_rec.cust_id IS NULL THEN
+                    CALL utils_globals.show_error("Customer not found")
+                    NEXT FIELD id
+                END IF
+            END IF
+
+        ON ACTION lookup_customer ATTRIBUTES(TEXT="Customer Lookup", IMAGE="zoom")
+            CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr_rec.id
+            IF l_hdr_rec.id IS NOT NULL THEN
+                CALL load_customer_details(l_hdr_rec.id)
+                    RETURNING l_hdr_rec.cust_id, l_hdr_rec.cust_name, l_hdr_rec.cust_id,
+                              l_hdr_rec.cust_phone, l_hdr_rec.cust_email, l_hdr_rec.cust_address1,
+                              l_hdr_rec.cust_address2, l_hdr_rec.cust_address3,
+                              l_hdr_rec.cust_postal_code, l_hdr_rec.cust_vat_no,
+                              l_hdr_rec.cust_payment_terms
+                DISPLAY BY NAME l_hdr_rec.id
+            END IF
+
+        ON ACTION accept ATTRIBUTES(TEXT="Save Header", IMAGE="save")
+            -- Validate header
+            IF l_hdr_rec.id IS NULL THEN
+                CALL utils_globals.show_error("Customer is required")
+                NEXT FIELD id
+            END IF
+
+            IF l_hdr_rec.trans_date IS NULL THEN
+                LET l_hdr_rec.trans_date = TODAY
+            END IF
+
+            ACCEPT INPUT
+
+        ON ACTION cancel ATTRIBUTES(TEXT="Cancel", IMAGE="exit")
+            CALL utils_globals.show_info("Quote creation cancelled.")
+            --CLOSE WINDOW w_quote_hdr
+            RETURN
+    END INPUT
+
+    -- Check if cancelled
+    IF INT_FLAG THEN
+        LET INT_FLAG = FALSE
+        --CLOSE WINDOW w_quote_hdr
+        RETURN
+    END IF
+
+    -- ==========================================================
+    -- 4. Save Header to Database
+    -- ==========================================================
+    BEGIN WORK
+    TRY
+        INSERT INTO sa33_crn_hdr VALUES(l_hdr_rec.*)
+
+        -- Get the generated header ID
+        LET l_new_hdr_id = SQLCA.SQLERRD[2]
+        LET l_hdr_rec.id = l_new_hdr_id
+
+        COMMIT WORK
+
+        CALL utils_globals.show_success(
+            SFMT("Quote header #%1 saved. ID=%2. Now add quote lines.",
+                 l_next_doc_no, l_new_hdr_id))
+
+    CATCH
+        ROLLBACK WORK
+        CALL utils_globals.show_error(
+            SFMT("Failed to save quote header: %1", SQLCA.SQLCODE))
+        RETURN
+    END TRY
+
+    -- ==========================================================
+    -- 5. Now add lines (header ID exists)
+    -- ==========================================================
+    LET m_crn_hdr_rec.* = l_hdr_rec.*
+    CALL m_crn_lines_arr.clear()
+
+    CALL input_quote_lines(l_new_hdr_id)
+
+    -- ==========================================================
+    -- 6. Load the complete quote for viewing
+    -- ==========================================================
+    --CALL load_crn(l_new_hdr_id)
+
+END FUNCTION
+
+-- ==============================================================
+-- Edit an Credit Note
+-- ==============================================================
+FUNCTION edit_crn()
+    DEFINE is_hdr SMALLINT
+    
+    LET  is_hdr = utils_globals.show_confirm('Do you want to edit headers or footer', 'Edit credit Document')
+
+END FUNCTION 
 
 -- ==============================================================
 -- Add or Edit an Credit Note line
@@ -41,11 +215,11 @@ FUNCTION edit_or_add_crn_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT
         -- Initialize new line
         INITIALIZE l_line.* TO NULL
         LET l_line.hdr_id = p_doc_id
-        LET l_line.line_no = m_arr_crn_lines.getLength() + 1
+        LET l_line.line_no = m_crn_lines_arr.getLength() + 1
         LET l_vat_rate = 15.00
     ELSE
         -- Load from existing array line
-        LET l_line.* = m_arr_crn_lines[p_row].*
+        LET l_line.* = m_crn_lines_arr[p_row].*
         LET l_vat_rate = 15.00
     END IF
 
@@ -83,9 +257,9 @@ FUNCTION edit_or_add_crn_line(p_doc_id INTEGER, p_row INTEGER, p_is_new SMALLINT
 
             ON ACTION save
                 IF p_is_new THEN
-                    LET m_arr_crn_lines[m_arr_crn_lines.getLength() + 1].* = l_line.*
+                    LET m_crn_lines_arr[m_crn_lines_arr.getLength() + 1].* = l_line.*
                 ELSE
-                    LET m_arr_crn_lines[p_row].* = l_line.*
+                    LET m_crn_lines_arr[p_row].* = l_line.*
                 END IF
                 CALL utils_globals.msg_saved()
                 EXIT DIALOG
@@ -101,7 +275,7 @@ END FUNCTION
 -- ==============================================================
 PRIVATE FUNCTION lookup_stock_item() RETURNS STRING
     DEFINE l_stock_id STRING
-    LET l_stock_id = st121_st_lkup.display_stocklist() -- your lookup popup
+    LET l_stock_id = st121_st_lkup.fetch_list() -- your lookup popup
     RETURN l_stock_id
 END FUNCTION
 
@@ -121,12 +295,11 @@ END FUNCTION
 FUNCTION delete_crn_line(p_doc_id INTEGER, p_row INTEGER)
     IF p_row > 0 THEN
         IF utils_globals.confirm_delete(p_row, p_doc_id) THEN
-            CALL m_arr_crn_lines.deleteElement(p_row)
+            CALL m_crn_lines_arr.deleteElement(p_row)
             CALL utils_globals.msg_deleted()
         END IF
     END IF
 END FUNCTION
-
 
 -- ==============================================================
 -- Save all lines to database
@@ -136,11 +309,10 @@ FUNCTION save_crn_lines(p_doc_id INTEGER)
 
     DELETE FROM sa33_crn_det WHERE hdr_id = p_doc_id
 
-    FOR i = 1 TO m_arr_crn_lines.getLength()
-        INSERT INTO sa33_crn_det VALUES m_arr_crn_lines[i].*
+    FOR i = 1 TO m_crn_lines_arr.getLength()
+        INSERT INTO sa33_crn_det VALUES m_crn_lines_arr[i].*
     END FOR
 END FUNCTION
-
 
 -- ==============================================================
 -- Function : load_customer
@@ -179,7 +351,6 @@ END FUNCTION
 -- ==============================================================
 -- Function : load_credit_note
 -- ==============================================================
-
 FUNCTION load_credit_note(p_doc_id INTEGER)
     DEFINE idx INTEGER
     DEFINE user_choice SMALLINT
@@ -190,13 +361,13 @@ FUNCTION load_credit_note(p_doc_id INTEGER)
     OPEN WINDOW w_crn WITH FORM "sa133_crn" ATTRIBUTES(STYLE = "dialog")
 
     -- Initialize variables
-    INITIALIZE m_rec_crn.* TO NULL
-    CALL m_arr_crn_lines.clear()
+    INITIALIZE m_crn_hdr_rec.* TO NULL
+    CALL m_crn_lines_arr.clear()
 
     -- ===========================================
     -- Load header record
     -- ===========================================
-    SELECT * INTO m_rec_crn.* 
+    SELECT * INTO m_crn_hdr_rec.* 
       FROM sa33_crn_hdr 
      WHERE id = p_doc_id
 
@@ -211,7 +382,7 @@ FUNCTION load_credit_note(p_doc_id INTEGER)
              WHERE hdr_id = p_doc_id 
              ORDER BY line_no
 
-        FOREACH ord_lines_cur INTO m_arr_crn_lines[idx + 1].*
+        FOREACH ord_lines_cur INTO m_crn_lines_arr[idx + 1].*
             LET idx = idx + 1
         END FOREACH
 
@@ -221,8 +392,8 @@ FUNCTION load_credit_note(p_doc_id INTEGER)
         -- ===========================================
         -- Show form in view mode first
         -- ===========================================
-        DISPLAY BY NAME m_rec_crn.*
-        DISPLAY ARRAY m_arr_crn_lines TO arr_sa_crn_items.*
+        DISPLAY BY NAME m_crn_hdr_rec.*
+        DISPLAY ARRAY m_crn_lines_arr TO arr_sa_crn_items.*
 
             BEFORE DISPLAY
                 CALL DIALOG.setActionHidden("cancel", TRUE)
@@ -234,7 +405,7 @@ FUNCTION load_credit_note(p_doc_id INTEGER)
                 CASE user_choice
                     WHEN 1
                         CALL edit_crn_header(p_doc_id)
-                        DISPLAY BY NAME m_rec_crn.*  -- Refresh
+                        DISPLAY BY NAME m_crn_hdr_rec.*  -- Refresh
                     WHEN 2
                         CALL edit_crn_lines(p_doc_id)
                     OTHERWISE
@@ -276,7 +447,7 @@ END FUNCTION
 FUNCTION edit_crn_header(p_doc_id INTEGER)
     DEFINE new_hdr RECORD LIKE sa33_crn_hdr.*
 
-    LET new_hdr.* = m_rec_crn.*
+    LET new_hdr.* = m_crn_hdr_rec.*
 
     DIALOG
         INPUT BY NAME new_hdr.*
@@ -285,7 +456,7 @@ FUNCTION edit_crn_header(p_doc_id INTEGER)
             
                 UPDATE sa33_crn_hdr SET sa33_crn_hdr.* = new_hdr.* 
                  WHERE id = p_doc_id
-                LET m_rec_crn.* = new_hdr.*
+                LET m_crn_hdr_rec.* = new_hdr.*
                 
                 CALL utils_globals.msg_saved()
 
@@ -296,10 +467,12 @@ FUNCTION edit_crn_header(p_doc_id INTEGER)
     END DIALOG
 END FUNCTION
 
-
+-- ==============================================================
+-- Edit Credit Lines
+-- ==============================================================
 FUNCTION edit_crn_lines(p_doc_id INTEGER)
     DIALOG
-        DISPLAY ARRAY m_arr_crn_lines TO arr_sa_crn_items.*
+        DISPLAY ARRAY m_crn_lines_arr TO arr_sa_crn_items.*
             BEFORE DISPLAY
                 CALL DIALOG.setActionHidden("accept", TRUE)
 
@@ -323,30 +496,29 @@ FUNCTION edit_crn_lines(p_doc_id INTEGER)
     END DIALOG
 END FUNCTION
 
-
 -- ==============================================================
 -- Save Credit Note (Header + Lines)
 -- ==============================================================
 FUNCTION save_credit_note()
     DEFINE exists INTEGER
 
-    SELECT COUNT(*) INTO exists FROM sa33_crn_hdr WHERE id = m_rec_crn.id
+    SELECT COUNT(*) INTO exists FROM sa33_crn_hdr WHERE id = m_crn_hdr_rec.id
 
     IF exists = 0 THEN
-        INSERT INTO sa33_crn_hdr VALUES m_rec_crn.*
+        INSERT INTO sa33_crn_hdr VALUES m_crn_hdr_rec.*
         CALL utils_globals.msg_saved()
     ELSE
         UPDATE sa33_crn_hdr
-            SET sa33_crn_hdr.* = m_rec_crn.*
-            WHERE id = m_rec_crn.id
+            SET sa33_crn_hdr.* = m_crn_hdr_rec.*
+            WHERE id = m_crn_hdr_rec.id
         CALL utils_globals.msg_updated()
     END IF
 
     -- Save lines
-    DELETE FROM sa33_crn_det WHERE hdr_id = m_rec_crn.id
+    DELETE FROM sa33_crn_det WHERE hdr_id = m_crn_hdr_rec.id
 
-    FOR m_curr_idx = 1 TO m_arr_crn_lines.getLength()
-        INSERT INTO sa33_crn_det VALUES m_arr_crn_lines[m_curr_idx].*
+    FOR m_curr_idx = 1 TO m_crn_lines_arr.getLength()
+        INSERT INTO sa33_crn_det VALUES m_crn_lines_arr[m_curr_idx].*
     END FOR
 
 END FUNCTION

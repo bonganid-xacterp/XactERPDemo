@@ -15,7 +15,7 @@
           <Edit width="10" scroll="1"/>
           <LStr text="Date"/>
         </TableColumn>
-        <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(30)" fieldId="2" sqlTabName="dl30_trans" text="Doc No" tabIndex="3">
+        <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="DECIMAL(10,0)" fieldId="2" sqlTabName="dl30_trans" text="Doc No" tabIndex="3" numAlign="1">
           <Edit width="20" scroll="1"/>
           <LStr text="Doc No"/>
         </TableColumn>

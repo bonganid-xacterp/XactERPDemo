@@ -150,9 +150,8 @@ PUBLIC FUNCTION initialize_application() RETURNS BOOLEAN
     TRY
         -- Load the visual style for the application
         CALL ui.Interface.loadStyles(STYLE_FILE)
-
+        CALL ui.Interface.loadActionDefaults('actions')
         -- Load the top menu
-
 
         -- Initialize database connection
         LET db_result = utils_db.initialize_database()
@@ -425,99 +424,132 @@ PUBLIC FUNCTION apply_field_formatting() RETURNS SMALLINT
     DEFINE w om.DomNode
     DEFINE i INTEGER
     DEFINE tag, dtype, nm STRING
-    
+
     LET win = ui.Window.getCurrent()
-    IF win IS NULL THEN RETURN 0 END IF
-    
+    IF win IS NULL THEN
+        RETURN 0
+    END IF
+
     LET form = win.getForm()
-    IF form IS NULL THEN RETURN 0 END IF
-    
+    IF form IS NULL THEN
+        RETURN 0
+    END IF
+
     LET root = form.getNode()
-    IF root IS NULL THEN RETURN 0 END IF
-    
+    IF root IS NULL THEN
+        RETURN 0
+    END IF
+
     LET fields = root.selectByTagName("FormField")
-    
+
     FOR i = 1 TO fields.getLength()
         LET fld = fields.item(i)
-        
+
         -- Find the concrete widget under the FormField
         LET w = first_widget_child(fld)
         IF w IS NULL THEN
             CONTINUE FOR
         END IF
-        
+
         -- Prefer widget.tag (your debug shows it is set there)
         LET tag = w.getAttribute("tag")
         IF tag IS NULL OR tag.trim() = "" THEN
             LET tag = fld.getAttribute("tag")
         END IF
-        IF tag IS NULL THEN LET tag = "" END IF
+        IF tag IS NULL THEN
+            LET tag = ""
+        END IF
         LET tag = tag.trim().toLowerCase()
-        
+
         IF tag = "" THEN
             CONTINUE FOR
         END IF
-        
+
         LET dtype = fld.getAttribute("dataType")
-        IF dtype IS NULL THEN LET dtype = "" END IF
+        IF dtype IS NULL THEN
+            LET dtype = ""
+        END IF
         LET dtype = dtype.trim().toUpperCase()
-        
+
         LET nm = fld.getAttribute("name")
-        IF nm IS NULL THEN LET nm = "(unnamed)" END IF
-        
+        IF nm IS NULL THEN
+            LET nm = "(unnamed)"
+        END IF
+
         CASE tag
             WHEN "currency"
                 -- Only apply to numeric types
-                IF dtype = "" OR dtype MATCHES "DECIMAL*" OR dtype MATCHES "NUMERIC*" OR 
-                   dtype MATCHES "FLOAT*" OR dtype MATCHES "MONEY*" OR
-                   dtype = "INTEGER" OR dtype = "SMALLINT" THEN
+                IF dtype = ""
+                    OR dtype MATCHES "DECIMAL*"
+                    OR dtype MATCHES "NUMERIC*"
+                    OR dtype MATCHES "FLOAT*"
+                    OR dtype MATCHES "MONEY*"
+                    OR dtype = "INTEGER"
+                    OR dtype = "SMALLINT" THEN
                     CALL w.setAttribute("picture", "R <<<<,<<<,<<<,<<&.&&")
                     CALL w.setAttribute("numAlign", "1")
                     -- Set picture on FormField too (this is valid)
                     CALL fld.setAttribute("picture", "R <<<<,<<<,<<<,<<&.&&")
                 END IF
-                
+
             WHEN "date"
                 -- Only set format on widget, NOT on FormField
                 CALL w.setAttribute("format", "dd/mm/yyyy")
-                
+
             WHEN "datetime"
                 -- Only set format on widget, NOT on FormField
                 CALL w.setAttribute("format", "dd/mm/yyyy hh:mi")
         END CASE
-        
+
         -- Debug to verify what actually got set
-        DISPLAY "Formatted ", nm, " [", tag, "]",
-                " picture=", NVL(w.getAttribute("picture"), ""),
-                " format=",  NVL(w.getAttribute("format"), ""),
-                " numAlign=", NVL(w.getAttribute("numAlign"), "")
+        DISPLAY "Formatted ",
+            nm,
+            " [",
+            tag,
+            "]",
+            " picture=",
+            NVL(w.getAttribute("picture"), ""),
+            " format=",
+            NVL(w.getAttribute("format"), ""),
+            " numAlign=",
+            NVL(w.getAttribute("numAlign"), "")
     END FOR
-    
+
     -- Force UI refresh so new attributes take effect
     CALL ui.Interface.refresh()
-    
+
     RETURN 1
 END FUNCTION
 
 PRIVATE FUNCTION first_widget_child(fld om.DomNode) RETURNS om.DomNode
     DEFINE nl om.NodeList
-    
+
     -- Try common input widgets
     LET nl = fld.selectByTagName("Edit")
-    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
-    
+    IF nl.getLength() > 0 THEN
+        RETURN nl.item(1)
+    END IF
+
     LET nl = fld.selectByTagName("DateEdit")
-    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
-    
+    IF nl.getLength() > 0 THEN
+        RETURN nl.item(1)
+    END IF
+
     LET nl = fld.selectByTagName("TimeEdit")
-    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
-    
+    IF nl.getLength() > 0 THEN
+        RETURN nl.item(1)
+    END IF
+
     LET nl = fld.selectByTagName("SpinEdit")
-    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
-    
+    IF nl.getLength() > 0 THEN
+        RETURN nl.item(1)
+    END IF
+
     LET nl = fld.selectByTagName("ComboBox")
-    IF nl.getLength() > 0 THEN RETURN nl.item(1) END IF
-    
+    IF nl.getLength() > 0 THEN
+        RETURN nl.item(1)
+    END IF
+
     RETURN NULL
 END FUNCTION
 
@@ -960,11 +992,11 @@ PUBLIC FUNCTION get_next_code(p_table STRING, p_field STRING)
 
     LET next_num = last_num + 1
 
-    DISPLAY SFMT("Next available code for %1.%2 = %3", p_table, p_field, next_num)
+    DISPLAY SFMT("Next available code for %1.%2 = %3",
+        p_table, p_field, next_num)
 
     RETURN next_num
 END FUNCTION
-
 
 -- ==============================================================
 -- Generate next record document number
@@ -992,7 +1024,8 @@ PUBLIC FUNCTION set_next_doc_no(p_table STRING, p_field STRING)
 
     LET next_num = last_num + 1
 
-    DISPLAY SFMT("Next available code for %1.%2 = %3", p_table, p_field, next_num)
+    DISPLAY SFMT("Next available code for %1.%2 = %3",
+        p_table, p_field, next_num)
 
     RETURN next_num
 END FUNCTION
@@ -1168,15 +1201,12 @@ PUBLIC FUNCTION apply_currency_prefix()
 --    END FOR
 END FUNCTION
 
-
 -- =======================
 -- Confirm Exit
 -- =======================
 FUNCTION confirm_exit()
-    
-   
-END FUNCTION
 
+END FUNCTION
 
 -- ==============================================================
 -- Load UOMs into ComboBox
@@ -1187,7 +1217,7 @@ FUNCTION load_uoms()
     DEFINE frm ui.Form
     DEFINE win ui.Window
     DEFINE arr_uom_codes DYNAMIC ARRAY OF STRING
-    DEFINE arr_uom_names dynamic ARRAY OF STRING 
+    DEFINE arr_uom_names DYNAMIC ARRAY OF STRING
 
     -- Clear arrays
     CALL arr_uom_codes.clear()
@@ -1198,9 +1228,7 @@ FUNCTION load_uoms()
     TRY
         -- Load active UOMs from database
         DECLARE uom_curs CURSOR FOR
-            SELECT uom_code, uom_name
-              FROM st03_uom_master
-             ORDER BY uom_code
+            SELECT uom_code, uom_name FROM st03_uom_master ORDER BY uom_code
 
         FOREACH uom_curs INTO arr_uom_codes[idx], arr_uom_names[idx]
             LET idx = idx + 1
@@ -1243,5 +1271,5 @@ END FUNCTION
 -- ==============================================================
 FUNCTION update_debtor_balances(p_cust_id INTEGER)
     --DEFINE l_cust RECORD LIKE dl01_mast.*
-   
+
 END FUNCTION

@@ -1,27 +1,27 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="demoappdb" tag="" spacing="normal" text="Debtors" width="116" height="20">
+<Form name="dl101_mast.tmp" build="3.20.14" sqlDbName="demoappdb" tag="" spacing="normal" text="Debtors" width="116" height="17">
   <LStr text="Debtors"/>
   <VBox name="vbox1">
-    <Grid name="dl101_mast_hdr" width="111" height="12">
+    <Grid name="dl101_mast_hdr" width="111" height="9">
       <Label name="lbl_form_title" width="109" text="DEBTORS MASTER" justify="center" style="header" posY="0" posX="1" gridWidth="109">
         <LStr text="DEBTORS MASTER"/>
       </Label>
-      <Group name="group2" text="" gridChildrenInParent="1" posY="1" posX="1" gridWidth="67" gridHeight="9">
+      <Group name="group2" text="" gridChildrenInParent="1" posY="1" posX="1" gridWidth="67" gridHeight="8">
         <PhantomFormField name="dl01_mast.id" colName="id" noEntry="1" sqlType="BIGINT" required="1" notNull="1" fieldId="15" sqlTabName="dl01_mast">
           <PhantomEdit width="1"/>
         </PhantomFormField>
         <LStr text=""/>
-        <Label name="dl01_mast_cust_name_label1" width="10" text="Cust Name" posY="2" posX="1" gridWidth="10">
+        <Label name="dl01_mast_cust_name_label1" width="10" text="Cust Name" posY="1" posX="1" gridWidth="10">
           <LStr text="Cust Name"/>
         </Label>
         <FormField name="dl01_mast.cust_name" colName="cust_name" sqlType="VARCHAR(120)" required="1" notNull="1" fieldId="0" sqlTabName="dl01_mast" tabIndex="1">
-          <Edit width="20" scroll="1" posY="2" posX="12" gridWidth="20"/>
+          <Edit width="20" scroll="1" posY="1" posX="12" gridWidth="20"/>
         </FormField>
-        <Label name="dl01_mast_status_label1" width="12" text="Status" posY="2" posX="33" gridWidth="12">
+        <Label name="dl01_mast_status_label1" width="12" text="Status" posY="1" posX="33" gridWidth="12">
           <LStr text="Status"/>
         </Label>
         <FormField name="dl01_mast.status" colName="status" sqlType="VARCHAR(20)" required="1" notNull="1" fieldId="1" sqlTabName="dl01_mast" tabIndex="2">
-          <ComboBox width="8" scroll="1" posY="2" posX="46" gridWidth="10">
+          <ComboBox width="8" scroll="1" posY="1" posX="46" gridWidth="10">
             <Item name="active" text="Active"/>
             <Item name="inactive" text="Inactive"/>
           </ComboBox>
@@ -35,89 +35,89 @@
         <PhantomFormField name="dl01_mast.deleted_at" colName="deleted_at" sqlType="DATETIME YEAR TO FRACTION(4)" fieldId="18" sqlTabName="dl01_mast">
           <PhantomEdit width="1"/>
         </PhantomFormField>
-        <Label name="dl01_mast_phone_label1" width="10" text="Phone" posY="3" posX="1" gridWidth="10">
+        <Label name="dl01_mast_phone_label1" width="10" text="Phone" posY="2" posX="1" gridWidth="10">
           <LStr text="Phone"/>
         </Label>
-        <FormField name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(30)" fieldId="2" sqlTabName="dl01_mast" tabIndex="3">
-          <Edit width="20" scroll="1" posY="3" posX="12" gridWidth="20"/>
+        <FormField name="dl01_mast.phone" colName="phone" sqlType="VARCHAR(11)" fieldId="2" sqlTabName="dl01_mast" tabIndex="3">
+          <Edit width="20" scroll="1" posY="2" posX="12" gridWidth="20"/>
         </FormField>
-        <Label name="dl01_mast_email_label1" width="12" text="Email" posY="3" posX="33" gridWidth="12">
+        <Label name="dl01_mast_email_label1" width="12" text="Email" posY="2" posX="33" gridWidth="12">
           <LStr text="Email"/>
         </Label>
         <FormField name="dl01_mast.email" colName="email" sqlType="VARCHAR(120)" fieldId="3" sqlTabName="dl01_mast" tabIndex="4">
-          <Edit width="20" scroll="1" posY="3" posX="46" gridWidth="20"/>
+          <Edit width="20" scroll="1" posY="2" posX="46" gridWidth="20"/>
         </FormField>
-        <Label name="dl01_mast_address1_label1" width="10" text="Address1" posY="4" posX="1" gridWidth="10">
+        <Label name="dl01_mast_address1_label1" width="10" text="Address1" posY="3" posX="1" gridWidth="10">
           <LStr text="Address1"/>
         </Label>
         <FormField name="dl01_mast.address1" colName="address1" sqlType="VARCHAR(100)" fieldId="4" sqlTabName="dl01_mast" tabIndex="5">
-          <Edit width="20" scroll="1" posY="4" posX="12" gridWidth="20"/>
+          <Edit width="20" scroll="1" posY="3" posX="12" gridWidth="20"/>
         </FormField>
-        <Label name="dl01_mast_address2_label1" width="12" text="Address2" posY="4" posX="33" gridWidth="12">
+        <Label name="dl01_mast_address2_label1" width="12" text="Address2" posY="3" posX="33" gridWidth="12">
           <LStr text="Address2"/>
         </Label>
         <FormField name="dl01_mast.address2" colName="address2" sqlType="VARCHAR(100)" fieldId="5" sqlTabName="dl01_mast" tabIndex="6">
-          <Edit width="20" scroll="1" posY="4" posX="46" gridWidth="20"/>
+          <Edit width="20" scroll="1" posY="3" posX="46" gridWidth="20"/>
         </FormField>
-        <Label name="dl01_mast_address3_label1" width="10" text="Address3" posY="5" posX="1" gridWidth="10">
+        <Label name="dl01_mast_address3_label1" width="10" text="Address3" posY="4" posX="1" gridWidth="10">
           <LStr text="Address3"/>
         </Label>
         <FormField name="dl01_mast.address3" colName="address3" sqlType="VARCHAR(100)" fieldId="6" sqlTabName="dl01_mast" tabIndex="7">
-          <Edit width="20" scroll="1" posY="5" posX="12" gridWidth="20"/>
+          <Edit width="20" scroll="1" posY="4" posX="12" gridWidth="20"/>
         </FormField>
-        <Label name="dl01_mast_postal_code_label1" width="12" text="Postal Code" posY="5" posX="33" gridWidth="12">
+        <Label name="dl01_mast_postal_code_label1" width="12" text="Postal Code" posY="4" posX="33" gridWidth="12">
           <LStr text="Postal Code"/>
         </Label>
         <FormField name="dl01_mast.postal_code" colName="postal_code" sqlType="VARCHAR(10)" fieldId="7" sqlTabName="dl01_mast" tabIndex="8">
-          <Edit width="10" scroll="1" posY="5" posX="46" gridWidth="10"/>
+          <Edit width="10" scroll="1" posY="4" posX="46" gridWidth="10"/>
         </FormField>
-        <Label name="dl01_mast_vat_no_label1" width="10" text="VAT No" posY="6" posX="1" gridWidth="10">
+        <Label name="dl01_mast_vat_no_label1" width="10" text="VAT No" posY="5" posX="1" gridWidth="10">
           <LStr text="VAT No"/>
         </Label>
         <FormField name="dl01_mast.vat_no" colName="vat_no" sqlType="VARCHAR(20)" fieldId="8" sqlTabName="dl01_mast" tabIndex="9">
-          <Edit width="20" scroll="1" posY="6" posX="12" gridWidth="20"/>
+          <Edit width="20" scroll="1" posY="5" posX="12" gridWidth="20"/>
         </FormField>
-        <Label name="dl01_mast_payment_terms_label1" width="12" text="Pay Terms" posY="6" posX="33" gridWidth="12">
+        <Label name="dl01_mast_payment_terms_label1" width="12" text="Pay Terms" posY="5" posX="33" gridWidth="12">
           <LStr text="Pay Terms"/>
         </Label>
         <FormField name="dl01_mast.payment_terms" colName="payment_terms" sqlType="VARCHAR(50)" fieldId="9" sqlTabName="dl01_mast" tabIndex="10">
-          <ComboBox width="8" scroll="1" posY="6" posX="46" gridWidth="10">
+          <ComboBox width="8" scroll="1" posY="5" posX="46" gridWidth="10">
             <Item name="0" text="Cash"/>
             <Item name="30" text="30Days"/>
           </ComboBox>
         </FormField>
-        <Label name="dl01_mast_cr_limit_label1" width="10" text="Credit Limit" posY="7" posX="1" gridWidth="10">
+        <Label name="dl01_mast_cr_limit_label1" width="10" text="Credit Limit" posY="6" posX="1" gridWidth="10">
           <LStr text="Credit Limit"/>
         </Label>
         <FormField name="dl01_mast.cr_limit" colName="cr_limit" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="10" sqlTabName="dl01_mast" tabIndex="11">
-          <Edit width="10" scroll="1" posY="7" posX="12" gridWidth="10"/>
+          <Edit width="10" scroll="1" posY="6" posX="12" gridWidth="10"/>
         </FormField>
       </Group>
-      <Group name="group1" text="" gridChildrenInParent="1" posY="1" posX="68" gridWidth="28" gridHeight="9">
+      <Group name="group1" text="" gridChildrenInParent="1" posY="1" posX="68" gridWidth="28" gridHeight="8">
         <LStr text=""/>
-        <Label name="dl01_mast_cost_ytd_label1" width="9" text="Cost YTD" posY="1" posX="2" gridWidth="9">
-          <LStr text="Cost YTD"/>
-        </Label>
-        <FormField name="dl01_mast.cost_ytd" colName="cost_ytd" sqlType="DECIMAL(15,2)" fieldId="11" sqlTabName="dl01_mast" noEntry="1" tabIndex="12">
-          <Edit width="11" scroll="1" posY="1" posX="13" gridWidth="11"/>
-        </FormField>
-        <Label name="dl01_mast_created_by_label1" width="9" text="Created By" posY="2" posX="2" gridWidth="9">
+        <Label name="dl01_mast_created_by_label1" width="9" text="Created By" posY="1" posX="2" gridWidth="9">
           <LStr text="Created By"/>
         </Label>
-        <FormField name="dl01_mast.created_by" colName="created_by" sqlType="BIGINT" fieldId="12" sqlTabName="dl01_mast" tabIndex="13">
-          <ButtonEdit width="9" image="zoom" scroll="1" posY="2" posX="13" gridWidth="11"/>
+        <FormField name="dl01_mast.created_by" colName="created_by" sqlType="BIGINT" fieldId="11" sqlTabName="dl01_mast" tabIndex="12">
+          <Edit width="11" scroll="1" posY="1" posX="13" gridWidth="11"/>
         </FormField>
-        <Label name="dl01_mast_balance_label1" width="9" text="Balance" posY="3" posX="2" gridWidth="9">
+        <Label name="dl01_mast_balance_label1" width="9" text="Balance" posY="2" posX="2" gridWidth="9">
           <LStr text="Balance"/>
         </Label>
-        <FormField name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="13" sqlTabName="dl01_mast" noEntry="1" tabIndex="14">
-          <Edit width="11" scroll="1" posY="3" posX="13" gridWidth="11"/>
+        <FormField name="dl01_mast.balance" colName="balance" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="12" sqlTabName="dl01_mast" noEntry="1" tabIndex="13">
+          <Edit width="11" scroll="1" posY="2" posX="13" gridWidth="11"/>
         </FormField>
-        <Label name="dl01_mast_sales_ytd_label1" width="9" text="Sales YTD" posY="4" posX="2" gridWidth="9">
+        <Label name="dl01_mast_sales_ytd_label1" width="9" text="Sales YTD" posY="5" posX="2" gridWidth="9">
           <LStr text="Sales YTD"/>
         </Label>
-        <FormField name="dl01_mast.sales_ytd" colName="sales_ytd" sqlType="DECIMAL(15,2)" fieldId="14" sqlTabName="dl01_mast" noEntry="1" tabIndex="15">
-          <Edit width="11" scroll="1" posY="4" posX="13" gridWidth="11"/>
+        <FormField name="dl01_mast.sales_ytd" colName="sales_ytd" sqlType="DECIMAL(15,2)" fieldId="13" sqlTabName="dl01_mast" noEntry="1" tabIndex="14">
+          <Edit width="11" scroll="1" posY="5" posX="13" gridWidth="11"/>
+        </FormField>
+        <Label name="dl01_mast_cost_ytd_label1" width="9" text="Cost YTD" posY="6" posX="2" gridWidth="9">
+          <LStr text="Cost YTD"/>
+        </Label>
+        <FormField name="dl01_mast.cost_ytd" colName="cost_ytd" sqlType="DECIMAL(15,2)" fieldId="14" sqlTabName="dl01_mast" noEntry="1" tabIndex="15">
+          <Edit width="11" scroll="1" posY="6" posX="13" gridWidth="11"/>
         </FormField>
       </Group>
     </Grid>
@@ -135,7 +135,7 @@
             <Edit width="10" scroll="1"/>
             <LStr text="Trans Date"/>
           </TableColumn>
-          <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="VARCHAR(30)" fieldId="22" sqlTabName="dl30_trans" text="Doc No" tabIndex="17">
+          <TableColumn name="dl30_trans.doc_no" colName="doc_no" sqlType="DECIMAL(10,0)" fieldId="22" sqlTabName="dl30_trans" text="Doc No" tabIndex="17" numAlign="1">
             <Edit width="12" scroll="1"/>
             <LStr text="Doc No"/>
           </TableColumn>
@@ -167,18 +167,6 @@
       </Page>
     </Folder>
   </VBox>
-  <RecordView tabName="dl30_trans">
-    <Link colName="id" fieldIdRef="19"/>
-    <Link colName="cust_id" fieldIdRef="20"/>
-    <Link colName="trans_date" fieldIdRef="21"/>
-    <Link colName="doc_no" fieldIdRef="22"/>
-    <Link colName="doc_type" fieldIdRef="23"/>
-    <Link colName="gross_tot" fieldIdRef="24"/>
-    <Link colName="vat" fieldIdRef="25"/>
-    <Link colName="disc" fieldIdRef="26"/>
-    <Link colName="net_tot" fieldIdRef="27"/>
-    <Link colName="notes" fieldIdRef="28"/>
-  </RecordView>
   <RecordView tabName="dl01_mast">
     <Link colName="cust_name" fieldIdRef="0"/>
     <Link colName="status" fieldIdRef="1"/>
@@ -191,14 +179,26 @@
     <Link colName="vat_no" fieldIdRef="8"/>
     <Link colName="payment_terms" fieldIdRef="9"/>
     <Link colName="cr_limit" fieldIdRef="10"/>
-    <Link colName="cost_ytd" fieldIdRef="11"/>
-    <Link colName="created_by" fieldIdRef="12"/>
-    <Link colName="balance" fieldIdRef="13"/>
-    <Link colName="sales_ytd" fieldIdRef="14"/>
+    <Link colName="created_by" fieldIdRef="11"/>
+    <Link colName="balance" fieldIdRef="12"/>
+    <Link colName="sales_ytd" fieldIdRef="13"/>
+    <Link colName="cost_ytd" fieldIdRef="14"/>
     <Link colName="id" fieldIdRef="15"/>
     <Link colName="created_at" fieldIdRef="16"/>
     <Link colName="updated_at" fieldIdRef="17"/>
     <Link colName="deleted_at" fieldIdRef="18"/>
+  </RecordView>
+  <RecordView tabName="dl30_trans">
+    <Link colName="id" fieldIdRef="19"/>
+    <Link colName="cust_id" fieldIdRef="20"/>
+    <Link colName="trans_date" fieldIdRef="21"/>
+    <Link colName="doc_no" fieldIdRef="22"/>
+    <Link colName="doc_type" fieldIdRef="23"/>
+    <Link colName="gross_tot" fieldIdRef="24"/>
+    <Link colName="vat" fieldIdRef="25"/>
+    <Link colName="disc" fieldIdRef="26"/>
+    <Link colName="net_tot" fieldIdRef="27"/>
+    <Link colName="notes" fieldIdRef="28"/>
   </RecordView>
   <RecordView tabName="arr_debt_trans">
     <Link colName="id" fieldIdRef="19"/>
@@ -223,14 +223,14 @@
     <Link colName="postal_code" fieldIdRef="7"/>
     <Link colName="vat_no" fieldIdRef="8"/>
     <Link colName="payment_terms" fieldIdRef="9"/>
-    <Link colName="balance" fieldIdRef="13"/>
+    <Link colName="balance" fieldIdRef="12"/>
     <Link colName="cr_limit" fieldIdRef="10"/>
-    <Link colName="sales_ytd" fieldIdRef="14"/>
-    <Link colName="cost_ytd" fieldIdRef="11"/>
+    <Link colName="sales_ytd" fieldIdRef="13"/>
+    <Link colName="cost_ytd" fieldIdRef="14"/>
     <Link colName="status" fieldIdRef="1"/>
     <Link colName="created_at" fieldIdRef="16"/>
     <Link colName="updated_at" fieldIdRef="17"/>
     <Link colName="deleted_at" fieldIdRef="18"/>
-    <Link colName="created_by" fieldIdRef="12"/>
+    <Link colName="created_by" fieldIdRef="11"/>
   </RecordView>
 </Form>

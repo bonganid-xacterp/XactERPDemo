@@ -14,14 +14,16 @@ SCHEMA demoappdb
 -- ==========================================
 -- Main Lookup Function
 -- ==========================================
-FUNCTION display_stocklist() RETURNS STRING
+FUNCTION fetch_list() RETURNS STRING
     DEFINE
         stock_arr DYNAMIC ARRAY OF RECORD
             id LIKE st01_mast.id,
             description LIKE st01_mast.description,
-            stock_on_hand LIKE st01_mast.stock_on_hand
+            stock_on_hand LIKE st01_mast.stock_on_hand,
+            uom LIKE st01_mast.uom
         END RECORD,
         f_search STRING,
+        where_clause STRING,
         ret_code INTEGER,
         curr_idx INTEGER
 
@@ -32,7 +34,11 @@ FUNCTION display_stocklist() RETURNS STRING
         ATTRIBUTES(STYLE = "dialog", TYPE = POPUP)
 
     LET f_search = ""
+    LET where_clause = "1=1"  -- Default WHERE clause (all records)
     LET ret_code = NULL
+
+    -- Load initial data
+    CALL load_stock_data_construct(stock_arr, where_clause)
 
     -- Dialog combining search + table
     DIALOG ATTRIBUTES(UNBUFFERED)
@@ -44,10 +50,14 @@ FUNCTION display_stocklist() RETURNS STRING
             TO tbl_st_list.*
             ATTRIBUTES(DOUBLECLICK = accept)
 
-            BEFORE DISPLAY
-                CALL load_stock_data(stock_arr, f_search)
-
             ON ACTION accept ATTRIBUTES(TEXT = "Select", IMAGE = "check")
+                LET curr_idx = arr_curr()
+                IF curr_idx > 0 THEN
+                    LET ret_code = stock_arr[curr_idx].id
+                    EXIT DIALOG
+                END IF
+
+            ON KEY (RETURN)
                 LET curr_idx = arr_curr()
                 IF curr_idx > 0 THEN
                     LET ret_code = stock_arr[curr_idx].id
@@ -64,17 +74,22 @@ FUNCTION display_stocklist() RETURNS STRING
         -- ===========================================
         INPUT BY NAME f_search ATTRIBUTES(WITHOUT DEFAULTS)
 
-            BEFORE FIELD f_search
-                -- If Enter pressed, reload but stay on same field
-                CALL load_stock_data(stock_arr, f_search)
-                NEXT FIELD f_search
-
             AFTER FIELD f_search
                 -- Fires on Enter or Tab leaving the field
                 CALL load_stock_data(stock_arr, f_search)
 
             ON ACTION search ATTRIBUTES(TEXT = "Search", IMAGE = "zoom")
                 CALL load_stock_data(stock_arr, f_search)
+
+            ON ACTION clear ATTRIBUTES(TEXT = "Clear", IMAGE = "refresh")
+                -- Clear search field and reload all records
+                LET f_search = ""
+                CALL load_stock_data_construct(stock_arr, "1=1")
+                DISPLAY BY NAME f_search
+
+             ON ACTION cancel ATTRIBUTES(TEXT = "Close", IMAGE = "exit")
+                LET ret_code = NULL
+                EXIT DIALOG
 
         END INPUT
 
@@ -91,7 +106,8 @@ FUNCTION load_stock_data(
     p_arr DYNAMIC ARRAY OF RECORD
         id LIKE st01_mast.id,
         description LIKE st01_mast.description,
-        stock_on_hand LIKE st01_mast.stock_on_hand
+        stock_on_hand LIKE st01_mast.stock_on_hand,
+        uom LIKE st01_mast.uom
     END RECORD,
     p_filter STRING)
 
@@ -99,7 +115,8 @@ FUNCTION load_stock_data(
         stock_rec RECORD
             id LIKE st01_mast.id,
             description LIKE st01_mast.description,
-            stock_on_hand LIKE st01_mast.stock_on_hand
+            stock_on_hand LIKE st01_mast.stock_on_hand,
+             uom LIKE st01_mast.uom
         END RECORD,
         like_pat STRING,
         i INTEGER
@@ -127,17 +144,15 @@ FUNCTION load_stock_data(
     -- Parameterized SQL Query
     -- ===========================================
     PREPARE stmt
-        FROM "SELECT id, description, stock_on_hand
+        FROM "SELECT id, description, stock_on_hand, uom
            FROM st01_mast
           WHERE status = 'active'
-            AND (CAST(id AS VARCHAR(20)) ILIKE ?
-                 OR description ILIKE ?
-                 OR CAST(stock_on_hand AS VARCHAR(20)) ILIKE ?)
+            AND description ILIKE ?
           ORDER BY id
           LIMIT 100"
 
     DECLARE stock_curs CURSOR FOR stmt
-    OPEN stock_curs USING like_pat, like_pat, like_pat
+    OPEN stock_curs USING like_pat
 
     LET i = 0
     FOREACH stock_curs INTO stock_rec.*
@@ -148,4 +163,51 @@ FUNCTION load_stock_data(
     CLOSE stock_curs
     FREE stock_curs
     FREE stmt
+END FUNCTION
+
+-- ==========================================
+-- Helper Function : Load Stock Data with CONSTRUCT
+-- ==========================================
+FUNCTION load_stock_data_construct(
+    p_arr DYNAMIC ARRAY OF RECORD
+        id LIKE st01_mast.id,
+        description LIKE st01_mast.description,
+        stock_on_hand LIKE st01_mast.stock_on_hand,
+        uom LIKE st01_mast.uom
+    END RECORD,
+    p_where_clause STRING)
+
+    DEFINE
+        stock_rec RECORD
+            id LIKE st01_mast.id,
+            description LIKE st01_mast.description,
+            stock_on_hand LIKE st01_mast.stock_on_hand,
+            uom LIKE st01_mast.uom
+        END RECORD,
+        sql_query STRING,
+        i INTEGER
+
+    CALL p_arr.clear()
+
+    -- Build SQL query with constructed WHERE clause
+    LET sql_query = "SELECT id, description, stock_on_hand, uom ",
+                    "FROM st01_mast ",
+                    "WHERE status = 'active' ",
+                    "AND (", p_where_clause, ") ",
+                    "ORDER BY id ",
+                    "LIMIT 100"
+
+    -- Prepare and execute query
+    PREPARE stmt_construct FROM sql_query
+    DECLARE stock_curs_construct CURSOR FOR stmt_construct
+
+    LET i = 0
+    FOREACH stock_curs_construct INTO stock_rec.*
+        LET i = i + 1
+        LET p_arr[i].* = stock_rec.*
+    END FOREACH
+
+    CLOSE stock_curs_construct
+    FREE stock_curs_construct
+    FREE stmt_construct
 END FUNCTION

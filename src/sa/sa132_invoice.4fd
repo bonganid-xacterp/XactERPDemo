@@ -6,32 +6,32 @@
   <Record masterTable="sa32_inv_hdr" name="rec_sa_inv_hdr" uid="{287bef6a-3bc6-4405-8627-679773dba2e1}">
     <RecordField colName="id" fieldIdRef="23" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.id" sqlTabName="sa32_inv_hdr" uid="{2fbde512-3c8b-4c76-8076-78ec26d89545}"/>
     <RecordField colName="doc_no" fieldIdRef="1" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.doc_no" sqlTabName="sa32_inv_hdr" uid="{1e584911-ec17-4b71-9feb-d7c8afd78588}"/>
-    <RecordField colName="cust_id" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_id" sqlTabName="sa32_inv_hdr" uid="{5034f54b-6917-4768-9dc6-eaa526af6aa3}"/>
+    <RecordField colName="ref_doc_type" fieldIdRef="24" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.ref_doc_type" sqlTabName="sa32_inv_hdr" uid="{9a1daea8-2d8e-45c0-8e23-44f90d8f378c}"/>
+    <RecordField colName="ref_doc_no" fieldIdRef="25" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.ref_doc_no" sqlTabName="sa32_inv_hdr" uid="{f1e1005f-8858-460a-8883-01f31906dcbc}"/>
     <RecordField colName="trans_date" fieldIdRef="2" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.trans_date" sqlTabName="sa32_inv_hdr" uid="{6720256e-ff72-4ee6-b6ed-95e013229954}"/>
-    <RecordField colName="gross_tot" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.gross_tot" sqlTabName="sa32_inv_hdr" uid="{47d73f2d-0cc9-4762-9bad-9f0d50f23b0c}"/>
-    <RecordField colName="vat_tot" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.vat_tot" sqlTabName="sa32_inv_hdr" uid="{3e515c2b-371b-455b-9c5f-75f3d66854f4}"/>
-    <RecordField colName="net_tot" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.net_tot" sqlTabName="sa32_inv_hdr" uid="{83631ba7-5d77-443f-b417-70109e671532}"/>
-    <RecordField colName="status" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.status" sqlTabName="sa32_inv_hdr" uid="{180fd217-fd7a-48dc-8dad-07cda5aed50c}"/>
-    <RecordField colName="disc_tot" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.disc_tot" sqlTabName="sa32_inv_hdr" uid="{bcd422f7-edf5-4997-a572-cd5eac5c2db6}"/>
+    <RecordField colName="due_date" fieldIdRef="33" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.due_date" sqlTabName="sa32_inv_hdr" uid="{6034a6f3-ab27-427a-a03c-d62cc806062a}"/>
+    <RecordField colName="cust_id" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_id" sqlTabName="sa32_inv_hdr" uid="{5034f54b-6917-4768-9dc6-eaa526af6aa3}"/>
     <RecordField colName="cust_name" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_name" sqlTabName="sa32_inv_hdr" uid="{5a952b77-10b7-438f-8c11-5085e366561e}"/>
     <RecordField colName="cust_phone" fieldIdRef="10" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_phone" sqlTabName="sa32_inv_hdr" uid="{22d7301c-e98e-4474-acdd-b00cabf39184}"/>
-    <RecordField colName="cust_address1" fieldIdRef="12" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_address1" sqlTabName="sa32_inv_hdr" uid="{f336192a-ea22-45bd-8839-48395979dbb3}"/>
     <RecordField colName="cust_email" fieldIdRef="11" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_email" sqlTabName="sa32_inv_hdr" uid="{e7ec6c48-4456-49c6-971f-274575eb2294}"/>
+    <RecordField colName="cust_address1" fieldIdRef="12" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_address1" sqlTabName="sa32_inv_hdr" uid="{f336192a-ea22-45bd-8839-48395979dbb3}"/>
     <RecordField colName="cust_address2" fieldIdRef="13" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_address2" sqlTabName="sa32_inv_hdr" uid="{ba8cc23d-5032-4aac-b747-f2d8c6de74c7}"/>
     <RecordField colName="cust_address3" fieldIdRef="14" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_address3" sqlTabName="sa32_inv_hdr" uid="{baad258b-aa5f-4b62-8ace-ad3aac7119dc}"/>
     <RecordField colName="cust_postal_code" fieldIdRef="15" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_postal_code" sqlTabName="sa32_inv_hdr" uid="{f45c0c8c-1ca5-4d92-85fb-bc5140b38e0a}"/>
-    <RecordField colName="created_at" fieldIdRef="26" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.created_at" sqlTabName="sa32_inv_hdr" uid="{65deb263-e6e4-4402-b19d-c267e4e8768c}"/>
-    <RecordField colName="created_by" fieldIdRef="27" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.created_by" sqlTabName="sa32_inv_hdr" uid="{87c02ff2-dbd5-429a-83f1-769f4a0fbef7}"/>
-    <RecordField colName="updated_at" fieldIdRef="28" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.updated_at" sqlTabName="sa32_inv_hdr" uid="{274c95b7-f138-4b44-bf4c-aba773dd0a70}"/>
-    <RecordField colName="deleted_at" fieldIdRef="29" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.deleted_at" sqlTabName="sa32_inv_hdr" uid="{24d4192d-5ec6-4e3f-89a8-cf8f30ee9fcb}"/>
     <RecordField colName="cust_vat_no" fieldIdRef="31" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_vat_no" sqlTabName="sa32_inv_hdr" uid="{fabc443d-32f6-4cea-84f6-d98444d00f16}"/>
     <RecordField colName="cust_payment_terms" fieldIdRef="32" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.cust_payment_terms" sqlTabName="sa32_inv_hdr" uid="{ed6ed65b-1c7e-49a3-84d6-8f10b788a492}"/>
-    <RecordField colName="due_date" fieldIdRef="33" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.due_date" sqlTabName="sa32_inv_hdr" uid="{6034a6f3-ab27-427a-a03c-d62cc806062a}"/>
-    <RecordField colName="ref_doc_type" fieldIdRef="24" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.ref_doc_type" sqlTabName="sa32_inv_hdr" uid="{9a1daea8-2d8e-45c0-8e23-44f90d8f378c}"/>
-    <RecordField colName="ref_doc_no" fieldIdRef="25" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.ref_doc_no" sqlTabName="sa32_inv_hdr" uid="{f1e1005f-8858-460a-8883-01f31906dcbc}"/>
+    <RecordField colName="gross_tot" fieldIdRef="3" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.gross_tot" sqlTabName="sa32_inv_hdr" uid="{47d73f2d-0cc9-4762-9bad-9f0d50f23b0c}"/>
+    <RecordField colName="disc_tot" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.disc_tot" sqlTabName="sa32_inv_hdr" uid="{bcd422f7-edf5-4997-a572-cd5eac5c2db6}"/>
+    <RecordField colName="vat_tot" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.vat_tot" sqlTabName="sa32_inv_hdr" uid="{3e515c2b-371b-455b-9c5f-75f3d66854f4}"/>
+    <RecordField colName="net_tot" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.net_tot" sqlTabName="sa32_inv_hdr" uid="{83631ba7-5d77-443f-b417-70109e671532}"/>
+    <RecordField colName="status" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.status" sqlTabName="sa32_inv_hdr" uid="{180fd217-fd7a-48dc-8dad-07cda5aed50c}"/>
+    <RecordField colName="created_at" fieldIdRef="26" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.created_at" sqlTabName="sa32_inv_hdr" uid="{65deb263-e6e4-4402-b19d-c267e4e8768c}"/>
+    <RecordField colName="updated_at" fieldIdRef="28" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.updated_at" sqlTabName="sa32_inv_hdr" uid="{274c95b7-f138-4b44-bf4c-aba773dd0a70}"/>
+    <RecordField colName="deleted_at" fieldIdRef="29" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.deleted_at" sqlTabName="sa32_inv_hdr" uid="{24d4192d-5ec6-4e3f-89a8-cf8f30ee9fcb}"/>
+    <RecordField colName="created_by" fieldIdRef="27" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.created_by" sqlTabName="sa32_inv_hdr" uid="{87c02ff2-dbd5-429a-83f1-769f4a0fbef7}"/>
+    <RecordField colName="updated_by" fieldIdRef="49" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.updated_by" sqlTabName="sa32_inv_hdr" uid="{9fafce54-5943-4c5b-9ba2-98b05ba77b46}"/>
   </Record>
-  <Record masterTable="sa32_inv_det" name="arr_sa_inv_lines" uid="{a984beee-80d0-403e-ad9b-1c82d6eefea4}"/>
-  <Record masterTable="sa32_inv_det" name="record1" uid="{61fe6595-03e9-4ff4-9608-ac83624ebcf1}">
+  <Record masterTable="sa32_inv_det" name="arr_sa_inv_lines" uid="{61fe6595-03e9-4ff4-9608-ac83624ebcf1}">
     <RecordField colName="id" fieldIdRef="16" fieldType="TABLE_COLUMN" name="sa32_inv_det.id" sqlTabName="sa32_inv_det" uid="{7ac381dd-0401-4fa4-b302-fcffeff9119e}"/>
     <RecordField colName="hdr_id" fieldIdRef="17" fieldType="TABLE_COLUMN" name="sa32_inv_det.hdr_id" sqlTabName="sa32_inv_det" uid="{b16a5ac4-c439-4bac-ae22-7d3b9b918218}"/>
     <RecordField colName="line_no" fieldIdRef="18" fieldType="TABLE_COLUMN" name="sa32_inv_det.line_no" sqlTabName="sa32_inv_det" uid="{6796ba09-8901-4943-b07d-6fde38bef7e0}"/>
@@ -45,7 +45,7 @@
     <RecordField colName="gross_amt" fieldIdRef="36" fieldType="TABLE_COLUMN" name="sa32_inv_det.gross_amt" sqlTabName="sa32_inv_det" uid="{4fb94757-5a2d-429b-b084-12d2dd974cc1}"/>
     <RecordField colName="vat_rate" fieldIdRef="37" fieldType="TABLE_COLUMN" name="sa32_inv_det.vat_rate" sqlTabName="sa32_inv_det" uid="{74f1c012-486e-43bb-99dd-cb05d890928b}"/>
     <RecordField colName="vat_amt" fieldIdRef="38" fieldType="TABLE_COLUMN" name="sa32_inv_det.vat_amt" sqlTabName="sa32_inv_det" uid="{55c10ef2-7023-42dc-8c63-f99ca92cf538}"/>
-    <RecordField colName="net_amt" fieldIdRef="39" fieldType="TABLE_COLUMN" name="sa32_inv_det.net_amt" sqlTabName="sa32_inv_det" uid="{ece71486-a9e1-4f6b-b5bc-d77ac684228f}"/>
+    <RecordField colName="net_excl_amt" fieldIdRef="39" fieldType="TABLE_COLUMN" name="sa32_inv_det.net_excl_amt" sqlTabName="sa32_inv_det" uid="{ece71486-a9e1-4f6b-b5bc-d77ac684228f}"/>
     <RecordField colName="line_total" fieldIdRef="40" fieldType="TABLE_COLUMN" name="sa32_inv_det.line_total" sqlTabName="sa32_inv_det" uid="{b9d4666f-8d2c-4517-bb71-e0cc246140db}"/>
     <RecordField colName="wh_id" fieldIdRef="41" fieldType="TABLE_COLUMN" name="sa32_inv_det.wh_id" sqlTabName="sa32_inv_det" uid="{90970d18-28bb-4227-84f5-aebbf39cd997}"/>
     <RecordField colName="wb_id" fieldIdRef="42" fieldType="TABLE_COLUMN" name="sa32_inv_det.wb_id" sqlTabName="sa32_inv_det" uid="{b6256d3d-e112-4c08-832c-7140cba554b8}"/>
@@ -120,6 +120,7 @@
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Phantom colName="updated_at" fieldId="28" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.updated_at" sqlTabName="sa32_inv_hdr" widget="Phantom"/>
+          <Phantom colName="updated_by" fieldId="49" fieldType="TABLE_COLUMN" name="sa32_inv_hdr.updated_by" sqlTabName="sa32_inv_hdr" widget="Phantom"/>
         </Group>
         <Label gridHeight="1" gridWidth="7" name="sa32_inv_hdr_status_label1" posX="2" posY="2" text="Status">
           <Initializer text="dbschema:sa32_inv_hdr.status/@label"/>
@@ -226,7 +227,7 @@
           <Edit colName="vat_amt" fieldId="38" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sa32_inv_det.vat_amt" posX="102" posY="0" scroll="true" sqlTabName="sa32_inv_det" tabIndex="-1" title="VAT Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="net_amt" fieldId="39" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sa32_inv_det.net_amt" posX="119" posY="0" scroll="true" sqlTabName="sa32_inv_det" tabIndex="-1" title="Net Total" widget="Edit">
+          <Edit colName="net_excl_amt" fieldId="39" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sa32_inv_det.net_excl_amt" posX="119" posY="0" scroll="true" sqlTabName="sa32_inv_det" tabIndex="-1" title="Net Total" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Edit colName="line_total" fieldId="40" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sa32_inv_det.line_total" posX="136" posY="0" scroll="true" sqlTabName="sa32_inv_det" tabIndex="-1" title="Line Total" widget="Edit">
@@ -252,6 +253,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAyADgANwBiAGUAZgA2AGEALQAzAGIAYwA2AC0ANAA0ADAANQAtADgANgAyADcALQA2ADcAOQA3ADcAMwBkAGIAYQAyAGUAMQB9QDAAABQAAApAMAAAFAAACgAAAAAAAAAAAQAAAEwAewA2ADEAZgBlADYANQA5ADUALQAwADMAZQA5AC0ANABmAGYANAAtADkANgAwADgALQBhAGMAOAAzADYAMgA0AGUAYgBjAGYAMQB9QDAAAAQAAABAMAAABAAAAAAAAAAAAAAAAQAAAEwAewBhADkAOAA0AGIAZQBlAGUALQA4ADAAZAAwAC0ANAAwADMAZQAtAGEAZAA5AGIALQAxAGMAOAAyAGQANgBlAGUAZgBlAGEANAB9QHEzM0TGZm1AZOZmfAzM1j9wYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA2ADEAZgBlADYANQA5ADUALQAwADMAZQA5AC0ANABmAGYANAAtADkANgAwADgALQBhAGMAOAAzADYAMgA0AGUAYgBjAGYAMQB9QHJAAATQAABAMmZmbwAAAT+GhysCDEm8AQAAAEwAewAyADgANwBiAGUAZgA2AGEALQAzAGIAYwA2AC0ANAA0ADAANQAtADgANgAyADcALQA2ADcAOQA3ADcAMwBkAGIAYQAyAGUAMQB9QDAAABgAAA9AMAAAGAAADwAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

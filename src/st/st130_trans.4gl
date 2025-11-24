@@ -328,7 +328,7 @@ END FUNCTION
 FUNCTION lookup_stock_for_filter()
     DEFINE selected_code INTEGER
 
-    CALL st121_st_lkup.display_stocklist() RETURNING selected_code
+    CALL st121_st_lkup.fetch_list() RETURNING selected_code
 
     IF selected_code IS NOT NULL AND selected_code > 0 THEN
         LET filter_rec.id = selected_code

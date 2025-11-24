@@ -29,7 +29,7 @@
 
     <!-- Main Application Window (MDI Container) -->
     <Style name="Window.main">
-        <StyleAttribute name="windowType" value="normal"/>
+        <StyleAttribute name="windowType" value="container"/>
         <StyleAttribute name="position" value="center"/>
         <StyleAttribute name="tabbedContainer" value="yes"/>
         <StyleAttribute name="border" value="title"/>
@@ -206,6 +206,7 @@
     <Style name="Edit.code">
         <StyleAttribute name="fontWeight" value="bold"/>
         <StyleAttribute name="textColor" value="#0070C0"/>
+        <StyleAttribute name="backgroundColor" value="yellow"/>
     </Style>
 
     <!-- ========================================================== -->
@@ -213,7 +214,7 @@
     <!-- ========================================================== -->
 
     <Style name="Table">
-        <StyleAttribute name="backgroundColor" value="white"/>
+        <StyleAttribute name="backgroundColor" value="yellow"/>
         <StyleAttribute name="textColor" value="#333333"/>
         <StyleAttribute name="fontFamily" value="Segoe UI"/>
         <StyleAttribute name="fontSize" value="8pt"/>

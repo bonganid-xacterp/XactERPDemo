@@ -61,88 +61,27 @@ END MAIN
 -- Program init
 -- ==============================================================
 FUNCTION init_cl_module()
-
     DEFINE chosen_row SMALLINT
-
     LET is_edit_mode = FALSE
-
-    -- initialize the list of records
-    --CALL load_all_creditors()
-
-    CALL utils_globals.set_form_label('lbl_form_title', 'CREDITORS ENQUIRY')
-
-    DISPLAY ARRAY m_cred_trans_arr
-        TO m_cred_trans_arr.*
+    INITIALIZE m_cred_rec.* TO NULL
+    DISPLAY BY NAME m_cred_rec.*
+    DISPLAY ARRAY m_cred_trans_arr TO m_cred_trans_arr.*
         ATTRIBUTES(UNBUFFERED, DOUBLECLICK = row_select)
         BEFORE DISPLAY
-
             CALL DIALOG.setActionHidden("accept", TRUE)
             CALL DIALOG.setActionHidden("cancel", TRUE)
             CALL DIALOG.setActionHidden("row_select", TRUE)
-
-        ON ACTION Find ATTRIBUTES(TEXT = "Find", IMAGE = "zoom")
-            CALL query_creditors()
-            LET is_edit_mode = FALSE
-
-        ON ACTION New ATTRIBUTES(TEXT = "New", IMAGE = "new")
-            CALL new_creditor()
-            LET is_edit_mode = FALSE
-
-        ON ACTION row_select
-            LET chosen_row = DIALOG.getCurrentRow("m_cred_trans_arr")
-            IF chosen_row > 0 THEN
-                CALL open_transaction_window(
-                    m_cred_trans_arr[chosen_row].doc_no,
-                    m_cred_trans_arr[chosen_row].doc_type)
-            END IF
-
-        ON ACTION List ATTRIBUTES(TEXT = "Reload List", IMAGE = "fa-list")
-            DISPLAY "List All"
-            CALL load_all_creditors()
-            LET is_edit_mode = FALSE
-
-        ON ACTION Edit ATTRIBUTES(TEXT = "Edit", IMAGE = "pen")
-            DISPLAY "Edit Record"
-            IF m_cred_rec.id IS NULL OR m_cred_rec.id = 0 THEN
-                CALL utils_globals.show_info("No record selected to edit.")
-            ELSE
-                LET is_edit_mode = TRUE
-                CALL utils_globals.set_form_label(
-                    'lbl_form_title', 'CREDITORS MAINTENANCE')
-                CALL edit_creditor()
-            END IF
-
-        ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "fa-trash")
-            CALL delete_creditor()
-            LET is_edit_mode = FALSE
-
-        ON ACTION PREVIOUS
-            CALL move_record(-1)
-            DISPLAY ARRAY m_cred_trans_arr TO m_cred_trans_arr.*
-                BEFORE DISPLAY
-                    EXIT DISPLAY
-            END DISPLAY
-
-        ON ACTION Next
-            CALL move_record(1)
-            DISPLAY ARRAY m_cred_trans_arr TO m_cred_trans_arr.*
-                BEFORE DISPLAY
-                    EXIT DISPLAY
-            END DISPLAY
-
-        ON ACTION add_order
-            ATTRIBUTES(TEXT = "Add P/Order", IMAGE = "fa-reorder")
-            DISPLAY "Add Quote"
-            IF m_cred_rec.id THEN
-                CALL pu130_order.new_po_from_master(m_cred_rec.id)
-            ELSE
-                CALL utils_globals.show_warning(
-                    'Choose a creditor record first.')
-            END IF
-        ON ACTION EXIT ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close")
-            EXIT DISPLAY
+        ON ACTION Find       CALL query_creditors(); LET is_edit_mode = FALSE
+        ON ACTION New        ATTRIBUTES(TEXT = "New", IMAGE = "new") CALL new_creditor();   LET is_edit_mode = FALSE
+        ON ACTION row_select LET chosen_row = DIALOG.getCurrentRow("m_cred_trans_arr"); IF chosen_row > 0 THEN CALL open_transaction_window(m_cred_trans_arr[chosen_row].doc_no, m_cred_trans_arr[chosen_row].doc_type) END IF
+        ON ACTION List       ATTRIBUTES(TEXT = "Refresh Records", IMAGE = "refresh") CALL load_all_creditors(); LET is_edit_mode = FALSE
+        ON ACTION Edit       ATTRIBUTES(TEXT = "Edit", IMAGE = "pen") IF m_cred_rec.id IS NULL OR m_cred_rec.id = 0 THEN CALL utils_globals.show_info("No record selected to edit.") ELSE LET is_edit_mode = TRUE; CALL utils_globals.set_form_label('lbl_form_title', 'CREDITORS MAINTENANCE'); CALL edit_creditor() END IF
+        ON ACTION DELETE     ATTRIBUTES(TEXT = "Delete", IMAGE = "fa-trash") CALL delete_creditor(); LET is_edit_mode = FALSE
+        ON ACTION PREVIOUS   CALL move_record(-1)
+        ON ACTION Next       CALL move_record(1)
+        ON ACTION add_order  ATTRIBUTES(TEXT = "Add P/Order", IMAGE = "new") IF m_cred_rec.id THEN CALL pu130_order.new_po_from_master(m_cred_rec.id) ELSE CALL utils_globals.show_warning('Choose a creditor record first.') END IF
+        ON ACTION EXIT       ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close") EXIT DISPLAY
     END DISPLAY
-
 END FUNCTION
 
 -- ==============================================================

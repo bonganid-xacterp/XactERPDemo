@@ -134,7 +134,7 @@
     <Column fglLength="30" fglType="201" name="method" notNull="false" order="7" status="U" uuid="db/column92"/>
     <Column fglLength="40" fglType="201" name="bank_account" notNull="false" order="8" status="U" uuid="db/column93"/>
     <Column fglLength="3842" fglType="5" name="amount" notNull="true" order="9" status="U" uuid="db/column94"/>
-    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="10" status="U" uuid="db/column95"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="10" status="U" uuid="db/column95"/>
     <Column fglLength="20" fglType="201" name="status" notNull="true" order="11" status="U" uuid="db/column96"/>
     <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="12" status="U" uuid="db/column97"/>
     <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="13" status="U" uuid="db/column98"/>
@@ -166,16 +166,14 @@
     <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column117"/>
     <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column118"/>
     <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column119"/>
-    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column120"/>
+    <Column fglLength="3842" fglType="5" name="net_excl_amt" notNull="true" order="14" status="U" uuid="db/column684"/>
     <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column121"/>
-    <Column fglLength="8" fglType="52" name="wh_code" notNull="false" order="16" status="U" uuid="db/column676"/>
-    <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column123"/>
-    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="18" status="U" uuid="db/column124"/>
-    <Column fglLength="20" fglType="201" name="status" notNull="true" order="19" status="U" uuid="db/column125"/>
-    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="20" status="U" uuid="db/column126"/>
-    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="21" status="U" uuid="db/column127"/>
-    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="22" status="U" uuid="db/column128"/>
-    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="23" status="U" uuid="db/column129"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="16" status="U" uuid="db/column124"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="17" status="U" uuid="db/column125"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="18" status="U" uuid="db/column126"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="19" status="U" uuid="db/column127"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="20" status="U" uuid="db/column128"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="21" status="U" uuid="db/column129"/>
     <Index indexColumns="hdr_id" indexConstraint="index" name="idx_pu30_det_hdr" status="U" uuid="db/index16"/>
     <Index indexColumns="hdr_id, line_no" indexConstraint="unique" name="pu30_ord_det_hdr_id_line_no_key" status="U" uuid="db/index17"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="pu30_ord_det_pkey" status="U" uuid="db/index18"/>
@@ -226,7 +224,7 @@
     <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="13" status="U" uuid="db/column167"/>
     <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="14" status="U" uuid="db/column168"/>
     <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="15" status="U" uuid="db/column169"/>
-    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="16" status="U" uuid="db/column170"/>
+    <Column fglLength="3842" fglType="5" name="net_excl_amt" notNull="true" order="16" status="U" uuid="db/column679"/>
     <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="17" status="U" uuid="db/column171"/>
     <Column fglLength="8" fglType="52" name="po_line_id" notNull="false" order="18" status="U" uuid="db/column172"/>
     <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="19" status="U" uuid="db/column173"/>
@@ -289,7 +287,7 @@
     <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="13" status="U" uuid="db/column220"/>
     <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="14" status="U" uuid="db/column221"/>
     <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="15" status="U" uuid="db/column222"/>
-    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="16" status="U" uuid="db/column223"/>
+    <Column fglLength="3842" fglType="5" name="net_excl_amt" notNull="true" order="16" status="U" uuid="db/column683"/>
     <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="17" status="U" uuid="db/column224"/>
     <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="18" status="U" uuid="db/column225"/>
     <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="19" status="U" uuid="db/column226"/>
@@ -353,7 +351,7 @@
     <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column274"/>
     <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column275"/>
     <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column276"/>
-    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column277"/>
+    <Column fglLength="3842" fglType="5" name="net_excl_amt" notNull="true" order="14" status="U" uuid="db/column685"/>
     <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column278"/>
     <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="16" status="U" uuid="db/column279"/>
     <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column280"/>
@@ -411,7 +409,7 @@
     <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column322"/>
     <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column323"/>
     <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column324"/>
-    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column325"/>
+    <Column fglLength="3842" fglType="5" name="net_excl_amt" notNull="true" order="14" status="U" uuid="db/column686"/>
     <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column326"/>
     <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="16" status="U" uuid="db/column327"/>
     <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column328"/>
@@ -445,7 +443,7 @@
     <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="17" status="U" uuid="db/column351"/>
     <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="18" status="U" uuid="db/column352"/>
     <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="19" status="U" uuid="db/column353"/>
-    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="20" status="U" uuid="db/column354"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="20" status="U" uuid="db/column354"/>
     <Column fglLength="20" fglType="201" name="status" notNull="true" order="21" status="U" uuid="db/column355"/>
     <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="22" status="U" uuid="db/column356"/>
     <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="23" status="U" uuid="db/column357"/>
@@ -470,7 +468,7 @@
     <Column fglLength="3842" fglType="5" name="gross_amt" notNull="true" order="11" status="U" uuid="db/column371"/>
     <Column fglLength="1795" fglType="5" name="vat_rate" notNull="true" order="12" status="U" uuid="db/column372"/>
     <Column fglLength="3842" fglType="5" name="vat_amt" notNull="true" order="13" status="U" uuid="db/column373"/>
-    <Column fglLength="3842" fglType="5" name="net_amt" notNull="true" order="14" status="U" uuid="db/column374"/>
+    <Column fglLength="3842" fglType="5" name="net_excl_amt" notNull="true" order="14" status="U" uuid="db/column687"/>
     <Column fglLength="3842" fglType="5" name="line_total" notNull="true" order="15" status="U" uuid="db/column375"/>
     <Column fglLength="8" fglType="52" name="wh_id" notNull="false" order="16" status="U" uuid="db/column376"/>
     <Column fglLength="8" fglType="52" name="wb_id" notNull="false" order="17" status="U" uuid="db/column377"/>
@@ -505,7 +503,7 @@
     <Column fglLength="3842" fglType="5" name="disc_tot" notNull="true" order="18" status="U" uuid="db/column401"/>
     <Column fglLength="3842" fglType="5" name="vat_tot" notNull="true" order="19" status="U" uuid="db/column402"/>
     <Column fglLength="3842" fglType="5" name="net_tot" notNull="true" order="20" status="U" uuid="db/column403"/>
-    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="21" status="U" uuid="db/column404"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="21" status="U" uuid="db/column404"/>
     <Column fglLength="20" fglType="201" name="status" notNull="true" order="22" status="U" uuid="db/column405"/>
     <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="23" status="U" uuid="db/column406"/>
     <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="24" status="U" uuid="db/column407"/>
@@ -597,6 +595,7 @@
     <Column fglLength="8" fglType="52" name="created_by" notNull="true" order="18" status="U" uuid="db/column478"/>
     <Column fglLength="20" fglType="201" name="uom" notNull="false" order="19" status="U" uuid="db/column653"/>
     <Column fglLength="1283" fglType="5" name="stock_balance" notNull="false" order="20" status="U" uuid="db/column654"/>
+    <Column fglLength="1283" fglType="5" name="stock_ordered" notNull="false" order="21" status="U" uuid="db/column678"/>
     <Index indexColumns="category_id" indexConstraint="index" name="idx_st01_cat" status="U" uuid="db/index58"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="st01_mast_pkey" status="U" uuid="db/index59"/>
     <Index indexColumns="stock_code" indexConstraint="unique" name="st01_mast_stock_code_key" status="U" uuid="db/index60"/>
@@ -653,7 +652,7 @@
     <Column fglLength="3074" fglType="5" name="sell_price" notNull="false" order="8" status="U" uuid="db/column495"/>
     <Column fglLength="30" fglType="201" name="batch_id" notNull="false" order="9" status="U" uuid="db/column496"/>
     <Column fglLength="4" fglType="7" name="expiry_date" notNull="false" order="10" status="U" uuid="db/column497"/>
-    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="11" status="U" uuid="db/column498"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="11" status="U" uuid="db/column498"/>
     <Index indexColumns="stock_id, trans_date" indexConstraint="index" name="st30_trans_idx" status="U" uuid="db/index112"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="st30_trans_pkey" status="U" uuid="db/index64"/>
     <Index indexColumns="trans_date" indexConstraint="index" name="st30_idx_code_trans_date" status="A" uuid="db/index63"/>
@@ -747,12 +746,15 @@
     <Column fglLength="120" fglType="201" name="table_name" notNull="true" order="3" status="U" uuid="db/column554"/>
     <Column fglLength="120" fglType="201" name="key_field" notNull="true" order="4" status="U" uuid="db/column555"/>
     <Column fglLength="120" fglType="201" name="desc_field" notNull="true" order="5" status="U" uuid="db/column556"/>
-    <Column fglLength="120" fglType="201" name="display_title" notNull="false" order="6" status="U" uuid="db/column557"/>
-    <Column fglLength="400" fglType="201" name="filter_condition" notNull="false" order="7" status="U" uuid="db/column558"/>
-    <Column fglLength="20" fglType="201" name="status" notNull="true" order="8" status="U" uuid="db/column559"/>
-    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="9" status="U" uuid="db/column560"/>
-    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="10" status="U" uuid="db/column561"/>
-    <Index indexColumns="lookup_code" indexConstraint="unique" name="sy08_lkup_config_lookup_code_key" status="U" uuid="db/index79"/>
+    <Column fglLength="200" fglType="201" name="extra_field" notNull="false" order="6" status="U" uuid="db/column676"/>
+    <Column fglLength="120" fglType="201" name="display_title" notNull="true" order="7" status="U" uuid="db/column557"/>
+    <Column fglLength="400" fglType="201" name="filter_condition" notNull="false" order="8" status="U" uuid="db/column558"/>
+    <Column fglLength="120" fglType="201" name="col1_title" notNull="false" order="9" status="U" uuid="db/column680"/>
+    <Column fglLength="120" fglType="201" name="col2_title" notNull="false" order="10" status="U" uuid="db/column681"/>
+    <Column fglLength="120" fglType="201" name="col3_title" notNull="false" order="11" status="U" uuid="db/column682"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="false" order="12" status="U" uuid="db/column560"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="13" status="U" uuid="db/column561"/>
+    <Index indexColumns="lookup_code" indexConstraint="uniqueIndex" name="sy08_lkup_code_idx" status="U" uuid="db/index113"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="sy08_lkup_config_pkey" status="U" uuid="db/index80"/>
   </Table>
   <Table active="true" name="wb01_mast" status="U" uuid="db/table36">
@@ -897,8 +899,6 @@
   <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="pu30_ord_det_hdr_id_fkey" refTable="pu30_ord_hdr" status="U" table="pu30_ord_det" uuid="db/foreignkey13"/>
   <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="pu30_ord_det_stock_id_fkey" refTable="st01_mast" status="U" table="pu30_ord_det" uuid="db/foreignkey14"/>
   <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="pu30_ord_det_updated_by_fkey" refTable="sy00_user" status="U" table="pu30_ord_det" uuid="db/foreignkey15"/>
-  <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="pu30_ord_det_wb_id_fkey" refTable="wb01_mast" status="U" table="pu30_ord_det" uuid="db/foreignkey16"/>
-  <ForeignKey cascadeDelete="false" fkColumns="wh_code" fkRefColumns="id" name="pu30_ord_det_wh_id_fkey" refTable="wh01_mast" status="U" table="pu30_ord_det" uuid="db/foreignkey17"/>
   <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="pu30_ord_hdr_created_by_fkey" refTable="sy00_user" status="U" table="pu30_ord_hdr" uuid="db/foreignkey18"/>
   <ForeignKey cascadeDelete="false" fkColumns="supp_id" fkRefColumns="id" name="pu30_ord_hdr_supp_id_fkey" refTable="cl01_mast" status="U" table="pu30_ord_hdr" uuid="db/foreignkey19"/>
   <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="pu30_ord_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="pu30_ord_hdr" uuid="db/foreignkey20"/>

@@ -64,9 +64,9 @@
         </Label>
         <ComboBox colName="status" defaultValue="1" fieldId="5" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" items="Inactive, Active, Archived" name="wh01_mast.status" posX="43" posY="2" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="Status" widget="ComboBox">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          <Item lstrtext="false" name="0" text="Inactive"/>
-          <Item lstrtext="false" name="1" text="Active"/>
-          <Item lstrtext="false" name="-1" text="Archived"/>
+          <Item lstrtext="false" name="inactive" text="Inactive"/>
+          <Item lstrtext="false" name="active" text="Active"/>
+          <Item lstrtext="false" name="archived" text="Archived"/>
         </ComboBox>
         <Table gridHeight="6" gridWidth="142" name="arr_wh_trans" posX="1" posY="4" totalRows="5">
           <Phantom colName="id" fieldId="10" fieldType="TABLE_COLUMN" name="wh30_trans.id" sqlTabName="wh30_trans" widget="Phantom"/>
@@ -126,6 +126,6 @@
     <Phantom colName="updated_at" fieldId="9" fieldType="TABLE_COLUMN" name="wh01_mast.updated_at" sqlTabName="wh01_mast" widget="Phantom"/>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBhADYANwBmAGQAZAAzAGMALQAwADcAYQBlAC0ANABhADkAMQAtADkAMABmAGQALQA3AGYAZQBlAGIAMwAwADIAZAA5AGUAZAB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQAAAEwAewBkADkANQA4ADcAYgAwADUALQAyADIANwBjAC0ANAAwAGEANQAtADgAOQA2AGMALQBjAGEAZAA2ADEANAAwAGYAYwA0AGEAYQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBhADYANwBmAGQAZAAzAGMALQAwADcAYQBlAC0ANABhADkAMQAtADkAMABmAGQALQA3AGYAZQBlAGIAMwAwADIAZAA5AGUAZAB9QCAAAAwAAANAIAAADAAAAwAAAAAAAAAAAQAAAEwAewBkADkANQA4ADcAYgAwADUALQAyADIANwBjAC0ANAAwAGEANQAtADgAOQA2AGMALQBjAGEAZAA2ADEANAAwAGYAYwA0AGEAYQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

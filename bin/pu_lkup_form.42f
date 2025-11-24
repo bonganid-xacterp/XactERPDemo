@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<Form name="pu_lkup_form.tmp" build="3.20.14" sqlDbName="demoappdb" text="" width="48" height="21">
+<Form name="pu_lkup_form.tmp" build="3.20.14" sqlDbName="demoappdb" text="" width="48" height="17">
   <LStr text=""/>
   <VBox name="vbox1">
-    <Grid name="main_grd" width="48" height="21">
+    <Grid name="main_grd" width="48" height="17">
       <Label name="lbl_title" width="46" text="" color="green" justify="center" sizePolicy="dynamic" posY="0" posX="1" gridWidth="46">
         <LStr text=""/>
       </Label>
@@ -11,7 +11,7 @@
         <Label name="lbl_product" width="10" text="Product Code" posY="1" posX="1" gridWidth="10">
           <LStr text="Product Code"/>
         </Label>
-        <FormField name="pu30_ord_det.stock_id" colName="stock_id" sqlType="BIGINT" fieldId="0" sqlTabName="pu30_ord_det" tabIndex="1">
+        <FormField name="formonly.stock_id" colName="stock_id" sqlType="BIGINT" fieldId="0" sqlTabName="formonly" tabIndex="1">
           <ButtonEdit width="8" action="lookup_stock" autoNext="1" image="zoom" posY="1" posX="12" gridWidth="10"/>
         </FormField>
         <Label name="lbl_item_desc" width="10" text="Product Name" posY="2" posX="1" gridWidth="10">
@@ -23,19 +23,19 @@
         <Label name="lbl_qnty" width="10" text="Quantity" posY="4" posX="1" gridWidth="10">
           <LStr text="Quantity"/>
         </Label>
-        <FormField name="pu30_ord_det.qnty" colName="qnty" sqlType="DECIMAL(15,3)" required="1" notNull="1" fieldId="2" sqlTabName="pu30_ord_det" tabIndex="3">
+        <FormField name="formonly.qnty" colName="qnty" sqlType="DECIMAL(15,3)" fieldId="2" sqlTabName="formonly" tabIndex="3">
           <Edit width="10" posY="4" posX="12" gridWidth="10"/>
         </FormField>
         <Label name="lbl_disc" width="10" text="Discount Perc" posY="4" posX="23" gridWidth="10">
           <LStr text="Discount Perc"/>
         </Label>
-        <FormField name="pu30_ord_det.disc_pct" colName="disc_pct" sqlType="DECIMAL(7,3)" required="1" notNull="1" fieldId="3" sqlTabName="pu30_ord_det" tabIndex="4">
+        <FormField name="formonly.disc_pct" colName="disc_pct" sqlType="DECIMAL(7,3)" fieldId="3" sqlTabName="formonly" tabIndex="4">
           <Edit width="10" posY="4" posX="34" gridWidth="10"/>
         </FormField>
         <Label name="lbl_uom" width="10" text="Unit Of Measure" posY="5" posX="1" gridWidth="10">
           <LStr text="Unit Of Measure"/>
         </Label>
-        <FormField name="pu30_ord_det.uom" colName="uom" sqlType="VARCHAR(20)" fieldId="4" sqlTabName="pu30_ord_det" noEntry="1" tabIndex="5">
+        <FormField name="formonly.uom" colName="uom" sqlType="VARCHAR" fieldId="4" sqlTabName="formonly" noEntry="1" tabIndex="5">
           <ComboBox width="8" posY="5" posX="12" gridWidth="10">
             <Item name="EA" text="Each"/>
             <Item name="6PK" text="6 Pack"/>
@@ -45,37 +45,37 @@
         <Label name="lbl_disc_amt" width="10" text="Discount Amount" posY="5" posX="23" gridWidth="10">
           <LStr text="Discount Amount"/>
         </Label>
-        <FormField name="pu30_ord_det.disc_amt" colName="disc_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="5" sqlTabName="pu30_ord_det" noEntry="1" tabIndex="6">
+        <FormField name="formonly.disc_amt" colName="disc_amt" sqlType="DECIMAL(15,2)" fieldId="5" sqlTabName="formonly" noEntry="1" tabIndex="6">
           <Edit width="10" posY="5" posX="34" gridWidth="10"/>
         </FormField>
         <Label name="lbl_price" width="10" text="Unit Price" posY="7" posX="1" gridWidth="10">
           <LStr text="Unit Price"/>
         </Label>
-        <FormField name="pu30_ord_det.unit_cost" colName="unit_cost" sqlType="DECIMAL(15,4)" required="1" notNull="1" fieldId="6" sqlTabName="pu30_ord_det" noEntry="1" tabIndex="7">
+        <FormField name="formonly.unit_cost" colName="unit_cost" sqlType="DECIMAL(15,4)" fieldId="6" sqlTabName="formonly" noEntry="1" tabIndex="7">
           <Edit width="10" posY="7" posX="12" gridWidth="10"/>
         </FormField>
         <Label name="lbl_gross_amt" width="10" text="Gross Amount" posY="7" posX="23" gridWidth="10">
           <LStr text="Gross Amount"/>
         </Label>
-        <FormField name="pu30_ord_det.gross_amt" colName="gross_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="7" sqlTabName="pu30_ord_det" noEntry="1" tabIndex="8">
+        <FormField name="formonly.gross_amt" colName="gross_amt" sqlType="DECIMAL(15,2)" fieldId="7" sqlTabName="formonly" noEntry="1" tabIndex="8">
           <Edit width="10" posY="7" posX="34" gridWidth="10"/>
         </FormField>
         <Label name="lbl_vat_amt" width="10" text="VAT Amount" posY="8" posX="1" gridWidth="10">
           <LStr text="VAT Amount"/>
         </Label>
-        <FormField name="pu30_ord_det.vat_amt" colName="vat_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="8" sqlTabName="pu30_ord_det" noEntry="1" tabIndex="9">
+        <FormField name="formonly.vat_amt" colName="vat_amt" sqlType="DECIMAL(15,2)" fieldId="8" sqlTabName="formonly" noEntry="1" tabIndex="9">
           <Edit width="10" posY="8" posX="12" gridWidth="10"/>
         </FormField>
         <Label name="lbl_net_amt" width="10" text="Net Amount" posY="8" posX="23" gridWidth="10">
           <LStr text="Net Amount"/>
         </Label>
-        <FormField name="pu30_ord_det.net_amt" colName="net_amt" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="9" sqlTabName="pu30_ord_det" noEntry="1" tabIndex="10">
+        <FormField name="formonly.net_amt" colName="net_amt" sqlType="DECIMAL(15,2)" fieldId="9" sqlTabName="formonly" noEntry="1" tabIndex="10">
           <Edit width="10" posY="8" posX="34" gridWidth="10"/>
         </FormField>
         <Label name="lbl_vat_amt1" width="10" text="VAT Rate" posY="9" posX="1" gridWidth="10">
           <LStr text="VAT Rate"/>
         </Label>
-        <FormField name="pu30_ord_det.vat_rate" colName="vat_rate" sqlType="DECIMAL(7,3)" required="1" notNull="1" fieldId="10" sqlTabName="pu30_ord_det" defaultValue="0" noEntry="1" tabIndex="11">
+        <FormField name="formonly.vat_rate" colName="vat_rate" sqlType="DECIMAL(7,3)" fieldId="10" sqlTabName="formonly" defaultValue="0" noEntry="1" tabIndex="11">
           <ComboBox width="8" posY="9" posX="12" gridWidth="10">
             <Item name="0" text="No VAT"/>
             <Item name="15" text="15 %"/>
@@ -84,7 +84,7 @@
         <Label name="lbl_line_total" width="10" text="Line Total" posY="9" posX="23" gridWidth="10">
           <LStr text="Line Total"/>
         </Label>
-        <FormField name="pu30_ord_det.line_total" colName="line_total" sqlType="DECIMAL(15,2)" required="1" notNull="1" fieldId="11" sqlTabName="pu30_ord_det" noEntry="1" tabIndex="12">
+        <FormField name="formonly.line_total" colName="line_total" sqlType="DECIMAL(15,2)" fieldId="11" sqlTabName="formonly" noEntry="1" tabIndex="12">
           <Edit width="10" posY="9" posX="34" gridWidth="10"/>
         </FormField>
       </Group>
@@ -111,8 +111,9 @@
       </Group>
     </Grid>
   </VBox>
-  <RecordView tabName="pu30_ord_det">
+  <RecordView tabName="formonly">
     <Link colName="stock_id" fieldIdRef="0"/>
+    <Link colName="item_name" fieldIdRef="1"/>
     <Link colName="qnty" fieldIdRef="2"/>
     <Link colName="disc_pct" fieldIdRef="3"/>
     <Link colName="uom" fieldIdRef="4"/>
@@ -123,9 +124,6 @@
     <Link colName="net_amt" fieldIdRef="9"/>
     <Link colName="vat_rate" fieldIdRef="10"/>
     <Link colName="line_total" fieldIdRef="11"/>
-  </RecordView>
-  <RecordView tabName="formonly">
-    <Link colName="item_name" fieldIdRef="1"/>
     <Link colName="balance" fieldIdRef="12"/>
     <Link colName="reserved" fieldIdRef="13"/>
     <Link colName="available" fieldIdRef="14"/>
