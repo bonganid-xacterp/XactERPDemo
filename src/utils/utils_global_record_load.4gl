@@ -1,4 +1,4 @@
----- ==============================================================
+--- ==============================================================
 ---- Program   : utils_lookup_loader.4gl
 ---- Purpose   : Global Generic Lookup Loader for ANY module/table
 ---- Author    : Bongani Dlamini

@@ -15,6 +15,7 @@ IMPORT FGL utils_status_const
 IMPORT FGL pu132_inv
 IMPORT FGL pu131_grn
 IMPORT FGL pu130_order
+IMPORT FGL utils_global_lkup
 
 SCHEMA demoappdb
 
@@ -33,29 +34,29 @@ DEFINE is_edit_mode SMALLINT
 -- ==============================================================
 -- MAIN
 -- ==============================================================
-MAIN
-
-    IF NOT utils_globals.initialize_application() THEN
-        DISPLAY "Initialization failed."
-        EXIT PROGRAM 1
-    END IF
-
-    OPTIONS INPUT WRAP
-
-    IF utils_globals.is_standalone() THEN
-        OPEN WINDOW w_cl101
-            WITH
-            FORM "cl101_mast" -- ATTRIBUTES(STYLE = "normal")
-    ELSE
-        OPEN WINDOW w_cl101 WITH FORM "cl101_mast" ATTRIBUTES(STYLE = "child")
-    END IF
-
-    CALL init_cl_module()
-
-    IF utils_globals.is_standalone() THEN
-        CLOSE WINDOW w_cl101
-    END IF
-END MAIN
+--MAIN
+--
+--    IF NOT utils_globals.initialize_application() THEN
+--        DISPLAY "Initialization failed."
+--        EXIT PROGRAM 1
+--    END IF
+--
+--    OPTIONS INPUT WRAP
+--
+--    IF utils_globals.is_standalone() THEN
+--        OPEN WINDOW w_cl101
+--            WITH
+--            FORM "cl101_mast" -- ATTRIBUTES(STYLE = "normal")
+--    ELSE
+--        OPEN WINDOW w_cl101 WITH FORM "cl101_mast" ATTRIBUTES(STYLE = "child")
+--    END IF
+--
+--    CALL init_cl_module()
+--
+--    IF utils_globals.is_standalone() THEN
+--        CLOSE WINDOW w_cl101
+--    END IF
+--END MAIN
 
 -- ==============================================================
 -- Program init
@@ -114,7 +115,7 @@ FUNCTION query_creditors()
     DEFINE selected_code STRING
     DEFINE found_idx, i INTEGER
 
-    LET selected_code = cl121_lkup.fetch_list()
+    LET selected_code = utils_global_lkup.display_lookup('creditors')
 
     IF selected_code IS NULL OR selected_code = "" THEN
         RETURN
@@ -399,7 +400,7 @@ END FUNCTION
 -- ==============================================================
 FUNCTION edit_creditor()
 
-    CALL utils_globals.set_form_label('lbl_form_title', 'EDIT CREDITOR')
+    CALL utils_globals.set_form_label('lbl_form_title', 'EDIT CREDITOR' || '#' || m_cred_rec.id)
 
     DIALOG ATTRIBUTES(UNBUFFERED)
         INPUT BY NAME m_cred_rec.*

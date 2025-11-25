@@ -12,6 +12,7 @@ IMPORT FGL utils_globals
 IMPORT FGL utils_db
 IMPORT FGL st122_cat_lkup
 IMPORT FGL utils_status_const
+IMPORT FGL utils_global_lkup
 IMPORT FGL st121_st_lkup
 IMPORT FGL pu130_order
 IMPORT FGL pu131_grn
@@ -47,12 +48,16 @@ FUNCTION init_st_module()
 
     LET is_edit_mode = FALSE
 
+    -- load uoms
+
+    CALL load_uoms()
+
     INITIALIZE m_stock_rec.* TO NULL
 
     DISPLAY BY NAME m_stock_rec.*
 
-    DISPLAY ARRAY m_st_trans_arr TO m_st_trans_arr.*
-    
+    DISPLAY ARRAY m_st_trans_arr
+        TO m_st_trans_arr.*
         ATTRIBUTES(UNBUFFERED, DOUBLECLICK = row_select)
 
         BEFORE DISPLAY
@@ -81,7 +86,7 @@ FUNCTION init_st_module()
                 CALL utils_globals.show_error('Error fetching doc')
             END TRY
 
-        ON ACTION List ATTRIBUTES(TEXT = "Refresh Records", IMAGE = "refresh")
+        ON ACTION List ATTRIBUTES(TEXT = "Reload", IMAGE = "refresh")
             CALL load_all_stock();
             LET is_edit_mode = FALSE
 
@@ -107,7 +112,7 @@ FUNCTION init_st_module()
 
         ON ACTION add_order ATTRIBUTES(TEXT = "Add P/Order", IMAGE = "new")
             IF m_stock_rec.id THEN
-                CALL pu130_order.new_po_from_master(m_stock_rec.id)
+                CALL pu130_order.new_po_from_stock(m_stock_rec.id)
             ELSE
                 CALL utils_globals.show_warning(
                     'Choose a creditor record first.')
@@ -146,7 +151,7 @@ FUNCTION query_stock_lookup()
     DEFINE selected_code STRING
     DEFINE found_idx, i INTEGER
 
-    LET selected_code = st121_st_lkup.fetch_list()
+    LET selected_code = utils_global_lkup.display_lookup('stock')
 
     IF selected_code IS NULL OR selected_code = "" THEN
         RETURN
@@ -292,6 +297,7 @@ FUNCTION new_stock()
     DIALOG ATTRIBUTES(UNBUFFERED)
 
         INPUT BY NAME m_stock_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
+
             ON ACTION lookup_category
                 CALL open_category_lkup()
 
@@ -304,10 +310,10 @@ FUNCTION new_stock()
                     CALL utils_globals.msg_error_duplicates()
                 END TRY
 
-        END INPUT
+            ON ACTION cancel
+                EXIT DIALOG
 
-        ON ACTION cancel
-            EXIT DIALOG
+        END INPUT
 
     END DIALOG
 

@@ -10,7 +10,6 @@
     <RecordField colName="key_field" fieldIdRef="4" fieldType="TABLE_COLUMN" name="sy08_lkup_config.key_field" sqlTabName="sy08_lkup_config" uid="{5f9b545b-f1c7-42ce-9f5e-5842d4d67960}"/>
     <RecordField colName="desc_field" fieldIdRef="5" fieldType="TABLE_COLUMN" name="sy08_lkup_config.desc_field" sqlTabName="sy08_lkup_config" uid="{352b3d25-a3fc-4596-9a03-7e4e6b36d648}"/>
     <RecordField colName="display_title" fieldIdRef="6" fieldType="TABLE_COLUMN" name="sy08_lkup_config.display_title" sqlTabName="sy08_lkup_config" uid="{36aed307-cb01-4093-85d5-f72ef4cf2c00}"/>
-    <RecordField colName="filter_condition" fieldIdRef="7" fieldType="TABLE_COLUMN" name="sy08_lkup_config.filter_condition" sqlTabName="sy08_lkup_config" uid="{41dc2ea0-59bb-4eb5-8a88-88812e7586c4}"/>
     <RecordField colName="created_at" fieldIdRef="8" fieldType="TABLE_COLUMN" name="sy08_lkup_config.created_at" sqlTabName="sy08_lkup_config" uid="{8b54c887-8b93-4aa1-a1e9-983e54549710}"/>
     <RecordField colName="updated_at" fieldIdRef="9" fieldType="TABLE_COLUMN" name="sy08_lkup_config.updated_at" sqlTabName="sy08_lkup_config" uid="{83fe7821-c49a-497b-bf57-7f5cd38d68d6}"/>
     <RecordField colName="extra_field" fieldIdRef="10" fieldType="TABLE_COLUMN" name="sy08_lkup_config.extra_field" sqlTabName="sy08_lkup_config" uid="{c651c5cf-578a-47cf-9ccf-4a7c30a0f0d7}"/>
@@ -79,16 +78,10 @@
           <Edit colName="col3_title" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sy08_lkup_config.col3_title" posX="40" posY="5" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="9" title="Key Field" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Label gridHeight="1" gridWidth="10" name="sy08_lkup_config_filter_condition_label1" posX="1" posY="6" text="Fiter Condition">
-            <Initializer text="dbschema:sy08_lkup_config.filter_condition/@label"/>
-          </Label>
-          <Edit colName="filter_condition" fieldId="7" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="14" name="sy08_lkup_config.filter_condition" posX="12" posY="6" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="10" title="Fiter Condition" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
           <Label gridHeight="1" gridWidth="10" name="sy08_lkup_config_search_label" posX="1" posY="7" text="Search Fields">
             <Initializer text="dbschema:sy08_lkup_config.filter_condition/@label"/>
           </Label>
-          <Edit colName="search_fields" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="2" gridWidth="42" name="sy08_lkup_config.search_fields" posX="12" posY="7" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="-1" title="Fiter Condition" widget="Edit">
+          <Edit colName="search_fields" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="2" gridWidth="42" name="sy08_lkup_config.search_fields" posX="12" posY="7" scroll="true" sqlTabName="sy08_lkup_config" tabIndex="10" title="Fiter Condition" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Label gridHeight="1" gridWidth="42" name="info" posX="12" posY="9" text="Max 3 , search terms based on above fields"/>

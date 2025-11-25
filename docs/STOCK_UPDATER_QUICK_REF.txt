@@ -1,0 +1,156 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                   GLOBAL STOCK UPDATER - QUICK REFERENCE                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+IMPORT
+────────────────────────────────────────────────────────────────────────────────
+  IMPORT FGL utils_global_stock_updater
+
+BASIC USAGE (90% of cases)
+────────────────────────────────────────────────────────────────────────────────
+  LET l_ok = utils_global_stock_updater.update_stock_simple(
+      l_stock_id,
+      l_quantity,
+      "OUT",      -- "IN" or "OUT"
+      "INV"       -- Doc type
+  )
+
+WITH COSTING (Purchases/Sales)
+────────────────────────────────────────────────────────────────────────────────
+  LET l_ok = utils_global_stock_updater.update_stock_with_cost(
+      l_stock_id,
+      l_quantity,
+      "IN",
+      "GRN",
+      l_doc_no,
+      l_unit_cost,
+      l_sell_price
+  )
+
+WITH BATCH/EXPIRY (Batch-controlled items)
+────────────────────────────────────────────────────────────────────────────────
+  LET l_ok = utils_global_stock_updater.update_stock_with_batch(
+      l_stock_id,
+      l_quantity,
+      "IN",
+      "GRN",
+      l_doc_no,
+      l_batch_id,
+      l_expiry_date
+  )
+
+CHECK AVAILABILITY (Before processing)
+────────────────────────────────────────────────────────────────────────────────
+  IF NOT utils_global_stock_updater.check_stock_availability(
+      l_stock_id, l_required_qty) THEN
+      RETURN  -- Error already shown
+  END IF
+
+GET CURRENT STOCK
+────────────────────────────────────────────────────────────────────────────────
+  LET l_qty = utils_global_stock_updater.get_current_stock(l_stock_id)
+
+DOCUMENT TYPES
+────────────────────────────────────────────────────────────────────────────────
+  PO   = Purchase Order
+  GRN  = Goods Received Note
+  SO   = Sales Order
+  INV  = Invoice
+  CRN  = Credit Note
+  TRF  = Warehouse Transfer
+  BIN  = Bin Transaction
+  POS  = Point of Sale
+
+DIRECTION GUIDE
+────────────────────────────────────────────────────────────────────────────────
+  Direction   When to Use
+  ─────────   ──────────────────────────────────────────────────────────
+  "IN"        Purchases, Returns, Receipts, Adjustments +, Transfers IN
+  "OUT"       Sales, Issues, Shipments, Adjustments -, Transfers OUT
+
+QUICK EXAMPLES
+────────────────────────────────────────────────────────────────────────────────
+
+  ┌─ Sales Invoice ───────────────────────────────────────────────────────┐
+  │ utils_global_stock_updater.update_stock_simple(                       │
+  │     l_stock_id, l_qty, "OUT", "INV")                                  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─ GRN Receipt ─────────────────────────────────────────────────────────┐
+  │ utils_global_stock_updater.update_stock_with_cost(                    │
+  │     l_stock_id, l_qty, "IN", "GRN", l_doc_no, l_cost, l_price)        │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─ Credit Note (Return) ────────────────────────────────────────────────┐
+  │ utils_global_stock_updater.update_stock_simple(                       │
+  │     l_stock_id, l_qty, "IN", "CRN")                                   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─ Warehouse Transfer ──────────────────────────────────────────────────┐
+  │ -- OUT from source                                                    │
+  │ utils_global_stock_updater.update_stock_simple(                       │
+  │     l_stock_id, l_qty, "OUT", "TRF")                                  │
+  │                                                                        │
+  │ -- IN to destination                                                  │
+  │ utils_global_stock_updater.update_stock_simple(                       │
+  │     l_stock_id, l_qty, "IN", "TRF")                                   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+FEATURES
+────────────────────────────────────────────────────────────────────────────────
+  ✓ Automatic negative stock prevention
+  ✓ Row-level locking (thread-safe)
+  ✓ Auto transaction recording
+  ✓ Automatic error display
+  ✓ Full rollback on failure
+  ✓ Updates stock_on_hand + stock_balance
+  ✓ Tracks total_sales + total_purch
+
+RETURN VALUES
+────────────────────────────────────────────────────────────────────────────────
+  TRUE  (1) = Success
+  FALSE (0) = Failure (error already shown to user)
+
+ERROR HANDLING
+────────────────────────────────────────────────────────────────────────────────
+  IF NOT utils_global_stock_updater.update_stock_simple(...) THEN
+      -- Error already displayed via utils_globals.show_error()
+      -- Just handle the failure (rollback outer transaction, etc.)
+      RETURN FALSE
+  END IF
+
+COMMON PATTERNS
+────────────────────────────────────────────────────────────────────────────────
+
+  Pattern 1: Process Multiple Lines
+  ──────────────────────────────────
+  FOR i = 1 TO l_line_count
+      IF NOT utils_global_stock_updater.update_stock_simple(
+          ma_lines[i].stock_id, ma_lines[i].qnty, "OUT", "INV") THEN
+          RETURN FALSE
+      END IF
+  END FOR
+
+  Pattern 2: Check Before Update
+  ───────────────────────────────
+  IF NOT utils_global_stock_updater.check_stock_availability(
+      l_stock_id, l_required_qty) THEN
+      RETURN
+  END IF
+  -- Proceed with processing
+
+  Pattern 3: Display Current Stock
+  ─────────────────────────────────
+  LET l_stock = utils_global_stock_updater.get_current_stock(l_stock_id)
+  DISPLAY "Current Stock: ", l_stock
+
+FILES
+────────────────────────────────────────────────────────────────────────────────
+  Source: src/utils/utils_global_stock_updater.4gl
+  Binary: bin/utils_global_stock_updater.42m
+  Guide:  docs/STOCK_UPDATER_GUIDE.md
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  TIP: Use update_stock_simple() for 90% of cases. Only use the advanced     ║
+║       functions when you need costing or batch tracking.                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝

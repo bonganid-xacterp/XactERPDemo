@@ -189,12 +189,11 @@ FUNCTION load_stock_data_construct(
     CALL p_arr.clear()
 
     -- Build SQL query with constructed WHERE clause
-    LET sql_query =
-        "SELECT id, description, stock_on_hand, uom ",
+    LET sql_query = "SELECT id, description, stock_on_hand, uom ",
         "FROM st01_mast ",
-        "AND (",
+        "WHERE 
         p_where_clause,
-        ") ",
+        ",
         "ORDER BY id ",
         "LIMIT 100"
 

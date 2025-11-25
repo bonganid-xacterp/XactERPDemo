@@ -85,7 +85,7 @@
           <Label gridHeight="1" gridWidth="9" name="pu30_ord_hdr_supp_name_label1" posX="1" posY="2" text="Supplier Name">
             <Initializer text="dbschema:pu30_ord_hdr.supp_name/@label"/>
           </Label>
-          <ButtonEdit action="lookup_creditors" colName="supp_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" image="zoom" name="pu30_ord_hdr.supp_id" posX="11" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="ButtonEdit">
+          <ButtonEdit action="lookup_creditors" colName="supp_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" image="" name="pu30_ord_hdr.supp_id" posX="11" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="ButtonEdit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </ButtonEdit>
           <Edit colName="supp_name" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="pu30_ord_hdr.supp_name" posX="18" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="Edit">
@@ -241,6 +241,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZsVAAIlAMMzNBmZmwT+keuFHrhR/AQAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM2PTM3ZAMMzNA2ZmuT+lgQYk3S8fAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM2gAAE9AMMzNB5mZ+j+lgQYk3S8fAQAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZszZmjtAMMzNCpmaAj+keuFHrhR/AQ==]]>
   </DiagramLayout>
 </ManagedForm>

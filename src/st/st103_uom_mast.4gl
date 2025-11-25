@@ -10,6 +10,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL utils_db
+IMPORT FGL utils_global_lkup
 
 SCHEMA demoappdb
 
@@ -22,27 +23,6 @@ DEFINE uom_rec uom_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
-
--- ==============================================================
--- MAIN
--- ==============================================================
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        DISPLAY "Initialization failed."
---        EXIT PROGRAM 1
---    END IF
---
---    IF utils_globals.is_standalone() THEN
---        OPTIONS INPUT WRAP
---        OPEN WINDOW w_st103 WITH FORM "st103_uom_mast" -- ATTRIBUTES(STYLE = "normal")
---    END IF
---
---    CALL init_uom_module()
---
---    IF utils_globals.is_standalone() THEN
---        CLOSE WINDOW w_st103
---    END IF
---END MAIN
 
 -- ==============================================================
 -- Init Program
@@ -71,7 +51,7 @@ FUNCTION query_uom_lookup()
            l_idx INTEGER,
            i INTEGER
 
-    LET selected_code = query_uom()
+    LET selected_code = utils_global_lkup.display_lookup('uom')
 
     IF selected_code IS NOT NULL THEN
         -- Load ALL records for navigation
@@ -145,7 +125,7 @@ FUNCTION query_uom() RETURNS STRING
     LET curr_idx = 1
     LET ret_code = NULL
 
-    OPEN WINDOW w_lkup WITH FORM "utils_global_lkup_form"
+    OPEN WINDOW w_lkup WITH FORM "utils_global_lkup"
         ATTRIBUTES(STYLE = "lookup")
 
     -- Set column titles

@@ -9,7 +9,7 @@
 
 IMPORT ui
 IMPORT FGL utils_globals
-IMPORT FGL utils_global_lkup_form   -- ? Global lookup utility (replaces st122_cat_lkup)
+IMPORT FGL utils_global_lkup   -- ? Global lookup utility (replaces st122_cat_lkup)
 IMPORT FGL st122_cat_lkup
 IMPORT FGL st101_mast
 

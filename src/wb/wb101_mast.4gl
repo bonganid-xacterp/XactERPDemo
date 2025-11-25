@@ -13,7 +13,7 @@ IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL wh121_lkup
 IMPORT FGL wb121_lkup
-IMPORT FGL utils_global_lkup_form
+IMPORT FGL utils_global_lkup
 
 SCHEMA demoappdb
 
@@ -103,7 +103,7 @@ PRIVATE FUNCTION load_all_bins()
     IF ok THEN
         MESSAGE SFMT("Loaded %1 bin(s)", arr_codes.getLength())
     ELSE
-        CALL utils_globals.show_info("No bins found.")
+        DISPLAY ("No bins found.")
         INITIALIZE wbin_rec.* TO NULL
         LET rec_wh_code = NULL
         DISPLAY BY NAME wbin_rec.*
@@ -116,7 +116,7 @@ END FUNCTION
 FUNCTION query_bins()
     DEFINE selected_code STRING
 
-    LET selected_code = utils_global_lkup_form.display_lookup('bin')
+    LET selected_code = utils_global_lkup.display_lookup('bin')
 
     IF selected_code IS NULL OR selected_code = "" THEN
         RETURN
@@ -229,7 +229,7 @@ FUNCTION new_bin()
     CALL utils_globals.get_next_number("wb01_mast", "WB")
         RETURNING next_num, next_full
 
-    LET wbin_rec.wb_code = next_full
+    LET wbin_rec.wb_code = next_num
     LET wbin_rec.status = "active"
     LET wbin_rec.created_at = CURRENT
     LET wbin_rec.created_by = utils_globals.get_current_user_id()

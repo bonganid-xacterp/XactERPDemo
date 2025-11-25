@@ -19,33 +19,11 @@ SCHEMA demoappdb
 -- Record Definitions
 -- ==============================================================
 TYPE lkup_config_t RECORD LIKE sy08_lkup_config.*
-DEFINE rec_lkup_config lkup_config_t
+DEFINE lkup_config_rec lkup_config_t
 
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
-
--- ==============================================================
--- MAIN (Standalone or Child Mode)
--- ==============================================================
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        CALL utils_globals.show_error("Initialization failed.")
---        EXIT PROGRAM 1
---    END IF
---
---    IF utils_globals.is_standalone() THEN
---        OPEN WINDOW w_sy08 WITH FORM "sy08_lkup_config"
---    ELSE
---        OPEN WINDOW w_sy08 WITH FORM "sy08_lkup_config" ATTRIBUTES(STYLE = "child")
---    END IF
---
---    CALL init_lkup_config_module()
---
---    IF utils_globals.is_standalone() THEN
---        CLOSE WINDOW w_sy08
---    END IF
---END MAIN
 
 -- ==============================================================
 -- Main Controller Menu
@@ -68,7 +46,7 @@ FUNCTION init_lkup_config_module()
             LET is_edit_mode = FALSE
 
         COMMAND "Edit"
-            IF rec_lkup_config.id IS NULL OR rec_lkup_config.id <= 0 THEN
+            IF lkup_config_rec.id IS NULL OR lkup_config_rec.id <= 0 THEN
                 CALL utils_globals.show_info("No lookup configuration selected to edit.")
             ELSE
                 LET is_edit_mode = TRUE
@@ -101,8 +79,8 @@ PRIVATE FUNCTION load_all_lkup_configs()
         MESSAGE SFMT("Loaded %1 lookup configuration(s)", arr_codes.getLength())
     ELSE
         CALL utils_globals.show_info("No lookup configurations found.")
-        INITIALIZE rec_lkup_config.* TO NULL
-        DISPLAY BY NAME rec_lkup_config.*
+        INITIALIZE lkup_config_rec.* TO NULL
+        DISPLAY BY NAME lkup_config_rec.*
     END IF
 END FUNCTION
 
@@ -180,19 +158,19 @@ END FUNCTION
 -- ==============================================================
 FUNCTION load_lkup_config(p_id INTEGER)
     TRY
-        SELECT * INTO rec_lkup_config.* FROM sy08_lkup_config WHERE id = p_id
+        SELECT * INTO lkup_config_rec.* FROM sy08_lkup_config WHERE id = p_id
 
         IF SQLCA.SQLCODE = 0 THEN
-            DISPLAY BY NAME rec_lkup_config.*
+            DISPLAY BY NAME lkup_config_rec.*
         ELSE
-            INITIALIZE rec_lkup_config.* TO NULL
-            DISPLAY BY NAME rec_lkup_config.*
+            INITIALIZE lkup_config_rec.* TO NULL
+            DISPLAY BY NAME lkup_config_rec.*
         END IF
 
     CATCH
         CALL utils_globals.show_sql_error("load_lkup_config: Error loading lookup config")
-        INITIALIZE rec_lkup_config.* TO NULL
-        DISPLAY BY NAME rec_lkup_config.*
+        INITIALIZE lkup_config_rec.* TO NULL
+        DISPLAY BY NAME lkup_config_rec.*
     END TRY
 END FUNCTION
 
@@ -219,52 +197,56 @@ FUNCTION new_lkup_config()
     DEFINE dup_found, new_id INTEGER
     DEFINE i, array_size INTEGER
 
-    INITIALIZE rec_lkup_config.* TO NULL
-    LET rec_lkup_config.created_at = CURRENT
+    INITIALIZE lkup_config_rec.* TO NULL
+    LET lkup_config_rec.created_at = CURRENT
 
     CALL utils_globals.set_form_label("lbl_form_title", "NEW LOOKUP CONFIG")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_lkup_config.lookup_code,
-                      rec_lkup_config.table_name,
-                      rec_lkup_config.key_field,
-                      rec_lkup_config.desc_field,
-                      rec_lkup_config.display_title,
-                      rec_lkup_config.filter_condition
+        INPUT BY NAME lkup_config_rec.lookup_code,
+                      lkup_config_rec.table_name,
+                      lkup_config_rec.key_field,
+                      lkup_config_rec.desc_field,
+                      lkup_config_rec.extra_field,
+                      lkup_config_rec.display_title,
+                      lkup_config_rec.col1_title,
+                      lkup_config_rec.col2_title,
+                      lkup_config_rec.col3_title,
+                      lkup_config_rec.search_fields
             ATTRIBUTES(WITHOUT DEFAULTS, NAME = "new_lkup_config")
 
             AFTER FIELD lookup_code
-                IF rec_lkup_config.lookup_code IS NULL OR rec_lkup_config.lookup_code = "" THEN
+                IF lkup_config_rec.lookup_code IS NULL OR lkup_config_rec.lookup_code = "" THEN
                     CALL utils_globals.show_error("Lookup Code is required.")
                     NEXT FIELD lookup_code
                 END IF
                 -- Check if lookup_code already exists
-                LET dup_found = check_lookup_code_unique(rec_lkup_config.lookup_code)
+                LET dup_found = check_lookup_code_unique(lkup_config_rec.lookup_code)
                 IF dup_found != 0 THEN
                     CALL utils_globals.show_error("Lookup Code already exists.")
                     NEXT FIELD lookup_code
                 END IF
 
             AFTER FIELD table_name
-                IF rec_lkup_config.table_name IS NULL OR rec_lkup_config.table_name = "" THEN
+                IF lkup_config_rec.table_name IS NULL OR lkup_config_rec.table_name = "" THEN
                     CALL utils_globals.show_error("Table Name is required.")
                     NEXT FIELD table_name
                 END IF
 
             AFTER FIELD key_field
-                IF rec_lkup_config.key_field IS NULL OR rec_lkup_config.key_field = "" THEN
+                IF lkup_config_rec.key_field IS NULL OR lkup_config_rec.key_field = "" THEN
                     CALL utils_globals.show_error("Key Field is required.")
                     NEXT FIELD key_field
                 END IF
 
             AFTER FIELD desc_field
-                IF rec_lkup_config.desc_field IS NULL OR rec_lkup_config.desc_field = "" THEN
+                IF lkup_config_rec.desc_field IS NULL OR lkup_config_rec.desc_field = "" THEN
                     CALL utils_globals.show_error("Description Field is required.")
                     NEXT FIELD desc_field
                 END IF
 
             AFTER FIELD display_title
-                IF rec_lkup_config.display_title IS NULL OR rec_lkup_config.display_title = "" THEN
+                IF lkup_config_rec.display_title IS NULL OR lkup_config_rec.display_title = "" THEN
                     CALL utils_globals.show_error("Display Title is required.")
                     NEXT FIELD display_title
                 END IF
@@ -273,28 +255,28 @@ FUNCTION new_lkup_config()
 
         ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "filesave")
             -- Validate before saving
-            IF rec_lkup_config.lookup_code IS NULL OR rec_lkup_config.lookup_code = "" THEN
+            IF lkup_config_rec.lookup_code IS NULL OR lkup_config_rec.lookup_code = "" THEN
                 CALL utils_globals.show_error("Lookup Code is required.")
                 NEXT FIELD lookup_code
             END IF
-            IF rec_lkup_config.table_name IS NULL OR rec_lkup_config.table_name = "" THEN
+            IF lkup_config_rec.table_name IS NULL OR lkup_config_rec.table_name = "" THEN
                 CALL utils_globals.show_error("Table Name is required.")
                 NEXT FIELD table_name
             END IF
-            IF rec_lkup_config.key_field IS NULL OR rec_lkup_config.key_field = "" THEN
+            IF lkup_config_rec.key_field IS NULL OR lkup_config_rec.key_field = "" THEN
                 CALL utils_globals.show_error("Key Field is required.")
                 NEXT FIELD key_field
             END IF
-            IF rec_lkup_config.desc_field IS NULL OR rec_lkup_config.desc_field = "" THEN
+            IF lkup_config_rec.desc_field IS NULL OR lkup_config_rec.desc_field = "" THEN
                 CALL utils_globals.show_error("Description Field is required.")
                 NEXT FIELD desc_field
             END IF
-            IF rec_lkup_config.display_title IS NULL OR rec_lkup_config.display_title = "" THEN
+            IF lkup_config_rec.display_title IS NULL OR lkup_config_rec.display_title = "" THEN
                 CALL utils_globals.show_error("Display Title is required.")
                 NEXT FIELD display_title
             END IF
             CALL save_lkup_config()
-            LET new_id = rec_lkup_config.id
+            LET new_id = lkup_config_rec.id
             IF new_id IS NOT NULL THEN
                 CALL utils_globals.show_info("Lookup configuration saved successfully.")
                 EXIT DIALOG
@@ -326,8 +308,8 @@ FUNCTION new_lkup_config()
             CALL load_lkup_config(arr_codes[curr_idx])
         ELSE
             LET curr_idx = 0
-            INITIALIZE rec_lkup_config.* TO NULL
-            DISPLAY BY NAME rec_lkup_config.*
+            INITIALIZE lkup_config_rec.* TO NULL
+            DISPLAY BY NAME lkup_config_rec.*
         END IF
     END IF
 
@@ -341,12 +323,16 @@ FUNCTION edit_lkup_config()
     CALL utils_globals.set_form_label("lbl_form_title", "EDIT LOOKUP CONFIG")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_lkup_config.lookup_code,
-                      rec_lkup_config.table_name,
-                      rec_lkup_config.key_field,
-                      rec_lkup_config.desc_field,
-                      rec_lkup_config.display_title,
-                      rec_lkup_config.filter_condition
+        INPUT BY NAME lkup_config_rec.lookup_code,
+                      lkup_config_rec.table_name,
+                      lkup_config_rec.key_field,
+                      lkup_config_rec.desc_field,
+                      lkup_config_rec.extra_field,
+                      lkup_config_rec.display_title,
+                      lkup_config_rec.col1_title,
+                      lkup_config_rec.col2_title,
+                      lkup_config_rec.col3_title,
+                      lkup_config_rec.search_fields
             ATTRIBUTES(WITHOUT DEFAULTS, NAME = "edit_lkup_config")
 
             BEFORE FIELD lookup_code
@@ -354,25 +340,25 @@ FUNCTION edit_lkup_config()
                 NEXT FIELD table_name
 
             AFTER FIELD table_name
-                IF rec_lkup_config.table_name IS NULL OR rec_lkup_config.table_name = "" THEN
+                IF lkup_config_rec.table_name IS NULL OR lkup_config_rec.table_name = "" THEN
                     CALL utils_globals.show_error("Table Name is required.")
                     NEXT FIELD table_name
                 END IF
 
             AFTER FIELD key_field
-                IF rec_lkup_config.key_field IS NULL OR rec_lkup_config.key_field = "" THEN
+                IF lkup_config_rec.key_field IS NULL OR lkup_config_rec.key_field = "" THEN
                     CALL utils_globals.show_error("Key Field is required.")
                     NEXT FIELD key_field
                 END IF
 
             AFTER FIELD desc_field
-                IF rec_lkup_config.desc_field IS NULL OR rec_lkup_config.desc_field = "" THEN
+                IF lkup_config_rec.desc_field IS NULL OR lkup_config_rec.desc_field = "" THEN
                     CALL utils_globals.show_error("Description Field is required.")
                     NEXT FIELD desc_field
                 END IF
 
             AFTER FIELD display_title
-                IF rec_lkup_config.display_title IS NULL OR rec_lkup_config.display_title = "" THEN
+                IF lkup_config_rec.display_title IS NULL OR lkup_config_rec.display_title = "" THEN
                     CALL utils_globals.show_error("Display Title is required.")
                     NEXT FIELD display_title
                 END IF
@@ -381,19 +367,19 @@ FUNCTION edit_lkup_config()
 
         ON ACTION save ATTRIBUTES(TEXT = "Update", IMAGE = "filesave")
             -- Validate before saving
-            IF rec_lkup_config.table_name IS NULL OR rec_lkup_config.table_name = "" THEN
+            IF lkup_config_rec.table_name IS NULL OR lkup_config_rec.table_name = "" THEN
                 CALL utils_globals.show_error("Table Name is required.")
                 NEXT FIELD table_name
             END IF
-            IF rec_lkup_config.key_field IS NULL OR rec_lkup_config.key_field = "" THEN
+            IF lkup_config_rec.key_field IS NULL OR lkup_config_rec.key_field = "" THEN
                 CALL utils_globals.show_error("Key Field is required.")
                 NEXT FIELD key_field
             END IF
-            IF rec_lkup_config.desc_field IS NULL OR rec_lkup_config.desc_field = "" THEN
+            IF lkup_config_rec.desc_field IS NULL OR lkup_config_rec.desc_field = "" THEN
                 CALL utils_globals.show_error("Description Field is required.")
                 NEXT FIELD desc_field
             END IF
-            IF rec_lkup_config.display_title IS NULL OR rec_lkup_config.display_title = "" THEN
+            IF lkup_config_rec.display_title IS NULL OR lkup_config_rec.display_title = "" THEN
                 CALL utils_globals.show_error("Display Title is required.")
                 NEXT FIELD display_title
             END IF
@@ -401,7 +387,7 @@ FUNCTION edit_lkup_config()
             EXIT DIALOG
 
         ON ACTION cancel ATTRIBUTES(TEXT = "Cancel", IMAGE = "cancel")
-            CALL load_lkup_config(rec_lkup_config.id)
+            CALL load_lkup_config(lkup_config_rec.id)
             EXIT DIALOG
 
     END DIALOG
@@ -420,53 +406,65 @@ FUNCTION save_lkup_config()
         SELECT COUNT(*)
             INTO exists
             FROM sy08_lkup_config
-            WHERE id = rec_lkup_config.id
+            WHERE id = lkup_config_rec.id
 
         IF exists = 0 THEN
             -- New record
-            LET rec_lkup_config.created_at = CURRENT
+            LET lkup_config_rec.created_at = CURRENT
 
             INSERT INTO sy08_lkup_config (
                 lookup_code,
                 table_name,
                 key_field,
                 desc_field,
+                extra_field,
                 display_title,
-                filter_condition,
+                col1_title,
+                col2_title,
+                col3_title,
+                search_fields,
                 created_at
             ) VALUES (
-                rec_lkup_config.lookup_code,
-                rec_lkup_config.table_name,
-                rec_lkup_config.key_field,
-                rec_lkup_config.desc_field,
-                rec_lkup_config.display_title,
-                rec_lkup_config.filter_condition,
-                rec_lkup_config.created_at
+                lkup_config_rec.lookup_code,
+                lkup_config_rec.table_name,
+                lkup_config_rec.key_field,
+                lkup_config_rec.desc_field,
+                lkup_config_rec.extra_field,
+                lkup_config_rec.display_title,
+                lkup_config_rec.col1_title,
+                lkup_config_rec.col2_title,
+                lkup_config_rec.col3_title,
+                lkup_config_rec.search_fields,
+                lkup_config_rec.created_at
             )
 
             -- Get the generated ID
-            LET rec_lkup_config.id = SQLCA.SQLERRD[2]
+            LET lkup_config_rec.id = SQLCA.SQLERRD[2]
 
             COMMIT WORK
             CALL utils_globals.msg_saved()
         ELSE
             -- Update existing record
-            LET rec_lkup_config.updated_at = CURRENT
+            LET lkup_config_rec.updated_at = CURRENT
 
             UPDATE sy08_lkup_config
-                SET table_name = rec_lkup_config.table_name,
-                    key_field = rec_lkup_config.key_field,
-                    desc_field = rec_lkup_config.desc_field,
-                    display_title = rec_lkup_config.display_title,
-                    filter_condition = rec_lkup_config.filter_condition,
-                    updated_at = rec_lkup_config.updated_at
-                WHERE id = rec_lkup_config.id
+                SET table_name = lkup_config_rec.table_name,
+                    key_field = lkup_config_rec.key_field,
+                    desc_field = lkup_config_rec.desc_field,
+                    extra_field = lkup_config_rec.extra_field,
+                    display_title = lkup_config_rec.display_title,
+                    col1_title = lkup_config_rec.col1_title,
+                    col2_title = lkup_config_rec.col2_title,
+                    col3_title = lkup_config_rec.col3_title,
+                    search_fields = lkup_config_rec.search_fields,
+                    updated_at = lkup_config_rec.updated_at
+                WHERE id = lkup_config_rec.id
 
             COMMIT WORK
             CALL utils_globals.msg_updated()
         END IF
 
-        CALL load_lkup_config(rec_lkup_config.id)
+        CALL load_lkup_config(lkup_config_rec.id)
 
     CATCH
         ROLLBACK WORK
@@ -482,14 +480,14 @@ FUNCTION delete_lkup_config()
     DEFINE deleted_id INTEGER
     DEFINE array_size INTEGER
 
-    IF rec_lkup_config.id IS NULL OR rec_lkup_config.id <= 0 THEN
+    IF lkup_config_rec.id IS NULL OR lkup_config_rec.id <= 0 THEN
         CALL utils_globals.show_info("No lookup configuration selected for deletion.")
         RETURN
     END IF
 
     LET ok =
         utils_globals.show_confirm(
-            "Delete lookup configuration: " || rec_lkup_config.lookup_code || "?",
+            "Delete lookup configuration: " || lkup_config_rec.lookup_code || "?",
             "Confirm Delete")
 
     IF NOT ok THEN
@@ -497,7 +495,7 @@ FUNCTION delete_lkup_config()
         RETURN
     END IF
 
-    LET deleted_id = rec_lkup_config.id
+    LET deleted_id = lkup_config_rec.id
 
     BEGIN WORK
     TRY
@@ -524,8 +522,8 @@ FUNCTION delete_lkup_config()
         CALL load_lkup_config(arr_codes[curr_idx])
     ELSE
         LET curr_idx = 0
-        INITIALIZE rec_lkup_config.* TO NULL
-        DISPLAY BY NAME rec_lkup_config.*
+        INITIALIZE lkup_config_rec.* TO NULL
+        DISPLAY BY NAME lkup_config_rec.*
     END IF
 END FUNCTION
 
