@@ -755,6 +755,7 @@
     <Column fglLength="120" fglType="201" name="col3_title" notNull="false" order="11" status="U" uuid="db/column682"/>
     <Column fglLength="4622" fglType="10" name="created_at" notNull="false" order="12" status="U" uuid="db/column560"/>
     <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="13" status="U" uuid="db/column561"/>
+    <Column fglLength="300" fglType="201" name="search_fields" notNull="false" order="14" status="U" uuid="db/column701"/>
     <Index indexColumns="lookup_code" indexConstraint="uniqueIndex" name="sy08_lkup_code_idx" status="U" uuid="db/index113"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="sy08_lkup_config_pkey" status="U" uuid="db/index80"/>
   </Table>
@@ -771,6 +772,22 @@
     <Index indexColumns="wh_id" indexConstraint="index" name="idx_wb_wh" status="U" uuid="db/index81"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="wb01_mast_pkey" status="U" uuid="db/index82"/>
     <Index indexColumns="wh_id, wb_code" indexConstraint="unique" name="wb01_mast_wh_id_wb_code_key" status="U" uuid="db/index83"/>
+  </Table>
+  <Table active="true" name="wb30_trans" status="U" uuid="db/table46">
+    <Column fglLength="4" fglType="6" name="id" notNull="true" order="1" status="U" uuid="db/column702"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="false" order="2" status="U" uuid="db/column703"/>
+    <Column fglLength="2560" fglType="5" name="doc_no" notNull="false" order="3" status="U" uuid="db/column704"/>
+    <Column fglLength="2560" fglType="5" name="from_wb_id" notNull="false" order="4" status="U" uuid="db/column705"/>
+    <Column fglLength="2560" fglType="5" name="to_wb_id" notNull="false" order="5" status="U" uuid="db/column706"/>
+    <Column fglLength="2560" fglType="5" name="stock_id" notNull="false" order="6" status="U" uuid="db/column707"/>
+    <Column fglLength="2560" fglType="5" name="qnty" notNull="false" order="7" status="U" uuid="db/column708"/>
+    <Column fglLength="10" fglType="201" name="direction" notNull="false" order="8" status="U" uuid="db/column709"/>
+    <Column fglLength="100" fglType="201" name="remarks" notNull="false" order="9" status="U" uuid="db/column710"/>
+    <Column fglLength="10" fglType="201" name="status" notNull="false" order="10" status="U" uuid="db/column711"/>
+    <Column fglLength="4" fglType="2" name="created_by" notNull="false" order="11" status="U" uuid="db/column712"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="false" order="12" status="U" uuid="db/column713"/>
+    <Column fglLength="4" fglType="2" name="updated_by" notNull="false" order="13" status="U" uuid="db/column714"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="14" status="U" uuid="db/column715"/>
   </Table>
   <Table active="true" name="wb30_trf_hdr" status="U" uuid="db/table37">
     <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column571"/>
@@ -835,28 +852,6 @@
     <Index indexColumns="wb_id" indexConstraint="index" name="idx_wh30_trans_wb" status="U" uuid="db/index93"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="wh30_trans_pkey" status="U" uuid="db/index95"/>
   </Table>
-  <Table active="true" name="wh30_trf_hdr" status="U" uuid="db/table41">
-    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column617"/>
-    <Column fglLength="30" fglType="201" name="trans_no" notNull="false" order="2" status="U" uuid="db/column618"/>
-    <Column fglLength="8" fglType="52" name="from_wh_id" notNull="true" order="3" status="U" uuid="db/column619"/>
-    <Column fglLength="8" fglType="52" name="to_wh_id" notNull="true" order="4" status="U" uuid="db/column620"/>
-    <Column fglLength="8" fglType="52" name="from_wb_id" notNull="false" order="5" status="U" uuid="db/column621"/>
-    <Column fglLength="8" fglType="52" name="to_wb_id" notNull="false" order="6" status="U" uuid="db/column622"/>
-    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="7" status="U" uuid="db/column623"/>
-    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="8" status="U" uuid="db/column624"/>
-    <Column fglLength="20" fglType="201" name="status" notNull="true" order="9" status="U" uuid="db/column625"/>
-    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="10" status="U" uuid="db/column626"/>
-    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="11" status="U" uuid="db/column627"/>
-    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="12" status="U" uuid="db/column628"/>
-    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="13" status="U" uuid="db/column629"/>
-    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="14" status="U" uuid="db/column630"/>
-    <Index indexColumns="trans_date" indexConstraint="index" name="idx_wh30_trf_hdr_dt" status="U" uuid="db/index96"/>
-    <Index indexColumns="from_wh_id" indexConstraint="index" name="idx_wh30_trf_hdr_from" status="U" uuid="db/index97"/>
-    <Index indexColumns="status" indexConstraint="index" name="idx_wh30_trf_hdr_stat" status="U" uuid="db/index98"/>
-    <Index indexColumns="to_wh_id" indexConstraint="index" name="idx_wh30_trf_hdr_to" status="U" uuid="db/index99"/>
-    <Index indexColumns="id" indexConstraint="primaryKey" name="wh30_trf_hdr_pkey" status="U" uuid="db/index100"/>
-    <Index indexColumns="trans_no" indexConstraint="unique" name="wh30_trf_hdr_trans_no_key" status="U" uuid="db/index101"/>
-  </Table>
   <Table active="true" name="wh31_trf_det" status="U" uuid="db/table42">
     <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column631"/>
     <Column fglLength="8" fglType="52" name="hdr_id" notNull="true" order="2" status="U" uuid="db/column632"/>
@@ -870,17 +865,38 @@
     <Column fglLength="4" fglType="7" name="expiry_date" notNull="false" order="10" status="U" uuid="db/column640"/>
     <Column fglLength="3843" fglType="5" name="qnty" notNull="true" order="11" status="U" uuid="db/column641"/>
     <Column fglLength="3844" fglType="5" name="unit_cost" notNull="true" order="12" status="U" uuid="db/column642"/>
-    <Column fglLength="3842" fglType="5" name="ext_cost" notNull="true" order="13" status="U" uuid="db/column643"/>
-    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="14" status="U" uuid="db/column644"/>
-    <Column fglLength="20" fglType="201" name="status" notNull="true" order="15" status="U" uuid="db/column645"/>
-    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="16" status="U" uuid="db/column646"/>
-    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="17" status="U" uuid="db/column647"/>
-    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="18" status="U" uuid="db/column648"/>
-    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="19" status="U" uuid="db/column649"/>
+    <Column fglLength="200" fglType="201" name="notes" notNull="false" order="13" status="U" uuid="db/column644"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="14" status="U" uuid="db/column645"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="15" status="U" uuid="db/column646"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="16" status="U" uuid="db/column647"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="17" status="U" uuid="db/column648"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="18" status="U" uuid="db/column649"/>
     <Index indexColumns="hdr_id" indexConstraint="index" name="idx_wh31_trf_det_hdr" status="U" uuid="db/index102"/>
     <Index indexColumns="stock_id" indexConstraint="index" name="idx_wh31_trf_det_stock" status="U" uuid="db/index103"/>
     <Index indexColumns="hdr_id, item_no" indexConstraint="unique" name="wh31_trf_det_hdr_id_item_no_key" status="U" uuid="db/index104"/>
     <Index indexColumns="id" indexConstraint="primaryKey" name="wh31_trf_det_pkey" status="U" uuid="db/index105"/>
+  </Table>
+  <Table active="true" name="wh31_trf_hdr" status="U" uuid="db/table47">
+    <Column fglLength="8" fglType="53" name="id" notNull="true" order="1" status="U" uuid="db/column716"/>
+    <Column fglLength="30" fglType="201" name="trans_no" notNull="false" order="2" status="U" uuid="db/column717"/>
+    <Column fglLength="8" fglType="52" name="from_wh_id" notNull="true" order="3" status="U" uuid="db/column718"/>
+    <Column fglLength="8" fglType="52" name="to_wh_id" notNull="true" order="4" status="U" uuid="db/column719"/>
+    <Column fglLength="8" fglType="52" name="from_wb_id" notNull="false" order="5" status="U" uuid="db/column720"/>
+    <Column fglLength="8" fglType="52" name="to_wb_id" notNull="false" order="6" status="U" uuid="db/column721"/>
+    <Column fglLength="4" fglType="7" name="trans_date" notNull="true" order="7" status="U" uuid="db/column722"/>
+    <Column fglLength="56" fglType="12" name="notes" notNull="false" order="8" status="U" uuid="db/column723"/>
+    <Column fglLength="20" fglType="201" name="status" notNull="true" order="9" status="U" uuid="db/column724"/>
+    <Column fglLength="8" fglType="52" name="created_by" notNull="false" order="10" status="U" uuid="db/column725"/>
+    <Column fglLength="4622" fglType="10" name="created_at" notNull="true" order="11" status="U" uuid="db/column726"/>
+    <Column fglLength="8" fglType="52" name="updated_by" notNull="false" order="12" status="U" uuid="db/column727"/>
+    <Column fglLength="4622" fglType="10" name="updated_at" notNull="false" order="13" status="U" uuid="db/column728"/>
+    <Column fglLength="4622" fglType="10" name="deleted_at" notNull="false" order="14" status="U" uuid="db/column729"/>
+    <Index indexColumns="trans_date" indexConstraint="index" name="idx_wh30_trf_hdr_dt" status="U" uuid="db/index115"/>
+    <Index indexColumns="from_wh_id" indexConstraint="index" name="idx_wh30_trf_hdr_from" status="U" uuid="db/index116"/>
+    <Index indexColumns="status" indexConstraint="index" name="idx_wh30_trf_hdr_stat" status="U" uuid="db/index117"/>
+    <Index indexColumns="to_wh_id" indexConstraint="index" name="idx_wh30_trf_hdr_to" status="U" uuid="db/index118"/>
+    <Index indexColumns="id" indexConstraint="primaryKey" name="wh30_trf_hdr_pkey" status="U" uuid="db/index119"/>
+    <Index indexColumns="trans_no" indexConstraint="unique" name="wh30_trf_hdr_trans_no_key" status="U" uuid="db/index120"/>
   </Table>
   <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="cl01_mast_created_by_fkey" refTable="sy00_user" status="U" table="cl01_mast" uuid="db/foreignkey1"/>
   <ForeignKey cascadeDelete="false" fkColumns="supp_id" fkRefColumns="id" name="cl30_trans_supp_id_fkey" refTable="cl01_mast" status="U" table="cl30_trans" uuid="db/foreignkey2"/>
@@ -979,15 +995,15 @@
   <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="wh30_trans_stock_id_fkey" refTable="st01_mast" status="U" table="wh30_trans" uuid="db/foreignkey95"/>
   <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="wh30_trans_updated_by_fkey" refTable="sy00_user" status="U" table="wh30_trans" uuid="db/foreignkey96"/>
   <ForeignKey cascadeDelete="false" fkColumns="wb_id" fkRefColumns="id" name="wh30_trans_wb_id_fkey" refTable="wb01_mast" status="U" table="wh30_trans" uuid="db/foreignkey97"/>
-  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wh30_trf_hdr_created_by_fkey" refTable="sy00_user" status="U" table="wh30_trf_hdr" uuid="db/foreignkey99"/>
-  <ForeignKey cascadeDelete="false" fkColumns="from_wb_id" fkRefColumns="id" name="wh30_trf_hdr_from_wb_id_fkey" refTable="wb01_mast" status="U" table="wh30_trf_hdr" uuid="db/foreignkey100"/>
-  <ForeignKey cascadeDelete="false" fkColumns="from_wh_id" fkRefColumns="id" name="wh30_trf_hdr_from_wh_id_fkey" refTable="wh01_mast" status="U" table="wh30_trf_hdr" uuid="db/foreignkey101"/>
-  <ForeignKey cascadeDelete="false" fkColumns="to_wb_id" fkRefColumns="id" name="wh30_trf_hdr_to_wb_id_fkey" refTable="wb01_mast" status="U" table="wh30_trf_hdr" uuid="db/foreignkey102"/>
-  <ForeignKey cascadeDelete="false" fkColumns="to_wh_id" fkRefColumns="id" name="wh30_trf_hdr_to_wh_id_fkey" refTable="wh01_mast" status="U" table="wh30_trf_hdr" uuid="db/foreignkey103"/>
-  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="wh30_trf_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="wh30_trf_hdr" uuid="db/foreignkey104"/>
+  <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wh30_trf_hdr_created_by_fkey" refTable="sy00_user" status="U" table="wh31_trf_hdr" uuid="db/foreignkey99"/>
+  <ForeignKey cascadeDelete="false" fkColumns="from_wb_id" fkRefColumns="id" name="wh30_trf_hdr_from_wb_id_fkey" refTable="wb01_mast" status="U" table="wh31_trf_hdr" uuid="db/foreignkey100"/>
+  <ForeignKey cascadeDelete="false" fkColumns="from_wh_id" fkRefColumns="id" name="wh30_trf_hdr_from_wh_id_fkey" refTable="wh01_mast" status="U" table="wh31_trf_hdr" uuid="db/foreignkey101"/>
+  <ForeignKey cascadeDelete="false" fkColumns="to_wb_id" fkRefColumns="id" name="wh30_trf_hdr_to_wb_id_fkey" refTable="wb01_mast" status="U" table="wh31_trf_hdr" uuid="db/foreignkey102"/>
+  <ForeignKey cascadeDelete="false" fkColumns="to_wh_id" fkRefColumns="id" name="wh30_trf_hdr_to_wh_id_fkey" refTable="wh01_mast" status="U" table="wh31_trf_hdr" uuid="db/foreignkey103"/>
+  <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="wh30_trf_hdr_updated_by_fkey" refTable="sy00_user" status="U" table="wh31_trf_hdr" uuid="db/foreignkey104"/>
   <ForeignKey cascadeDelete="false" fkColumns="created_by" fkRefColumns="id" name="wh31_trf_det_created_by_fkey" refTable="sy00_user" status="U" table="wh31_trf_det" uuid="db/foreignkey105"/>
   <ForeignKey cascadeDelete="false" fkColumns="from_wb_id" fkRefColumns="id" name="wh31_trf_det_from_wb_id_fkey" refTable="wb01_mast" status="U" table="wh31_trf_det" uuid="db/foreignkey106"/>
-  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="wh31_trf_det_hdr_id_fkey" refTable="wh30_trf_hdr" status="U" table="wh31_trf_det" uuid="db/foreignkey107"/>
+  <ForeignKey cascadeDelete="true" fkColumns="hdr_id" fkRefColumns="id" name="wh31_trf_det_hdr_id_fkey" refTable="wh31_trf_hdr" status="U" table="wh31_trf_det" uuid="db/foreignkey107"/>
   <ForeignKey cascadeDelete="false" fkColumns="stock_id" fkRefColumns="id" name="wh31_trf_det_stock_id_fkey" refTable="st01_mast" status="U" table="wh31_trf_det" uuid="db/foreignkey108"/>
   <ForeignKey cascadeDelete="false" fkColumns="to_wb_id" fkRefColumns="id" name="wh31_trf_det_to_wb_id_fkey" refTable="wb01_mast" status="U" table="wh31_trf_det" uuid="db/foreignkey109"/>
   <ForeignKey cascadeDelete="false" fkColumns="updated_by" fkRefColumns="id" name="wh31_trf_det_updated_by_fkey" refTable="sy00_user" status="U" table="wh31_trf_det" uuid="db/foreignkey110"/>
