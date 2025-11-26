@@ -189,6 +189,8 @@
         <File filePath="src/sy/sy130_logs.4gl"/>
         <File filePath="src/sy/sy140_hist.4fd"/>
         <File filePath="src/sy/sy140_hist.4gl"/>
+        <File filePath="src/sy/sy150_config_tbl.4fd"/>
+        <File filePath="src/sy/sy150_config_tbl.4gl"/>
         <File filePath="src/sy/sy150_lkup_config.4fd"/>
         <File filePath="src/sy/sy150_lkup_config.4gl"/>
       </Application>
@@ -202,6 +204,8 @@
         <File filePath="src/utils/utils_global_lkup.4gl"/>
         <File filePath="src/utils/utils_global_stock_updater.4gl"/>
         <File filePath="src/utils/utils_globals.4gl"/>
+        <File filePath="src/utils/utils_line_det_lkup.4fd"/>
+        <File filePath="src/utils/utils_line_det_lkup.4gl"/>
         <File filePath="src/utils/utils_logger.4gl"/>
         <File filePath="src/utils/utils_mast_lkup_form.4fd"/>
         <File filePath="src/utils/utils_sidemenu.4gl"/>

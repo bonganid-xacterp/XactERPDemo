@@ -21,7 +21,7 @@ IMPORT FGL st140_hist
 
 -- Warehouse Module imports
 IMPORT FGL wh101_mast
---IMPORT FGL wh130_trf
+IMPORT FGL wh130_trf
 IMPORT FGL wb101_mast
 IMPORT FGL wb130_trf
 
@@ -47,7 +47,7 @@ IMPORT FGL sy101_user
 IMPORT FGL sy102_role
 IMPORT FGL sy103_perm
 IMPORT FGL sy130_logs
-IMPORT FGL sy150_lkup_config
+IMPORT FGL sy150_config_tbl
 
 SCHEMA demoappdb
 
@@ -128,7 +128,7 @@ FUNCTION open_mdi_container()
     CALL ui.Interface.loadTopMenu("main_topmenu")
 
     -- Parent window hosting the MDI tabs
-    OPEN WINDOW w_main WITH FORM "main_shell"
+    OPEN WINDOW main_shell WITH FORM "main_shell"
         ATTRIBUTES(TEXT = APP_NAME || " - " || g_current_username,
                    STYLE = "Window.container")
 
@@ -174,17 +174,17 @@ FUNCTION show_main_menu()
         ON ACTION st_cat
             CALL launch_child_module("st102_cat", "Stock Categories")
 
-        -- ----------- Warehouse -----------------------------------
+        -- ----------- Warehouse  & BINS -----------------------------------
         ON ACTION wh_mast
             CALL launch_child_module("wh101_mast", "Warehouses")
 
-        ON ACTION wh_stock_trf
+        ON ACTION wh_trf
             CALL launch_child_module("wh130_trf", "Warehouse Transfer")
 
         ON ACTION wb_mast
             CALL launch_child_module("wb101_mast", "Warehouse Bins")
             
-        ON ACTION wb_stock_trf
+        ON ACTION wb_trf
             CALL launch_child_module("wb130_trf", "Bin Transfer")
 
         -- ----------- Purchasing ----------------------------------
@@ -263,7 +263,7 @@ FUNCTION launch_child_module(module_name STRING, title STRING)
         RETURN
     END IF
 
-    -- Run module logic – assumes window already open
+    -- Run module logic ï¿½ assumes window already open
     CASE module_name
 
         -- Stock
@@ -273,7 +273,7 @@ FUNCTION launch_child_module(module_name STRING, title STRING)
 
         -- Warehouse / Bin
         WHEN "wh101_mast"       CALL wh101_mast.init_wh_module()
-        --WHEN "wh130_trf"        CALL wh130_trf.init_wh_trf_module()
+        WHEN "wh130_trf"        CALL wh130_trf.init_wh_trf_module()
         WHEN "wb101_mast"       CALL wb101_mast.init_wb_module()
         WHEN "wb130_trf"        CALL wb130_trf.init_wb_tfr_module()
 
@@ -292,11 +292,11 @@ FUNCTION launch_child_module(module_name STRING, title STRING)
         WHEN "sa133_crn"        CALL sa133_crn.init_crn_module()
 
         -- System
-        WHEN "sy101_user"       CALL sy101_user.init_user_module()
-        WHEN "sy102_role"       CALL sy102_role.init_role_module()
-        WHEN "sy103_perm"       CALL sy103_perm.init_perm_module()
-        WHEN "sy130_logs"       CALL sy130_logs.init_logs_module()
-        WHEN "sy150_lkup_config" CALL sy150_lkup_config.init_lkup_config_module()
+        WHEN "sy101_user"           CALL sy101_user.init_user_module()
+        WHEN "sy102_role"           CALL sy102_role.init_role_module()
+        WHEN "sy103_perm"           CALL sy103_perm.init_perm_module()
+        WHEN "sy130_logs"           CALL sy130_logs.init_logs_module()
+        WHEN "sy150_lkup_config"    CALL sy150_config_tbl.init_lkup_config()
 
         OTHERWISE
             CALL utils_globals.show_error("Module not implemented: " || module_name)

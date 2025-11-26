@@ -49,10 +49,10 @@ END FUNCTION
 -- Query using Lookup
 -- ==============================================================
 FUNCTION query_categories()
-    DEFINE selected_code STRING
+    DEFINE selected_code INTEGER
     DEFINE found_idx, i INTEGER
 
-    LET selected_code = st122_cat_lkup.load_lookup()
+    LET selected_code = utils_global_lkup.display_lookup('stock_category')
 
     IF selected_code IS NULL OR selected_code = "" THEN
         RETURN

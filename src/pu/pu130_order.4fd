@@ -85,7 +85,7 @@
           <Label gridHeight="1" gridWidth="9" name="pu30_ord_hdr_supp_name_label1" posX="1" posY="2" text="Supplier Name">
             <Initializer text="dbschema:pu30_ord_hdr.supp_name/@label"/>
           </Label>
-          <ButtonEdit action="lookup_creditors" colName="supp_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" image="" name="pu30_ord_hdr.supp_id" posX="11" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="ButtonEdit">
+          <ButtonEdit action="lookup_creditors" colName="supp_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="6" image="zoom" name="pu30_ord_hdr.supp_id" posX="11" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="ButtonEdit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </ButtonEdit>
           <Edit colName="supp_name" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="pu30_ord_hdr.supp_name" posX="18" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Supplier Name" widget="Edit">
@@ -145,7 +145,7 @@
           <Edit colName="ref_no" fieldId="23" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu30_ord_hdr.ref_no" posX="14" posY="1" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Created By" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_gross_tot_label1" posX="28" posY="1" text="Gross Total">
+          <Label gridHeight="1" gridWidth="8" name="pu30_ord_hdr_gross_tot_label1" posX="26" posY="1" text="Gross Total">
             <Initializer text="dbschema:pu30_ord_hdr.gross_tot/@label"/>
           </Label>
           <Edit colName="gross_tot" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" justify="right" name="pu30_ord_hdr.gross_tot" noEntry="true" posX="35" posY="1" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Gross Total" widget="Edit">
@@ -157,7 +157,7 @@
           <DateEdit colName="trans_date" fieldId="13" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" justify="right" name="pu30_ord_hdr.trans_date" posX="14" posY="2" sqlTabName="pu30_ord_hdr" tabIndex="-1" widget="DateEdit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </DateEdit>
-          <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_disc_tot_label1" posX="28" posY="2" text="Disc Total">
+          <Label gridHeight="1" gridWidth="8" name="pu30_ord_hdr_disc_tot_label1" posX="26" posY="2" text="Disc Total">
             <Initializer text="dbschema:pu30_ord_hdr.disc_tot/@label"/>
           </Label>
           <Edit colName="disc_tot" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" justify="right" name="pu30_ord_hdr.disc_tot" noEntry="true" posX="35" posY="2" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Disc Total" widget="Edit">
@@ -169,7 +169,7 @@
           <DateEdit colName="updated_at" fieldId="18" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" justify="right" name="pu30_ord_hdr.updated_at" noEntry="true" posX="14" posY="3" sqlTabName="pu30_ord_hdr" tabIndex="-1" widget="DateEdit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </DateEdit>
-          <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_vat_tot_label1" posX="28" posY="3" text="VAT Total">
+          <Label gridHeight="1" gridWidth="8" name="pu30_ord_hdr_vat_tot_label1" posX="26" posY="3" text="VAT Total">
             <Initializer text="dbschema:pu30_ord_hdr.vat_tot/@label"/>
           </Label>
           <Edit colName="vat_tot" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" justify="right" name="pu30_ord_hdr.vat_tot" noEntry="true" posX="35" posY="3" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="VAT Total" widget="Edit">
@@ -181,7 +181,7 @@
           <Edit colName="created_by" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="pu30_ord_hdr.created_by" posX="14" posY="4" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Created By" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Label gridHeight="1" gridWidth="6" name="pu30_ord_hdr_net_tot_label1" posX="28" posY="4" text="Net Total">
+          <Label gridHeight="1" gridWidth="8" name="pu30_ord_hdr_net_tot_label1" posX="26" posY="4" text="Net Total">
             <Initializer text="dbschema:pu30_ord_hdr.net_tot/@label"/>
           </Label>
           <Edit colName="net_tot" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" justify="right" name="pu30_ord_hdr.net_tot" noEntry="true" posX="35" posY="4" scroll="true" sqlTabName="pu30_ord_hdr" tabIndex="-1" title="Net Total" widget="Edit">
@@ -194,9 +194,9 @@
           <Phantom colName="id" fieldId="46" fieldType="TABLE_COLUMN" name="pu30_ord_det.id" sqlTabName="pu30_ord_det" widget="Phantom"/>
           <Phantom colName="hdr_id" fieldId="45" fieldType="TABLE_COLUMN" name="pu30_ord_det.hdr_id" sqlTabName="pu30_ord_det" widget="Phantom"/>
           <Phantom colName="line_no" fieldId="48" fieldType="TABLE_COLUMN" name="pu30_ord_det.line_no" sqlTabName="pu30_ord_det" widget="Phantom"/>
-          <ButtonEdit action="stock_lookup" colName="stock_id" fieldId="20" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" image="zoom" name="pu30_ord_det.stock_id" posX="0" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Stock ID" widget="ButtonEdit">
+          <Edit colName="stock_id" fieldId="20" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="pu30_ord_det.stock_id" posX="0" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Stock ID" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </ButtonEdit>
+          </Edit>
           <Edit colName="item_name" fieldId="21" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="18" name="pu30_ord_det.item_name" noEntry="true" posX="9" posY="0" scroll="true" sqlTabName="pu30_ord_det" tabIndex="-1" title="Item Name" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
@@ -241,6 +241,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM2gAAE9AMMzNB5mZ+j+lgQYk3S8fAQAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZszZmjtAMMzNCpmaAj+keuFHrhR/AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBkADEAYQBiADYAOABmADkALQBiAGQANgBiAC0ANAA3ADMAZAAtAGIAMwBkAGEALQBhAGMANAA2AGQAZQAzAGMANQBiADEAZAB9QGCzM2wszSlAMMzNC8zNPD+lgQYk3S8fAQAAAEwAewBmAGUAMQAyADgAMABjADcALQAxADAAMgA4AC0ANAA1ADcAOAAtAGIAMAAwAGIALQAzAGQAOQA0ADIAZgA0AGQAYwBmADkAZAB9QH5mZtRzM+5AMMzNDszNRD+keuFHrhR/AQ==]]>
   </DiagramLayout>
 </ManagedForm>

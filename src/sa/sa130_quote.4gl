@@ -52,7 +52,7 @@ FUNCTION init_qt_module()
         END INPUT
 
         -- Add a dummy display array to keep dialog alive
-        DISPLAY ARRAY m_qt_lines_arr TO arr_sa_qt_lines.*
+        DISPLAY ARRAY m_qt_lines_arr TO tbl_sa_lines.*
         END DISPLAY
 
         ON ACTION find ATTRIBUTES(TEXT = "Find", IMAGE = "zoom")
@@ -221,7 +221,7 @@ FUNCTION new_qt_from_master(p_cust_id INTEGER)
         END INPUT
 
         -- Doc Lines Dialog
-        INPUT ARRAY m_qt_lines_arr FROM arr_sa_qt_lines.*
+        INPUT ARRAY m_qt_lines_arr FROM tbl_sa_lines.*
 
             ATTRIBUTES(INSERT ROW = TRUE, DELETE ROW = TRUE, APPEND ROW = TRUE)
             BEFORE INPUT
@@ -235,7 +235,7 @@ FUNCTION new_qt_from_master(p_cust_id INTEGER)
                 END IF
 
             BEFORE ROW
-                LET row_idx = DIALOG.getCurrentRow("arr_sa_qt_lines")
+                LET row_idx = DIALOG.getCurrentRow("tbl_sa_lines")
 
             BEFORE FIELD stock_id
                 IF NOT g_hdr_saved THEN
@@ -273,7 +273,7 @@ FUNCTION new_qt_from_master(p_cust_id INTEGER)
                 ATTRIBUTES(TEXT = "Stock Lookup",
                     IMAGE = "zoom",
                     DEFAULTVIEW = YES)
-                LET row_idx = DIALOG.getCurrentRow("arr_sa_qt_lines")
+                LET row_idx = DIALOG.getCurrentRow("tbl_sa_lines")
                 TRY
                     LET sel_code = st121_st_lkup.fetch_list()
                 CATCH
@@ -592,7 +592,7 @@ FUNCTION load_quote(p_id INTEGER)
     DISPLAY BY NAME m_qt_hdr_rec.*
 
     -- Show line details
-    DISPLAY ARRAY m_qt_lines_arr TO arr_sa_qt_lines.*
+    DISPLAY ARRAY m_qt_lines_arr TO tbl_sa_lines.*
 
     CLOSE WINDOW w_sa130
 

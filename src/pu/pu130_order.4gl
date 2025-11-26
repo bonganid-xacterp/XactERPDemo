@@ -45,6 +45,7 @@ FUNCTION init_po_module()
     CALL m_po_lines_arr.clear()
 
     DIALOG ATTRIBUTES(UNBUFFERED)
+        -- Header details
         INPUT BY NAME m_po_hdr_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
             BEFORE INPUT
                 -- Start in read-only mode with save disabled
@@ -124,7 +125,7 @@ FUNCTION init_po_module()
 END FUNCTION
 
 -- ==============================================================
--- 
+--
 -- ==============================================================
 FUNCTION run_po_dialog()
     DEFINE row_idx INTEGER
@@ -165,9 +166,9 @@ FUNCTION run_po_dialog()
                         m_po_hdr_rec.doc_no))
 
                 -- Move focus to lines array
-                NEXT FIELD stock_id
-                CONTINUE DIALOG
 
+                ON ACTION CANCEL
+                EXIT DIALOG 
         END INPUT
 
         -----------------------------------------------------------------
@@ -215,7 +216,7 @@ FUNCTION run_po_dialog()
                 -- ACTIONS on lines
                 -----------------------------------------------------------------
             ON ACTION row_select
-                ATTRIBUTES(TEXT = "Add Line", IMAGE = "add", DEFAULTVIEW = YES)
+                ATTRIBUTES(TEXT = "Add Line", IMAGE = "plus", DEFAULTVIEW = YES)
                 LET row_idx = DIALOG.getCurrentRow("po_lines_arr")
                 CALL populate_line_from_lookup(row_idx)
                 CONTINUE DIALOG
@@ -396,27 +397,11 @@ FUNCTION new_po_from_master(p_supp_id INTEGER)
     CLOSE WINDOW w_pu130
 END FUNCTION
 
---====================================================
--- Load Creditor record
---====================================================
-FUNCTION lookup_creditors()
-    DEFINE l_supp_id INTEGER
-
-    TRY
-        LET l_supp_id = utils_global_lkup.display_lookup('creditors')
-    CATCH
-        CALL utils_globals.show_error("Creditor lookup failed: " || STATUS)
-        RETURN
-    END TRY
-
-    CALL new_po_from_master(l_supp_id)
-
-END FUNCTION
-
 -- ==============================================================
 -- Create new po from stock item
 -- ==============================================================
 FUNCTION new_po_from_stock(p_stock_id INTEGER)
+
     DEFINE l_supp_id INTEGER
     DEFINE l_stock_id INTEGER
     DEFINE row_idx INTEGER
@@ -663,6 +648,23 @@ FUNCTION new_po_from_stock(p_stock_id INTEGER)
     END DIALOG
 
     CLOSE WINDOW w_pu130
+END FUNCTION
+
+--====================================================
+-- Load Creditor record
+--====================================================
+FUNCTION lookup_creditors()
+    DEFINE l_supp_id INTEGER
+
+    TRY
+        LET l_supp_id = utils_global_lkup.display_lookup('creditors')
+    CATCH
+        CALL utils_globals.show_error("Creditor lookup failed: " || STATUS)
+        RETURN
+    END TRY
+
+    CALL new_po_from_master(l_supp_id)
+
 END FUNCTION
 
 -- ==============================================================
@@ -920,61 +922,14 @@ END FUNCTION
 -- Load by id
 -- ==============================================================
 FUNCTION load_po(p_id INTEGER)
-DEFINE l_converted SMALLINT
 
- CALL utils_globals.set_form_label('lbl_form_title', 'EDIT CREDITOR' || '#' || m_po_hdr_rec.id)
+    DEFINE l_converted SMALLINT
 
-     -- Load header
---    TRY
---        SELECT * INTO m_po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_id
---
---        IF SQLCA.SQLCODE != 0 THEN
---            CALL utils_globals.show_error("PO header not found.")
---            RETURN
---        END IF
---    CATCH
---        CALL utils_globals.show_sql_error("load_po: PO header query failed")
---        RETURN
---    END TRY
---
---  OPEN WINDOW w_pu130 WITH FORM "pu130_order"
---  
---    DIALOG ATTRIBUTES(UNBUFFERED)
---
---        INPUT BY NAME m_po_hdr_rec.*
---            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "creditors")
---
---            ON ACTION edit ATTRIBUTES(TEXT = "Edit PO", IMAGE = "pen")
---                --CALL show_amend_dialog()
---                EXIT DIALOG
---
---            ON ACTION convert_to_grn ATTRIBUTES(TEXT = "Gen GRN", IMAGE = "fa-copy")
---                LET l_converted =  pu131_grn.converted_po_into_grn(m_po_hdr_rec.id)
---                EXIT DIALOG
---
---            ON ACTION cancel
---                EXIT DIALOG
---
---            AFTER FIELD supp_name
---                IF m_po_hdr_rec.supp_name IS NULL
---                    OR m_po_hdr_rec.supp_name = "" THEN
---                    CALL utils_globals.show_error("creditor Name is required.")
---                    NEXT FIELD supp_name
---                END IF
---        END INPUT
---
---    -- Show line details
---    DISPLAY ARRAY m_po_lines_arr TO po_lines_arr.*
---    END DISPLAY 
---
---    END DIALOG
+        --Load header
 
-    INITIALIZE m_po_hdr_rec.* TO NULL
-    CALL m_po_lines_arr.clear()
-
-    -- Load header
     TRY
         SELECT * INTO m_po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_id
+        
 
         IF SQLCA.SQLCODE != 0 THEN
             CALL utils_globals.show_error("PO header not found.")
@@ -985,30 +940,58 @@ DEFINE l_converted SMALLINT
         RETURN
     END TRY
 
-    -- Load lines
-    TRY
-        DECLARE supp_curs CURSOR FOR
-            SELECT * FROM pu30_ord_det WHERE hdr_id = p_id ORDER BY id
+    
+    -- Load PO lines
+    LET curr_idx = 1
 
-        FOREACH supp_curs INTO m_po_lines_arr[m_po_lines_arr.getLength() + 1].*
+    TRY
+        DECLARE order_curs CURSOR FOR
+            SELECT * FROM pu30_ord_det WHERE hdr_id = p_id ORDER BY id DESC
+
+        FOREACH order_curs INTO m_po_lines_arr[curr_idx].*
+            LET curr_idx = curr_idx + 1
         END FOREACH
 
-        CLOSE supp_curs
-        FREE supp_curs
+        CLOSE order_curs
+        FREE order_curs
     CATCH
         CALL utils_globals.show_sql_error("load_po: PO lines query failed")
         RETURN
     END TRY
 
-    OPEN WINDOW w_pu130 WITH FORM "pu130_order"
-    
-    -- Show header fields
-    DISPLAY BY NAME m_po_hdr_rec.*
+  OPEN WINDOW w_pu130 WITH FORM "pu130_order"
+    ATTRIBUTES(STYLE="child")
+
+    DIALOG ATTRIBUTES(UNBUFFERED)
+
+        INPUT BY NAME m_po_hdr_rec.*
+            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "creditors")
+
+            ON ACTION edit ATTRIBUTES(TEXT = "Edit PO", IMAGE = "pen")
+                --CALL show_amend_dialog()
+                EXIT DIALOG
+
+            ON ACTION convert_to_grn ATTRIBUTES(TEXT = "Gen GRN", IMAGE = "fa-copy")
+                LET l_converted =  pu131_grn.converted_po_into_grn(m_po_hdr_rec.id)
+                EXIT DIALOG
+
+            ON ACTION cancel
+                EXIT DIALOG
+
+            AFTER FIELD supp_name
+                IF m_po_hdr_rec.supp_name IS NULL
+                    OR m_po_hdr_rec.supp_name = "" THEN
+                    CALL utils_globals.show_error("creditor Name is required.")
+                    NEXT FIELD supp_name
+                END IF
+        END INPUT
 
     -- Show line details
     DISPLAY ARRAY m_po_lines_arr TO po_lines_arr.*
---
-    CLOSE WINDOW w_pu130
+    END DISPLAY
+
+    END DIALOG
+
 
 END FUNCTION
 
@@ -1018,13 +1001,18 @@ END FUNCTION
 FUNCTION find_po()
     DEFINE selected_code STRING
     TRY
-    LET selected_code = utils_global_lkup.display_lookup('pu_ord')
+        LET selected_code = utils_global_lkup.display_lookup('pu_ord')
 
-    IF selected_code IS NULL OR selected_code.getLength() = 0 THEN
-        RETURN
-    END IF
+        IF selected_code IS NULL OR selected_code.getLength() = 0 THEN
+            RETURN
+        END IF
     CATCH
-        CALL utils_globals.show_sql_error('An error occurred retriving data : ' || SQLERRMESSAGE ||  ' [ ' || SQLSTATE || ' ]')
+        CALL utils_globals.show_sql_error(
+            'An error occurred retriving data : '
+                || SQLERRMESSAGE
+                || ' [ '
+                || SQLSTATE
+                || ' ]')
     END TRY
     CALL load_po(selected_code)
 END FUNCTION

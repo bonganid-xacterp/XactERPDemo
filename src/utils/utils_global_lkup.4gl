@@ -91,9 +91,7 @@ PUBLIC FUNCTION display_lookup(p_lookup_code STRING) RETURNS STRING
 
     TRY
         -- Open lookup form -----------------------------------------
-        OPEN WINDOW wlk
-            WITH
-            FORM "utils_global_lkup"
+        OPEN WINDOW wlk WITH FORM "utils_global_lkup"
             ATTRIBUTES(TYPE = POPUP, STYLE = "dialog")
 
         CALL utils_globals.set_form_label(
@@ -136,68 +134,60 @@ PUBLIC FUNCTION display_lookup(p_lookup_code STRING) RETURNS STRING
                         "Error filtering lookup data")
                     LET f_search = ""
                 END TRY
-
-            ON ACTION FETCH ATTRIBUTES(TEXT = "Reset Search", IMAGE = "refresh")
-                TRY
-                    LET f_search = ""
-                    CALL load_lookup_data(base_sql, arr_results, f_search)
-                    MESSAGE "Search cleared - showing all records"
-                CATCH
-                    CALL utils_globals.show_sql_error("Error resetting search")
-                END TRY
-
-            ON ACTION ACCEPT
-            ON KEY(RETURN)
-                TRY
-                    LET idx = arr_curr()
-                    IF idx > 0 THEN
-                        LET ret_val = arr_results[idx].lbl_c1
-                        EXIT DIALOG
-                    END IF
-                CATCH
-                    CALL utils_globals.show_error(
-                        "Error retrieving selected value")
-                    LET ret_val = NULL
-                END TRY
-
-            ON ACTION cancel
-                LET ret_val = NULL
-                EXIT DIALOG
-
         END INPUT
 
         -- Results table -----------------------------------------
         DISPLAY ARRAY arr_results
             TO tbl_lookup_list.*
-            ATTRIBUTES(DOUBLECLICK = ACCEPT)
-
-            ON ACTION ACCEPT
-                TRY
-                    LET idx = arr_curr()
-                    IF idx > 0 THEN
-                        LET ret_val = arr_results[idx].lbl_c1
-                        EXIT DIALOG
-                    END IF
-                CATCH
-                    CALL utils_globals.show_error(
-                        "Error retrieving selected value")
-                    LET ret_val = NULL
-                END TRY
-
-            ON ACTION FETCH ATTRIBUTES(TEXT = "Reset Search", IMAGE = "refresh")
-                TRY
-                    LET f_search = ""
-                    CALL load_lookup_data(base_sql, arr_results, f_search)
-                    MESSAGE "Search cleared - showing all records"
-                CATCH
-                    CALL utils_globals.show_sql_error("Error resetting search")
-                END TRY
-
-            ON ACTION cancel
-                LET ret_val = NULL
-                EXIT DIALOG
-
+            ATTRIBUTES(DOUBLECLICK = accept_row)
         END DISPLAY
+
+        -- Global actions
+
+        ON ACTION ACCEPT
+            TRY
+                LET idx = arr_curr()
+                IF idx > 0 THEN
+                    LET ret_val = arr_results[idx].lbl_c1
+                    EXIT DIALOG
+                END IF
+            CATCH
+                CALL utils_globals.show_error("Error retrieving selected value")
+                LET ret_val = NULL
+            END TRY
+
+        ON ACTION FETCH ATTRIBUTES(TEXT = "Clear Search", IMAGE = "refresh")
+            TRY
+                LET f_search = ""
+                CALL load_lookup_data(base_sql, arr_results, f_search)
+                MESSAGE "Search cleared - showing all records"
+            CATCH
+                CALL utils_globals.show_sql_error("Error resetting search")
+            END TRY
+
+        ON ACTION accept_row
+            TRY
+                LET idx = arr_curr()
+                IF idx > 0 THEN
+                    LET ret_val = arr_results[idx].lbl_c1
+                    EXIT DIALOG
+                END IF
+            CATCH
+                CALL utils_globals.show_error("Error retrieving selected value")
+                LET ret_val = NULL
+            END TRY
+
+        ON KEY(RETURN)
+            TRY
+                CALL load_lookup_data(base_sql, arr_results, f_search)
+            CATCH
+                CALL utils_globals.msg_no_record()
+                LET f_search = NULL
+            END TRY
+
+        ON ACTION cancel
+            LET ret_val = NULL
+            EXIT DIALOG
 
     END DIALOG
 

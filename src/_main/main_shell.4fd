@@ -4,7 +4,7 @@
     <DynamicProperties version="2"/>
   </AGSettings>
   <Form gridHeight="30" gridWidth="100" name="main_shell" spacing="normal" text="XACT ERP System">
-    <Grid gridHeight="30" gridWidth="100" name="main_container" posX="0" posY="0"/>
+    <Grid gridHeight="30" gridWidth="100" name="main_shell" posX="0" posY="0"/>
   </Form>
   <DiagramLayout>
     <![CDATA[AAAAAg==]]>

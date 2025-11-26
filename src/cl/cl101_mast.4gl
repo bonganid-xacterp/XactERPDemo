@@ -32,59 +32,80 @@ DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
 
 -- ==============================================================
--- MAIN
--- ==============================================================
---MAIN
---
---    IF NOT utils_globals.initialize_application() THEN
---        DISPLAY "Initialization failed."
---        EXIT PROGRAM 1
---    END IF
---
---    OPTIONS INPUT WRAP
---
---    IF utils_globals.is_standalone() THEN
---        OPEN WINDOW w_cl101
---            WITH
---            FORM "cl101_mast" -- ATTRIBUTES(STYLE = "normal")
---    ELSE
---        OPEN WINDOW w_cl101 WITH FORM "cl101_mast" ATTRIBUTES(STYLE = "child")
---    END IF
---
---    CALL init_cl_module()
---
---    IF utils_globals.is_standalone() THEN
---        CLOSE WINDOW w_cl101
---    END IF
---END MAIN
-
--- ==============================================================
 -- Program init
 -- ==============================================================
 FUNCTION init_cl_module()
     DEFINE chosen_row SMALLINT
-    
+
     LET is_edit_mode = FALSE
-    
+
     INITIALIZE m_cred_rec.* TO NULL
-    
+
     DISPLAY BY NAME m_cred_rec.*
+    
     DISPLAY ARRAY m_cred_trans_arr TO m_cred_trans_arr.*
+    
         ATTRIBUTES(UNBUFFERED, DOUBLECLICK = row_select)
+        
         BEFORE DISPLAY
             CALL DIALOG.setActionHidden("accept", TRUE)
             CALL DIALOG.setActionHidden("cancel", TRUE)
             CALL DIALOG.setActionHidden("row_select", TRUE)
-        ON ACTION Find       CALL query_creditors(); LET is_edit_mode = FALSE
-        ON ACTION New        ATTRIBUTES(TEXT = "New", IMAGE = "new") CALL new_creditor();   LET is_edit_mode = FALSE
-        ON ACTION row_select LET chosen_row = DIALOG.getCurrentRow("m_cred_trans_arr"); IF chosen_row > 0 THEN CALL open_transaction_window(m_cred_trans_arr[chosen_row].doc_no, m_cred_trans_arr[chosen_row].doc_type) END IF
-        ON ACTION List       ATTRIBUTES(TEXT = "Refresh Records", IMAGE = "refresh") CALL load_all_creditors(); LET is_edit_mode = FALSE
-        ON ACTION Edit       ATTRIBUTES(TEXT = "Edit", IMAGE = "pen") IF m_cred_rec.id IS NULL OR m_cred_rec.id = 0 THEN CALL utils_globals.show_info("No record selected to edit.") ELSE LET is_edit_mode = TRUE; CALL utils_globals.set_form_label('lbl_form_title', 'CREDITORS MAINTENANCE'); CALL edit_creditor() END IF
-        ON ACTION DELETE     ATTRIBUTES(TEXT = "Delete", IMAGE = "fa-trash") CALL delete_creditor(); LET is_edit_mode = FALSE
-        ON ACTION PREVIOUS   CALL move_record(-1)
-        ON ACTION Next       CALL move_record(1)
-        ON ACTION add_order  ATTRIBUTES(TEXT = "Add P/Order", IMAGE = "new") IF m_cred_rec.id THEN CALL pu130_order.new_po_from_master(m_cred_rec.id) ELSE CALL utils_globals.show_warning('Choose a creditor record first.') END IF
-        ON ACTION EXIT       ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close") EXIT DISPLAY
+
+         ON ACTION row_select
+            LET chosen_row = DIALOG.getCurrentRow("m_cred_trans_arr");
+            IF chosen_row > 0 THEN
+                CALL open_transaction_window(
+                    m_cred_trans_arr[chosen_row].doc_no,
+                    m_cred_trans_arr[chosen_row].doc_type)
+            END IF
+            
+        ON ACTION Find
+            CALL query_creditors();
+            LET is_edit_mode = FALSE
+            
+        ON ACTION New ATTRIBUTES(TEXT = "New", IMAGE = "new")
+            CALL new_creditor();
+            LET is_edit_mode = FALSE
+            
+       
+            
+        ON ACTION List ATTRIBUTES(TEXT = "Refresh Records", IMAGE = "refresh")
+            CALL load_all_creditors();
+            LET is_edit_mode = FALSE
+            
+        ON ACTION Edit ATTRIBUTES(TEXT = "Edit", IMAGE = "pen")
+            IF m_cred_rec.id IS NULL OR m_cred_rec.id = 0 THEN
+                CALL utils_globals.show_info("No record selected to edit.")
+            ELSE
+                LET is_edit_mode = TRUE;
+                CALL utils_globals.set_form_label(
+                    'lbl_form_title', 'CREDITORS MAINTENANCE');
+                CALL edit_creditor()
+            END IF
+            
+        ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "fa-trash")
+            CALL delete_creditor();
+            LET is_edit_mode = FALSE
+            
+        ON ACTION PREVIOUS
+            CALL move_record(-1)
+            
+        ON ACTION Next
+            CALL move_record(1)
+            
+        ON ACTION add_order ATTRIBUTES(TEXT = "Add P/Order", IMAGE = "new")
+            IF m_cred_rec.id THEN
+                CALL pu130_order.new_po_from_master(m_cred_rec.id)
+            ELSE
+                CALL utils_globals.show_warning(
+                    'Choose a creditor record first.')
+            END IF
+            
+        ON ACTION EXIT 
+            ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close")
+            EXIT DISPLAY
+            
     END DISPLAY
 END FUNCTION
 
@@ -210,7 +231,7 @@ FUNCTION new_creditor()
             ON ACTION cancel ATTRIBUTES(TEXT = "Cancel", IMAGE = "cancel")
                 LET new_acc_code = NULL
                 CALL utils_globals.show_info("Creation cancelled.")
-                EXIT PROGRAM 
+                EXIT PROGRAM
         END INPUT
     END DIALOG
 
@@ -400,7 +421,8 @@ END FUNCTION
 -- ==============================================================
 FUNCTION edit_creditor()
 
-    CALL utils_globals.set_form_label('lbl_form_title', 'EDIT CREDITOR' || '#' || m_cred_rec.id)
+    CALL utils_globals.set_form_label(
+        'lbl_form_title', 'EDIT CREDITOR' || '#' || m_cred_rec.id)
 
     DIALOG ATTRIBUTES(UNBUFFERED)
         INPUT BY NAME m_cred_rec.*
@@ -477,13 +499,13 @@ FUNCTION load_creditor_transactions(p_supp_id INTEGER)
     CALL m_cred_trans_arr.clear()
 
     DECLARE cred_trans_curs CURSOR FOR
-        SELECT * FROM cl30_trans
+        SELECT *
+            FROM cl30_trans
             WHERE supp_id = p_supp_id
             ORDER BY trans_date DESC, doc_no DESC
 
     LET idx = 1
-    FOREACH cred_trans_curs
-        INTO m_cred_trans_arr[idx].*
+    FOREACH cred_trans_curs INTO m_cred_trans_arr[idx].*
         LET idx = idx + 1
     END FOREACH
 

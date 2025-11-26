@@ -34,6 +34,9 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS STRING
     IF formname IS NULL OR formname.getLength() = 0 THEN
         RETURN NULL
     END IF
+    
+    -- Build a unique window name
+    LET winname = WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
 
     -- If already open, just bring to front and return NULL
     FOR i = 1 TO m_open_modules.getLength()
@@ -42,9 +45,6 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS STRING
             RETURN NULL
         END IF
     END FOR
-
-    -- Build a unique window name
-    LET winname = WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
 
     TRY
         CALL ui.Interface.setName(winname)
