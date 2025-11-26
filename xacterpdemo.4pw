@@ -199,6 +199,7 @@
         <File filePath="src/utils/utils_doc_totals.4gl"/>
         <File filePath="src/utils/utils_docs_lkup_form.4fd"/>
         <File filePath="src/utils/utils_enq.4gl"/>
+        <File filePath="src/utils/utils_global_doc_engine.4gl"/>
         <File filePath="src/utils/utils_global_journal_updater.4gl"/>
         <File filePath="src/utils/utils_global_lkup.4fd"/>
         <File filePath="src/utils/utils_global_lkup.4gl"/>

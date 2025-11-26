@@ -41,12 +41,13 @@
     <Document container="true" filePath="src/sy/sy150_lkup_config.4fd" locator="" module="mod-fd"/>
     <Document container="true" filePath="src/pu/pu_lkup_form.4fd" locator="" module="mod-fd"/>
     <Document container="true" filePath="src/utils/utils_line_det_lkup.4fd" locator="" module="mod-fd"/>
-    <Document container="true" filePath="src/utils/utils_line_det_lkup.4gl" locator="47:29" module="mod-ce3">
+    <Document container="true" filePath="src/pu/pu130_order.4gl" locator="45:32" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
-    <Document container="true" filePath="src/pu/pu130_order.4gl" locator="1014:51" module="mod-ce3">
+    <Document container="true" filePath="src/pu/pu130_order.4fd" locator="" module="mod-fd"/>
+    <Document container="true" filePath="src/utils/utils_global_lkup.4gl" locator="1:1:6:65" module="mod-ce3">
       <Data name="8" value="CP1252"/>
     </Document>
   </OpenDocuments>
-  <CurrentDocument filePath="src/cl/cl101_mast.4gl" module="mod-ce3"/>
+  <CurrentDocument filePath="src/pu/pu130_order.4gl" module="mod-ce3"/>
 </WorkspaceViewState>

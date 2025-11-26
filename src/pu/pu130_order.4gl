@@ -167,8 +167,8 @@ FUNCTION run_po_dialog()
 
                 -- Move focus to lines array
 
-                ON ACTION CANCEL
-                EXIT DIALOG 
+            ON ACTION CANCEL
+                EXIT DIALOG
         END INPUT
 
         -----------------------------------------------------------------
@@ -488,6 +488,12 @@ FUNCTION new_po_from_stock(p_stock_id INTEGER)
                         "Please use 'Amend Order' to edit.")
                     CONTINUE DIALOG
                 END IF
+                -- save header info
+                LET g_hdr_saved = save_po_header()
+
+                ON ACTION EXIT 
+                    CALL utils_globals.show_info('Operation Cancelled')
+                    EXIT DIALOG
 
                 IF NOT validate_po_header() THEN
                     CALL utils_globals.show_error("Please fix required fields.")
@@ -924,12 +930,11 @@ END FUNCTION
 FUNCTION load_po(p_id INTEGER)
 
     DEFINE l_converted SMALLINT
-
-        --Load header
+    DEFINE l_amend_choice STRING
+    --Load header
 
     TRY
         SELECT * INTO m_po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_id
-        
 
         IF SQLCA.SQLCODE != 0 THEN
             CALL utils_globals.show_error("PO header not found.")
@@ -940,7 +945,6 @@ FUNCTION load_po(p_id INTEGER)
         RETURN
     END TRY
 
-    
     -- Load PO lines
     LET curr_idx = 1
 
@@ -959,20 +963,54 @@ FUNCTION load_po(p_id INTEGER)
         RETURN
     END TRY
 
-  OPEN WINDOW w_pu130 WITH FORM "pu130_order"
-    ATTRIBUTES(STYLE="child")
+    OPEN WINDOW w_pu130
+        WITH
+        FORM "pu130_order"
+        ATTRIBUTES(STYLE = "child", NORMAL)
 
     DIALOG ATTRIBUTES(UNBUFFERED)
 
         INPUT BY NAME m_po_hdr_rec.*
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "creditors")
+            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "purchase_order")
 
-            ON ACTION edit ATTRIBUTES(TEXT = "Edit PO", IMAGE = "pen")
-                --CALL show_amend_dialog()
-                EXIT DIALOG
+            BEFORE INPUT
+            
+                IF m_po_hdr_rec.status = "posted" THEN
+                    CALL DIALOG.setActionActive('edit', FALSE)
+                END IF
+                
+                IF  m_po_hdr_rec.status = "draft" THEN
+                     CALL DIALOG.setActionActive('convert_to_grn', FALSE)
+                END IF
+                
+            -- Amend a PO if the  status is not posted
+            ON ACTION edit ATTRIBUTES(TEXT = "Amend P/O", IMAGE = "pen")
+                LET l_amend_choice = show_amend_dialog()
 
-            ON ACTION convert_to_grn ATTRIBUTES(TEXT = "Gen GRN", IMAGE = "fa-copy")
-                LET l_converted =  pu131_grn.converted_po_into_grn(m_po_hdr_rec.id)
+                -- Load this action  when viewing a saved PO
+                CASE l_amend_choice
+                    WHEN "HEADER"
+                        -- Close current window and reopen in edit mode
+                        CLOSE WINDOW w_pu130
+                        CALL edit_po_header(m_po_hdr_rec.id)
+                        EXIT DIALOG
+
+                    WHEN "LINES"
+                        -- Close current window and open lines editing
+                        CLOSE WINDOW w_pu130
+                        CALL edit_po_lines(m_po_hdr_rec.id)
+                        EXIT DIALOG
+
+                    WHEN "CANCEL"
+                        -- Do nothing, dialog remains open
+                        CALL utils_globals.show_info("Amend cancelled.")
+                        CONTINUE DIALOG
+                END CASE
+
+            ON ACTION convert_to_grn
+                ATTRIBUTES(TEXT = "Gen GRN", IMAGE = "fa-copy")
+                LET l_converted =
+                    pu131_grn.converted_po_into_grn(m_po_hdr_rec.id)
                 EXIT DIALOG
 
             ON ACTION cancel
@@ -986,13 +1024,183 @@ FUNCTION load_po(p_id INTEGER)
                 END IF
         END INPUT
 
-    -- Show line details
-    DISPLAY ARRAY m_po_lines_arr TO po_lines_arr.*
-    END DISPLAY
+        -- Show line details
+        DISPLAY ARRAY m_po_lines_arr TO po_lines_arr.*
+        END DISPLAY
 
     END DIALOG
 
+END FUNCTION
 
+-- ==============================================================
+-- Edit PO Header
+-- ==============================================================
+FUNCTION edit_po_header(p_po_id INTEGER)
+    -- Reload the PO data
+    TRY
+        SELECT * INTO m_po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_po_id
+
+        IF SQLCA.SQLCODE != 0 THEN
+            CALL utils_globals.show_error("PO header not found.")
+            RETURN
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error(
+            "edit_po_header: PO header query failed")
+        RETURN
+    END TRY
+
+    -- Open window for editing header
+    OPEN WINDOW w_pu130_edit
+        WITH
+        FORM "pu130_order"
+        ATTRIBUTES(STYLE = "dialog")
+
+    DISPLAY BY NAME m_po_hdr_rec.*
+
+    INPUT BY NAME m_po_hdr_rec.* ATTRIBUTES(WITHOUT DEFAULTS, UNBUFFERED)
+
+        BEFORE INPUT
+            MESSAGE "Edit header details. Press OK to save, Cancel to discard."
+
+        ON ACTION ACCEPT
+            -- Validate header
+            IF NOT validate_po_header() THEN
+                CALL utils_globals.show_error("Please fix required fields.")
+                CONTINUE INPUT
+            END IF
+
+            -- Save header
+            IF save_po_header() THEN
+                CALL utils_globals.show_info("Header updated successfully.")
+                EXIT INPUT
+            ELSE
+                CALL utils_globals.show_error("Save failed.")
+                CONTINUE INPUT
+            END IF
+
+        ON ACTION cancel
+            CALL utils_globals.show_info("Edit cancelled.")
+            EXIT INPUT
+    END INPUT
+
+    CLOSE WINDOW w_pu130_edit
+
+    -- Reload the PO in read-only mode
+    CALL load_po(p_po_id)
+END FUNCTION
+
+-- ==============================================================
+-- Edit PO Lines
+-- ==============================================================
+FUNCTION edit_po_lines(p_po_id INTEGER)
+    DEFINE row_idx INTEGER
+
+    -- Reload the PO data
+    TRY
+        SELECT * INTO m_po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_po_id
+
+        IF SQLCA.SQLCODE != 0 THEN
+            CALL utils_globals.show_error("PO header not found.")
+            RETURN
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error(
+            "edit_po_lines: PO header query failed")
+        RETURN
+    END TRY
+
+    -- Load PO lines
+    TRY
+        CALL m_po_lines_arr.clear()
+        LET row_idx = 1
+
+        DECLARE edit_lines_cur CURSOR FOR
+            SELECT * FROM pu30_ord_det WHERE hdr_id = p_po_id ORDER BY line_no
+
+        FOREACH edit_lines_cur INTO m_po_lines_arr[row_idx].*
+            LET row_idx = row_idx + 1
+        END FOREACH
+
+        CLOSE edit_lines_cur
+        FREE edit_lines_cur
+    CATCH
+        CALL utils_globals.show_sql_error(
+            "edit_po_lines: PO lines query failed")
+        RETURN
+    END TRY
+
+    -- Open window for editing lines
+    OPEN WINDOW w_pu130_lines
+        WITH
+        FORM "pu130_order"
+        ATTRIBUTES(STYLE = "dialog")
+
+    DISPLAY BY NAME m_po_hdr_rec.*
+
+    INPUT ARRAY m_po_lines_arr
+        FROM po_lines_arr.*
+        ATTRIBUTES(INSERT ROW = TRUE,
+            DELETE ROW = TRUE,
+            APPEND ROW = TRUE,
+            UNBUFFERED)
+
+        BEFORE INPUT
+            MESSAGE "Edit order lines. Add, modify, or delete lines. Press Save to commit changes."
+
+        BEFORE ROW
+            LET row_idx = DIALOG.getCurrentRow("po_lines_arr")
+
+        BEFORE INSERT
+            LET m_po_lines_arr[row_idx].hdr_id = m_po_hdr_rec.id
+            LET m_po_lines_arr[row_idx].status = "active"
+            LET m_po_lines_arr[row_idx].created_at = TODAY
+            LET m_po_lines_arr[row_idx].created_by = m_po_hdr_rec.created_by
+
+        AFTER INSERT
+            CALL renumber_lines()
+
+        ON ACTION stock_lookup
+            ATTRIBUTES(TEXT = "Stock Lookup", IMAGE = "zoom", DEFAULTVIEW = YES)
+            LET row_idx = DIALOG.getCurrentRow("po_lines_arr")
+            CALL open_stock_lookup(row_idx)
+            CONTINUE INPUT
+
+        AFTER FIELD stock_id
+            IF row_idx > 0
+                AND row_idx <= m_po_lines_arr.getLength()
+                AND m_po_lines_arr[row_idx].stock_id IS NOT NULL THEN
+                CALL load_stock_details(row_idx)
+            END IF
+
+        AFTER FIELD qnty, unit_cost, disc_pct, vat_rate
+            IF row_idx > 0 AND row_idx <= m_po_lines_arr.getLength() THEN
+                CALL calculate_line_totals(row_idx)
+            END IF
+
+        AFTER DELETE
+            CALL renumber_lines()
+            CALL recalculate_header_totals()
+
+        ON ACTION ACCEPT
+            -- Save all lines
+            IF m_po_lines_arr.getLength() > 0 THEN
+                CALL save_po_lines()
+                CALL utils_globals.show_info("Lines saved successfully.")
+            ELSE
+                CALL utils_globals.show_info("No lines to save.")
+            END IF
+            EXIT INPUT
+
+        ON ACTION cancel
+            CALL utils_globals.show_info("Edit cancelled.")
+            EXIT INPUT
+    END INPUT
+
+    CLOSE WINDOW w_pu130_lines
+
+    -- Reload the PO in read-only mode
+    CALL load_po(p_po_id)
 END FUNCTION
 
 -- ==============================================================
