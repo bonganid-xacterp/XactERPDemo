@@ -5,7 +5,7 @@
   </AGSettings>
   <Record masterTable="wb01_mast1" name="st_uom_rec" uid="{8a09c035-5ceb-4556-9764-7ac6f2b70d86}">
     <RecordField colName="wb_code" fieldIdRef="11" fieldType="TABLE_ALIAS" name="wb01_mast1.wb_code" sqlTabName="wb01_mast" table_alias_name="wb01_mast1" uid="{de080e56-9c95-487d-9be9-04fd2da49a95}"/>
-    <RecordField colName="wh_id" fieldIdRef="12" fieldType="TABLE_ALIAS" name="wb01_mast1.wh_id" sqlTabName="wb01_mast" table_alias_name="wb01_mast1" uid="{36dd6d75-3d47-468f-a4e6-5009d1f83b40}"/>
+    <RecordField colName="wh_id" fieldIdRef="12" fieldType="TABLE_COLUMN" name="wb01_mast.wh_id" sqlTabName="wb01_mast" uid="{36dd6d75-3d47-468f-a4e6-5009d1f83b40}"/>
     <RecordField colName="description" fieldIdRef="13" fieldType="TABLE_ALIAS" name="wb01_mast1.description" sqlTabName="wb01_mast" table_alias_name="wb01_mast1" uid="{5fb1b099-5ee0-4603-8c02-d182495d240b}"/>
     <RecordField colName="status" fieldIdRef="14" fieldType="TABLE_ALIAS" name="wb01_mast1.status" sqlTabName="wb01_mast" table_alias_name="wb01_mast1" uid="{e24fd5a9-1a3f-4b1f-ae95-4fb3a76a100c}"/>
     <RecordField colName="id" fieldIdRef="5" fieldType="TABLE_COLUMN" name="wb01_mast.id" sqlTabName="wb01_mast" uid="{740f97d8-01c0-461a-a43a-e2eaf1f5a387}"/>
@@ -21,7 +21,7 @@
         <Label gridHeight="1" gridWidth="10" name="wb01_mast1_wh_id_label1" posX="1" posY="2" text="WH Code">
           <Initializer text="dbschema:wb01_mast.wh_id/@label"/>
         </Label>
-        <ButtonEdit colName="wh_id" fieldId="12" fieldType="TABLE_ALIAS" gridHeight="1" gridWidth="20" image="zoom" name="wb01_mast1.wh_id" posX="12" posY="2" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" table_alias_name="wb01_mast1" title="WH Code" widget="ButtonEdit">
+        <ButtonEdit colName="wh_id" fieldId="12" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" image="zoom" name="wb01_mast.wh_id" posX="12" posY="2" scroll="true" sqlTabName="wb01_mast" tabIndex="-1" title="WH Code" widget="ButtonEdit">
           <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
         </ButtonEdit>
         <Label gridHeight="1" gridWidth="11" name="wb01_mast1_wb_code_label1" posX="38" posY="2" text="Bin Code">
@@ -51,6 +51,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA4AGEAMAA5AGMAMAAzADUALQA1AGMAZQBiAC0ANAA1ADUANgAtADkANwA2ADQALQA3AGEAYwA2AGYAMgBiADcAMABkADgANgB9QCAAAAQAAABAIAAABAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewA4AGEAMAA5AGMAMAAzADUALQA1AGMAZQBiAC0ANAA1ADUANgAtADkANwA2ADQALQA3AGEAYwA2AGYAMgBiADcAMABkADgANgB9QCAAAAgAAAFAIAAACAAAAQAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

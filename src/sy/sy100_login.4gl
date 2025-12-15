@@ -102,8 +102,7 @@ FUNCTION login_user() RETURNS SMALLINT
         CALL log_error(
             "login_user",
             "Critical error: " || STATUS || " - " || SQLCA.SQLERRM)
-        CALL utils_globals.show_error(
-            "A critical error occurred. Please restart the application.")
+        -- Don't show error here - window may already be closed
         LET ok = FALSE
     END TRY
 
@@ -239,7 +238,7 @@ FUNCTION run_login_dialog() RETURNS(SMALLINT, STRING, STRING)
         CALL log_error(
             "run_login_dialog",
             "Dialog error: " || STATUS || " - " || SQLCA.SQLERRM)
-        CALL utils_globals.show_error("An error occurred in the login dialog.")
+        -- Don't show error here - window may not be available
         LET ok = FALSE
     END TRY
 
@@ -276,7 +275,8 @@ FUNCTION attempt_login(p_username STRING, p_password STRING) RETURNS SMALLINT
 
         -- Attempt validation
         TRY
-            LET l_success = validate_login(l_trimmed_user, l_trimmed_pass)
+            --LET l_success = validate_login(l_trimmed_user, l_trimmed_pass)
+            LET l_success = validate_login_demo(l_trimmed_user, l_trimmed_pass)
         CATCH
             CALL log_error(
                 "attempt_login",
@@ -337,9 +337,9 @@ FUNCTION validate_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
 
         -- Query user from database
         TRY
-            SELECT user_password, user_role, is_active
+            SELECT password, role_id, status
                 INTO l_db_password, l_db_role, l_is_active
-                FROM sys_users
+                FROM sy00_user
                 WHERE LOWER(username) = LOWER(p_user)
 
             -- Check if query returned results
@@ -366,7 +366,7 @@ FUNCTION validate_login(p_user STRING, p_pass STRING) RETURNS SMALLINT
         END TRY
 
         -- Check if account is active
-        IF l_is_active = 0 THEN
+        IF l_is_active = 'inactive' THEN
             CALL log_warning(
                 "validate_login", "Inactive account login attempt: " || p_user)
             ERROR "Account is disabled. Contact administrator."
@@ -440,8 +440,15 @@ END FUNCTION
 -- --------------------------------------------------------------
 FUNCTION confirm_exit_login() RETURNS SMALLINT
     DEFINE ans SMALLINT
+    DEFINE w ui.Window
 
     TRY
+        -- Check if there's a current window before showing dialog
+        LET w = ui.Window.getCurrent()
+        IF w IS NULL THEN
+            RETURN TRUE  -- No window, allow exit
+        END IF
+
         LET ans =
             utils_globals.show_confirm(
                 "Are you sure you want to exit login?", "Exit Login")

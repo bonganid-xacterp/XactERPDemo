@@ -69,8 +69,8 @@
           <Edit colName="vat_no" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" name="cl01_mast.vat_no" noEntry="false" posX="12" posY="2" repeat="false" sqlTabName="cl01_mast" tabIndex="0" title="edit1" widget="Edit"/>
           <Label gridHeight="1" gridWidth="10" name="lbl_dl_bal" posX="1" posY="3" text="Balance"/>
           <Edit colName="balance" fieldId="10" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" name="cl01_mast.balance" noEntry="true" posX="12" posY="3" repeat="false" sqlTabName="cl01_mast" tabIndex="0" title="edit1" widget="Edit"/>
-          <Label gridHeight="1" gridWidth="10" name="lbl_dl_bal2" posX="1" posY="5" text="Created By"/>
-          <Edit colName="created_by" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" name="cl01_mast.created_by" noEntry="true" posX="12" posY="5" sqlTabName="cl01_mast" tabIndex="-1" title="created_by" widget="Edit"/>
+          <Label gridHeight="1" gridWidth="10" name="lbl_dl_bal2" posX="1" posY="4" text="Created By"/>
+          <Edit colName="created_by" fieldId="14" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="13" name="cl01_mast.created_by" noEntry="true" posX="12" posY="4" sqlTabName="cl01_mast" tabIndex="-1" title="created_by" widget="Edit"/>
         </Group>
         <Phantom colName="id" fieldId="9" fieldType="TABLE_COLUMN" name="cl01_mast.id" sqlTabName="cl01_mast" widget="Phantom"/>
         <Phantom colName="created_at" fieldId="11" fieldType="TABLE_COLUMN" name="cl01_mast.created_at" sqlTabName="cl01_mast" widget="Phantom"/>
@@ -89,7 +89,7 @@
               <Edit colName="doc_no" fieldId="15" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.doc_no" posX="10" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc No" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="doc_type" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="cl30_trans.doc_type" posX="20" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc Tyoe" widget="Edit">
+              <Edit colName="doc_type" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="11" name="cl30_trans.doc_type" posX="20" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc Type" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
               <Edit colName="gross_tot" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="cl30_trans.gross_tot" posX="31" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Gross Total" widget="Edit">
@@ -101,7 +101,7 @@
               <Edit colName="vat_tot" fieldId="22" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="cl30_trans.vat_tot" posX="49" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="VAT" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
-              <Edit colName="net_tot" fieldId="24" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="cl30_trans.net_tot" posX="57" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Net Total" widget="Edit">
+              <Edit colName="net_tot" fieldId="24" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="cl30_trans.net_tot" posX="57" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Doc Net Total" widget="Edit">
                 <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
               </Edit>
               <Edit colName="notes" fieldId="26" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="16" name="cl30_trans.notes" posX="65" posY="0" scroll="true" sqlTabName="cl30_trans" tabIndex="-1" title="Notes" widget="Edit">
@@ -114,6 +114,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA3ADEANQBkADQAMwBlAGEALQBkAGMAMwAyAC0ANABiADEAMQAtAGEAYwBkADEALQA3ADQAOQBmAGIANQBiAGQAYQAzAGUAMwB9QDAAABgAAA9AMAAAGAAADz+crAgxJul+AQAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QG6ZmdIAAEZALmZnPAACvD+AYk3S8an8AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAyAGIANQA2ADQAYgBjADYALQBiADkAOQA3AC0ANAAzADIAZAAtADgAMQBlADUALQBjADAAMgAyADEAZAA1AGQAOQAzADkAMQB9QG6ZmdmmZrtALmZnQ5mcjD+AYk3S8an8AQAAAEwAewA3ADEANQBkADQAMwBlAGEALQBkAGMAMwAyAC0ANABiADEAMQAtAGEAYwBkADEALQA3ADQAOQBmAGIANQBiAGQAYQAzAGUAMwB9QDAAABwAABVAMAAAHAAAFT+crAgxJul+AQ==]]>
   </DiagramLayout>
 </ManagedForm>

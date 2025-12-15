@@ -66,10 +66,8 @@
   <PlatformList version="1.0"/>
   <Group environment="filelist:FGLPROFILE=$(ProjectDir)/.fglprofile" id="147973800" label="erpdemoapp" language="Genero">
     <Group environment="dir:FGLRESOURCEPATH=$(ProjectDir)/src/res,filelist:FGLPPROFILE=$(ProjectDir)/.fglprofile,dir:FGLDATABASE=$(ProjectDir)/database,file:Logo=$(ProjectDir)/src/res/logo.png" id="39840687" label="src">
-      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,409572948,396525034,782461791,960354642,221924664,31393700,757682379,276307902,39599040,95666062,206295008,45766396" id="221858380" label="_main">
-        <File filePath="src/_main/__main_shell.4fd"/>
+      <Application binaryName="_main" dependencies="31764552,497700,56784492,104908716,541201365,252410214,27202992,713572960,570478975,42429894,150687270,409572948,396525034,782461791,960354642,221924664,31393700,276307902,39599040,206295008,45766396,95666062,757682379" id="221858380" label="_main">
         <File filePath="src/_main/actions.4ad"/>
-        <File filePath="src/_main/main_app.4gl"/>
         <File filePath="src/_main/main_shell.4fd"/>
         <File filePath="src/_main/main_shell.4gl"/>
         <File filePath="src/_main/main_styles.4st"/>
@@ -164,8 +162,6 @@
         <File filePath="src/st/st103_uom_mast.4gl"/>
         <File filePath="src/st/st120_enq.4fd"/>
         <File filePath="src/st/st120_enq.4gl"/>
-        <File filePath="src/st/st121_lkup_form.4fd"/>
-        <File filePath="src/st/st121_lkup_form.4gl"/>
         <File filePath="src/st/st121_st_lkup.4fd"/>
         <File filePath="src/st/st121_st_lkup.4gl"/>
         <File filePath="src/st/st122_cat_lkup.4fd"/>
@@ -177,7 +173,6 @@
         <File filePath="src/st/st140_hist.4fd"/>
         <File filePath="src/st/st140_hist.4gl"/>
       </Application>
-      <Application binaryName="st101_mast" dependencies="31764552" id="128709180" label="st101_mast"/>
       <Application binaryName="sy" dependencies="497700,104908716,31764552,782461791,221924664" id="31393700" label="sy">
         <File filePath="src/sy/sy100_login.4fd"/>
         <File filePath="src/sy/sy100_login.4gl"/>
@@ -194,21 +189,26 @@
         <File filePath="src/sy/sy130_logs.4gl"/>
         <File filePath="src/sy/sy140_hist.4fd"/>
         <File filePath="src/sy/sy140_hist.4gl"/>
+        <File filePath="src/sy/sy150_config_tbl.4fd"/>
+        <File filePath="src/sy/sy150_config_tbl.4gl"/>
         <File filePath="src/sy/sy150_lkup_config.4fd"/>
         <File filePath="src/sy/sy150_lkup_config.4gl"/>
       </Application>
       <Library binaryName="utils" dependencies="782461791,31764552" id="497700" label="utils">
         <File filePath="src/utils/utils_db.4gl"/>
         <File filePath="src/utils/utils_doc_totals.4gl"/>
+        <File filePath="src/utils/utils_docs_lkup_form.4fd"/>
         <File filePath="src/utils/utils_enq.4gl"/>
-        <File filePath="src/utils/utils_global_lkup_form.4fd"/>
-        <File filePath="src/utils/utils_global_lkup_form.4gl"/>
-        <File filePath="src/utils/utils_global_record_load.4gl"/>
+        <File filePath="src/utils/utils_global_doc_engine.4gl"/>
+        <File filePath="src/utils/utils_global_journal_updater.4gl"/>
+        <File filePath="src/utils/utils_global_lkup.4fd"/>
+        <File filePath="src/utils/utils_global_lkup.4gl"/>
+        <File filePath="src/utils/utils_global_stock_updater.4gl"/>
         <File filePath="src/utils/utils_globals.4gl"/>
-        <File filePath="src/utils/utils_lkup.4gl"/>
+        <File filePath="src/utils/utils_line_det_lkup.4fd"/>
+        <File filePath="src/utils/utils_line_det_lkup.4gl"/>
         <File filePath="src/utils/utils_logger.4gl"/>
         <File filePath="src/utils/utils_mast_lkup_form.4fd"/>
-        <File filePath="src/utils/utils_sa_doc_lkup_form.4fd"/>
         <File filePath="src/utils/utils_sidemenu.4gl"/>
         <File filePath="src/utils/utils_status_const.4gl"/>
         <File filePath="src/utils/utils_windows.4gl"/>
@@ -219,10 +219,12 @@
         <File filePath="src/wb/wb102_lkup.4gl"/>
         <File filePath="src/st/wb121_lkup.4fd"/>
         <File filePath="src/st/wb121_lkup.4gl"/>
+        <File filePath="src/wb/wb130_trf.4fd"/>
+        <File filePath="src/wb/wb130_trf.4gl"/>
         <File filePath="src/wb/wb140_hist.4fd"/>
         <File filePath="src/wb/wb140_hist.4gl"/>
-        <File filePath="src/wb/wb30_hdr.4fd"/>
-        <File filePath="src/wb/wb30_hdr.4gl"/>
+        <File filePath="src/wb/wb30_trf_hdr.4fd"/>
+        <File filePath="src/wb/wb30_trf_hdr.4gl"/>
         <File filePath="src/wb/wb31_det.4fd"/>
         <File filePath="src/wb/wb31_det.4gl"/>
       </Application>
@@ -231,8 +233,8 @@
         <File filePath="src/wh/wh101_mast.4gl"/>
         <File filePath="src/wh/wh121_lkup.4fd"/>
         <File filePath="src/wh/wh121_lkup.4gl"/>
-        <File filePath="src/wh/wh130_trans.4fd"/>
-        <File filePath="src/wh/wh130_trans.4gl"/>
+        <File filePath="src/wh/wh130_trf.4fd"/>
+        <File filePath="src/wh/wh130_trf.4gl"/>
         <File filePath="src/wh/wh140_hist.4fd"/>
         <File filePath="src/wh/wh140_hist.4gl"/>
       </Application>

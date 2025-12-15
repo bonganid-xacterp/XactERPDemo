@@ -93,7 +93,7 @@ FUNCTION init_grn_module()
                 TRY
                     LET chosen_rec = lookup_posted_po()
                     IF chosen_rec IS NOT NULL THEN
-                        LET ok = load_po_into_grn(chosen_rec)
+                        LET ok = converted_po_into_grn(chosen_rec)
                         IF ok THEN
                             MESSAGE "PO loaded into GRN successfully."
                         ELSE
@@ -110,7 +110,7 @@ FUNCTION init_grn_module()
 
 
         -- LINE ARRAY
-        INPUT ARRAY m_grn_lines_arr FROM pu131_grn_trans.*
+        INPUT ARRAY m_grn_lines_arr FROM grn_lines_arr.*
             ATTRIBUTES(INSERT ROW=TRUE, DELETE ROW=TRUE, APPEND ROW=TRUE)
 
             BEFORE INPUT
@@ -131,9 +131,9 @@ FUNCTION init_grn_module()
 END FUNCTION
 
 
--- =======================
+-- ===============================================
 -- PO Lookup - Display posted POs
--- =======================
+-- ===============================================
 FUNCTION lookup_posted_po() RETURNS INTEGER
     DEFINE selected_po_id INTEGER
     DEFINE idx INTEGER
@@ -224,20 +224,24 @@ FUNCTION lookup_posted_po() RETURNS INTEGER
     RETURN selected_po_id
 END FUNCTION
 
--- =======================
--- Load PO data into GRN
--- =======================
-FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
-    DEFINE po_hdr_rec RECORD LIKE pu30_ord_hdr.*
-    DEFINE po_line_rec RECORD LIKE pu30_ord_det.*
+-- ==================================================
+-- Convert PO data into GRN
+-- ==================================================
+FUNCTION converted_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
+    DEFINE l_po_hdr_rec RECORD LIKE pu30_ord_hdr.*
+    DEFINE l_po_line_arr RECORD LIKE pu30_ord_det.*
     DEFINE i INTEGER
     DEFINE next_grn_doc INTEGER
+
+    -- Load creditor data and transaction info
+    SELECT * INTO l_po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_po_id
+    SELECT * INTO l_po_line_arr.* FROM pu30_ord_det WHERE hdr_id = p_po_id
 
     TRY
         SELECT COALESCE(MAX(id), 0) + 1 INTO next_grn_doc FROM pu31_grn_hdr
 
     -- Load PO header
-    SELECT * INTO po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_po_id
+    SELECT * INTO l_po_hdr_rec.* FROM pu30_ord_hdr WHERE id = p_po_id
 
     IF SQLCA.SQLCODE <> 0 THEN
         CALL utils_globals.show_error("Purchase Order not found.")
@@ -245,7 +249,7 @@ FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
     END IF
 
     -- Check if PO is posted
-    IF po_hdr_rec.status <> "posted" THEN
+    IF l_po_hdr_rec.status <> "posted" THEN
         CALL utils_globals.show_warning("Only posted POs can be receipted.")
         RETURN FALSE
     END IF
@@ -256,21 +260,21 @@ FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
     LET m_grn_hdr_rec.id = next_grn_doc
     LET m_grn_hdr_rec.doc_no = next_grn_doc
     LET m_grn_hdr_rec.ref_doc_type = "PO"
-    LET m_grn_hdr_rec.ref_doc_no = po_hdr_rec.doc_no
+    LET m_grn_hdr_rec.ref_doc_no = l_po_hdr_rec.doc_no
     LET m_grn_hdr_rec.trans_date = TODAY
-    LET m_grn_hdr_rec.supp_id = po_hdr_rec.supp_id
-    LET m_grn_hdr_rec.supp_name = po_hdr_rec.supp_name
-    LET m_grn_hdr_rec.supp_phone = po_hdr_rec.supp_phone
-    LET m_grn_hdr_rec.supp_email = po_hdr_rec.supp_email
-    LET m_grn_hdr_rec.supp_address1 = po_hdr_rec.supp_address1
-    LET m_grn_hdr_rec.supp_address2 = po_hdr_rec.supp_address2
-    LET m_grn_hdr_rec.supp_address3 = po_hdr_rec.supp_address3
-    LET m_grn_hdr_rec.supp_postal_code = po_hdr_rec.supp_postal_code
-    LET m_grn_hdr_rec.supp_vat_no = po_hdr_rec.supp_vat_no
-    LET m_grn_hdr_rec.supp_payment_terms = po_hdr_rec.supp_payment_terms
-    LET m_grn_hdr_rec.gross_tot = 0
-    LET m_grn_hdr_rec.vat_tot = 0
-    LET m_grn_hdr_rec.net_tot = 0
+    LET m_grn_hdr_rec.supp_id = l_po_hdr_rec.supp_id
+    LET m_grn_hdr_rec.supp_name = l_po_hdr_rec.supp_name
+    LET m_grn_hdr_rec.supp_phone = l_po_hdr_rec.supp_phone
+    LET m_grn_hdr_rec.supp_email = l_po_hdr_rec.supp_email
+    LET m_grn_hdr_rec.supp_address1 = l_po_hdr_rec.supp_address1
+    LET m_grn_hdr_rec.supp_address2 = l_po_hdr_rec.supp_address2
+    LET m_grn_hdr_rec.supp_address3 = l_po_hdr_rec.supp_address3
+    LET m_grn_hdr_rec.supp_postal_code = l_po_hdr_rec.supp_postal_code
+    LET m_grn_hdr_rec.supp_vat_no = l_po_hdr_rec.supp_vat_no
+    LET m_grn_hdr_rec.supp_payment_terms = l_po_hdr_rec.supp_payment_terms
+    LET m_grn_hdr_rec.gross_tot = l_po_hdr_rec.gross_tot
+    LET m_grn_hdr_rec.vat_tot = l_po_hdr_rec.vat_tot
+    LET m_grn_hdr_rec.net_tot = l_po_hdr_rec.net_tot
     LET m_grn_hdr_rec.status = "draft"
     LET m_grn_hdr_rec.created_at = CURRENT
     LET m_grn_hdr_rec.created_by = utils_globals.get_current_user_id()
@@ -285,26 +289,26 @@ FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
     DECLARE po_lines_curs CURSOR FOR
         SELECT * FROM pu30_ord_det WHERE hdr_id = p_po_id ORDER BY line_no
 
-    FOREACH po_lines_curs INTO po_line_rec.*
+    FOREACH po_lines_curs INTO l_po_line_arr.*
         LET i = i + 1
 
         -- Initialize GRN line from PO line
         INITIALIZE m_grn_lines_arr[i].* TO NULL
 
         LET m_grn_lines_arr[i].line_no = i
-        LET m_grn_lines_arr[i].stock_id = po_line_rec.stock_id
-        LET m_grn_lines_arr[i].item_name = po_line_rec.item_name
-        LET m_grn_lines_arr[i].uom = po_line_rec.uom
-        LET m_grn_lines_arr[i].qnty = po_line_rec.qnty
-        LET m_grn_lines_arr[i].unit_cost = po_line_rec.unit_cost
-        LET m_grn_lines_arr[i].disc_pct = po_line_rec.disc_pct
-        LET m_grn_lines_arr[i].disc_amt = po_line_rec.disc_amt
-        LET m_grn_lines_arr[i].gross_amt = po_line_rec.gross_amt
-        LET m_grn_lines_arr[i].vat_rate = po_line_rec.vat_rate
-        LET m_grn_lines_arr[i].vat_amt = po_line_rec.vat_amt
-        LET m_grn_lines_arr[i].net_excl_amt = po_line_rec.net_excl_amt
-        LET m_grn_lines_arr[i].line_total = po_line_rec.line_total
-        LET m_grn_lines_arr[i].po_line_id = po_line_rec.id
+        LET m_grn_lines_arr[i].stock_id = l_po_line_arr.stock_id
+        LET m_grn_lines_arr[i].item_name = l_po_line_arr.item_name
+        LET m_grn_lines_arr[i].uom = l_po_line_arr.uom
+        LET m_grn_lines_arr[i].qnty = l_po_line_arr.qnty
+        LET m_grn_lines_arr[i].unit_cost = l_po_line_arr.unit_cost
+        LET m_grn_lines_arr[i].disc_pct = l_po_line_arr.disc_pct
+        LET m_grn_lines_arr[i].disc_amt = l_po_line_arr.disc_amt
+        LET m_grn_lines_arr[i].gross_amt = l_po_line_arr.gross_amt
+        LET m_grn_lines_arr[i].vat_rate = l_po_line_arr.vat_rate
+        LET m_grn_lines_arr[i].vat_amt = l_po_line_arr.vat_amt
+        LET m_grn_lines_arr[i].net_excl_amt = l_po_line_arr.net_excl_amt
+        LET m_grn_lines_arr[i].line_total = l_po_line_arr.line_total
+        LET m_grn_lines_arr[i].po_line_id = l_po_line_arr.id
         LET m_grn_lines_arr[i].wh_id = ""
         LET m_grn_lines_arr[i].wb_id = ""
         LET m_grn_lines_arr[i].status = "active"
@@ -316,9 +320,8 @@ FUNCTION load_po_into_grn(p_po_id INTEGER) RETURNS SMALLINT
     CALL recalc_pu_grn_totals()
 
     MESSAGE SFMT("PO %1 loaded with %2 line(s). Reference: %3",
-        po_hdr_rec.doc_no, i, po_hdr_rec.doc_no)
-
-    RETURN TRUE
+        l_po_hdr_rec.doc_no, i, l_po_hdr_rec.doc_no)
+        RETURN TRUE 
 CATCH
     CALL utils_globals.show_error("Load PO into GRN failed: " || STATUS)
     RETURN FALSE

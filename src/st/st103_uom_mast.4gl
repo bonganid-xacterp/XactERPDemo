@@ -10,6 +10,7 @@
 IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL utils_db
+IMPORT FGL utils_global_lkup
 
 SCHEMA demoappdb
 
@@ -22,27 +23,6 @@ DEFINE uom_rec uom_t
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
 DEFINE is_edit_mode SMALLINT
-
--- ==============================================================
--- MAIN
--- ==============================================================
---MAIN
---    IF NOT utils_globals.initialize_application() THEN
---        DISPLAY "Initialization failed."
---        EXIT PROGRAM 1
---    END IF
---
---    IF utils_globals.is_standalone() THEN
---        OPTIONS INPUT WRAP
---        OPEN WINDOW w_st103 WITH FORM "st103_uom_mast" -- ATTRIBUTES(STYLE = "normal")
---    END IF
---
---    CALL init_uom_module()
---
---    IF utils_globals.is_standalone() THEN
---        CLOSE WINDOW w_st103
---    END IF
---END MAIN
 
 -- ==============================================================
 -- Init Program
@@ -66,17 +46,43 @@ END FUNCTION
 -- Query using Lookup Window
 -- ==============================================================
 FUNCTION query_uom_lookup()
-    DEFINE selected_code STRING
+    DEFINE selected_code STRING,
+           l_code INTEGER,
+           l_idx INTEGER,
+           i INTEGER
 
-    LET selected_code = query_uom()
+    LET selected_code = utils_global_lkup.display_lookup('uom')
 
     IF selected_code IS NOT NULL THEN
-        CALL load_uom_item(selected_code)
-
-        -- Update the array to contain just this record for navigation
+        -- Load ALL records for navigation
         CALL arr_codes.clear()
-        LET arr_codes[1] = selected_code
+        LET l_idx = 0
+
+        TRY
+            DECLARE uom_nav_curs CURSOR FOR
+                SELECT id FROM st03_uom_master ORDER BY id DESC
+
+            FOREACH uom_nav_curs INTO l_code
+                LET l_idx = l_idx + 1
+                LET arr_codes[l_idx] = l_code
+            END FOREACH
+
+            CLOSE uom_nav_curs
+            FREE uom_nav_curs
+        CATCH
+            CALL utils_globals.show_sql_error("query_uom_lookup: Error loading navigation")
+        END TRY
+
+        -- Find the index of the selected record
         LET curr_idx = 1
+        FOR i = 1 TO arr_codes.getLength()
+            IF arr_codes[i] = selected_code THEN
+                LET curr_idx = i
+                EXIT FOR
+            END IF
+        END FOR
+
+        CALL load_uom_item(selected_code)
     ELSE
         CALL utils_globals.show_error("No records found")
     END IF
@@ -105,27 +111,32 @@ FUNCTION query_uom() RETURNS STRING
     DEFINE arr_uom DYNAMIC ARRAY OF RECORD
             c1     LIKE st03_uom_master.id,
             c2  LIKE st03_uom_master.uom_code,
-            c3  LIKE st03_uom_master.uom_name,
-            c4 LIKE st03_uom_master.status
+            c3  LIKE st03_uom_master.uom_name
         END RECORD,
         lkup_rec RECORD
             c1     LIKE st03_uom_master.id,
             c2  LIKE st03_uom_master.uom_code,
-            c3  LIKE st03_uom_master.uom_name,
-            c4 LIKE st03_uom_master.status
+            c3  LIKE st03_uom_master.uom_name
         END RECORD,
         ret_code STRING,
-        curr_row, curr_idx SMALLINT
+        curr_row, curr_idx SMALLINT,
+        frm ui.Form
 
     LET curr_idx = 1
     LET ret_code = NULL
 
-    OPEN WINDOW w_lkup WITH FORM "utils_global_lkup_form"
-        ATTRIBUTES(TYPE = POPUP, STYLE = "lookup")
+    OPEN WINDOW w_lkup WITH FORM "utils_global_lkup"
+        ATTRIBUTES(STYLE = "lookup")
+
+    -- Set column titles
+    LET frm = ui.Window.getCurrent().getForm()
+    CALL frm.setElementText("c1", "ID")
+    CALL frm.setElementText("c2", "Code")
+    CALL frm.setElementText("c3", "Name")
 
     TRY
         DECLARE uom_curs CURSOR FOR
-            SELECT id, uom_code, uom_name, status
+            SELECT id, uom_code, uom_name
               FROM st03_uom_master
              ORDER BY id DESC
 

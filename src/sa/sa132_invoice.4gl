@@ -13,6 +13,7 @@ IMPORT FGL utils_globals
 IMPORT FGL st121_st_lkup
 IMPORT FGL utils_doc_totals
 IMPORT FGL dl121_lkup
+IMPORT FGL utils_global_stock_updater
 
 SCHEMA demoappdb
 
@@ -30,8 +31,7 @@ DEFINE m_arr_codes DYNAMIC ARRAY OF STRING
 DEFINE m_curr_idx INTEGER
 DEFINE m_is_edit SMALLINT
 
-    DEFINE g_hdr_saved SMALLINT
-
+DEFINE g_hdr_saved SMALLINT
 
 -- ==============================================================
 -- Init Program
@@ -375,11 +375,11 @@ FUNCTION populate_doc_header(p_cust_id INTEGER)
 
     LET l_cust_id = p_cust_id
 
-    -- load creditor data
+    -- load customer data
     TRY
-        SELECT * INTO m_debt_rec.* FROM cl01_mast WHERE id = l_cust_id
+        SELECT * INTO m_debt_rec.* FROM dl01_mast WHERE id = l_cust_id
     CATCH
-        CALL utils_globals.show_sql_error("populate_doc_header: Error loading supplier")
+        CALL utils_globals.show_sql_error("populate_doc_header: Error loading customer")
         RETURN
     END TRY
 
@@ -394,7 +394,7 @@ FUNCTION populate_doc_header(p_cust_id INTEGER)
     LET m_inv_hdr_rec.trans_date = TODAY
     LET m_inv_hdr_rec.status = "draft"
     LET m_inv_hdr_rec.created_at = TODAY -- FIXED: Changed from CURRENT
-    LET m_inv_hdr_rec.created_by = utils_globals.get_random_user()
+    LET m_inv_hdr_rec.created_by = utils_globals.get_current_user_id()
 
     -- link supplier
     LET m_inv_hdr_rec.cust_id = m_debt_rec.id
@@ -416,11 +416,10 @@ FUNCTION populate_doc_header(p_cust_id INTEGER)
     
 END FUNCTION 
 
-
 -- ==============================================================
 -- Calculate line totals
 -- ==============================================================
-FUNCTION calculate_line_totals(p_idx INTEGER)
+PRIVATE FUNCTION calculate_line_totals(p_idx INTEGER)
     DEFINE l_gross DECIMAL(12, 2)
     DEFINE l_disc DECIMAL(12, 2)
     DEFINE l_vat DECIMAL(12, 2)
@@ -466,7 +465,7 @@ END FUNCTION
 -- ==============================================================
 -- Recalculate header totals from all lines
 -- ==============================================================
-FUNCTION recalculate_header_totals()
+PRIVATE FUNCTION recalculate_header_totals()
     DEFINE i INTEGER
     DEFINE l_gross_tot DECIMAL(12, 2)
     DEFINE l_disc_tot DECIMAL(12, 2)
@@ -695,10 +694,10 @@ PRIVATE FUNCTION load_stock_defaults(p_stock_id INTEGER)
     DEFINE l_desc VARCHAR(150)
     DEFINE l_stock_on_hand DECIMAL(15,2)
 
-    SELECT unit_price, sell_price, description, stock_on_hand
+    SELECT unit_cost, sell_price, description, stock_on_hand
         INTO l_cost, l_price, l_desc, l_stock_on_hand
         FROM st01_mast
-        WHERE stock_id = p_stock_id
+        WHERE id = p_stock_id
 
     IF SQLCA.SQLCODE != 0 THEN
         LET l_cost = 0
@@ -1017,7 +1016,7 @@ FUNCTION post_invoice(p_invoice_id INTEGER)
 
         FOREACH post_inv_lines_cur INTO l_stock_id, l_quantity
             -- Deduct physical stock
-            IF NOT update_stock_on_hand(l_stock_id, l_quantity, "OUT") THEN
+            IF NOT utils_global_stock_updater.update_stock_simple(l_stock_id, l_quantity, "OUT", 'SA_INV') THEN
                 ROLLBACK WORK
                 CALL utils_globals.show_error("Failed to update stock levels")
                 RETURN
@@ -1047,64 +1046,6 @@ FUNCTION post_invoice(p_invoice_id INTEGER)
         ROLLBACK WORK
         CALL utils_globals.show_error(
             SFMT("Failed to post invoice: %1", SQLCA.SQLCODE))
-    END TRY
-
-END FUNCTION
-
--- ==============================================================
--- Function : update_stock_on_hand 
--- ==============================================================
-PRIVATE FUNCTION update_stock_on_hand(p_stock_id INTEGER, p_quantity DECIMAL,
-                              p_direction VARCHAR(3))
-    RETURNS SMALLINT
-
-    DEFINE l_current_stock DECIMAL(15,2)
-
-    BEGIN WORK
-
-    TRY
-        -- Lock the stock record
-        SELECT stock_on_hand INTO l_current_stock
-          FROM st01_mast
-         WHERE stock_id = p_stock_id
-           FOR UPDATE
-
-        -- Update based on direction
-        IF p_direction = "OUT" THEN
-            -- Sales - decrease stock
-            UPDATE st01_mast
-               SET stock_on_hand = stock_on_hand - p_quantity,
-                   total_sales = total_sales + p_quantity,
-                   updated_at = CURRENT
-             WHERE stock_id = p_stock_id
-
-        ELSE IF p_direction = "IN" THEN
-            -- Purchase/Return - increase stock
-            UPDATE st01_mast
-               SET stock_on_hand = stock_on_hand + p_quantity,
-                   total_purch = total_purch + p_quantity,
-                   updated_at = CURRENT
-             WHERE stock_id = p_stock_id
-        END IF
-        END IF
-
-        -- Record stock transaction
-        INSERT INTO st30_trans (
-            stock_id, trans_date, doc_type, direction, qnty,
-            created_at, created_by
-        ) VALUES (
-            p_stock_id, TODAY, 'INVOICE', p_direction, p_quantity,
-            CURRENT, l_user
-        )
-
-        COMMIT WORK
-        RETURN TRUE
-
-    CATCH
-        ROLLBACK WORK
-        CALL utils_globals.show_error(
-            SFMT("Failed to update stock: %1", SQLCA.SQLCODE))
-        RETURN FALSE
     END TRY
 
 END FUNCTION

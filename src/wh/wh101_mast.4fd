@@ -4,15 +4,15 @@
     <DynamicProperties version="2"/>
   </AGSettings>
   <Record masterTable="wh01_mast" name="rec_wh" uid="{d9587b05-227c-40a5-896c-cad6140fc4aa}">
+    <RecordField colName="id" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wh01_mast.id" sqlTabName="wh01_mast" uid="{d6793e5e-3506-4f57-9d04-a268374f9c64}"/>
     <RecordField colName="wh_code" fieldIdRef="1" fieldType="TABLE_COLUMN" name="wh01_mast.wh_code" sqlTabName="wh01_mast" uid="{c8f68739-95a6-4ec9-8a3c-48c96373b2bb}"/>
     <RecordField colName="wh_name" fieldIdRef="2" fieldType="TABLE_COLUMN" name="wh01_mast.wh_name" sqlTabName="wh01_mast" uid="{1249028e-4755-4b28-8eb5-ad766000f3f2}"/>
     <RecordField colName="location" fieldIdRef="3" fieldType="TABLE_COLUMN" name="wh01_mast.location" sqlTabName="wh01_mast" uid="{12e7da7c-1052-48d8-bb2a-de63f507621a}"/>
     <RecordField colName="status" defaultValue="1" fieldIdRef="5" fieldType="TABLE_COLUMN" name="wh01_mast.status" sqlTabName="wh01_mast" uid="{7a7a8838-656c-4378-a7a6-0c7fa3d440c9}"/>
-    <RecordField colName="id" fieldIdRef="4" fieldType="TABLE_COLUMN" name="wh01_mast.id" sqlTabName="wh01_mast" uid="{d6793e5e-3506-4f57-9d04-a268374f9c64}"/>
     <RecordField colName="created_at" fieldIdRef="6" fieldType="TABLE_COLUMN" name="wh01_mast.created_at" sqlTabName="wh01_mast" uid="{b3a3f28d-c20d-4d3e-bcac-d03f7e683d02}"/>
-    <RecordField colName="created_by" fieldIdRef="7" fieldType="TABLE_COLUMN" name="wh01_mast.created_by" sqlTabName="wh01_mast" uid="{f4111851-82df-4a7c-a5fc-ae6305ae27ff}"/>
-    <RecordField colName="deleted_at" fieldIdRef="8" fieldType="TABLE_COLUMN" name="wh01_mast.deleted_at" sqlTabName="wh01_mast" uid="{f9eb0b25-2218-475d-8aa3-99da8e5ebdd8}"/>
     <RecordField colName="updated_at" fieldIdRef="9" fieldType="TABLE_COLUMN" name="wh01_mast.updated_at" sqlTabName="wh01_mast" uid="{26235654-30ad-4385-bdc0-08bdc2350959}"/>
+    <RecordField colName="deleted_at" fieldIdRef="8" fieldType="TABLE_COLUMN" name="wh01_mast.deleted_at" sqlTabName="wh01_mast" uid="{f9eb0b25-2218-475d-8aa3-99da8e5ebdd8}"/>
+    <RecordField colName="created_by" fieldIdRef="7" fieldType="TABLE_COLUMN" name="wh01_mast.created_by" sqlTabName="wh01_mast" uid="{f4111851-82df-4a7c-a5fc-ae6305ae27ff}"/>
   </Record>
   <Record masterTable="wh30_trans" name="arr_wh_trans" uid="{a67fdd3c-07ae-4a91-90fd-7feeb302d9ed}">
     <RecordField colName="id" fieldIdRef="10" fieldType="TABLE_COLUMN" name="wh30_trans.id" sqlTabName="wh30_trans" uid="{0b7a9f9d-3493-4a3e-8d7d-7f1359d3452e}"/>
@@ -21,15 +21,13 @@
     <RecordField colName="ref_no" fieldIdRef="13" fieldType="TABLE_COLUMN" name="wh30_trans.ref_no" sqlTabName="wh30_trans" uid="{7f301563-a949-4def-867e-2ceb8827e9c8}"/>
     <RecordField colName="source_module" fieldIdRef="14" fieldType="TABLE_COLUMN" name="wh30_trans.source_module" sqlTabName="wh30_trans" uid="{65842a5e-488b-47ce-8c76-105b2247cef8}"/>
     <RecordField colName="source_doc_id" fieldIdRef="15" fieldType="TABLE_COLUMN" name="wh30_trans.source_doc_id" sqlTabName="wh30_trans" uid="{c2f87de6-9408-45d3-8623-3008e5ae0a7b}"/>
-    <RecordField colName="wh_id" fieldIdRef="16" fieldType="TABLE_COLUMN" name="wh30_trans.wh_id" sqlTabName="wh30_trans" uid="{6fb873e3-a8dd-402a-accb-60abafdb8377}"/>
     <RecordField colName="wb_id" fieldIdRef="17" fieldType="TABLE_COLUMN" name="wh30_trans.wb_id" sqlTabName="wh30_trans" uid="{93d83a46-afae-404f-bb9f-215fa5c8de0b}"/>
     <RecordField colName="stock_id" fieldIdRef="18" fieldType="TABLE_COLUMN" name="wh30_trans.stock_id" sqlTabName="wh30_trans" uid="{c6719562-ba77-423d-9528-984d71f37bb8}"/>
-    <RecordField colName="qnty_in" fieldIdRef="19" fieldType="TABLE_COLUMN" name="wh30_trans.qnty_in" sqlTabName="wh30_trans" uid="{07db580e-8704-4925-b343-edeac45ebf81}"/>
-    <RecordField colName="qnty_out" fieldIdRef="20" fieldType="TABLE_COLUMN" name="wh30_trans.qnty_out" sqlTabName="wh30_trans" uid="{95fe34ab-e7a6-4d5f-951a-00b7212d521a}"/>
+    <RecordField colName="qnty" fieldIdRef="19" fieldType="TABLE_COLUMN" name="wh30_trans.qnty" sqlTabName="wh30_trans" uid="{07db580e-8704-4925-b343-edeac45ebf81}"/>
+    <RecordField colName="direction" fieldIdRef="20" fieldType="TABLE_COLUMN" name="wh30_trans.direction" sqlTabName="wh30_trans" uid="{95fe34ab-e7a6-4d5f-951a-00b7212d521a}"/>
     <RecordField colName="run_qty" fieldIdRef="21" fieldType="TABLE_COLUMN" name="wh30_trans.run_qty" sqlTabName="wh30_trans" uid="{a29eed5b-0d0d-4c4c-a4b1-cf2ab3dacca0}"/>
     <RecordField colName="uom" fieldIdRef="22" fieldType="TABLE_COLUMN" name="wh30_trans.uom" sqlTabName="wh30_trans" uid="{aca3e4d0-ba08-4dcf-a7d9-ef4eba53860f}"/>
     <RecordField colName="unit_cost" fieldIdRef="23" fieldType="TABLE_COLUMN" name="wh30_trans.unit_cost" sqlTabName="wh30_trans" uid="{5ae3cdb5-5dea-4c3a-a5c8-669086f2f9bf}"/>
-    <RecordField colName="ext_cost" fieldIdRef="24" fieldType="TABLE_COLUMN" name="wh30_trans.ext_cost" sqlTabName="wh30_trans" uid="{d6ef80d9-9dc8-4058-a277-6e4868fb7934}"/>
     <RecordField colName="remarks" fieldIdRef="25" fieldType="TABLE_COLUMN" name="wh30_trans.remarks" sqlTabName="wh30_trans" uid="{1610e600-400f-49ca-aaf6-bd7a8b643ef4}"/>
     <RecordField colName="status" fieldIdRef="26" fieldType="TABLE_COLUMN" name="wh30_trans.status" sqlTabName="wh30_trans" uid="{dbec2c1d-613d-4fa5-930e-51b6573f5594}"/>
     <RecordField colName="created_by" fieldIdRef="27" fieldType="TABLE_COLUMN" name="wh30_trans.created_by" sqlTabName="wh30_trans" uid="{bceee3f9-ee7a-41cd-bca1-14837c1503cb}"/>
@@ -37,11 +35,11 @@
     <RecordField colName="updated_by" fieldIdRef="29" fieldType="TABLE_COLUMN" name="wh30_trans.updated_by" sqlTabName="wh30_trans" uid="{39b2557c-8d90-4364-adce-9432614e122c}"/>
     <RecordField colName="updated_at" fieldIdRef="30" fieldType="TABLE_COLUMN" name="wh30_trans.updated_at" sqlTabName="wh30_trans" uid="{b49d0123-f2be-4562-a54e-fe0179449dcb}"/>
   </Record>
-  <Form gridHeight="15" gridWidth="143" name="frm_whs" text="Warehouse">
-    <VBox gridHeight="14" gridWidth="143" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="12" gridWidth="143" name="wh" posX="0" posY="1">
-        <Label color="black" gridHeight="1" gridWidth="141" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" style="bold title" text="WAREHOUSE MASTER"/>
-        <Label gridHeight="1" gridWidth="8" name="wh01_mast_wh_code_label1" posX="1" posY="1" text="WH Code">
+  <Form gridHeight="15" gridWidth="134" name="frm_whs" text="Warehouse">
+    <VBox gridHeight="14" gridWidth="134" name="vbox1" posX="0" posY="0">
+      <Grid gridHeight="12" gridWidth="134" name="wh" posX="0" posY="1">
+        <Label color="black" gridHeight="1" gridWidth="133" justify="center" name="lbl_title" posX="1" posY="0" sizePolicy="dynamic" style="bold title" text="WAREHOUSE MASTER"/>
+        <Label gridHeight="1" gridWidth="8" name="wh01_mast_wh_code_label1" posX="1" posY="1" text="Wh Code">
           <Initializer text="dbschema:wh01_mast.wh_code/@label"/>
         </Label>
         <Edit colName="wh_code" fieldId="1" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="20" name="wh01_mast.wh_code" posX="10" posY="1" scroll="true" sqlTabName="wh01_mast" tabIndex="-1" title="WH Code" widget="Edit">
@@ -68,7 +66,7 @@
           <Item lstrtext="false" name="active" text="Active"/>
           <Item lstrtext="false" name="archived" text="Archived"/>
         </ComboBox>
-        <Table gridHeight="6" gridWidth="142" name="arr_wh_trans" posX="1" posY="4" totalRows="5">
+        <Table gridHeight="6" gridWidth="133" name="arr_wh_trans" posX="1" posY="4" totalRows="5">
           <Phantom colName="id" fieldId="10" fieldType="TABLE_COLUMN" name="wh30_trans.id" sqlTabName="wh30_trans" widget="Phantom"/>
           <Edit colName="trans_date" fieldId="11" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.trans_date" posX="0" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Trans Date" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
@@ -81,35 +79,31 @@
           </Edit>
           <Phantom colName="source_module" fieldId="14" fieldType="TABLE_COLUMN" name="wh30_trans.source_module" sqlTabName="wh30_trans" widget="Phantom"/>
           <Phantom colName="source_doc_id" fieldId="15" fieldType="TABLE_COLUMN" name="wh30_trans.source_doc_id" sqlTabName="wh30_trans" widget="Phantom"/>
-          <Edit colName="wh_id" fieldId="16" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.wh_id" posX="34" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="WH ID" widget="Edit">
+          <Edit colName="status" fieldId="26" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.status" posX="34" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Status" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="wb_id" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.wb_id" posX="42" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="BIN ID" widget="Edit">
+          <Edit colName="wb_id" fieldId="17" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.wb_id" posX="43" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="BIN ID" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="stock_id" fieldId="18" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.stock_id" posX="50" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Stock ID" widget="Edit">
+          <Edit colName="stock_id" fieldId="18" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.stock_id" posX="51" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Stock ID" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="qnty_in" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.qnty_in" posX="60" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Qnty In" widget="Edit">
+          <Edit colName="qnty" fieldId="19" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="8" name="wh30_trans.qnty" posX="61" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Qnty" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="qnty_out" fieldId="20" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="wh30_trans.qnty_out" posX="68" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Qnty Out" widget="Edit">
+          <Edit colName="direction" fieldId="20" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="7" name="wh30_trans.direction" posX="69" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Direction" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="run_qty" fieldId="21" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.run_qty" posX="75" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Balance" widget="Edit">
+          <Edit colName="run_qty" fieldId="21" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.run_qty" posX="76" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Balance" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="uom" fieldId="22" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.uom" posX="84" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="UOM" widget="Edit">
+          <Edit colName="uom" fieldId="22" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="10" name="wh30_trans.uom" posX="85" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="UOM" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="unit_cost" fieldId="23" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.unit_cost" posX="94" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Unit Cost" widget="Edit">
+          <Edit colName="unit_cost" fieldId="23" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.unit_cost" posX="95" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Unit Cost" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Phantom colName="ext_cost" fieldId="24" fieldType="TABLE_COLUMN" name="wh30_trans.ext_cost" sqlTabName="wh30_trans" widget="Phantom"/>
-          <Edit colName="remarks" fieldId="25" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="16" name="wh30_trans.remarks" posX="103" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Remarks" widget="Edit">
-            <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
-          </Edit>
-          <Edit colName="status" fieldId="26" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="9" name="wh30_trans.status" posX="119" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Status" widget="Edit">
+          <Edit colName="remarks" fieldId="25" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="16" name="wh30_trans.remarks" posX="104" posY="0" scroll="true" sqlTabName="wh30_trans" tabIndex="-1" title="Remarks" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Phantom colName="created_by" fieldId="27" fieldType="TABLE_COLUMN" name="wh30_trans.created_by" sqlTabName="wh30_trans" widget="Phantom"/>
@@ -126,6 +120,6 @@
     <Phantom colName="updated_at" fieldId="9" fieldType="TABLE_COLUMN" name="wh01_mast.updated_at" sqlTabName="wh01_mast" widget="Phantom"/>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewBhADYANwBmAGQAZAAzAGMALQAwADcAYQBlAC0ANABhADkAMQAtADkAMABmAGQALQA3AGYAZQBlAGIAMwAwADIAZAA5AGUAZAB9QCAAAAwAAANAIAAADAAAAwAAAAAAAAAAAQAAAEwAewBkADkANQA4ADcAYgAwADUALQAyADIANwBjAC0ANAAwAGEANQAtADgAOQA2AGMALQBjAGEAZAA2ADEANAAwAGYAYwA0AGEAYQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBkADkANQA4ADcAYgAwADUALQAyADIANwBjAC0ANAAwAGEANQAtADgAOQA2AGMALQBjAGEAZAA2ADEANAAwAGYAYwA0AGEAYQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEwAewBhADYANwBmAGQAZAAzAGMALQAwADcAYQBlAC0ANABhADkAMQAtADkAMABmAGQALQA3AGYAZQBlAGIAMwAwADIAZAA5AGUAZAB9QGNmZnDZmZs+mAAAEmZmaz9QYk3S8an8AQ==]]>
   </DiagramLayout>
 </ManagedForm>

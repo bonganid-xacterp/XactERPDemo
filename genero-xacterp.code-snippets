@@ -1,0 +1,319 @@
+{
+  "MD Init Module": {
+    "prefix": "md-init",
+    "description": "Standard Master–Detail init module for Genero 3.20.10",
+    "body": [
+      "FUNCTION ${1:init_document_module}()",
+      "    CALL ${2:open_window}()",
+      "    CALL ${3:start_new_document}()",
+      "END FUNCTION"
+    ]
+  },
+  "MD Start New Document": {
+    "prefix": "md-new",
+    "description": "Start new master–detail document (header first, lines cleared)",
+    "body": [
+      "FUNCTION ${1:start_new_document}()",
+      "    INITIALIZE ${2:m_hdr}.* TO NULL",
+      "    CALL ${3:m_lines}.clear()",
+      "",
+      "    LET ${2:m_hdr}.status = \"draft\"",
+      "    LET ${2:m_hdr}.trans_date = TODAY",
+      "    LET ${2:m_hdr}.created_at = CURRENT",
+      "    LET ${2:m_hdr}.created_by = utils_globals.get_current_user_id()",
+      "",
+      "    LET ${4:is_new} = TRUE",
+      "    LET ${5:is_edit_header} = TRUE",
+      "    LET ${6:is_edit_lines} = FALSE",
+      "",
+      "    CALL ${7:prepare_form_for_header}()",
+      "    CALL ${8:edit_header}()",
+      "END FUNCTION"
+    ]
+  },
+  "MD Load Document": {
+    "prefix": "md-load",
+    "description": "Load existing master–detail document (header + lines)",
+    "body": [
+      "FUNCTION ${1:load_document}(p_id INTEGER)",
+      "    SELECT * INTO ${2:m_hdr}.* FROM ${3:<header_table>} WHERE id = p_id",
+      "    CALL ${4:reload_lines}()",
+      "    CALL ${5:ask_edit_mode}()",
+      "END FUNCTION"
+    ]
+  },
+  "MD Header Dialog": {
+    "prefix": "md-header-dialog",
+    "description": "Standard header INPUT dialog with accept/cancel/lookup",
+    "body": [
+      "FUNCTION ${1:edit_header}()",
+      "    DIALOG ATTRIBUTES(UNBUFFERED)",
+      "        INPUT BY NAME ${2:m_hdr}.*",
+      "            ON ACTION accept",
+      "                IF ${3:validate_header}() THEN",
+      "                    CALL ${4:save_header}()",
+      "                    EXIT DIALOG",
+      "                END IF",
+      "",
+      "            ON ACTION cancel",
+      "                EXIT DIALOG",
+      "",
+      "            ON ACTION lookup_supplier",
+      "                CALL utils_lkup_form.open(\"SUPPLIER\") RETURNING ${2:m_hdr}.supp_id",
+      "",
+      "            -- Add more lookup actions as needed",
+      "        END INPUT",
+      "    END DIALOG",
+      "END FUNCTION"
+    ]
+  },
+  "MD Validate Header": {
+    "prefix": "md-validate-header",
+    "description": "Basic header validation function",
+    "body": [
+      "FUNCTION ${1:validate_header}() RETURNS BOOLEAN",
+      "    IF ${2:m_hdr}.trans_date IS NULL THEN",
+      "        CALL utils_globals.show_error(\"Transaction date is required.\")",
+      "        RETURN FALSE",
+      "    END IF",
+      "",
+      "    -- Add other required field checks here",
+      "",
+      "    RETURN TRUE",
+      "END FUNCTION"
+    ]
+  },
+  "MD Save Header": {
+    "prefix": "md-save-header",
+    "description": "Insert or update header, enforce header-first rule",
+    "body": [
+      "FUNCTION ${1:save_header}()",
+      "    IF ${2:is_new} THEN",
+      "        INSERT INTO ${3:<header_table>} VALUES ${4:m_hdr}.*",
+      "            RETURNING id INTO ${4:m_hdr}.id",
+      "    ELSE",
+      "        UPDATE ${3:<header_table>} SET * = ${4:m_hdr}.* WHERE id = ${4:m_hdr}.id",
+      "    END IF",
+      "",
+      "    LET ${5:g_hdr_saved} = TRUE",
+      "    LET ${6:is_edit_header} = FALSE",
+      "    LET ${7:is_edit_lines} = TRUE",
+      "",
+      "    CALL ${8:prepare_form_for_lines}()",
+      "    CALL ${9:edit_lines}()",
+      "END FUNCTION"
+    ]
+  },
+  "MD Lines Menu": {
+    "prefix": "md-lines-menu",
+    "description": "Standard Lines MENU for Insert/Amend/Delete/Save/Close",
+    "body": [
+      "FUNCTION ${1:edit_lines}()",
+      "    MENU \"Lines\"",
+      "        COMMAND \"Insert\"",
+      "            CALL ${2:insert_line}()",
+      "",
+      "        COMMAND \"Amend\"",
+      "            CALL ${3:edit_line}()",
+      "",
+      "        COMMAND \"Delete\"",
+      "            CALL ${4:delete_line}()",
+      "",
+      "        COMMAND \"Save\"",
+      "            CALL ${5:save_lines}()",
+      "",
+      "        COMMAND \"Close\"",
+      "            EXIT MENU",
+      "    END MENU",
+      "END FUNCTION"
+    ]
+  },
+  "MD Insert Line": {
+    "prefix": "md-insert-line",
+    "description": "Insert new line using temporary record and INPUT dialog",
+    "body": [
+      "FUNCTION ${1:insert_line}()",
+      "    DEFINE l ${2:line_t}",
+      "    INITIALIZE l.* TO NULL",
+      "    LET l.${3:<fk_hdr_field>} = ${4:m_hdr}.id",
+      "",
+      "    DIALOG",
+      "        INPUT BY NAME l.*",
+      "            ON ACTION accept",
+      "                LET ${5:m_lines}[${5:m_lines}.getLength() + 1] = l",
+      "                EXIT DIALOG",
+      "",
+      "            ON ACTION cancel",
+      "                EXIT DIALOG",
+      "",
+      "            ON ACTION lookup_stock",
+      "                CALL utils_lkup_form.open(\"STOCK\") RETURNING l.stock_id",
+      "        END INPUT",
+      "    END DIALOG",
+      "END FUNCTION"
+    ]
+  },
+  "MD Edit Line": {
+    "prefix": "md-edit-line",
+    "description": "Edit current line from m_lines array",
+    "body": [
+      "FUNCTION ${1:edit_line}()",
+      "    DEFINE l ${2:line_t}",
+      "    LET ${3:curr_line} = ARR_CURR(${4:m_lines})",
+      "    LET l = ${4:m_lines}[${3:curr_line}]",
+      "",
+      "    DIALOG",
+      "        INPUT BY NAME l.*",
+      "            ON ACTION accept",
+      "                LET ${4:m_lines}[${3:curr_line}] = l",
+      "                EXIT DIALOG",
+      "",
+      "            ON ACTION cancel",
+      "                EXIT DIALOG",
+      "        END INPUT",
+      "    END DIALOG",
+      "END FUNCTION"
+    ]
+  },
+  "MD Delete Line": {
+    "prefix": "md-delete-line",
+    "description": "Delete current line from m_lines array",
+    "body": [
+      "FUNCTION ${1:delete_line}()",
+      "    LET ${2:curr_line} = ARR_CURR(${3:m_lines})",
+      "    CALL ${3:m_lines}.deleteElement(${2:curr_line})",
+      "END FUNCTION"
+    ]
+  },
+  "MD Save Lines": {
+    "prefix": "md-save-lines",
+    "description": "Save all lines from array to DB (header-first FK logic)",
+    "body": [
+      "FUNCTION ${1:save_lines}()",
+      "    IF ${2:m_hdr}.id IS NULL OR ${2:m_hdr}.id <= 0 THEN",
+      "        CALL utils_globals.show_error(\"Header must be saved before saving lines.\")",
+      "        RETURN",
+      "    END IF",
+      "",
+      "    DELETE FROM ${3:<line_table>} WHERE ${4:<fk_hdr_field>} = ${2:m_hdr}.id",
+      "",
+      "    FOR ${5:i} = 1 TO ${6:m_lines}.getLength()",
+      "        INSERT INTO ${3:<line_table>} VALUES ${6:m_lines}[${5:i}].*",
+      "    END FOR",
+      "END FUNCTION"
+    ]
+  },
+  "MD Reload Lines": {
+    "prefix": "md-reload-lines",
+    "description": "Reload lines from DB into dynamic array",
+    "body": [
+      "FUNCTION ${1:reload_lines}()",
+      "    CALL ${2:m_lines}.clear()",
+      "    SELECT * INTO ${2:m_lines}.*",
+      "        FROM ${3:<line_table>}",
+      "        WHERE ${4:<fk_hdr_field>} = ${5:m_hdr}.id",
+      "END FUNCTION"
+    ]
+  },
+  "MD Prepare Form For Header": {
+    "prefix": "md-form-header",
+    "description": "Prepare form: enable header block, disable lines block",
+    "body": [
+      "FUNCTION ${1:prepare_form_for_header}()",
+      "    -- TODO: Enable header fields, disable lines array in the form",
+      "    -- Example:",
+      "    -- CALL ui.Form.setElementActive(\"${2:grp_header}\", TRUE)",
+      "    -- CALL ui.Form.setElementActive(\"${3:arr_lines}\", FALSE)",
+      "END FUNCTION"
+    ]
+  },
+  "MD Prepare Form For Lines": {
+    "prefix": "md-form-lines",
+    "description": "Prepare form: disable header block, enable lines block",
+    "body": [
+      "FUNCTION ${1:prepare_form_for_lines}()",
+      "    -- TODO: Disable header fields, enable lines array in the form",
+      "    -- CALL ui.Form.setElementActive(\"${2:grp_header}\", FALSE)",
+      "    -- CALL ui.Form.setElementActive(\"${3:arr_lines}\", TRUE)",
+      "END FUNCTION"
+    ]
+  },
+  "MD Ask Edit Mode": {
+    "prefix": "md-ask-mode",
+    "description": "Ask user if they want to edit header or lines",
+    "body": [
+      "FUNCTION ${1:ask_edit_mode}()",
+      "    DEFINE resp INTEGER",
+      "",
+      "    CALL utils_globals.show_question_choice(",
+      "        \"Edit Mode\",",
+      "        \"Do you want to edit the HEADER or the LINES?\",",
+      "        \"Header\",",
+      "        \"Lines\",",
+      "        resp",
+      "    )",
+      "",
+      "    IF resp = 1 THEN",
+      "        LET ${2:is_edit_header} = TRUE",
+      "        LET ${3:is_edit_lines} = FALSE",
+      "        CALL ${4:prepare_form_for_header}()",
+      "        CALL ${5:edit_header}()",
+      "    ELSE",
+      "        LET ${2:is_edit_header} = FALSE",
+      "        LET ${3:is_edit_lines} = TRUE",
+      "        CALL ${4:prepare_form_for_lines}()",
+      "        CALL ${6:edit_lines}()",
+      "    END IF",
+      "END FUNCTION"
+    ]
+  },
+  "MD Warn If Unsaved Header": {
+    "prefix": "md-warn-unsaved",
+    "description": "Standard warning if header is not saved",
+    "body": [
+      "FUNCTION ${1:warn_if_unsaved_header}() RETURNS BOOLEAN",
+      "    IF ${2:g_hdr_saved} <> TRUE THEN",
+      "        CALL utils_globals.show_error(\"Header must be saved before entering lines.\")",
+      "        RETURN FALSE",
+      "    END IF",
+      "    RETURN TRUE",
+      "END FUNCTION"
+    ]
+  },
+  "MD Copy From Previous Document": {
+    "prefix": "md-copy-prev",
+    "description": "Use utils_doc.copy_header and copy_lines to copy document",
+    "body": [
+      "FUNCTION ${1:copy_from_previous_doc}(p_prev_id INTEGER)",
+      "    DEFINE prev_hdr ${2:hdr_t}",
+      "    DEFINE prev_lines DYNAMIC ARRAY OF ${3:line_t}",
+      "",
+      "    SELECT * INTO prev_hdr.* FROM ${4:<header_table>} WHERE id = p_prev_id",
+      "    SELECT * INTO prev_lines.* FROM ${5:<line_table>} WHERE ${6:<fk_hdr_field>} = p_prev_id",
+      "",
+      "    CALL utils_doc.copy_header(prev_hdr, ${7:m_hdr})",
+      "    CALL utils_doc.copy_lines(prev_lines, ${8:m_lines})",
+      "",
+      "    LET ${9:is_new} = TRUE",
+      "    LET ${10:is_copy_mode} = TRUE",
+      "END FUNCTION"
+    ]
+  },
+  "MD Populate From Master": {
+    "prefix": "md-populate-master",
+    "description": "Populate header from master record using utils_doc.populate_from_master",
+    "body": [
+      "FUNCTION ${1:populate_from_master}(p_master_id INTEGER)",
+      "    CALL utils_doc.populate_from_master(p_master_id, ${2:m_hdr}.*)",
+      "END FUNCTION"
+    ]
+  },
+  "MD Lookup Helper": {
+    "prefix": "md-lookup",
+    "description": "Generic lookup pattern using utils_lkup_form",
+    "body": [
+      "ON ACTION ${1:lookup_action}",
+      "    CALL utils_lkup_form.open(\"${2:CONTEXT}\") RETURNING ${3:target_field}"
+    ]
+  }
+}

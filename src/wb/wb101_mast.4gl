@@ -13,6 +13,7 @@ IMPORT ui
 IMPORT FGL utils_globals
 IMPORT FGL wh121_lkup
 IMPORT FGL wb121_lkup
+IMPORT FGL utils_global_lkup
 
 SCHEMA demoappdb
 
@@ -20,8 +21,7 @@ SCHEMA demoappdb
 -- Record Definitions
 -- ==============================================================
 TYPE bin_t RECORD LIKE wb01_mast.*
-DEFINE rec_bin bin_t
-DEFINE rec_wh_code STRING
+DEFINE bin_rec bin_t
 
 DEFINE arr_codes DYNAMIC ARRAY OF STRING
 DEFINE curr_idx INTEGER
@@ -37,7 +37,9 @@ MAIN
     END IF
 
     IF utils_globals.is_standalone() THEN
-        OPEN WINDOW w_wb101 WITH FORM "wb101_mast" -- ATTRIBUTES(STYLE = "normal")
+        OPEN WINDOW w_wb101
+            WITH
+            FORM "wb101_mast" -- ATTRIBUTES(STYLE = "normal")
     ELSE
         OPEN WINDOW w_wb101 WITH FORM "wb101_mast" ATTRIBUTES(STYLE = "child")
     END IF
@@ -70,7 +72,7 @@ FUNCTION init_wb_module()
             LET is_edit_mode = FALSE
 
         COMMAND "Edit"
-            IF rec_bin.wb_code IS NULL OR rec_bin.wb_code = "" THEN
+            IF bin_rec.wb_code IS NULL OR bin_rec.wb_code = "" THEN
                 CALL utils_globals.show_info("No bin selected to edit.")
             ELSE
                 LET is_edit_mode = TRUE
@@ -102,11 +104,10 @@ PRIVATE FUNCTION load_all_bins()
     IF ok THEN
         MESSAGE SFMT("Loaded %1 bin(s)", arr_codes.getLength())
     ELSE
-        CALL utils_globals.show_info("No bins found.")
-        INITIALIZE rec_bin.* TO NULL
-        LET rec_wh_code = NULL
-        DISPLAY BY NAME rec_bin.*
-        DISPLAY rec_wh_code TO wh01_mast.wh_code
+        DISPLAY ("No bins found.")
+        INITIALIZE bin_rec.* TO NULL
+
+        DISPLAY BY NAME bin_rec.*
     END IF
 END FUNCTION
 
@@ -116,7 +117,7 @@ END FUNCTION
 FUNCTION query_bins()
     DEFINE selected_code STRING
 
-    LET selected_code = wb121_lkup.display_list()
+    LET selected_code = utils_global_lkup.display_lookup('bin')
 
     IF selected_code IS NULL OR selected_code = "" THEN
         RETURN
@@ -140,7 +141,8 @@ FUNCTION select_bins(where_clause STRING) RETURNS SMALLINT
     -- Input validation for where_clause
     IF where_clause IS NOT NULL AND where_clause != "" THEN
         IF where_clause MATCHES ".*[;'\"].*" THEN
-            CALL utils_globals.show_error("Invalid characters in search criteria")
+            CALL utils_globals.show_error(
+                "Invalid characters in search criteria")
             RETURN FALSE
         END IF
     END IF
@@ -181,20 +183,15 @@ END FUNCTION
 -- Load Single Bin
 -- ==============================================================
 FUNCTION load_bin(p_code STRING)
-    SELECT wb01_mast.*, wh01_mast.wh_code
-        INTO rec_bin.*, rec_wh_code
-        FROM wb01_mast LEFT JOIN wh01_mast ON wb01_mast.wh_id = wh01_mast.id
-        WHERE wb01_mast.wb_code = p_code
+    TRY
+        SELECT * FROM wb01_mast WHERE id = p_code
 
-    IF SQLCA.SQLCODE = 0 THEN
-        DISPLAY BY NAME rec_bin.*
-        DISPLAY rec_wh_code TO wh01_mast.wh_code
-    ELSE
-        INITIALIZE rec_bin.* TO NULL
-        LET rec_wh_code = NULL
-        DISPLAY BY NAME rec_bin.*
-        DISPLAY rec_wh_code TO wh01_mast.wh_code
-    END IF
+        IF SQLCA.SQLCODE = 0 THEN
+            DISPLAY BY NAME bin_rec.*
+        END IF
+    CATCH
+        CALL utils_globals.show_sql_error(SQLERRMESSAGE)
+    END TRY
 END FUNCTION
 
 -- ==============================================================
@@ -218,44 +215,43 @@ END FUNCTION
 -- ==============================================================
 FUNCTION new_bin()
     DEFINE dup_found SMALLINT
-    DEFINE new_id INTEGER  -- Changed from SMALLINT to INTEGER
+    DEFINE new_id INTEGER -- Changed from SMALLINT to INTEGER
     DEFINE next_num INTEGER
     DEFINE next_full STRING
     DEFINE i, array_size INTEGER
 
-    INITIALIZE rec_bin.* TO NULL
-    LET rec_wh_code = NULL
+    INITIALIZE bin_rec.* TO NULL
 
     CALL utils_globals.get_next_number("wb01_mast", "WB")
         RETURNING next_num, next_full
 
-    LET rec_bin.wb_code = next_full
-    LET rec_bin.status = "active"
-    LET rec_bin.created_at = CURRENT
-    LET rec_bin.created_by = utils_globals.get_current_user_id()
+    LET bin_rec.wb_code = next_num
+    LET bin_rec.status = "active"
+    LET bin_rec.created_at = CURRENT
+    LET bin_rec.created_by = utils_globals.get_current_user_id()
 
     CALL utils_globals.set_form_label("lbl_title", "NEW WAREHOUSE BIN")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_bin.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "new_bin")
+        INPUT BY NAME bin_rec.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "new_bin")
 
             AFTER FIELD wb_code
-                IF rec_bin.wb_code IS NULL OR rec_bin.wb_code = "" THEN
+                IF bin_rec.wb_code IS NULL OR bin_rec.wb_code = "" THEN
                     CALL utils_globals.show_error("Bin Code is required.")
                     NEXT FIELD wb_code
                 END IF
 
             AFTER FIELD description
-                IF rec_bin.description IS NULL OR rec_bin.description = "" THEN
+                IF bin_rec.description IS NULL OR bin_rec.description = "" THEN
                     CALL utils_globals.show_error("Description is required.")
                     NEXT FIELD description
                 END IF
 
             ON ACTION save ATTRIBUTES(TEXT = "Save", IMAGE = "filesave")
-                LET dup_found = check_bin_unique(rec_bin.wb_code)
+                LET dup_found = check_bin_unique(bin_rec.wb_code)
                 IF dup_found = 0 THEN
                     CALL save_bin()
-                    LET new_id = rec_bin.id
+                    LET new_id = bin_rec.id
                     CALL utils_globals.show_info("Bin saved successfully.")
                     EXIT DIALOG
                 ELSE
@@ -264,39 +260,11 @@ FUNCTION new_bin()
 
             ON ACTION cancel
                 CALL utils_globals.show_info("Creation cancelled.")
-                LET new_id = 0  -- Use 0 instead of NULL for INTEGER
+                LET new_id = 0 -- Use 0 instead of NULL for INTEGER
                 EXIT DIALOG
 
         END INPUT
 
-        INPUT rec_wh_code FROM wh01_mast.wh_code
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "new_bin_wh")
-
-            AFTER FIELD wh_code
-                IF rec_wh_code IS NOT NULL AND rec_wh_code != "" THEN
-                    CALL validate_warehouse_code(rec_wh_code)
-                        RETURNING rec_bin.wh_id
-                    IF rec_bin.wh_id IS NULL OR rec_bin.wh_id = 0 THEN
-                        CALL utils_globals.show_error("Invalid Warehouse Code.")
-                        LET rec_wh_code = NULL
-                        NEXT FIELD wh_code
-                    END IF
-                END IF
-
-            ON ACTION lookup_warehouse ATTRIBUTES(TEXT="Warehouse Lookup", IMAGE="zoom")
-                CALL find_wh() RETURNING rec_wh_code
-                IF rec_wh_code IS NOT NULL AND rec_wh_code != "" THEN
-                    CALL validate_warehouse_code(rec_wh_code)
-                        RETURNING rec_bin.wh_id
-                    IF rec_bin.wh_id IS NOT NULL AND rec_bin.wh_id > 0 THEN
-                        DISPLAY rec_wh_code TO wh01_mast.wh_code
-                        MESSAGE SFMT("Warehouse %1 selected", rec_wh_code)
-                    ELSE
-                        CALL utils_globals.show_error("Invalid Warehouse Code.")
-                        LET rec_wh_code = NULL
-                    END IF
-                END IF
-        END INPUT
     END DIALOG
 
     -- Reload the list and position to the new record
@@ -305,23 +273,23 @@ FUNCTION new_bin()
         LET array_size = arr_codes.getLength()
         IF array_size > 0 THEN
             FOR i = 1 TO array_size
-                IF arr_codes[i] = rec_bin.wb_code THEN
+                IF arr_codes[i] = bin_rec.wb_code THEN
                     LET curr_idx = i
                     EXIT FOR
                 END IF
             END FOR
         END IF
-        CALL load_bin(rec_bin.wb_code)
+        CALL load_bin(bin_rec.wb_code)
     ELSE
         LET array_size = arr_codes.getLength()
         IF array_size > 0 AND curr_idx >= 1 AND curr_idx <= array_size THEN
             CALL load_bin(arr_codes[curr_idx])
         ELSE
             LET curr_idx = 0
-            INITIALIZE rec_bin.* TO NULL
-            LET rec_wh_code = NULL
-            DISPLAY BY NAME rec_bin.*
-            DISPLAY rec_wh_code TO wh01_mast.wh_code
+            INITIALIZE bin_rec.* TO NULL
+
+            DISPLAY BY NAME bin_rec.*
+
         END IF
     END IF
 
@@ -335,7 +303,7 @@ FUNCTION edit_bin()
     CALL utils_globals.set_form_label("lbl_title", "EDIT WAREHOUSE BIN")
 
     DIALOG ATTRIBUTES(UNBUFFERED)
-        INPUT BY NAME rec_bin.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "edit_bin")
+        INPUT BY NAME bin_rec.* ATTRIBUTES(WITHOUT DEFAULTS, NAME = "edit_bin")
 
             BEFORE FIELD wb_code
                 -- Bin code should not be editable
@@ -347,45 +315,17 @@ FUNCTION edit_bin()
                 EXIT DIALOG
 
             ON ACTION cancel
-                CALL load_bin(rec_bin.wb_code)
+                CALL load_bin(bin_rec.wb_code)
                 EXIT DIALOG
 
             AFTER FIELD description
-                IF rec_bin.description IS NULL OR rec_bin.description = "" THEN
+                IF bin_rec.description IS NULL OR bin_rec.description = "" THEN
                     CALL utils_globals.show_error("Description is required.")
                     NEXT FIELD description
                 END IF
 
         END INPUT
 
-        INPUT rec_wh_code FROM wh01_mast.wh_code
-            ATTRIBUTES(WITHOUT DEFAULTS, NAME = "edit_bin_wh")
-
-            AFTER FIELD wh_code
-                IF rec_wh_code IS NOT NULL AND rec_wh_code != "" THEN
-                    CALL validate_warehouse_code(rec_wh_code)
-                        RETURNING rec_bin.wh_id
-                    IF rec_bin.wh_id IS NULL OR rec_bin.wh_id = 0 THEN
-                        CALL utils_globals.show_error("Invalid Warehouse Code.")
-                        LET rec_wh_code = NULL
-                        NEXT FIELD wh_code
-                    END IF
-                END IF
-
-            ON ACTION lookup_warehouse ATTRIBUTES(TEXT="Warehouse Lookup", IMAGE="zoom")
-                CALL find_wh() RETURNING rec_wh_code
-                IF rec_wh_code IS NOT NULL AND rec_wh_code != "" THEN
-                    CALL validate_warehouse_code(rec_wh_code)
-                        RETURNING rec_bin.wh_id
-                    IF rec_bin.wh_id IS NOT NULL AND rec_bin.wh_id > 0 THEN
-                        DISPLAY rec_wh_code TO wh01_mast.wh_code
-                        MESSAGE SFMT("Warehouse %1 selected", rec_wh_code)
-                    ELSE
-                        CALL utils_globals.show_error("Invalid Warehouse Code.")
-                        LET rec_wh_code = NULL
-                    END IF
-                END IF
-        END INPUT
     END DIALOG
 
     CALL utils_globals.set_form_label("lbl_title", "WAREHOUSE BIN MAINTENANCE")
@@ -402,30 +342,30 @@ FUNCTION save_bin()
         SELECT COUNT(*)
             INTO exists
             FROM wb01_mast
-            WHERE wb_code = rec_bin.wb_code
+            WHERE wb_code = bin_rec.wb_code
 
         IF exists = 0 THEN
-            INSERT INTO wb01_mast VALUES rec_bin.*
+            INSERT INTO wb01_mast VALUES bin_rec.*
             COMMIT WORK
             CALL utils_globals.msg_saved()
         ELSE
-            LET rec_bin.updated_at = CURRENT
+            LET bin_rec.updated_at = CURRENT
             UPDATE wb01_mast
-                SET wh_id = rec_bin.wh_id,
-                    description = rec_bin.description,
-                    status = rec_bin.status,
-                    updated_at = rec_bin.updated_at
-                WHERE wb_code = rec_bin.wb_code
+                SET wh_id = bin_rec.wh_id,
+                    description = bin_rec.description,
+                    status = bin_rec.status,
+                    updated_at = bin_rec.updated_at
+                WHERE wb_code = bin_rec.wb_code
             COMMIT WORK
             CALL utils_globals.msg_updated()
         END IF
 
-        CALL load_bin(rec_bin.wb_code)
+        CALL load_bin(bin_rec.wb_code)
 
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error(SFMT("Save failed: Error %1 - %2", 
-                                          SQLCA.SQLCODE, SQLCA.SQLERRM))
+        CALL utils_globals.show_error(
+            SFMT("Save failed: Error %1 - %2", SQLCA.SQLCODE, SQLCA.SQLERRM))
     END TRY
 END FUNCTION
 
@@ -436,32 +376,22 @@ FUNCTION delete_bin()
     DEFINE ok SMALLINT
     DEFINE deleted_code STRING
     DEFINE array_size INTEGER
-    DEFINE in_use INTEGER
 
-    IF rec_bin.wb_code IS NULL OR rec_bin.wb_code = "" THEN
+    IF bin_rec.wb_code IS NULL OR bin_rec.wb_code = "" THEN
         CALL utils_globals.show_info("No bin selected for deletion.")
         RETURN
     END IF
 
-    -- Check if bin is being used in other tables (foreign key constraints)
-    -- Add your specific foreign key checks here based on your schema
-    -- Example:
-    -- SELECT COUNT(*) INTO in_use FROM inventory_table WHERE bin_code = rec_bin.wb_code
-    -- IF in_use > 0 THEN
-    --     CALL utils_globals.show_error("Cannot delete - bin has inventory records")
-    --     RETURN
-    -- END IF
-
     LET ok =
         utils_globals.show_confirm(
-            "Delete this bin: " || rec_bin.description || "?", "Confirm Delete")
+            "Delete this bin: " || bin_rec.description || "?", "Confirm Delete")
 
     IF NOT ok THEN
         CALL utils_globals.show_info("Delete cancelled.")
         RETURN
     END IF
 
-    LET deleted_code = rec_bin.wb_code
+    LET deleted_code = bin_rec.wb_code
 
     BEGIN WORK
     TRY
@@ -470,8 +400,8 @@ FUNCTION delete_bin()
         CALL utils_globals.msg_deleted()
     CATCH
         ROLLBACK WORK
-        CALL utils_globals.show_error(SFMT("Delete failed: Error %1 - %2", 
-                                          SQLCA.SQLCODE, SQLCA.SQLERRM))
+        CALL utils_globals.show_error(
+            SFMT("Delete failed: Error %1 - %2", SQLCA.SQLCODE, SQLCA.SQLERRM))
         RETURN
     END TRY
 
@@ -489,10 +419,10 @@ FUNCTION delete_bin()
         CALL load_bin(arr_codes[curr_idx])
     ELSE
         LET curr_idx = 0
-        INITIALIZE rec_bin.* TO NULL
-        LET rec_wh_code = NULL
-        DISPLAY BY NAME rec_bin.*
-        DISPLAY rec_wh_code TO wh01_mast.wh_code
+        INITIALIZE bin_rec.* TO NULL
+
+        DISPLAY BY NAME bin_rec.*
+
     END IF
 END FUNCTION
 
@@ -516,13 +446,13 @@ END FUNCTION
 -- ==============================================================
 FUNCTION validate_warehouse_code(p_wh_code STRING) RETURNS INTEGER
     DEFINE wh_id INTEGER
-    
-    LET wh_id = 0  -- Initialize to 0 (invalid)
+
+    LET wh_id = 0 -- Initialize to 0 (invalid)
 
     SELECT id INTO wh_id FROM wh01_mast WHERE wh_code = p_wh_code
 
     IF SQLCA.SQLCODE != 0 OR wh_id IS NULL THEN
-        RETURN 0  -- Return 0 for invalid warehouse code
+        RETURN 0 -- Return 0 for invalid warehouse code
     END IF
 
     RETURN wh_id

@@ -29,10 +29,10 @@
   <!-- Warehouse Management -->
   <TopMenuGroup text="Warehouse">
     <TopMenuCommand name="wh_mast" text="Warehouses" image="fa-industry"/>
-     <TopMenuCommand name="wh_mast" text="Warehouse Transfer" image="fa-stack-overflow"/>
+     <TopMenuCommand name="wh_trf" text="Warehouse Transfer" image="fa-stack-overflow"/>
      <TopMenuSeparator/>
     <TopMenuCommand name="wb_mast" text="Warehouse Bins" image="listins"/>
-     <TopMenuCommand name="wb_mast" text="Bin Transfer" image="fa-stack-overflow"/>
+     <TopMenuCommand name="wb_trf" text="Bin Transfer" image="fa-stack-overflow"/>
      <TopMenuSeparator/>
   </TopMenuGroup>
 

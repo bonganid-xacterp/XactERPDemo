@@ -137,7 +137,7 @@ PUBLIC FUNCTION launch_child_window(module_name STRING, title STRING) RETURNS SM
     TRY
         CALL ui.Interface.setType("child")
         CALL ui.Interface.setName(winname)
-        CALL ui.Interface.setContainer("mdi_container")  <!-- ? POINT TO THE ACTUAL CONTAINER -->
+        CALL ui.Interface.setContainer("main_shell")
 
         OPEN WINDOW winname WITH FORM formname
             ATTRIBUTES(TEXT = wintitle, STYLE="Window.child")
@@ -256,7 +256,7 @@ PUBLIC FUNCTION show_window_manager()
     END IF
 
     -- Display window list
-    OPEN WINDOW w_window_list WITH FORM "utils_global_lkup_form"
+    OPEN WINDOW w_window_list WITH FORM "utils_global_lkup"
         ATTRIBUTES(TEXT = "Active Windows")
 
     DISPLAY ARRAY arr_active TO sr_lookup.*

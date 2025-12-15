@@ -194,7 +194,7 @@ END FUNCTION
 -- Purpose  : Enables view-only actions; disables editing actions
 -- ==============================================================
 
-PUBLIC FUNCTION set_view_mode()
+PUBLIC FUNCTION set_view_mode_actions()
     DEFINE dlg ui.Dialog
     LET dlg = ui.Dialog.getCurrent()
 
@@ -220,7 +220,7 @@ END FUNCTION
 -- Purpose  : Enables editing actions; disables non-edit actions
 -- ==============================================================
 
-PUBLIC FUNCTION set_edit_mode()
+PUBLIC FUNCTION set_edit_mode_actions()
     DEFINE dlg ui.Dialog
     LET dlg = ui.Dialog.getCurrent()
 
@@ -247,7 +247,7 @@ END FUNCTION
 -- Purpose  : Prepares form for new record creation
 -- ==============================================================
 
-PUBLIC FUNCTION set_new_mode()
+PUBLIC FUNCTION set_new_mode_actions()
     DEFINE dlg ui.Dialog
     LET dlg = ui.Dialog.getCurrent()
 
@@ -277,6 +277,15 @@ PUBLIC FUNCTION show_message(
     p_message STRING, message_type STRING, title STRING)
     DEFINE icon STRING
     DEFINE window_title STRING
+    DEFINE w ui.Window
+
+    -- Check if there's a current window before showing message
+    LET w = ui.Window.getCurrent()
+    IF w IS NULL THEN
+        -- No window available, just display to console/log
+        DISPLAY p_message
+        RETURN
+    END IF
 
     LET window_title = IIF(title IS NULL, "Message", title)
 
@@ -316,6 +325,15 @@ END FUNCTION
 -- Confirmation dialog
 PUBLIC FUNCTION show_confirm(message STRING, title STRING) RETURNS BOOLEAN
     DEFINE answer SMALLINT
+    DEFINE w ui.Window
+
+    -- Check if there's a current window before showing dialog
+    LET w = ui.Window.getCurrent()
+    IF w IS NULL THEN
+        -- No window available, default to FALSE (don't confirm)
+        RETURN FALSE
+    END IF
+
     LET title = IIF(title IS NULL, "Confirm", title)
 
     MENU title ATTRIBUTES(STYLE = "dialog", COMMENT = message)
@@ -656,11 +674,23 @@ PUBLIC FUNCTION set_page_title(title STRING)
 END FUNCTION
 
 PUBLIC FUNCTION set_form_label(label_name STRING, p_text STRING)
-    DEFINE f ui.Form
-    LET f = ui.Window.getCurrent().getForm()
-    CALL f.setElementText(label_name, p_text)
+    DEFINE  w_cur ui.WINDOW,
+        f_cur ui.FORM,
+
+        l_dlog ui.DIALOG
+
+    LET l_dlog = ui.DIALOG.getCurrent()
+
+    LET w_cur = ui.WINDOW.getCurrent()
+    LET f_cur = l_dlog.getForm()
+
+    CALL f_cur.setElementText(label_name, p_text)
 END FUNCTION
 
+
+-- ==============================================================
+-- Set field hidden
+-- ==============================================================
 PUBLIC FUNCTION set_fields_visibility(
     fields DYNAMIC ARRAY OF STRING, hidden BOOLEAN)
     DEFINE f ui.Form
@@ -669,6 +699,21 @@ PUBLIC FUNCTION set_fields_visibility(
     LET f = ui.Window.getCurrent().getForm()
     FOR i = 1 TO fields.getLength()
         CALL f.setFieldHidden(fields[i], hidden)
+    END FOR
+END FUNCTION
+
+-- ==============================================================
+-- Set field inactive
+-- ==============================================================
+PUBLIC FUNCTION set_array_fields_editable(
+    fields DYNAMIC ARRAY OF STRING, active BOOLEAN)
+    DEFINE f ui.Form
+    DEFINE i INTEGER
+    DEFINE dlg ui.Dialog
+
+    LET f = ui.Window.getCurrent().getForm()
+    FOR i = 1 TO fields.getLength()
+        CALL dlg.setFieldActive(fields[i], active)
     END FOR
 END FUNCTION
 
@@ -1150,6 +1195,11 @@ FUNCTION show_sql_error(p_context STRING)
     DEFINE sql_errm STRING = SQLCA.SQLERRM
     --DEFINE sql_state STRING = SQLCA.SQLSTATE
 
+    -- Only show error if there actually is one (SQLCODE != 0)
+    IF sql_code = 0 THEN
+        RETURN -- No error, don't show anything
+    END IF
+
     -- Check if the error is "No Data Found" or "End of Cursor" (often handled gracefully)
     IF sql_code = NOTFOUND THEN
         LET full_message =
@@ -1158,11 +1208,8 @@ FUNCTION show_sql_error(p_context STRING)
     ELSE
         -- Format the detailed error message
         LET full_message =
-            SFMT("Database Error: %1\n(SQLCODE: %2 / SQLSTATE: %3)\nError: %4",
-                p_context,
-                sql_code,
-                -- sql_state,
-                sql_errm)
+            SFMT("Database Error: %1\n(SQLCODE: %2)\nError: %3",
+                p_context, sql_code, sql_errm)
     END IF
 
     CALL show_error(full_message)

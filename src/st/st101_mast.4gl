@@ -12,8 +12,11 @@ IMPORT FGL utils_globals
 IMPORT FGL utils_db
 IMPORT FGL st122_cat_lkup
 IMPORT FGL utils_status_const
+IMPORT FGL utils_global_lkup
 IMPORT FGL st121_st_lkup
 IMPORT FGL pu130_order
+IMPORT FGL pu131_grn
+IMPORT FGL pu132_inv
 
 SCHEMA demoappdb
 
@@ -35,56 +38,90 @@ DEFINE arr_uom_codes DYNAMIC ARRAY OF STRING
 DEFINE arr_uom_names DYNAMIC ARRAY OF STRING
 
 -- Transactions array for display
-DEFINE m_st_trans_arr DYNAMIC ARRAY OF RECORD
-    trans_date LIKE st30_trans.trans_date,
-    doc_type LIKE st30_trans.doc_type,
-    direction LIKE st30_trans.direction,
-    qnty LIKE st30_trans.qnty,
-    unit_cost LIKE st30_trans.unit_cost,
-    sell_price LIKE st30_trans.sell_price,
-    expiry_date LIKE st30_trans.expiry_date
-END RECORD
+DEFINE m_st_trans_arr DYNAMIC ARRAY OF RECORD LIKE st30_trans.*
 
 -- ==============================================================
 -- Init Program
 -- ==============================================================
 FUNCTION init_st_module()
+    DEFINE chosen_row SMALLINT
 
     LET is_edit_mode = FALSE
+
+    -- load uoms
+
+    CALL load_uoms()
+
     INITIALIZE m_stock_rec.* TO NULL
 
     DISPLAY BY NAME m_stock_rec.*
 
-    CALL load_uoms()
+    DISPLAY ARRAY m_st_trans_arr
+        TO m_st_trans_arr.*
+        ATTRIBUTES(UNBUFFERED, DOUBLECLICK = row_select)
 
-    MENU "Stock Master Menu"
+        BEFORE DISPLAY
+            CALL DIALOG.setActionHidden("accept", TRUE)
+            CALL DIALOG.setActionHidden("cancel", TRUE)
+            CALL DIALOG.setActionHidden("row_select", TRUE)
+
         ON ACTION Find
             CALL query_stock_lookup();
             LET is_edit_mode = FALSE
-        ON ACTION New
-            CALL new_stock()
-        ON ACTION Edit
+
+        ON ACTION New ATTRIBUTES(TEXT = "New", IMAGE = "new")
+            CALL new_stock();
+            LET is_edit_mode = FALSE
+
+        ON ACTION row_select
+
+            TRY
+                LET chosen_row = DIALOG.getCurrentRow("m_st_trans_arr");
+                IF chosen_row > 0 THEN
+                    CALL open_transaction_window(
+                        m_st_trans_arr[chosen_row].doc_no,
+                        m_st_trans_arr[chosen_row].doc_type)
+                END IF
+            CATCH
+                CALL utils_globals.show_error('Error fetching doc')
+            END TRY
+
+        ON ACTION List ATTRIBUTES(TEXT = "Reload", IMAGE = "refresh")
+            CALL load_all_stock();
+            LET is_edit_mode = FALSE
+
+        ON ACTION Edit ATTRIBUTES(TEXT = "Edit", IMAGE = "pen")
             IF m_stock_rec.id IS NULL OR m_stock_rec.id = 0 THEN
-                CALL utils_globals.show_info("No record selected.")
+                CALL utils_globals.show_info("No record selected to edit.")
             ELSE
+                LET is_edit_mode = TRUE;
+                CALL utils_globals.set_form_label(
+                    'lbl_form_title', 'CREDITORS MAINTENANCE');
                 CALL edit_stock()
             END IF
-        ON ACTION Delete
-            CALL delete_stock()
-        ON ACTION Previous
-            CALL move_record(-1)
-        ON ACTION Next
-            CALL move_record(1)
-        ON ACTION add_po
-            IF m_stock_rec.id IS NULL OR m_stock_rec.id = 0 THEN
-                CALL utils_globals.show_info("Select a stock item first.")
-            ELSE
-                CALL capture_new_po(m_stock_rec.id)
-            END IF
-        ON ACTION Exit
-            EXIT MENU
-    END MENU
 
+        ON ACTION DELETE ATTRIBUTES(TEXT = "Delete", IMAGE = "fa-trash")
+            CALL delete_stock();
+            LET is_edit_mode = FALSE
+
+        ON ACTION PREVIOUS
+            CALL move_record(-1)
+
+        ON ACTION NEXT
+            CALL move_record(1)
+
+        ON ACTION add_order ATTRIBUTES(TEXT = "Add P/Order", IMAGE = "new")
+            IF m_stock_rec.id THEN
+                CALL pu130_order.new_po_from_stock(m_stock_rec.id)
+            ELSE
+                CALL utils_globals.show_warning(
+                    'Choose a creditor record first.')
+            END IF
+
+        ON ACTION EXIT ATTRIBUTES(TEXT = "Exit", IMAGE = "fa-close")
+            EXIT DISPLAY
+
+    END DISPLAY
 END FUNCTION
 
 -- ==============================================================
@@ -114,7 +151,7 @@ FUNCTION query_stock_lookup()
     DEFINE selected_code STRING
     DEFINE found_idx, i INTEGER
 
-    LET selected_code = st121_st_lkup.fetch_list()
+    LET selected_code = utils_global_lkup.display_lookup('stock')
 
     IF selected_code IS NULL OR selected_code = "" THEN
         RETURN
@@ -156,7 +193,8 @@ FUNCTION load_stock_item(p_id INTEGER)
             CALL load_stock_transactions(m_stock_rec.id)
         END IF
     CATCH
-        CALL utils_globals.show_sql_error("load_stock_item: Error loading stock item")
+        CALL utils_globals.show_sql_error(
+            "load_stock_item: Error loading stock item")
     END TRY
 END FUNCTION
 
@@ -187,7 +225,8 @@ FUNCTION get_linked_category(p_id INTEGER)
     TRY
         SELECT cat_name INTO l_cat_name FROM st02_cat WHERE id = p_id
     CATCH
-        CALL utils_globals.show_sql_error("get_linked_category: Error loading category")
+        CALL utils_globals.show_sql_error(
+            "get_linked_category: Error loading category")
         LET l_cat_name = NULL
     END TRY
     RETURN l_cat_name
@@ -198,26 +237,29 @@ END FUNCTION
 -- ==============================================================
 FUNCTION load_stock_transactions(p_stock_id INTEGER)
     DEFINE idx INTEGER
+
     CALL m_st_trans_arr.clear()
-    LET idx = 1
 
     TRY
-        DECLARE c_trans CURSOR FOR
+        DECLARE stock_trans_curs CURSOR FOR
             SELECT *
                 FROM st30_trans
                 WHERE stock_id = p_stock_id
                 ORDER BY trans_date DESC
 
-        FOREACH c_trans INTO m_st_trans_arr[idx].*
+        LET idx = 1
+        FOREACH stock_trans_curs INTO m_st_trans_arr[idx].*
             LET idx = idx + 1
         END FOREACH
 
-        CLOSE c_trans
-        FREE c_trans
+        CLOSE stock_trans_curs
+        FREE stock_trans_curs
+
     CATCH
-        CALL utils_globals.show_sql_error("load_stock_transactions: Error loading transactions")
+        CALL utils_globals.show_sql_error(
+            "load_stock_transactions: Error loading transactions")
     END TRY
-    --    DISPLAY ARRAY m_st_trans_arr TO tbl_st_trans.*
+
 END FUNCTION
 
 -- ==============================================================
@@ -255,6 +297,7 @@ FUNCTION new_stock()
     DIALOG ATTRIBUTES(UNBUFFERED)
 
         INPUT BY NAME m_stock_rec.* ATTRIBUTES(WITHOUT DEFAULTS)
+
             ON ACTION lookup_category
                 CALL open_category_lkup()
 
@@ -267,10 +310,10 @@ FUNCTION new_stock()
                     CALL utils_globals.msg_error_duplicates()
                 END TRY
 
-        END INPUT
+            ON ACTION cancel
+                EXIT DIALOG
 
-        ON ACTION cancel
-            EXIT DIALOG
+        END INPUT
 
     END DIALOG
 
@@ -370,7 +413,8 @@ FUNCTION select_stock_items(p_where STRING) RETURNS SMALLINT
         CLOSE stock_curs
         FREE stock_curs
     CATCH
-        CALL utils_globals.show_sql_error("select_stock_items: Error selecting stock items")
+        CALL utils_globals.show_sql_error(
+            "select_stock_items: Error selecting stock items")
         RETURN FALSE
     END TRY
 
@@ -413,7 +457,8 @@ FUNCTION check_stock_unique(p_id INTEGER) RETURNS SMALLINT
             RETURN 1
         END IF
     CATCH
-        CALL utils_globals.show_sql_error("check_stock_unique: Error checking stock uniqueness")
+        CALL utils_globals.show_sql_error(
+            "check_stock_unique: Error checking stock uniqueness")
         RETURN 1
     END TRY
     RETURN 0
@@ -438,7 +483,8 @@ FUNCTION delete_stock()
             FROM st30_trans
             WHERE stock_id = m_stock_rec.id
         IF trans_count > 0 THEN
-            CALL utils_globals.show_error("Cannot delete item with transactions.")
+            CALL utils_globals.show_error(
+                "Cannot delete item with transactions.")
             RETURN
         END IF
 
@@ -449,7 +495,8 @@ FUNCTION delete_stock()
             LET ok = select_stock_items("1=1")
         END IF
     CATCH
-        CALL utils_globals.show_sql_error("delete_stock: Error deleting stock item")
+        CALL utils_globals.show_sql_error(
+            "delete_stock: Error deleting stock item")
     END TRY
 END FUNCTION
 
@@ -511,9 +558,77 @@ FUNCTION load_uoms()
 END FUNCTION
 
 -- ==============================================================
--- Load UOMs into ComboBox
+-- Capture New PO from Stock
 -- ==============================================================
 FUNCTION capture_new_po(p_id INTEGER)
     -- capture new po
     CALL pu130_order.new_po_from_stock(p_id)
+END FUNCTION
+
+-- ==============================================================
+-- Open Transaction Document (double-click handler)
+-- ==============================================================
+FUNCTION open_transaction_window(p_doc_id INTEGER, l_type STRING)
+
+    DISPLAY "Loaded the doc no for doc : " || p_doc_id
+
+    CASE l_type
+        WHEN "PO"
+            CALL pu130_order.load_po(p_doc_id)
+        WHEN "INV"
+            CALL pu132_inv.load_pu_inv(p_doc_id)
+        WHEN "GRN"
+            CALL pu131_grn.load_pu_grn(p_doc_id)
+        OTHERWISE
+            CALL utils_globals.show_info("Unknown document type: " || l_type)
+    END CASE
+
+END FUNCTION
+
+-- ==============================================================
+-- Extract Document ID from Notes
+-- ==============================================================
+FUNCTION extract_doc_id_from_notes(
+    p_notes STRING, p_doc_type STRING)
+    RETURNS INTEGER
+    DEFINE l_pattern STRING
+    DEFINE l_pos INTEGER
+    DEFINE l_end_pos INTEGER
+    DEFINE l_doc_id_str STRING
+    DEFINE l_doc_id INTEGER
+
+    IF p_notes IS NULL THEN
+        RETURN NULL
+    END IF
+
+    -- Pattern: "PO#123" or "GRN#123" or "INV#123"
+    LET l_pattern = p_doc_type || "#"
+    LET l_pos = p_notes.getIndexOf(l_pattern, 1)
+
+    IF l_pos = 0 THEN
+        RETURN NULL
+    END IF
+
+    -- Move past the pattern to get the number
+    LET l_pos = l_pos + l_pattern.getLength()
+
+    -- Find the end of the number (space or end of string)
+    LET l_end_pos = l_pos
+    WHILE l_end_pos <= p_notes.getLength()
+        IF p_notes.getCharAt(l_end_pos) >= "0"
+            AND p_notes.getCharAt(l_end_pos) <= "9" THEN
+            LET l_end_pos = l_end_pos + 1
+        ELSE
+            EXIT WHILE
+        END IF
+    END WHILE
+
+    IF l_end_pos = l_pos THEN
+        RETURN NULL
+    END IF
+
+    LET l_doc_id_str = p_notes.subString(l_pos, l_end_pos - 1)
+    LET l_doc_id = l_doc_id_str
+
+    RETURN l_doc_id
 END FUNCTION

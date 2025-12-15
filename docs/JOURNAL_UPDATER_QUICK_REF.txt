@@ -1,0 +1,176 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                 GLOBAL JOURNAL UPDATER - QUICK REFERENCE                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+IMPORT
+────────────────────────────────────────────────────────────────────────────────
+  IMPORT FGL utils_global_journal_updater
+
+SALES INVOICE JOURNAL
+────────────────────────────────────────────────────────────────────────────────
+  LET l_jrn_id = utils_global_journal_updater.create_sales_invoice_journal(
+      l_inv_id,
+      l_doc_no,
+      l_trans_date,
+      l_cust_id,
+      l_net_total
+  )
+
+  Entry: DR: Accounts Receivable, CR: Sales Revenue
+
+SALES CREDIT NOTE JOURNAL
+────────────────────────────────────────────────────────────────────────────────
+  LET l_jrn_id = utils_global_journal_updater.create_sales_credit_note_journal(
+      l_crn_id,
+      l_doc_no,
+      l_trans_date,
+      l_cust_id,
+      l_net_total
+  )
+
+  Entry: DR: Sales Returns, CR: Accounts Receivable
+
+PURCHASE INVOICE JOURNAL
+────────────────────────────────────────────────────────────────────────────────
+  LET l_jrn_id = utils_global_journal_updater.create_purchase_invoice_journal(
+      l_inv_id,
+      l_doc_no,
+      l_trans_date,
+      l_supp_id,
+      l_net_total
+  )
+
+  Entry: DR: Purchases, CR: Accounts Payable
+
+GRN JOURNAL
+────────────────────────────────────────────────────────────────────────────────
+  LET l_jrn_id = utils_global_journal_updater.create_grn_journal(
+      l_grn_id,
+      l_doc_no,
+      l_trans_date,
+      l_supp_id,
+      l_net_total
+  )
+
+  Entry: DR: Inventory, CR: GRN Clearing
+
+CUSTOM JOURNAL ENTRY
+────────────────────────────────────────────────────────────────────────────────
+  DEFINE l_entries DYNAMIC ARRAY OF RECORD
+      acc_id INTEGER,
+      debit DECIMAL(15,2),
+      credit DECIMAL(15,2),
+      notes STRING
+  END RECORD
+
+  LET l_entries[1].acc_id = 101
+  LET l_entries[1].debit = 1500.00
+  LET l_entries[1].credit = 0.00
+  LET l_entries[1].notes = "Customer invoice"
+
+  LET l_entries[2].acc_id = 401
+  LET l_entries[2].debit = 0.00
+  LET l_entries[2].credit = 1500.00
+  LET l_entries[2].notes = "Sales revenue"
+
+  LET l_jrn_id = utils_global_journal_updater.create_journal_entry(
+      "INV", "INV-2025-00123", TODAY, "Sales Invoice", l_entries)
+
+REQUIRED GL ACCOUNT CODES
+────────────────────────────────────────────────────────────────────────────────
+  Code        Description              Type        Usage
+  ────────────────────────────────────────────────────────────────────────────
+  AR          Accounts Receivable      Asset       Customer invoices
+  AP          Accounts Payable         Liability   Supplier invoices
+  SALES       Sales Revenue            Revenue     Customer invoices
+  SALES_RET   Sales Returns            Expense     Credit notes
+  PURCH       Purchases                Expense     Purchase invoices
+  INV         Inventory                Asset       GRN, stock receipts
+  GRN_CLR     GRN Clearing             Liability   GRN clearing
+
+ERROR HANDLING
+────────────────────────────────────────────────────────────────────────────────
+  IF l_jrn_id = 0 THEN
+      -- Error already displayed via utils_globals.show_error()
+      ROLLBACK WORK
+      RETURN FALSE
+  END IF
+
+RETURN VALUES
+────────────────────────────────────────────────────────────────────────────────
+  Journal ID  = Success (> 0)
+  0           = Failure (error already shown to user)
+
+INTEGRATION PATTERN
+────────────────────────────────────────────────────────────────────────────────
+  BEGIN WORK
+  TRY
+      -- Update balances/stock
+      -- ... business logic ...
+
+      -- Create journal entry
+      LET l_jrn_id = utils_global_journal_updater.create_xxx_journal(...)
+
+      IF l_jrn_id = 0 THEN
+          ROLLBACK WORK
+          RETURN FALSE
+      END IF
+
+      -- Update document status
+      UPDATE xxx_hdr SET status = "POSTED" WHERE id = p_id
+
+      COMMIT WORK
+      RETURN TRUE
+
+  CATCH
+      ROLLBACK WORK
+      RETURN FALSE
+  END TRY
+
+JOURNAL NUMBER FORMAT
+────────────────────────────────────────────────────────────────────────────────
+  JRN-YYYY-MM-NNNNNN
+
+  Example: JRN-2025-01-000001
+
+FEATURES
+────────────────────────────────────────────────────────────────────────────────
+  ✓ Automatic double-entry validation (DR = CR)
+  ✓ Account existence validation
+  ✓ Automatic journal number generation
+  ✓ Transaction management (BEGIN/COMMIT/ROLLBACK)
+  ✓ Comprehensive error handling
+  ✓ User tracking
+  ✓ Status tracking (POSTED)
+  ✓ Full audit trail
+
+COMMON ERRORS
+────────────────────────────────────────────────────────────────────────────────
+  "No journal entries provided"
+    → Empty entries array
+
+  "Journal out of balance: DR=X CR=Y"
+    → Debits don't equal credits
+
+  "Account ID X does not exist"
+    → Invalid account ID or inactive account
+
+  "Failed to get GL account configuration"
+    → Required account code not in gl01_acc table
+
+TABLES USED
+────────────────────────────────────────────────────────────────────────────────
+  gl01_acc    - Chart of Accounts (master)
+  gl30_jnls   - Journal Headers
+  gl31_lines  - Journal Detail Lines
+
+FILES
+────────────────────────────────────────────────────────────────────────────────
+  Source: src/utils/utils_global_journal_updater.4gl
+  Binary: bin/utils_global_journal_updater.42m
+  Guide:  docs/JOURNAL_UPDATER_GUIDE.md
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  TIP: Use specialized functions (create_sales_invoice_journal, etc.) for    ║
+║       standard transactions. Use create_journal_entry() for custom entries. ║
+╚══════════════════════════════════════════════════════════════════════════════╝

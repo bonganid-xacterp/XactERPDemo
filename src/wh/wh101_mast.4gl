@@ -68,7 +68,12 @@ FUNCTION init_wh_module()
     MENU "Warehouse Menu"
         COMMAND "Find"       CALL query_warehouses(); LET is_edit_mode = FALSE
         COMMAND "New"        CALL new_warehouse();    LET is_edit_mode = FALSE
-        COMMAND "Edit"       IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" THEN CALL utils_globals.show_info("No warehouse selected to edit.") ELSE LET is_edit_mode = TRUE; CALL edit_warehouse() END IF
+        COMMAND "Edit"       
+                IF rec_wh.wh_code IS NULL OR rec_wh.wh_code = "" 
+                THEN 
+                CALL utils_globals.show_info("No warehouse selected to edit.") 
+                ELSE LET is_edit_mode = TRUE; 
+                CALL edit_warehouse() END IF
         COMMAND "Delete"     CALL delete_warehouse(); LET is_edit_mode = FALSE
         COMMAND "Previous"   CALL move_record(-1)
         COMMAND "Next"       CALL move_record(1)
@@ -278,7 +283,6 @@ FUNCTION new_warehouse()
                 IF dup_found = 0 THEN
                     CALL insert_warehouse()   -- explicit INSERT + RETURNING
                     LET new_id = rec_wh.id
-                    CALL utils_globals.show_info("Warehouse saved successfully.")
                     EXIT DIALOG
                 ELSE
                     CALL utils_globals.show_error("Duplicate warehouse found.")

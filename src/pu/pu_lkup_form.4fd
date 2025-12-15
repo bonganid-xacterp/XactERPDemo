@@ -3,7 +3,7 @@
   <AGSettings>
     <DynamicProperties version="2"/>
   </AGSettings>
-  <Record active="false" name="tbl_list" uid="{f53ce3c4-38c1-41d0-983c-73be5ef11b5e}">
+  <Record active="false" name="m_line_data" uid="{f53ce3c4-38c1-41d0-983c-73be5ef11b5e}">
     <RecordField fieldIdRef="1" fieldType="NON_DATABASE" name="stock_id" sqlType="BIGINT" uid="{a98bbe8a-cdc6-4934-9a13-51d5de26076e}"/>
     <RecordField fieldIdRef="2" fieldType="NON_DATABASE" length="100" name="item_name" sqlType="VARCHAR" uid="{9ac6b795-71f4-4ac7-8826-4262d335633c}"/>
     <RecordField fieldIdRef="3" fieldType="NON_DATABASE" name="qnty" precisionDecimal="15" scaleDecimal="3" sqlType="DECIMAL" uid="{6e7926e6-8a50-4836-92d7-f26ac6bc2df5}"/>
@@ -70,6 +70,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewAzADQAZQAwAGIAOQA3ADYALQBkADIAOQA3AC0ANABlADIAMgAtAGIAZABmADUALQBkAGQANAA3ADYAMQA3AGUAMQAzADAAZAB9QGhMzN9GZms+gAAADAAAAz9QYk3S8an8AQAAAEwAewBmADUAMwBjAGUAMwBjADQALQAzADgAYwAxAC0ANAAxAGQAMAAtADkAOAAzAGMALQA3ADMAYgBlADUAZQBmADEAMQBiADUAZQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
+    <![CDATA[AAAAAgAAAEwAewAzADQAZQAwAGIAOQA3ADYALQBkADIAOQA3AC0ANABlADIAMgAtAGIAZABmADUALQBkAGQANAA3ADYAMQA3AGUAMQAzADAAZAB9QGhMzOVZmaM+gAAAEAAABj9QYk3S8an8AQAAAEwAewBmADUAMwBjAGUAMwBjADQALQAzADgAYwAxAC0ANAAxAGQAMAAtADkAOAAzAGMALQA3ADMAYgBlADUAZQBmADEAMQBiADUAZQB9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

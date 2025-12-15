@@ -39,7 +39,7 @@
     <RecordField colName="gross_amt" fieldIdRef="31" fieldType="TABLE_COLUMN" name="sa33_crn_det.gross_amt" sqlTabName="sa33_crn_det" uid="{4f5111cb-c4a5-45df-aeeb-dbc3c8c04798}"/>
     <RecordField colName="vat_rate" fieldIdRef="32" fieldType="TABLE_COLUMN" name="sa33_crn_det.vat_rate" sqlTabName="sa33_crn_det" uid="{661cef81-d025-402e-9f61-f340e02dcb9c}"/>
     <RecordField colName="vat_amt" fieldIdRef="33" fieldType="TABLE_COLUMN" name="sa33_crn_det.vat_amt" sqlTabName="sa33_crn_det" uid="{57d0731d-adcf-44da-a98f-7de318f68e9c}"/>
-    <RecordField colName="net_amt" fieldIdRef="34" fieldType="TABLE_COLUMN" name="sa33_crn_det.net_amt" sqlTabName="sa33_crn_det" uid="{b28463c9-a646-47ad-86fe-933a07cce160}"/>
+    <RecordField colName="net_excl_amt" fieldIdRef="34" fieldType="TABLE_COLUMN" name="sa33_crn_det.net_excl_amt" sqlTabName="sa33_crn_det" uid="{b28463c9-a646-47ad-86fe-933a07cce160}"/>
     <RecordField colName="line_total" fieldIdRef="35" fieldType="TABLE_COLUMN" name="sa33_crn_det.line_total" sqlTabName="sa33_crn_det" uid="{9c402f61-e2f0-40a8-bcdc-143d11029507}"/>
     <RecordField colName="wh_id" fieldIdRef="36" fieldType="TABLE_COLUMN" name="sa33_crn_det.wh_id" sqlTabName="sa33_crn_det" uid="{9e6c5327-8594-4a5d-ad38-80c89d844f42}"/>
     <RecordField colName="wb_id" fieldIdRef="37" fieldType="TABLE_COLUMN" name="sa33_crn_det.wb_id" sqlTabName="sa33_crn_det" uid="{7c0f070d-884b-420a-8d3c-82a633022f05}"/>
@@ -52,7 +52,7 @@
   </Record>
   <Form gridHeight="20" gridWidth="315" name="form" text="CREDIT NOTE">
     <VBox gridHeight="20" gridWidth="315" name="vbox1" posX="0" posY="0">
-      <Grid gridHeight="18" gridWidth="351" name="sa130_ord_hdr" posX="0" posY="1">
+      <Grid gridHeight="18" gridWidth="315" name="sa130_ord_hdr" posX="0" posY="1">
         <Label gridHeight="1" gridWidth="115" justify="center" name="lbl_form_title" posX="1" posY="0" style="bold header" text="SALES CREDIT NOTE"/>
         <Group gridHeight="9" gridWidth="53" name="cust_info" posX="1" posY="1" text="">
           <Label gridHeight="1" gridWidth="9" name="sa30_quo_hdr_doc_no_label1" posX="1" posY="1" text="Doc No">
@@ -209,7 +209,7 @@
           <Edit colName="vat_amt" fieldId="33" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sa33_crn_det.vat_amt" posX="156" posY="0" scroll="true" sqlTabName="sa33_crn_det" tabIndex="-1" title="VAT Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
-          <Edit colName="net_amt" fieldId="34" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sa33_crn_det.net_amt" posX="173" posY="0" scroll="true" sqlTabName="sa33_crn_det" tabIndex="-1" title="Net Amount" widget="Edit">
+          <Edit colName="net_excl_amt" fieldId="34" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sa33_crn_det.net_excl_amt" posX="173" posY="0" scroll="true" sqlTabName="sa33_crn_det" tabIndex="-1" title="Net Amount" widget="Edit">
             <Initializer title="dbschema:$(sqlTabName).$(colName)/@label"/>
           </Edit>
           <Edit colName="line_total" fieldId="35" fieldType="TABLE_COLUMN" gridHeight="1" gridWidth="17" name="sa33_crn_det.line_total" posX="190" posY="0" scroll="true" sqlTabName="sa33_crn_det" tabIndex="-1" title="Line Amount" widget="Edit">
@@ -236,6 +236,6 @@
     </VBox>
   </Form>
   <DiagramLayout>
-    <![CDATA[AAAAAgAAAEwAewA2AGQAYQBiADgAOABiADkALQBjADUAZgBkAC0ANABmADYAYgAtADgANQBlADgALQA1AGEAYQBmADYAOQA1ADkAYgA2ADUANQB9QDAAAAwAAANAMAAADAAAAwAAAAAAAAAAAQAAAEwAewBiADEAMQBiAGIAYQBjAGMALQA5ADcAMwBmAC0ANABiAGUAYQAtADkAZgBjADAALQAyADAAOAA1AGEAYwBlADQAZQBmAGEANAB9QHvMzNPAAABAOMzM0wAAAD98rAgxJul5AQ==]]>
+    <![CDATA[AAAAAgAAAEwAewBiADEAMQBiAGIAYQBjAGMALQA5ADcAMwBmAC0ANABiAGUAYQAtADkAZgBjADAALQAyADAAOAA1AGEAYwBlADQAZQBmAGEANAB9QHvMzNqzMzVAOMzM2TMzNT98rAgxJul5AQAAAEwAewA2AGQAYQBiADgAOABiADkALQBjADUAZgBkAC0ANABmADYAYgAtADgANQBlADgALQA1AGEAYQBmADYAOQA1ADkAYgA2ADUANQB9QDAAABAAAAZAMAAAEAAABgAAAAAAAAAAAQ==]]>
   </DiagramLayout>
 </ManagedForm>

@@ -26,7 +26,6 @@ DEFINE m_debug_mode SMALLINT
 -- Launch or focus a child window
 -- Returns: window name if opened, NULL if only focused or error
 -- ==============================================================
-
 FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS STRING
     DEFINE i INTEGER
     DEFINE winname STRING
@@ -35,6 +34,9 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS STRING
     IF formname IS NULL OR formname.getLength() = 0 THEN
         RETURN NULL
     END IF
+    
+    -- Build a unique window name
+    LET winname = WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
 
     -- If already open, just bring to front and return NULL
     FOR i = 1 TO m_open_modules.getLength()
@@ -43,9 +45,6 @@ FUNCTION launch_child_window(formname STRING, wintitle STRING) RETURNS STRING
             RETURN NULL
         END IF
     END FOR
-
-    -- Build a unique window name
-    LET winname = WINDOW_PREFIX || formname || "_" || (m_open_modules.getLength() + 1)
 
     TRY
         CALL ui.Interface.setName(winname)
@@ -82,7 +81,6 @@ END FUNCTION
 -- ==============================================================
 -- Close child window by module name
 -- ==============================================================
-
 FUNCTION close_child_window(formname STRING) RETURNS BOOLEAN
     DEFINE i INTEGER
     DEFINE winname STRING
@@ -117,7 +115,6 @@ END FUNCTION
 -- ==============================================================
 -- Close the currently active child window
 -- ==============================================================
-
 FUNCTION close_current_child_window()
     DEFINE w ui.Window
     DEFINE winname STRING
@@ -157,7 +154,6 @@ END FUNCTION
 -- ==============================================================
 -- Close all child windows
 -- ==============================================================
-
 FUNCTION close_all_child_windows()
     DEFINE i INTEGER
     DEFINE winname STRING
@@ -182,7 +178,6 @@ END FUNCTION
 -- ==============================================================
 -- Bring a window to front (simple refresh)
 -- ==============================================================
-
 PRIVATE FUNCTION bring_window_to_front(winname STRING)
     DEFINE w ui.Window
     LET w = ui.Window.forName(winname)
@@ -198,7 +193,6 @@ END FUNCTION
 -- ==============================================================
 -- Queries
 -- ==============================================================
-
 FUNCTION is_window_open(formname STRING) RETURNS SMALLINT
     DEFINE i INTEGER
     FOR i = 1 TO m_open_modules.getLength()
@@ -209,10 +203,16 @@ FUNCTION is_window_open(formname STRING) RETURNS SMALLINT
     RETURN FALSE
 END FUNCTION
 
+-- ==============================================================
+-- Queries
+-- ==============================================================
 FUNCTION get_open_window_count() RETURNS INTEGER
     RETURN m_open_modules.getLength()
 END FUNCTION
 
+-- ==============================================================
+-- Queries
+-- ==============================================================
 FUNCTION get_open_window_list() RETURNS STRING
     DEFINE i INTEGER
     DEFINE list STRING
@@ -232,6 +232,9 @@ FUNCTION get_open_window_list() RETURNS STRING
     RETURN list
 END FUNCTION
 
+-- ==============================================================
+-- Queries
+-- ==============================================================
 FUNCTION cleanup_stale_windows()
     DEFINE i INTEGER
     DEFINE w ui.Window
@@ -244,6 +247,9 @@ FUNCTION cleanup_stale_windows()
     END FOR
 END FUNCTION
 
+-- ==============================================================
+-- Queries
+-- ==============================================================
 FUNCTION shell_set_debug_mode(p_enabled SMALLINT)
     LET m_debug_mode = p_enabled
     IF m_debug_mode THEN
@@ -251,6 +257,9 @@ FUNCTION shell_set_debug_mode(p_enabled SMALLINT)
     END IF
 END FUNCTION
 
+-- ==============================================================
+-- Queries
+-- ==============================================================
 FUNCTION show_window_manager()
     DEFINE window_list STRING
     LET window_list = get_open_window_list()

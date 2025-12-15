@@ -14,6 +14,7 @@ IMPORT FGL st121_st_lkup
 IMPORT FGL utils_doc_totals
 IMPORT FGL sa132_invoice
 IMPORT FGL dl121_lkup
+IMPORT FGL utils_global_stock_updater
 
 SCHEMA demoappdb
 
@@ -139,18 +140,18 @@ FUNCTION new_order()
 
         AFTER FIELD acc_code
             IF l_hdr.cust_id IS NOT NULL THEN
-                --CALL load_customer_details(
-                --    l_hdr.cust_id)
-                --    RETURNING l_hdr.cust_id,
-                --        l_hdr.cust_name,
-                --        l_hdr.cust_phone,
-                --        l_hdr.cust_email,
-                --        l_hdr.cust_address1,
-                --        l_hdr.cust_address2,
-                --        l_hdr.cust_address3,
-                --        l_hdr.cust_postal_code,
-                --        l_hdr.cust_vat_no,
-                --        l_hdr.cust_payment_terms
+                CALL load_customer_details(
+                    l_hdr.cust_id)
+                    RETURNING l_hdr.cust_id,
+                        l_hdr.cust_name,
+                        l_hdr.cust_phone,
+                        l_hdr.cust_email,
+                        l_hdr.cust_address1,
+                        l_hdr.cust_address2,
+                        l_hdr.cust_address3,
+                        l_hdr.cust_postal_code,
+                        l_hdr.cust_vat_no,
+                        l_hdr.cust_payment_terms
 
                 IF l_hdr.cust_id IS NULL THEN
                     CALL utils_globals.show_error("Customer not found")
@@ -158,17 +159,17 @@ FUNCTION new_order()
                 END IF
             END IF
 
-            --ON ACTION lookup_customer ATTRIBUTES(TEXT="Customer Lookup", IMAGE="zoom")
-            --    CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr.cust_id
-            --    IF l_hdr.cust_id IS NOT NULL THEN
-            --        CALL load_customer_details(l_hdr.cust_id)
-            --            RETURNING l_hdr.cust_id, l_hdr.cust_name,
-            --                      l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
-            --                      l_hdr.cust_address2, l_hdr.cust_address3,
-            --                      l_hdr.cust_postal_code, l_hdr.cust_vat_no,
-            --                      l_hdr.cust_payment_terms
-            --        DISPLAY BY NAME l_hdr.cust_id
-            --    END IF
+            ON ACTION lookup_customer ATTRIBUTES(TEXT="Customer Lookup", IMAGE="zoom")
+                CALL dl121_lkup.load_lookup_form_with_search() RETURNING l_hdr.cust_id
+                IF l_hdr.cust_id IS NOT NULL THEN
+                    CALL load_customer_details(l_hdr.cust_id)
+                        RETURNING l_hdr.cust_id, l_hdr.cust_name,
+                                  l_hdr.cust_phone, l_hdr.cust_email, l_hdr.cust_address1,
+                                  l_hdr.cust_address2, l_hdr.cust_address3,
+                                  l_hdr.cust_postal_code, l_hdr.cust_vat_no,
+                                  l_hdr.cust_payment_terms
+                    DISPLAY BY NAME l_hdr.cust_id
+                END IF
 
         ON ACTION accept ATTRIBUTES(TEXT = "Save Header", IMAGE = "save")
             -- Validate header
@@ -270,17 +271,17 @@ FUNCTION new_ord_from_master(p_cust_id INTEGER)
     -- ==========================================================
     -- 3. Load customer details from dl01_mast
     -- ==========================================================
-    --CALL load_customer_details( p_cust_id)
-    --    RETURNING l_hdr.cust_id,
-    --        l_hdr.cust_name,
-    --        l_hdr.cust_phone,
-    --        l_hdr.cust_email,
-    --        l_hdr.cust_address1,
-    --        l_hdr.cust_address2,
-    --        l_hdr.cust_address3,
-    --        l_hdr.cust_postal_code,
-    --        l_hdr.cust_vat_no,
-    --        l_hdr.cust_payment_terms
+    CALL load_customer_details( p_cust_id)
+        RETURNING l_hdr.cust_id,
+            l_hdr.cust_name,
+            l_hdr.cust_phone,
+            l_hdr.cust_email,
+            l_hdr.cust_address1,
+            l_hdr.cust_address2,
+            l_hdr.cust_address3,
+            l_hdr.cust_postal_code,
+            l_hdr.cust_vat_no,
+            l_hdr.cust_payment_terms
 
     IF l_hdr.cust_id IS NULL THEN
         CALL utils_globals.show_error("Customer not found")
@@ -314,18 +315,18 @@ FUNCTION new_ord_from_master(p_cust_id INTEGER)
 
         AFTER FIELD acc_code
             IF l_hdr.cust_id IS NOT NULL THEN
-                --CALL load_customer_details(
-                --    l_hdr.cust_id)
-                --    RETURNING l_hdr.cust_id,
-                --        l_hdr.cust_name,
-                --        l_hdr.cust_phone,
-                --        l_hdr.cust_email,
-                --        l_hdr.cust_address1,
-                --        l_hdr.cust_address2,
-                --        l_hdr.cust_address3,
-                --        l_hdr.cust_postal_code,
-                --        l_hdr.cust_vat_no,
-                --        l_hdr.cust_payment_terms
+                CALL load_customer_details(
+                    l_hdr.cust_id)
+                    RETURNING l_hdr.cust_id,
+                        l_hdr.cust_name,
+                        l_hdr.cust_phone,
+                        l_hdr.cust_email,
+                        l_hdr.cust_address1,
+                        l_hdr.cust_address2,
+                        l_hdr.cust_address3,
+                        l_hdr.cust_postal_code,
+                        l_hdr.cust_vat_no,
+                        l_hdr.cust_payment_terms
 
                 IF l_hdr.cust_id IS NULL THEN
                     CALL utils_globals.show_error("Customer not found")
@@ -338,18 +339,18 @@ FUNCTION new_ord_from_master(p_cust_id INTEGER)
             CALL dl121_lkup.load_lookup_form_with_search()
                 RETURNING l_hdr.cust_id
             IF l_hdr.cust_id IS NOT NULL THEN
-                --CALL load_customer_details(
-                --    l_hdr.cust_id)
-                --    RETURNING l_hdr.cust_id,
-                --        l_hdr.cust_name,
-                --        l_hdr.cust_phone,
-                --        l_hdr.cust_email,
-                --        l_hdr.cust_address1,
-                --        l_hdr.cust_address2,
-                --        l_hdr.cust_address3,
-                --        l_hdr.cust_postal_code,
-                --        l_hdr.cust_vat_no,
-                --        l_hdr.cust_payment_terms
+                CALL load_customer_details(
+                    l_hdr.cust_id)
+                    RETURNING l_hdr.cust_id,
+                        l_hdr.cust_name,
+                        l_hdr.cust_phone,
+                        l_hdr.cust_email,
+                        l_hdr.cust_address1,
+                        l_hdr.cust_address2,
+                        l_hdr.cust_address3,
+                        l_hdr.cust_postal_code,
+                        l_hdr.cust_vat_no,
+                        l_hdr.cust_payment_terms
                 DISPLAY BY NAME l_hdr.cust_id
             END IF
 
@@ -410,7 +411,6 @@ FUNCTION new_ord_from_master(p_cust_id INTEGER)
     -- 6. Now add lines (header ID exists)
     -- ==========================================================
     LET m_ord_rec.* = l_hdr.*
-    CALL m_ord_lines_arr.clear()
     CALL m_ord_lines_arr.clear()
 
     CALL input_order_lines(l_new_hdr_id)
@@ -535,18 +535,15 @@ FUNCTION edit_or_add_order_line(
 
             IF l_stock_id IS NOT NULL AND l_stock_id > 0 THEN
                 LET l_line.stock_id = l_stock_id
-                LET l_line.stock_id = l_stock_id
 
                 -- Load stock defaults
                 CALL load_stock_defaults(
                     l_stock_id)
-                    RETURNING l_line.unit_price, l_line.unit_price, l_item_desc
+                    RETURNING l_line.unit_price, l_item_desc
 
-                LET l_line.unit_price = l_line.unit_price
                 LET l_line.item_name = l_item_desc
 
                 DISPLAY BY NAME l_line.stock_id,
-                    l_line.unit_price,
                     l_line.unit_price,
                     l_line.item_name
 
@@ -679,7 +676,7 @@ END FUNCTION
 -- ==============================================================
 PRIVATE FUNCTION load_stock_defaults(
     p_stock_id INTEGER)
-    RETURNS(DECIMAL, DECIMAL, VARCHAR(150))
+    RETURNS(DECIMAL, VARCHAR(150))
 
     DEFINE l_cost DECIMAL(15, 2)
     DEFINE l_price DECIMAL(15, 2)
@@ -687,10 +684,10 @@ PRIVATE FUNCTION load_stock_defaults(
     DEFINE l_stock_on_hand DECIMAL(15, 2)
     DEFINE l_available DECIMAL(15, 2)
 
-    SELECT unit_price, sell_price, description, stock_on_hand
+    SELECT unit_cost, sell_price, description, stock_on_hand
         INTO l_cost, l_price, l_desc, l_stock_on_hand
         FROM st01_mast
-        WHERE stock_id = p_stock_id
+        WHERE id = p_stock_id
 
     IF SQLCA.SQLCODE != 0 THEN
         LET l_cost = 0
@@ -707,7 +704,7 @@ PRIVATE FUNCTION load_stock_defaults(
             l_available USING "<<<,<<<,<<&.&&")
     END IF
 
-    RETURN l_cost, l_price, l_desc
+    RETURN l_cost, l_desc
 
 END FUNCTION
 
@@ -724,7 +721,7 @@ FUNCTION get_available_stock(p_stock_id INTEGER) RETURNS DECIMAL(15, 2)
     SELECT stock_on_hand
         INTO l_on_hand
         FROM st01_mast
-        WHERE stock_id = p_stock_id
+        WHERE id = p_stock_id
 
     IF SQLCA.SQLCODE != 0 THEN
         RETURN 0
@@ -764,7 +761,7 @@ FUNCTION check_stock_availability(
     SELECT stock_on_hand, description
         INTO l_on_hand, l_stock_desc
         FROM st01_mast
-        WHERE stock_id = p_stock_id
+        WHERE id = p_stock_id
 
     IF SQLCA.SQLCODE != 0 THEN
         LET l_message = "Stock item not found"
@@ -859,73 +856,20 @@ FUNCTION validate_order_stock_levels(
 END FUNCTION
 
 -- ==============================================================
--- Function : update_stock_on_hand (NEW)
+-- Function : update_stock_on_hand
+-- NOTE: This function now uses the global stock updater utility
 -- ==============================================================
 FUNCTION update_stock_on_hand(
     p_stock_id INTEGER, p_quantity DECIMAL, p_direction VARCHAR(3))
     RETURNS SMALLINT
 
-    DEFINE l_current_stock DECIMAL(15, 2)
-    DEFINE l_user SMALLINT
-
-    LET l_user = utils_globals.get_current_user_id()
-
-    BEGIN WORK
-
-    TRY
-        -- Lock the stock record
-        SELECT stock_on_hand
-            INTO l_current_stock
-            FROM st01_mast
-            WHERE stock_id = p_stock_id
-            FOR UPDATE
-
-        -- Update based on direction
-        IF p_direction = "OUT" THEN
-            -- Sales - decrease stock
-            UPDATE st01_mast
-                SET stock_on_hand = stock_on_hand - p_quantity,
-                    total_sales = total_sales + p_quantity,
-                    updated_at = CURRENT
-                WHERE stock_id = p_stock_id
-
-        ELSE
-            IF p_direction = "IN" THEN
-                -- Purchase/Return - increase stock
-                UPDATE st01_mast
-                    SET stock_on_hand = stock_on_hand + p_quantity,
-                        total_purch = total_purch + p_quantity,
-                        updated_at = CURRENT
-                    WHERE stock_id = p_stock_id
-            END IF
-        END IF
-
-        -- Record stock transaction
-        INSERT INTO st30_trans(
-            stock_id,
-            trans_date,
-            doc_type,
-            direction,
-            qnty,
-            created_at,
-            created_by)
-            VALUES(p_stock_id,
-                TODAY,
-                'INVOICE',
-                p_direction,
-                p_quantity,
-                CURRENT,
-                l_user)
-
-        COMMIT WORK
-        RETURN TRUE
-
-    CATCH
-        ROLLBACK WORK
-        CALL utils_globals.show_error(
-            SFMT("Failed to update stock: %1", SQLCA.SQLCODE))
-        RETURN FALSE
-    END TRY
+    -- Use the global stock updater utility
+    RETURN utils_global_stock_updater.update_stock_simple(
+        p_stock_id,
+        p_quantity,
+        p_direction,
+        "SO"  -- Sales Order document type
+    )
 
 END FUNCTION
 
@@ -1043,7 +987,7 @@ FUNCTION save_order_header_totals()
 END FUNCTION
 
 -- ==============================================================
--- Function : load_customer_details (NEW)
+-- Function : load_customer
 -- ==============================================================
 FUNCTION load_customer(p_id INTEGER)
 
@@ -1056,6 +1000,41 @@ FUNCTION load_customer(p_id INTEGER)
         CALL utils_globals.msg_no_record()
     END IF
     RETURN
+END FUNCTION
+
+-- ==============================================================
+-- Function : load_customer_details (NEW)
+-- Purpose  : Load customer details for order/invoice header
+-- ==============================================================
+FUNCTION load_customer_details(p_cust_id INTEGER)
+    RETURNS(INTEGER, VARCHAR(120), VARCHAR(11), VARCHAR(120),
+            VARCHAR(100), VARCHAR(100), VARCHAR(100), VARCHAR(10),
+            VARCHAR(20), VARCHAR(50))
+
+    DEFINE l_cust_id INTEGER
+    DEFINE l_cust_name VARCHAR(120)
+    DEFINE l_phone VARCHAR(11)
+    DEFINE l_email VARCHAR(120)
+    DEFINE l_address1 VARCHAR(100)
+    DEFINE l_address2 VARCHAR(100)
+    DEFINE l_address3 VARCHAR(100)
+    DEFINE l_postal_code VARCHAR(10)
+    DEFINE l_vat_no VARCHAR(20)
+    DEFINE l_payment_terms VARCHAR(50)
+
+    SELECT id, cust_name, phone, email, address1, address2, address3,
+           postal_code, vat_no, payment_terms
+      INTO l_cust_id, l_cust_name, l_phone, l_email, l_address1,
+           l_address2, l_address3, l_postal_code, l_vat_no, l_payment_terms
+      FROM dl01_mast
+     WHERE id = p_cust_id
+
+    IF SQLCA.SQLCODE != 0 THEN
+        RETURN NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+    END IF
+
+    RETURN l_cust_id, l_cust_name, l_phone, l_email, l_address1,
+           l_address2, l_address3, l_postal_code, l_vat_no, l_payment_terms
 END FUNCTION
 
 -- ==============================================================
@@ -1073,7 +1052,6 @@ FUNCTION load_order(p_doc_id INTEGER)
 
     -- Initialize variables
     INITIALIZE m_ord_rec.* TO NULL
-    CALL m_ord_lines_arr.clear()
     CALL m_ord_lines_arr.clear()
 
     -- ==========================================================
@@ -1260,6 +1238,7 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
     DEFINE l_invoice_count INTEGER
     DEFINE l_stock_id INTEGER
     DEFINE l_quantity DECIMAL(15, 2)
+    DEFINE l_user_id INTEGER
 
     -- ===========================================
     -- 1. Validate order can be converted
@@ -1311,6 +1290,9 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
             INTO l_new_invoice_doc_no
             FROM sa32_inv_hdr
 
+        -- Get current user ID before populating record
+        LET l_user_id = utils_globals.get_current_user_id()
+
         -- Copy order to invoice
         INITIALIZE l_invoice_hdr.* TO NULL
         LET l_invoice_hdr.id = l_new_invoice_doc_no
@@ -1318,17 +1300,15 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
         LET l_invoice_hdr.ref_doc_no = l_order_hdr.id
         LET l_invoice_hdr.cust_id = l_order_hdr.cust_id
         LET l_invoice_hdr.trans_date = TODAY
-        LET l_invoice_hdr.trans_date = TODAY
         LET l_invoice_hdr.gross_tot = l_order_hdr.gross_tot
         LET l_invoice_hdr.disc_tot = l_order_hdr.disc_tot
         LET l_invoice_hdr.vat_tot = l_order_hdr.vat_tot
         LET l_invoice_hdr.net_tot = l_order_hdr.net_tot
         LET l_invoice_hdr.status = "NEW"
         LET l_invoice_hdr.created_at = CURRENT
-        LET l_invoice_hdr.created_by = utils_globals.get_current_user_id()
+        LET l_invoice_hdr.created_by = l_user_id
 
         -- Copy customer details
-        LET l_invoice_hdr.cust_id = l_order_hdr.cust_id
         LET l_invoice_hdr.cust_name = l_order_hdr.cust_name
         LET l_invoice_hdr.cust_phone = l_order_hdr.cust_phone
         LET l_invoice_hdr.cust_email = l_order_hdr.cust_email
@@ -1353,17 +1333,12 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
             qnty,
             unit_price,
             sell_price,
-            vat_tot,
-            line_tot,
-            disc_tot,
-            stock_id,
             item_name,
             uom,
-            unit_price,
             disc_pct,
             disc_amt,
             gross_amt,
-            net_amt,
+            net_excl_amt,
             vat_rate,
             vat_amt,
             line_total,
@@ -1377,23 +1352,18 @@ FUNCTION copy_order_to_invoice(p_order_id INTEGER)
                 qnty,
                 unit_price,
                 sell_price,
-                vat_tot,
-                line_tot,
-                disc_tot,
-                stock_id,
                 item_name,
                 uom,
-                unit_price,
                 disc_pct,
                 disc_amt,
                 gross_amt,
-                net_amt,
+                net_excl_amt,
                 vat_rate,
                 vat_amt,
                 line_total,
                 status,
                 CURRENT,
-                m_user
+               l_user_id
                 FROM sa31_ord_det
                 WHERE hdr_id = p_order_id
 
